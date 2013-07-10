@@ -66,15 +66,28 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * A stack containing the QtiComponents to be traversed.
 	 * 
+	 * Each value in the trail is an array where:
+	 * * index [0] contains the source of the trailing phase
+	 * * index [1] contains the next QtiComponent object to traverse.
+	 * 
 	 * @var array
 	 */
 	private $trail = array();
 	
 	/**
+	 * An array of already traversed QtiComponent objects. 
 	 * 
 	 * @var array
 	 */
 	private $traversed = array();
+	
+	/**
+	 * The QtiComponent object which is the container of the QtiComponent object
+	 * returned by QtiComponentIterator::current().
+	 * 
+	 * @var QtiComponent
+	 */
+	private $currentContainer = null;
 	
 	/**
 	 * Create a new QtiComponentIterator object.
@@ -94,6 +107,14 @@ class QtiComponentIterator implements Iterator {
 	 */
 	protected function setRootComponent(QtiComponent $rootComponent) {
 		$this->rootComponent = $rootComponent;
+	}
+	
+	protected function setCurrentContainer(QtiComponent $currentContainer = null) {
+		$this->currentContainer = $currentContainer;
+	}
+	
+	public function getCurrentContainer() {
+		return $this->currentContainer;
 	}
 	
 	/**
@@ -125,45 +146,33 @@ class QtiComponentIterator implements Iterator {
 	}
 	
 	/**
-	 * Push QtiComponent objects on the traversal trail.
 	 * 
-	 * @param QtiComponent|QtiComponentCollection $components A QTIComponent or QTIComponentCollection object.
-	 * @throws InvalidArgumentException If $components is not a QtiComponent object nor a QtiComponentCollection object.
 	 */
-	protected function pushOnTrail($components) {
+	protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components) {
 		
-		if (!$components instanceof QtiComponent && !$components instanceof QtiComponentCollection) {
-			$msg = "QtiComponentIterator::pushOnTrail only accepts QtiComponent and QtiComponentCollection objects. ";
-			$msg.= "'" . gettype($components) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-		
-		if ($components instanceof QtiComponent) {
-			$components = new QtiComponentCollection(array($components));
-		}
-		
-		$components = array_reverse($components->getArrayCopy());
+		$trailEntry = array();
 		
 		$trail = &$this->getTrail();
+		$components = array_reverse($components->getArrayCopy());
+		
 		foreach ($components as $c) {
-			
-			array_push($trail, $c);
+			array_push($trail, array($source, $c));
 		}
 		
 		$this->setTrail($trail);
 	}
 	
 	/**
-	 * Pop a QtiComponent object from the traversal trail.
+	 * Pop a trail entry from the trail.
 	 * 
-	 * @return QtiComponent A QTI Component object.
+	 * @return array 
 	 */
 	protected function popFromTrail() {
 		$trail = &$this->getTrail();
-		$component = array_pop($trail);
+		$entry = array_pop($trail);
 		$this->setTrail($trail);
 		
-		return $component;
+		return $entry;
 	}
 	
 	/**
@@ -239,16 +248,21 @@ class QtiComponentIterator implements Iterator {
 		$traversed = array();
 		$this->setTraversed($traversed);
 		
-		$this->pushOnTrail($this->getRootComponent()->getComponents());
+		$root = $this->getRootComponent();
+		$this->pushOnTrail($root, $root->getComponents());
 		
 		if (count($this->getTrail()) > 0) {
+			$trailEntry = $this->popFromTrail();
+			
 			$this->setValid(true);
-			$this->setCurrentComponent($this->popFromTrail());
+			$this->setCurrentComponent($trailEntry[1]);
+			$this->setCurrentContainer($trailEntry[0]);
 			$this->markTraversed($this->getCurrentComponent());
 		}
 		else {
 			$this->setValid(false);
 			$this->setCurrentComponent(null);
+			$this->setCurrentContainer(null);
 		}
 	}
 	
@@ -281,10 +295,14 @@ class QtiComponentIterator implements Iterator {
 		if (count($this->getTrail()) > 0) {
 			
 			while(count($this->getTrail()) > 0) {
-				$component = $this->popFromTrail();
+				$trailEntry = $this->popFromTrail();
+				$component = $trailEntry[1];
+				$source = $trailEntry[0];
+				
 				if (!$this->isTraversed($component)) {
 					$this->setCurrentComponent($component);
-					$this->pushOnTrail($this->getCurrentComponent()->getComponents());
+					$this->setCurrentContainer($source);
+					$this->pushOnTrail($component, $this->getCurrentComponent()->getComponents());
 					$this->markTraversed($this->getCurrentComponent());
 					return;
 				}

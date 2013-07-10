@@ -16,12 +16,14 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
 		$baseValues[] = new BaseValue(BaseType::INTEGER, 25);
 		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
+		$sum = new Sum($baseValues);
 		
-		$iterator = new QtiComponentIterator(new Sum($baseValues));
+		$iterator = new QtiComponentIterator($sum);
 		
 		$iterations = 0;
 		foreach ($iterator as $k => $i) {
 			$this->assertSame($baseValues[$iterations], $i);
+			$this->assertSame($sum, $iterator->getCurrentContainer());
 			$this->assertEquals($k, $i->getQTIClassName());
 			$iterations++;
 		}
