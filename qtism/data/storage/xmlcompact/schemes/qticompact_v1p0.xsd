@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    version="QTI Compact 1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <xs:redefine schemaLocation="../../xml/schemes/imsqti_v2p1.xsd">
+	    <xs:complexType name="AssessmentItemRef.Type">
+	    	<xs:complexContent>
+	    		<xs:extension base="AssessmentItemRef.Type">
+	    			<xs:sequence>
+	    				<xs:element name="responseDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+	    				<xs:element name="outcomeDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+	    			</xs:sequence>
+	    		</xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+    </xs:redefine>
+</xs:schema>

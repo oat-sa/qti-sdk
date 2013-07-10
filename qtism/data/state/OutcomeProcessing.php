@@ -1,0 +1,74 @@
+<?php
+
+namespace qtism\data\state;
+
+use qtism\data\QtiComponentCollection;
+use qtism\data\QtiComponent;
+use qtism\data\rules\OutcomeRuleCollection;
+
+/**
+ * From IMS QTI:
+ * 
+ * Outcome processing takes place each time the candidate submits the responses for an item 
+ * (when in individual submission mode) or a group of items (when in simultaneous submission mode).
+ * It happens after any (item level) response processing triggered by the submission. 
+ * The values of the test's outcome variables are always reset to their defaults prior 
+ * to carrying out the instructions described by the outcomeRules. Because outcome 
+ * processing happend each time the candidate submits responses the resulting values 
+ * of the test-level outcomes may be used to activate test-level feedback during the 
+ * test or to control the behaviour of subsequent parts through the use of preConditions 
+ * and branchRules.
+ * 
+ * The structure of outcome processing is similar to that or responseProcessing.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
+class OutcomeProcessing extends QtiComponent {
+	
+	/**
+	 * A collection of OutcomeRule objects.
+	 * 
+	 * @var OutcomeRuleCollection
+	 */
+	private $outcomeRules;
+	
+	/**
+	 * Create a new instance of OutcomeProcessing.
+	 * 
+	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 */
+	public function __construct(OutcomeRuleCollection $outcomeRules = null) {
+		if (empty($outcomeRules)) {
+			$outcomeRules = new OutcomeRuleCollection();
+		}
+		
+		$this->setOutcomeRules($outcomeRules);
+	}
+	
+	/**
+	 * Get the OutcomeRule objects that form the OutcomeProcessing.
+	 * 
+	 * @return OutcomeRuleCollection A collection of OutcomeRule object.
+	 */
+	public function getOutcomeRules() {
+		return $this->outcomeRules;
+	}
+	
+	/**
+	 * Set the OutcomeRule objects that form the OutcomeProcessing.
+	 * 
+	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 */
+	public function setOutcomeRules(OutcomeRuleCollection $outcomeRules) {
+		$this->outcomeRules = $outcomeRules;
+	}
+	
+	public function getQTIClassName() {
+		return 'outcomeProcessing';
+	}
+	
+	public function getComponents() {
+		return new QtiComponentCollection($this->getOutcomeRules()->getArrayCopy());
+	}
+}
