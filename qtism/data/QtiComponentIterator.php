@@ -258,6 +258,7 @@ class QtiComponentIterator implements Iterator {
 			$this->setCurrentComponent($trailEntry[1]);
 			$this->setCurrentContainer($trailEntry[0]);
 			$this->markTraversed($this->getCurrentComponent());
+			$this->pushOnTrail($this->getCurrentComponent(), $this->getCurrentComponent()->getComponents());
 		}
 		else {
 			$this->setValid(false);
