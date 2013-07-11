@@ -3,6 +3,7 @@
 namespace qtism\data;
 
 use \ReflectionClass;
+use \InvalidArgumentException;
 
 /**
  * This extension of QtiComponentCollection can retrieve items it contains
@@ -13,6 +14,15 @@ use \ReflectionClass;
  */
 abstract class QtiIdentifiableCollection extends QtiComponentCollection {
 	
+	protected function checkType($value) {
+		parent::checkType($value);
+		
+		if (!$value instanceof QtiIdentifiable) {
+			$msg = "The QtiIdentifiable class only accepts to store QtiIdentifiable objects.";
+			throw new InvalidArgumentException($msg);
+		}
+	}
+	
 	/**
 	 * Get a QtiComponent contained in the collection by its identifier.
 	 * If no QtiComponent with $identifier is found in the collection, null is returned.
@@ -22,8 +32,7 @@ abstract class QtiIdentifiableCollection extends QtiComponentCollection {
 	 */
 	public function getByIdentifier($identifier) {
 		foreach ($this as $component) {
-			$reflection = new ReflectionClass($component);
-			if ($reflection->hasMethod('getIdentifier') && $component->getIdentifier() === $identifier) {
+			if ($component->getIdentifier() === $identifier) {
 				return $component;
 			}
 		}
