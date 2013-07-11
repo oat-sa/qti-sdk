@@ -21,7 +21,7 @@ class IsNull extends Operator {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::ANY), array(OperatorBaseType::ANY));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'isNull';
 	}
 }

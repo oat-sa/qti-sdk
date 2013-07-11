@@ -21,7 +21,7 @@ class LookupOutcomeValueMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 		
@@ -60,7 +60,7 @@ class LookupOutcomeValueMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'lookupOutcomeValue';
 	}
 }

@@ -26,7 +26,7 @@ class EqualRoundedMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI equalRounded element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
 		self::setDOMElementAttribute($element, 'figures', $component->getFigures());
 		

@@ -21,7 +21,7 @@ class Not extends Operator {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE), array(OperatorBaseType::BOOLEAN));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'not';
 	}
 }

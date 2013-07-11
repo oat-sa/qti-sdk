@@ -60,7 +60,7 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'outcomeMaximum';
 	}
 }

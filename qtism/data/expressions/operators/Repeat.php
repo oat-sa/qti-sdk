@@ -68,7 +68,7 @@ class Repeat extends Operator {
 		return $this->numberRepeats;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'repeat';
 	}
 }

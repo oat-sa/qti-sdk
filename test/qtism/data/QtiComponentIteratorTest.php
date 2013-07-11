@@ -24,7 +24,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		foreach ($iterator as $k => $i) {
 			$this->assertSame($baseValues[$iterations], $i);
 			$this->assertSame($sum, $iterator->getCurrentContainer());
-			$this->assertEquals($k, $i->getQTIClassName());
+			$this->assertEquals($k, $i->getQtiClassName());
 			$iterations++;
 		}
 	}

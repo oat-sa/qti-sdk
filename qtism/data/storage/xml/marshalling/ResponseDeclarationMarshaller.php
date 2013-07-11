@@ -90,7 +90,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'responseDeclaration';
 	}
 }

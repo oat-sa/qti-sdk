@@ -27,7 +27,7 @@ class Gcd extends Operator {
 		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::INTEGER));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'gcd';
 	}
 }

@@ -34,7 +34,7 @@ class Contains extends Operator {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SAME), array(OperatorBaseType::SAME));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'contains';
 	}
 }

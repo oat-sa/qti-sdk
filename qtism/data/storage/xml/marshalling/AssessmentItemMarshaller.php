@@ -23,7 +23,7 @@ class AssessmentItemMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 		self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
@@ -120,7 +120,7 @@ class AssessmentItemMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'assessmentItem';
 	}
 }

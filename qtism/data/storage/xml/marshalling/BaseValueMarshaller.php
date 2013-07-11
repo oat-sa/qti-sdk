@@ -23,7 +23,7 @@ class BaseValueMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
 		self::setDOMElementValue($element, $component->getValue());
@@ -53,7 +53,7 @@ class BaseValueMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'baseValue';
 	}
 }

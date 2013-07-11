@@ -97,7 +97,7 @@ class CorrectResponse extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'correctResponse';
 	}
 	

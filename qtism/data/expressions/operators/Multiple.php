@@ -28,7 +28,7 @@ class Multiple extends Operator {
 		parent::__construct($expressions, 0, -1, array(Cardinality::SINGLE, Cardinality::MULTIPLE), array(OperatorBaseType::SAME));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'multiple';
 	}
 }

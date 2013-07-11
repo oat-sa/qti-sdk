@@ -27,6 +27,6 @@ class ExitTestMarshallerTest extends QtiSmTestCase {
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\rules\\ExitTest', $component);
-		$this->assertEquals('exitTest', $component->getQTIClassName());
+		$this->assertEquals('exitTest', $component->getQtiClassName());
 	}
 }

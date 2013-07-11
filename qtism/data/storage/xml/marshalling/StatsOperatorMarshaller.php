@@ -25,7 +25,7 @@ class StatsOperatorMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI statsOperator element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'name', Statistics::getNameByConstant($component->getName()));
 		

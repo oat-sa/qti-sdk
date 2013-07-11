@@ -82,7 +82,7 @@ class MatchTableEntry extends QtiComponent {
 		$this->targetValue = $targetValue;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'matchTableEntry';
 	}
 	

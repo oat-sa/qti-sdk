@@ -41,7 +41,7 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'numberIncorrect';
 	}
 }

@@ -46,7 +46,7 @@ class CorrectResponseMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		$interpretation = $component->getInterpretation();
 		if (!empty($interpretation)) {
@@ -95,7 +95,7 @@ class CorrectResponseMarshaller extends Marshaller {
 		
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'correctResponse';
 	}
 }

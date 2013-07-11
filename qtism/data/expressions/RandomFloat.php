@@ -83,7 +83,7 @@ class RandomFloat extends Expression {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'randomFloat';
 	}
 }

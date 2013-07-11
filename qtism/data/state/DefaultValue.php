@@ -97,7 +97,7 @@ class DefaultValue extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'defaultValue';
 	}
 	

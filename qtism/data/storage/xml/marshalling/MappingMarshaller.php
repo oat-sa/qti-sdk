@@ -71,7 +71,7 @@ class MappingMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		if ($component->hasLowerBound() === true) {
 			self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
@@ -131,7 +131,7 @@ class MappingMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'mapping';
 	}
 }

@@ -44,7 +44,7 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		if ($component instanceof OutcomeIf || $component instanceof OutcomeElseIf) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
@@ -89,7 +89,7 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 		return new OutcomeRuleCollection();
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return '';
 	}
 }

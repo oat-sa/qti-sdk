@@ -25,7 +25,7 @@ class RubricBlockMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		$arrayViews = array();
 		foreach ($component->getViews() as $view) {
@@ -106,7 +106,7 @@ class RubricBlockMarshaller extends Marshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'rubricBlock';
 	}
 	

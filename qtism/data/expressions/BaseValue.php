@@ -87,7 +87,7 @@ class BaseValue extends Expression {
 		$this->value = $value;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'baseValue';
 	}
 }

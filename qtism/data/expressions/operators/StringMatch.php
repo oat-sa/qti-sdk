@@ -105,7 +105,7 @@ class StringMatch extends Operator {
 		return $this->substring;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'stringMatch';
 	}
 }

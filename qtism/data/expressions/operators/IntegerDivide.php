@@ -22,7 +22,7 @@ class IntegerDivide extends Operator {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'integerDivide';
 	}
 }

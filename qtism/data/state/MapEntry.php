@@ -129,7 +129,7 @@ class MapEntry extends QtiComponent {
 		return $this->caseSensitive;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'mapEntry';
 	}
 	

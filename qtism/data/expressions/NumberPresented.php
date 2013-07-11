@@ -18,7 +18,7 @@ use qtism\common\enums\Cardinality;
  */
 class NumberPresented extends ItemSubset {
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'numberPresented';
 	}
 	

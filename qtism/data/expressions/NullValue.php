@@ -13,7 +13,7 @@ namespace qtism\data\expressions;
  */
 class NullValue extends Expression {
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'null';
 	}
 }

@@ -31,7 +31,7 @@ class DurationLT extends Operator {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::DURATION));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'durationLT';
 	}
 }

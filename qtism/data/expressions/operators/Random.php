@@ -22,7 +22,7 @@ class Random extends Operator {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::ANY));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'random';
 	}
 }

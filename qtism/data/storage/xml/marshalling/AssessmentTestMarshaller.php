@@ -25,7 +25,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller {
 	 * @throws MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 		self::setDOMElementAttribute($element, 'title', $component->getTitle());
@@ -160,7 +160,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'assessmentTest';
 	}
 }

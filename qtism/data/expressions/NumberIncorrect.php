@@ -19,7 +19,7 @@ use qtism\common\enums\Cardinality;
  */
 class NumberIncorrect extends ItemSubset {
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'numberIncorrect';
 	}
 }

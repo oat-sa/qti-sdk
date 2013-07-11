@@ -154,7 +154,7 @@ class MarshallerFactory {
 	public function createMarshaller($object, array $args = array()) {
 		
 		if ($object instanceof QtiComponent) {
-			$qtiClassName = $object->getQTIClassName();
+			$qtiClassName = $object->getQtiClassName();
 		}
 		else if ($object instanceof DOMElement) {
 			$qtiClassName = Utils::getLocalNodeName($object->nodeName);

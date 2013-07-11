@@ -181,7 +181,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'variableDeclaration';
 	}
 	

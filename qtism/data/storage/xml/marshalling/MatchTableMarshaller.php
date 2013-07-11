@@ -69,7 +69,7 @@ class MatchTableMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		foreach ($component->getMatchTableEntries() as $matchTableEntry) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($matchTableEntry, array($this->getBaseType()));
@@ -105,7 +105,7 @@ class MatchTableMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'matchTable';
 	}
 }

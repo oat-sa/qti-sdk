@@ -28,7 +28,7 @@ class AndOperator extends Operator {
 		parent::__construct($expressions, 1, -1, array(Cardinality::single), array(OperatorBaseType::BOOLEAN));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'and';
 	}
 }

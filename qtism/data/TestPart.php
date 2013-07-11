@@ -309,7 +309,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 		$this->testFeedbacks = $testFeedbacks;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'testPart';
 	}
 	

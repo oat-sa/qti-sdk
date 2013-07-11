@@ -25,7 +25,7 @@ class StringMatchMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI stringMatch element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
 		self::setDOMElementAttribute($element, 'substring', $component->mustSubstring());
 		

@@ -161,7 +161,7 @@ class TimeLimits extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'timeLimits';
 	}
 	

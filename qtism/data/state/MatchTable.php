@@ -61,7 +61,7 @@ class MatchTable extends LookupTable {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'matchTable';
 	}
 	

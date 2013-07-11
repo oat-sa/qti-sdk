@@ -90,7 +90,7 @@ class OutcomeElseIf extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeElseIf';
 	}
 	

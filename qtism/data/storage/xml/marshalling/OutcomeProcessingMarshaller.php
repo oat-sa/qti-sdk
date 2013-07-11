@@ -23,7 +23,7 @@ class OutcomeProcessingMarshaller extends SectionPartMarshaller {
 	 * @throws MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		foreach ($component->getOutcomeRules() as $outcomeRule) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeRule);
@@ -53,7 +53,7 @@ class OutcomeProcessingMarshaller extends SectionPartMarshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'outcomeProcessing';
 	}
 }

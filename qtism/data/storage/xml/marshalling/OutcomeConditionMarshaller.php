@@ -53,7 +53,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		foreach ($elements as $elt) {
 			$element->appendChild($elt);
@@ -117,7 +117,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return '';
 	}
 }

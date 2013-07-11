@@ -120,7 +120,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'assessmentItemRef';
 	}
 }

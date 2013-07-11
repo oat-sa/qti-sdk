@@ -165,7 +165,7 @@ class Stylesheet extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'stylesheet';
 	}
 	

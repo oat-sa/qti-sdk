@@ -105,7 +105,7 @@ class BranchRule extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'branchRule';
 	}
 	

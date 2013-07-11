@@ -15,7 +15,7 @@ use qtism\data\QtiComponent;
  */
 class ExitTest extends QtiComponent implements OutcomeRule {
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'exitTest';
 	}
 	

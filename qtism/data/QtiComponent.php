@@ -16,7 +16,7 @@ abstract class QtiComponent {
 	 * 
 	 * @return string A QTI class name.
 	 */
-	abstract public function getQTIClassName();
+	abstract public function getQtiClassName();
 	
 	/**
 	 * Get the direct child components of this one.

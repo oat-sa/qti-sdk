@@ -171,7 +171,7 @@ class Value extends QtiComponent {
 		$this->value = $value;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'value';
 	}
 	

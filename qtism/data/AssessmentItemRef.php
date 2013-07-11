@@ -185,7 +185,7 @@ class AssessmentItemRef extends SectionPart {
 		$this->templateDefaults = $templateDefaults;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'assessmentItemRef';
 	}
 	

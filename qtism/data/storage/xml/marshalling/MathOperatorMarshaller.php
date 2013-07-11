@@ -25,7 +25,7 @@ class MathOperatorMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI mathOperator element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
 		

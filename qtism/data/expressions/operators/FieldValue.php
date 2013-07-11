@@ -59,7 +59,7 @@ class FieldValue extends Operator {
 		return $this->fieldIdentifier;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'fieldValue';
 	}
 }

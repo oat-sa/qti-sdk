@@ -26,7 +26,7 @@ class VariableDeclarationMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 		self::setDOMElementAttribute($element, 'cardinality', Cardinality::getNameByConstant($component->getCardinality()));
@@ -95,7 +95,7 @@ class VariableDeclarationMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'variableDeclaration';
 	}
 }

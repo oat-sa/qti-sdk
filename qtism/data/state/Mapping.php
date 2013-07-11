@@ -195,7 +195,7 @@ class Mapping extends QtiComponent {
 		return $this->mapEntries;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'mapping';
 	}
 	

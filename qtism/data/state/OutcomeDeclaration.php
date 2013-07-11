@@ -303,7 +303,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 		$this->lookupTable = $lookupTable;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeDeclaration';
 	}
 	

@@ -65,7 +65,7 @@ class StatsOperator extends Operator {
 		return $this->name;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'statsOperator';
 	}
 }

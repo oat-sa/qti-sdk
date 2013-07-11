@@ -96,7 +96,7 @@ class Inside extends Operator {
 		return $this->coords;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'inside';
 	}
 }

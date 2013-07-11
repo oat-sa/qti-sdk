@@ -24,7 +24,7 @@ class SubstringMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI substring element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
 		
 		foreach ($elements as $elt) {

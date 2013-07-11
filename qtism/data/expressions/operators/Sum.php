@@ -23,7 +23,7 @@ class Sum extends Operator {
 		parent::__construct($expressions, 1, -1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'sum';
 	}
 }

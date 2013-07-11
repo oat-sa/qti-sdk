@@ -92,7 +92,7 @@ class TemplateDefault extends QtiComponent {
 		$this->expression = $expression;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'templateDefault';
 	}
 	

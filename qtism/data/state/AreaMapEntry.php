@@ -128,7 +128,7 @@ class AreaMapEntry extends QtiComponent {
 		return $this->mappedValue;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'areaMapEntry';
 	}
 	

@@ -303,7 +303,7 @@ class ItemSessionControl extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'itemSessionControl';
 	}
 	

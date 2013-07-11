@@ -57,7 +57,7 @@ class OutcomeElse extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeElse';
 	}
 	

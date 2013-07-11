@@ -80,7 +80,7 @@ class RandomInteger extends Expression {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'randomInteger';
 	}
 }

@@ -95,7 +95,7 @@ class OperatorMarshaller extends RecursiveMarshaller {
 	
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		foreach ($elements as $elt) {
 			$element->appendChild($elt);
 		}
@@ -128,7 +128,7 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		return new ExpressionCollection();
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return '';
 	}
 }

@@ -111,7 +111,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 		$this->outcomeElse = $outcomeElse;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeCondition';
 	}
 	

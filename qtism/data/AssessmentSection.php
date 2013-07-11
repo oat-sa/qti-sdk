@@ -239,7 +239,7 @@ class AssessmentSection extends SectionPart {
 		$this->sectionParts = $sectionParts;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'assessmentSection';
 	}
 	

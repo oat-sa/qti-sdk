@@ -284,7 +284,7 @@ class QtiComponentIterator implements Iterator {
 	 * @return string A QTI class name.
 	 */
 	public function key() {
-		return $this->getCurrentComponent()->getQTIClassName();
+		return $this->getCurrentComponent()->getQtiClassName();
 	}
 	
 	/**

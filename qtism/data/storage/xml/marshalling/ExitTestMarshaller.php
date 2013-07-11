@@ -21,7 +21,7 @@ class ExitTestMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		return $element;
 	}
 	
@@ -36,7 +36,7 @@ class ExitTestMarshaller extends Marshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'exitTest';
 	}
 }

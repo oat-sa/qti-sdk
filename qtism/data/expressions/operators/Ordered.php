@@ -28,7 +28,7 @@ class Ordered extends Operator {
 		parent::__construct($expressions, 0, -1, array(Cardinality::SINGLE, Cardinality::ORDERED), array(OperatorBaseType::SAME));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'ordered';
 	}
 }

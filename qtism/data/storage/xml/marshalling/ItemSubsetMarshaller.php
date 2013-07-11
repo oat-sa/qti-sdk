@@ -12,7 +12,7 @@ use \InvalidArgumentException;
 class ItemSubsetMarshaller extends Marshaller {
 	
 	protected function marshall(QtiComponent $component) {
-		$element = self::getDOMCradle()->createElement($this->getExpectedQTIClassName());
+		$element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
 		
 		$sectionIdentifier = $component->getSectionIdentifier();
 		if (!empty($sectionIdentifier)) {
@@ -53,7 +53,7 @@ class ItemSubsetMarshaller extends Marshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'itemSubset';
 	}
 }

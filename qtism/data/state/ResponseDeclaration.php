@@ -153,7 +153,7 @@ class ResponseDeclaration extends VariableDeclaration {
 		return $this->areaMapping;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'responseDeclaration';
 	}
 	

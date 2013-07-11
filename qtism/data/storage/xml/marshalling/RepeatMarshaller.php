@@ -25,7 +25,7 @@ class RepeatMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI repeat element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
 		
 		foreach ($elements as $elt) {

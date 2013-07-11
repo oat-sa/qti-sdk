@@ -71,7 +71,7 @@ class AssessmentSectionRef extends SectionPart {
 		return $this->href;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'assessmentSectionRef';
 	}
 }

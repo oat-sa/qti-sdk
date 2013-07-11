@@ -55,7 +55,7 @@ class PreCondition extends QtiComponent {
 		$this->expression = $expression;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'preCondition';
 	}
 	

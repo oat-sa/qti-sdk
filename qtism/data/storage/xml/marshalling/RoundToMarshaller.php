@@ -26,7 +26,7 @@ class RoundToMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI roundTo element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'figures', $component->getFigures());
 		self::setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));

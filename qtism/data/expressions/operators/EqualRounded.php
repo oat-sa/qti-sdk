@@ -104,7 +104,7 @@ class EqualRounded extends Operator {
 		return $this->figures;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'equalRounded';
 	}
 }

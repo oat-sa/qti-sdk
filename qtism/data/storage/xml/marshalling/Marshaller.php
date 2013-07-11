@@ -116,17 +116,17 @@ abstract class Marshaller {
 			if (count($args) >= 1) {
 				if ($method == 'marshall') {
 					$component = $args[0];
-					if ($this->getExpectedQTIClassName() === '' || ($component->getQTIClassName() == $this->getExpectedQTIClassName())) {
+					if ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName())) {
 						return $this->marshall($component);
 					}
 				}
 				else {
 					$element = $args[0];
-					if ($this->getExpectedQTIClassName() === '' || ($element->nodeName == $this->getExpectedQTIClassName())) {
+					if ($this->getExpectedQtiClassName() === '' || ($element->nodeName == $this->getExpectedQtiClassName())) {
 						return call_user_func_array(array($this, 'unmarshall'), $args);
 					}
 					else {
-						throw new RuntimeException("Unexpected nodeName/className '" . $element->nodeName . "'/'" . $this->getExpectedQTIClassName() . "'.");
+						throw new RuntimeException("Unexpected nodeName/className '" . $element->nodeName . "'/'" . $this->getExpectedQtiClassName() . "'.");
 					}
 				}
 			}
@@ -311,5 +311,5 @@ abstract class Marshaller {
 	 * 
 	 * @return string A QTI class name or an empty string.
 	 */
-	abstract public function getExpectedQTIClassName();
+	abstract public function getExpectedQtiClassName();
 }

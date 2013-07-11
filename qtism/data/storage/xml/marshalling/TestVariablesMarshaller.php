@@ -70,7 +70,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'testVariables';
 	}
 }

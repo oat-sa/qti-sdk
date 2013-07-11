@@ -101,7 +101,7 @@ class OutcomeMinimum extends ItemSubset {
 		return $this->weightIdentifier;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeMinimum';
 	}
 }

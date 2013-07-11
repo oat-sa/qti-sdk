@@ -226,7 +226,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 		return $this->outcomeDeclarations;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'assessmentItem';
 	}
 	

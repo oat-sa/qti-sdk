@@ -27,7 +27,7 @@ class Member extends Operator {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::SAME));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'member';
 	}
 }

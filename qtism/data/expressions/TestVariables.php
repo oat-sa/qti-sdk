@@ -153,7 +153,7 @@ class TestVariables extends ItemSubset {
 		return $this->weightIdentifier;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'testVariables';
 	}
 }

@@ -27,7 +27,7 @@ class InsideMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI inside element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
 		self::setDOMElementAttribute($element, 'coords', $component->getCoords());
 		

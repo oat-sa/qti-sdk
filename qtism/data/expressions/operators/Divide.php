@@ -26,7 +26,7 @@ class Divide extends Operator {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'divide';
 	}
 }

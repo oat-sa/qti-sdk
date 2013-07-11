@@ -92,7 +92,7 @@ class OutcomeIf extends QtiComponent {
 		return $this->outcomeRules;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'outcomeIf';
 	}
 	

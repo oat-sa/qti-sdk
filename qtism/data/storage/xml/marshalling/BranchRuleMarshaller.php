@@ -21,7 +21,7 @@ class BranchRuleMarshaller extends Marshaller {
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
 		$element->appendChild($marshaller->marshall($component->getExpression()));
 		static::setDOMElementAttribute($element, 'target', $component->getTarget());
@@ -57,7 +57,7 @@ class BranchRuleMarshaller extends Marshaller {
 		}
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'branchRule';
 	}
 }

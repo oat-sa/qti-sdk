@@ -27,7 +27,7 @@ class Max extends Operator {
 		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'max';
 	}
 }

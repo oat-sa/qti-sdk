@@ -256,7 +256,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'testFeedback';
 	}
 	

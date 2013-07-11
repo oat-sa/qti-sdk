@@ -65,7 +65,7 @@ class PatternMatch extends Operator {
 		return $this->pattern;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'patternMatch';
 	}
 }

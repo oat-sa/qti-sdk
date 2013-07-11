@@ -169,7 +169,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		return new SectionPartCollection();
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return '';
 	}
 }

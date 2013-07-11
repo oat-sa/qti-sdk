@@ -117,7 +117,7 @@ class ItemSubset extends Expression {
 		return $this->excludeCategories;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'itemSubset';
 	}
 }

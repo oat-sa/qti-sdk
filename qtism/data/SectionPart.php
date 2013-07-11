@@ -246,7 +246,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 		$this->timeLimits = $timeLimits;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'sectionPart';
 	}
 	

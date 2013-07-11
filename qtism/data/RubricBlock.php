@@ -153,7 +153,7 @@ class RubricBlock extends QtiComponent {
 		return $this->content;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'rubricBlock';
 	}
 	

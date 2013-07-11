@@ -62,7 +62,7 @@ class InterpolationTable extends LookupTable {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'interpolationTable';
 	}
 	

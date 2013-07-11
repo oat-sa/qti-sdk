@@ -182,7 +182,7 @@ class AreaMapping extends QtiComponent {
 		return $this->getUpperBound() !== false;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'areaMapping';
 	}
 	

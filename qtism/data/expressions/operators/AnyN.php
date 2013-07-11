@@ -109,7 +109,7 @@ class AnyN extends Operator {
 		return $this->max;
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'anyN';
 	}
 }

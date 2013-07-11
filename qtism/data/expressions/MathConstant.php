@@ -58,7 +58,7 @@ class MathConstant extends Expression {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'mathConstant';
 	}
 }

@@ -15,7 +15,7 @@ use \DOMElement;
 class ItemSessionControlMarshaller extends Marshaller {
 	
 	protected function marshall(QtiComponent $component) {
-		$element = static::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
 		// If max attempts <= 0, it means it was not specified.
 		if ($component->getMaxAttempts() > 0) {
@@ -67,7 +67,7 @@ class ItemSessionControlMarshaller extends Marshaller {
 		return $object;
 	}
 	
-	public function getExpectedQTIClassName() {
+	public function getExpectedQtiClassName() {
 		return 'itemSessionControl';
 	}
 }

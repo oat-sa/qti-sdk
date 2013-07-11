@@ -96,7 +96,7 @@ class VariableMapping extends QtiComponent {
 		}
 	}
 	
-	public function getQTIClassName() {
+	public function getQtiClassName() {
 		return 'variableMapping';
 	}
 	

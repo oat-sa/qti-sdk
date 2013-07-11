@@ -26,7 +26,7 @@ class EqualMarshaller extends OperatorMarshaller {
 	 * @return DOMElement The marshalled QTI equal element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQTIClassName());
+		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		self::setDOMElementAttribute($element, 'toleranceMode', ToleranceMode::getNameByConstant($component->getToleranceMode()));
 		
 		$tolerance = $component->getTolerance();
