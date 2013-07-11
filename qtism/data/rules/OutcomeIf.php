@@ -2,6 +2,8 @@
 
 namespace qtism\data\rules;
 
+use qtism\data\QtiComponentCollection;
+
 use qtism\data\QtiComponent;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -97,6 +99,9 @@ class OutcomeIf extends QtiComponent {
 	}
 	
 	public function getComponents() {
-		return array_merge(array($this->getExpression()), $this->getOutcomeRules()->getArrayCopy());
+		$comp = array_merge(array($this->getExpression()), 
+							$this->getOutcomeRules()->getArrayCopy());
+		
+		return new QtiComponentCollection($comp);
 	}
 }

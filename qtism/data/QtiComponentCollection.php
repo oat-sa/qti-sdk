@@ -23,7 +23,6 @@ class QtiComponentCollection extends AbstractCollection {
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof QtiComponent) {
-			
 			$msg = "QtiComponentCollection class only accept QtiComponent objects, '" . get_class($value) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}

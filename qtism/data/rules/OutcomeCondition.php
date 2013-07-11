@@ -117,8 +117,11 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 	
 	public function getComponents() {
 		$comp = array_merge(array($this->getOutcomeIf()),
-							$this->getOutcomeElseIfs()->getArrayCopy(),
-							array($this->getOutcomeElse()));
+							$this->getOutcomeElseIfs()->getArrayCopy());
+		
+		if (!is_null($this->getOutcomeElse())) {
+			$comp[] = $this->getOutcomeElse();
+		}
 		
 		return new QtiComponentCollection($comp);
 	}
