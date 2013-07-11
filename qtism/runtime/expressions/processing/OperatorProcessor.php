@@ -84,31 +84,4 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 	public function getOperands() {
 		return $this->operands;
 	}
-	
-	protected function throwOperandTypingError($value) {
-		if (gettype($value) === 'object') {
-			if ($value instanceof MultipleContainer) {
-				$displayValue = 'MultipleContainer:' . BaseType::getNameByConstant($value->getBaseType());
-			}
-			else if ($value instanceof OrderedContainer) {
-				$displayValue = 'OrderedContainer:' . BaseType::getNameByConstant($value->getBaseType());
-			}
-			else if ($value instanceof RecordContainer) {
-				$displayValue = 'RecordContainer';
-			}
-			else {
-				$displayValue = get_class($value);
-			}
-		}
-		else {
-			$displayValue = $value;
-			if (gettype($displayValue) === 'boolean') {
-				$displayValue = ($displayValue === true) ? '(bool)true' : '(bool)false';
-			}
-		}
-		
-		$className = get_class($this);
-		$msg = "The operand value '${displayValue}' is not compliant with the accepted baseTypes/cardinalities of Operator '${className}'.";
-		throw new ExpressionProcessingException($msg, $this);
-	}
 }

@@ -40,15 +40,15 @@ class RoundToProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		$state = $this->getState();
 		$operand = $operands[0];
-		
-		if (!Utils::isSingle($operand)) {
-			$msg = "The RoundTo operator accepts 1 operand with single cardinality. Multiple, ordered or record cardinality given.";
-			throw new ExpressionProcessingException($msg, $this);
-		}
 			
 		// If the value is null, return null.
 		if ($operands->containsNull()) {
 			return null;
+		}
+		
+		if (!$operands->exclusivelySingle()) {
+			$msg = "The RoundTo operator accepts 1 operand with single cardinality.";
+			throw new ExpressionProcessingException($msg, $this);
 		}
 		
 		// Accept only numerical operands.

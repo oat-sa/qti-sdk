@@ -46,22 +46,27 @@ class SumProcessor extends OperatorProcessor {
 	 * @throws ExpressionProcessingException If invalid operands are given.
 	 */
 	public function process() {
+		
+		$operands = $this->getOperands();
+		
+		if ($operands->containsNull()) {
+			return null;
+		}
+		else if (!$operands->exclusivelyNumeric()) {
+			$msg = "The Sum Operator only accepts numeric values.";
+			throw new ExpressionProcessingException($msg, $this);
+		}
+		
 		$returnValue = 0;
 		
 		foreach ($this->getOperands() as $operand) {
-			if ($operand === null) {
-				return null;
-			}
-			else if (is_int($operand) || is_float($operand) || is_double($operand)) {
+			if (gettype($operand) !== 'object') {
 				$returnValue += $operand;
 			}
-			else if ($operand instanceof MultipleContainer && Utils::isNumeric($operand)) {
+			else {
 				foreach ($operand as $val) {
 					$returnValue += $val;
 				}
-			}
-			else {
-				$this->throwOperandTypingError($operand);
 			}
 		}
 		

@@ -89,6 +89,27 @@ class OperandsCollection extends AbstractCollection {
 	}
 	
 	/**
+	 * Wether the collection contains exclusively single cardinality values. If the container
+	 * is empty or contains a null value, false is returned.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelySingle() {
+		
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach ($this as $v) {
+			if (is_null($v) || $v instanceof Container) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Whether the collection is exclusively composed of string values: primitive or Containers.
 	 * Please note that:
 	 * 
