@@ -203,5 +203,11 @@ class RoundToProcessorTest extends QtiSmTestCase {
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 		$this->assertTrue(is_infinite($result));
+		$this->assertTrue(INF === $result);
+		
+		$processor->setOperands(new OperandsCollection(array(-INF)));
+		$result = $processor->process();
+		$this->assertTrue(is_infinite($result));
+		$this->assertTrue(-INF === $result);
 	}
 }
