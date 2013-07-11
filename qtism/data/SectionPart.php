@@ -7,7 +7,7 @@ use qtism\data\rules\BranchRuleCollection;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
-class SectionPart extends QtiComponent {
+class SectionPart extends QtiComponent implements QtiIdentifiable {
 	
 	/**
 	 * From IMS QTI:

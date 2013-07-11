@@ -15,7 +15,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentItem extends QtiComponent {
+class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	
 	/**
 	 * From IMS QTI:

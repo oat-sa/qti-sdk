@@ -2,8 +2,8 @@
 
 namespace qtism\data\state;
 
+use qtism\data\QtiIdentifiable;
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use qtism\common\utils\Format;
 use qtism\common\enums\BaseType;
@@ -25,7 +25,7 @@ use qtism\common\enums\Cardinality;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class VariableDeclaration extends QtiComponent {
+class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	
 	/**
 	 * From IMS QTI:

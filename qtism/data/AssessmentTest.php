@@ -26,7 +26,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTest extends QtiComponent {
+class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	
 	/**
 	 * From IMS QTI:

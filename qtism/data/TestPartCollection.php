@@ -11,7 +11,7 @@ use qtism\common\collections\AbstractCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TestPartCollection extends AbstractCollection {
+class TestPartCollection extends QtiIdentifiableCollection {
 
 	/**
 	 * Check if $value is a TestPart object.

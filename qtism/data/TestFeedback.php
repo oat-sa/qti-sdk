@@ -11,7 +11,7 @@ use qtism\common\utils\Format;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TestFeedback extends QtiComponent {
+class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	
 	/**
 	 * From IMS QTI:

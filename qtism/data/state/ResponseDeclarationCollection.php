@@ -2,7 +2,7 @@
 
 namespace qtism\data\state;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiIdentifiableCollection;
 use \InvalidArgumentException as InvalidArgumentException;
 
 /**
@@ -11,7 +11,7 @@ use \InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseDeclarationCollection extends AbstractCollection {
+class ResponseDeclarationCollection extends QtiIdentifiableCollection {
 	
 	/**
 	 * Check if a given $value is an instance of ResponseDeclaration.

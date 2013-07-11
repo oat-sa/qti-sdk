@@ -11,7 +11,7 @@ use qtism\data\QtiComponentCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SectionPartCollection extends QtiComponentCollection {
+class SectionPartCollection extends QtiIdentifiableCollection {
 
 	/**
 	 * Check if $value is a SectionPart object.

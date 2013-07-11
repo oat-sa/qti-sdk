@@ -3,7 +3,6 @@
 namespace qtism\data;
 
 use InvalidArgumentException as InvalidArgumentException;
-use qtism\common\collections\AbstractCollection;
 
 /**
  * A collection that aims at storing TestFeedback objects.
@@ -11,7 +10,7 @@ use qtism\common\collections\AbstractCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TestFeedbackCollection extends AbstractCollection {
+class TestFeedbackCollection extends QtiIdentifiableCollection {
 
 	/**
 	 * Check if $value is a TestFeedbackn object.
