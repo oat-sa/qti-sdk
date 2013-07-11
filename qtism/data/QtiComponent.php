@@ -2,6 +2,8 @@
 
 namespace qtism\data;
 
+use \InvalidArgumentException;
+
 /**
  * Any class which corresponds to a QTI component
  * must implement this class.
@@ -36,20 +38,69 @@ abstract class QtiComponent {
 	}
 	
 	/**
-	 * Get a QtiComponent object which is contained by this on the basis
+	 * Get a QtiComponent object which is contained by this one on the basis
 	 * of a given $identifier.
 	 * 
+	 * @param string $identifier The identifier to search for.
+	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
 	 * @return QtiComponent|null A QtiComponent object or null if not found.
+	 * @throws InvalidArgumentException If $identifier is not a string.
 	 */
-	public function getComponentByIdentifier($identifier) {
-		$iterator = $this->getIterator();
+	public function getComponentByIdentifier($identifier, $recursive = true) {
 		
-		foreach ($iterator as $component) {
+		if (!is_string($identifier)) {
+			$msg = "The QtiComponent::getComponentByIdentifier method only accepts a string as its ";
+			$msg.= "argument. '" . gettype($identifier) . "' given.";
+			throw new InvalidArgumentException($msg);
+		}
+		
+		$toIterate = ($recursive === true) ? $this->getIterator() : $this->getComponents();
+		
+		foreach ($toIterate as $component) {
 			if ($component instanceof QtiIdentifiable && $component->getIdentifier() === $identifier) {
 				return $component;
 			}
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Get QtiComponents object which is contained by this one the basis of
+	 * a given QTI className. If nothing found, an empty QtiComponentCollection
+	 * object is returned.
+	 * 
+	 * Example where we look for all assessmentSection class instances contained
+	 * in an assessmentTest.
+	 * <code>
+	 * $search = $assessmentTest->getComponentByClassName('assessmentSection');
+	 * // $search contains a QTIComponentCollection composed of AssessmentSection objects.
+	 * </code>
+	 * 
+	 * @param array|string An array of strings or a string.
+	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+	 * @throws InvalidArgumentException If $classNames is not an array nor a string value.
+	 */
+	public function getComponentsByClassName($classNames, $recursive = true) {
+		if (!is_string($classNames) && !is_array($classNames)) {
+			$msg = "The QtiComponent::getComponentsByClassName method only accepts ";
+			$msg.= "a string or an array as its main argument, '" . gettype($classNames) . "' given.";
+			throw new InvalidArgumentException($classNames);
+		}
+		
+		if (!is_array($classNames)) {
+			$classNames = array($classNames);
+		}
+		
+		$toIterate = ($recursive === true) ? $this->getIterator() : $this->getComponents();
+		$foundComponents = new QtiComponentCollection();
+		
+		foreach ($toIterate as $component) {
+			if (in_array($component->getQtiClassName(), $classNames)) {
+				$foundComponents[] = $component;
+			}
+		}
+		
+		return $foundComponents;
 	}
 }
