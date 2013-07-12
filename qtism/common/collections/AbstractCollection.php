@@ -281,4 +281,12 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		$msg = "The object you want to replace could not be found.";
 		throw new UnexpectedValueException($msg);
 	}
+	
+	/**
+	 * Reset the collection to an empty one.
+	 */
+	public function reset() {
+		$a = array();
+		$this->setDataPlaceHolder($a);
+	}
 }

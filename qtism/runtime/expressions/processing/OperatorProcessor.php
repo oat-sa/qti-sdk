@@ -79,7 +79,7 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 	 * Get the collection of QTI Runtime compliant values to be used
 	 * as the operands of the Operator to be processed.
 	 * 
-	 * @return Container A collection of QTI Runtime compliant values.
+	 * @return OperandsCollection A collection of QTI Runtime compliant values.
 	 */
 	public function getOperands() {
 		return $this->operands;
