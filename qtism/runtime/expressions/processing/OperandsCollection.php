@@ -3,7 +3,6 @@
 namespace qtism\runtime\expressions\processing;
 
 use qtism\common\enums\BaseType;
-
 use qtism\runtime\common\Container;
 use qtism\common\collections\AbstractCollection;
 use qtism\runtime\common\RecordContainer;
@@ -172,5 +171,39 @@ class OperandsCollection extends AbstractCollection {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Whether the collection is composed of values with the same baseType.
+	 * 
+	 * * If any of the values has not the same baseType than other values in the collection, false is returned.
+	 * * If the OperandsCollection is an empty collection, false is returned.
+	 * * If the OperandsCollection contains a value considered to be null, false is returned.
+	 * * If the OperandsCollection is composed exclusively by non-null RecordContainer objects, true is returned.
+	 * 
+	 * @return boolean
+	 */
+	public function sameBaseType() {
+		$operandsCount = count($this);
+		if ($operandsCount > 0 && !$this->containsNull()) {
+			
+			// take the first value of the collection as a referer.
+			$refValue = $this[0];
+			$refType = RuntimeUtils::inferBaseType($refValue);
+
+			for ($i = 1; $i < $operandsCount; $i++) {
+				$value = $this[$i];
+				$testType = RuntimeUtils::inferBaseType($value);
+				
+				if ($testType !== $refType) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

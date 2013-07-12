@@ -8,20 +8,6 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 
 class ProcessorUtilsTest extends QtiSmTestCase {
-
-	/**
-	 * @dataProvider numericValidProvider
-	 */
-	public function testIsNumericValid($value) {
-		$this->assertTrue(Utils::isNumeric($value));
-	}
-	
-	/**
-	 * @dataProvider numericInvalidProvider
-	 */
-	public function testIsNumericInvalid($value) {
-		$this->assertFalse(Utils::isNumeric($value));
-	}
 	
 	/**
 	 * @dataProvider sanitizeVariableRefValidProvider
@@ -36,34 +22,6 @@ class ProcessorUtilsTest extends QtiSmTestCase {
 	public function testSanitizeVariableRefInvalid($value) {
 		$this->setExpectedException('\\InvalidArgumentException');
 		$ref = Utils::sanitizeVariableRef($value);
-	}
-	
-	public function numericValidProvider() {
-		$returnValue = array(
-			array(15),
-			array(15.1)	,
-			array(0),
-			array(-0),
-			array(-15),
-			array(-15.1)
-		);
-		
-		$returnValue[] = array(new MultipleContainer(BaseType::INTEGER, array(15, -2)));
-		$returnValue[] = array(new OrderedContainer(BaseType::FLOAT, array(-1.434, 1423.2, 3.0)));
-		
-		return $returnValue;
-	}
-	
-	public function numericInvalidProvider() {
-		$returnValue = array(
-			array(true),
-			array(false),
-			array('string'),
-			array(new \stdClass())	
-		);
-		
-		$returnValue[] = array(new MultipleContainer(BaseType::BOOLEAN, array(true, false)));
-		return $returnValue;
 	}
 	
 	public function sanitizeVariableRefValidProvider() {

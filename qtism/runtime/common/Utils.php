@@ -147,4 +147,50 @@ class Utils {
 		$msg = "The value '${givenValue}' is not compliant with the '${acceptedTypes}' baseType.";
 		throw new InvalidArgumentException($msg);
 	}
+	
+	/**
+	 * Infer the QTI baseType of a given $value.
+	 * 
+	 * @param mixed $value A value you want to know the QTI baseType.
+	 * @return integer|false A value from the BaseType enumeration or false if the baseType could not be infered.
+	 */
+	public static function inferBaseType($value) {
+		if (is_scalar($value)) {
+			switch (gettype($value)) {
+				case 'boolean':
+					return BaseType::BOOLEAN;
+				break;
+			
+				case 'integer':
+					return BaseType::INTEGER;
+				break;
+			
+				case 'double':
+					return BaseType::FLOAT;
+				break;
+			
+				case 'string':
+					return BaseType::STRING;
+				break;
+			}
+		}
+		else if ($value instanceof MultipleContainer || $value instanceof OrderedContainer) {
+			return $value->getBaseType();
+		}
+		else if ($value instanceof Point) {
+			return BaseType::POINT;
+		}
+		else if ($value instanceof DirectedPair) {
+			return BaseType::DIRECTED_PAIR;
+		}
+		else if ($value instanceof Pair) {
+			return BaseType::PAIR;
+		}
+		else if ($value instanceof Duration) {
+			return BaseType::DURATION;
+		}
+		else {
+			return false;
+		}
+	}
 }

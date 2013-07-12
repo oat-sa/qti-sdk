@@ -179,4 +179,55 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[6]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 	}
+	
+	public function testSameBaseType() {
+		// If any of the values is null, false.
+		$operands = new OperandsCollection(array(null, null, null));
+		$this->assertFalse($operands->sameBaseType());
+		
+		// If any of the values is null, false.
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), null, null));
+		$this->assertFalse($operands->sameBaseType());
+		
+		// If any of the values is null, false.
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), null, 15));
+		$this->assertFalse($operands->sameBaseType());
+		
+		// If any of the values is null (an empty container is considered null), false.
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), 1, 15));
+		$this->assertFalse($operands->sameBaseType());
+		
+		// Non-null values, all integers.
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(15)), 1, 15));
+		$this->assertTrue($operands->sameBaseType());
+		
+		// Non-null, exclusively records.
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => 11)), new RecordContainer(array('b' => 22))));
+		$this->assertTrue($operands->sameBaseType());
+		
+		// Exclusively records but considered to be null because they are empty.
+		$operands = new OperandsCollection(array(new RecordContainer(), new RecordContainer()));
+		$this->assertFalse($operands->sameBaseType());
+		
+		// Test Exclusively boolean
+		$operands = new OperandsCollection(array(true, false));
+		$this->assertTrue($operands->sameBaseType());
+		
+		$operands = new Operandscollection(array(false));
+		$this->assertTrue($operands->sameBaseType());
+		
+		// Test Exclusively int
+		$operands = new OperandsCollection(array(10, 0));
+		$this->assertTrue($operands->sameBaseType());
+		
+		$operands = new OperandsCollection(array(0));
+		$this->assertTrue($operands->sameBaseType());
+		
+		$operands = new OperandsCollection(array(10, new OrderedContainer(BaseType::INTEGER, array(10, -1, 20)), 5));
+		$this->assertTrue($operands->sameBaseType());
+		
+		// - Misc
+		$operands = new Operandscollection(array(0, 10, 10.0));
+		$this->assertFalse($operands->sameBaseType());
+	}
 }
