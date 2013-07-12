@@ -59,8 +59,6 @@ abstract class Operator extends Expression {
 	 * @throws InvalidArgumentException If $expressions does not contain at least one Expression object.
 	 */
 	public function setExpressions(ExpressionCollection $expressions) {
-		// @todo use abstract method to detect if the expression count is
-		// correct.
 		$this->expressions = $expressions;
 	}
 	

@@ -17,8 +17,6 @@ use qtism\data\storage\Utils;
 use \DOMDocument;
 use \Exception;
 
-// @TODO override of decorateRootElement to indicate the correct XSD for qticompact.
-
 class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDocument {
 	
 	/**

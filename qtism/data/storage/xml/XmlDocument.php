@@ -223,7 +223,7 @@ class XmlDocument implements IXmlDocument {
 				
 				$rootElement = $this->getDomDocument()->importNode($element, true);
 				$this->getDomDocument()->appendChild($rootElement);
-				static::decorateRootElement($rootElement);
+				$this->decorateRootElement($rootElement);
 				
 				if ($this->getDomDocument()->save($uri) === false) {
 					// An error occured while saving.
@@ -279,10 +279,19 @@ class XmlDocument implements IXmlDocument {
 	 *
 	 * @param DOMElement $rootElement The root DOMElement object of the document to decorate.
 	 */
-	protected static function decorateRootElement(DOMElement $rootElement) {
-		$rootElement->setAttribute('xmlns', 'http://www.imsglobal.org/xsd/imsqti_v2p1');
+	protected function decorateRootElement(DOMElement $rootElement) {
+		$qtiSuffix = 'v2p1';
+		$xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+		switch (trim($this->getVersion())) {
+			case '2.0':
+				$qtiSuffix = 'v2p0';
+				$xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
+			break;
+		}
+		
+		$rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
 		$rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', 'http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd');
+		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
 	}
 	
 	protected static function formatLibXmlErrors(array $libXmlErrors) {

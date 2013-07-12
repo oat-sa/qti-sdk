@@ -60,7 +60,6 @@ class Utils {
 				break;
 				
 				case BaseType::FLOAT:
-					// @todo Transform in double if too long. How to detect that?
 					if (Format::isFloat($string)) {
 						$value = floatval($string);
 						return $value;
