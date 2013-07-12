@@ -230,4 +230,21 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new Operandscollection(array(0, 10, 10.0));
 		$this->assertFalse($operands->sameBaseType());
 	}
+	
+	public function testSameCardinality() {
+		$operands = new OperandsCollection();
+		$this->assertFalse($operands->sameCardinality());
+		
+		$operands = new OperandsCollection(array(null));
+		$this->assertFalse($operands->sameCardinality());
+		
+		$operands = new OperandsCollection(array(null, 10, 10));
+		$this->assertFalse($operands->sameCardinality());
+		
+		$operands = new OperandsCollection(array(0, false, 16, true, new Point(1, 1)));
+		$this->assertTrue($operands->sameCardinality());
+		
+		$operands = new OperandsCollection(array(10, 20, new OrderedContainer(BaseType::INTEGER)));
+		$this->assertFalse($operands->sameCardinality());
+	}
 }

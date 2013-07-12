@@ -98,4 +98,10 @@ class MultipleContainerTest extends QtiSmTestCase {
 		
 		return $returnValue;
 	}
+	
+	public function testEquals() {
+		$c1 = new MultipleContainer(BaseType::INTEGER, array(5, 4, 3, 2, 1));
+		$c2 = new MultipleContainer(BaseType::INTEGER, array(1, 6, 7, 8, 5));
+		$this->assertFalse($c1->equals($c2));
+	}
 }

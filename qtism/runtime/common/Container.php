@@ -108,13 +108,15 @@ class Container extends AbstractCollection implements Comparable {
 		$countA = count($obj);
 		$countB = count($this);
 		
-		if (gettype($obj) === 'object' && $obj instanceof self && $countA === $countB) {
-			foreach ($this as $t) {
-				if ($this->occurences($t) !== $obj->occurences($t)) {
+		if (gettype($obj) === 'object' && $obj instanceof static && $countA === $countB) {
+			foreach ($this->getDataPlaceHolder() as $t) {
+				$occurencesA = $this->occurences($t);
+				$occurencesB = $obj->occurences($t);
+				
+				if ($occurencesA !== $occurencesB) {
 					return false;
 				}
 			}
-			
 			return true;
 		}
 		else {
@@ -135,7 +137,7 @@ class Container extends AbstractCollection implements Comparable {
 	public function occurences($obj) {
 		$occurences = 0;
 		
-		foreach ($this as $t) {
+		foreach ($this->getDataPlaceHolder() as $t) {
 			if (gettype($obj) === 'object' && $obj instanceof Comparable) {
 				// try to use Comparable.
 				if ($obj->equals($t)) {

@@ -5,7 +5,7 @@ use qtism\runtime\expressions\processing\MathConstantProcessor;
 
 class MathConstantProcessorTest extends QtiSmTestCase {
 	
-	public function testBaseValue() {
+	public function testSimple() {
 		$mathConstantExpr = $this->createComponentFromXml('<mathConstant name="e"/>');
 		$mathConstantProcessor = new MathConstantProcessor($mathConstantExpr);
 		

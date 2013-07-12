@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
@@ -188,6 +189,32 @@ class Utils {
 		}
 		else if ($value instanceof Duration) {
 			return BaseType::DURATION;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Infer the cardinality of a given $value.
+	 * 
+	 * Please note that:
+	 * 
+	 * * A RecordContainer has no cardinality, thus it always returns false for such a container.
+	 * * The null value has no cardinality, this it always returns false for such a value. 
+	 * 
+	 * @param mixed $value A value you want to infer the cardinality.
+	 * @return integer|boolean A value from the Cardinality enumeration or false if it could not be infered.
+	 */
+	public static function inferCardinality($value) {
+		if (is_scalar($value)) {
+			return Cardinality::SINGLE;
+		}
+		else if ($value instanceof Point || $value instanceof Pair || $value instanceof Duration) {
+			return Cardinality::SINGLE;
+		}
+		else if ($value instanceof Container) {
+			return $value->getCardinality();
 		}
 		else {
 			return false;

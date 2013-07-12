@@ -206,4 +206,31 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 	}
+	
+	/**
+	 * Wether the collection is composed of values with the same cardinality. Please
+	 * note that:
+	 * 
+	 * * If the OperandsCollection is empty, false is returned.
+	 * * If the OperandsCollection contains a NULL value or a NULL container (empty), false is returned
+	 * 
+	 * @return boolean
+	 */
+	public function sameCardinality() {
+		$operandsCount = count($this);
+		if ($operandsCount > 0 && !$this->containsNull()) {
+			$refType = RuntimeUtils::inferCardinality($this[0]);
+			
+			for ($i = 1; $i < $operandsCount; $i++) {
+				if ($refType !== RuntimeUtils::inferCardinality($this[$i])) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
