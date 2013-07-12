@@ -163,7 +163,8 @@ $tests = array(
 	SAMPLES_DIR . 'ims/tests/randomizing_the_order_of_items_and_sections/randomizing_the_order_of_items_and_sections.xml',
 	SAMPLES_DIR . 'ims/tests/sets_of_items_with_leading_material/sets_of_items_with_leading_material.xml',
 	SAMPLES_DIR . 'ims/tests/simple_feedback_test/simple_feedback_test.xml',
-	SAMPLES_DIR . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml'
+	SAMPLES_DIR . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml',
+	SAMPLES_DIR . 'custom/very_long_assessmenttest.xml'
 );
 
 outputTitle("Loading QTI-XML Tests 2.1 samples:");
