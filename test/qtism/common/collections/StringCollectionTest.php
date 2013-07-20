@@ -64,5 +64,25 @@ class StringCollectionTest extends QtiSmTestCase {
 			$this->assertEquals($c, $s);
 			next($a);
 		}
+		
+		// Break in a foreach and check...
+		$i = 0;
+		foreach ($this->collection as $s) {
+			
+			if ($i === 1) {
+				break;
+			}
+			
+			$i++;
+		}
+		
+		$this->assertEquals('string2', $this->collection->current());
+		
+		// Check if we iterate from the beginning in a new foreach.
+		$i = 0;
+		foreach ($this->collection as $s) {
+			$i++;
+		}
+		$this->assertEquals(3, $i);
 	}
 }
