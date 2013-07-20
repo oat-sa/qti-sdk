@@ -177,7 +177,7 @@ class Container extends AbstractCollection implements Comparable {
 	}
 	
 	public function __clone() {
-		foreach ($this as $key => $value) {
+		foreach ($this->getDataPlaceHolder() as $key => $value) {
 			if (gettype($value) === 'object') {
 				$this[$key] = clone $value;
 			}

@@ -45,7 +45,7 @@ class OperandsCollection extends AbstractCollection {
 	 * @return boolean
 	 */
 	public function containsNull() {
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if ($v instanceof Container && $v->isNull()) {
 				return true;
 			}
@@ -75,7 +75,7 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
 				return false;
 			}
@@ -99,7 +99,7 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if (is_null($v) || $v instanceof Container) {
 				return false;
 			}
@@ -125,7 +125,7 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
 				return false;
 			}
@@ -148,7 +148,7 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
@@ -164,7 +164,7 @@ class OperandsCollection extends AbstractCollection {
 	 */
 	public function anythingButRecord() {
 		
-		foreach ($this as $v) {
+		foreach ($this->getDataPlaceHolder() as $v) {
 			if ($v instanceof RecordContainer) {
 				return false;
 			}

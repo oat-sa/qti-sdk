@@ -31,7 +31,7 @@ abstract class QtiIdentifiableCollection extends QtiComponentCollection {
 	 * @return QtiComponent A QtiComponent object or null if not found.
 	 */
 	public function getByIdentifier($identifier) {
-		foreach ($this as $component) {
+		foreach ($this->getDataPlaceHolder() as $component) {
 			if ($component->getIdentifier() === $identifier) {
 				return $component;
 			}
