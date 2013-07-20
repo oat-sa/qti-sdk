@@ -48,7 +48,7 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 
 		$min = (gettype($min) === 'integer') ? $min : $state[Utils::sanitizeVariableRef($min)];
 		$max = (gettype($max) === 'integer') ? $max : $state[Utils::sanitizeVariableRef($max)];
-		$step = (gettype($step) === 'integer') ? $step : [Utils::sanitizeVariableRef($step)];
+		$step = (gettype($step) === 'integer') ? $step : $state[Utils::sanitizeVariableRef($step)];
 		
 		if (gettype($min) === 'integer' && gettype($max) === 'integer' && gettype($step) === 'integer') {
 			if ($min > $max) {
