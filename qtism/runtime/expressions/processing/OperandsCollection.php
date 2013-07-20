@@ -88,6 +88,34 @@ class OperandsCollection extends AbstractCollection {
 	}
 	
 	/**
+	 * Wether the collection contains exclusively boolean values or containers.
+	 * 
+	 * * If the collection of operands is empty, false is returned.
+	 * * If the collection of operands contains a NULL value or a NULL container, false is returned.
+	 * * If the collection of operands contains a value or container which is not boolean, false is returned.
+	 * * If the collection of operands contains a RECORD container, false is returned, because records are not typed.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelyBoolean() {
+		
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach ($this->getDataPlaceHolder() as $v) {
+			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::BOOLEAN)) {
+				return false;
+			}
+			else if (!is_bool($v) && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Wether the collection contains exclusively single cardinality values. If the container
 	 * is empty or contains a null value, false is returned.
 	 * 

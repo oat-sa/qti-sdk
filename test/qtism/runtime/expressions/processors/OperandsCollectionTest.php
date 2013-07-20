@@ -247,4 +247,47 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(10, 20, new OrderedContainer(BaseType::INTEGER)));
 		$this->assertFalse($operands->sameCardinality());
 	}
+	
+	public function testExclusivelyBoolean() {
+		$operands = new OperandsCollection();
+		$this->assertFalse($operands->exclusivelyBoolean());
+
+		$operands[] = true;
+		$this->assertTrue($operands->exclusivelyBoolean());
+		
+		$operands[] = false;
+		$this->assertTrue($operands->exclusivelyBoolean());
+		
+		$container = new MultipleContainer(BaseType::BOOLEAN);
+		$operands[] = $container;
+		$this->assertFalse($operands->exclusivelyBoolean());
+		
+		$container[] = false;
+		$this->assertTrue($operands->exclusivelyBoolean());
+		
+		$operands = new OperandsCollection();
+		$operands[] = true;
+		$this->assertTrue($operands->exclusivelyBoolean());
+		$operands[] = null;
+		$this->assertFalse($operands->exclusivelyBoolean());
+		
+		$operands = new OperandsCollection();
+		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(true, false, true));
+		$this->assertTrue($operands->exclusivelyBoolean());
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN);
+		$this->assertFalse($operands->exclusivelyBoolean());
+		
+		$operands = new OperandsCollection();
+		$operands[] = true;
+		$operands[] = false;
+		$this->assertTrue($operands->exclusivelyBoolean());
+		$operands[] = new RecordContainer(array('b1' => true, 'b2' => false));
+		
+		$operands = new OperandsCollection();
+		$operands[] = true;
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(true));
+		$this->assertTrue($operands->exclusivelyBoolean());
+		$operands[] = new RecordContainer();
+		$this->assertFalse($operands->exclusivelyBoolean());
+	}
 }
