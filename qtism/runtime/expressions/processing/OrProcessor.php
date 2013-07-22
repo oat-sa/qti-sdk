@@ -3,14 +3,14 @@
 namespace qtism\runtime\expressions\processing;
 
 use qtism\data\expressions\Expression;
-use qtism\data\expressions\operators\AndOperator;
+use qtism\data\expressions\operators\OrOperator;
 use \InvalidArgumentException;
 
 /**
- * The AndProcessor class aims at processing AndOperator QTI Data Model Expression objects.
+ * The OrProcessor class aims at processing OrOperator QTI Data Model Expression objects.
  * 
  * Developer's note: IMS does not explain what happens when one or more sub-expressions are NULL
- * but not all sub-expressions are true. In this implementation, we consider that NULL is returned
+ * but not all sub-expressions are false. In this implementation, we consider that NULL is returned
  * if one ore more sub-expressions are NULL.
  * 
  * From IMS QTI:
@@ -23,14 +23,14 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AndProcessor extends OperatorProcessor {
+class OrProcessor extends OperatorProcessor {
 	
 	public function setExpression(Expression $expression) {
-		if ($expression instanceof AndOperator) {
+		if ($expression instanceof OrOperator) {
 			parent::setExpression($expression);
 		}
 		else {
-			$msg = "The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.";
+			$msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
 			throw new InvalidArgumentException($msg);
 		}
 	}
@@ -49,21 +49,21 @@ class AndProcessor extends OperatorProcessor {
 		}
 		
 		if ($operands->exclusivelySingle() === false) {
-			$msg = "The And Expression only accept operands with single cardinality.";
+			$msg = "The Or Expression only accept operands with single cardinality.";
 			throw new ExpressionProcessingException($msg, $this);
 		}
 		
 		if ($operands->exclusivelyBoolean() === false) {
-			$msg = "The And Expression only accept operands with boolean baseType.";
+			$msg = "The Or Expression only accept operands with boolean baseType.";
 			throw new ExpressionProcessingException($msg, $this);
 		}
 		
 		foreach ($operands as $operand) {
-			if ($operand === false) {
-				return false;
+			if ($operand === true) {
+				return true;
 			}
 		}
 		
-		return true;
+		return false;
 	}
 }
