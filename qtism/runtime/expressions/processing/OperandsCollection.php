@@ -44,6 +44,10 @@ class OperandsCollection extends AbstractCollection {
 	 * Wether the collection contains a QTI Runtime compliant value which is
 	 * considered to be NULL.
 	 * 
+	 * * If the collection of operands is empty, true is returned.
+	 * * If the collection of operands contains null, an empty container, or an empty string, true is returned.
+	 * * In any other case, false is returned.
+	 * 
 	 * @return boolean
 	 */
 	public function containsNull() {
