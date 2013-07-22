@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\expressions\processing;
 
+use qtism\common\enums\Cardinality;
+
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
 use qtism\common\collections\AbstractCollection;
@@ -188,6 +190,58 @@ class OperandsCollection extends AbstractCollection {
 			}
 		}
 		
+		return true;
+	}
+	
+	/**
+	 * Wether the collection contains only Single primitive values or MultipleContainer objects.
+	 * 
+	 * * If the collection of operands is empty, false is returned.
+	 * * If the collection of operands contains a RecordContainer object, false is returned.
+	 * * If the collection of operands contains an OrderedContainer object, false is returned.
+	 * * In any other case, true is returned.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelySingleOrMultiple() {
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			
+			if ($v instanceof RecordContainer || $v instanceof OrderedContainer) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Wether the collection contains only Single primitive values or OrderedContainer objects.
+	 *
+	 * * If the collection of operands is empty, false is returned.
+	 * * If the collection of operands contains a RecordContainer object, false is returned.
+	 * * If the collection of operands contains a MultipleContainer object, false is returned.
+	 * * In any other case, true is returned.
+	 *
+	 * @return boolean
+	 */
+	public function exclusivelySingleOrOrdered() {
+		if (count($this) === 0) {
+			return false;
+		}
+	
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+				
+			if ($v instanceof RecordContainer || ($v instanceof MultipleContainer && $v->getCardinality() === Cardinality::MULTIPLE)) {
+				return false;
+			}
+		}
+	
 		return true;
 	}
 	

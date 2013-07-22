@@ -180,6 +180,48 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 	}
 	
+	public function testExclusivelySingleOrOrdered() {
+		$operands = $this->getOperands();
+		$operands[] = null;
+		$this->assertTrue($operands->exclusivelySingleOrOrdered());
+		
+		$operands[] = new OrderedContainer(BaseType::INTEGER);
+		$this->assertTrue($operands->exclusivelySingleOrOrdered());
+		
+		$operands[] = 10;
+		$this->assertTrue($operands->exclusivelySingleOrOrdered());
+		
+		$operands[] = false;
+		$this->assertTrue($operands->exclusivelySingleOrOrdered());
+		
+		$operands[] = new Point(10, 20);
+		$this->assertTrue($operands->exclusivelySingleOrOrdered());
+		
+		$operands[] = new MultipleContainer(BaseType::INTEGER);
+		$this->assertFalse($operands->exclusivelySingleOrOrdered());
+	}
+	
+	public function testExclusivelySingleOrMultiple() {
+		$operands = $this->getOperands();
+		$operands[] = null;
+		$this->assertTrue($operands->exclusivelySingleOrMultiple());
+	
+		$operands[] = new MultipleContainer(BaseType::INTEGER);
+		$this->assertTrue($operands->exclusivelySingleOrMultiple());
+	
+		$operands[] = 10;
+		$this->assertTrue($operands->exclusivelySingleOrMultiple());
+	
+		$operands[] = false;
+		$this->assertTrue($operands->exclusivelySingleOrMultiple());
+	
+		$operands[] = new Point(10, 20);
+		$this->assertTrue($operands->exclusivelySingleOrMultiple());
+	
+		$operands[] = new OrderedContainer(BaseType::INTEGER);
+		$this->assertFalse($operands->exclusivelySingleOrMultiple());
+	}
+	
 	public function testSameBaseType() {
 		// If any of the values is null, false.
 		$operands = new OperandsCollection(array(null, null, null));
