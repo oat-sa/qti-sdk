@@ -188,7 +188,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * @return boolean Whether the collection contains $value.
 	 */
 	public function contains($value) {
-		foreach ($this->getDataPlaceHolder() as $data) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$data = $this[$key];
 			if ($value === $data || ($data instanceof Comparable && $data->equals($value))) {
 				return true;
 			}

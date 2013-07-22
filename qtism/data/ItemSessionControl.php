@@ -224,7 +224,7 @@ class ItemSessionControl extends QtiComponent {
 		}
 		else {
 			$msg = "ShowSolution must be a boolean, '" . gettype($showSolution) . "' given.";
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException($msg);
 		}
 	}
 	

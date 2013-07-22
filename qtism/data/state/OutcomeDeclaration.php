@@ -256,7 +256,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 		}
 		else {
 			$msg = "NormalMaximum must be a number or (boolean) false, '" . gettype($normalMaximum) . "' given.";
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException($msg);
 		}
 	}
 	

@@ -45,7 +45,8 @@ class OperandsCollection extends AbstractCollection {
 	 * @return boolean
 	 */
 	public function containsNull() {
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if ($v instanceof Container && $v->isNull()) {
 				return true;
 			}
@@ -75,7 +76,8 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
 				return false;
 			}
@@ -103,7 +105,8 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::BOOLEAN)) {
 				return false;
 			}
@@ -127,7 +130,8 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if (is_null($v) || $v instanceof Container) {
 				return false;
 			}
@@ -153,7 +157,8 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
 				return false;
 			}
@@ -176,7 +181,8 @@ class OperandsCollection extends AbstractCollection {
 			return false;
 		}
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
@@ -192,7 +198,8 @@ class OperandsCollection extends AbstractCollection {
 	 */
 	public function anythingButRecord() {
 		
-		foreach ($this->getDataPlaceHolder() as $v) {
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
 			if ($v instanceof RecordContainer) {
 				return false;
 			}

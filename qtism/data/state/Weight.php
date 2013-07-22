@@ -70,7 +70,7 @@ class Weight extends QtiComponent {
 		}
 		else {
 			$msg = "'${identifier}' is not a valid QTI Identifier.";
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException($msg);
 		}
 	}
 	

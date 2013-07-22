@@ -18,7 +18,7 @@ class NullProcessor extends ExpressionProcessor {
 			parent::setExpression($expression);
 		}
 		else {
-			$msg = "The NullProcessor class only processos NullValue QTI Data Model objects.";
+			$msg = "The NullProcessor class only processes NullValue QTI Data Model objects.";
 			throw new InvalidArgumentException();
 		}
 	}
