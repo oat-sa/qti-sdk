@@ -25,7 +25,7 @@ class AndOperator extends Operator {
 	
 	public function __construct(ExpressionCollection $expressions) {
 		
-		parent::__construct($expressions, 1, -1, array(Cardinality::single), array(OperatorBaseType::BOOLEAN));
+		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE), array(OperatorBaseType::BOOLEAN));
 	}
 	
 	public function getQtiClassName() {

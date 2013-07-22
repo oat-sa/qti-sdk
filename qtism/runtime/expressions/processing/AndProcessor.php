@@ -1,5 +1,7 @@
 <?php
 
+namespace qtism\runtime\expressions\processing;
+
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AndOperator;
 use \InvalidArgumentException;
