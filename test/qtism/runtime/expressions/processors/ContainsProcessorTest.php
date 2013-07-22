@@ -1,5 +1,7 @@
 <?php
 
+use qtism\runtime\common\RecordContainer;
+
 use qtism\common\datatypes\Point;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -334,6 +336,66 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 		$this->assertInternalType('boolean', $result);
 		$this->assertTrue($result);
+	}
+	
+	public function testNull() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection(array(null, new MultipleContainer(BaseType::INTEGER, array(25))));
+		$processor = new ContainsProcessor($expression, $operands);
+		$result = $processor->process();
+		$this->assertSame(null, $result);
+		
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER, array(25))));
+		$processor->setOperands($operands);
+		$result = $processor->process();
+		$this->assertSame(null, $result);
+	}
+	
+	public function testNotSameBaseType() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection();
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(25.0));
+		$processor = new ContainsProcessor($expression, $operands);
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$result = $processor->process();
+	}
+	
+	public function testNotSameCardinality() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection();
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
+		$processor = new ContainsProcessor($expression, $operands);
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$result = $processor->process();
+	}
+	
+	public function testWrongCardinality() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection();
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
+		$operands[] = new RecordContainer(array('1' => 1, '2' => 2));
+		$processor = new ContainsProcessor($expression, $operands);
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$result = $processor->process();
+	}
+	
+	public function testNotEnoughOperands() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2)))));
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$processor = new ContainsProcessor($expression, $operands);
+	}
+	
+	public function testTooMuchOperands() {
+		$expression = $this->createFakeExpression();
+		$operands = new OperandsCollection();
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$processor = new ContainsProcessor($expression, $operands);
 	}
 	
 	public function createFakeExpression() {
