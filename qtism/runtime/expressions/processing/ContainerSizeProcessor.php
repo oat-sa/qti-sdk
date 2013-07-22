@@ -35,7 +35,7 @@ class ContainerSizeProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return integer|null The size of the container or null if it contains NULL.
-	 * @ExpressionProcessingException
+	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

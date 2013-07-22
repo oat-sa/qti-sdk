@@ -44,7 +44,7 @@ class OrderedProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return OrderedContainer|null An OrderedContainer object or NULL.
-	 * @ExpressionProcessingException
+	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
