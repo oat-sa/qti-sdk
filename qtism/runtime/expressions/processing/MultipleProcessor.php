@@ -2,7 +2,7 @@
 
 namespace qtism\runtime\expressions\processing;
 
-use qtism\runtime\common\Utils;
+use qtism\runtime\common\Utils as CommonUtils;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Multiple;
@@ -65,7 +65,7 @@ class MultipleProcessor extends OperatorProcessor {
 			else {
 				if ($refType !== null) {
 					// A reference type as already been identifier.
-					if (Utils::inferBaseType($operand) === $refType) {
+					if (CommonUtils::inferBaseType($operand) === $refType) {
 						// $operand can be added to $returnValue.
 						static::appendValue($returnValue, $operand);
 					}
@@ -75,7 +75,7 @@ class MultipleProcessor extends OperatorProcessor {
 						throw new ExpressionProcessingException($msg, $this);
 					}
 				}
-				else if (($discoveryType = Utils::inferBaseType($operand)) !== false) {
+				else if (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {
 					// First value being identified as non-null.
 					$refType = $discoveryType;
 					$returnValue = new MultipleContainer($refType);

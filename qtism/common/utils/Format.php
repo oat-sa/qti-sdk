@@ -262,7 +262,7 @@ class Format {
 			return self::isIdentifier(substr($string, 1, -1));
 		}
 		else {
-			return false;
+			return self::isIdentifier($string);
 		}
 	}
 	

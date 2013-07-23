@@ -360,4 +360,36 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyRecord());
 		
 	}
+	
+	public function testExclusivelyOrdered() {
+		$operands = $this->getOperands();
+		$this->assertFalse($operands->exclusivelyOrdered());
+	
+		$mult = new OrderedContainer(BaseType::INTEGER);
+		$operands[] = $mult;
+		$this->assertTrue($operands->exclusivelyOrdered());
+	
+		$mult[] = -10;
+		$this->assertTrue($operands->exclusivelyOrdered());
+	
+		$operands[] = null;
+		$this->assertFalse($operands->exclusivelyOrdered());
+	
+		$operands->reset();
+		$operands[] = $mult;
+		$this->assertTrue($operands->exclusivelyOrdered());
+	
+		$operands[] = 10;
+		$this->assertFalse($operands->exclusivelyOrdered());
+	
+		$operands->reset();
+		$operands[] = $mult;
+		$operands[] = 'String!';
+		$this->assertFalse($operands->exclusivelyOrdered());
+		
+		$operands->reset();
+		$operands[] = $mult;
+		$operands[] = new MultipleContainer(BaseType::URI);
+		$this->assertFalse($operands->exclusivelyOrdered());
+	}
 }

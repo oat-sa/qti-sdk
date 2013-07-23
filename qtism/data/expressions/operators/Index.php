@@ -37,7 +37,7 @@ class Index extends Operator {
 	 * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
 	 */
 	public function __construct(ExpressionCollection $expressions, $n) {
-		$this->setExpressions($expressions, 1, 1, array(OperatorCardinality::ORDERED), array(OperatorBaseType::ANY));
+		parent::__construct($expressions, 1, 1, array(OperatorCardinality::ORDERED), array(OperatorBaseType::ANY));
 		$this->setN($n);
 	}
 	

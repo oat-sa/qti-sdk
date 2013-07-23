@@ -252,6 +252,10 @@ class OperandsCollection extends AbstractCollection {
 	/**
 	 * Whether the collection contains exclusively RecordContainer objects.
 	 * 
+	 * * Returns false if the collection of operands is empty.
+	 * * Returns false if any of the value contained in the collection of operands is not a RecordContainer object.
+	 * * In any other case, returns true;
+	 * 
 	 * @return boolean
 	 */
 	public function exclusivelyRecord() {
@@ -263,6 +267,30 @@ class OperandsCollection extends AbstractCollection {
 		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
 			$v = $this[$key];
 			if (!$v instanceof RecordContainer) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Wether the collection contains exclusively OrderedContainer objects.
+	 * 
+	 * * Returns false if the collection of operands is empty.
+	 * * Returns false if any of the value contained in the collection of operands is not an OrderedContainer object.
+	 * * Returns true in any other case.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelyOrdered() {
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			if (!$v instanceof OrderedContainer) {
 				return false;
 			}
 		}
