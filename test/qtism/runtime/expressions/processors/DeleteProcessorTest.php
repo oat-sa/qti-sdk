@@ -9,7 +9,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 
-class AndProcessorTest extends QtiSmTestCase {
+class DeleteProcessorTest extends QtiSmTestCase {
 	
 	public function testMultiple() {
 		$expression = $this->createFakeExpression();
