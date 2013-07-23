@@ -250,6 +250,27 @@ class OperandsCollection extends AbstractCollection {
 	}
 	
 	/**
+	 * Whether the collection contains exclusively RecordContainer objects.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelyRecord() {
+		
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			if (!$v instanceof RecordContainer) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Whether the collection contains anything but a RecordContainer object.
 	 * 
 	 * @return boolean

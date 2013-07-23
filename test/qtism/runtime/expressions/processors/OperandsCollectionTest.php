@@ -332,4 +332,32 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new RecordContainer();
 		$this->assertFalse($operands->exclusivelyBoolean());
 	}
+	
+	public function testExclusivelyRecord() {
+		$operands = $this->getOperands();
+		$this->assertFalse($operands->exclusivelyRecord());
+		
+		$rec = new RecordContainer();
+		$operands[] = $rec;
+		$this->assertTrue($operands->exclusivelyRecord());
+		
+		$rec['A'] = 1;
+		$this->assertTrue($operands->exclusivelyRecord());
+		
+		$operands[] = null;
+		$this->assertFalse($operands->exclusivelyRecord());
+		
+		$operands->reset();
+		$operands[] = $rec;
+		$this->assertTrue($operands->exclusivelyRecord());
+		
+		$operands[] = 10;
+		$this->assertFalse($operands->exclusivelyRecord());
+		
+		$operands->reset();
+		$operands[] = $rec;
+		$operands[] = 'String!';
+		$this->assertFalse($operands->exclusivelyRecord());
+		
+	}
 }
