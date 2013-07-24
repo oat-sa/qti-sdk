@@ -18,7 +18,7 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Subtract extends Operator {
 	
-	public function __contruct(ExpressionCollection $expressions) {
+	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
 	}
 	
