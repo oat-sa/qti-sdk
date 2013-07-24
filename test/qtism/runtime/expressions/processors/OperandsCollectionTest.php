@@ -108,7 +108,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyNumeric());
 	}
 	
-	public function exclusivelyInteger() {
+	public function testExclusivelyInteger() {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyInteger());
 		
@@ -134,11 +134,44 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$operands[] = new RecordContainer();
 		$this->assertFalse($operands->exclusivelyInteger());
-		unset($operands[6]);
+		unset($operands[5]);
 		$this->assertTrue($operands->exclusivelyInteger());
 		
 		$operands[] = new MultipleContainer(BaseType::DURATION);
 		$this->assertFalse($operands->exclusivelyInteger());
+	}
+	
+	public function testExclusivelyPoint() {
+		$operands = $this->getOperands();
+		$this->assertFalse($operands->exclusivelyPoint());
+	
+		$operands[] = new Point(1, 2);
+		$operands[] = new Point(3, 4);
+		$this->assertTrue($operands->exclusivelyPoint());
+	
+		$operands[] = '';
+		$this->assertFalse($operands->exclusivelyPoint());
+		unset($operands[2]);
+		$this->assertTrue($operands->exclusivelyPoint());
+	
+		$operands[] = new Duration('P1D');
+		$this->assertFalse($operands->exclusivelyPoint());
+		unset($operands[3]);
+		$this->assertTrue($operands->exclusivelyPoint());
+	
+		$mult = new MultipleContainer(BaseType::POINT);
+		$operands[] = $mult;
+		$this->assertFalse($operands->exclusivelyPoint());
+		$mult[] = new Point(1, 3);
+		$this->assertTrue($operands->exclusivelyPoint());
+	
+		$operands[] = new RecordContainer();
+		$this->assertFalse($operands->exclusivelyPoint());
+		unset($operands[5]);
+		$this->assertTrue($operands->exclusivelyPoint());
+	
+		$operands[] = new MultipleContainer(BaseType::DURATION);
+		$this->assertFalse($operands->exclusivelyPoint());
 	}
 	
 	public function testAnythingButRecord() {

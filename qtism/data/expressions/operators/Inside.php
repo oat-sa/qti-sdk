@@ -48,7 +48,7 @@ class Inside extends Operator {
 	 * @throws InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
 	 */
 	public function __construct(ExpressionCollection $expressions, $shape, Coords $coords) {
-		$this->setExpressions($expressions, 1, 1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::POINT));
+		parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::POINT));
 		$this->setShape($shape);
 		$this->setCoords($coords);
 	}

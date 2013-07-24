@@ -2,8 +2,8 @@
 
 namespace qtism\runtime\expressions\processing;
 
+use qtism\common\datatypes\Point;
 use qtism\common\enums\Cardinality;
-
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
 use qtism\common\collections\AbstractCollection;
@@ -402,5 +402,32 @@ class OperandsCollection extends AbstractCollection {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Wheter the collection of operands is composed exclusively of Point objects or Container objects
+	 * with a point baseType.
+	 * 
+	 * If the collection of operands contains something other than a Point object or a non-null Container object
+	 * with baseType point, false is returned.
+	 * 
+	 * @return boolean
+	 */
+	public function exclusivelyPoint() {
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::POINT)) {
+				return false;
+			}
+			else if (!$v instanceof Point && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
