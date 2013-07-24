@@ -1,13 +1,9 @@
 <?php
-
-use qtism\common\datatypes\Point;
-
-use qtism\common\enums\BaseType;
-
-use qtism\runtime\common\MultipleContainer;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Point;
+use qtism\common\enums\BaseType;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\processing\IntegerToFloatProcessor;
 use qtism\runtime\expressions\processing\OperandsCollection;
 
