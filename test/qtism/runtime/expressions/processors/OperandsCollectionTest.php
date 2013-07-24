@@ -108,6 +108,39 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyNumeric());
 	}
 	
+	public function exclusivelyInteger() {
+		$operands = $this->getOperands();
+		$this->assertFalse($operands->exclusivelyInteger());
+		
+		$operands[] = 14;
+		$operands[] = 15;
+		$this->assertTrue($operands->exclusivelyInteger());
+		
+		$operands[] = '';
+		$this->assertFalse($operands->exclusivelyInteger());
+		unset($operands[2]);
+		$this->assertTrue($operands->exclusivelyInteger());
+		
+		$operands[] = new Point(1, 10);
+		$this->assertFalse($operands->exclusivelyInteger());
+		unset($operands[3]);
+		$this->assertTrue($operands->exclusivelyInteger());
+		
+		$mult = new MultipleContainer(BaseType::INTEGER);
+		$operands[] = $mult;
+		$this->assertFalse($operands->exclusivelyInteger());
+		$mult[] = 15;
+		$this->assertTrue($operands->exclusivelyInteger());
+		
+		$operands[] = new RecordContainer();
+		$this->assertFalse($operands->exclusivelyInteger());
+		unset($operands[6]);
+		$this->assertTrue($operands->exclusivelyInteger());
+		
+		$operands[] = new MultipleContainer(BaseType::DURATION);
+		$this->assertFalse($operands->exclusivelyInteger());
+	}
+	
 	public function testAnythingButRecord() {
 		$operands = $this->getOperands();
 		$this->assertTrue($operands->anythingButRecord());

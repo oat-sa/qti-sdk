@@ -198,6 +198,34 @@ class OperandsCollection extends AbstractCollection {
 	}
 	
 	/**
+	 * Whether the collection is exclusively composed of integer values: primitive
+	 * or Containers. Please note that:
+	 * 
+	 * * A primitive with the NULL value is not considered as an integer.
+	 * * Only integer primitives and non-NULL Multiple/OrderedContainer objects are considered valid integers.
+	 * * If the the current OperandsCollection is empty, false is returned.
+	 * 
+	 * @return boolean.
+	 */
+	public function exclusivelyInteger() {
+		if (count($this) === 0) {
+			return false;
+		}
+		
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::INTEGER)) {
+				return false;
+			}
+			else if (!is_int($v) && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Wether the collection contains only Single primitive values or MultipleContainer objects.
 	 * 
 	 * * If the collection of operands is empty, false is returned.
