@@ -41,7 +41,7 @@ class SumProcessor extends OperatorProcessor {
 	}
 	
 	/**
-	 * Process the Sum.
+	 * Process the Sum operator.
 	 * 
 	 * @throws ExpressionProcessingException If invalid operands are given.
 	 */
@@ -49,11 +49,15 @@ class SumProcessor extends OperatorProcessor {
 		
 		$operands = $this->getOperands();
 		
-		if ($operands->containsNull()) {
+		if ($operands->containsNull() === true) {
 			return null;
 		}
-		else if (!$operands->exclusivelyNumeric()) {
-			$msg = "The Sum Operator only accepts numeric values.";
+		else if ($operands->anythingButRecord() === false) {
+			$msg = "The Sum operator only accepts operands with cardinality single, multiple or ordered.";
+			throw new ExpressionProcessingException($msg, $this);
+		}
+		else if ($operands->exclusivelyNumeric() === false) {
+			$msg = "The Sum operator only accepts operands with an integer or float baseType.";
 			throw new ExpressionProcessingException($msg, $this);
 		}
 		
