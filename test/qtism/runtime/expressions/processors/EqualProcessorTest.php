@@ -1,6 +1,14 @@
 <?php
+
+use qtism\common\enums\BaseType;
+
+use qtism\common\enums\Cardinality;
+
+use qtism\runtime\common\OutcomeVariable;
+
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\runtime\common\State;
 use qtism\runtime\common\RecordContainer;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\runtime\expressions\processing\EqualProcessor;
@@ -123,12 +131,78 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($result);
 	}
 	
+	public function testWithVariableRef() {
+		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0', 't1'));
+		$operands = new OperandsCollection(array(10, 9.9));
+		$processor = new EqualProcessor($expression, $operands);
+		
+		$state = new State();
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, 0.1));
+		$state->setVariable(new OutcomeVariable('t1', Cardinality::SINGLE, BaseType::FLOAT, 0.1));
+		$processor->setState($state);
+		
+		$result = $processor->process();
+		$this->assertInternalType('boolean', $result);
+		$this->assertTrue($result);
+		
+		$operands = new OperandsCollection(array(10, 9.8));
+		$processor->setOperands($operands);
+		$result = $processor->process();
+		$this->assertFalse($result);
+		
+		// only one t
+		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0'));
+		$operands = new OperandsCollection(array(10, 12));
+		$processor = new EqualProcessor($expression, $operands);
+		
+		$state = new State();
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, 2.0));
+		$processor->setState($state);
+		
+		$result = $processor->process();
+		$this->assertInternalType('boolean', $result);
+		$this->assertTrue($result);
+		
+		$operands = new OperandsCollection(array(10, 13));
+		$processor->setOperands($operands);
+		$result = $processor->process();
+		$this->assertFalse($result);
+	}
+	
 	public function testNull() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
 		$operands = new OperandsCollection(array(10, null));
 		$processor = new EqualProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
+	}
+	
+	public function testNoVariableRef() {
+		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0'));
+		$operands = new OperandsCollection(array(10, 9.9));
+		$processor = new EqualProcessor($expression, $operands);
+		
+		$state = new State();
+		$processor->setState($state);
+		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$processor->process();
+	}
+	
+	public function testNoSecondVariableRef() {
+		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0', 't1'));
+		$operands = new OperandsCollection(array(10, 9.9));
+		$processor = new EqualProcessor($expression, $operands);
+		
+		$state = new State();
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, 0.1));
+		$processor->setState($state);
+		$result = $processor->process();
+		$this->assertTrue($result);
+		
+		$operands = new OperandsCollection(array(10, 9.8));
+		$processor->setOperands($operands);
+		$result = $processor->process();
+		$this->assertFalse($result);
 	}
 	
 	public function testWrongBaseType() {
