@@ -8,7 +8,7 @@ use qtism\data\expressions\ExpressionCollection;
 use \InvalidArgumentException;
 
 /**
- * The repeat operator takes 0 or more sub-expressions, all of which must have either 
+ * The repeat operator takes 1 or more sub-expressions, all of which must have either 
  * single or ordered cardinality and the same baseType.
  * 
  * The result is an ordered container having the same baseType as its sub-expressions.
@@ -39,7 +39,7 @@ class Repeat extends Operator {
 	 * @param integer $numberRepeats An integer or a QTI variable reference.
 	 */
 	public function __construct(ExpressionCollection $expressions, $numberRepeats) {
-		parent::__construct($expressions, 0, -1, array(Cardinality::SINGLE, Cardinality::ORDERED), array(OperatorBaseType::SAME));
+		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE, Cardinality::ORDERED), array(OperatorBaseType::SAME));
 		$this->setNumberRepeats($numberRepeats);
 	}
 	
