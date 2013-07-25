@@ -3,6 +3,7 @@
 namespace qtism\runtime\expressions\processing;
 
 use qtism\common\datatypes\Point;
+use qtism\common\datatypes\Duration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
@@ -408,7 +409,7 @@ class OperandsCollection extends AbstractCollection {
 	 * Wheter the collection of operands is composed exclusively of Point objects or Container objects
 	 * with a point baseType.
 	 * 
-	 * If the collection of operands contains something other than a Point object or a non-null Container object
+	 * If the collection of operands contains something other than a Point object or a null Container object
 	 * with baseType point, false is returned.
 	 * 
 	 * @return boolean
@@ -428,6 +429,33 @@ class OperandsCollection extends AbstractCollection {
 			}
 		}
 		
+		return true;
+	}
+	
+	/**
+	 * Wheter the collection of operands is composed exclusively of Duration objects or Container objects
+	 * with a duration baseType.
+	 *
+	 * If the collection of operands contains something other than a Duration object or a null Container object
+	 * with baseType duration, false is returned.
+	 *
+	 * @return boolean
+	 */
+	public function exclusivelyDuration() {
+		if (count($this) === 0) {
+			return false;
+		}
+	
+		foreach (array_keys($this->getDataPlaceHolder()) as $key) {
+			$v = $this[$key];
+			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::DURATION)) {
+				return false;
+			}
+			else if (!$v instanceof Duration && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+				return false;
+			}
+		}
+	
 		return true;
 	}
 }

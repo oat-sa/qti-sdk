@@ -174,6 +174,39 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyPoint());
 	}
 	
+	public function testExclusivelyDuration() {
+		$operands = $this->getOperands();
+		$this->assertFalse($operands->exclusivelyDuration());
+	
+		$operands[] = new Duration('P1D');
+		$operands[] = new Duration('P2D');
+		$this->assertTrue($operands->exclusivelyDuration());
+	
+		$operands[] = 10;
+		$this->assertFalse($operands->exclusivelyDuration());
+		unset($operands[2]);
+		$this->assertTrue($operands->exclusivelyDuration());
+	
+		$operands[] = new Point(1, 2);
+		$this->assertFalse($operands->exclusivelyDuration());
+		unset($operands[3]);
+		$this->assertTrue($operands->exclusivelyDuration());
+	
+		$mult = new MultipleContainer(BaseType::DURATION);
+		$operands[] = $mult;
+		$this->assertFalse($operands->exclusivelyDuration());
+		$mult[] = new Duration('P1DT2S');
+		$this->assertTrue($operands->exclusivelyDuration());
+	
+		$operands[] = new RecordContainer();
+		$this->assertFalse($operands->exclusivelyDuration());
+		unset($operands[5]);
+		$this->assertTrue($operands->exclusivelyDuration());
+	
+		$operands[] = new MultipleContainer(BaseType::POINT);
+		$this->assertFalse($operands->exclusivelyDuration());
+	}
+	
 	public function testAnythingButRecord() {
 		$operands = $this->getOperands();
 		$this->assertTrue($operands->anythingButRecord());
