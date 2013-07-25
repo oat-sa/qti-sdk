@@ -110,11 +110,11 @@ class RepeatProcessor extends OperatorProcessor {
 				// Okay we are good...
 				if ($operand instanceof OrderedContainer) {
 					foreach ($operand as $o) {
-						$result[] = $o;
+						$result[] = (gettype($o) === 'object') ? clone $o : $o;
 					}
 				}
 				else {
-					$result[] = $operand;
+					$result[] = (gettype($operand) === 'object') ? clone $operand : $operand;
 				}
 			}
 		}
