@@ -61,6 +61,55 @@ class DurationTest extends QtiSmTestCase {
 		$this->assertEquals($d->getYears(), $c->getYears());
 	}
 	
+	/**
+	 * @dataProvider shorterThanProvider
+	 * 
+	 * @param Duration $duration1
+	 * @param Duration $duration2
+	 * @param boolean $expected
+	 */
+	public function testShorterThan(Duration $duration1, Duration $duration2, $expected) {
+		$this->assertSame($expected, $duration1->shorterThan($duration2));
+	}
+	
+	/**
+	 * @dataProvider longerThanOrEqualsProvider
+	 *
+	 * @param Duration $duration1
+	 * @param Duration $duration2
+	 * @param boolean $expected
+	 */
+	public function testLongerThanOrEquals(Duration $duration1, Duration $duration2, $expected) {
+		$this->assertSame($expected, $duration1->longerThanOrEquals($duration2));
+	}
+	
+	public function shorterThanProvider() {
+		$returnValue = array();
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P2Y'), true);
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P1Y'), false);
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P1YT2S'), true);
+		$returnValue[] = array(new Duration('P2Y'), new Duration('P1Y'), false);
+		$returnValue[] = array(new Duration('PT0S'), new Duration('PT1S'), true);
+		$returnValue[] = array(new Duration('PT1H25M0S'), new Duration('PT1H26M12S'), true);
+		$returnValue[] = array(new Duration('PT1H26M12S'), new Duration('PT1H25M0S'), false);
+		
+		return $returnValue;
+	}
+	
+	public function longerThanOrEqualsProvider() {
+		$returnValue = array();
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P2Y'), false);
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P1Y'), true);
+		$returnValue[] = array(new Duration('P1Y'), new Duration('P1YT2S'), false);
+		$returnValue[] = array(new Duration('P2Y'), new Duration('P1Y'), true);
+		$returnValue[] = array(new Duration('PT0S'), new Duration('PT1S'), false);
+		$returnValue[] = array(new Duration('PT1H25M0S'), new Duration('PT1H26M12S'), false);
+		$returnValue[] = array(new Duration('PT1H26M12S'), new Duration('PT1H25M0S'), true);
+		$returnValue[] = array(new Duration('PT1H26M'), new Duration('PT1H26M'), true);
+	
+		return $returnValue;
+	}
+	
 	public function validDurationProvider() {
 		return array(
 			array('P2D'), // 2 days

@@ -191,6 +191,68 @@ class Duration implements Comparable {
 				'' . $obj === '' . $this);
 	}
 	
+	/**
+	 * Whether the duration described by this Duration object is shorter
+	 * than the one described by $duration.
+	 * 
+	 * @param Duration $duration A Duration object to compare with this one.
+	 * @return boolean
+	 */
+	public function shorterThan(Duration $duration) {
+		if ($this->getYears() < $duration->getYears()) {
+			return true;
+		}
+		else if ($this->getMonths() < $duration->getMonths()) {
+			return true;
+		}
+		else if ($this->getDays() < $duration->getDays()) {
+			return true;
+		}
+		else if ($this->getHours() < $duration->getHours()) {
+			return true;
+		}
+		else if ($this->getMinutes() < $duration->getMinutes()) {
+			return true;
+		}
+		else if ($this->getSeconds() < $duration->getSeconds()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Whether the duration described by this Duration object is longer than or
+	 * equal to the one described by $duration.
+	 * 
+	 * @param Duration $duration A Duration object to compare with this one.
+	 * @return boolean
+	 */
+	public function longerThanOrEquals(Duration $duration) {
+		if ($this->getYears() < $duration->getYears()) {
+			return false;
+		}
+		else if ($this->getMonths() < $duration->getMonths()) {
+			return false;
+		}
+		else if ($this->getDays() < $duration->getDays()) {
+			return false;
+		}
+		else if ($this->getHours() < $duration->getHours()) {
+			return false;
+		}
+		else if ($this->getMinutes() < $duration->getMinutes()) {
+			return false;
+		}
+		else if ($this->getSeconds() < $duration->getSeconds()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
 	public function __clone() {
 		// ... :'( ... https://bugs.php.net/bug.php?id=50559
 		$d1 = new DateTime();
