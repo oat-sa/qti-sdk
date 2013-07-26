@@ -15,13 +15,6 @@ use \InvalidArgumentException;
 class ExpressionProcessingException extends ProcessingException {
 	
 	/**
-	 * Code to use when the error of the nature is unknown.
-	 * 
-	 * @var integer
-	 */
-	const UNKNOWN = 0;
-	
-	/**
 	 * Code to use when a state variable has not the expected type.
 	 * 
 	 * e.g. If the correct processor retrieves a variable which is not
@@ -29,7 +22,7 @@ class ExpressionProcessingException extends ProcessingException {
 	 * 
 	 * @var integer
 	 */
-	const WRONG_VARIABLE_TYPE = 1;
+	const WRONG_VARIABLE_TYPE = 10;
 	
 	/**
 	 * Code to use when a state variable has not the expected baseType.
@@ -39,7 +32,7 @@ class ExpressionProcessingException extends ProcessingException {
 	 * 
 	 * @var integer
 	 */
-	const WRONG_VARIABLE_BASETYPE = 2;
+	const WRONG_VARIABLE_BASETYPE = 11;
 	
 	/**
 	 * Code to use when a state variable is inconsistent.
@@ -49,23 +42,23 @@ class ExpressionProcessingException extends ProcessingException {
 	 * 
 	 * @var integer
 	 */
-	const INCONSISTENT_VARIABLE = 3;
+	const INCONSISTENT_VARIABLE = 12;
 	
 	/**
 	 * Code to use when a state variable does not exist or is not set.
 	 * 
 	 * @var integer
 	 */
-	const NONEXISTENT_VARIABLE = 4;
+	const NONEXISTENT_VARIABLE = 13;
 	
 	/**
 	 * Code to use when a processor encounters an internal logic error.
 	 * 
 	 * e.g. min >= max in the randomFloat processor.
 	 * 
-	 * @var unknown_type
+	 * @var integer
 	 */
-	const LOGIC_ERROR = 5;
+	const LOGIC_ERROR = 14;
 	
 	/**
 	 * Set the source of the error.

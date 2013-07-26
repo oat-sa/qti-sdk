@@ -37,6 +37,7 @@ class IntegerModulusProcessor extends OperatorProcessor {
 	 * Process the IntegerModulus operator.
 	 * 
 	 * @return integer|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
+	 * @throws OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -47,12 +48,12 @@ class IntegerModulusProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The IntegerModulus operator only accepts operands with single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyInteger() === false) {
 			$msg = "The IntegerModulus operator only accepts operands with baseType integer.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand1 = $operands[0];

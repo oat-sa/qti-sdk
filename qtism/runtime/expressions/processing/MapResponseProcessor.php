@@ -51,6 +51,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 	 * * An ExpressionProcessingException is thrown if the cardinality of the variable is RECORD.
 	 * 
 	 * @return a QTI Runtime compliant value.
+	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();
@@ -135,22 +136,22 @@ class MapResponseProcessor extends ExpressionProcessor {
 					}
 					else {
 						$msg = "MapResponse cannot be applied on a RECORD container.";
-						throw new ExpressionProcessingException($msg, $this);
+						throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
 					}
 				}
 				else {
 					$msg = "The target variable has no mapping while processing MapResponse.";
-					throw new ExpressionProcessingException($msg, $this);
+					throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::INCONSISTENT_VARIABLE);
 				}
 			}
 			else {
 				$msg = "The target variable must be a ResponseVariable, OutcomeVariable given while processing MapResponse.";
-				throw new ExpressionProcessingException($msg, $this);
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
 			}
 		}
 		else {
 			$msg = "No variable with identifier '${identifier}' could be found while processing MapResponse.";
-			throw new ExpressionProcessingException($msg, $this);
+			throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
 		}
 	}
 }

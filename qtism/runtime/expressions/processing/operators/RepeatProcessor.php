@@ -94,14 +94,14 @@ class RepeatProcessor extends OperatorProcessor {
 				// Check cardinality.
 				if ($i === 0 && !$operand instanceof OrderedContainer && !RuntimeUtils::isRuntimeCompliant($operand)) {
 					$msg = "The Repeat operator only accepts operands with a single or ordered cardinality.";
-					throw new OperatorProcessingException($msg, $this);
+					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 				}
 				
 				// Check baseType.
 				$currentType = RuntimeUtils::inferBaseType($operand);
 				if ($i === 0 && $refType !== null && $currentType !== $refType) {
 					$msg = "The Repeat operator only accepts operands with the same baseType.";
-					throw new OperatorProcessingException($msg, $this);
+					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 				}
 				else if (is_null($result)) {
 					$refType = $currentType;

@@ -60,7 +60,7 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 		if ($given < $min) {
 			$msg = "The Operator to be processed requires at least ${min} operand(s). ";
 			$msg.= "${given} operand(s) given.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
 		}
 		
 		// Check maximal operand count.
@@ -70,7 +70,7 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 		if ($max !== -1 && $given > $max) {
 			$msg = "The Operator to be processed requires at most ${max} operand(s). ";
 			$msg.= "${given} operand(s) given.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::TOO_MUCH_OPERANDS);
 		}
 		
 		$this->operands = $operands;

@@ -37,6 +37,7 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 	 * * Throws an ExpressionProcessingException if a variable reference is not found in the current state.
 	 * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
 	 * 
+	 * @return integer A random integer value.
 	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
@@ -53,7 +54,7 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 		if (gettype($min) === 'integer' && gettype($max) === 'integer' && gettype($step) === 'integer') {
 			if ($min > $max) {
 				$msg = "'min':'${min}' is greater than 'max':'${max}'.";
-				throw new ExpressionProcessingException($msg, $this);
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);
 			}
 			
 			if ($step === 1) {
@@ -68,7 +69,7 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 		}
 		else {
 			$msg = "At least one of the following variables is not an integer: 'min', 'max', 'step' while processing RandomInteger.";
-			throw new ExpressionProcessingException($msg, $this);
+			throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
 		}
 	}
 }

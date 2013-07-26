@@ -9,6 +9,10 @@ use \InvalidArgumentException;
 /**
  * The RandomFloatProcessor class aims at processing RandomFloat QTI Data Model Expression objects.
  * 
+ * From IMS QTI:
+ * 
+ * Selects a random float from the specified range [min,max].
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -29,6 +33,7 @@ class RandomFloatProcessor extends ExpressionProcessor {
 	 * 
 	 * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
 	 * 
+	 * @return float A Random float value.
 	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
@@ -48,12 +53,12 @@ class RandomFloatProcessor extends ExpressionProcessor {
 			}
 			else {
 				$msg = "'min':'${min}' is greater than 'max':'${max}'.";
-				throw new ExpressionProcessingException($msg, $this);
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);
 			}
 		}
 		else {
 			$msg = "At least one of the following values is not a float: 'min', 'max'.";
-			throw new ExpressionProcessingException($msg, $this);
+			throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
 		}
 	}
 }

@@ -2,15 +2,10 @@
 
 namespace qtism\runtime\expressions\processing\operators;
 
-
 use qtism\common\Comparable;
-
 use qtism\runtime\common\OrderedContainer;
-
 use qtism\runtime\common\MultipleContainer;
-
 use qtism\common\enums\Cardinality;
-
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\data\expressions\operators\Delete;
 use qtism\data\expressions\Expression;
@@ -18,6 +13,18 @@ use \InvalidArgumentException;
 
 /**
  * The DeleteProcessor class aims at processing Delete operators.
+ * 
+ * From IMS QTI:
+ * 
+ * The delete operator takes two sub-expressions which must both have the same 
+ * base-type. The first sub-expression must have single cardinality and the second 
+ * must be a multiple or ordered container. The result is a new container derived 
+ * from the second sub-expression with all instances of the first sub-expression 
+ * removed. For example, when applied to A and {B,A,C,A} the result is the container 
+ * {B,C}. If either sub-expression is NULL the result of the operator is NULL.
+ * 
+ * The restrictions that apply to the member operator also apply to the delete 
+ * operator.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -49,20 +56,20 @@ class DeleteProcessor extends OperatorProcessor {
 		
 		if ($operands->sameBaseType() === false) {
 			$msg = "The Delete operator only accepts operands with the same baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand1 = $operands[0];
 		if (RuntimeUtils::inferCardinality($operand1) !== Cardinality::SINGLE) {
 			$msg = "The first operand of the Delete operator must have the single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$operand2 = $operands[1];
 		$cardinality = RuntimeUtils::inferCardinality($operand2);
 		if ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
 			$msg = "The second operand of the Delete operator must have a cardinality or multiple or ordered.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$returnedBaseType = RuntimeUtils::inferBaseType($operand1);

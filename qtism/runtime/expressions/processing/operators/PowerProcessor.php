@@ -49,12 +49,12 @@ class PowerProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The Power operator only accepts operands with a single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyNumeric() === false) {
 			$msg = "The Power operator only accepts operands with a baseType of integer or float.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand1 = $operands[0];

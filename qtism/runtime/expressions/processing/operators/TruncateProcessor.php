@@ -39,6 +39,7 @@ class TruncateProcessor extends OperatorProcessor {
 	 * Process the Truncate operator.
 	 * 
 	 * @return integer|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
+	 * @throws OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -49,12 +50,12 @@ class TruncateProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The Truncate operator only accepts operands with a single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyNumeric() === false) {
 			$msg = "The Truncate operator only accepts operands with an integer or float baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand = $operands[0];

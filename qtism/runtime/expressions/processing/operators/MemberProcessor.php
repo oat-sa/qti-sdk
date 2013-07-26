@@ -11,6 +11,16 @@ use \InvalidArgumentException;
 /**
  * The MemberProcessor class aims at processing Member operators.
  * 
+ * From IMS QTI:
+ * 
+ * The member operator takes two sub-expressions which must both have the same base-type. The first sub-expression must
+ * have single cardinality and the second must be a multiple or ordered container. The result is a single boolean with a
+ * value of true if the value given by the first sub-expression is in the container defined by the second sub-expression.
+ * If either sub-expression is NULL then the result of the operator is NULL.
+ * 
+ * The member operator should not be used on sub-expressions with a base-type of float because of the poorly defined comparison of values.
+ * It must not be used on sub-expressions with a base-type of duration.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -41,7 +51,7 @@ class MemberProcessor extends OperatorProcessor {
 		
 		if ($operands->sameBaseType() === false) {
 			$msg = "The Member operator only accepts values with the same baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand1 = $operands[0];
@@ -50,14 +60,14 @@ class MemberProcessor extends OperatorProcessor {
 		// The first expression must have single cardinality.
 		if (CommonUtils::inferCardinality($operand1) !== Cardinality::SINGLE) {
 			$msg = "The first operand of the Member operator must have a single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		// The second expression must have multiple or ordered cardinality.
 		$cardinality = CommonUtils::inferCardinality($operand2);
 		if ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
 			$msg = "The second operand of the Member operator must have a multiple or ordered cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		return $operand2->contains($operand1);

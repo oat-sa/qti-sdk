@@ -55,7 +55,7 @@ class OrderedProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingleOrOrdered() === false) {
 			$msg = "The Ordered operator only accepts operands with single or ordered cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$refType = null;
@@ -77,7 +77,7 @@ class OrderedProcessor extends OperatorProcessor {
 					else {
 						// baseType mismatch.
 						$msg = "The Ordered operator only accepts values with a similar baseType.";
-						throw new OperatorProcessingException($msg, $this);
+						throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 					}
 				}
 				else if (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {

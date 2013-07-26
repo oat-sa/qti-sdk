@@ -50,7 +50,7 @@ class IndexProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelyOrdered() === false) {
 			$msg = "The Index operator only accepts values with a cardinality of ordered.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$n = $this->getExpression()->getN();
@@ -63,18 +63,18 @@ class IndexProcessor extends OperatorProcessor {
 				}
 				else {
 					$msg = "The value '${index}' is not an integer. Ordered containers can be only accessed by integers.";
-					throw new OperatorProcessingException($msg, $this);
+					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 				}
 			}
 			else {
 				$msg = "Unknown variable reference '${n}'.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
 		}
 		
 		if ($n < 1) {
 			$msg = "The value of 'n' must be a non-zero postive integer, '${n}' given.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
 		}
 		
 		$n = $n - 1; // QTI indexes begin at 1...

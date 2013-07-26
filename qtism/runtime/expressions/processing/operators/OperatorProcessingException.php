@@ -28,4 +28,26 @@ class OperatorProcessingException extends ExpressionProcessingException {
 	 * @var integer
 	 */
 	const WRONG_BASETYPE = 101;
+	
+	/**
+	 * The code to use when an operand has a not compliant baseType OR
+	 * cardinality.
+	 * 
+	 * @var integer
+	 */
+	const WRONG_BASETYPE_OR_CARDINALITY = 102;
+	
+	/**
+	 * The code to use when not enough operands are given to a processor.
+	 * 
+	 * @var integer
+	 */
+	const NOT_ENOUGH_OPERANDS = 103;
+	
+	/**
+	 * The code to use when too much operands are given to a processor.
+	 * 
+	 * @var integer
+	 */
+	const TOO_MUCH_OPERANDS = 104;
 }

@@ -14,6 +14,13 @@ use \Exception;
  */
 class ProcessingException extends \RuntimeException {
 	
+	/**
+	 * Code to use when the error of the nature is unknown.
+	 *
+	 * @var integer
+	 */
+	const UNKNOWN = 0;
+	
 	private $source = null;
 	
 	/**
@@ -21,10 +28,12 @@ class ProcessingException extends \RuntimeException {
 	 * 
 	 * @param string $msg A human-readable message describing the error.
 	 * @param Processable $source A Processable object where the error occured.
+	 * @param integer A code to characterize the error.
 	 * @param Exception $previous An optional Exception object that caused the error.
 	 */
-	public function __construct($msg, Processable $source, Exception $previous = null) {
-		parent::__construct($msg, $previous);
+	public function __construct($msg, Processable $source, $code = 0, Exception $previous = null) {
+		
+		parent::__construct($msg, $code, $previous);
 		$this->setSource($source);
 	}
 	

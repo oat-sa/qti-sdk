@@ -9,6 +9,10 @@ use \InvalidArgumentException;
 /**
  * The BaseValueProcessor class aims at processing BaseValue expressions.
  * 
+ * From IMS QTI:
+ * 
+ * The simplest expression returns a single value from the set defined by the given baseType.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -26,6 +30,8 @@ class BaseValueProcessor extends ExpressionProcessor {
 	
 	/**
 	 * Process the BaseValue.
+	 * 
+	 * @return mixed A QTI Runtime compliant scalar value.
 	 */
 	public function process() {
 		return $this->getExpression()->getValue();

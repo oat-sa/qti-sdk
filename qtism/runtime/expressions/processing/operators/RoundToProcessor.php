@@ -10,6 +10,28 @@ use \InvalidArgumentException;
 /**
  * The RoundToProcessor class aims at processing QTI Data Model RoundTo Operator objects.
  * 
+ * From IMS QTI:
+ * 
+ * he roundTo operator takes one sub-expression which must have single cardinality 
+ * and a numerical base-type. The result is a single float with the value nearest to 
+ * that of the expression's value such that when converted to a decimal string it 
+ * represents the expression rounded by the specified rounding method to the 
+ * specified precision. If the sub-expression is NULL, then the result is NULL. If 
+ * the sub-expression is INF, then the result is INF. If the sub-expression is -INF, 
+ * then the result is -INF. If the argument is NaN, then the result is NULL.
+ * 
+ * When rounding to n significant figures, the deciding digit is the (n+1)th digit 
+ * counting from the first non-zero digit from the left in the number. If the 
+ * deciding digit is 5 or greater, the nth digit is increased by 1 and all digits to 
+ * its right are discarded; if the deciding digit is less than 5, all digits to the 
+ * right of the nth digit are discarded.
+ * 
+ * When rounding to n decimal places, the deciding digit is the (n+1)th digit 
+ * counting to the right from the decimal point. If the deciding digit is 5 or 
+ * greater, the nth digit is increased by 1 and all digits to its right are 
+ * discarded; if the deciding digit is less than 5, all digits to the right of the 
+ * nth digit are discarded.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -34,6 +56,7 @@ class RoundToProcessor extends OperatorProcessor {
 	 * * The cardinality of the operand is not single.
 	 * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
 	 * 
+	 * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
 	 * @throws OperatorProcessingException
 	 */
 	public function process() {
@@ -48,13 +71,13 @@ class RoundToProcessor extends OperatorProcessor {
 		
 		if (!$operands->exclusivelySingle()) {
 			$msg = "The RoundTo operator accepts 1 operand with single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		// Accept only numerical operands.
 		if (!$operands->exclusivelyNumeric()) {
-			$msg = "The RoundTo operand accepts 1 operand with numerical baseType, '" . gettype($operand) . "' given.";
-			throw new OperatorProcessingException($msg, $this);
+			$msg = "The RoundTo operand accepts 1 operand with numerical baseType.";
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		// As per QTI 2.1 spec...
@@ -73,9 +96,13 @@ class RoundToProcessor extends OperatorProcessor {
 			$figuresIdentifier = Utils::sanitizeVariableRef($figures);
 			$figures = $state[$figuresIdentifier];
 			
-			if (is_null($figures) || !is_int($figures)) {
-				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or not an integer value.";
-				throw new OperatorProcessingException($msg, $this);
+			if (is_null($figures)) {
+				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
+			}
+			else if (!is_int($figures)) {
+				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is not an integer.";
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
 		}
 		
@@ -84,7 +111,7 @@ class RoundToProcessor extends OperatorProcessor {
 			if ($figures <= 0) {
 				// As per QTI 2.1 spec.
 				$msg = "The 'figures' attribute must be a non-zero positive integer when mode 'significantFigures' is used, '${figures}' given.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
 			}
 			
 			if ($operand == 0) {

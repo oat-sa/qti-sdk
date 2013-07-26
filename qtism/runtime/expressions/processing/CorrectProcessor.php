@@ -44,6 +44,7 @@ class CorrectProcessor extends ExpressionProcessor {
 	 * * The targeted variable is not a ResponseVariable.
 	 * 
 	 * @return mixed A QTI Runtime compliant value or null.
+	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();
@@ -60,7 +61,7 @@ class CorrectProcessor extends ExpressionProcessor {
 		}
 		else {
 			$msg = "The variable with identifier '${identifier}' is not a ResponseVariable object.";
-			throw new ExpressionProcessingException($msg, $this);
+			throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
 		}
 	}
 }

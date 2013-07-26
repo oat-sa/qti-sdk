@@ -50,7 +50,7 @@ class MultipleProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingleOrMultiple() === false) {
 			$msg = "The Multiple operator only accepts operands with single or omultiple cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$refType = null;
@@ -72,7 +72,7 @@ class MultipleProcessor extends OperatorProcessor {
 					else {
 						// baseType mismatch.
 						$msg = "The Multiple operator only accepts values with a similar baseType.";
-						throw new OperatorProcessingException($msg, $this);
+						throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 					}
 				}
 				else if (($discoveryType = CommonUtils::inferBaseType($operand)) !== false) {

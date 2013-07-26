@@ -63,12 +63,12 @@ class EqualRoundedProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The EqualRounded operator only accepts operands with a single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyNumeric() === false) {
 			$msg = "The EqualRounded operator only accepts operands with an integer or float baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		// delegate the rounding to the RoundTo operator.
@@ -84,11 +84,11 @@ class EqualRoundedProcessor extends OperatorProcessor {
 			
 			if (is_null($varValue) === true) {
 				$msg = "The variable with name '${varName}' could not be resolved.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
 			else if (is_int($varValue) === false) {
 				$msg = "The variable with name '${varName}' is not an integer.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
 			
 			$figures = $varValue;
@@ -107,7 +107,7 @@ class EqualRoundedProcessor extends OperatorProcessor {
 			}
 			catch (OperatorProcessingException $e) {
 				$msg = "An error occured while rounding '${operand}'.";
-				throw new OperatorProcessingException($msg, $this, $e);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR, $e);
 			}
 		}
 		

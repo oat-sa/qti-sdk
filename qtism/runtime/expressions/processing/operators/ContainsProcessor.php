@@ -8,7 +8,14 @@ use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Contains;
 
 /**
- * The NotProcessor class aims at processing Not QTI DataModel expressions.
+ * The ContainsProcessor class aims at processing Contains QTI DataModel operators.
+ * 
+ * From IMS QTI:
+ * 
+ * The not operator takes a single sub-expression with a base-type of boolean and 
+ * single cardinality. The result is a single boolean with a value obtained by the 
+ * logical negation of the sub-expression's value. If the sub-expression is NULL 
+ * then the not operator also results in NULL.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -40,17 +47,17 @@ class ContainsProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelyMultipleOrOrdered() === false) {
 			$msg = "The Contains Expression only accept operands with multiple or ordered cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->sameCardinality() === false) {
 			$msg = "The Contains Expression only accept operands with the same cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->sameBaseType() === false) {
 			$msg = "The Contains Expression only accept operands with the same baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$operand1 = $operands[0];

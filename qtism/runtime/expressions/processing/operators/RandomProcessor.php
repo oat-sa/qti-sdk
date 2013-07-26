@@ -46,7 +46,7 @@ class RandomProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelyMultipleOrOrdered() === false) {
 			$msg = "The Random operator only accepts values with multiple or ordered cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$operand = $operands[0];

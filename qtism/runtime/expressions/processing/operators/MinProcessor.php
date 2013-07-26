@@ -54,7 +54,7 @@ class MinProcessor extends OperatorProcessor {
 		
 		if ($operands->anythingButRecord() === false) {
 			$msg = "The Min operator only accept values with a cardinality of single, multiple or ordered.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyNumeric() === false) {

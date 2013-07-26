@@ -43,6 +43,7 @@ class SumProcessor extends OperatorProcessor {
 	/**
 	 * Process the Sum operator.
 	 * 
+	 * @return integer|float|null A single integer/float that corresponds to the sum of the numerical values of the sub-expressions. If any of the sub-expressions are NULL, the operator results in NULL.
 	 * @throws OperatorProcessingException If invalid operands are given.
 	 */
 	public function process() {
@@ -54,11 +55,11 @@ class SumProcessor extends OperatorProcessor {
 		}
 		else if ($operands->anythingButRecord() === false) {
 			$msg = "The Sum operator only accepts operands with cardinality single, multiple or ordered.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		else if ($operands->exclusivelyNumeric() === false) {
 			$msg = "The Sum operator only accepts operands with an integer or float baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$returnValue = 0;

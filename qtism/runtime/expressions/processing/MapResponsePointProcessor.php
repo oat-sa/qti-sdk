@@ -48,6 +48,7 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 	 * * The targeted variable has no areaMapping.
 	 * * The target variable has the RECORD cardinality.
 	 * 
+	 * @return float A transformed float value according to the areaMapping of the target variable.
 	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
@@ -115,28 +116,28 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 					else {
 						if ($var->isRecord()) {
 							$msg = "The MapResponsePoint expression cannot be applied to RECORD variables.";
-							throw new ExpressionProcessingException($msg, $this);
+							throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
 						}
 						else {
 							$strBaseType = BaseType::getNameByConstant($var->getBaseType());
 							$msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
-							throw new ExpressionProcessingException($msg, $this);
+							throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
 						}
 					}
 				}
 				else {
 					$msg = "Variable with identifier '${identifier}' has no areaMapping.";
-					throw new ExpressionProcessingException($msg, $this);
+					throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::INCONSISTENT_VARIABLE);
 				}
 			}
 			else {
 				$msg = "The variable with identifier '${identifier}' is not a ResponseVariable.";
-				throw new ExpressionProcessingException($msg, $this);
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
 			}
 		}
 		else {
 			$msg = "No variable with identifier '${identifier}' could be found in the current State object.";
-			throw new ExpressionProcessingException($msg, $this);
+			throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
 		}
 	}
 }

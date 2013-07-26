@@ -9,6 +9,12 @@ use \InvalidArgumentException;
 /**
  * The FieldValueProcessor class aims at processing FieldValue expressions.
  * 
+ * From IMS QTI:
+ * 
+ * The field-value operator takes a sub-expression with a record container value. 
+ * The result is the value of the field with the specified fieldIdentifier. If there 
+ * is no field with that identifier then the result of the operator is NULL.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -35,7 +41,7 @@ class FieldValueProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelyRecord() === false) {
 			$msg = "The FieldValue operator only accepts operands with a cardinality of record.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		$fieldIdentifier = $this->getExpression()->getFieldIdentifier();

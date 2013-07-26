@@ -63,11 +63,11 @@ class AnyNProcessor extends OperatorProcessor {
 			
 			if (is_null($varValue)) {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
 			else if (gettype($varValue) !== 'integer') {
 				$msg = "The variable with name '${varName}' is not an integer.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 			}
 			else {
 				$min = $varValue;
@@ -82,11 +82,11 @@ class AnyNProcessor extends OperatorProcessor {
 				
 			if (is_null($varValue)) {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
 			else if (gettype($varValue) !== 'integer') {
 				$msg = "The variable with name '${varName}' is not an integer.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
 			else {
 				$max = $varValue;
@@ -109,7 +109,7 @@ class AnyNProcessor extends OperatorProcessor {
 			else {
 				// Not null, not a boolean, we have a problem...
 				$msg = "The AnyN operator only accepts values with cardinality single and baseType boolean.";
-				throw new OperatorProcessingException($msg, $this);
+				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE_OR_CARDINALITY);
 			}
 		}
 		

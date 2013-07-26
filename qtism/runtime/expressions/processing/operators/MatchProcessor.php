@@ -45,7 +45,8 @@ class MatchProcessor extends OperatorProcessor {
 	/**
 	 * Process the Match Expression object.
 	 * 
-	 * @return boolean
+	 * @return boolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
+	 * @throws OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -57,12 +58,12 @@ class MatchProcessor extends OperatorProcessor {
 		
 		if ($operands->sameCardinality() === false) {
 			$msg = "The Match Expression only accepts operands with the same cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->sameBaseType() === false) {
 			$msg = "The Match Expression only accepts operands with the same baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		$firstOperand = $operands[0];
