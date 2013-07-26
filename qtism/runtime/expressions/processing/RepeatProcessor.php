@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions\processing;
 
+use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OrderedContainer;
@@ -91,7 +92,7 @@ class RepeatProcessor extends OperatorProcessor {
 				}
 				
 				// Check cardinality.
-				if ($i === 0 && (!is_scalar($operand) && !$operand instanceof OrderedContainer)) {
+				if ($i === 0 && !$operand instanceof OrderedContainer && !RuntimeUtils::isRuntimeCompliant($operand)) {
 					$msg = "The Repeat operator only accepts operands with a single or ordered cardinality.";
 					throw new ExpressionProcessingException($msg, $this);
 				}
@@ -108,13 +109,13 @@ class RepeatProcessor extends OperatorProcessor {
 				}
 				
 				// Okay we are good...
-				if ($operand instanceof OrderedContainer) {
-					foreach ($operand as $o) {
-						$result[] = (gettype($o) === 'object') ? clone $o : $o;
-					}
+				$operandCardinality = RuntimeUtils::inferCardinality($operand);
+				if ($operandCardinality !== Cardinality::ORDERED) {
+					$operand = new OrderedContainer($currentType, array($operand));
 				}
-				else {
-					$result[] = (gettype($operand) === 'object') ? clone $operand : $operand;
+				
+				foreach ($operand as $o) {
+					$result[] = (gettype($o) === 'object') ? clone $o : $o;
 				}
 			}
 		}
