@@ -12,6 +12,8 @@ use qtism\common\utils\Format;
 use \InvalidArgumentException;
 use \RuntimeException;
 
+// @todo write an isNull method that applies on both scalar and container values.
+
 class Utils {
 	
 	/**
