@@ -4,7 +4,7 @@ namespace qtism\runtime\expressions\processing\operators;
 
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Expression;
-use qtism\runtime\expressions\processing\Utils;
+use qtism\runtime\expressions\processing\Utils as ProcessingUtils;
 use \InvalidArgumentException;
 
 /**
@@ -57,7 +57,7 @@ class IndexProcessor extends OperatorProcessor {
 		if (is_string($n)) {
 			// The value of $n comes from the state.
 			$state = $this->getState();
-			if (($index = $state[Utils::sanitizeVariableRef($n)]) !== null) {
+			if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
 				if (gettype($index) === 'integer') {
 					$n = $index;
 				}
