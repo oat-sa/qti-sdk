@@ -8,7 +8,11 @@ use qtism\runtime\expressions\processing\operators\Utils as OperatorUtils;
 use \InvalidArgumentException;
 
 /**
- * The PatternProcessor class aims at processing Pattern expressions.
+ * The PatternProcessor class aims at processing Pattern expressions. 
+ * 
+ * Please not that this implementation of PatternMatch does not support character class subtraction as
+ * in XML Schema 2 specification. Moreover, \i \I \c \C are not supported. Except that,
+ * this implementation is fully compliant with the XML Schema 2 regular expression flavour.
  * 
  * From IMS QTI:
  * 
