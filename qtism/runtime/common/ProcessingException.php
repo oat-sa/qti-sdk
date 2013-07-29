@@ -21,6 +21,15 @@ class ProcessingException extends \RuntimeException {
 	 */
 	const UNKNOWN = 0;
 	
+	/**
+	 * Code to use when a runtime error occcurs.
+	 * 
+	 * e.g. When a division by zero occurs, an overflow, ...
+	 * 
+	 * @var unknown_type
+	 */
+	const RUNTIME_ERROR = 1;
+	
 	private $source = null;
 	
 	/**
