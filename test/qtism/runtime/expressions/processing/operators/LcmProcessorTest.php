@@ -3,24 +3,24 @@
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\RecordContainer;
-use qtism\runtime\expressions\processing\operators\GcdProcessor;
+use qtism\runtime\expressions\processing\operators\LcmProcessor;
 use qtism\runtime\expressions\processing\operators\OperandsCollection;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 
-class GcdProcessorTest extends QtiSmTestCase {
+class LcmProcessorTest extends QtiSmTestCase {
 	
 	/**
-	 * @dataProvider gcdProvider
+	 * @dataProvider lcmProvider
 	 * 
 	 * @param array $operands
 	 * @param integer $expected
 	 */
-	public function testGcd(array $operands, $expected) {
+	public function testLcm(array $operands, $expected) {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection($operands);
-		$processor = new GcdProcessor($expression, $operands);
+		$processor = new LcmProcessor($expression, $operands);
 		$this->assertSame($expected, $processor->process());
 	}
 	
@@ -28,13 +28,13 @@ class GcdProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
-		$processor = new GcdProcessor($expression, $operands);
+		$processor = new LcmProcessor($expression, $operands);
 	}
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array('String!')), 10));
-		$processor = new GcdProcessor($expression, $operands);
+		$processor = new LcmProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
@@ -42,58 +42,57 @@ class GcdProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(10, 20, new RecordContainer(array('A' => 10)), 30));
-		$processor = new GcdProcessor($expression, $operands);
+		$processor = new LcmProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
 	
 	/**
-	 * @dataProvider gcdWithNullValuesProvider
+	 * @dataProvider lcmWithNullValuesProvider
 	 * 
 	 * @param array $operands
 	 */
 	public function testGcdWithNullValues(array $operands) {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection($operands);
-		$processor = new GcdProcessor($expression, $operands);
+		$processor = new LcmProcessor($expression, $operands);
 		$this->assertSame(null, $processor->process());
 	}
 	
-	public function gcdProvider() {
+	public function lcmProvider() {
 		return array(
-			array(array(45, 60, 330), 15),
-			array(array(0, 45, 60, 0, 330, 15, 0), 15), // gcd (0, 45, 60, 330, 15, 0)
 			array(array(0), 0),
-			array(array(0, 0, 0), 0),
-			array(array(new MultipleContainer(BaseType::INTEGER, array(45, 60, 330))), 15), // gcd(45, 60, 330)
-			array(array(0, new OrderedContainer(BaseType::INTEGER, array(0))), 0), // gcd(0, 0, 0)
-			array(array(new MultipleContainer(BaseType::INTEGER, array(45, 60, 0, 330))), 15), // gcd(45, 60, 0, 330)
-			array(array(new MultipleContainer(BaseType::INTEGER, array(45)), new OrderedContainer(BaseType::INTEGER, array(60)), new MultipleContainer(BaseType::INTEGER, array(330))), 15),
-			array(array(45), 45),
-			array(array(0, 45), 45),
-			array(array(45, 0), 45),
-			array(array(0, 45, 0), 45)
+			array(array(0, 0), 0),
+			array(array(330, 0), 0),
+			array(array(0, 330), 0),
+			array(array(330, 0, 15), 0),
+			array(array(330, 65, 15), 4290),
+			array(array(-10, -5), 10),
+			array(array(330), 330),
+			array(array(330, new MultipleContainer(BaseType::INTEGER, array(65)), 15), 4290),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(330)), new MultipleContainer(BaseType::INTEGER, array(65)), new MultipleContainer(BaseType::INTEGER, array(15))), 4290),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(330, 65)), new MultipleContainer(BaseType::INTEGER, array(65))), 4290),
 		);
 	}
 	
-	public function gcdWithNullValuesProvider() {
+	public function lcmWithNullValuesProvider() {
 		return array(
-			array(array(45, null, 330)),
-			array(array('', 550, 330)),
-			array(array(230, new OrderedContainer(BaseType::INTEGER), 25, 33)),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(null)))),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(null, null, null)))),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(25, 30)), 200, new MultipleContainer(BaseType::INTEGER, array(25, null, 30))))
+			array(array(null)),
+			array(array(null, 10)),
+			array(array(10, null)),
+			array(array(10, null, 10)),
+			array(array(10, new MultipleContainer(BaseType::INTEGER))),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(10, null))))
 		);
 	}
 	
 	public function createFakeExpression() {
 		return $this->createComponentFromXml('
-			<gcd>
-				<baseValue baseType="integer">40</baseValue>
-				<baseValue baseType="integer">60</baseValue>
+			<lcm>
 				<baseValue baseType="integer">330</baseValue>
-			</gcd>
+				<baseValue baseType="integer">65</baseValue>
+				<baseValue baseType="integer">15</baseValue>
+			</lcm>
 		');
 	}
 }
