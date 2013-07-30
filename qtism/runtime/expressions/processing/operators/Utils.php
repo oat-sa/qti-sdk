@@ -56,6 +56,105 @@ class Utils {
 	}
 	
 	/**
+	 * Compute the arithmetic mean of $sample.
+	 * 
+	 * @param array An array of numeric values.
+	 * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
+	 */
+	public static function mean(array $sample) {
+		
+		$count = count($sample);
+		if ($count === 0) {
+			return false;
+		}
+		
+		$sum = 0;
+		foreach ($sample as $s) {
+			$sType = gettype($s);
+			
+			if ($sType !== 'integer' && $sType !== 'double') {
+				// only deal with numeric values.
+				return false;
+			}
+			
+			$sum += $s;
+		}
+		
+		return $sum / $count;
+	}
+	
+	/**
+	 * Compute the variance of $sample.
+	 * 
+	 * * To compute the population variance: $sample is considered as a population if $correction equals false.
+	 * * To compute the sample variance: $sample is considered as sample if $correction equals true.
+	 * 
+	 * IMPORTANT: 
+	 * If $correction is true, $sample must contain more than 1 value, otherwise this method 
+	 * returns false.
+	 * 
+	 * @param array $sample An array of numeric values.
+	 * @param boolean $correction (optional) Apply the Bessel's correction on the computed variance.
+	 * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
+	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
+	 */
+	public static function variance(array $sample, $correction = true) {
+		$mean = static::mean($sample);
+		
+		if ($mean === false) {
+			return false;
+		}
+		
+		// We are sure that
+		// 1. $sample is not empty.
+		// 2. $sample contains only numeric values.
+		$count = count($sample);
+		if ($correction === true && $count <= 1) {
+			return false;
+		}
+		
+		// because self::mean returns false if $sample is empty
+		// or if it contains non-numeric values, we do not have to
+		// check that fact anymore.
+ 		$sum = 0;
+		
+    	foreach ($sample as $s) {
+        	$sum += pow($s - $mean, 2);
+    	}
+ 
+    	$d = ($correction === true) ? $count - 1 : $count;
+    	
+    	return $sum / $d;
+	}
+	
+	/**
+	 * Compute the standard deviation of $sample.
+	 * 
+	 * * To compute the population standard deviation: $sample is considered as a population if $correction equals false.
+	 * * To compute the sample standard deviation: $sample is considered as sample if $correction equals true.
+	 * 
+	 * IMPORTANT: 
+	 * If $correction is true, $sample must contain more than 1 value, otherwise this method 
+	 * returns false.
+	 * 
+	 * @param array $sample An array of numeric values.
+	 * @param boolean $correction (optional) Whether to apply Bessel's correction.
+	 * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
+	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance 
+	 */
+	public static function standardDeviation(array $sample, $correction = true) {
+		$sampleVariance = static::variance($sample, $correction);
+		
+		if ($sampleVariance === false) {
+			// non numeric values found in $sample or empty $sample or $correction applied
+			// but count($sample) <= 1.
+			return false;
+		}
+		
+		return sqrt($sampleVariance);
+	}
+	
+	/**
 	 * Add an appropriate delimiter (/) to a regular expression that has no delimiters. This
 	 * method is multi-byte safe safe.
 	 *

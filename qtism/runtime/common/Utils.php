@@ -145,7 +145,7 @@ class Utils {
 	 * @throws InvalidArgumentException In any case.
 	 */
 	public static function throwBaseTypeTypingError($baseType, $value) {
-		$givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value);
+		$givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value) . ':' . $value;
 		$acceptedTypes = BaseType::getNameByConstant($baseType);
 		$msg = "The value '${givenValue}' is not compliant with the '${acceptedTypes}' baseType.";
 		throw new InvalidArgumentException($msg);
