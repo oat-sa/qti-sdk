@@ -54,12 +54,12 @@ class PatternMatchProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The PatternMatch operator only accepts operands with a single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyString() === false) {
 			$msg = "The PatternMatch operator only accepts operands with a string baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		// XML schema always implicitly anchors the entire regular expression
