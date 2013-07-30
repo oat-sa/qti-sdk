@@ -290,4 +290,12 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		$a = array();
 		$this->setDataPlaceHolder($a);
 	}
+	
+	public function __clone() {
+		foreach ($this->getDataPlaceHolder() as $key => $value) {
+			if (gettype($value) === 'object') {
+				$this[$key] = clone $value;
+			}
+		}
+	}
 }
