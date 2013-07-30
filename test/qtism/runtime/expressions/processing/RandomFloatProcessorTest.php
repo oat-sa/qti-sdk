@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\RandomFloatProcessor;
+use qtism\runtime\expressions\RandomFloatProcessor;
 
 class RandomFloatProcessorTest extends QtiSmTestCase {
 	
@@ -33,7 +33,7 @@ class RandomFloatProcessorTest extends QtiSmTestCase {
 		$processor = new RandomFloatProcessor($expression);
 		$processor->setExpression($expression);
 		
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 }

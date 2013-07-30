@@ -8,7 +8,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\expressions\processing\CorrectProcessor;
+use qtism\runtime\expressions\CorrectProcessor;
 
 class CorrectProcessorTest extends QtiSmTestCase {
 	
@@ -82,7 +82,7 @@ class CorrectProcessorTest extends QtiSmTestCase {
 		
 		$processor = new CorrectProcessor($expr);
 		$processor->setState(new State(array($variable)));
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 }

@@ -5,8 +5,8 @@ use qtism\runtime\common\MultipleContainer;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\StringMatchProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\StringMatchProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\data\expressions\operators\Operator;
 
 class StringMatchProcessorTest extends QtiSmTestCase {
@@ -57,7 +57,7 @@ class StringMatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array('String!', new MultipleContainer(BaseType::STRING, array('String!'))));
 		$processor = new StringMatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -65,21 +65,21 @@ class StringMatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array('String!', 25));
 		$processor = new StringMatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array('String!'));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new StringMatchProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array('String!', 'String!', 'String!'));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new StringMatchProcessor($expression, $operands);
 	}
 	

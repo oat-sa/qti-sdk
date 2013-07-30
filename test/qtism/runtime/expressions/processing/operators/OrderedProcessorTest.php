@@ -2,8 +2,8 @@
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\OrderedProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OrderedProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -118,7 +118,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$operands[] = null;
 		$operands[] = 10;
 		$processor = new OrderedProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -132,7 +132,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 		
 		$operands[] = new RecordContainer();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

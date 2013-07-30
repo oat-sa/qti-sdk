@@ -4,8 +4,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
-use qtism\runtime\expressions\processing\operators\DurationGTEProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\DurationGTEProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class DurationGTEProcessorTest extends QtiSmTestCase {
 	
@@ -44,7 +44,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new Duration('P1D'), 256));
 		$processor = new DurationGTEProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -52,21 +52,21 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new Duration('P1D'), new MultipleContainer(BaseType::DURATION, array(new Duration('P2D')))));
 		$processor = new DurationGTEProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DurationGTEProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new Duration('P1D'), new Duration('P2D'), new Duration('P3D')));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DurationGTEProcessor($expression, $operands);
 	}
 	

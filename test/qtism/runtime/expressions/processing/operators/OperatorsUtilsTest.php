@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\Utils as OperatorsUtils;
+use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 
 class OperatorsUtilsTest extends QtiSmTestCase {
 	

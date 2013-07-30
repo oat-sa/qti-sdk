@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\MathConstantProcessor;
+use qtism\runtime\expressions\MathConstantProcessor;
 
 class MathConstantProcessorTest extends QtiSmTestCase {
 	

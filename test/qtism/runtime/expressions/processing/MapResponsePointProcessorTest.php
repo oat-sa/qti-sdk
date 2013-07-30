@@ -7,7 +7,7 @@ use qtism\common\datatypes\Point;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
-use qtism\runtime\expressions\processing\MapResponsePointProcessor;
+use qtism\runtime\expressions\MapResponsePointProcessor;
 
 class MapResponsePointProcessorTest extends QtiSmTestCase {
 	
@@ -92,7 +92,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 	public function testNoVariable() {
 		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
 		$processor = new MapResponsePointProcessor($expr);
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 	
@@ -143,7 +143,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 	
@@ -156,7 +156,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 	
@@ -169,7 +169,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 	

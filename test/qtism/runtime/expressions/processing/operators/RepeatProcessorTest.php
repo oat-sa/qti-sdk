@@ -8,8 +8,8 @@ use qtism\runtime\common\OrderedContainer;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\RepeatProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\RepeatProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class RepeatProcessorTest extends QtiSmTestCase {
 	
@@ -75,7 +75,7 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(10))));
 		$processor = new RepeatProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -83,14 +83,14 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(10)), 10.3));
 		$processor = new RepeatProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RepeatProcessor($expression, $operands);
 	}
 	

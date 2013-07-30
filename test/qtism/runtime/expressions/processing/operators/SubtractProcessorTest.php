@@ -4,8 +4,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\expressions\processing\operators\SubtractProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\SubtractProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class SubtractProcessorTest extends QtiSmTestCase {
 	
@@ -41,7 +41,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(10, new Point(1, 2)));
 		$processor = new SubtractProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -49,21 +49,21 @@ class SubtractProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(10)), 20));
 		$processor = new SubtractProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubtractProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(10, 20, 30, 40));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubtractProcessor($expression, $operands);
 	}
 	

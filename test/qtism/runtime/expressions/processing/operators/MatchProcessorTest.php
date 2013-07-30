@@ -6,8 +6,8 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
-use qtism\runtime\expressions\processing\operators\MatchProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\MatchProcessor;
 
 class MatchProcessorTest extends QtiSmTestCase {
 	
@@ -44,7 +44,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = 15;
 		$operands[] = 'String!';
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -54,7 +54,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(10, 20, 30, 40));
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(10.0, 20.0, 30.0, 40.0));
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -64,7 +64,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = 'String!';
 		$operands[] = new OrderedContainer(BaseType::FLOAT, array(10.0, 20.0));
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -74,7 +74,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = 'String!';
 		$operands[] = new MultipleContainer(BaseType::STRING, array('String!'));
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -84,7 +84,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = new OrderedContainer(BaseType::STRING, array('String!'));
 		$operands[] = new MultipleContainer(BaseType::STRING, array('String!'));
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -94,21 +94,21 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = new OrderedContainer(BaseType::STRING, array('String!'));
 		$operands[] = new RecordContainer(array('entry1' => 'String!'));
 		$processor = new MatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(15));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MatchProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(25, 25, 25));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MatchProcessor($expression, $operands);
 	}
 	

@@ -3,8 +3,8 @@
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\RecordContainer;
-use qtism\runtime\expressions\processing\operators\LcmProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\LcmProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -27,7 +27,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new LcmProcessor($expression, $operands);
 	}
 	
@@ -35,7 +35,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array('String!')), 10));
 		$processor = new LcmProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -43,7 +43,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(10, 20, new RecordContainer(array('A' => 10)), 30));
 		$processor = new LcmProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
 	

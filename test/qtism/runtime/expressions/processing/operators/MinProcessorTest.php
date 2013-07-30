@@ -5,8 +5,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
-use qtism\runtime\expressions\processing\operators\MinProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\MinProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\common\MultipleContainer;
 
 class MinProcessorTest extends QtiSmTestCase {
@@ -35,7 +35,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		$rec['A'] = 1;
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

@@ -2,9 +2,9 @@
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\ContainerSizeProcessor;
+use qtism\runtime\expressions\operators\ContainerSizeProcessor;
 use qtism\data\expressions\operators\ContainerSize; 
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
@@ -15,7 +15,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainerSizeProcessor($expression, $operands);
 	}
 	
@@ -24,7 +24,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(26));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainerSizeProcessor($expression, $operands);
 	}
 	
@@ -47,7 +47,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(25));
 		$processor = new ContainerSizeProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -55,7 +55,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new RecordContainer(array('1' => 1.0, '2' => 2))));
 		$processor = new ContainerSizeProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

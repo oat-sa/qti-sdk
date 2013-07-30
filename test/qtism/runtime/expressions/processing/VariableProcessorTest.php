@@ -3,7 +3,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\data\state\WeightCollection;
-use qtism\runtime\expressions\processing\VariableProcessor;
+use qtism\runtime\expressions\VariableProcessor;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;

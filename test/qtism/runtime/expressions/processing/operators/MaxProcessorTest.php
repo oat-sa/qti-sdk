@@ -5,8 +5,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
-use qtism\runtime\expressions\processing\operators\MaxProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\MaxProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\common\MultipleContainer;
 
 class MaxProcessorTest extends QtiSmTestCase {
@@ -35,7 +35,7 @@ class MaxProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		$rec['A'] = 1;
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

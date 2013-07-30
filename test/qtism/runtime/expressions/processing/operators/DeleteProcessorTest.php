@@ -2,8 +2,8 @@
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Point;
-use qtism\runtime\expressions\processing\operators\DeleteProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\DeleteProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -106,7 +106,7 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$operands[] = 10.1;
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(0, 10, 20, 30));
 		$processor = new DeleteProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -116,7 +116,7 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(0, 10, 20, 30));
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(0, 10, 20, 30));
 		$processor = new DeleteProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -126,14 +126,14 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$operands[] = 10;
 		$operands[] = 10;
 		$processor = new DeleteProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DeleteProcessor($expression, $operands);
 	}
 	
@@ -143,7 +143,7 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$operands[] = 10;
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(10));
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(10));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DeleteProcessor($expression, $operands);
 	}
 	

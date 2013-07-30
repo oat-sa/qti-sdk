@@ -3,8 +3,8 @@
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\data\expressions\operators\MathFunctions;
-use qtism\runtime\expressions\processing\operators\MathOperatorProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\MathOperatorProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class MathOperatorProcessorTest extends QtiSmTestCase {
 	

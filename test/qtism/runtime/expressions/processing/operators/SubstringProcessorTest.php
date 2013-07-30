@@ -6,8 +6,8 @@ use qtism\runtime\common\MultipleContainer;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\operators\SubstringProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\SubstringProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class SubstringProcessorTest extends QtiSmTestCase {
 	
@@ -98,7 +98,7 @@ class SubstringProcessorTest extends QtiSmTestCase {
 		$operands[] = '10';
 		$operands[] = 100;
 		$processor = new SubstringProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -108,21 +108,21 @@ class SubstringProcessorTest extends QtiSmTestCase {
 		$operands[] = 'Wrong Cardinality';
 		$operands[] = new MultipleContainer(BaseType::STRING, array('Wrong', 'Cardinality'));
 		$processor = new SubstringProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection(array('only 1 operand'));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubstringProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection(array('exactly', 'three', 'operands'));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubstringProcessor($expression, $operands);
 	}
 	

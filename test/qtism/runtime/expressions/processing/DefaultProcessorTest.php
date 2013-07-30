@@ -5,7 +5,7 @@ use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\State;
-use qtism\runtime\expressions\processing\DefaultProcessor;
+use qtism\runtime\expressions\DefaultProcessor;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
 

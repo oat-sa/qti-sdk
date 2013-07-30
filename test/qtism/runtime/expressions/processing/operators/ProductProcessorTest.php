@@ -4,8 +4,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
-use qtism\runtime\expressions\processing\operators\ProductProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\ProductProcessor;
 
 class ProductProcessorTest extends QtiSmTestCase {
 
@@ -76,7 +76,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands() {
 		$product = $this->createFakeProductComponent();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$productProcessor = new ProductProcessor($product, $operands);
 	}
 	

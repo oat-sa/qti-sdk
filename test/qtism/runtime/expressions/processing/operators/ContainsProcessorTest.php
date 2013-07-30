@@ -9,8 +9,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\expressions\processing\operators\ContainsProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\ContainsProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class ContainsProcessorTest extends QtiSmTestCase {
 	
@@ -357,7 +357,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(25.0));
 		$processor = new ContainsProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -367,7 +367,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
 		$processor = new ContainsProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -377,14 +377,14 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
 		$operands[] = new RecordContainer(array('1' => 1, '2' => 2));
 		$processor = new ContainsProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2)))));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainsProcessor($expression, $operands);
 	}
 	
@@ -394,7 +394,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(25));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainsProcessor($expression, $operands);
 	}
 	

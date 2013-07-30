@@ -7,12 +7,12 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Statistics;
-use qtism\runtime\expressions\processing\operators\StatsOperatorProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\StatsOperatorProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\OperatorProcessingException;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
@@ -124,14 +124,14 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression(Statistics::MEAN);
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new StatsOperatorProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(Statistics::MEAN);
 		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(10)), new MultipleContainer(BaseType::FLOAT, array(10.0))));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new StatsOperatorProcessor($expression, $operands);
 	}
 	

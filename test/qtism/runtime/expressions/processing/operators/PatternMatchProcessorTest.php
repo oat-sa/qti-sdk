@@ -4,9 +4,9 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\PatternMatchProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
-use qtism\runtime\expressions\processing\operators\OperatorProcessingException;
+use qtism\runtime\expressions\operators\PatternMatchProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OperatorProcessingException;
 
 class PatternMatchProcessorTest extends QtiSmTestCase {
 	
@@ -40,14 +40,14 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	public function testNotEnougOperands() {
 		$expression = $this->createFakeExpression('abc');
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new PatternMatchProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression('abc');
 		$operands = new OperandsCollection(array('string', 'string'));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new PatternMatchProcessor($expression, $operands);
 	}
 	
@@ -55,7 +55,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression('abc');
 		$operands = new OperandsCollection(array(new RecordContainer(array('A' => 1))));
 		$processor = new PatternMatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -63,7 +63,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression('abc');
 		$operands = new OperandsCollection(array(255.34));
 		$processor = new PatternMatchProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\operators\\OperatorProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
 	}
 	

@@ -3,8 +3,8 @@
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Point;
-use qtism\runtime\expressions\processing\operators\OrProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OrProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
@@ -14,7 +14,7 @@ class OrProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands	() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new OrProcessor($expression, $operands);
 		$result = $processor->process();
 	}
@@ -23,7 +23,7 @@ class OrProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new Point(1, 2)));
 		$processor = new OrProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -31,7 +31,7 @@ class OrProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new RecordContainer(array('a' => 'string!'))));
 		$processor = new OrProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -39,7 +39,7 @@ class OrProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT, array(25.0))));
 		$processor = new OrProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

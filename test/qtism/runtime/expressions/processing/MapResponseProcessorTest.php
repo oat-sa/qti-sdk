@@ -8,7 +8,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\expressions\processing\MapResponseProcessor;
+use qtism\runtime\expressions\MapResponseProcessor;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\MultipleContainer;
 
@@ -92,14 +92,14 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testVariableNotDefined() {
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="INVALID"/>');
 		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
 		$mapResponseProcessor->process();
 	}
 	
 	public function testNoMapping() {
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="duration" cardinality="multiple"/>');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
@@ -110,7 +110,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testOutcomeDeclaration() {
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="response1" baseType="integer" cardinality="multiple">
 				<mapping>

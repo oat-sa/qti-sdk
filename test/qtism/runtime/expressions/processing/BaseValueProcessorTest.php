@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\BaseValueProcessor;
+use qtism\runtime\expressions\BaseValueProcessor;
 use qtism\common\datatypes\Point;
 
 class BaseValueProcessorTest extends QtiSmTestCase {

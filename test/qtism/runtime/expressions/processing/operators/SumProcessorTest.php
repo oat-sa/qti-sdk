@@ -4,8 +4,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
-use qtism\runtime\expressions\processing\operators\SumProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\SumProcessor;
 
 class SumProcessorTest extends QtiSmTestCase {
 

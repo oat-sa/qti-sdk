@@ -7,8 +7,8 @@ use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\RandomProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\RandomProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class RandomProcessorTest extends QtiSmTestCase {
 	
@@ -80,7 +80,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = 10;
 		$processor = new RandomProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -89,14 +89,14 @@ class RandomProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = new RecordContainer(array('A' => 1));
 		$processor = new RandomProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 	}
@@ -106,7 +106,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = new MultipleContainer(BaseType::PAIR);
 		$operands[] = new MultipleContainer(BaseType::PAIR);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 	}

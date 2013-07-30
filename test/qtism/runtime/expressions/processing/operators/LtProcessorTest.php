@@ -3,8 +3,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
-use qtism\runtime\expressions\processing\operators\LtProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\LtProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class LtProcessorTest extends QtiSmTestCase {
 	
@@ -49,7 +49,7 @@ class LtProcessorTest extends QtiSmTestCase {
 		$operands[] = 1;
 		$operands[] = true;
 		$processor = new LtProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -59,7 +59,7 @@ class LtProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(1, 2);
 		$operands[] = 2;
 		$processor = new LtProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -69,21 +69,21 @@ class LtProcessorTest extends QtiSmTestCase {
 		$operands[] = new RecordContainer(array('A' => 1));
 		$operands[] = 2;
 		$processor = new LtProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new LtProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(1, 2, 3));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new LtProcessor($expression, $operands);
 	}
 	

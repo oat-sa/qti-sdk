@@ -7,7 +7,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Duration;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class OperandsCollectionProcessorTest extends QtiSmTestCase {
 	

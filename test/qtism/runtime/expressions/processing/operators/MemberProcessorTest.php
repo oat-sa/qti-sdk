@@ -6,8 +6,8 @@ use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\expressions\processing\operators\MemberProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\MemberProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class MemberProcessorTest extends QtiSmTestCase {
 	
@@ -70,7 +70,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = new Pair('A', 'B');
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
 		$processor = new MemberProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -80,7 +80,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(13, 37)));
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
 		$processor = new MemberProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -90,7 +90,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(13, 37);
 		$operands[] = new Point(13, 38);
 		$processor = new MemberProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -98,7 +98,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Point(13, 37);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MemberProcessor($expression, $operands);
 	}
 	
@@ -108,7 +108,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(13, 37);
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(3, 4)));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MemberProcessor($expression, $operands);
 	}
 	

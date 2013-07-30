@@ -3,7 +3,7 @@ use qtism\runtime\common\State;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\expressions\processing\RandomIntegerProcessor;
+use qtism\runtime\expressions\RandomIntegerProcessor;
 
 class RandomIntegerProcessorTest extends QtiSmTestCase {
 
@@ -35,7 +35,7 @@ class RandomIntegerProcessorTest extends QtiSmTestCase {
 	public function testMinLessThanMax() {
 		$expression = $this->createComponentFromXml('<randomInteger min="100" max="10"/>');
 		$processor = new RandomIntegerProcessor($expression);
-		$this->setExpectedException('qtism\runtime\expressions\processing\ExpressionProcessingException');
+		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
 	}
 }

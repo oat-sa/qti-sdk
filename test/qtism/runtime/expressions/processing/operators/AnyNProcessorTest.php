@@ -7,8 +7,8 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\expressions\processing\operators\AnyNProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\AnyNProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class AnyNProcessorTest extends QtiSmTestCase {
 	
@@ -33,7 +33,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(2, 3);
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER)));
 		$processor = new AnyNProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -41,7 +41,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(2, 3);
 		$operands = new OperandsCollection(array('String'));
 		$processor = new AnyNProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -49,14 +49,14 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(2, 3);
 		$operands = new OperandsCollection(array(new Point(1, 2)));
 		$processor = new AnyNProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression(2, 3);
 		$operands = new OperandsCollection();
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new AnyNProcessor($expression, $operands);
 	}
 	
@@ -88,7 +88,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression('min', 4);
 		$operands = new OperandsCollection(array(true, true, true, null));
 		$processor = new AnyNProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -96,7 +96,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(3, 'max');
 		$operands = new OperandsCollection(array(true, true, true, null));
 		$processor = new AnyNProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -108,7 +108,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$state->setVariable($min);
 		$processor = new AnyNProcessor($expression, $operands);
 		$processor->setState($state);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -120,7 +120,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 		$state->setVariable($max);
 		$processor = new AnyNProcessor($expression, $operands);
 		$processor->setState($state);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	

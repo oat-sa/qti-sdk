@@ -11,8 +11,8 @@ require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 use qtism\runtime\common\State;
 use qtism\runtime\common\RecordContainer;
 use qtism\data\expressions\operators\ToleranceMode;
-use qtism\runtime\expressions\processing\operators\EqualProcessor;
-use qtism\runtime\expressions\processing\operators\OperandsCollection;
+use qtism\runtime\expressions\operators\EqualProcessor;
+use qtism\runtime\expressions\operators\OperandsCollection;
 
 class EqualProcessorTest extends QtiSmTestCase {
 	
@@ -184,7 +184,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		
 		$state = new State();
 		$processor->setState($state);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor->process();
 	}
 	
@@ -209,7 +209,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
 		$operands = new OperandsCollection(array(10, 'String!'));
 		$processor = new EqualProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
@@ -217,21 +217,21 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
 		$operands = new OperandsCollection(array(new RecordContainer(array('A' => 1)), 10));
 		$processor = new EqualProcessor($expression, $operands);
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
 		$operands = new OperandsCollection(array(10));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new EqualProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
 		$operands = new OperandsCollection(array(10, 10, 10));
-		$this->setExpectedException('qtism\\runtime\\expressions\\processing\\ExpressionProcessingException');
+		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new EqualProcessor($expression, $operands);
 	}
 	
