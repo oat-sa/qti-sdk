@@ -19,5 +19,15 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
 		$this->assertTrue($weights->getByIdentifier('weight3') === $weight3);
 		
 		$this->assertTrue($weights->getByIdentifier('weightX') === null);
+		
+		
+		// Can I address the by identifier?
+		$this->assertTrue($weights['weight2'] === $weight2);
+		
+		// What happens if I change the identifier of an object.
+		// Is it adressable with the new identifier?
+		$weight2->setIdentifier('weightX');
+		$this->assertTrue($weights['weightX'] === $weight2);
+		$this->assertFalse(isset($weights['weight2']));
 	}
 }

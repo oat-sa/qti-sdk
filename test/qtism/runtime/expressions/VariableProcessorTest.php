@@ -59,10 +59,12 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(1337, $state['var1']);
 		
 		// What if the indicated weight is not found?
-		$weights[0]->setIdentifier('weight2');
+		$weights['weight1']->setIdentifier('weight2');
 		$result = $variableProcessor->process();
 		$this->assertEquals(1337, $result);
-		$weights[0]->setIdentifier('weight1');
+		
+		// Remember! the identifier has changed... Magic isn't it ? x)
+		$weights['weight2']->setIdentifier('weight1');
 		
 		// -- multiple cardinality test.
 		$val = new MultipleContainer(BaseType::FLOAT, array(10.1, 12.1));
@@ -79,7 +81,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(12.1, $stateVal[1]);
 		
 		// What if the indicated weight is not found?
-		unset($weights[0]);
+		unset($weights['weight1']);
 		$result = $variableProcessor->process();
 		$this->assertEquals(10.1, $result[0]);
 		$this->assertEquals(12.1, $result[1]);

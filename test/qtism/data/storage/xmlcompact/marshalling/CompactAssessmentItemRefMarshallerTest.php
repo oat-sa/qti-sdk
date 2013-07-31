@@ -108,16 +108,16 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('./q01.xml', $component->getHref());
 		
 		$weights = $component->getWeights();
-		$this->assertEquals('W01', $weights[0]->getIdentifier());
-		$this->assertEquals('W02', $weights[1]->getIdentifier());
+		$this->assertEquals('W01', $weights['W01']->getIdentifier());
+		$this->assertEquals('W02', $weights['W02']->getIdentifier());
 		
 		$responseDeclarations = $component->getResponseDeclarations();
-		$this->assertEquals('R01', $responseDeclarations[0]->getIdentifier());
-		$this->assertEquals('R02', $responseDeclarations[1]->getIdentifier());
+		$this->assertEquals('R01', $responseDeclarations['R01']->getIdentifier());
+		$this->assertEquals('R02', $responseDeclarations['R02']->getIdentifier());
 		
 		$outcomeDeclarations = $component->getOutcomeDeclarations();
-		$this->assertEquals('O01', $outcomeDeclarations[0]->getIdentifier());
-		$this->assertEquals('O02', $outcomeDeclarations[1]->getIdentifier());
+		$this->assertEquals('O01', $outcomeDeclarations['O01']->getIdentifier());
+		$this->assertEquals('O02', $outcomeDeclarations['O02']->getIdentifier());
 		
 	}
 }

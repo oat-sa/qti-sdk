@@ -23,10 +23,10 @@ class QtiComponentTest extends QtiSmTestCase {
 		
 		// -- search by identifier.
 		$search = $assessmentSection->getComponentByIdentifier('Q02');
-		$this->assertSame($sectionParts[1], $search);
+		$this->assertSame($sectionParts['Q02'], $search);
 		
 		$search = $assessmentSection->getComponentByIdentifier('Q03', false);
-		$this->assertSame($sectionParts[2], $search);
+		$this->assertSame($sectionParts['Q03'], $search);
 		
 		// -- search by QTI class name.
 		$search = $assessmentSection->getComponentsByClassName('correct');

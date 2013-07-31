@@ -137,8 +137,8 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 					
 					// find the old one and replace it.
 					$previousParts = $previous->getSectionParts();
-					for ($i = 0; $i < count($previousParts); $i++) {
-						if ($previousParts[$i] === $component) {
+					foreach ($previousParts as $k => $previousPart) {
+						if ($previousParts[$k] === $component) {
 							
 							// If the previous processed component is an XmlAssessmentSectionDocument,
 							// it means that the given baseUri must be adapted.
@@ -158,8 +158,8 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 					// the 1st pass.
 					$assessmentSection = self::resolveAssessmentSectionRef($component, $xmlAssessmentTestDocument->getUri());
 					$previousParts = $previous->getSectionParts();
-					for ($i = 0; $i < count($previousParts); $i++) {
-						if ($previousParts[$i] === $component) {
+					foreach ($previousParts as $k => $previousPart) {
+						if ($previousParts[$k] === $component) {
 							$previousParts->replace($component, $assessmentSection);
 							break;
 						}

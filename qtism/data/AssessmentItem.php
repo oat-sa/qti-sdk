@@ -7,6 +7,7 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
 use \InvalidArgumentException;
+use \SplObserver;
 
 /**
  * The AssessmentItem QTI class implementation. It contains all the information
@@ -65,6 +66,13 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	private $outcomeDeclarations;
 	
 	/**
+	 * The observers of this object.
+	 * 
+	 * @var SplObjectStorage
+	 */
+	private $observers;
+	
+	/**
 	 * Create a new AssessmentItem object.
 	 * 
 	 * @param string $identifier A QTI Identifier.
@@ -73,6 +81,8 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $timeDependent is not a boolean value, or if $lang is not a string value. 
 	 */
 	public function __construct($identifier, $timeDependent, $lang = '') {
+		$this->setObservers(new SplObjectStorage());
+		
 		$this->setIdentifier($identifier);
 		$this->setTimeDependent($timeDependent);
 		$this->setLang($lang);
@@ -88,7 +98,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier)) {
+			
 			$this->identifier = $identifier;
+			$this->notify();
 		}
 		else {
 			$msg = "The identifier argument must be a valid QTI Identifier, '" . $identifier . "' given.";
@@ -235,5 +247,50 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 							$this->getResponseDeclarations()->getArrayCopy());
 		
 		return new QtiComponentCollection($comp);
+	}
+	
+	/**
+	 * Get the observers of the object.
+	 *
+	 * @return SplObjectStorage An SplObjectStorage object.
+	 */
+	protected function getObservers() {
+		return $this->observers;
+	}
+	
+	/**
+	 * Set the observers of the object.
+	 *
+	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 */
+	protected function setObservers(SplObjectStorage $observers) {
+		$this->observers = $observers;
+	}
+	
+	/**
+	 * SplSubject::attach implementation.
+	 *
+	 * @param SplObserver An SplObserver object.
+	 */
+	public function attach(SplObserver $observer) {
+		$this->getObservers()->attach($observer);
+	}
+	
+	/**
+	 * SplSubject::detach implementation.
+	 *
+	 * @param SplObserver $observer An SplObserver object.
+	 */
+	public function detach(SplObserver $observer) {
+		$this->getObservers()->detach($observer);
+	}
+	
+	/**
+	 * SplSubject::notify implementation.
+	 */
+	public function notify() {
+		foreach ($this->getObservers() as $observer) {
+			$observer->update($this);
+		}
 	}
 }

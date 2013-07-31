@@ -57,10 +57,10 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(SubmissionMode::INDIVIDUAL, $component->getSubmissionMode());
 		
 		$assessmentSections = $component->getAssessmentSections();
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections[0]);
-		$this->assertEquals('section1', $assessmentSections[0]->getIdentifier());
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections[1]);
-		$this->assertEquals('section2', $assessmentSections[1]->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
+		$this->assertEquals('section1', $assessmentSections['section1']->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section2']);
+		$this->assertEquals('section2', $assessmentSections['section2']->getIdentifier());
 	}
 	
 	public function testUnmarshallMorderate() {
@@ -87,10 +87,10 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(SubmissionMode::INDIVIDUAL, $component->getSubmissionMode());
 		
 		$assessmentSections = $component->getAssessmentSections();
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections[0]);
-		$this->assertEquals('section1', $assessmentSections[0]->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
+		$this->assertEquals('section1', $assessmentSections['section1']->getIdentifier());
 		
-		$assessmentSection = $assessmentSections[0];
+		$assessmentSection = $assessmentSections['section1'];
 		$this->assertEquals(3, count($assessmentSection->getSectionParts()));
 	}
 }

@@ -219,12 +219,12 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		
 		// Is order preserved?
 		$sectionParts = $component->getSectionParts();
-		$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts[0]);
-		$this->assertEquals('Q01', $sectionParts[0]->getIdentifier());
-		$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts[1]);
-		$this->assertEquals('Q02', $sectionParts[1]->getIdentifier());
-		$this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts[2]);
-		$this->assertEquals('S01', $sectionParts[2]->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q01']);
+		$this->assertEquals('Q01', $sectionParts['Q01']->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q02']);
+		$this->assertEquals('Q02', $sectionParts['Q02']->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['S01']);
+		$this->assertEquals('S01', $sectionParts['S01']->getIdentifier());
 		
 		$this->assertEquals(1, count($component->getPreconditions()));
 		$this->assertEquals(1, count($component->getBranchRules()));
@@ -262,20 +262,20 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($component->getSectionParts()));
 		
 		$sectionParts = $component->getSectionParts();
-		$this->assertEquals('sub1AssessmentSection', $sectionParts[0]->getIdentifier());
+		$this->assertEquals('sub1AssessmentSection', $sectionParts['sub1AssessmentSection']->getIdentifier());
 		
-		$subSectionParts = $sectionParts[0]->getSectionParts();
-		$this->assertEquals('Q01', $subSectionParts[0]->getIdentifier());
-		$this->assertEquals('Q02', $subSectionParts[1]->getIdentifier());
-		$this->assertEquals('sub2AssessmentSection', $sectionParts[1]->getIdentifier());
+		$subSectionParts = $sectionParts['sub1AssessmentSection']->getSectionParts();
+		$this->assertEquals('Q01', $subSectionParts['Q01']->getIdentifier());
+		$this->assertEquals('Q02', $subSectionParts['Q02']->getIdentifier());
+		$this->assertEquals('sub2AssessmentSection', $sectionParts['sub2AssessmentSection']->getIdentifier());
 		
-		$subSectionParts = $sectionParts[1]->getSectionParts();
-		$this->assertEquals('Q03', $subSectionParts[0]->getIdentifier());
-		$this->assertEquals('sub21AssessmentSection', $subSectionParts[1]->getIdentifier());
-		$this->assertEquals('sub22AssessmentSection', $subSectionParts[2]->getIdentifier());
+		$subSectionParts = $sectionParts['sub2AssessmentSection']->getSectionParts();
+		$this->assertEquals('Q03', $subSectionParts['Q03']->getIdentifier());
+		$this->assertEquals('sub21AssessmentSection', $subSectionParts['sub21AssessmentSection']->getIdentifier());
+		$this->assertEquals('sub22AssessmentSection', $subSectionParts['sub22AssessmentSection']->getIdentifier());
 		
-		$subSectionParts = $subSectionParts[2]->getSectionParts();
-		$this->assertEquals('S01', $subSectionParts[0]->getIdentifier());
+		$subSectionParts = $subSectionParts['sub22AssessmentSection']->getSectionParts();
+		$this->assertEquals('S01', $subSectionParts['S01']->getIdentifier());
 	}
 	
 	public function testUnmarshallOneSectionAssessmentItemRefOnly() {

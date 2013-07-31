@@ -88,7 +88,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		$outcomeDeclarations = $assessmentTest->getOutcomeDeclarations();
 		$this->assertEquals(2, count($outcomeDeclarations));
 		
-		$outcomeDeclaration = $outcomeDeclarations[0];
+		$outcomeDeclaration = $outcomeDeclarations['SCORE'];
 		$this->assertEquals('SCORE', $outcomeDeclaration->getIdentifier());
 		$this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
 		$this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
@@ -102,7 +102,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		$this->assertInternalType('float', $value->getValue());
 		$this->assertEquals(0.0, $value->getValue());
 		
-		$outcomeDeclaration = $outcomeDeclarations[1];
+		$outcomeDeclaration = $outcomeDeclarations['MAXSCORE'];
 		$this->assertEquals('MAXSCORE', $outcomeDeclaration->getIdentifier());
 		$this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
 		$this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
@@ -119,7 +119,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		// -- TestParts
 		$testParts = $assessmentTest->getTestParts();
 		$this->assertEquals(1, count($testParts));
-		$testPart = $testParts[0];
+		$testPart = $testParts['testpartID'];
 		$this->assertInstanceOf('qtism\\data\\TestPart', $testPart);
 		$this->assertEquals('testpartID', $testPart->getIdentifier());
 		$this->assertEquals(NavigationMode::NONLINEAR, $testPart->getNavigationMode());
@@ -128,7 +128,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		// -- AssessmentSections
 		$assessmentSections = $testPart->getAssessmentSections();
 		$this->assertEquals(1, count($assessmentSections));
-		$assessmentSection = $assessmentSections[0];
+		$assessmentSection = $assessmentSections['Sektion_181865064'];
 		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSection);
 		$this->assertEquals('Sektion_181865064', $assessmentSection->getIdentifier());
 		$this->assertFalse($assessmentSection->isFixed());
@@ -157,10 +157,13 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		);
 		
 		for ($i = 0; $i < count($assessmentItemRefs); $i++) {
-			$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs[$i]);
-			$this->assertEquals($expectedItems[$i][0], $assessmentItemRefs[$i]->getIdentifier());
-			$this->assertEquals($expectedItems[$i][1], $assessmentItemRefs[$i]->getHref());
-			$this->assertFalse($assessmentItemRefs[$i]->isFixed());
+			$id = $expectedItems[$i][0];
+			$file = $expectedItems[$i][1];
+			
+			$this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs[$id]);
+			$this->assertEquals($id, $assessmentItemRefs[$id]->getIdentifier());
+			$this->assertEquals($file, $assessmentItemRefs[$id]->getHref());
+			$this->assertFalse($assessmentItemRefs[$id]->isFixed());
 		}
 		
 		// OutcomeProcessing

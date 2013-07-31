@@ -33,23 +33,26 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 
 		$testParts = $doc->getTestParts();
 		$this->assertEquals(1, count($testParts));
-		$assessmentSections = $testParts[0]->getAssessmentSections();
+		$assessmentSections = $testParts['testpartID']->getAssessmentSections();
 		$this->assertEquals(1, count($assessmentSections));
-		$assessmentItemRefs = $assessmentSections[0]->getSectionParts();
-		for ($i = 0; $i < count($assessmentItemRefs); $i++) {
-			$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $assessmentItemRefs[$i]);
+		$assessmentItemRefs = $assessmentSections['Sektion_181865064']->getSectionParts();
+		
+		$itemCount = 0;
+		foreach ($assessmentItemRefs as $k => $ref) {
+			$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $assessmentItemRefs[$k]);
+			$itemCount++;
 		}
-		$this->assertEquals($i, 13); // contains 13 assessmentItemRef elements.
+		$this->assertEquals($itemCount, 13); // contains 13 assessmentItemRef elements.
 		
 		// Pick up 3 for a test...
-		$assessmentItemRef = $assessmentItemRefs[3];
+		$assessmentItemRef = $assessmentItemRefs['Choicemultiple_871212949'];
 		$this->assertEquals('Choicemultiple_871212949', $assessmentItemRef->getIdentifier());
 		$responseDeclarations = $assessmentItemRef->getResponseDeclarations();
 		$this->assertEquals(1, count($responseDeclarations));
-		$this->assertEquals('RESPONSE_27966883', $responseDeclarations[0]->getIdentifier());
+		$this->assertEquals('RESPONSE_27966883', $responseDeclarations['RESPONSE_27966883']->getIdentifier());
 		$outcomeDeclarations = $assessmentItemRef->getOutcomeDeclarations();
 		$this->assertEquals(10, count($outcomeDeclarations));
-		$this->assertEquals('MAXSCORE', $outcomeDeclarations[1]->getIdentifier());
+		$this->assertEquals('MAXSCORE', $outcomeDeclarations['MAXSCORE']->getIdentifier());
 	}
 	
 	public function testSave() {
@@ -101,35 +104,35 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$outcomeDeclarations = $compactDoc->getOutcomeDeclarations();
 		$this->assertEquals(2, count($outcomeDeclarations));
-		$this->assertEquals('SCORE', $outcomeDeclarations[0]->getIdentifier());
+		$this->assertEquals('SCORE', $outcomeDeclarations['SCORE']->getIdentifier());
 		
 		$testParts = $compactDoc->getTestParts();
 		$this->assertEquals(1, count($testParts));
-		$this->assertEquals('testpartID', $testParts[0]->getIdentifier());
-		$this->assertEquals(NavigationMode::NONLINEAR, $testParts[0]->getNavigationMode());
+		$this->assertEquals('testpartID', $testParts['testpartID']->getIdentifier());
+		$this->assertEquals(NavigationMode::NONLINEAR, $testParts['testpartID']->getNavigationMode());
 		
-		$assessmentSections1stLvl = $testParts[0]->getAssessmentSections();
+		$assessmentSections1stLvl = $testParts['testpartID']->getAssessmentSections();
 		$this->assertEquals(1, count($assessmentSections1stLvl));
-		$this->assertEquals('Container_45665458', $assessmentSections1stLvl[0]->getIdentifier());
+		$this->assertEquals('Container_45665458', $assessmentSections1stLvl['Container_45665458']->getIdentifier());
 		
-		$assessmentSections2ndLvl = $assessmentSections1stLvl[0]->getSectionParts();
+		$assessmentSections2ndLvl = $assessmentSections1stLvl['Container_45665458']->getSectionParts();
 		$this->assertEquals(1, count($assessmentSections2ndLvl));
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections2ndLvl[0]);
-		$this->assertEquals('Sektion_181865064', $assessmentSections2ndLvl[0]->getIdentifier());
+		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections2ndLvl['Sektion_181865064']);
+		$this->assertEquals('Sektion_181865064', $assessmentSections2ndLvl['Sektion_181865064']->getIdentifier());
 		
-		$assessmentItemRefs = $assessmentSections2ndLvl[0]->getSectionParts();
+		$assessmentItemRefs = $assessmentSections2ndLvl['Sektion_181865064']->getSectionParts();
 		$this->assertEquals(13, count($assessmentItemRefs));
 		
 		// Pick up 4 for a test...
-		$assessmentItemRef = $assessmentItemRefs[4];
+		$assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
 		$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $assessmentItemRef);
 		$this->assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
 		$responseDeclarations = $assessmentItemRef->getResponseDeclarations();
 		$this->assertEquals(1, count($responseDeclarations));
-		$this->assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
+		$this->assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
 		$outcomeDeclarations = $assessmentItemRef->getOutcomeDeclarations();
 		$this->assertEquals(5, count($outcomeDeclarations));
-		$this->assertEquals('FEEDBACKBASIC', $outcomeDeclarations[2]->getIdentifier());
+		$this->assertEquals('FEEDBACKBASIC', $outcomeDeclarations['FEEDBACKBASIC']->getIdentifier());
 		
 		$file = tempnam('/tmp', 'qsm');
 		$compactDoc->save($file);

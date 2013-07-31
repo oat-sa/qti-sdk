@@ -272,9 +272,9 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		}
 		
 		$data = &$this->getDataPlaceHolder();
-		for ($i = 0; $i < count($data); $i++) {
-			if ($data[$i] === $object) {
-				$data[$i] = $replacement;
+		foreach (array_keys($data) as $k) {
+			if ($data[$k] === $object) {
+				$data[$k] = $replacement;
 				return;
 			}
 		}
