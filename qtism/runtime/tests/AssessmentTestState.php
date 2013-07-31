@@ -5,7 +5,10 @@ namespace qtism\runtime\tests;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
+use qtism\runtime\common\Variable;
 use \InvalidArgumentException;
+use \OutOfRangeException;
+use \OutOfBoundsException;
 
 /**
  * The State of an AssessmentTest Instance.
@@ -30,9 +33,9 @@ class AssessmentTestState extends State {
 	 * @param AssessmentItemRefCollection A collection of QTI Data Model AssessmentItemRef objects. In other words, the execution context.
 	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
 	 */
-	public function __construct(array $array = array(), AssessmentItemRefCollection $assessmentItemRefs = null) {
-		parent::__construct($array);
+	public function __construct(array $array = array(), AssessmentItemRefCollection $assessmentItemRefs) {
 		$this->setAssessmentItemRefs((empty($assessmentItemRefs)) ? new AssessmentItemRefCollection() : $assessmentItemRefs);
+		parent::__construct($array);
 	}
 	
 	/**
@@ -89,5 +92,62 @@ class AssessmentTestState extends State {
 		}
 		
 		return false;
+	}
+	
+	public function setVariable(Variable $variable) {
+		$v = new VariableIdentifier($variable->getIdentifier());
+		
+		if ($v->hasPrefix() === true) {
+			// Check if the corresponding itemRef is registered.
+			$items = $this->getAssessmentItemRefs();
+			if (isset($items[$v->getPrefix()]) === false) {
+				$prefix = $v->getPrefix();
+				$msg = "No assessmentItemRef with identifier '${prefix}' found.";
+				throw new InvalidArgumentException($msg);
+			}	
+		}
+		
+		$data = &$this->getDataPlaceHolder();
+		$data[$v->getIdentifier()] = $variable;
+	}
+	
+	public function offsetGet($offset) {
+		
+		if (gettype($offset) !== 'string') {
+			$msg = "An AssessmentTestState object must be addressed by string.";
+			throw new OutOfRangeException($msg);
+		}
+		
+		try {
+			$v = new VariableIdentifier($offset);
+			$data = &$this->getDataPlaceHolder();
+			
+			if ($v->hasPrefix() === false) {
+				// Simple variable name.
+				// -> This means the requested variable is in the global test scope.
+				$varName = $v->getVariableName();
+				if (isset($data[$varName]) === false) {
+					return null;
+				}
+				
+				return $data[$varName]->getValue();
+			}
+			else {
+				// Prefixed variable Name.
+				// -> The prefix is always an item identifier. Is it referenced ?
+				$itemId = $v->getPrefix();
+				$items = $this->getAssessmentItemRefs();
+				if (isset($items[$itemId]) === false) {
+					// The test does not contain the requested item.
+					return null;
+				}
+				
+				return $data[$v->getPrefix() . '.' . $v->getVariableName()]->getValue();
+			}
+		}
+		catch (InvalidArgumentException $e) {
+			$msg = "AssessmentTestState object addressed with an invalid identifier '${offset}'.";
+			throw new OutOfRangeException($msg, 0, $e);
+		}
 	}
 }
