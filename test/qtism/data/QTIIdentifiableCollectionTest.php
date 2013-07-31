@@ -14,11 +14,11 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
 		$weight3 = new Weight('weight3', 1.2);
 		$weights = new WeightCollection(array($weight1, $weight2, $weight3));
 		
-		$this->assertTrue($weights->getByIdentifier('weight1') === $weight1);
-		$this->assertTrue($weights->getByIdentifier('weight2') === $weight2);
-		$this->assertTrue($weights->getByIdentifier('weight3') === $weight3);
+		$this->assertTrue($weights['weight1'] === $weight1);
+		$this->assertTrue($weights['weight2'] === $weight2);
+		$this->assertTrue($weights['weight3'] === $weight3);
 		
-		$this->assertTrue($weights->getByIdentifier('weightX') === null);
+		$this->assertTrue($weights['weightX'] === null);
 		
 		
 		// Can I address the by identifier?

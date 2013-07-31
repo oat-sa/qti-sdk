@@ -87,7 +87,8 @@ class VariableProcessor extends ExpressionProcessor {
 		
 		// We have a value for this variable, is it weighted?
 		if ($state instanceof AssessmentTestState) {
-			$weight = $state->getWeights()->getByIdentifier($weightIdentifier);
+			$weights = $state->getWeights();
+			$weight = $weights[$weightIdentifier];
 			
 			// From IMS QTI:
 			//Weights only apply to item variables with base types integer and float.

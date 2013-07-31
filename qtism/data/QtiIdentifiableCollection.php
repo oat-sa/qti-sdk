@@ -39,23 +39,6 @@ abstract class QtiIdentifiableCollection extends QtiComponentCollection implemen
 	}
 	
 	/**
-	 * Get a QtiComponent contained in the collection by its identifier.
-	 * If no QtiComponent with $identifier is found in the collection, null is returned.
-	 * 
-	 * @param  $identifier The identifier of the QtiComponent to retrieve.
-	 * @return QtiComponent A QtiComponent object or null if not found.
-	 */
-	public function getByIdentifier($identifier) {
-		foreach ($this->getDataPlaceHolder() as $component) {
-			if ($component->getIdentifier() === $identifier) {
-				return $component;
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
 	 * Whether a QtiIdentifiable object with 'identifier' = $offset is in
 	 * the collection.
 	 * 
