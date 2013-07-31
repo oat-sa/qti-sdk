@@ -31,6 +31,16 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$this->assertTrue(Utils::inferCardinality($value) === $expectedCardinality);
 	}
 	
+	/**
+	 * @dataProvider isValidVariableIdentifierProvider
+	 * 
+	 * @param string $string
+	 * @param boolean $expected
+	 */
+	public function testIsValidVariableIdentifier($string, $expected) {
+		$this->assertSame($expected, Utils::isValidVariableIdentifier($string));
+	}
+	
 	public function inferBaseTypeProvider() {
 		$returnValue = array();
 		
@@ -73,5 +83,33 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(new Duration('P1D'), Cardinality::SINGLE);
 		
 		return $returnValue;
+	}
+	
+	public function isValidVariableIdentifierProvider() {
+		return array(
+			array('Q01', true),
+			array('Q_01', true),
+			array('Q-01', true),
+			array('Q*01', false),
+			array('q01', true),
+			array('_Q01', false),
+			array('', false),
+			array(1337, false),
+			array('Q01.1', false),
+			array('Q01.1.SCORE', true),
+			array('Q01.999.SCORE', true),
+			array('Q01.A.SCORE', false),
+			array('Qxx.12.', false),
+			array('Q-2.', false),
+			array('934.9.SCORE', false),
+			array('A34.10.S-C-O', true),
+			array('999', false),
+			array('Q01.1.SCORE.MAX', false),
+			array('Q 01', false),
+			array('Q01 . SCORE', false),
+			array('Q_01.SCORE', true),
+			array('Q01.0.SCORE', false), // non positive sequence number -> false
+			array('Q01.09.SCORE', false) // prefixing sequence by zero not allowed.
+		);
 	}
 }

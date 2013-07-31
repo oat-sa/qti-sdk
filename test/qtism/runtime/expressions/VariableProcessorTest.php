@@ -1,5 +1,9 @@
 <?php
 
+use qtism\data\AssessmentItemRefCollection;
+
+use qtism\data\AssessmentItemRef;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\state\WeightCollection;
@@ -43,10 +47,14 @@ class VariableProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testWeighted() {
+		$assessmentItemRef = new AssessmentItemRef('Q01', './Q01.xml');
 		$weights = new WeightCollection(array(new Weight('weight1', 1.1)));
-		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, 1337);
-		$state = new AssessmentTestState(array($var1), $weights);
-		$variableExpr = $this->createComponentFromXml('<variable identifier="var1" weightIdentifier="weight1" />');
+		$assessmentItemRef->setWeights($weights);
+		$assessmentItemRefs = new AssessmentItemRefCollection(array($assessmentItemRef));
+		
+		$var1 = new OutcomeVariable('Q01.var1', Cardinality::SINGLE, BaseType::INTEGER, 1337);
+		$state = new AssessmentTestState(array($var1), $assessmentItemRefs);
+		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
 		
 		$variableProcessor = new VariableProcessor($variableExpr);
 		$variableProcessor->setState($state);
@@ -56,7 +64,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertInternalType('float', $result);
 		$this->assertEquals(1470.7, $result);
 		// The value in the state must be intact.
-		$this->assertEquals(1337, $state['var1']);
+		$this->assertEquals(1337, $state['Q01.var1']);
 		
 		// What if the indicated weight is not found?
 		$weights['weight1']->setIdentifier('weight2');
@@ -68,15 +76,15 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		// -- multiple cardinality test.
 		$val = new MultipleContainer(BaseType::FLOAT, array(10.1, 12.1));
-		$var2 = new OutcomeVariable('var2', Cardinality::MULTIPLE, BaseType::FLOAT, $val);
+		$var2 = new OutcomeVariable('Q01.var2', Cardinality::MULTIPLE, BaseType::FLOAT, $val);
 		$state->setVariable($var2);
-		$variableExpr = $this->createComponentFromXml('<variable identifier="var2" weightIdentifier="weight1"/>');
+		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var2" weightIdentifier="weight1"/>');
 		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();
 		$this->assertEquals(11.11, $result[0]);
 		$this->assertEquals(13.31, $result[1]);
 		// The value in the state must be unchanged.
-		$stateVal = $state['var2'];
+		$stateVal = $state['Q01.var2'];
 		$this->assertEquals(10.1, $stateVal[0]);
 		$this->assertEquals(12.1, $stateVal[1]);
 		

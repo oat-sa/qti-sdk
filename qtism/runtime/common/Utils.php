@@ -222,4 +222,27 @@ class Utils {
 			return false;
 		}
 	}
+	
+	/**
+	 * Whether a given $string is a valid variable identifier.
+	 * 
+	 * Q01			-> Valid
+	 * Q_01			-> Valid
+	 * 1_Q01		-> Invalid
+	 * Q01.SCORE	-> Valid
+	 * Q-01.1.Score	-> Valid
+	 * Q*01.2.Score	-> Invalid
+	 * 
+	 * @param string $string A string value.
+	 * @return boolean Whether the given $string is a valid variable identifier.
+	 */
+	public static function isValidVariableIdentifier($string) {
+		
+		if (gettype($string) !== 'string' || empty($string)) {
+			return false;
+		}
+		
+		$pattern = '/^[a-z][a-z0-9_\-]*(?:(?:\.[1-9][0-9]*){0,1}\.[a-z][a-z0-9_\-]*){0,1}$/iu';
+		return preg_match($pattern, $string) === 1;
+	}
 }

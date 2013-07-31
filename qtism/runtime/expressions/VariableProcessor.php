@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\tests\AssessmentTestState;
@@ -87,29 +88,41 @@ class VariableProcessor extends ExpressionProcessor {
 		
 		// We have a value for this variable, is it weighted?
 		if ($state instanceof AssessmentTestState) {
-			$weights = $state->getWeights();
-			$weight = $weights[$weightIdentifier];
 			
-			// From IMS QTI:
-			//Weights only apply to item variables with base types integer and float.
-			// If the item variable is of any other type the weight is ignored.
-			if (!empty($weight) && ($variable->getBaseType() == BaseType::INTEGER || $variable->getBaseType() == BaseType::FLOAT)) {
-				
-				if ($variable->getCardinality() == Cardinality::SINGLE) {
-					$variableValue *= $weight->getValue();
-				}
-				else {
+			try {
+				$vIdentifier = new VariableIdentifier($variableIdentifier);
+				if ($vIdentifier->hasPrefix() === true) {
 					
-					// variableValue is an object, the weighting should not
-					// affect the content of the state so a new container is created.
-					$cloneValue = clone $variableValue;
-					for ($i = 0; $i < count($cloneValue); $i++) {
-						$cloneValue[$i] *= $weight->getValue();
-					}
+					$weight = $state->getWeight($vIdentifier->getPrefix() . '.' . $weightIdentifier);
+						
+					// From IMS QTI:
+					//Weights only apply to item variables with base types integer and float.
+					// If the item variable is of any other type the weight is ignored.
+					if (!empty($weight) && ($variable->getBaseType() == BaseType::INTEGER || $variable->getBaseType() == BaseType::FLOAT)) {
 					
-					$variableValue = $cloneValue;
+						if ($variable->getCardinality() == Cardinality::SINGLE) {
+							$variableValue *= $weight->getValue();
+						}
+						else {
+								
+							// variableValue is an object, the weighting should not
+							// affect the content of the state so a new container is created.
+							$cloneValue = clone $variableValue;
+							for ($i = 0; $i < count($cloneValue); $i++) {
+								$cloneValue[$i] *= $weight->getValue();
+							}
+								
+							$variableValue = $cloneValue;
+						}
+					}	
 				}
 			}
+			catch (InvalidArgumentException $e) {
+				// Invalid $variableIdentifier.
+				$msg = "Invalid identifier '${variableIdentifier}' given for variable identifier.";
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
+			}
+			
 		}
 		
 		return $variableValue;
