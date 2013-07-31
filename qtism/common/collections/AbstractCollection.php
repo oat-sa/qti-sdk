@@ -31,9 +31,9 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		
 		$dataPlaceHolder = &$this->getDataPlaceHolder();
 		
-		foreach ($array as $a) {
+		foreach ($array as $k => $a) {
 			$this->checkType($a);
-			$dataPlaceHolder[] = $a;
+			$dataPlaceHolder[$k] = $a;
 		}
 		
 		reset($dataPlaceHolder);
