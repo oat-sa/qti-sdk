@@ -1,4 +1,10 @@
 <?php
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+
+use qtism\data\state\VariableDeclaration;
+
+use qtism\data\state\OutcomeDeclarationCollection;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\VariableIdentifier;
@@ -19,29 +25,21 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 	public function setUp() {
 		parent::setUp();
 		
-		// AssessmentItemRefs involved.
-		$itemArray = array();
+		$xml = new XmlCompactAssessmentTestDocument('1.0');
+		$xml->load(dirname(__FILE__) . '/../../../samples/custom/assessmenttest_context.xml');
 		
-		$assessmentItemRef = new AssessmentItemRef('Q01', './Q01.xml');
-		$assessmentItemRef->setWeights(new WeightCollection(array(new Weight('W01', 1.0), new Weight('W02', 1.1))));
-		$itemArray[] = $assessmentItemRef;
-		
-		$variables = array();
-		$variables[] = new OutcomeVariable('OUTCOME1', Cardinality::SINGLE, BaseType::STRING, 'String!');
-		$variables[] = new OutcomeVariable('Q01.SCORE', Cardinality::SINGLE, BaseType::INTEGER, 10);
-		$variables[] = new OutcomeVariable('Q01.MAXSCORE', Cardinality::SINGLE, BaseType::FLOAT, 10.0);
-		
-		$this->state = new AssessmentTestContext($variables, new AssessmentItemRefCollection($itemArray));
+		$this->state = new AssessmentTestContext($xml);
+		$this->state['OUTCOME1'] = 'String!';
+		$this->state['Q01.SCORE'] = 10;
+		$this->state['Q01.MAXSCORE'] = 10.0;
 	}
 	
 	public function getState() {
 		return $this->state;
 	}
 	
-	public function testGetVariableValue($strictMode = false) {
-		
+	public function testGetVariableValue() {	
 		$state = $this->getState();
-		$state->setStrictMode($strictMode);
 		
 		// get a value which is set (global scope).
 		$val = $state['OUTCOME1'];
@@ -54,42 +52,18 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 		$this->assertEquals(10, $val);
 		
 		// get a value which is not set (global score).
-		try {
-			$val = $state['OUTCOMEX'];
-			
-			$this->assertFalse($strictMode);
-			$this->assertSame(null, $val);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
+		$val = $state['OUTCOMEX'];
+		$this->assertSame(null, $val);
+
 		
 		// get a value which is not set (item scope && item referenced).
+		$val = $state['Q01.OVERKILL'];
+		$this->assertSame(null, $val);
 		
-		try {
-			$val = $state['Q01.OVERKILL'];
-			
-			$this->assertFalse($strictMode);
-			$this->assertSame(null, $val);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
 		
 		// get a value which is not set (item scope && no such an item referenced).
-		try {
-			$val = $state['Q0X.OVERKILL'];
-			
-			$this->assertFalse($strictMode);
-			$this->assertSame(null, $val);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
-	}
-	
-	public function testGetVariableValueStrictMode() {
-		$this->testGetVariableValue(true);
+		$val = $state['Q0X.OVERKILL'];
+		$this->assertSame(null, $val);
 	}
 	
 	public function testSetVariableValue() {
@@ -130,16 +104,6 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 	}
 	
 	/**
-	 * @dataProvider getUnsetVariableStrictModeProvider
-	 */
-	public function testGetUnsetVariableStrictMode($identifier) {
-		$this->setExpectedException('\\OutOfBoundsException');
-		$state = $this->getState();
-		$state->setStrictMode(true);
-		$val = $state[$identifier];
-	}
-	
-	/**
 	 * @dataProvider getWeightProvider
 	 * 
 	 * @param string $identifier
@@ -155,9 +119,8 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 		$this->assertEquals($expectedValue, $weight->getValue());
 	}
 		
-	public function testUnset($strictMode = false) {
+	public function testUnset() {
 		$state = $this->getState();
-		$state->setStrictMode($strictMode);
 		
 		$this->assertEquals($state['OUTCOME1'], 'String!');
 		unset($state['OUTCOME1']);
@@ -166,36 +129,21 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 		$this->assertEquals($state['Q01.SCORE'], 10);
 		unset($state['Q01.SCORE']);
 		$this->assertSame($state['Q01.SCORE'], null);
-		
-		// If strict mode is false, no error should be thrown.
-		try {
-			unset($state['XXX']);
-			$this->assertFalse($strictMode);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
-		
-		try {
-			unset($state['Q01.X']);
-			$this->assertFalse($strictMode);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
-		
-		try {
-			unset($state['Q02.X']);
-			$this->assertFalse($strictMode);
-		}
-		catch (OutOfBoundsException $e) {
-			$this->assertTrue($strictMode);
-		}
+
+		unset($state['XXX']);
+		unset($state['Q01.X']);
+		unset($state['Q02.X']);
 	}
 	
-	public function testUnsetStrictMode() {
-		$this->testUnset(true);
+	public function testOffsetExists() {
+		$state = $this->getState();
+		$this->assertTrue(isset($state['OUTCOME1']));
+		$this->assertFalse(isset($state['OUTCOMEX']));
+		$this->assertTrue(isset($state['Q01.SCORE']));
+		$this->assertFalse(isset($state['Q9999.SCORE']));
+		$this->assertFalse(isset($state['Q01.X']));
 	}
+	
 	
 	/**
 	 * @dataProvider getWeightProviderNoPrefix
@@ -242,14 +190,6 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 		return array(
 			array('Q01.W03'),
 			array('Q02.W02')
-		);
-	}
-	
-	public function getUnsetVariableStrictModeProvider() {
-		return array(
-			array('OUTCOMEX'),
-			array('Q01.OVERKILL'),
-			array('Q0X.OVERKILL')		
 		);
 	}
 }

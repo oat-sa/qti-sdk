@@ -10,7 +10,7 @@ use InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentItemRefCollection extends QtiIdentifiableCollection {
+class AssessmentItemRefCollection extends SectionPartCollection {
 
 	/**
 	 * Check if $value is an AssessmentItemRef object.

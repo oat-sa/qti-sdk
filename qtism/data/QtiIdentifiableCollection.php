@@ -15,7 +15,7 @@ use \SplSubject;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class QtiIdentifiableCollection extends QtiComponentCollection implements SplObserver {
+class QtiIdentifiableCollection extends QtiComponentCollection implements SplObserver {
 	
 	/**
 	 * Create a new QtiIdentifiableCollection object.

@@ -1,11 +1,15 @@
 <?php
-
-use qtism\data\AssessmentItemRefCollection;
-
-use qtism\data\AssessmentItemRef;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\data\TestPartCollection;
+use qtism\data\AssessmentSection;
+use qtism\data\AssessmentSectionCollection;
+use qtism\data\TestPart;
+use qtism\data\AssessmentTest;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\AssessmentItemRefCollection;
+use qtism\data\AssessmentItemRef;
 use qtism\data\state\WeightCollection;
 use qtism\runtime\expressions\VariableProcessor;
 use qtism\common\enums\Cardinality;
@@ -47,13 +51,22 @@ class VariableProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testWeighted() {
-		$assessmentItemRef = new AssessmentItemRef('Q01', './Q01.xml');
+		$assessmentItemRef = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
 		$weights = new WeightCollection(array(new Weight('weight1', 1.1)));
 		$assessmentItemRef->setWeights($weights);
+		$assessmentItemRef->addOutcomeDeclaration(new OutcomeDeclaration('var1', BaseType::INTEGER, Cardinality::SINGLE));
+		
 		$assessmentItemRefs = new AssessmentItemRefCollection(array($assessmentItemRef));
+		$assessmentTest = new AssessmentTest('A01', 'An assessmentTest');
+		$assessmentSection = new AssessmentSection('S01', 'An assessmentSection', true);
+		$assessmentSection->setSectionParts($assessmentItemRefs);
+		$assessmentSections = new AssessmentSectionCollection(array($assessmentSection));
+		$testPart = new TestPart('P01', $assessmentSections);
+		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
 		$var1 = new OutcomeVariable('Q01.var1', Cardinality::SINGLE, BaseType::INTEGER, 1337);
-		$state = new AssessmentTestContext(array($var1), $assessmentItemRefs);
+		$state = new AssessmentTestContext($assessmentTest);
+		$state['Q01.var1'] = 1337;
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
 		
 		$variableProcessor = new VariableProcessor($variableExpr);

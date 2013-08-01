@@ -2,6 +2,11 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\QtiIdentifiableCollection;
+use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\data\AssessmentTest;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
@@ -23,67 +28,66 @@ use \OutOfBoundsException;
 class AssessmentTestContext extends State {
 	
 	/**
-	 * The collection of AssessmentItemRef objects
-	 * that are useful to the AssessmentTestContext.
+	 * A shortcut to assessmentItemRefs.
 	 * 
 	 * @var AssessmentItemRefCollection
 	 */
 	private $assessmentItemRefs;
 	
 	/**
-	 * Strict mode enable/disabled.
-	 * 
-	 * @var boolean
-	 */
-	private $strictMode = false;
-	
-	/**
 	 * Create a new AssessmentTestContext object.
 	 *
-	 * @param array $array An optional array of QTI Runtime Model Variable objects.
-	 * @param AssessmentItemRefCollection A collection of QTI Data Model AssessmentItemRef objects. In other words, the execution context.
-	 * @param boolean $strictMode (optional) Enable the strict mode. Default is false.
+	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
 	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
 	 */
-	public function __construct(array $array = array(), AssessmentItemRefCollection $assessmentItemRefs, $strictMode = false) {
-		$this->setAssessmentItemRefs((empty($assessmentItemRefs)) ? new AssessmentItemRefCollection() : $assessmentItemRefs);
-		parent::__construct($array);
+	public function __construct(AssessmentTest $assessmentTest) {
+		
+		parent::__construct();
+		
+		$itemRefs = new AssessmentItemRefCollection($assessmentTest->getComponentsByClassName('assessmentItemRef')->getArrayCopy());
+		$this->setAssessmentItemRefs($itemRefs);
+		
+		// Take the outcomeDeclaration objects of the global scope.
+		foreach ($assessmentTest->getComponentsByClassName('outcomeDeclaration', false) as $globalOutcome) {
+			$this->setVariable(OutcomeVariable::createFromDataModel($globalOutcome));
+		}
+		
+		// Take the outcomeDeclaration/responseDeclaration objects from the
+		// the item scopes.
+		foreach ($this->getAssessmentItemRefs() as $itemRef) {
+			
+			foreach ($itemRef->getOutcomeDeclarations() as $outcome) {
+				$var = OutcomeVariable::createFromDataModel($outcome);
+				$unprefixedIdentifier = $var->getIdentifier();
+				$var->setIdentifier($itemRef->getIdentifier() . '.' . $unprefixedIdentifier);
+				$this->setVariable($var);
+			}
+			
+			foreach ($itemRef->getResponseDeclarations() as $resp) {
+				$var = ResponseVariable::createFromDataModel($resp);
+				$unprefixedIdentifier = $var->getIdentifier();
+				$var->setIdentifier($itemRef->getIdentifier() . '.' . $unprefixedIdentifier);
+				$this->setVariable($var);
+			}
+		}
 	}
 	
 	/**
-	 * Set the assessmentItemRefs bound to this AssessmentTestContext.
+	 * Set the assessmentItemRef objects involved in the context.
 	 * 
-	 * @param AssessmentItemRefCollection $assessmentItemRefs A collection of AssessmentItemRef objects.
+	 * @param AssessmentItemRefCollection $assessmentItemRefs A Collection of AssessmentItemRef objects.
 	 */
-	protected function setAssessmentItemRefs(AssessmentItemRefCollection $assessmentItemRefs = null) {
+	protected function setAssessmentItemRefs(AssessmentItemRefCollection $assessmentItemRefs) {
 		$this->assessmentItemRefs = $assessmentItemRefs;
 	}
 	
 	/**
-	 * Get the assessmentItemRefs bound to this AssessmentTestContext.
+	 * Get the assessmentItemRef objects involved in the context.
 	 * 
-	 * @return AssessmentItemRefCollection A collection of AssessmentItemRef objects.
+	 * @return AssessmentItemRefCollection A Collection of AssessmentItemRef objects.
 	 */
 	protected function getAssessmentItemRefs() {
 		return $this->assessmentItemRefs;
-	}
-	
-	/**
-	 * Enable or disable the strict mode.
-	 * 
-	 * @param boolean $strictMode Whether enable/disable the strict mode.
-	 */
-	public function setStrictMode($strictMode) {
-		$this->strictMode = $strictMode;
-	}
-	
-	/**
-	 * Whether the strict mode is enabled at the moment.
-	 * 
-	 * @return boolean
-	 */
-	public function isStrictMode() {
-		return $this->strictMode;
 	}
 	
 	/**
@@ -137,19 +141,8 @@ class AssessmentTestContext extends State {
 	 */
 	public function setVariable(Variable $variable) {
 		$v = new VariableIdentifier($variable->getIdentifier());
-		
-		if ($v->hasPrefix() === true) {
-			// Check if the corresponding itemRef is registered.
-			$items = $this->getAssessmentItemRefs();
-			if (isset($items[$v->getPrefix()]) === false) {
-				$prefix = $v->getPrefix();
-				$msg = "No assessmentItemRef with identifier '${prefix}' found.";
-				throw new InvalidArgumentException($msg);
-			}	
-		}
-		
 		$data = &$this->getDataPlaceHolder();
-		$data[$v->getIdentifier()] = $variable;
+		$data[$v->__toString()] = $variable;
 	}
 	
 	/**
@@ -175,37 +168,15 @@ class AssessmentTestContext extends State {
 				// -> This means the requested variable is in the global test scope.
 				$varName = $v->getVariableName();
 				if (isset($data[$varName]) === false) {
-					if ($this->isStrictMode() === true) {
-						$msg = "AssessmentTestContext strict mode enabled. No variable '${varName}' found in the current context.";
-						throw new OutOfBoundsException($msg);
-					}
-					else {
-						return null;
-					}
+					return null;
 				}
 				
-				return $data[$v->__toString()]->getValue();
+				return $data[$offset]->getValue();
 			}
 			else {
-				// Prefixed variable Name.
-				// -> The prefix is always an item identifier. Is it referenced ?
-				$itemId = $v->getPrefix();
-				if ($this->isItemReferenced($itemId) === false) {
-					// The test does not contain the requested item.
-					if ($this->isStrictMode() === true) {
-						$msg = "AssessmentTestContext strict mode enabled. No item '${itemId}' referenced in the current context.";
-						throw new OutOfBoundsException($msg);
-					}
-					else {
-						return null;
-					}
-				}
-				else if (isset($data[$v->__toString()])) {
-					return $data[$v->__toString()]->getValue();
-				}
-				else if ($this->isStrictMode() === true) {
-					$msg = "AssessmentTestContext strict mode enabled. No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "'.";
-					throw new OutOfBoundsException($msg);
+				
+				if (isset($data[$offset])) {
+					return $data[$offset]->getValue();
 				}
 				else {
 					return null;
@@ -244,17 +215,12 @@ class AssessmentTestContext extends State {
 					throw new OutOfBoundsException($msg);
 				}
 				
-				$data[$v->__toString()]->setValue($value);
+				$data[$offset]->setValue($value);
 			}
 			else if ($v->hasSequenceNumber() === false) {
 				// prefix given, no sequence number
-				$itemId = $v->getPrefix();
-				if ($this->isItemReferenced($itemId) === false) {
-					$msg = "No item '${itemId}' referenced in the current context while setting variable '${v}'.";
-					throw new OutOfBoundsException($msg);
-				}
-				else if (isset($data[$v->__toString()])) {
-					$data[$v->__toString()]->setValue($value);
+				if (isset($data[$offset])) {
+					$data[$offset]->setValue($value);
 				}
 				else {
 					$msg = "No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "'.";
@@ -263,7 +229,7 @@ class AssessmentTestContext extends State {
 			}
 			else {
 				// prefix and sequence number given.
-				$msg = "The variable '${v}' cannot be set using a sequence number.";
+				$msg = "The variable '${offset}' cannot be set using a sequence number.";
 				throw new OutOfBoundsException($msg);
 			}
 		}
@@ -305,35 +271,27 @@ class AssessmentTestContext extends State {
 			throw new OutOfBoundsException($msg);
 		}
 		
-		if ($this->isStrictMode() === true) {
-			if ($v->hasPrefix() === true && $this->isItemReferenced($v->getPrefix()) === false) {
-				$msg = "AssessmentTestContext strict mode enabled. The item '" . $v->getPrefix() . "' is not referenced in the current context.";
-				throw new OutOfBoundsException($msg);
-			}
-			else if (isset($data[$v->__toString()])) {
-				$data[$v->__toString()]->setValue(null);
-			}
-			else {
-				$msg = "No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "' in the current context.";
-				throw new OutOfBoundsException($msg);
-			}
-		}
-		else {
-			// No strict mode.
-			if (isset($data[$v->__toString()]) === true) {
-				$data[$v->__toString()]->setValue(null);
-			}
+		// No strict mode.
+		if (isset($data[$offset]) === true) {
+			$data[$offset]->setValue(null);
 		}
 	}
 	
 	/**
-	 * Whether a item with identifier $itemIdentifier is referenced in the current context.
+	 * Check if a given variable identified by $offset exists in the 
+	 * current context.
 	 * 
-	 * @param string $itemIdentifier The identifier of an item you want to know if it's referenced.
-	 * @return boolean Whether the item is referenced or not.
+	 * This method throws an OutOfRangeException in strict mode only, 
+	 * if the identifier $offset is a invalid identifier.
+	 * 
+	 * This method throws an OutOfBoundsException in strict mode only,
+	 * if the identifier $offset does not match any variable in the current state.
+	 * 
+	 * @throws OutOfRangeException In strict mode only, if the given $offset is not a valid variable identifier.
+	 * @return boolean Whether the variable identified by $offset exists in the current context.
 	 */
-	protected function isItemReferenced($itemIdentifier) {
-		$items = $this->getAssessmentItemRefs();
-		return isset($items[$itemIdentifier]);
+	public function offsetExists($offset) {
+		$data = &$this->getDataPlaceHolder();
+		return isset($data[$offset]);
 	}
 }

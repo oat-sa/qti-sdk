@@ -212,8 +212,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 			throw new InvalidArgumentException($msg);
 		}
 		else if (!$this->contains($object)) {
-			$data = &$this->getDataPlaceHolder();
-			$data[] = $object;
+			$this->offsetSet(null, $object);
 		}
 	}
 	
@@ -233,14 +232,9 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		}
 		
 		$data = &$this->getDataPlaceHolder();
-		for ($i = 0; $i < count($data); $i++) {
-			
-			if ($data[$i] === $object) {
-				unset($data[$i]);
-				
-				// Reset keys.
-				$data = array_values($data);
-				$this->setDataPlaceHolder($data);
+		foreach (array_keys($data) as $k) {
+			if ($data[$k] === $object) {
+				$this->offsetUnset($k);
 				return;
 			}
 		}
