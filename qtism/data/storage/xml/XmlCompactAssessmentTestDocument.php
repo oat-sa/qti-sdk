@@ -4,7 +4,7 @@ namespace qtism\data\storage\xml;
 
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\AssessmentSectionRef;
-use qtism\data\CompactAssessmentItemRef;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\storage\xml\XmlAssessmentTestDocument;
@@ -132,7 +132,7 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 				// Leaf node
 				if ($component instanceof AssessmentItemRef) {
 					// Transform the ref in an compact extended ref.
-					$compactRef = CompactAssessmentItemRef::createFromAssessmentItemRef($component);
+					$compactRef = ExtendedAssessmentItemRef::createFromAssessmentItemRef($component);
 					
 					// find the old one and replace it.
 					$previousParts = $previous->getSectionParts();
@@ -178,11 +178,11 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	 * Dereference the file referenced by an assessmentItemRef and add
 	 * outcome/responseDeclarations to the compact one.
 	 * 
-	 * @param CompactAssessmentItemRef $compactAssessmentItemRef A previously instantiated CompactAssessmentItemRef object.
+	 * @param ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
 	 * @param string $baseUri The URI which describe the location of the file containing the assessment item ref, that will help to resolve relative URIs. 
 	 * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-	protected static function resolveAssessmentItemRef(CompactAssessmentItemRef $compactAssessmentItemRef, $baseUri) {
+	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, $baseUri) {
 		try {
 			$resolver = new LocalFileResolver($baseUri);
 			$href = $resolver->resolve($compactAssessmentItemRef->getHref());

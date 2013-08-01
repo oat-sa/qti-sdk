@@ -39,7 +39,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$itemCount = 0;
 		foreach ($assessmentItemRefs as $k => $ref) {
-			$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $assessmentItemRefs[$k]);
+			$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $assessmentItemRefs[$k]);
 			$itemCount++;
 		}
 		$this->assertEquals($itemCount, 13); // contains 13 assessmentItemRef elements.
@@ -125,7 +125,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		// Pick up 4 for a test...
 		$assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
-		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $assessmentItemRef);
+		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $assessmentItemRef);
 		$this->assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
 		$responseDeclarations = $assessmentItemRef->getResponseDeclarations();
 		$this->assertEquals(1, count($responseDeclarations));

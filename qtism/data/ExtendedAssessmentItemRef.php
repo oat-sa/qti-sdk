@@ -10,14 +10,14 @@ use qtism\data\AssessmentItemRef;
 use qtism\common\collections\IdentifierCollection;
 
 /**
- * The CompactAssessmentItemRef class is an extended representation of the QTI
+ * The ExtendedAssessmentItemRef class is an extended representation of the QTI
  * assessmentItemRef class. It gathers together the assessmentItemRef + the
  * outcome/responseDeclarations of the referenced item in a single component.  
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CompactAssessmentItemRef extends AssessmentItemRef {
+class ExtendedAssessmentItemRef extends AssessmentItemRef {
 	
 	/**
 	 * The outcomeDeclarations found in the referenced assessmentItem.
@@ -121,10 +121,10 @@ class CompactAssessmentItemRef extends AssessmentItemRef {
 	}
 	
 	/**
-	 * Create a new CompactAssessmentItemRef object from an AssessmentItemRef object.
+	 * Create a new ExtendedAssessmentItemRef object from an AssessmentItemRef object.
 	 * 
 	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-	 * @return CompactAssessmentItemRef A CompactAssessmentItemRef object.
+	 * @return ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
 	 */
 	public static function createFromAssessmentItemRef(AssessmentItemRef $assessmentItemRef) {
 		$identifier = $assessmentItemRef->getIdentifier();

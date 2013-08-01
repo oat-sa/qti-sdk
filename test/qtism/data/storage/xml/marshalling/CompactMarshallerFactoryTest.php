@@ -1,6 +1,6 @@
 <?php
 
-use qtism\data\CompactAssessmentItemRef;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -12,7 +12,7 @@ class CompactMarshallerFactyoryTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\CompactMarshallerFactory', $factory);
 		
 		$this->assertTrue($factory->hasMappingEntry('assessmentItemRef'));
-		$this->assertEquals('qtism\\data\\storage\\xml\\marshalling\\CompactAssessmentItemRefMarshaller', $factory->getMappingEntry('assessmentItemRef'));
+		$this->assertEquals('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $factory->getMappingEntry('assessmentItemRef'));
 	}
 	
 	public function testFromDomElement() {
@@ -22,10 +22,10 @@ class CompactMarshallerFactyoryTest extends QtiSmTestCase {
 		
 		$factory = new CompactMarshallerFactory();
 		$marshaller = $factory->createMarshaller($element);
-		$this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\CompactAssessmentItemRefMarshaller', $marshaller);
+		$this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller', $marshaller);
 	}
 	
 	public function testFromComponent() {
-		$component = new CompactAssessmentItemRef('Q01', './q01.xml');
+		$component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 	}
 }

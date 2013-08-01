@@ -8,16 +8,16 @@ use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
-use qtism\data\CompactAssessmentItemRef;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
+class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshallMinimal() {
 		$factory = new CompactMarshallerFactory();
-		$component = new CompactAssessmentItemRef('Q01', './q01.xml');
+		$component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 		$marshaller = $factory->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
@@ -35,7 +35,7 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$marshaller = $factory->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $component);
+		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
 		$this->assertEquals(0, count($component->getOutcomeDeclarations()));
 		$this->assertEquals(0, count($component->getResponseDeclarations()));
 		$this->assertEquals('Q01', $component->getIdentifier());
@@ -44,7 +44,7 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 	
 	public function testMarshallModerate() {
 		$factory = new CompactMarshallerFactory();
-		$component = new CompactAssessmentItemRef('Q01', './q01.xml');
+		$component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
 		$weights = new WeightCollection(); // some noise
 		$weights[] = new Weight('W01', 1.0);
 		$weights[] = new Weight('W02', 2.0);
@@ -103,7 +103,7 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$marshaller = $factory->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $component);
+		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
 		$this->assertEquals('Q01', $component->getIdentifier());
 		$this->assertEquals('./q01.xml', $component->getHref());
 		
