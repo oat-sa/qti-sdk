@@ -200,8 +200,16 @@ class AssessmentTestContext extends State {
 						return null;
 					}
 				}
-				
-				return $data[$v->__toString()]->getValue();
+				else if (isset($data[$v->__toString()])) {
+					return $data[$v->__toString()]->getValue();
+				}
+				else if ($this->isStrictMode() === true) {
+					$msg = "AssessmentTestContext strict mode enabled. No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "'.";
+					throw new OutOfBoundsException($msg);
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch (InvalidArgumentException $e) {
@@ -215,7 +223,7 @@ class AssessmentTestContext extends State {
 	 * the AssessmentTestContext object takes care itself of the sequencing of the values. It cannot be done manually.
 	 * 
 	 * @throws OutOfRangeException If $offset is not a string or an invalid variable identifier.
-	 * @throws OutOfBoundsException If a variable cannot be found when strict mode is enabled or if trying to set a variable's value with a sequence number.
+	 * @throws OutOfBoundsException If a variable cannot be found or if trying to set a variable's value with a sequence number.
 	 */
 	public function offsetSet($offset, $value) {
 		
@@ -232,7 +240,7 @@ class AssessmentTestContext extends State {
 				// global scope request.
 				$varName = $v->getVariableName();
 				if (isset($data[$varName]) === false) {
-					$msg = "AssessmentTestContext strict mode enabled. The variable '${varName}' to be set does not exist in the current context.";
+					$msg = "The variable '${varName}' to be set does not exist in the current context.";
 					throw new OutOfBoundsException($msg);
 				}
 				
@@ -242,11 +250,16 @@ class AssessmentTestContext extends State {
 				// prefix given, no sequence number
 				$itemId = $v->getPrefix();
 				if ($this->isItemReferenced($itemId) === false) {
-					$msg = "AssessmentTestContext strict mode enabled. No item '${itemId}' referenced in the current context while setting variable '${v}'.";
+					$msg = "No item '${itemId}' referenced in the current context while setting variable '${v}'.";
 					throw new OutOfBoundsException($msg);
 				}
-				
-				$data[$v->__toString()]->setValue($value);
+				else if (isset($data[$v->__toString()])) {
+					$data[$v->__toString()]->setValue($value);
+				}
+				else {
+					$msg = "No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "'.";
+					throw new OutOfBoundsException($msg);
+				}
 			}
 			else {
 				// prefix and sequence number given.
@@ -258,6 +271,58 @@ class AssessmentTestContext extends State {
 			// Invalid variable identifier.
 			$msg = "AssessmentTestContext object addressed with an invalid identifier '${offset}'.";
 			throw new OutOfRangeException($msg, 0, $e);
+		}
+	}
+	
+	/**
+	 * Unset a given variable's value identified by $offset from the current context.
+	 * Please not that unsetting a variable's value keep the variable still instantiated
+	 * in the context with the previous value replaced by NULL.
+	 * 
+	 * If strict mode is enabled, an OutOfBoundsException will be thrown if:
+	 * 
+	 * * The $offset contains a sequence number.
+	 * * The $offset refers to an unexistent variable.
+	 * 
+	 * @param string $offset
+	 * @throws OutOfRangeException
+	 * @throws OutOfBoundsException
+	 */
+	public function offsetUnset($offset) {
+		$data = &$this->getDataPlaceHolder();
+		
+		// Valid identifier?
+		try {
+			$v = new VariableIdentifier($offset);
+		}
+		catch (InvalidArgumentException $e) {
+			$msg = "The variable identifier '${offset}' is invalid.";
+			throw new OutOfRangeException($msg, 0, $e);
+		}
+		
+		if ($v->hasSequenceNumber() === true) {
+			$msg = "Variables contained in AssessmentTestContext objects cannot be unset with a sequence number.";
+			throw new OutOfBoundsException($msg);
+		}
+		
+		if ($this->isStrictMode() === true) {
+			if ($v->hasPrefix() === true && $this->isItemReferenced($v->getPrefix()) === false) {
+				$msg = "AssessmentTestContext strict mode enabled. The item '" . $v->getPrefix() . "' is not referenced in the current context.";
+				throw new OutOfBoundsException($msg);
+			}
+			else if (isset($data[$v->__toString()])) {
+				$data[$v->__toString()]->setValue(null);
+			}
+			else {
+				$msg = "No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "' in the current context.";
+				throw new OutOfBoundsException($msg);
+			}
+		}
+		else {
+			// No strict mode.
+			if (isset($data[$v->__toString()]) === true) {
+				$data[$v->__toString()]->setValue(null);
+			}
 		}
 	}
 	
