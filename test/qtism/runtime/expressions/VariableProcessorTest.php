@@ -15,7 +15,7 @@ use qtism\runtime\common\State;
 use qtism\data\state\Weight;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\tests\AssessmentTestState;
+use qtism\runtime\tests\AssessmentTestContext;
 
 class VariableProcessorTest extends QtiSmTestCase {
 
@@ -53,7 +53,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$assessmentItemRefs = new AssessmentItemRefCollection(array($assessmentItemRef));
 		
 		$var1 = new OutcomeVariable('Q01.var1', Cardinality::SINGLE, BaseType::INTEGER, 1337);
-		$state = new AssessmentTestState(array($var1), $assessmentItemRefs);
+		$state = new AssessmentTestContext(array($var1), $assessmentItemRefs);
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
 		
 		$variableProcessor = new VariableProcessor($variableExpr);

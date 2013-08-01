@@ -5,7 +5,7 @@ namespace qtism\runtime\expressions;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\runtime\tests\AssessmentTestState;
+use qtism\runtime\tests\AssessmentTestContext;
 use qtism\data\expressions\Variable;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -87,7 +87,7 @@ class VariableProcessor extends ExpressionProcessor {
 		}
 		
 		// We have a value for this variable, is it weighted?
-		if ($state instanceof AssessmentTestState) {
+		if ($state instanceof AssessmentTestContext) {
 			
 			try {
 				$vIdentifier = new VariableIdentifier($variableIdentifier);

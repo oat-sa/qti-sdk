@@ -16,18 +16,18 @@ use \OutOfBoundsException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestState extends State {
+class AssessmentTestContext extends State {
 	
 	/**
 	 * The collection of AssessmentItemRef objects
-	 * that are useful to the AssessmentTestState.
+	 * that are useful to the AssessmentTestContext.
 	 * 
 	 * @var AssessmentItemRefCollection
 	 */
 	private $assessmentItemRefs;
 	
 	/**
-	 * Create a new AssessmentTestState object.
+	 * Create a new AssessmentTestContext object.
 	 *
 	 * @param array $array An optional array of QTI Runtime Model Variable objects.
 	 * @param AssessmentItemRefCollection A collection of QTI Data Model AssessmentItemRef objects. In other words, the execution context.
@@ -114,7 +114,7 @@ class AssessmentTestState extends State {
 	public function offsetGet($offset) {
 		
 		if (gettype($offset) !== 'string') {
-			$msg = "An AssessmentTestState object must be addressed by string.";
+			$msg = "An AssessmentTestContext object must be addressed by string.";
 			throw new OutOfRangeException($msg);
 		}
 		
@@ -146,7 +146,7 @@ class AssessmentTestState extends State {
 			}
 		}
 		catch (InvalidArgumentException $e) {
-			$msg = "AssessmentTestState object addressed with an invalid identifier '${offset}'.";
+			$msg = "AssessmentTestContext object addressed with an invalid identifier '${offset}'.";
 			throw new OutOfRangeException($msg, 0, $e);
 		}
 	}

@@ -9,9 +9,9 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\tests\AssessmentTestState;
+use qtism\runtime\tests\AssessmentTestContext;
 
-class AssessmentTestStateTest extends QtiSmTestCase {
+class AssessmentTestContextTest extends QtiSmTestCase {
 	
 	protected $state;
 	
@@ -29,7 +29,7 @@ class AssessmentTestStateTest extends QtiSmTestCase {
 		$variables[] = new OutcomeVariable('Q01.SCORE', Cardinality::SINGLE, BaseType::INTEGER, 10);
 		$variables[] = new OutcomeVariable('Q01.MAXSCORE', Cardinality::SINGLE, BaseType::FLOAT, 10.0);
 		
-		$this->state = new AssessmentTestState($variables, new AssessmentItemRefCollection($itemArray));
+		$this->state = new AssessmentTestContext($variables, new AssessmentItemRefCollection($itemArray));
 	}
 	
 	public function getState() {
