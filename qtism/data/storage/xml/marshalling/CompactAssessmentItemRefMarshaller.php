@@ -1,10 +1,10 @@
 <?php
 
-namespace qtism\data\storage\xmlcompact\marshalling;
+namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
-use qtism\data\storage\xmlcompact\data\CompactAssessmentItemRef;
+use qtism\data\CompactAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\AssessmentItemRefMarshaller;
 use qtism\data\QtiComponent;
 use \DOMElement;

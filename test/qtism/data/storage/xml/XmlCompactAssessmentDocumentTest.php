@@ -5,7 +5,7 @@ use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlAssessmentTestDocument;
 use qtism\data\AssessmentTest;
 use \DOMDocument;
-use qtism\data\storage\xmlcompact\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -16,7 +16,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
 		$doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
 		
-		$schema = dirname(__FILE__) . '/../../../../../qtism/data/storage/xmlcompact/schemes/qticompact_v1p0.xsd';
+		$schema = dirname(__FILE__) . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
 		$this->assertTrue($doc->schemaValidate($schema));
 	}
 	
@@ -39,7 +39,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$itemCount = 0;
 		foreach ($assessmentItemRefs as $k => $ref) {
-			$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $assessmentItemRefs[$k]);
+			$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $assessmentItemRefs[$k]);
 			$itemCount++;
 		}
 		$this->assertEquals($itemCount, 13); // contains 13 assessmentItemRef elements.
@@ -98,7 +98,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$doc->load($file);
 		$compactDoc = XmlCompactAssessmentTestDocument::createFromXmlAssessmentTestDocument($doc);
 		
-		$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\XmlCompactAssessmentTestDocument', $compactDoc);
+		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlCompactAssessmentTestDocument', $compactDoc);
 		$this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getIdentifier());
 		$this->assertEquals('Interaction Mix (Sachsen)', $compactDoc->getTitle());
 		
@@ -125,7 +125,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		// Pick up 4 for a test...
 		$assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
-		$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $assessmentItemRef);
+		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $assessmentItemRef);
 		$this->assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
 		$responseDeclarations = $assessmentItemRef->getResponseDeclarations();
 		$this->assertEquals(1, count($responseDeclarations));

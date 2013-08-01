@@ -1,6 +1,6 @@
 <?php
 
-namespace qtism\data\storage\xmlcompact\data;
+namespace qtism\data;
 
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\OutcomeDeclaration;

@@ -1,9 +1,9 @@
 <?php
 
-namespace qtism\data\storage\xmlcompact;
+namespace qtism\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
-use qtism\data\storage\xmlcompact\marshalling\CompactMarshallerFactory;
+use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMElement;
 
 class XmlCompactDocument extends XmlDocument {

@@ -8,8 +8,8 @@ use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
-use qtism\data\storage\xmlcompact\data\CompactAssessmentItemRef;
-use qtism\data\storage\xmlcompact\marshalling\CompactMarshallerFactory;
+use qtism\data\CompactAssessmentItemRef;
+use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -35,7 +35,7 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$marshaller = $factory->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $component);
+		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $component);
 		$this->assertEquals(0, count($component->getOutcomeDeclarations()));
 		$this->assertEquals(0, count($component->getResponseDeclarations()));
 		$this->assertEquals('Q01', $component->getIdentifier());
@@ -103,7 +103,7 @@ class CompactAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$marshaller = $factory->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\storage\\xmlcompact\\data\\CompactAssessmentItemRef', $component);
+		$this->assertInstanceOf('qtism\\data\\CompactAssessmentItemRef', $component);
 		$this->assertEquals('Q01', $component->getIdentifier());
 		$this->assertEquals('./q01.xml', $component->getHref());
 		

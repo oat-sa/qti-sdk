@@ -1,10 +1,10 @@
 <?php
 
-namespace qtism\data\storage\xmlcompact;
+namespace qtism\data\storage\xml;
 
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\AssessmentSectionRef;
-use qtism\data\storage\xmlcompact\data\CompactAssessmentItemRef;
+use qtism\data\CompactAssessmentItemRef;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\storage\xml\XmlAssessmentTestDocument;
@@ -13,7 +13,6 @@ use qtism\data\storage\xml\IXmlDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\data\storage\xml\XmlAssessmentSectionDocument;
-use qtism\data\storage\Utils;
 use \DOMDocument;
 use \Exception;
 
