@@ -220,4 +220,27 @@ class VariableIdentifier {
 	public function hasPrefix() {
 		return $this->getPrefix() !== '';
 	}
+	
+	/**
+	 * Returns the variable identifier as a string such as:
+	 * 
+	 * * VARNAME
+	 * * PREFIX.VARNAME
+	 * * PREFIX.SEQ.VARNAME
+	 * 
+	 * depending on the nature of the variable identifier.
+	 * 
+	 * @return string The stringified VariableIdentifier object.
+	 */
+	public function __toString() {
+		if ($this->hasSequenceNumber() === true) {
+			return $this->getPrefix() . '.' . $this->getSequenceNumber() . '.' . $this->getVariableName();
+		}
+		else if ($this->hasPrefix() === true) {
+			return $this->getPrefix() . '.' . $this->getVariableName();
+		}
+		else {
+			return $this->getVariableName();
+		}
+	}
 }
