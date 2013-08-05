@@ -7,6 +7,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\state\ResponseDeclaration;
 use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\OrderedContainer;
 
 class ResponseVariableTest extends QtiSmTestCase {
 	
@@ -46,6 +47,9 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertEquals(BaseType::PAIR, $responseVariable->getBaseType());
 		$this->assertEquals(Cardinality::ORDERED, $responseVariable->getCardinality());
 		
+		// Value should be NULL to begin.
+		$this->assertTrue($responseVariable->isNull());
+		
 		$defaultValue = $responseVariable->getDefaultValue();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $defaultValue);
 		$this->assertEquals(3, count($defaultValue));
@@ -67,5 +71,16 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($correctResponse));
 		$this->assertTrue($correctResponse[0]->equals(new Pair('A', 'B')));
 		$this->assertTrue($correctResponse[1]->equals(new Pair('E', 'F')));
+		
+		// If I reinitialize the value, we must find a NULL container into this variable.
+		$responseVariable->initialize();
+		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
+		$this->assertTrue($responseVariable->isNull());
+		
+		// If I apply the default value...
+		$responseVariable->applyDefaultValue();
+		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
+		$this->assertEquals(3, count($responseVariable->getValue()));
+		$this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
 	}
 }

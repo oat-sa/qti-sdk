@@ -80,6 +80,9 @@ class MarshallerFactory {
 		$this->addMappingEntry('outcomeIf', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');
 		$this->addMappingEntry('outcomeElseIf', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');
 		$this->addMappingEntry('outcomeElse', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');
+		$this->addMappingEntry('responseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
+		$this->addMappingEntry('responseElseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
+		$this->addMappingEntry('responseElse', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 	}
 	
 	/**

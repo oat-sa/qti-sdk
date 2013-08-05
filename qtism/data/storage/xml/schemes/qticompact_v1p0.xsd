@@ -13,6 +13,7 @@
 	    			<xs:sequence>
 	    				<xs:element name="responseDeclaration" minOccurs="0" maxOccurs="unbounded"/>
 	    				<xs:element name="outcomeDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+	    				<xs:element name="responseProcessing" minOccurs="0" maxOccurs="1"/>
 	    			</xs:sequence>
 	    		</xs:extension>
 	    	</xs:complexContent>

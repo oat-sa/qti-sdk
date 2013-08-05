@@ -62,6 +62,33 @@ class DurationTest extends QtiSmTestCase {
 	}
 	
 	/**
+	 * @dataProvider toStringProvider
+	 * 
+	 * @param Duration $duration
+	 * @param string $expected
+	 */
+	public function testToString(Duration $duration, $expected) {
+		$this->assertEquals($duration->__toString(), $expected);
+	}
+	
+	public function testAdd() {
+		$d1 = new Duration('PT1S');
+		$d2 = new Duration('PT1S');
+		$d1->add($d2);
+		$this->assertEquals('PT2S', $d1->__toString());
+		
+		$d1 = new Duration('PT1S');
+		$d2 = new Duration('P1M');
+		$d1->add($d2);
+		$this->assertEquals('P1MT1S', $d1->__toString());	
+		
+		$d1 = new Duration('PT23H59M59S');
+		$d2 = new Duration('PT10S');
+		$d1->add($d2);
+		$this->assertEquals('P1DT9S', $d1->__toString());
+	}
+		
+	/**
 	 * @dataProvider shorterThanProvider
 	 * 
 	 * @param Duration $duration1
@@ -114,7 +141,7 @@ class DurationTest extends QtiSmTestCase {
 		return array(
 			array('P2D'), // 2 days
 			array('PT2S'), // 2 seconds
-			array('P6YT5M') // 5 years, 2 seconds	
+			array('P6YT5M') // 6 years, 5 months
 		);
 	}
 	
@@ -124,6 +151,14 @@ class DurationTest extends QtiSmTestCase {
 			array('PSSST'),
 			array('Invalid'),
 			array('')
+		);
+	}
+	
+	public function toStringProvider() {
+		return array(
+			array(new Duration('P2D'), 'P2D'), // 2 days
+			array(new Duration('PT2S'), 'PT2S'), // 2 seconds
+			array(new Duration('P6YT5M'), 'P6YT5M') // 6 years, 5 months
 		);
 	}
 }

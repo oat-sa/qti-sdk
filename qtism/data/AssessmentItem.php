@@ -4,6 +4,7 @@ namespace qtism\data;
 
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\state\ResponseProcessing;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
 use \InvalidArgumentException;
@@ -64,6 +65,13 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	 * @var OutcomeDeclarationCollection
 	 */
 	private $outcomeDeclarations;
+	
+	/**
+	 * The responseProcessing.
+	 * 
+	 * @var ResponseProcessing
+	 */
+	private $responseProcessing = null;
 	
 	/**
 	 * The observers of this object.
@@ -238,6 +246,33 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 		return $this->outcomeDeclarations;
 	}
 	
+	/**
+	 * Get the associated ResponseProcessing object.
+	 * 
+	 * @return ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+	 */
+	public function getResponseProcessing() {
+		return $this->responseProcessing;
+	}
+	
+	/**
+	 * Set the associated ResponseProcessing object.
+	 * 
+	 * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
+	 */
+	public function setResponseProcessing(ResponseProcessing $responseProcessing = null) {
+		$this->responseProcessing = $responseProcessing;
+	}
+	
+	/**
+	 * Whether the AssessmentItem has a response processing.
+	 * 
+	 * @return boolean
+	 */
+	public function hasResponseProcessing() {
+		return $this->getResponseProcessing() !== null;
+	}
+	
 	public function getQtiClassName() {
 		return 'assessmentItem';
 	}
@@ -245,6 +280,10 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable {
 	public function getComponents() {
 		$comp = array_merge($this->getOutcomeDeclarations()->getArrayCopy(),
 							$this->getResponseDeclarations()->getArrayCopy());
+		
+		if ($this->hasResponseProcessing() === true) {
+			$comp[] = $this->getResponseProcessing();
+		}
 		
 		return new QtiComponentCollection($comp);
 	}

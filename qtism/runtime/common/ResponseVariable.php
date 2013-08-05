@@ -12,6 +12,18 @@ use \InvalidArgumentException;
 /**
  * This class represents a Response Variable in the QTI Runtime Model.
  * 
+ * A note from IMS about response variables initialization:
+ * 
+ * At runtime, response variables are instantiated as part of an item session. Their values are always initialized to 
+ * NULL (no value) regardless of whether or not a default value is given in the declaration. A response variable with a NULL
+ * value indicates that the candidate has not offered a response, either because they have not attempted the item at all or 
+ * because they have attempted it and chosen not to provide a response.
+ * 
+ * If a default value has been provided for a response variable then the variable is set to this value at the start of the 
+ * first attempt. If the candidate never attempts the item, in other words, the item session passes straight from the initial 
+ * state to the closed state without going through the interacting state, then the response variable remains NULL and the 
+ * default value is never used.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */

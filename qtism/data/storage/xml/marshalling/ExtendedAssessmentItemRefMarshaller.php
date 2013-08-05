@@ -35,6 +35,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 			$element->appendChild($marshaller->marshall($outcomeDeclaration));
 		}
 		
+		if ($component->hasResponseProcessing() === true) {
+			$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getResponseProcessing());
+			$element->appendChild($marshaller->marshall($component->getResponseProcessing()));
+		}
+		
 		return $element;
 	}
 	
@@ -75,6 +80,12 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 			$outcomeDeclarations[] = $marshaller->unmarshall($outcomeDeclarationElt);
 		}
 		$compactAssessmentItemRef->setOutcomeDeclarations($outcomeDeclarations);
+		
+		$responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
+		if (count($responseProcessingElts) === 1) {
+			$marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
+			$compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
+		}
 		
 		return $compactAssessmentItemRef;
 	}

@@ -142,22 +142,18 @@ class Duration implements Comparable {
 	}
 	
 	public function __toString() {
-		$string = '';
+		$string = 'P';
 		
-		if ($this->getYears() > 0 || $this->getMonths() > 0 || $this->getDays() > 0) {
-			$string .= 'P';
-			
-			if ($this->getYears() > 0) {
-				$string .= $this->getYears() . 'Y';
-			}
-			
-			if ($this->getMonths() > 0) {
-				$string .= $this->getMonths() . 'M';
-			}
-			
-			if ($this->getDays() > 0) {
-				$string .= $this->getDays() . 'D';
-			}
+		if ($this->getYears() > 0) {
+			$string .= $this->getYears() . 'Y';
+		}
+		
+		if ($this->getMonths() > 0) {
+			$string .= $this->getMonths() . 'M';
+		}
+		
+		if ($this->getDays() > 0) {
+			$string .= $this->getDays() . 'D';
 		}
 		
 		if ($this->getHours() > 0 || $this->getMinutes() > 0 || $this->getSeconds() > 0) {
@@ -253,11 +249,30 @@ class Duration implements Comparable {
 		}
 	}
 	
+	/**
+	 * Add a duration to this one.
+	 * 
+	 * For instance, P1S + P1S = P2S.
+	 * 
+	 * @param Duration $duration A Duration object.
+	 */
+	public function add(Duration $duration) {
+		$refStrDate = '19710101';
+		$d1 = new DateTime($refStrDate);
+		$d2 = new DateTime($refStrDate);
+		
+		$d2->add(new DateInterval($this->__toString()));
+		$d2->add(new DateInterval($duration->__toString()));
+		
+		$interval = $d2->diff($d1);
+		$this->setInterval($interval);
+	}
+	
 	public function __clone() {
 		// ... :'( ... https://bugs.php.net/bug.php?id=50559
 		$d1 = new DateTime();
 		$d2 = new DateTime();
-		$d2->add(new DateInterval('' . $this));
+		$d2->add(new DateInterval($this->__toString()));
 		$interval = $d2->diff($d1);
 		$interval->invert = ($interval->invert === 1) ? 0 : 1;
 		$this->setInterval($interval);

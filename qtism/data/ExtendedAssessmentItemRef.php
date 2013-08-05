@@ -6,6 +6,7 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\state\ResponseProcessing;
 use qtism\data\AssessmentItemRef;
 use qtism\common\collections\IdentifierCollection;
 
@@ -32,6 +33,13 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef {
 	 * @var ResponseDeclarationCollection
 	 */
 	private $responseDeclarations;
+	
+	/**
+	 * The responseProcessing found in the referenced assessmentItem
+	 * 
+	 * @var ResponseProcessing
+	 */
+	private $responseProcessing = null;
 	
 	/**
 	 * Create a new instance of CompactAssessmentItem
@@ -64,6 +72,33 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef {
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
+	}
+	
+	/**
+	 * Set the responseProcessing found in the referenced assessmentItem.
+	 * 
+	 * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
+	 */
+	public function setResponseProcessing(ResponseProcessing $responseProcessing = null) {
+		$this->responseProcessing = $responseProcessing;
+	}
+	
+	/**
+	 * Get the responseProcessing found in the referenced assessmentItem.
+	 * 
+	 * @return ResponseProcessing A ResponseProcessing object or null if no response processing described. 
+	 */
+	public function getResponseProcessing() {
+		return $this->responseProcessing;
+	}
+	
+	/**
+	 * Whether the referenced assessmentITem has a responseProcessing entry.
+	 * 
+	 * @return boolean
+	 */
+	public function hasResponseProcessing() {
+		return $this->getResponseProcessing() !== null;
 	}
 	
 	/**

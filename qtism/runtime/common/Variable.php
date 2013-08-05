@@ -68,14 +68,34 @@ abstract class Variable {
 		$this->setCardinality($cardinality);
 		$this->setBaseType($baseType);
 		
-		if (is_null($value) && $this->getCardinality() === Cardinality::MULTIPLE) {
-			$value = new MultipleContainer($baseType);
+		// Initialize the variable with the appropriate default value.
+		$this->initialize();
+		
+		// If provided, set the value of the variable.
+		if (is_null($value) === false) {
+			$this->setValue($value);
 		}
-		else if (is_null($value) && $this->getCardinality() === Cardinality::ORDERED) {
-			$value = new OrderedContainer($baseType);
+	}
+	
+	/**
+	 * Initialize the variable with the appropriate default value.
+	 * 
+	 * * If the variable is supposed to contain a Container (Multiple, Ordered or Record cardinality), the variable's value becomes an empty container.
+	 * * If the variable is scalar (Cardinality single), the value becomes NULL.
+	 *
+	 */
+	public function initialize() {
+		if ($this->getCardinality() === Cardinality::MULTIPLE) {
+			$value = new MultipleContainer($this->getBaseType());
 		}
-		else if (is_null($value) && $this->getCardinality() === Cardinality::RECORD) {
+		else if ($this->getCardinality() === Cardinality::ORDERED) {
+			$value = new OrderedContainer($this->getBaseType());
+		}
+		else if ($this->getCardinality() === Cardinality::RECORD) {
 			$value = new RecordContainer();
+		}
+		else {
+			$value = null;
 		}
 		
 		$this->setValue($value);
@@ -527,5 +547,14 @@ abstract class Variable {
 	 */
 	public function isString() {
 		return (!$this->isNull() && $this->getBaseType() === BaseType::STRING);
+	}
+	
+	/**
+	 * Set the value of the Variable with its default value. If no default
+	 * value was given, the value of the variable becomes NULL.
+	 * 
+	 */
+	public function applyDefaultValue() {
+		$this->setValue($this->getDefaultValue());
 	}
 }

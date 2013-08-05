@@ -13,7 +13,7 @@ use \DOMElement;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeProcessingMarshaller extends SectionPartMarshaller {
+class OutcomeProcessingMarshaller extends Marshaller {
 	
 	/**
 	 * Marshall an OutcomeProcessing object into a DOMElement object.

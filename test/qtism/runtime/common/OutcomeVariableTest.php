@@ -46,6 +46,18 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertEquals(16, $variable->getValue());
 		$this->assertInternalType('integer', $variable->getDefaultValue());
 		$this->assertEquals(-1, $variable->getDefaultValue());
+		
+		// If I reinit the variable, I should see the NULL value inside.
+		$variable->initialize();
+		$this->assertSame(null, $variable->getValue());
+		
+		// If I apply the default value, 0 should be inside because
+		// baseType is integer, cardinality single, and no default value
+		// was given.
+		$variable->setDefaultValue(null);
+		$variable->applyDefaultValue();
+		$this->assertInternalType('integer', $variable->getValue());
+		$this->assertEquals(0, $variable->getValue());
 	}
 	
 	public function testCardinalityMultiple() {

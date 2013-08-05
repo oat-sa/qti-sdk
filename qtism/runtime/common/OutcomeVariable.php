@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\enums\BaseType;
+
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\VariableDeclaration;
 use qtism\data\state\LookupTable;
@@ -184,6 +186,26 @@ class OutcomeVariable extends Variable {
 		else {
 			$msg = "OutcomeVariable::createFromDataModel only accept 'qtism\\data\\state\\OutcomeDeclaration' objects, '" . get_class($variableDeclaration) . "' given.";
 			throw new InvalidArgumentException($msg);
+		}
+	}
+	
+	/**
+	 * Apply the default value to the OutcomeVariable.
+	 * 
+	 * If no default value is described, and the cardinality is single and the baseType
+	 * is integer or float, the value of the variable becomes 0.
+	 * 
+	 */
+	public function applyDefaultValue() {
+		parent::applyDefaultValue();
+		
+		if (is_null($this->getDefaultValue()) === true && $this->getCardinality() === Cardinality::SINGLE) {
+			if ($this->getBaseType() === BaseType::INTEGER) {
+				$this->setValue(0);
+			}
+			else if ($this->getBaseType() === BaseType::FLOAT) {
+				$this->setValue(0.0);
+			}
 		}
 	}
 }

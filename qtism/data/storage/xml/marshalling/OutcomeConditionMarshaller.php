@@ -96,7 +96,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 			$returnValue = array($component->getOutcomeIf());
 			
 			if (count($component->getOutcomeElseIfs()) > 0) {
-				$returnValue = array_merge($returnValue, $component->getOutcomeElseIfs->getArrayCopy());
+				$returnValue = array_merge($returnValue, $component->getOutcomeElseIfs()->getArrayCopy());
 			}
 			
 			if ($component->getOutcomeElse() !== null) {
