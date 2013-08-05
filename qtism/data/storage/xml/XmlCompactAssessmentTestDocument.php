@@ -201,6 +201,9 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 			if ($doc->hasResponseProcessing() === true) {
 				$compactAssessmentItemRef->setResponseProcessing($doc->getResponseProcessing());
 			}
+			
+			$compactAssessmentItemRef->setAdaptive($doc->isAdaptive());
+			$compactAssessmentItemRef->setTimeDependent($doc->isTimeDependent());
 		}
 		catch (Exception $e) {
 			$msg = "An error occured while unreferencing file '${href}'.";

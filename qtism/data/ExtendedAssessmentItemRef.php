@@ -9,6 +9,7 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseProcessing;
 use qtism\data\AssessmentItemRef;
 use qtism\common\collections\IdentifierCollection;
+use \InvalidArgumentException;
 
 /**
  * The ExtendedAssessmentItemRef class is an extended representation of the QTI
@@ -40,6 +41,18 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef {
 	 * @var ResponseProcessing
 	 */
 	private $responseProcessing = null;
+	
+	/**
+	 * The adaptive attribute found in the referenced assessmentItem.
+	 * 
+	 * @var boolean
+	 */
+	private $adaptive = false;
+	
+	/**
+	 * The timeDependent attribute found in the referenced assessmentItem.
+	 */
+	private $timeDependent = false;
 	
 	/**
 	 * Create a new instance of CompactAssessmentItem
@@ -153,6 +166,56 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef {
 	 */
 	public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration) {
 		$this->getResponseDeclarations()->detach($responseDeclaration);
+	}
+	
+	/**
+	 * Whether the referenced Item is adaptive.
+	 * 
+	 * @return boolean
+	 */
+	public function isAdaptive() {
+		return $this->adaptive;
+	}
+	
+	/**
+	 * Set if the referenced Item is considered to be adaptive or not.
+	 * 
+	 * @param boolean $adaptive Whether the referenced Item is adaptive.
+	 * @throws InvalidArgumentException If $adaptive is not a boolean value.
+	 */
+	public function setAdaptive($adaptive) {
+		if (gettype($adaptive) === 'boolean') {
+			$this->adaptive = $adaptive;
+		}
+		else {
+			$msg = "The adaptive argument must be a boolean value, '" . gettype($adaptive) . "' given.";
+			throw new InvalidArgumentException($msg);
+		}
+	}
+	
+	/**
+	 * Set if the referenced Item is considered to be time dependent or not.
+	 * 
+	 * @param boolean $timeDependent Whether the referenced item is time dependent.
+	 * @throws InvalidArgumentException If $timeDependent is not a boolean value.
+	 */
+	public function setTimeDependent($timeDependent) {
+		if (gettype($timeDependent) === 'boolean') {
+			$this->timeDependent = $timeDependent;
+		}
+		else {
+			$msg = "The timeDependent argument must be a boolean value, '" . gettype($timeDependent) . "' given.";
+			throw new InvalidArgumentException($msg);
+		}
+	}
+	
+	/**
+	 * Whether the referenced Item is considered to be time dependent.
+	 * 
+	 * @return boolean
+	 */
+	public function isTimeDependent() {
+		return $this->timeDependent;
 	}
 	
 	/**

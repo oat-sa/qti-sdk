@@ -42,6 +42,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		foreach ($assessmentItemRefs as $k => $ref) {
 			$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $assessmentItemRefs[$k]);
 			$this->assertTrue($assessmentItemRefs[$k]->hasResponseProcessing());
+			$this->assertFalse($assessmentItemRefs[$k]->isTimeDependent());
+			$this->assertFalse($assessmentItemRefs[$k]->isAdaptive());
 			$itemCount++;
 		}
 		$this->assertEquals($itemCount, 13); // contains 13 assessmentItemRef elements.

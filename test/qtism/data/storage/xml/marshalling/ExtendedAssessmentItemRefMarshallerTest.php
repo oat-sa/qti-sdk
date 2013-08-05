@@ -30,12 +30,14 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshallMinimal() {
 		$factory = new CompactMarshallerFactory();
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml"/>');
+		$dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="false"/>');
 		$element = $dom->documentElement;
 		$marshaller = $factory->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
+		$this->assertFalse($component->isTimeDependent());
+		$this->assertFalse($component->isAdaptive());
 		$this->assertEquals(0, count($component->getOutcomeDeclarations()));
 		$this->assertEquals(0, count($component->getResponseDeclarations()));
 		$this->assertEquals('Q01', $component->getIdentifier());
@@ -90,7 +92,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
-			<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml">
+			<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true">
 				<weight identifier="W01" value="1.0"/>
 				<weight identifier="W02" value="2.0"/>
 				<responseDeclaration identifier="R01" baseType="integer" cardinality="single"/>
@@ -105,6 +107,8 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		
 		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $component);
 		$this->assertEquals('Q01', $component->getIdentifier());
+		$this->assertTrue($component->isTimeDependent());
+		$this->assertTrue($component->isAdaptive());
 		$this->assertEquals('./q01.xml', $component->getHref());
 		
 		$weights = $component->getWeights();

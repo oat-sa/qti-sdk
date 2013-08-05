@@ -41,6 +41,9 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 			$element->appendChild($respProcElt);
 		}
 		
+		self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+		self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+		
 		return $element;
 	}
 	
@@ -86,6 +89,18 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 		if (count($responseProcessingElts) === 1) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
 			$compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
+		}
+		
+		if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+			$compactAssessmentItemRef->setAdaptive($adaptive);
+		}
+		
+		if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+			$compactAssessmentItemRef->setTimeDependent($timeDependent);
+		}
+		else {
+			$msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->nodeName . "'.";
+			throw new UnmarshallingException($msg, $element); 
 		}
 		
 		return $compactAssessmentItemRef;
