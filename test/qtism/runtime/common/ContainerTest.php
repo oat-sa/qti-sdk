@@ -203,4 +203,25 @@ class ContainerTest extends QtiSmTestCase {
 		$container[] = $pair;
 		$this->assertTrue($container->contains(new Pair('A', 'B')));
 	}
+	
+	/**
+	 * @dataProvider toStringProvider
+	 * 
+	 * @param Container $container
+	 * @param string $expected The expected result of a __toString() call.
+	 */
+	public function testToString(Container $container, $expected) {
+		$this->assertEquals($expected, $container->__toString());
+	}
+	
+	public function toStringProvider() {
+		$returnValue = array();
+		
+		$returnValue[] = array(new Container(), '[]');
+		$returnValue[] = array(new Container(array(10)), '[10]');
+		$returnValue[] = array(new Container(array(true, false)), '[true; false]');
+		$returnValue[] = array(new Container(array(new Duration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new DirectedPair('C', 'D'), 'String!')), '[P2DT2S; 10 15; A B; C D; \'String!\']');
+		
+		return $returnValue;
+	}
 }

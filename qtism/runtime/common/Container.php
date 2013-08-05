@@ -177,4 +177,49 @@ class Container extends AbstractCollection implements Comparable {
 		}
 		return $container;
 	}
+	
+	/**
+	 * Get the character bounds of the container while output in
+	 * a __toString context. For instance, this method returns 
+	 * array('[', ']'). Thus, the result of the __toString method will
+	 * be '[10, 20, 30]' if the values held by the container are integer
+	 * 10, 20 and 30.
+	 * 
+	 * @return array An array with two entries which are respectively to character lower and upper bounds.
+	 */
+	public function getToStringBounds() {
+		return array('[', ']');
+	}
+	
+	public function __toString() {
+		$bounds = $this->getToStringBounds();
+		$data = &$this->getDataPlaceHolder();
+		
+		if (count($data) === 0) {
+			// Empty container.
+			return $bounds[0] . $bounds[1];
+		}
+		$strings = array();
+		
+		foreach (array_keys($data) as $k) {
+			$d = $data[$k];
+			$type = gettype($d);
+			if ($type === 'object') {
+				$strings[] = $d->__toString();
+			}
+			else if ($type === 'boolean') {
+				// PHP boolean primitive type.
+				$strings[] = ($d === true) ? 'true' : 'false';
+			}
+			else if ($type === 'string') {
+				$strings[] = "'${d}'";
+			}
+			else {
+				// Other PHP primitive type.
+				$strings[] = '' . $d;
+			}
+		}
+		
+		return $bounds[0] . implode('; ', $strings) . $bounds[1];
+	}
 }

@@ -16,7 +16,7 @@ use qtism\common\enums\Enumeration;
 class Shape implements Enumeration {
 	
 	/**
-	 * Note: Corresponds to QTI shape::default. Unfortunalty, 'default' is a reserved
+	 * Note: Corresponds to QTI shape::default. Unfortunately, 'default' is a reserved
 	 * token in PHP.
 	 * 
 	 * From IMS QTI:
