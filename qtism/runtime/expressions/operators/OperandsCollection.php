@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\collections\Stack;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\Cardinality;
@@ -20,7 +21,7 @@ use InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OperandsCollection extends AbstractCollection {
+class OperandsCollection extends AbstractCollection implements Stack {
 
 	/**
 	 * Check if $value is a QTI Runtime compliant value.
@@ -457,5 +458,34 @@ class OperandsCollection extends AbstractCollection {
 		}
 	
 		return true;
+	}
+	
+	public function push($value) {
+		$this->checkType($value);
+		
+		$data = &$this->getDataPlaceHolder();
+		array_push($data, $value);
+	}
+	
+	public function pop($count = 1) {
+		
+		$data = &$this->getDataPlaceHolder();
+		if ($count === 1) {
+			return array_pop($data);
+		}
+		
+		$returnValue = new OperandsCollection();
+		$opCount = count($data);
+		$i = $opCount - $count;
+		while ($i < $opCount) {
+			$returnValue[] = $data[$i];
+			unset($data[$i]);
+			$i++;
+		}
+		
+		$newData = array_values($data);
+		$this->setDataPlaceHolder($newData);
+		
+		return $returnValue;
 	}
 }

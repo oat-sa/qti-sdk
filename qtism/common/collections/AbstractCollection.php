@@ -285,6 +285,16 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		$this->setDataPlaceHolder($a);
 	}
 	
+	/**
+	 * Get the keys of the collection.
+	 * 
+	 * @return array An array of values which are the keys of the collection.
+	 */
+	public function getKeys() {
+		$data = &$this->getDataPlaceHolder();
+		return array_keys($data);
+	}
+	
 	public function __clone() {
 		foreach ($this->getDataPlaceHolder() as $key => $value) {
 			if (gettype($value) === 'object') {
