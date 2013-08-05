@@ -37,7 +37,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 		
 		if ($component->hasResponseProcessing() === true) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getResponseProcessing());
-			$element->appendChild($marshaller->marshall($component->getResponseProcessing()));
+			$respProcElt = $marshaller->marshall($component->getResponseProcessing());
+			$element->appendChild($respProcElt);
 		}
 		
 		return $element;

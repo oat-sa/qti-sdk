@@ -197,6 +197,10 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 			foreach ($doc->getOutcomeDeclarations() as $out) {
 				$compactAssessmentItemRef->addOutcomeDeclaration($out);
 			}
+			
+			if ($doc->hasResponseProcessing() === true) {
+				$compactAssessmentItemRef->setResponseProcessing($doc->getResponseProcessing());
+			}
 		}
 		catch (Exception $e) {
 			$msg = "An error occured while unreferencing file '${href}'.";
