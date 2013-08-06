@@ -3,6 +3,7 @@
 namespace qtism\runtime\rules;
 
 use qtism\runtime\common\ProcessingException;
+use qtism\runtime\common\Processable;
 
 /**
  * An Exception to be thrown in a Rule Processing context.
