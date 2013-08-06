@@ -30,6 +30,52 @@ class ProcessingException extends \RuntimeException {
 	 */
 	const RUNTIME_ERROR = 1;
 	
+	/**
+	 * Code to use when a requested variable does not exist or is not set.
+	 *
+	 * @var integer
+	 */
+	const NONEXISTENT_VARIABLE = 2;
+	
+	/**
+	 * Code to use when a variable has not the expected type.
+	 *
+	 * e.g. If the correct processor retrieves a variable which is not
+	 * a ResponseDeclaration.
+	 *
+	 * @var integer
+	 */
+	const WRONG_VARIABLE_TYPE = 3;
+	
+	/**
+	 * Code to use when a variable has not the expected baseType.
+	 *
+	 * e.g. If the mapResponsePoint processor retrieves a variable with
+	 * a baseType different than point.
+	 *
+	 * @var integer
+	 */
+	const WRONG_VARIABLE_BASETYPE = 4;
+	
+	/**
+	 * Code to use when a variable is inconsistent.
+	 *
+	 * e.g. If the mapResponsePoint processor retrieves a variable with
+	 * no areaMapping set.
+	 *
+	 * @var integer
+	 */
+	const INCONSISTENT_VARIABLE = 5;
+	
+	/**
+	 * Code to use when a processor encounters an internal logic error.
+	 *
+	 * e.g. min >= max in the randomFloat processor.
+	 *
+	 * @var integer
+	 */
+	const LOGIC_ERROR = 6;
+	
 	private $source = null;
 	
 	/**
