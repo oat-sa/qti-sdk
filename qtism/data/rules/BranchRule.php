@@ -30,7 +30,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BranchRule extends QtiComponent {
+class BranchRule extends QtiComponent implements Rule {
 	
 	/**
 	 * The expression of the BranchRule.

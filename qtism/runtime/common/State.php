@@ -59,6 +59,14 @@ class State extends AbstractCollection {
 		}
 	}
 	
+	/**
+	 * Unset a variable from the current state. In other words
+	 * the relevant Variable object is removed from the state. 
+	 * 
+	 * @param string|Variable $variable The identifier of the variable or a Variable object to unset.
+	 * @throws InvalidArgumentException If $variable is not a string nor a Variable object.
+	 * @throws OutOfRangeException If no variable in the current state matches $variable.
+	 */
 	public function unsetVariable($variable) {
 		$data = &$this->getDataPlaceHolder();
 		

@@ -12,6 +12,7 @@ use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
+use qtism\runtime\common\State;
 use \InvalidArgumentException;
 
 /**

@@ -4,7 +4,6 @@ namespace qtism\runtime\common;
 
 use qtism\data\QtiComponent;
 use qtism\runtime\common\StackTrace;
-use qtism\runtime\common\State;
 
 /**
  * The AbstractEngine class is the common sub-class to all engines.
