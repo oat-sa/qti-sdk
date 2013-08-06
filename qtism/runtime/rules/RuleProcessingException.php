@@ -14,20 +14,12 @@ use qtism\runtime\common\Processable;
 class RuleProcessingException extends ProcessingException {
 	
 	/**
-	 * The error code to use when the result
-	 * of a conditional expression is not boolean nor NULL.
-	 * 
-	 * @var integer
-	 */
-	const WRONG_CONDITION_VALUE = 10;
-	
-	/**
 	 * The error code to use when the exitResponse rule is invoked
 	 * during rule processing.
 	 * 
 	 * @var integer
 	 */
-	const EXIT_RESPONSE = 11;
+	const EXIT_RESPONSE = 10;
 	
 	/**
 	 * The error code to use when the exitTest rule is invoked
@@ -35,7 +27,7 @@ class RuleProcessingException extends ProcessingException {
 	 *
 	 * @var integer
 	 */
-	const EXIT_TEST = 12;
+	const EXIT_TEST = 11;
 	
 	/**
 	 * Set the source of the error.

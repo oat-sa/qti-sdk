@@ -2,6 +2,9 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\data\QtiComponent;
+use qtism\runtime\common\ProcessorFactory;
+use qtism\runtime\common\Processable;
 use qtism\runtime\expressions\operators\OperatorProcessor;
 use qtism\data\expressions\Expression;
 use \RuntimeException;
@@ -14,7 +17,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExpressionProcessorFactory {
+class ExpressionProcessorFactory implements ProcessorFactory {
 	
 	/**
 	 * Create a new ExpressionProcessorFactory object.
@@ -28,11 +31,11 @@ class ExpressionProcessorFactory {
 	 * Create the ExpressionProcessor object able to process the 
 	 * given $expression.
 	 * 
-	 * @param Expression $expression An Expression object you want to get the related processor.
-	 * @return ExpressionProcessor The related ExpressionProcessor object.
+	 * @param QtiComponent $expression An Expression object you want to get the related processor.
+	 * @return Processable The related ExpressionProcessor object.
 	 * @throws RuntimeException If no ExpressionProcessor can be found for the given $expression.
 	 */
-	public function createProcessor(Expression $expression) {
+	public function createProcessor(QtiComponent $expression) {
 		$qtiClassName = ucfirst($expression->getQtiClassName());
 		$nsPackage = 'qtism\\runtime\\expressions\\';
 		$className =  $nsPackage . $qtiClassName . 'Processor';

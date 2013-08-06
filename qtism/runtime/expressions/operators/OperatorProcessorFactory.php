@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
+use qtism\data\QtiComponent;
 use qtism\data\expressions\operators\Operator;
 use qtism\runtime\expressions\ExpressionProcessorFactory;
 use qtism\data\expressions\Expression;
@@ -36,7 +37,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory {
 	 * @throws RuntimeException If no relevant OperatorProcessor is found for the given $expression.
 	 * 
 	 */
-	public function createProcessor(Expression $expression, OperandsCollection $operands = null) {
+	public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null) {
 		if ($expression instanceof Operator) {
 			$qtiClassName = ucfirst($expression->getQtiClassName());
 			$nsPackage = 'qtism\\runtime\\expressions\\operators\\';
