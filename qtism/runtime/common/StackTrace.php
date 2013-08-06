@@ -43,4 +43,16 @@ class StackTrace extends AbstractCollection implements Stack {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+	public function __toString() {
+		$str = '';
+		$data = &$this->getDataPlaceHolder();
+		
+		foreach (array_keys($data) as $k) {
+			$item = $data[$k];
+			$str .= $item->getTraceMessage() . "\n";
+		}
+		
+		return $str;
+	}
 }

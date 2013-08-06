@@ -187,7 +187,7 @@ class Container extends AbstractCollection implements Comparable {
 	 * 
 	 * @return array An array with two entries which are respectively to character lower and upper bounds.
 	 */
-	public function getToStringBounds() {
+	protected function getToStringBounds() {
 		return array('[', ']');
 	}
 	

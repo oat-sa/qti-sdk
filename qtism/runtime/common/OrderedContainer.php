@@ -42,4 +42,8 @@ class OrderedContainer extends MultipleContainer {
 	public function getCardinality() {
 		return Cardinality::ORDERED;
 	}
+	
+	protected function getToStringBounds() {
+		return array('<', '>');
+	}
 }

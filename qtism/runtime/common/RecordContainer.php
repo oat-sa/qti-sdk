@@ -93,4 +93,8 @@ class RecordContainer extends Container {
 		}
 		return $container;
 	}
+	
+	protected function getToStringBounds() {
+		return array('{', '}');
+	}
 }

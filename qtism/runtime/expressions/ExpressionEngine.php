@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\runtime\expressions\operators\OperatorProcessor;
+use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\common\StackTraceItem;
 use qtism\data\QtiComponent;
@@ -10,8 +12,7 @@ use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
-use qtism\runtime\common\State;
-use qtism\runtime\common\Processable;
+use \InvalidArgumentException;
 
 /**
  * The ExpressionEngine class provides a bed for Expression processing, by processing
@@ -21,21 +22,7 @@ use qtism\runtime\common\Processable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExpressionEngine implements Processable {
-	
-	/**
-	 * A Context for the ExpressionEngine.
-	 * 
-	 * @var State
-	 */
-	private $context;
-	
-	/**
-	 * The Expression object the ExpressionEngine will process.
-	 * 
-	 * @var Expression
-	 */
-	private $expression;
+class ExpressionEngine extends AbstractEngine {
 	
 	/**
 	 * 
@@ -67,13 +54,6 @@ class ExpressionEngine implements Processable {
 	private $operatorProcessorFactory;
 	
 	/**
-	 * The StackTrace of the engine.
-	 * 
-	 * @var StackTrace;
-	 */
-	private $stackTrace;
-	
-	/**
 	 * The operands stack.
 	 * 
 	 * @var OperandsCollection
@@ -83,12 +63,13 @@ class ExpressionEngine implements Processable {
 	/**
 	 * Create a new ExpressionEngine object.
 	 * 
-	 * @param Expression $expression The Expression object to be processed.
+	 * @param QtiComponent $expression The Expression object to be processed.
 	 * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
 	 */
-	public function __construct(Expression $expression, State $context = null) {
-		$this->setExpression($expression);
-		$this->setContext((is_null($context) === true) ? new State() : $context);
+	public function __construct(QtiComponent $expression, State $context = null) {
+		
+		parent::__construct($expression, $context);
+		
 		$this->setExpressionProcessorFactory(new ExpressionProcessorFactory());
 		$this->setOperatorProcessorFactory(new OperatorProcessorFactory());
 		$this->setStackTrace(new StackTrace());
@@ -96,39 +77,19 @@ class ExpressionEngine implements Processable {
 	}
 	
 	/**
-	 * Set the execution context of the ExpressionEngine.
+	 * Set the Expression object to be processed.
 	 * 
-	 * @param State $context A State object representing the execution context.
+	 * @param QtiComponent $expression An Expression object.
+	 * @throws InvalidArgumentException If $expression is not an Expression object.
 	 */
-	public function setContext(State $context) {
-		$this->context = $context;
-	}
-	
-	/**
-	 * Get the execution context of the ExpressionEngine.
-	 * 
-	 * @return State A State object representing the execution context.
-	 */
-	public function getContext() {
-		return $this->context;
-	}
-	
-	/**
-	 * Set the Expression object to be processed by the ExpressionEngine.
-	 * 
-	 * @param Expression $expression An Expression object to be processed.
-	 */
-	public function setExpression(Expression $expression) {
-		$this->expression = $expression;
-	}
-	
-	/**
-	 * Get the Expression object to be processed by the ExpressionEngine.
-	 * 
-	 * @return Expression An Expression object to be processed.
-	 */
-	public function getExpression() {
-		return $this->expression;
+	public function setComponent(QtiComponent $expression) {
+		if ($expression instanceof Expression) {
+			parent::setComponent($expression);
+		}
+		else {
+			$msg = "The ExpressionEngine class only accepts QTI Data Model Expression objects to be processed.";
+			throw new InvalidArgumentException($msg);
+		}
 	}
 	
 	/**
@@ -168,24 +129,6 @@ class ExpressionEngine implements Processable {
 	}
 	
 	/**
-	 * Set the StackTrace of the engine.
-	 * 
-	 * @param StackTrace $stackTrace A StackTrace object.
-	 */
-	protected function setStackTrace(StackTrace $stackTrace) {
-		$this->stackTrace = $stackTrace;
-	}
-	
-	/**
-	 * Get the execution Stack trace.
-	 * 
-	 * @return StackTrace The current execution stack trace.
-	 */
-	public function getStackTrace() {
-		return $this->stackTrace;
-	}
-	
-	/**
 	 * Get the Operands stack.
 	 * 
 	 * @return OperandsCollection An OperandsCollection object.
@@ -201,17 +144,6 @@ class ExpressionEngine implements Processable {
 	 */
 	protected function setOperands(OperandsCollection $operands) {
 		$this->operands = $operands;
-	}
-	
-	/**
-	 * Add an entry in the stack trace.
-	 * 
-	 * @param QtiComponent $component A component you want to trace.
-	 * @param string $message A trace message.
-	 */
-	protected function trace(QtiComponent $component, $message) {
-		$item = new StackTraceItem($component, $message);
-		$this->getStackTrace()->push($item);
 	}
 	
 	/**
@@ -310,7 +242,7 @@ class ExpressionEngine implements Processable {
 	 * @throws ExpressionProcessingException|OperatorProcessingException If an error occurs during the Expression processing.
 	 */
 	public function process() {
-		$expression = $this->getExpression();
+		$expression = $this->getComponent();
 		
 		// Reset trail and marker arrays.
 		$trail = array();
@@ -342,9 +274,9 @@ class ExpressionEngine implements Processable {
 				// trace the processing of the operator.
 				$qtiName = $expression->getQtiClassName();
 				$trace = "Operator '${qtiName}' processed.";
-				$this->trace($expression, $trace);
+				$this->traceOperator($processor, $result);
 				
-				if ($expression !== $this->getExpression()) {
+				if ($expression !== $this->getComponent()) {
 					$this->getOperands()->push($result);
 				}
 			}
@@ -360,10 +292,40 @@ class ExpressionEngine implements Processable {
 				// trace the processing of the expression.
 				$qtiName = $expression->getQtiClassName();
 				$trace = "Expression '${qtiName}' processed.";
-				$this->trace($expression, $trace);
+				$this->traceExpression($processor, $result);
 			}
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Trace a given Expression $processor execution.
+	 * 
+	 * @param ExpressionProcessor $processor The processor that undertook the processing.
+	 * @param mixed $result The result of the processing.
+	 */
+	protected function traceExpression(ExpressionProcessor $processor, $result) {
+		$qtiClassName = $processor->getExpression()->getQtiClassName();
+		$this->trace("${qtiClassName} [${result}]");
+	}
+	
+	/**
+	 * Trace a given Operator $processor execution.
+	 * 
+	 * @param OperatorProcessor $processor The processor that undertook the processing.
+	 * @param mixed $result The result of the processing.
+	 */
+	protected function traceOperator(OperatorProcessor $processor, $result) {
+
+		$stringOperands = array();
+		
+		foreach ($processor->getOperands() as $operand) {
+			$stringOperands[] = '' . $operand;
+		}
+		
+		$qtiClassName = $processor->getExpression()->getQtiClassName();
+		$msg = "${qtiClassName}(" . implode(', ', $stringOperands) . ") [${result}]";
+		$this->trace($msg);
 	}
 }

@@ -91,4 +91,8 @@ class MultipleContainer extends Container {
 		}
 		return $container;
 	}
+	
+	protected function getToStringBounds() {
+		return array('[', ']');
+	}
 }
