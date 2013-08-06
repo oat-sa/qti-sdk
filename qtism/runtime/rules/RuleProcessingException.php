@@ -30,6 +30,14 @@ class RuleProcessingException extends ProcessingException {
 	const EXIT_RESPONSE = 11;
 	
 	/**
+	 * The error code to use when the exitTest rule is invoked
+	 * during rule processing.
+	 *
+	 * @var integer
+	 */
+	const EXIT_TEST = 12;
+	
+	/**
 	 * Set the source of the error.
 	 *
 	 * @param Processable $source The source of the error.
