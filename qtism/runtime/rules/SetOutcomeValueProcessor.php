@@ -2,8 +2,8 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
-
 use qtism\data\rules\SetOutcomeValue;
 use qtism\data\rules\Rule;
 use \InvalidArgumentException;
@@ -43,12 +43,14 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 	}
 	
 	/**
-	 * Processor the setOutcomeValue rule. 
+	 * Process the setOutcomeValue rule. 
 	 * 
 	 * A RuleProcessingException will be thrown if:
 	 * 
 	 * * The outcome variable does not exist.
+	 * * The requested variable is not an OutcomeVariable.
 	 * * The outcome variable's baseType does not match the baseType of the affected value.
+	 * * An error occurs while processing the related expression.
 	 * 
 	 * @throws RuleProcessingException If one of the error described above arise.
 	 */
@@ -62,16 +64,20 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 			$msg = "No variable with identifier '${identifier}' to be set in the current state.";
 			throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
 		}
+		else if (!$var instanceof OutcomeVariable) {
+			$msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
+			throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
+		}
 		
 		// Process the expression.
 		// Its result will be the value to set to the target variable.
 		try {
-			$expressionEngine = new ExpressionEngine($rule->getExpression(), $this->getState());
+			$expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
 			$val = $expressionEngine->process();
 		}
 		catch (ExpressionProcessingException $e) {
 			$msg = "An error occured while processing the expression bound with the setOutcomeValue rule.";
-			throw new RuleProcessingException($msg, $this, RuleProcessingException::UNKNOWN, $e);
+			throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR, $e);
 		}
 		
 		// The variable exists, its new value is processed.

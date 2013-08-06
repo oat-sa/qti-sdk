@@ -6,6 +6,7 @@ use qtism\data\QtiComponent;
 use qtism\data\state\InterpolationTable;
 use qtism\data\state\InterpolationTableEntryCollection;
 use qtism\common\enums\BaseType;
+use qtism\data\storage\Utils;
 use \InvalidArgumentException;
 use \DOMElement;
 
@@ -77,6 +78,10 @@ class InterpolationTableMarshaller extends Marshaller {
 			$element->appendChild($marshaller->marshall($interpolationTableEntry));
 		}
 		
+		if ($component->getDefaultValue() !== null) {
+			static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+		}
+		
 		return $element;
 	}
 	
@@ -98,6 +103,18 @@ class InterpolationTableMarshaller extends Marshaller {
 			}
 			
 			$object = new InterpolationTable($interpolationTableEntryCollection);
+			
+			if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+				try {
+					$object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
+				}
+				catch (InvalidArgumentException $e) {
+					$strType = BaseType::getNameByConstant($this->getBaseType());
+					$msg = "Unable to transform '${defaultValue}' into ${strType}.";
+					throw new UnmarshallingException($msg, $element, $e);
+				}
+			}
+			
 			return $object;
 		}
 		else {

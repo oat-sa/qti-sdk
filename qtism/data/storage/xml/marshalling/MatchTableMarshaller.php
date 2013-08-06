@@ -6,6 +6,7 @@ use qtism\data\QtiComponent;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntryCollection;
 use qtism\common\enums\BaseType;
+use qtism\data\storage\Utils;
 use \DOMElement;
 use \InvalidArgumentException;
 
@@ -76,6 +77,10 @@ class MatchTableMarshaller extends Marshaller {
 			$element->appendChild($marshaller->marshall($matchTableEntry));
 		}
 		
+		if ($component->getDefaultValue() !== null) {
+			static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+		}
+		
 		return $element;
 	}
 	
@@ -97,6 +102,19 @@ class MatchTableMarshaller extends Marshaller {
 			}
 			
 			$object = new MatchTable($matchTableEntries);
+			
+			if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+				try {
+					$defaultValue = Utils::stringToDatatype($defaultValue, $this->getBaseType());
+					$object->setDefaultValue($defaultValue);
+				}
+				catch (InvalidArgumentException $e) {
+					$strType = BaseType::getNameByConstant($this->getBaseType());
+					$msg = "Unable to transform '$defaultValue' in a ${strType}.";
+					throw new UnmarshallingException($msg, $element, $e);
+				}
+			}
+			
 			return $object;
 		}
 		else {
