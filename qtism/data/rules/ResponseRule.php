@@ -20,6 +20,6 @@ use qtism\data\QtiComponent;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface ResponseRule {
+interface ResponseRule extends Rule {
 	
 }

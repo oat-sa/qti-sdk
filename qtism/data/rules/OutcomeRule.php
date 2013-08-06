@@ -13,6 +13,6 @@ use qtism\data\QtiComponent;
  * @author <jerome@taotesting.com>
  *
  */
-interface OutcomeRule {
+interface OutcomeRule extends Rule {
 	
 }
