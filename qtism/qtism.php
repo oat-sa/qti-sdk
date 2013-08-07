@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * The QtiStateMachine PSR-O autoloader.
+ */
 namespace qtism;
 
 function qtism_autoload($class) {
