@@ -2,11 +2,11 @@
 
 namespace qtism\data\storage\xml;
 
-use qtism\data\AssessmentItem;
+use qtism\data\state\ResponseProcessing;
 use \DOMDocument;
 use \RuntimeException;
 
-class XmlAssessmentItemDocument extends AssessmentItem implements IXmlDocument {
+class XmlResponseProcessingDocument extends ResponseProcessing implements IXmlDocument {
 	
 	/**
 	 * The QTI version in use.
@@ -16,7 +16,7 @@ class XmlAssessmentItemDocument extends AssessmentItem implements IXmlDocument {
 	private $version = '2.1';
 	
 	/**
-	 * The XmlDocument object corresponding to the saved/loaded AssessmentItem.
+	 * The XmlDocument object corresponding to the saved/loaded ResponseProcessing.
 	 * 
 	 * @var XmlDocument
 	 */
@@ -29,7 +29,7 @@ class XmlAssessmentItemDocument extends AssessmentItem implements IXmlDocument {
 	 * @param string $version The QTI version to use (default is '2.1').
 	 */
 	public function __construct($version = '2.1') {
-		parent::__construct('assessmentItem', false);
+		parent::__construct();
 		$this->setXmlDocument(new XmlDocument($version, $this));
 	}
 	
@@ -62,7 +62,7 @@ class XmlAssessmentItemDocument extends AssessmentItem implements IXmlDocument {
 	}
 	
 	/**
-	 * Validate the AssessmentItem XML document according to the relevant XSD schema.
+	 * Validate the ResponseProcessing XML document according to the relevant XSD schema.
 	 * If $filename is provided, the file pointed by $filename will be used instead
 	 * of the default schema.
 	 */

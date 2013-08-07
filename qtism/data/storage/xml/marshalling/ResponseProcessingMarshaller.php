@@ -48,7 +48,7 @@ class ResponseProcessingMarshaller extends Marshaller {
 	 * @return QtiComponent A ResponseProcessing object.
 	 * @throws UnmarshallingException
 	 */
-	protected function unmarshall(DOMElement $element) {
+	protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null) {
 		$responseRuleElts = self::getChildElements($element);
 		
 		$responseRules = new ResponseRuleCollection();
@@ -57,7 +57,13 @@ class ResponseProcessingMarshaller extends Marshaller {
 			$responseRules[] = $marshaller->unmarshall($responseRuleElts[$i]);
 		}
 		
-		$object = new ResponseProcessing($responseRules);
+		if (is_null($responseProcessing) === true) {
+			$object = new ResponseProcessing($responseRules);
+		}
+		else {
+			$object = $responseProcessing;
+			$object->setResponseRules($responseRules);
+		}
 		
 		if (($template = static::getDOMElementAttributeAs($element, 'template')) !== null) {
 			$object->setTemplate($template);
