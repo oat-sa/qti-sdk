@@ -1,14 +1,12 @@
 <?php
 
 use qtism\data\state\OutcomeDeclaration;
-
 use qtism\data\state\OutcomeDeclarationCollection;
-
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\SetOutcomeValue;
 use qtism\data\rules\OutcomeRuleCollection;
-use qtism\data\state\OutcomeProcessing;
+use qtism\data\processing\OutcomeProcessing;
 use qtism\data\TestFeedbackCollection;
 use qtism\data\TestFeedback;
 use qtism\data\TestPartCollection;

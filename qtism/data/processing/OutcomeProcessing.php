@@ -1,6 +1,6 @@
 <?php
 
-namespace qtism\data\state;
+namespace qtism\data\processing;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;

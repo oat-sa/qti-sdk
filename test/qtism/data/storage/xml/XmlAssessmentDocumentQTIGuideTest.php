@@ -168,7 +168,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		
 		// OutcomeProcessing
 		$outcomeProcessing = $assessmentTest->getOutcomeProcessing();
-		$this->assertInstanceOf('qtism\\data\\state\\OutcomeProcessing', $outcomeProcessing);
+		$this->assertInstanceOf('qtism\\data\\processing\\OutcomeProcessing', $outcomeProcessing);
 		$this->assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
 		
 		$outcomeRules = $outcomeProcessing->getOutcomeRules();

@@ -5,7 +5,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\LookupOutcomeValue;
 use qtism\data\rules\OutcomeRuleCollection;
-use qtism\data\state\OutcomeProcessing;
+use qtism\data\processing\OutcomeProcessing;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use \DOMDocument;
 
@@ -53,7 +53,7 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase {
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\state\\OutcomeProcessing', $component);
+		$this->assertInstanceOf('qtism\\data\\processing\\OutcomeProcessing', $component);
 		
 		$outcomeRules = $component->getOutcomeRules();
 		$this->assertInstanceOf('qtism\\data\\rules\\LookupOutcomeValue', $outcomeRules[0]);

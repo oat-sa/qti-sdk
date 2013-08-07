@@ -5,7 +5,7 @@ namespace qtism\data;
 use qtism\data\utils\Reflection;
 use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclarationCollection;
-use qtism\data\state\OutcomeProcessing;
+use qtism\data\processing\OutcomeProcessing;
 use qtism\data\state\VariableDeclarationCollection;
 use qtism\data\state\Weight;
 use qtism\common\utils\Format;

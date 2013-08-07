@@ -6,7 +6,7 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
-use qtism\data\state\ResponseProcessing;
+use qtism\data\processing\ResponseProcessing;
 use qtism\data\AssessmentItemRef;
 use qtism\common\collections\IdentifierCollection;
 use \InvalidArgumentException;

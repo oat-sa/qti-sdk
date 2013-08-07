@@ -3,7 +3,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
-use qtism\data\state\OutcomeProcessing;
+use qtism\data\processing\OutcomeProcessing;
 use qtism\data\rules\OutcomeRuleCollection;
 use \DOMElement;
 

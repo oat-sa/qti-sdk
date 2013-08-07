@@ -4,7 +4,7 @@ namespace qtism\data;
 
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
-use qtism\data\state\ResponseProcessing;
+use qtism\data\processing\ResponseProcessing;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
 use \InvalidArgumentException;

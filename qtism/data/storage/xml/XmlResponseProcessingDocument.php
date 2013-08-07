@@ -2,7 +2,7 @@
 
 namespace qtism\data\storage\xml;
 
-use qtism\data\state\ResponseProcessing;
+use qtism\data\processing\ResponseProcessing;
 use \DOMDocument;
 use \RuntimeException;
 

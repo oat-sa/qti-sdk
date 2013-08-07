@@ -9,7 +9,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase {
 	public function testLoadMatchCorrect() {
 		$xml = new XmlResponseProcessingDocument('2.1');
 		$xml->load(self::getTemplatesPath() . '2_1/match_correct.xml');
-		$this->assertInstanceOf('qtism\\data\\state\\ResponseProcessing', $xml);
+		$this->assertInstanceOf('qtism\\data\\processing\\ResponseProcessing', $xml);
 		$this->assertFalse($xml->hasTemplateLocation());
 		$this->assertFalse($xml->hasTemplate());
 		
