@@ -8,7 +8,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase {
 	
 	public function testLoadMatchCorrect() {
 		$xml = new XmlResponseProcessingDocument('2.1');
-		$xml->load($this->getTemplatesPath() . '2_1/match_correct.xml');
+		$xml->load(self::getTemplatesPath() . '2_1/match_correct.xml');
 		$this->assertInstanceOf('qtism\\data\\state\\ResponseProcessing', $xml);
 		$this->assertFalse($xml->hasTemplateLocation());
 		$this->assertFalse($xml->hasTemplate());
@@ -36,12 +36,33 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase {
 	}
 	
 	/**
+	 * @dataProvider testLoadProvider
+	 * 
+	 * @param string $url
+	 */
+	public function testLoad($url) {
+		$xml = new XmlResponseProcessingDocument();
+		$xml->load($url, true);
+	}
+	
+	/**
 	 * Returns the location of the templates on the file system
 	 * WITH A TRAILING SLASH.
 	 * 
 	 * @return string
 	 */
-	public function getTemplatesPath() {
+	public static function getTemplatesPath() {
 		return dirname(__FILE__) . '/../../../../../qtism/runtime/rules/templates/';
+	}
+	
+	public function testLoadProvider() {
+		return array(
+			array(self::getTemplatesPath() . '2_1/match_correct.xml'),
+			array(self::getTemplatesPath() . '2_1/map_response.xml'),
+			array(self::getTemplatesPath() . '2_1/map_response_point.xml'),
+			array(self::getTemplatesPath() . '2_0/match_correct.xml'),
+			array(self::getTemplatesPath() . '2_0/map_response.xml'),
+			array(self::getTemplatesPath() . '2_0/map_response_point.xml')
+		);
 	}
 }
