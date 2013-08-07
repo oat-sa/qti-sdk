@@ -11,8 +11,8 @@ use qtism\data\rules\Rule;
 use \InvalidArgumentException;
 
 /**
- * The AbstractConditionEngine implements the common logic
- * of OutcomeCondition and ResponseCondition engines.
+ * The AbstractConditionProcessor implements the common logic
+ * of OutcomeCondition and ResponseCondition processors.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
