@@ -92,6 +92,25 @@ class OutcomeConditionEngineTest extends QtiSmTestCase {
 		$this->assertSame($expectedZ, $state['z']);
 	}
 	
+	public function testWrongRuleType() {
+		$rule = $this->createComponentFromXml('
+			<responseCondition>
+				<responseIf>
+					<equal>
+						<variable identifier="t"/>
+						<baseValue baseType="integer">1337</baseValue>
+					</equal>
+					<setOutcomeValue identifier="x">
+						<baseValue baseType="string">Piece of cake!</baseValue>
+					</setOutcomeValue>
+				</responseIf>
+			</responseCondition>
+		');
+		
+		$this->setExpectedException('\\InvalidArgumentException');
+		$engine = new OutcomeConditionEngine($rule);
+	}
+	
 	public function testOutcomeConditionComplexProvider() {
 		return array(
 			array(1, 1, 'A', 'C', null),
