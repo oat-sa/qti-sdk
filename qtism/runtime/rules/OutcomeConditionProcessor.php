@@ -16,7 +16,7 @@ namespace qtism\runtime\rules;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeConditionEngine extends AbstractConditionEngine {
+class OutcomeConditionProcessor extends AbstractConditionProcessor {
 	
 	public function getQtiNature() {
 		return 'outcome';

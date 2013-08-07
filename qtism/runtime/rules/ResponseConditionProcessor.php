@@ -16,7 +16,7 @@ namespace qtism\runtime\rules;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseConditionEngine extends AbstractConditionEngine {
+class ResponseConditionProcessor extends AbstractConditionProcessor {
 	
 	public function getQtiNature() {
 		return 'response';

@@ -17,7 +17,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractConditionEngine extends AbstractEngine {
+abstract class AbstractConditionProcessor extends RuleProcessor {
 	
 	/**
 	 * The trail stack, an array of Rule objects.
@@ -40,26 +40,26 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 	 * @param QtiComponent $rule An OutcomeCondition/ResponseCondition rule object.
 	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
 	 */
-	public function __construct(QtiComponent $rule, State $context = null) {
-		parent::__construct($rule, $context);
+	public function __construct(QtiComponent $rule) {
+		parent::__construct($rule);
 		$this->setRuleProcessorFactory(new RuleProcessorFactory());
 	}
 	
 	/**
 	 * Set the OutcomeCondition/ResponseCondition object to be processed.
 	 * 
-	 * @param QtiComponent $rule An OutcomeCondition/ResponseCondition object.
+	 * @param Rule $rule An OutcomeCondition/ResponseCondition object.
 	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
 	 */
-	public function setComponent(QtiComponent $rule) {
+	public function setRule(Rule $rule) {
 		
 		$className = ucfirst($this->getQtiNature()) . 'Condition';
 		
 		if (get_class($rule) === 'qtism\\data\\rules\\' . $className) {
-			parent::setComponent($rule);
+			parent::setRule($rule);
 		}
 		else {
-			$msg = "The ${className}Engine only accepts ${className} objects to be processed.";
+			$msg = "The ${className}Processor only accepts ${className} objects to be processed.";
 			throw new InvalidArgumentException($msg);
 		}
 	}
@@ -147,8 +147,8 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 	 */
 	public function process() {
 		
-		$state = $this->getContext();
-		$this->pushTrail($this->getComponent());
+		$state = $this->getState();
+		$this->pushTrail($this->getRule());
 		
 		$className = ucfirst($this->getQtiNature());
 		$nsClass = 'qtism\\data\\rules\\' . $className . 'Condition';
@@ -169,7 +169,6 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 				if ($exprEngine->process() === true) {
 					// Follow the if.
 					$this->pushTrail(call_user_func(array($ifStatement, $ruleGetter)));
-					$this->trace('if statement followed');
 				}
 				else {
 					// Let's try for else ifs.
@@ -183,7 +182,6 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 						if ($exprEngine->process() === true) {
 							// Follow the current else if.
 							$this->pushTrail(call_user_func(array($elseIfStatement, $ruleGetter)));
-							$this->trace('elseIf statement followed');
 							$followElseIf = true;
 							break;
 						}
@@ -194,7 +192,6 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 					if ($followElseIf === false && is_null($elseStatement) === false) {
 						// No else if followed, the last resort is the else.
 						$this->pushTrail(call_user_func(array($elseStatement, $ruleGetter)));
-						$this->trace('else statement followed');
 					}
 				}
 			}
@@ -203,7 +200,6 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 				$processor = $this->getRuleProcessorFactory()->createProcessor($rule);
 				$processor->setState($state);
 				$processor->process();
-				$this->trace($rule->getQtiClassName() . ' processed');
 			}
 		}
 	}

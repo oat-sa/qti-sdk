@@ -1,16 +1,15 @@
 <?php
-use qtism\runtime\common\ResponseVariable;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\common\ResponseVariable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\rules\ResponseConditionEngine;
+use qtism\runtime\rules\ResponseConditionProcessor;
 use qtism\runtime\rules\RuleProcessingException;
 
-class ResponseConditionEngineTest extends QtiSmTestCase {
+class ResponseConditionProcessorTest extends QtiSmTestCase {
 	
 	/**
 	 * @dataProvider responseConditionMatchCorrectProvider
@@ -63,8 +62,9 @@ class ResponseConditionEngineTest extends QtiSmTestCase {
 		$this->assertEquals(0, $outcomeVar->getDefaultValue());
 		
 		$state = new State(array($responseVar, $outcomeVar));
-		$engine = new ResponseConditionEngine($rule, $state);
-		$engine->process();
+		$processor = new ResponseConditionProcessor($rule);
+		$processor->setState($state);
+		$processor->process();
 		
 		$this->assertInternalType('float', $state['SCORE']);
 		$this->assertEquals($expectedScore, $state['SCORE']);
