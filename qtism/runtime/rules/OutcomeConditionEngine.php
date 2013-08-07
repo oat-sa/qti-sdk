@@ -1,6 +1,8 @@
 <?php
 namespace qtism\runtime\rules;
 
+use qtism\runtime\common\State;
+use qtism\runtime\common\AbstractEngine;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -23,7 +25,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeConditionProcessor extends RuleProcessor {
+class OutcomeConditionEngine extends AbstractEngine {
 	
 	/**
 	 * The trail stack, an array of Rule objects.
@@ -43,26 +45,26 @@ class OutcomeConditionProcessor extends RuleProcessor {
 	/**
 	 * Create a new OutcomeConditionProcessor.
 	 * 
-	 * @param Rule $rule An OutcomeCondition rule object.
+	 * @param QtiComponent $rule An OutcomeCondition rule object.
 	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition object.
 	 */
-	public function __construct(Rule $rule) {
-		parent::__construct($rule);
+	public function __construct(QtiComponent $rule, State $context = null) {
+		parent::__construct($rule, $context);
 		$this->setRuleProcessorFactory(new RuleProcessorFactory());
 	}
 	
 	/**
 	 * Set the OutcomeCondition object to be processed.
 	 * 
-	 * @param Rule $rule An OutcomeCondition object.
+	 * @param QtiComponent $rule An OutcomeCondition object.
 	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition object.
 	 */
-	public function setRule(Rule $rule) {
+	public function setComponent(QtiComponent $rule) {
 		if ($rule instanceof OutcomeCondition) {
-			parent::setRule($rule);
+			parent::setComponent($rule);
 		}
 		else {
-			$msg = "The OutcomeConditionProcessor only accepts OutcomeCondition objects to be processed.";
+			$msg = "The OutcomeConditionEngine only accepts OutcomeCondition objects to be processed.";
 			throw new InvalidArgumentException($msg);
 		}
 	}
@@ -97,10 +99,12 @@ class OutcomeConditionProcessor extends RuleProcessor {
 		if ($components instanceof QtiComponent) {
 			array_push($trail, $components);
 		}
-		
-		while ($i >= 1) {
-			$i--;
-			array_push($trail, $components[$i]);
+		else {
+			// collection
+			while ($i >= 1) {
+				$i--;
+				array_push($trail, $components[$i]);
+			}
 		}
 	}
 	
@@ -139,8 +143,8 @@ class OutcomeConditionProcessor extends RuleProcessor {
 	 */
 	public function process() {
 		
-		$state = $this->getState();
-		$this->pushTrail(new QtiComponentCollection(array($this->getRule())));
+		$state = $this->getContext();
+		$this->pushTrail($this->getComponent());
 		
 		while (count($this->getTrail()) > 0) {
 
@@ -156,6 +160,7 @@ class OutcomeConditionProcessor extends RuleProcessor {
 				if ($exprEngine->process() === true) {
 					// Follow the if.
 					$this->pushTrail($outcomeIf->getOutcomeRules());
+					$this->trace('if statement followed');
 				}
 				else {
 					// Let's try for else ifs.
@@ -168,14 +173,16 @@ class OutcomeConditionProcessor extends RuleProcessor {
 						if ($exprEngine->process() === true) {
 							// Follow the current else if.
 							$this->pushTrail($outcomeElseIf->getOutcomeRules());
+							$this->trace('elseIf statement followed');
 							$followElseIf = true;
 							break;
 						}
 					}
 					
-					if ($followElseIf === false) {
+					if ($followElseIf === false && is_null($rule->getOutcomeElse()) === false) {
 						// No else if followed, the last resort is the else.
 						$this->pushTrail($rule->getOutcomeElse()->getOutcomeRules());
+						$this->trace('else statement followed');
 					}
 				}
 			}
@@ -184,6 +191,7 @@ class OutcomeConditionProcessor extends RuleProcessor {
 				$processor = $this->getRuleProcessorFactory()->createProcessor($rule);
 				$processor->setState($state);
 				$processor->process();
+				$this->trace($rule->getQtiClassName() . ' processed');
 			}
 		}
 	}

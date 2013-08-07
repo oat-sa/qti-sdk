@@ -5,10 +5,10 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\rules\OutcomeConditionProcessor;
+use qtism\runtime\rules\OutcomeConditionEngine;
 use qtism\runtime\rules\RuleProcessingException;
 
-class OutcomeConditionProcessorTest extends QtiSmTestCase {
+class OutcomeConditionEngineTest extends QtiSmTestCase {
 	
 	/**
 	 * @dataProvider testOutcomeConditionComplexProvider
@@ -83,9 +83,9 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase {
 		$state->setVariable(new OutcomeVariable('y', Cardinality::SINGLE, BaseType::STRING));
 		$state->setVariable(new OutcomeVariable('z', Cardinality::SINGLE, BaseType::STRING));
 		
-		$processor = new OutcomeConditionProcessor($rule);
-		$processor->setState($state);
-		$processor->process();
+		$engine = new OutcomeConditionEngine($rule);
+		$engine->setContext($state);
+		$engine->process();
 		
 		$this->assertSame($expectedX, $state['x']);
 		$this->assertSame($expectedY, $state['y']);
@@ -95,7 +95,10 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase {
 	public function testOutcomeConditionComplexProvider() {
 		return array(
 			array(1, 1, 'A', 'C', null),
-			array(1, 0, 'B', 'C', null)
+			array(1, 0, 'B', 'C', null),
+			array(2, 0, null, 'A', 'B'),
+			array(3, 0, 'V', null, null),
+			array(4, 1, 'Z', null, null)
 		);
 	}
 }
