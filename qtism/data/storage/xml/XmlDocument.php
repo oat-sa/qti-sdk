@@ -7,7 +7,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\QtiComponent;
-use qtism\data\storage\Utils;
+use qtism\data\storage\Utils as StorageUtils;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMDocument;
 use \DOMElement;
@@ -87,7 +87,7 @@ class XmlDocument implements IXmlDocument {
 	}
 	
 	protected function setUri($uri = '') {
-		$this->uri = Utils::sanitizeUri($uri);
+		$this->uri = StorageUtils::sanitizeUri($uri);
 	}
 	
 	/**
