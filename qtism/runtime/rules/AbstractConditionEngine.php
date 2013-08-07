@@ -151,6 +151,7 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 		$this->pushTrail($this->getComponent());
 		
 		$className = ucfirst($this->getQtiNature());
+		$nsClass = 'qtism\\data\\rules\\' . $className . 'Condition';
 		$ruleGetter = "get${className}Rules";
 		$statementGetter = "get${className}"; // + 'If'|'ElseIf'|'Else'
 		
@@ -158,7 +159,7 @@ abstract class AbstractConditionEngine extends AbstractEngine {
 
 			$rule = $this->popTrail();
 			
-			if ($rule instanceof OutcomeCondition) {
+			if (get_class($rule) === $nsClass) {
 				
 				// Let's try for if.
 				$ifStatement = call_user_func(array($rule, $statementGetter . 'If'));
