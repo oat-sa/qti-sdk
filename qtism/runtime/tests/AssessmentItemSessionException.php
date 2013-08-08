@@ -10,6 +10,5 @@ class AssessmentItemSessionException extends Exception {
 	
 	const DURATION_EXCEEDED = 1;
 	
-	const UNEXISTENT_VARIABLE = 2;
-	
+	const MAX_ATTEMPTS_EXCEEDED = 2;
 }

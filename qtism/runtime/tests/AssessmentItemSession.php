@@ -105,7 +105,7 @@ class AssessmentItemSession extends State {
 	 * @return ItemSessionControl An ItemSessionControl object.
 	 */
 	public function getItemSessionControl() {
-		return $this->itemSessionControl();
+		return $this->itemSessionControl;
 	}
 	
 	/**
@@ -162,7 +162,7 @@ class AssessmentItemSession extends State {
 		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
 		 
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::STRING, 'unknown'));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, 'unknown'));
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
@@ -181,6 +181,20 @@ class AssessmentItemSession extends State {
 	 *
 	 */
 	public function beginAttempt() {
+	    
+	    // Are we allowed to begin a new attempt?
+	    $itemRef = $this->getAssessmentItemRef();
+	    if ($this['completionStatus'] === 'completed') {
+	        $identifier = $itemRef->getIdentifier();
+	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
+	        $msg.= "completion status is already set to 'complete'";
+	        throw new AssessmentItemSessionException($msg, AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED);
+	    }
+	    else if ($itemRef->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
+	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
+	        throw new AssessmentItemSessionException($msg, AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED);
+	    }
+	    
 		$data = &$this->getDataPlaceHolder();
 		
 		// Response variables' default values are set at the beginning
@@ -188,7 +202,8 @@ class AssessmentItemSession extends State {
 		if ($this['numAttempts'] === 0) {
 		    
 		    // At the start of the first attempt, the completionStatus
-		    // goes to 'unknown'.
+		    // goes to 'unknown' and response variables get their
+		    // default values if any.
 		    
 			foreach (array_keys($data) as $k) {
 				if ($data[$k] instanceof ResponseVariable) {
@@ -204,23 +219,27 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * End the attempt by providing responses or by another action.
+	 * End the attempt by providing responses or by another action. If $responses
+	 * is provided, the values found into it will be merged to the current state
+	 * before ResponseProcessing is executed.
 	 * 
-	 * * If more attempts are allowed, the session goes  state.
-	 * * Otherwise, the 'suspended' state is activated.
+	 * * If more attempts are allowed, the session continues.
 	 * 
-	 * @param boolean $responseProcessing Whether to execute the responseProcessing or not.
-	 * @param State $responses A State composed by the candidate's responses to the item if $responseProcessing = true.
+	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
+	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
 	 */
-	public function endAttempt($responseProcessing = true, State $responses = null) {
+	public function endAttempt(State $responses = null, $responseProcessing = true) {
 		
 	    // Apply the responses to the current state and process the responses.
-	    foreach ($responses as $identifier => $value) {
-	        $this[$identifier] = $value;
+	    if (is_null($responses) !== true) {
+	        foreach ($responses as $identifier => $value) {
+	            $this[$identifier] = $value->getValue();
+	        }   
 	    }
 	    
-	    if ($responseProcessing === true && is_null($responses) === false) {
-	        $engine = new ResponseProcessingEngine($this->getAssessmentItemRef()->getResponseProcessing());
+	    if ($responseProcessing === true) {
+	        $responseProcessing = $this->getAssessmentItemRef()->getResponseProcessing();
+	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
 	        $engine->process();
 	    }
 	    
@@ -234,7 +253,7 @@ class AssessmentItemSession extends State {
 		    
 		    $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
 		    
-		    if ($maxAttempts > 0 && $maxAttempts >= $this['numAttempts']) {
+		    if ($this['numAttempts'] >= $maxAttempts) {
 		        $this->endItemSession();
 		        $this['completionStatus'] = 'completed';
 		    }

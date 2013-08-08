@@ -23,11 +23,9 @@ class ItemSessionControl extends QtiComponent {
 	 * completionStatus has been set to completed) whether or not feedback is shown 
 	 * is controlled by the showFeedback constraint.
 	 * 
-	 * -1 means not specified.
-	 * 
 	 * @var int
 	 */
-	private $maxAttempts = -1;
+	private $maxAttempts = 1;
 	
 	/**
 	 * From IMS QTI:
@@ -132,7 +130,7 @@ class ItemSessionControl extends QtiComponent {
 	/**
 	 * Get the maximum number of attempts in the given test context.
 	 * 
-	 * @return integer An integer. If -1, the maxAttempts attribute was not specified.
+	 * @return integer An integer.
 	 */
 	public function getMaxAttempts() {
 		return $this->maxAttempts;
@@ -141,7 +139,7 @@ class ItemSessionControl extends QtiComponent {
 	/**
 	 * Set the maximum number of attempts in the given test context.
 	 * 
-	 * @param integer $maxAttempts An integer. -1 = not specified, 0 = unlimited.
+	 * @param integer $maxAttempts An integer.
 	 * @throws InvalidArgumentException If $maxAttempts is not an integer.
 	 */
 	public function setMaxAttempts($maxAttempts) {
