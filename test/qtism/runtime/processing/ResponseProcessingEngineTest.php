@@ -1,8 +1,9 @@
 <?php
-use qtism\runtime\common\State;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\rules\RuleProcessingException;
+use qtism\runtime\common\ProcessingException;
+use qtism\runtime\common\State;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\processing\ResponseProcessingEngine;
@@ -41,7 +42,25 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
 		$engine->process();
 		$this->assertInternalType('float', $context['SCORE']);
 		$this->assertEquals(1.0, $context['SCORE']);
-		
-		var_dump(''.$engine->getStackTrace());
+	}
+	
+	public function testResponseProcessingExitResponse() {
+	    $responseProcessing = $this->createComponentFromXml('
+	        <responseProcessing>
+                <exitResponse/>
+	        </responseProcessing>
+	    ');
+	    
+	    $engine = new ResponseProcessingEngine($responseProcessing);
+	    
+	    try {
+	        $engine->process();
+	        // An exception MUST be thrown.
+	        $this->assertTrue(true);
+	    }
+	    catch (ProcessingException $e) {
+	        $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
+	        $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
+	    }
 	}
 }

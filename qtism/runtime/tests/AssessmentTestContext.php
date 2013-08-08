@@ -73,6 +73,20 @@ class AssessmentTestContext extends State {
 	}
 	
 	/**
+	 * Returns the test-level outcome variables.
+	 */
+	public function getTestLevelOutcomeVariables() {
+		// @todo implement AssessmentTestContext::getTestLevelOutcomeVariables.
+	}
+	
+	/**
+	 * Returns the item-level variables (both outcome and response variables).
+	 */
+	public function getItemLevelVariables() {
+		// @todo implement AssessmentTestContext::getItemLevelVariables.
+	}
+	
+	/**
 	 * Set the assessmentItemRef objects involved in the context.
 	 * 
 	 * @param AssessmentItemRefCollection $assessmentItemRefs A Collection of AssessmentItemRef objects.

@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\processing;
 
+use qtism\runtime\common\ProcessingException;
 use qtism\runtime\rules\RuleEngine;
 use qtism\data\storage\xml\XmlResponseProcessingDocument;
 use qtism\data\processing\ResponseProcessing;
@@ -114,7 +115,13 @@ class ResponseProcessingEngine extends AbstractEngine {
 	/**
 	 * Execute the ResponseProcessing according to the current context.
 	 * 
-	 * @throws ResponseProcessingException
+	 * The following sub-types of ProcessingException may be thrown:
+	 * 
+	 * * RuleProcessingException: If a ResponseRule in the ResponseProcessing produces an error OR if the ExitResponse rule is invoked. In this last case, a specific exception code will be produced to deal with the situation accordingly.
+	 * * ExpressionProcessingException: If an Expression within a ResponseRule produces an error.
+	 * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
+	 * 
+	 * @throws ProcessingException
 	 */
 	public function process() {
 		// @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
