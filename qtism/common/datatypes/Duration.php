@@ -135,10 +135,22 @@ class Duration implements Comparable {
 	/**
 	 * Get the number of seconds.
 	 * 
+	 * @param $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
 	 * @return int
 	 */
-	public function getSeconds() {
-		return $this->getInterval()->s;
+	public function getSeconds($total = false) {
+	    if ($total === false) {
+	        return $this->getInterval()->s;
+	    }
+		
+	    $sYears = 31536000 * $this->getYears();
+	    $sMonths = 30 * 24 * 3600 * $this->getMonths();
+	    $sDays = 24 * 3600 * $this->getDays();
+	    $sHours = 3600 * $this->getHours();
+	    $sMinutes = 60 * $this->getMinutes();
+	    $sSeconds = $this->getSeconds();
+	    
+	    return $sYears + $sMonths + $sDays + $sHours + $sMinutes + $sSeconds;
 	}
 	
 	public function __toString() {
@@ -259,15 +271,23 @@ class Duration implements Comparable {
 	 * 
 	 * For instance, P1S + P1S = P2S.
 	 * 
-	 * @param Duration $duration A Duration object.
+	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
 	 */
-	public function add(Duration $duration) {
+	public function add($duration) {
 		$refStrDate = '19710101';
 		$d1 = new DateTime($refStrDate);
 		$d2 = new DateTime($refStrDate);
 		
+		if ($duration instanceof Duration) {
+		    $toAdd = $duration;
+		}
+		else {
+		    $toAdd = new Duration('PT0S');
+		    $toAdd->setInterval($duration);
+		}
+		
 		$d2->add(new DateInterval($this->__toString()));
-		$d2->add(new DateInterval($duration->__toString()));
+		$d2->add(new DateInterval($toAdd->__toString()));
 		
 		$interval = $d2->diff($d1);
 		$this->setInterval($interval);

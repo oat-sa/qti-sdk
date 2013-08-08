@@ -2,6 +2,8 @@
 
 namespace qtism\data;
 
+use qtism\common\datatypes\Duration;
+
 use \InvalidArgumentException;
 
 /**
@@ -28,20 +30,20 @@ class TimeLimits extends QtiComponent {
 	 * Minimum times are applicable to assessmentSections and assessmentItems only when
 	 * linear navigation mode is in effect.
 	 * 
-	 * false = unlimited
+	 * null = unlimited
 	 * 
-	 * @var integer|boolean
+	 * @var Duration
 	 */
-	private $minTime = false;
+	private $minTime = null;
 	
 	/**
 	 * Maximum time.
 	 * 
-	 * false = unlimited
+	 * null = unlimited
 	 * 
-	 * @var integer|boolean
+	 * @var Duration
 	 */
-	private $maxTime = false;
+	private $maxTime = null;
 	
 	/**
 	 * From IMS QTI:
@@ -56,11 +58,11 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Create a new instance of TimeLimits.
 	 * 
-	 * @param integer|boolean $minTime The minimum time. Give false if not defined.
-	 * @param integer|boolan $maxTime The maximum time. Give false if not defined.
+	 * @param Duration $minTime The minimum time. Give null if not defined.
+	 * @param Duration $maxTime The maximum time. Give null if not defined.
 	 * @param string $allowLateSubmission Wether it allows late submission of responses.
 	 */
-	public function __construct($minTime = false, $maxTime = false, $allowLateSubmission = false) {
+	public function __construct($minTime = null, $maxTime = null, $allowLateSubmission = false) {
 		$this->setMinTime($minTime);
 		$this->setMaxTime($maxTime);
 		$this->setAllowLateSubmission($allowLateSubmission);
@@ -69,7 +71,7 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Get the minimum time.
 	 * 
-	 * @return int A duration in seconds.
+	 * @return Duration A Duration object or null if unlimited.
 	 */
 	public function getMinTime() {
 		return $this->minTime;
@@ -81,29 +83,29 @@ class TimeLimits extends QtiComponent {
 	 * @return boolean
 	 */
 	public function hasMinTime() {
-		return $this->getMinTime() !== false;
+		return !is_null($this->getMinTime());
 	}
 	
 	/**
 	 * Set the minimum time.
 	 * 
-	 * @param integer|boolean $minTime A duration in seconds or (boolean) false if not specified.
-	 * @throws InvalidArgumentException If $minTime is not an integer nor (boolean) false.
+	 * @param Duration $minTime A Duration object or null if unlimited.
+	 * @throws InvalidArgumentException If $minTime is not a Duration object nor null.
 	 */
 	public function setMinTime($minTime) {
-		if (is_int($minTime) || (is_bool($minTime) && $minTime === false)) {
+		if (is_null($minTime) || $minTime instanceof Duration) {
 			$this->minTime = $minTime;
 		}
 		else {
-			$msg = "MinTime must be an integer or (boolean) false, '" . gettype($minTime) . "' given.";
+			$msg = "MinTime must be a Duration object or null, '" . gettype($minTime) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
 	}
 	
 	/**
-	 * Get the maximum time. Returns empty string if unlimited.
+	 * Get the maximum time. Returns null if unlimited
 	 * 
-	 * @return string A duration.
+	 * @return Duration A Duration object or null if unlimited.
 	 */
 	public function getMaxTime() {
 		return $this->maxTime;
@@ -115,21 +117,21 @@ class TimeLimits extends QtiComponent {
 	 * @return boolean
 	 */
 	public function hasMaxTime() {
-		return $this->getMaxTime() !== false;
+		return !is_null($this->getMaxTime());
 	}
 	
 	/**
-	 * Set the maximum time in seconds. Set to (boolean) false if unlimited.
+	 * Set the maximum time or null if unlimited.
 	 * 
-	 * @param integer|boolean $maxTime A duration in seconds or (boolean) false if not specified.
-	 * @throws InvalidArgumentException If $maxTime is not a string.
+	 * @param Duration $maxTime A duration object or null if unlimited.
+	 * @throws InvalidArgumentException If $maxTime is not a Duration object nor null.
 	 */
 	public function setMaxTime($maxTime) {
-		if (is_int($maxTime) || (is_bool($maxTime) && $maxTime === false)) {
+		if (is_null($maxTime) || $maxTime instanceof Duration) {
 			$this->maxTime = $maxTime;
 		}
 		else {
-			$msg = "MaxTime must be an integer or (boolean) false, '" . gettype($maxTime) . "' given.";
+			$msg = "MaxTime must be a Duration object or null, '" . gettype($maxTime) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
 	}

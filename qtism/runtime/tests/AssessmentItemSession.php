@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -12,10 +13,94 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\State;
+use \DateTime;
 use \InvalidArgumentException;
 
+/**
+ * The AssessmentItemSession class implements the lifecycle of an AssessmentItem session.
+ * 
+ * FROM IMS QTI:
+ * 
+ * An item session is the accumulation of all the attempts at a particular instance of an 
+ * item made by a candidate. In some types of test, the same item may be presented to the 
+ * candidate multiple times (e.g., during 'drill and practice'). Each occurrence or 
+ * instance of the item is associated with its own item session.
+ * 
+ * The following diagram illustrates the user-perceived states of the item session. Not all 
+ * states will apply to every scenario, for example feedback may not be provided for an 
+ * item or it may not be allowed in the context in which the item is being used. Similarly, 
+ * the candidate may not be permitted to review their responses and/or examine a model 
+ * solution. In practice, systems may support only a limited number of the indicated state 
+ * transitions and/or support other state transitions not shown here.
+ * 
+ * For system developers, an important first step in determining which requirements apply 
+ * to their system is to identify which of the user-perceived states are supported in their 
+ * system and to match the state transitions indicated in the diagram to their own event 
+ * model.
+ * 
+ * The discussion that follows forms part of this specification's requirements on Delivery 
+ * Engines.
+ * 
+ * The session starts when the associated item first becomes eligible for delivery to the 
+ * candidate. The item session's state is then maintained and updated in response to the 
+ * actions of the candidate until the session is over. At any time the state of the session 
+ * may be turned into an itemResult. A delivery system may also allow an itemResult to be 
+ * used as the basis for a new session in order to allow a candidate's responses to be seen 
+ * in the context of the item itself (and possibly compared to a solution) or even to allow 
+ * a candidate to resume an interrupted session at a later time.
+ * 
+ * The initial state of an item session represents the state after it has been determined 
+ * that the item will be delivered to the candidate but before the delivery has taken 
+ * place.
+ * 
+ * In a typical non-Adaptive Test the items are selected in advance and the candidate's 
+ * interaction with all items is reported at the end of the test session, regardless of 
+ * whether or not the candidate actually attempted all the items. In effect, item sessions 
+ * are created in the initial state for all items at the start of the test and are 
+ * maintained in parallel. In an Adaptive Test the items that are to be presented are 
+ * selected during the session based on the responses and outcomes associated with the 
+ * items presented so far. Items are selected from a large pool and the delivery engine 
+ * only reports the candidate's interaction with items that have actually been selected.
+ * 
+ * A candidate's interaction with an item is broken into 0 or more attempts. During each 
+ * attempt the candidate interacts with the item through one or more candidate sessions. 
+ * At the end of a candidate session the item may be placed into the suspended state ready 
+ * for the next candidate session. During a candidate session the item session is in the 
+ * interacting state. Once an attempt has ended response processing takes place, after 
+ * response processing a new attempt may be started.
+ * 
+ * For non-adaptive items, response processing typically takes place a limited number of 
+ * times, usually only once. For adaptive items, no such limit is required because the 
+ * response processing adapts the values it assigns to the outcome variables based on the 
+ * path through the item. In both cases, each invocation of response processing occurrs at 
+ * the end of each attempt. The appearance of the item's body, and whether any modal 
+ * feedback is shown, is determined by the values of the outcome variables.
+ * 
+ * When no more attempts are allowed the item session passes into the closed state. Once in 
+ * the closed state the values of the response variables are fixed. A delivery system or 
+ * reporting tool may still allow the item to be presented after it has reached the closed 
+ * state. This type of presentation takes place in the review state, summary feedback may 
+ * also be visible at this point if response processing has taken place and set a suitable 
+ * outcome variable.
+ * 
+ * Finally, for systems that support the display of solutions, the item session may pass 
+ * into the solution state. In this state, the candidate's responses are temporarily 
+ * replaced by the correct values supplied in the corresponding responseDeclarations 
+ * (or NULL if none was declared).
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class AssessmentItemSession extends State {
 	
+    /**
+     * A timing reference used to compute the duration of 
+     * the session.
+     * 
+     * @var DateTime
+     */
+    private $timeReference;
+    
 	/**
 	 * The state of the Item Session as described
 	 * by the AssessmentItemSessionState enumeration.
@@ -31,6 +116,14 @@ class AssessmentItemSession extends State {
 	 * @var ItemSessionControl
 	 */
 	private $itemSessionControl;
+	
+	/**
+	 * The time limits to be applied on the session if
+	 * needed.
+	 * 
+	 * @var TimeLimits
+	 */
+	private $timeLimits = null;
 	
 	/**
 	 * The ExtendedAssessmentItemRef describing the item the session
@@ -60,7 +153,7 @@ class AssessmentItemSession extends State {
 		$this->setState(AssessmentItemSessionState::INITIAL);
 		$this->beginItemSession();
 		
-		// Set-up default ItemAssessmentControl object.
+		// Set-up default ItemSessionControl object.
 		$this->setItemSessionControl(new ItemSessionControl());
 	}
 	
@@ -106,6 +199,52 @@ class AssessmentItemSession extends State {
 	 */
 	public function getItemSessionControl() {
 		return $this->itemSessionControl;
+	}
+	
+	/**
+	 * Set the TimeLimits to be applied to the session.
+	 * 
+	 * @param TimeLimits $timeLimits A TimeLimits object or null if no time limits must be applied.
+	 */
+	public function setTimeLimits(TimeLimits $timeLimits = null) {
+	    $this->timeLimits = $timeLimits;
+	}
+	
+	/**
+	 * Get the TimeLimits to be applied to the session.
+	 * 
+	 * @return TimeLimits A TimLimits object or null if no time limits must be applied.
+	 */
+	public function getTimeLimits() {
+	    return $this->timeLimits;
+	}
+	
+	/**
+	 * Set the timing reference.
+	 * 
+	 * @param DateTime $timeReference A DateTime object.
+	 */
+	protected function setTimeReference(DateTime $timeReference) {
+	    $this->timeReference = $timeReference;
+	}
+	
+	/**
+	 * Get the timing reference.
+	 * 
+	 * @return DateTime A DateTime object.
+	 */
+	protected function getTimeReference() {
+	    return $this->timeReference;
+	}
+	
+	/**
+	 * Whether the session is driven by a TimeLimits object
+	 * or not.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTimeLimits() {
+	    return !is_null($this->getTimeLimits());
 	}
 	
 	/**
@@ -158,16 +297,16 @@ class AssessmentItemSession extends State {
 		}
 		
 		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
-		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION));
 		 
 		// -- Create the built-in outcome variables.
 		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, 'unknown'));
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
-		$this['numAttempts'] = 0;
 		$this['duration'] = new Duration('PT0S');
+		$this['numAttempts'] = 0;
 		$this['completionStatus'] = 'not_attempted';
 	}
 	
@@ -210,12 +349,17 @@ class AssessmentItemSession extends State {
 					$data[$k]->applyDefaultValue();
 				}
 			}
+			
+			$this['duration'] = new Duration('PT0S');
 		}
 		
 		$this['numAttempts'] = $this['numAttempts'] + 1;
 		
 		// The session get the INTERACTING STATE.
 		$this->setState(AssessmentItemSessionState::INTERACTING);
+		
+		// Register a time reference that will be used later on to compute the duration built-in variable.
+		$this->setTimeReference(new DateTime());
 	}
 	
 	/**
@@ -247,19 +391,34 @@ class AssessmentItemSession extends State {
 		// After response processing, if the item is adaptive, close
 		// the item session if completionStatus = 'complete'.
 		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === 'completed') {
+		    
 		    $this->endItemSession();
 		}
-		else if ($this->getAssessmentItemRef()->isAdaptive() === false) {
+		else if ($this->getAssessmentItemRef()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
 		    
-		    $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
-		    
-		    if ($this['numAttempts'] >= $maxAttempts) {
-		        $this->endItemSession();
-		        $this['completionStatus'] = 'completed';
-		    }
+		    $this->endItemSession();
+		    $this['completionStatus'] = 'completed';
 		}
-		// else ...
-		// The item is adaptive but not 'completed', the session still lives.
+		else {
+		    // Waiting for a next attempt.
+		    $this->suspend();
+		}
+	}
+	
+	/**
+	 * Suspend the item session. The state will switch to SUSPENDED.
+	 * 
+	 */
+	public function suspend() {
+	    // If the current state is INTERACTING update duration built-in variable.
+	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
+	        $timeRef = $this->getTimeReference();
+	        $now = new DateTime();
+	        $this['duration']->add($timeRef->diff($now));
+	        $this->setTimeReference(new DateTime());
+	    }
+	    
+	    $this->setState(AssessmentItemSessionState::SUSPENDED);
 	}
 	
 	/**
@@ -272,6 +431,13 @@ class AssessmentItemSession extends State {
 	 * * the candidate ends an attempt, the is is adaptive and the completionStatus is 'complete'.
 	 */
 	public function endItemSession() {
+	    
+	    // If the candidate was interacting, suspend before
+	    // to get a correct state flow.
+	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
+	        $this->suspend();
+	    }
+	   
 		$this->setState(AssessmentItemSessionState::CLOSED);
 	}
 }

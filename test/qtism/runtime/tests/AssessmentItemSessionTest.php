@@ -1,4 +1,6 @@
 <?php
+use qtism\data\TimeLimits;
+
 use qtism\data\ItemSessionControl;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
@@ -17,6 +19,9 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     public function testInstantiation() {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        // No timelimits by default.
+        $this->assertFalse($itemSession->hasTimeLimits());
         
         // Response variables instantiated and set to NULL?
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('RESPONSE'));
@@ -102,12 +107,24 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         for ($i = 0; $i < $count; $i++) {
             // Here, manual set up of responses.
             $itemSession->beginAttempt();
+            
+            // simulate some time... 1 second to answer the item.
+            sleep(1);
+            
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
             $this->assertInternalType('float', $itemSession['SCORE']);
             $this->assertEquals($expected[$i], $itemSession['SCORE']);
             $this->assertEquals($i + 1, $itemSession['numAttempts']);
+            
+            // 1 more second before the next attempt.
+            // we are here in suspended mode so it will not be
+            // added to the duration.
+            sleep(1);
         }
+        
+        // The total duration shold have taken 5 seconds, the rest of the time was in SUSPENDED state.
+        $this->assertEquals(5, $itemSession['duration']->getSeconds(true));
         
         // one more and we get an expection... :)
         try {
@@ -150,6 +167,18 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED, $e->getCode());
         }
+    }
+    
+    public function testDurationBrutalSessionClosing() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
+        
+        $itemSession->beginAttempt();
+        sleep(1);
+        
+        // End session while attempting (brutal x))
+        $itemSession->endItemSession();
+        $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
     }
     
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {

@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentItemRef;
@@ -54,7 +55,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$itemSessionControl = new ItemSessionControl();
 		
 		$timeLimits = new TimeLimits();
-		$timeLimits->setMaxTime(50); // 2 days.
+		$timeLimits->setMaxTime(new Duration('PT50S')); // 50 seconds.
 		
 		$variableMappings = new VariableMappingCollection();
 		$variableMappings[] = new VariableMapping('var1', 'var2');

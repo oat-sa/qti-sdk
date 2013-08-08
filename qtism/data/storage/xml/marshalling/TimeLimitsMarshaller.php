@@ -2,8 +2,11 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\enums\BaseType;
+
 use qtism\data\QtiComponent;
 use qtism\data\TimeLimits;
+use qtism\data\storage\Utils as StorageUtils;
 use \DOMElement;
 use \InvalidArgumentException;
 
@@ -25,11 +28,11 @@ class TimeLimitsMarshaller extends Marshaller {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		if ($component->hasMinTime() === true) {
-			self::setDOMElementAttribute($element, 'minTime', $component->getMinTime());
+			self::setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));
 		}
 		
 		if ($component->hasMaxTime() === true) {
-			self::setDOMElementAttribute($element, 'maxTime', $component->getMaxTime());
+			self::setDOMElementAttribute($element, 'maxTime', $component->getMaxTime()->getSeconds(true));
 		}
 		
 		self::setDOMElementAttribute($element, 'allowLateSubmission', $component->doesAllowLateSubmission());
@@ -48,12 +51,12 @@ class TimeLimitsMarshaller extends Marshaller {
 		
 		$object = new TimeLimits();
 		
-		if (($value = static::getDOMElementAttributeAs($element, 'minTime', 'integer')) !== null) {
-			$object->setMinTime($value);
+		if (($value = static::getDOMElementAttributeAs($element, 'minTime', 'string')) !== null) {
+			$object->setMinTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
 		}
 		
-		if (($value = static::getDOMElementAttributeAs($element, 'maxTime', 'integer')) !== null) {
-			$object->setMaxTime($value);
+		if (($value = static::getDOMElementAttributeAs($element, 'maxTime', 'string')) !== null) {
+			$object->setMaxTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
 		}
 		
 		if (($value = static::getDOMElementAttributeAs($element, 'allowLateSubmission', 'boolean')) !== null) {

@@ -2,6 +2,7 @@
 
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\TimeLimits;
+use qtism\common\datatypes\Duration;
 use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -10,8 +11,8 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 
-		$minTime = 50;
-		$maxTime = 100;
+		$minTime = new Duration('PT50S');
+		$maxTime = new Duration('PT100S');
 		
 		$component = new TimeLimits($minTime, $maxTime);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
@@ -19,8 +20,8 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
 		$this->assertEquals('timeLimits', $element->nodeName);
-		$this->assertEquals($minTime, $element->getAttribute('minTime'));
-		$this->assertEquals($maxTime, $element->getAttribute('maxTime'));
+		$this->assertEquals(50, $element->getAttribute('minTime'));
+		$this->assertEquals(100, $element->getAttribute('maxTime'));
 		$this->assertEquals('false', $element->getAttribute('allowLateSubmission'));
 	}
 	
@@ -33,8 +34,8 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\TimeLimits', $component);
-		$this->assertEquals($component->getMinTime(), '50');
-		$this->assertEquals($component->getMaxTime(), '100');
+		$this->assertEquals($component->getMinTime() . '', 'PT50S');
+		$this->assertEquals($component->getMaxTime() . '', 'PT1M40S');
 		$this->assertEquals($component->doesAllowLateSubmission(), false);
 	}
 }
