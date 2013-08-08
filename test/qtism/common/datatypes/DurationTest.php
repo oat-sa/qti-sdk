@@ -158,7 +158,8 @@ class DurationTest extends QtiSmTestCase {
 		return array(
 			array(new Duration('P2D'), 'P2D'), // 2 days
 			array(new Duration('PT2S'), 'PT2S'), // 2 seconds
-			array(new Duration('P6YT5M'), 'P6YT5M') // 6 years, 5 months
+			array(new Duration('P6YT5M'), 'P6YT5M'), // 6 years, 5 months
+			array(new Duration('PT0S'), 'PT0S'), // 0 seconds
 		);
 	}
 }

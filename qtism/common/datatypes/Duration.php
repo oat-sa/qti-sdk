@@ -172,6 +172,11 @@ class Duration implements Comparable {
 			}
 		}
 		
+	    if ($string === 'P') {
+	        // Special case, the duration is 'nothing'.
+	        return 'PT0S';
+	    }
+		
 		return $string;
 	}
 	

@@ -2,6 +2,9 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\processing\ResponseProcessingEngine;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ItemSessionControl;
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
@@ -19,7 +22,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @var integer
 	 */
-	private $state;
+	private $state = AssessmentItemSessionState::INITIAL;
 	
 	/**
 	 * The ItemSessionControl object giving information about how to control
@@ -30,37 +33,35 @@ class AssessmentItemSession extends State {
 	private $itemSessionControl;
 	
 	/**
+	 * The ExtendedAssessmentItemRef describing the item the session
+	 * handles.
+	 * 
+	 * @var ExtendedAssessmentItemRef
+	 */
+	private $assessmentItemRef;
+	
+	/**
 	 * Create a new AssessmentItemSession object.
 	 * 
 	 * * Unless provided in the $variables array, the built-in response/outcome variables 'numAttempts', 'duration' and
 	 * 'completionStatus' will be created and set to an appropriate default value automatically.
 	 * 
-	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl
-	 * object to rule the session, use the setItemSessionControl() method.
+	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
+	 * * The AssessmentItemSession object is set up with a default INITIAL state. Built-in outcome/response variables are then set.
 	 * 
-	 * @param array $variables An array of Variable objects to compose the AssessmentItemSession.
-	 * @param integer $state A value from the AssessmentItemSessionState enumeration representing the current state of the AssessmentItemSession.
+	 * After the instantiation of the AssessmentItemSession object, you can update the values of variables accordingly, and set up
+	 * the current state of the session.
+	 * 
+	 * @param ExtendedAssessmentItemRef $assessmentItemRef The description of the item that the session handles.
 	 */
-	public function __construct(array $variables = array(), $state = AssessmentItemSessionState::INITIAL) {
-		parent::__construct($variables);
-		$this->setState($state);
+	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef) {
+		parent::__construct();
+		$this->setAssessmentItemRef($assessmentItemRef);
+		$this->setState(AssessmentItemSessionState::INITIAL);
+		$this->beginItemSession();
 		
 		// Set-up default ItemAssessmentControl object.
 		$this->setItemSessionControl(new ItemSessionControl());
-		
-		// -- Create the built-in response variables.
-		if (isset($this['numAttempts']) === false) {
-			$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
-		}
-		
-		if (isset($this['duration']) === false) {
-			$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
-		}
-		
-		// -- Create the built-in outcome variables.
-		if (isset($this['completionStatus']) === false) {
-			$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::STRING, 'unknown'));
-		}	
 	}
 	
 	/**
@@ -69,7 +70,7 @@ class AssessmentItemSession extends State {
 	 * @param integer $state A value from the AssessmentItemSessionState enumeration.
 	 * @throws InvalidArgumentException If $state is not a value from the AssessmentItemSessionState enumeration.
 	 */
-	protected function setState($state) {
+	public function setState($state) {
 		if (in_array($state, AssessmentItemSessionState::asArray())) {
 			$this->state = $state;
 		}
@@ -108,6 +109,26 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Set the ExtendendedAssessmentItemRef object which describes the item to be handled
+	 * by the session.
+	 * 
+	 * @param ExtendedAssessmentItemRef $assessmentItemRef An ExtendedAssessmentItemRef object.
+	 */
+	public function setAssessmentItemRef(ExtendedAssessmentItemRef $assessmentItemRef) {
+	    $this->assessmentItemRef = $assessmentItemRef;
+	}
+	
+	/**
+	 * Get the ExtendedAssessmentItemRef object which describes the item to be handled by the
+	 * session.
+	 * 
+	 * @return ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
+	 */
+	public function getAssessmentItemRef() {
+	    return $this->assessmentItemRef;
+	}
+	
+	/**
 	 * Start the item session. The item session is started when the related item
 	 * becomes eligible for the candidate.
 	 * 
@@ -116,27 +137,34 @@ class AssessmentItemSession extends State {
 	 * * The state of the session is set to INITIAL.
 	 * 
 	 */
-	public function beginSession() {
-		
-		// We will initialize the item session and its variables.
-		// Be carefull, do not touch 'numAttempts', 'duration' and 'completionStatus'
-		// variables, they are already correctly initialized.
-		
-		$data = &$this->getDataPlaceHolder();
-		foreach (array_keys($data) as $k) {
-			if (!in_array($k, array('numAttempts', 'duration')) && $data[$k] instanceof ResponseVariable) {
-				// Response variables are instantiated as part of the item session.
-				// Their values are always initialized to NULL.
-				$data[$k]->initialize();
-			}
-			else if ($k !== 'completionStatus') {
-				// Outcome variables are instantiantiated as part of the item session.
-				// Their values may be initialized with a default value.
-				$data[$k]->initialize();
-				$data[$k]->applyDefaultValue();
-			}
+	public function beginItemSession() {
+	    
+		// We initialize the item session and its variables.
+		foreach ($this->getAssessmentItemRef()->getOutcomeDeclarations() as $outcomeDeclaration) {
+		    // Outcome variables are instantiantiated as part of the item session.
+		    // Their values may be initialized with a default value if they have one.
+		    $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+		    $outcomeVariable->initialize();
+		    $outcomeVariable->applyDefaultValue();
+		    $this->setVariable($outcomeVariable);
 		}
 		
+		foreach ($this->getAssessmentItemRef()->getResponseDeclarations() as $responseDeclaration) {
+		    // Response variables are instantiated as part of the item session.
+		    // Their values are always initialized to NULL.
+		    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+		    $responseVariable->initialize();
+		    $this->setVariable($responseVariable);
+		}
+		
+		// -- Create the built-in response variables.
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+		 
+		// -- Create the built-in outcome variables.
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::STRING, 'unknown'));
+		
+		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
 		$this['numAttempts'] = 0;
 		$this['duration'] = new Duration('PT0S');
@@ -145,6 +173,11 @@ class AssessmentItemSession extends State {
 	
 	/**
 	 * begin an attempt for this item session.
+	 * 
+	 * If the attempt to begin is the first one of the session:
+	 * 
+	 * * ResponseVariables are applied their default value.
+	 * * The completionStatus variable changes to 'unknown'.
 	 *
 	 */
 	public function beginAttempt() {
@@ -152,7 +185,11 @@ class AssessmentItemSession extends State {
 		
 		// Response variables' default values are set at the beginning
 		// of the first attempt.
-		if ($numAttempts === 0) {
+		if ($this['numAttempts'] === 0) {
+		    
+		    // At the start of the first attempt, the completionStatus
+		    // goes to 'unknown'.
+		    
 			foreach (array_keys($data) as $k) {
 				if ($data[$k] instanceof ResponseVariable) {
 					$data[$k]->applyDefaultValue();
@@ -161,43 +198,61 @@ class AssessmentItemSession extends State {
 		}
 		
 		$this['numAttempts'] = $this['numAttempts'] + 1;
-		$this['completionStatus'] = 'incomplete';
 		
+		// The session get the INTERACTING STATE.
 		$this->setState(AssessmentItemSessionState::INTERACTING);
 	}
 	
 	/**
-	 * End the attemp by providing responses or by another action.
+	 * End the attempt by providing responses or by another action.
 	 * 
-	 * * If more attempts are allowed, the session remains in the 'interacting' state.
+	 * * If more attempts are allowed, the session goes  state.
 	 * * Otherwise, the 'suspended' state is activated.
 	 * 
-	 * @param State $responses A State composed by the responses to the item.
+	 * @param boolean $responseProcessing Whether to execute the responseProcessing or not.
+	 * @param State $responses A State composed by the candidate's responses to the item if $responseProcessing = true.
 	 */
-	public function endAttempt(State $responses = null) {
+	public function endAttempt($responseProcessing = true, State $responses = null) {
 		
-		$maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
-		if ($maxAttempts > 0 && $this['numAttempts'] >= $maxAttempts) {
-			$this->endItemSession();
+	    // Apply the responses to the current state and process the responses.
+	    foreach ($responses as $identifier => $value) {
+	        $this[$identifier] = $value;
+	    }
+	    
+	    if ($responseProcessing === true && is_null($responses) === false) {
+	        $engine = new ResponseProcessingEngine($this->getAssessmentItemRef()->getResponseProcessing());
+	        $engine->process();
+	    }
+	    
+	    
+		// After response processing, if the item is adaptive, close
+		// the item session if completionStatus = 'complete'.
+		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === 'completed') {
+		    $this->endItemSession();
 		}
-	}
-	
-	/**
-	 * Suspend the item session.
-	 * 
-	 * @param State $responseVariables A State composed of ResponseVariable objects.
-	 */
-	public function suspend() {
-		$this->setState(AssessmentItemSessionState::SUSPENDED);
+		else if ($this->getAssessmentItemRef()->isAdaptive() === false) {
+		    
+		    $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
+		    
+		    if ($maxAttempts > 0 && $maxAttempts >= $this['numAttempts']) {
+		        $this->endItemSession();
+		        $this['completionStatus'] = 'completed';
+		    }
+		}
+		// else ...
+		// The item is adaptive but not 'completed', the session still lives.
 	}
 	
 	/**
 	 * Close the item session because no more attempts are allowed. The 'completionStatus' built-in outcome variable
 	 * becomes 'complete', and the state of the item session becomes 'closed'.
 	 * 
+	 * The item session ends if:
+	 * 
+	 * * the candidate ends an attempt, the item is non-adaptive and the maximum amount of attempts is reached.
+	 * * the candidate ends an attempt, the is is adaptive and the completionStatus is 'complete'.
 	 */
 	public function endItemSession() {
-		$this['completionStatus'] = 'complete';
 		$this->setState(AssessmentItemSessionState::CLOSED);
 	}
 }
