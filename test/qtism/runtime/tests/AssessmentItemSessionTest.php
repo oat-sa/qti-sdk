@@ -150,6 +150,37 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
     }
     
+    public function testAcceptableLatency() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->setAcceptableLatency(new Duration('PT1S'));
+        
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setMaxAttempts(2);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        
+        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
+        $itemSession->setTimeLimits($timeLimits);
+        
+        // Sleep 3 second to respect minTime and stay in the acceptable latency time.
+        $itemSession->beginAttempt();
+        sleep(3);
+        $itemSession->endAttempt();
+        
+        // Sleep 1 more second to achieve the attempt outside the time frame.
+        $itemSession->beginAttempt();
+        sleep(1);
+        
+        try {
+            $itemSession->endAttempt();
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
+            $this->assertEquals('PT4S', $itemSession['duration']->__toString());
+            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+        }
+    }
+    
     /**
      * 
      * @param integer $count The number of attempts to perform.

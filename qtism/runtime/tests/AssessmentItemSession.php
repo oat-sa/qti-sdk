@@ -519,7 +519,7 @@ class AssessmentItemSession extends State {
 	        // assessmentItems only when linear navigation mode is in effect.
 	        if ($this->isNavigationLinear() && $timeLimits->hasMinTime()) {
 	            
-	            if ($this['duration']->getSeconds(true) < $timeLimits->getMinTime()->getSeconds(true)) {
+	            if ($this['duration']->getSeconds(true) <= $timeLimits->getMinTime()->getSeconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
 	                // Suspend and wait for a next attempt.
 	                $this->suspend();
@@ -533,7 +533,7 @@ class AssessmentItemSession extends State {
 	        // Otherwise, if late submission is not allowed but time exceeded, the session is 'incomplete'.
 	        if ($timeLimits->hasMaxTime()) {
 	            
-	            if ($this['duration']->getSeconds(true) > $timeLimits->getMaxTime()->getSeconds(true)) {
+	            if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($timeLimits->getMaxTime())->getSeconds(true)) {
 	                
 	                $maxTimeExceeded = true;
 	                
@@ -630,5 +630,17 @@ class AssessmentItemSession extends State {
 	    }
 	   
 		$this->setState(AssessmentItemSessionState::CLOSED);
+	}
+	
+	/**
+	 * Get a cloned $duration with the acceptable latency of the item
+	 * session added.
+	 * 
+	 * @return Duration $duration + acceptable latency.
+	 */
+	protected function getDurationWithLatency(Duration $duration) {
+	    $duration = clone $duration;
+	    $duration->add($this->getAcceptableLatency());
+	    return $duration;
 	}
 }
