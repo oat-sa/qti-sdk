@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\NavigationMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
@@ -165,6 +166,14 @@ class AssessmentItemSession extends State {
 	private $timeLimits = null;
 	
 	/**
+	 * The navigation mode in use during the item session.
+	 * Default is NavigationMode::LINEAR.
+	 * 
+	 * @var integer
+	 */
+	private $navigationMode = NavigationMode::LINEAR;
+	
+	/**
 	 * The ExtendedAssessmentItemRef describing the item the session
 	 * handles.
 	 * 
@@ -185,8 +194,10 @@ class AssessmentItemSession extends State {
 	 * the current state of the session.
 	 * 
 	 * @param ExtendedAssessmentItemRef $assessmentItemRef The description of the item that the session handles.
+	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
+	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef) {
+	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef, $navigationMode = NavigationMode::LINEAR) {
 		parent::__construct();
 		$this->setAssessmentItemRef($assessmentItemRef);
 		
@@ -308,6 +319,53 @@ class AssessmentItemSession extends State {
 	 */
 	public function hasTimeLimits() {
 	    return !is_null($this->getTimeLimits());
+	}
+	
+	/**
+	 * Set the navigation mode in use during the item session.
+	 * 
+	 * @param integer $navigationMode A value from the NavigationMode enumeration.
+	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
+	 */
+	public function setNavigationMode($navigationMode) {
+	    if (in_array($navigationMode, NavigationMode::asArray()) === true) {
+	        $this->navigationMode = $navigationMode;
+	    }
+	    else {
+	        $msg = "The navigationMode argument must be a value from the NavigationMode enumeration, '${navigationMode}' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the navigation mode in use during the item session.
+	 * 
+	 * @return integer A value from the NavigationMode enumeration.
+	 */
+	public function getNavigationMode() {
+	    return $this->navigationMode;
+	}
+	
+	/**
+	 * Convenience method.
+	 * 
+	 * Whether the navigation mode in use for the item session is LINEAR.
+	 * 
+	 * @return boolean
+	 */
+	public function isNavigationLinear() {
+	    return $this->getNavigationMode() === NavigationMode::LINEAR;
+	}
+	
+	/**
+	 * Convenience method.
+	 * 
+	 * Whether the navigation mode in use for the item session is NON_LINEAR.
+	 * 
+	 * @return boolean
+	 */
+	public function isNavigationNonLinear() {
+	    return $this->getNavigationMode() === NavigationMode::NONLINEAR;
 	}
 	
 	/**
@@ -438,12 +496,56 @@ class AssessmentItemSession extends State {
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
 	 */
 	public function endAttempt(State $responses = null, $responseProcessing = true) {
-		
+	    
+	    // End of attempt, go in SUSPEND state.
+	    $this->suspend();
+
+	    // Flag to indicate if time is exceed or not.
+	    $maxTimeExceeded = false;
+	    
+	    // Is timeLimits in force.
+	    if ($this->hasTimeLimits() === true) {
+	        
+	        $timeLimits = $this->getTimeLimits();
+	        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
+	        // assessmentItems only when linear navigation mode is in effect.
+	        if ($this->isNavigationLinear() && $timeLimits->hasMinTime()) {
+	            
+	            if ($this['duration']->getSeconds(true) < $timeLimits->getMinTime()->getSeconds(true)) {
+	                // An exception is thrown to prevent the numAttempts to be incremented.
+	                // Suspend and wait for a next attempt.
+	                $this->suspend();
+	                $msg = "The minimal duration is not yet reached.";
+	                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_UNDERFLOW);
+	            }
+	        }
+	        
+	        // Check if the maxTime constraint is respected.
+	        // If late submission is allowed but time exceeded, the item session will be considered 'completed'.
+	        // Otherwise, if late submission is not allowed but time exceeded, the session is 'incomplete'.
+	        if ($timeLimits->hasMaxTime()) {
+	            
+	            if ($this['duration']->getSeconds(true) > $timeLimits->getMaxTime()->getSeconds(true)) {
+	                
+	                $maxTimeExceeded = true;
+	                
+	                if ($this->getTimeLimits()->doesAllowLateSubmission() === false) {
+	                    // Set the current completionStatus to 'incomplete'.
+	                    $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;
+	                    $this->endItemSession();
+	                    
+	                    $msg = "The maximal duration is exceeded.";
+	                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
+	                }
+	            }
+	        }
+	    }
+	    
 	    // Apply the responses to the current state and process the responses.
 	    if (is_null($responses) !== true) {
 	        foreach ($responses as $identifier => $value) {
 	            $this[$identifier] = $value->getValue();
-	        }   
+	        }
 	    }
 	    
 	    // Apply response processing.
@@ -452,21 +554,21 @@ class AssessmentItemSession extends State {
 	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
 	        $engine->process();
 	    }
-	    
-	    
-		// After response processing, if the item is adaptive, end the itemSession.
-		//
-		// If the item is not adaptive but numAttempts is exceeded,
-		// end the item session and set the completionStatus to 'completed'.
-		//
-		// Otherwise, suspend the the session, waiting for a next attempt.
-		
-	    // Is timeLimits in force.
-	    if ($this->hasTimeLimits() === true) {
-	        
+	     
+	     
+	    // After response processing, if the item is adaptive, end the itemSession.
+	    //
+	    // If the item is not adaptive but numAttempts is exceeded,
+	    // end the item session and set the completionStatus to 'completed'.
+	    //
+	    // Otherwise, suspend the the session, waiting for a next attempt.
+	    if ($maxTimeExceeded === true) {
+
+	        // Special case. The maximum time is exceeded but late submission allowed.
+	        $this->endItemSession();
+	        $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;   
 	    }
-	    
-		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+		else if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 		    
 		    $this->endItemSession();
 		}
@@ -475,17 +577,21 @@ class AssessmentItemSession extends State {
 		    $this->endItemSession();
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
-		else {
-		    // Waiting for a next attempt.
-		    $this->suspend();
-		}
+		// Else ...
+		// Wait for the next attempt.
 	}
 	
 	/**
-	 * Suspend the item session. The state will switch to SUSPENDED.
+	 * Suspend the item session. The state will switch to SUSPENDED and the
+	 * 'duration' built-in variable is updated.
 	 * 
 	 */
 	public function suspend() {
+	    $this->updateDuration();
+	    $this->setState(AssessmentItemSessionState::SUSPENDED);
+	}
+	
+	protected function updateDuration() {
 	    // If the current state is INTERACTING update duration built-in variable.
 	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
 	        $timeRef = $this->getTimeReference();
@@ -493,8 +599,6 @@ class AssessmentItemSession extends State {
 	        $this['duration']->add($timeRef->diff($now));
 	        $this->setTimeReference(new DateTime());
 	    }
-	    
-	    $this->setState(AssessmentItemSessionState::SUSPENDED);
 	}
 	
 	/**
@@ -505,6 +609,9 @@ class AssessmentItemSession extends State {
 	 * 
 	 * * the candidate ends an attempt, the item is non-adaptive and the maximum amount of attempts is reached.
 	 * * the candidate ends an attempt, the is is adaptive and the completionStatus is 'complete'.
+	 * 
+	 * If the current state is INTERACTING, the state is set to SUSPEND (to get 'duration' computed) and
+	 * then the state goes to CLOSED.
 	 */
 	public function endItemSession() {
 	    
