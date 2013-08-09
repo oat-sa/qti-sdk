@@ -19,6 +19,10 @@ use \InvalidArgumentException;
 /**
  * The AssessmentItemSession class implements the lifecycle of an AssessmentItem session.
  * 
+ * When instantiated, the resulting AssessmentItemSession object is initialized in
+ * the in the AssessmentItemSessionState::INITIAL state, and the session begins (a call
+ * to AssessmentItemSession::beginItemSession is performed).
+ * 
  * FROM IMS QTI:
  * 
  * An item session is the accumulation of all the attempts at a particular instance of an 
@@ -94,12 +98,47 @@ use \InvalidArgumentException;
 class AssessmentItemSession extends State {
 	
     /**
+     * The item completion status 'incomplete'.
+     * 
+     * @var string
+     */
+    const COMPLETION_STATUS_INCOMPLETE = 'incomplete';
+    
+    /**
+     * The item completion status 'not_attempted'.
+     * 
+     * @var string
+     */
+    const COMPLETION_STATUS_NOT_ATTEMPTED = 'not_attempted';
+    
+    /**
+     * The item completion status 'unknown'.
+     * 
+     * @var string
+     */
+    const COMPLETION_STATUS_UNKNOWN = 'unknown';
+    
+    /**
+     * The item completion status 'completed'.
+     * 
+     * @var string
+     */
+    const COMPLETION_STATUS_COMPLETED = 'completed';
+    
+    /**
      * A timing reference used to compute the duration of 
      * the session.
      * 
      * @var DateTime
      */
     private $timeReference;
+    
+    /**
+     * An acceptable latency to be applied
+     * on duration when timelimits are in
+     * force.
+     */
+    private $acceptableLatency;
     
 	/**
 	 * The state of the Item Session as described
@@ -150,6 +189,10 @@ class AssessmentItemSession extends State {
 	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef) {
 		parent::__construct();
 		$this->setAssessmentItemRef($assessmentItemRef);
+		
+		// Acceptable latency time is by default "0 seconds". In
+		// other words, no additional time is given.
+		$this->setAcceptableLatency(new Duration('PT0S'));
 		$this->setState(AssessmentItemSessionState::INITIAL);
 		$this->beginItemSession();
 		
@@ -238,6 +281,26 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Set the acceptable latency time to be applied
+	 * when timelimits are in force.
+	 * 
+	 * @param Duration $acceptableLatency A Duration object.
+	 */
+	public function setAcceptableLatency(Duration $acceptableLatency) {
+	    $this->acceptableLatency = $acceptableLatency;
+	}
+	
+	/**
+	 * Get the acceptable latency time to be applied when timelimits
+	 * are in force.
+	 * 
+	 * @return Duration A Duration object.
+	 */
+	public function getAcceptableLatency() {
+	    return $this->acceptableLatency;
+	}
+	
+	/**
 	 * Whether the session is driven by a TimeLimits object
 	 * or not.
 	 * 
@@ -301,13 +364,13 @@ class AssessmentItemSession extends State {
 		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION));
 		 
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, 'unknown'));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, self::COMPLETION_STATUS_UNKNOWN));
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
 		$this['duration'] = new Duration('PT0S');
 		$this['numAttempts'] = 0;
-		$this['completionStatus'] = 'not_attempted';
+		$this['completionStatus'] = self::COMPLETION_STATUS_NOT_ATTEMPTED;
 	}
 	
 	/**
@@ -323,7 +386,7 @@ class AssessmentItemSession extends State {
 	    
 	    // Are we allowed to begin a new attempt?
 	    $itemRef = $this->getAssessmentItemRef();
-	    if ($this['completionStatus'] === 'completed') {
+	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
 	        $msg.= "completion status is already set to 'complete'";
@@ -390,14 +453,14 @@ class AssessmentItemSession extends State {
 	    
 		// After response processing, if the item is adaptive, close
 		// the item session if completionStatus = 'complete'.
-		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === 'completed') {
+		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 		    
 		    $this->endItemSession();
 		}
 		else if ($this->getAssessmentItemRef()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
 		    
 		    $this->endItemSession();
-		    $this['completionStatus'] = 'completed';
+		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
 		else {
 		    // Waiting for a next attempt.
@@ -423,7 +486,7 @@ class AssessmentItemSession extends State {
 	
 	/**
 	 * Close the item session because no more attempts are allowed. The 'completionStatus' built-in outcome variable
-	 * becomes 'complete', and the state of the item session becomes 'closed'.
+	 * becomes 'completed', and the state of the item session becomes 'closed'.
 	 * 
 	 * The item session ends if:
 	 * 
