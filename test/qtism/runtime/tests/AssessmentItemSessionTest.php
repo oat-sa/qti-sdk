@@ -1,10 +1,9 @@
 <?php
-use qtism\data\TimeLimits;
-
-use qtism\data\ItemSessionControl;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Duration;
+use qtism\data\TimeLimits;
+use qtism\data\ItemSessionControl;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -85,6 +84,70 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
+    }
+    
+    public function testEvolutionBasicTimeLimitsUnderflowOverflow() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        // Give more than one attempt.
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setMaxAttempts(2);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        
+        // No late submission allowed.
+        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
+        $itemSession->setTimeLimits($timeLimits);
+        
+        // End the attempt before minTime of 1 second.
+        $itemSession->beginAttempt();
+        
+        try {
+            $itemSession->endAttempt();
+            // An exception MUST be thrown.
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::DURATION_UNDERFLOW, $e->getCode());
+        }
+        
+        // Check that numAttempts is taken into account &
+        // that the session is correctly suspended, waiting for
+        // the next attempt.
+        $this->assertEquals(1, $itemSession['numAttempts']);
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSession->getState());
+        
+        // Try again by waiting too much to respect max time.
+        $itemSession->beginAttempt();
+        sleep(3);
+        
+        try {
+            $itemSession->endAttempt();
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
+        }
+        
+        $this->assertEquals(2, $itemSession['numAttempts']);
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+        $this->assertInternalType('float', $itemSession['SCORE']);
+        $this->assertEquals(0.0, $itemSession['SCORE']);
+    }
+    
+    public function testAllowLateSubmissionNonAdaptive() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        $timeLimits = new TimeLimits(null, new Duration('PT1S'), true);
+        $itemSession->setTimeLimits($timeLimits);
+        
+        $itemSession->beginAttempt();
+        $itemSession['RESPONSE'] = 'ChoiceB';
+        sleep(2);
+        
+        // No exception because late submission is allowed.
+        $itemSession->endAttempt();
+        $this->assertEquals(1.0, $itemSession['SCORE']);
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
     }
     
     /**

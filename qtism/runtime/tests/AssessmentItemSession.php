@@ -450,7 +450,15 @@ class AssessmentItemSession extends State {
 	        $msg.= "completion status is already set to 'complete'";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
+	    else if ($this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
+	        // Max duration already exceeded.
+	        $identifier = $itemRef->getIdentifier();
+	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
+	        $msg.= "maximum duration is already exceeded.";
+	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
+	    }
 	    else if ($itemRef->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
+	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
