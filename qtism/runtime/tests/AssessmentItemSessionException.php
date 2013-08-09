@@ -4,11 +4,84 @@ namespace qtism\runtime\tests;
 
 use \Exception;
 
+/**
+ * The AssessmentItemSessionException class must be used to raise errors
+ * related to an AssessmentItemSession. Information about the nature
+ * of the error is indicated in the exception code. Please see related
+ * class constants for more information about the error codes and their
+ * signification.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class AssessmentItemSessionException extends Exception {
 	
+    /**
+     * Error code to use when the nature of the error is unknown.
+     * 
+     * @var integer
+     */
 	const UNKNOWN = 0;
 	
-	const DURATION_EXCEEDED = 1;
+	/**
+	 * Error code to use when timelimits are in force and the
+	 * maximum duration is exceeded at 'endAttempt' time.
+	 * 
+	 * @var integer
+	 */
+	const DURATION_OVERFLOW = 1;
 	
-	const MAX_ATTEMPTS_EXCEEDED = 2;
+	/**
+	 * Error code to use when timelimits are in force and
+	 * the minimum duration is not exceeded at 'endAttempt' time.
+	 * 
+	 * @var integer
+	 */
+	const DURATION_UNDERFLOW = 2;
+	
+	/**
+	 * Error code to use when the maximum amount attempts for a non-adaptive
+	 * item is exceeded.
+	 * 
+	 * @var integer
+	 */
+	const ATTEMPTS_OVERFLOW = 3;
+	
+	/**
+	 * The AssessmentItemSession object which threw the error.
+	 * 
+	 * @var AssessmentItemSession
+	 */
+	private $source;
+	
+	/**
+	 * Create a new AssessmentItemSessionException object.
+	 * 
+	 * @param string $message A human-readable message describing the nature of the exception.
+	 * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
+	 * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class. 
+	 * @param Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
+	 */
+	public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null) {
+	    parent::__construct($message, $code, $previous);
+	    $this->setSource($source);
+	}
+	
+	/**
+	 * Set the AssessmentItemSource object the exception comes from.
+	 * 
+	 * @param AssessmentItemSession $source An AssessmentItemSession object.
+	 */
+	protected function setSource(AssessmentItemSession $source) {
+	    $this->source = $source;
+	}
+	
+	/**
+	 * Get the AssessmentItemSource object the exception comes from.
+	 * 
+	 * @return AssessmentItemSession An AssessmentItemSession object.
+	 */
+	protected function geSource() {
+	    return $this->source;
+	}
 }

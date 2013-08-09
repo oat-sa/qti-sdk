@@ -390,11 +390,11 @@ class AssessmentItemSession extends State {
 	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
 	        $msg.= "completion status is already set to 'complete'";
-	        throw new AssessmentItemSessionException($msg, AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED);
+	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
 	    else if ($itemRef->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
-	        throw new AssessmentItemSessionException($msg, AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED);
+	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
 	    
 		$data = &$this->getDataPlaceHolder();
@@ -430,7 +430,9 @@ class AssessmentItemSession extends State {
 	 * is provided, the values found into it will be merged to the current state
 	 * before ResponseProcessing is executed.
 	 * 
-	 * * If more attempts are allowed, the session continues.
+	 * * If the item is adaptive and the completionStatus is indicated to be 'completed', the item session ends.
+	 * * If the item is non-adaptive, and the number of attempts is exceeded, the item session ends and the completionStatus is set to 'completed'.
+	 * * Otherwise, the item session goes to the SUSPENDED state, waiting for a next attempt.
 	 * 
 	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
@@ -444,6 +446,7 @@ class AssessmentItemSession extends State {
 	        }   
 	    }
 	    
+	    // Apply response processing.
 	    if ($responseProcessing === true) {
 	        $responseProcessing = $this->getAssessmentItemRef()->getResponseProcessing();
 	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
@@ -451,8 +454,18 @@ class AssessmentItemSession extends State {
 	    }
 	    
 	    
-		// After response processing, if the item is adaptive, close
-		// the item session if completionStatus = 'complete'.
+		// After response processing, if the item is adaptive, end the itemSession.
+		//
+		// If the item is not adaptive but numAttempts is exceeded,
+		// end the item session and set the completionStatus to 'completed'.
+		//
+		// Otherwise, suspend the the session, waiting for a next attempt.
+		
+	    // Is timeLimits in force.
+	    if ($this->hasTimeLimits() === true) {
+	        
+	    }
+	    
 		if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 		    
 		    $this->endItemSession();

@@ -83,7 +83,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     
@@ -132,7 +132,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     
@@ -165,7 +165,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::MAX_ATTEMPTS_EXCEEDED, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     
