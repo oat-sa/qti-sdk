@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlAssessmentTestDocument;
 use qtism\data\state\VariableDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\common\VariableIdentifier;

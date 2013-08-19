@@ -2,6 +2,12 @@
 
 namespace qtism\runtime\tests;
 
+
+use qtism\runtime\tests\Route;
+use qtism\runtime\tests\RouteItem;
+use qtism\data\AssessmentSection;
+use qtism\data\TestPart;
+use qtism\data\QtiComponentIterator;
 use qtism\data\QtiIdentifiableCollection;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
@@ -403,16 +409,9 @@ class AssessmentTestSession extends State {
 	 * Add an item session to the current assessment test session.
 	 * 
 	 * @param AssessmentItemSession $session
-	 * @param uinteger $sequenceNumber (optional) The sequence number of the item session. The sequence numbers in QTI begin at index 1. 
 	 * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
-	 * @throws InvalidArgumentException If $sequenceNumber is not an integer >= 1.
 	 */
-	public function addItemSession(AssessmentItemSession $session, $sequenceNumber = 1) {
-	    
-	    if (gettype($sequenceNumber) !== 'integer' || $sequenceNumber < 1) {
-	        $msg = "The sequenceNumber argument must be an integer value >= 1, '${sequenceNumber}' given.";
-	        throw new InvalidArgumentException($msg); 
-	    }
+	public function addItemSession(AssessmentItemSession $session) {
 	    
 	    $assessmentItemRefs = $this->getAssessmentItemRefs();
 	    $sessionAssessmentItemRefIdentifier = $session->getAssessmentItemRef()->getIdentifier();
@@ -431,7 +430,7 @@ class AssessmentTestSession extends State {
 	        $currentItemSessions[$sessionAssessmentItemRefIdentifier] = array();
 	    }
 	   
-	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][$sequenceNumber - 1] = $session; 
+	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][] = $session; 
 	}
 	
 	/**
@@ -466,5 +465,12 @@ class AssessmentTestSession extends State {
 	        $msg = "'" . $v->__toString() . "' is not a valid session identifier.";
 	        throw new OutOfRangeException($msg);    
 	    }
+	}
+	
+	public static function instantiate(AssessmentTest $assessmentTest, $selection = true, $ordering = true) {
+	    // 1. Apply selection and ordering.
+	    
+	    // 2. Build the route.
+	    $route = Route::createFromAssessmentTest($assessmentTest);
 	}
 }
