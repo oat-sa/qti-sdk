@@ -2,7 +2,11 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\expressions\Correct;
+use qtism\runtime\expressions\CorrectProcessor;
+use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\data\NavigationMode;
+use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
@@ -174,6 +178,14 @@ class AssessmentItemSession extends State {
 	private $navigationMode = NavigationMode::LINEAR;
 	
 	/**
+	 * The submission mode in use during the item session.
+	 * Default is SubmissionMode::INDIVIDUAL.
+	 * 
+	 * @var integer
+	 */
+	private $submissionMode = SubmissionMode::INDIVIDUAL;
+	
+	/**
 	 * The ExtendedAssessmentItemRef describing the item the session
 	 * handles.
 	 * 
@@ -195,9 +207,10 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param ExtendedAssessmentItemRef $assessmentItemRef The description of the item that the session handles.
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
+	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
 	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef, $navigationMode = NavigationMode::LINEAR) {
+	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
 		$this->setAssessmentItemRef($assessmentItemRef);
 		
@@ -205,6 +218,8 @@ class AssessmentItemSession extends State {
 		// other words, no additional time is given.
 		$this->setAcceptableLatency(new Duration('PT0S'));
 		$this->setState(AssessmentItemSessionState::INITIAL);
+		$this->setNavigationMode($navigationMode);
+		$this->setSubmissionMode($submissionMode);
 		$this->beginItemSession();
 		
 		// Set-up default ItemSessionControl object.
@@ -344,6 +359,31 @@ class AssessmentItemSession extends State {
 	 */
 	public function getNavigationMode() {
 	    return $this->navigationMode;
+	}
+	
+	/**
+	 * Set the submission mode in use during the item session.
+	 * 
+	 * @param integer $submissionMode A value from the SubmissionMode enumeration.
+	 * @throws InvalidArgumentException If $submissionMode is not a valud from the SubmissionMode enumeration.
+	 */
+	public function setSubmissionMode($submissionMode) {
+	    if (in_array($submissionMode, SubmissionMode::asArray()) === true) {
+	        $this->submissionMode = $submissionMode;
+	    }
+	    else {
+	        $msg = "The submissionMode argument must be a value from the SubmissionMode enumeration, '${submissionMode}' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the submission mode in use during the item session.
+	 * 
+	 * @return integer A value from the SubmissionMode enumeration.
+	 */
+	public function getSubmissionMode() {
+	    return $this->submissionMode;
 	}
 	
 	/**
@@ -502,6 +542,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
+	 * @throws AssessmentItemSessionException
 	 */
 	public function endAttempt(State $responses = null, $responseProcessing = true) {
 	    
@@ -517,7 +558,7 @@ class AssessmentItemSession extends State {
 	        $timeLimits = $this->getTimeLimits();
 	        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
 	        // assessmentItems only when linear navigation mode is in effect.
-	        if ($this->isNavigationLinear() && $timeLimits->hasMinTime()) {
+	        if ($this->isNavigationLinear() === true && $timeLimits->hasMinTime() === true) {
 	            
 	            if ($this['duration']->getSeconds(true) <= $timeLimits->getMinTime()->getSeconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
@@ -531,7 +572,7 @@ class AssessmentItemSession extends State {
 	        // Check if the maxTime constraint is respected.
 	        // If late submission is allowed but time exceeded, the item session will be considered 'completed'.
 	        // Otherwise, if late submission is not allowed but time exceeded, the session is 'incomplete'.
-	        if ($timeLimits->hasMaxTime()) {
+	        if ($timeLimits->hasMaxTime() === true) {
 	            
 	            if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($timeLimits->getMaxTime())->getSeconds(true)) {
 	                
@@ -549,7 +590,36 @@ class AssessmentItemSession extends State {
 	        }
 	    }
 	    
-	    // Apply the responses to the current state and process the responses.
+	    // As per specs, when validateResponses is turned on (true) then the candidates are not
+	    // allowed to submit the item until they have provided valid responses for all
+	    // interactions. When turned off (false) invalid responses may be accepted by the
+	    // system.
+	    if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustValidateResponses() === true) {
+	        // Use the correct expression to control if the responses
+	        // are correct.
+	        foreach ($responses as $response) {
+	            $correctExpression = new Correct($response->getIdentifier());
+	            $correctProcessor = new CorrectProcessor($correctExpression);
+	            $correctProcessor->setState($responses);
+	    
+	            try {
+	                if ($correctProcessor->process() !== true) {
+	                    $responseIdentifier = $response->getIdentifier();
+	                    $msg = "The current itemSessionControl.validateResponses attribute is set to true but ";
+	                    $msg.= "response '${responseIdentifier}' is incorrect.";
+	                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::INVALID_RESPONSE);
+	                }
+	            }
+	            catch (ExpressionProcessingException $e) {
+	                $responseIdentifier = $response->getIdentifier();
+	                $msg = "The current itemSessionControl.validResponses attribute is set to true but an error ";
+	                $msg.= "occured while trying to detect if response '${responseIdentifier}' was correct.";
+	                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
+	            }
+	        }
+	    }
+	    
+	    // Apply the responses (if provided) to the current state and deal with the responseProcessing.
 	    if (is_null($responses) !== true) {
 	        foreach ($responses as $identifier => $value) {
 	            $this[$identifier] = $value->getValue();
@@ -630,6 +700,30 @@ class AssessmentItemSession extends State {
 	    }
 	   
 		$this->setState(AssessmentItemSessionState::CLOSED);
+	}
+	
+	/**
+	 * Skip the item of the current item session. All response variables involved in the item session
+	 * will be set to their default value or NULL and submitted.
+	 * 
+	 * @throws AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
+	 */
+	public function skip() {
+	    // allowSkipping is taken into account only if submission mode is INDIVIDUAL.
+	    if ($this->getItemSessionControl()->doesAllowSkipping() === false && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
+	        // Skipping not allowed.
+	        $itemIdentifier = $this->getAssessmentItemRef()->getIdentifier();
+	        $msg = "Skipping item '${itemIdentifier}' is not allowed.";
+	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::SKIPPING_FORBIDDEN);
+	    }
+	    else {
+	        // Detect all response variables and submit them with their default value or NULL.
+	        foreach ($this->getAssessmentItemRef()->getResponseDeclarations() as $responseDeclaration) {
+	            $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
+	        }
+	         
+	        $this->endAttempt();
+	    }
 	}
 	
 	/**

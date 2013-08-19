@@ -48,6 +48,30 @@ class AssessmentItemSessionException extends Exception {
 	const ATTEMPTS_OVERFLOW = 3;
 	
 	/**
+	 * Error code to use when a runtime error that could not be corrected
+	 * occurs during the assessment item session lifecycle.
+	 * 
+	 * @var integer
+	 */
+	const RUNTIME_ERROR = 4;
+	
+	/**
+	 * Error code to return when itemSessionControl.validateResponses is in force
+	 * but a provided response is incorrect.
+	 * 
+	 * @var integer
+	 */
+	const INVALID_RESPONSE = 5;
+	
+	/**
+	 * Error code to use when itemSessionControl.allowSkipping is not in force
+	 * but a request to skip the item is performed.
+	 * 
+	 * @var integer
+	 */
+	const SKIPPING_FORBIDDEN = 6;
+	
+	/**
 	 * The AssessmentItemSession object which threw the error.
 	 * 
 	 * @var AssessmentItemSession

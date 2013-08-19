@@ -275,6 +275,68 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
     }
     
+    public function testValidateResponsesInForce() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setValidateResponses(true);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        
+        $itemSession->beginAttempt();
+        // Set an invalid response.
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC'));
+        
+        try {
+            $itemSession->endAttempt($responses);
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::INVALID_RESPONSE, $e->getCode());
+            
+            // The response must not be taken into account in the itemSession, because the mustValidateResponse attribute
+            // prevents the item TO BE SUBMITTED if not all valid responses.
+            $this->assertFalse($itemSession['RESPONSE'] === 'ChoiceC');
+        }
+    }
+    
+    public function testSkippingForbidden() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setAllowSkipping(false);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        
+        $itemSession->beginAttempt();
+        try {
+            $itemSession->skip();
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
+        }
+    }
+    
+    public function testSkippingAllowed() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginAttempt();
+        $itemSession->skip();
+        
+        $this->assertEquals($itemSession->getState(), AssessmentItemSessionState::CLOSED);
+        $this->assertEquals(0.0, $itemSession['SCORE']);
+        $this->assertEquals(null, $itemSession['RESPONSE']);
+    }
+    
+    public function testValidResponsesInForceValid() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setValidateResponses(false);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        
+        $itemSession->beginAttempt();
+        $responses = new State();
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD'));
+        $itemSession->endAttempt($responses);
+    }
+    
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {
         $marshaller = new ExtendedAssessmentItemRefMarshaller();
         $element = self::createDOMElement($xmlString);
