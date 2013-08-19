@@ -14,15 +14,17 @@ use qtism\runtime\common\Variable;
 use \InvalidArgumentException;
 use \OutOfRangeException;
 use \OutOfBoundsException;
+use \LogicException;
 
 /**
- * The Context of an AssessmentTest Instance.
+ * The AssessmentTestSession class represents a candidate session
+ * for a given AssessmentTest.
  * 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestContext extends State {
+class AssessmentTestSession extends State {
 	
 	/**
 	 * A shortcut to assessmentItemRefs.
@@ -39,7 +41,7 @@ class AssessmentTestContext extends State {
 	private $assessmentItemSessions = array();
 	
 	/**
-	 * Create a new AssessmentTestContext object.
+	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
 	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
@@ -247,7 +249,7 @@ class AssessmentTestContext extends State {
 			}
 		}
 		catch (InvalidArgumentException $e) {
-			$msg = "AssessmentTestContext object addressed with an invalid identifier '${offset}'.";
+			$msg = "AssessmentTestSession object addressed with an invalid identifier '${offset}'.";
 			throw new OutOfRangeException($msg, 0, $e);
 		}
 	}
@@ -261,7 +263,7 @@ class AssessmentTestContext extends State {
 	public function offsetSet($offset, $value) {
 		
 		if (gettype($offset) !== 'string') {
-			$msg = "An AssessmentTestContext object must be addressed by string.";
+			$msg = "An AssessmentTestSession object must be addressed by string.";
 			throw new OutOfRangeException($msg);
 		}
 		
@@ -305,7 +307,7 @@ class AssessmentTestContext extends State {
 		}
 		catch (InvalidArgumentException $e) {
 			// Invalid variable identifier.
-			$msg = "AssessmentTestContext object addressed with an invalid identifier '${offset}'.";
+			$msg = "AssessmentTestSession object addressed with an invalid identifier '${offset}'.";
 			throw new OutOfRangeException($msg, 0, $e);
 		}
 	}
@@ -378,7 +380,7 @@ class AssessmentTestContext extends State {
 	 * @param string $identifier A QTI Identifier.
 	 * @throws OutOfBoundsException If $identifier does not refer to any assessmentItemRef of the assessmentTest.
 	 */
-	public function beginItemSession($identifier) {
+	protected function beginItemSession($identifier) {
 	    $assessmentItemRefs = $this->getAssessmentItemRefs();
 	    if (isset($assessmentItemRefs[$identifier]) === true) {
 	        $itemSession = new AssessmentItemSession($assessmentItemRefs[$identifier]);
@@ -394,6 +396,75 @@ class AssessmentTestContext extends State {
 	    else {
 	        $msg = "No assessmentItemRef with identifier '${identifier}' found in the current assessmentTest.";
 	        throw new OutOfBoundsException($msg);
+	    }
+	}
+	
+	/**
+	 * Add an item session to the current assessment test session.
+	 * 
+	 * @param AssessmentItemSession $session
+	 * @param uinteger $sequenceNumber (optional) The sequence number of the item session. The sequence numbers in QTI begin at index 1. 
+	 * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
+	 * @throws InvalidArgumentException If $sequenceNumber is not an integer >= 1.
+	 */
+	public function addItemSession(AssessmentItemSession $session, $sequenceNumber = 1) {
+	    
+	    if (gettype($sequenceNumber) !== 'integer' || $sequenceNumber < 1) {
+	        $msg = "The sequenceNumber argument must be an integer value >= 1, '${sequenceNumber}' given.";
+	        throw new InvalidArgumentException($msg); 
+	    }
+	    
+	    $assessmentItemRefs = $this->getAssessmentItemRefs();
+	    $sessionAssessmentItemRefIdentifier = $session->getAssessmentItemRef()->getIdentifier();
+	    
+	    if (isset($assessmentItemRefs[$sessionAssessmentItemRefIdentifier]) === false) {
+	        // The session that is requested to be set is bound to an item
+	        // which is not referenced in the test. This is a pure logic error.
+	        $msg = "The item session to set is bound to an unknown AssessmentItemRef.";
+	        throw new LogicException($msg);
+	    }
+	    
+	    $currentItemSessions = &$this->getAssessmentItemSessions();
+	    
+	    // Something already registered?
+	    if (isset($currentItemSessions[$sessionAssessmentItemRefIdentifier]) === false) {
+	        $currentItemSessions[$sessionAssessmentItemRefIdentifier] = array();
+	    }
+	   
+	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][$sequenceNumber - 1] = $session; 
+	}
+	
+	/**
+	 * Get the AssessmentItemSession object related to $sessionIdentifier. If no AssessmentItemSession
+	 * object with that given $sessionIdentifier is handled by the AssessmentTestSession, false is returned.
+	 * 
+	 * @param string $sessionIdentifier A valid variable identifier.
+	 * @return AssessmentItemSession|false The related AssessmentItemSession object or false if not found.
+	 * @throws OutOfRangeException If $sessionIdentifier is not a valid variable identifier.
+	 */
+	public function getItemSession($sessionIdentifier) {
+	    
+	    try {
+	        $v = new VariableIdentifier($sessionIdentifier);
+	        
+	        $currentItemSessions = &$this->getAssessmentItemSessions();
+	        
+	        if ($v->hasPrefix() === true && isset($currentItemSessions[$v->getPrefix()]) === true) {
+	            
+	            $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+	            $prefix = $v->getPrefix();
+	            
+	            if (isset($currentItemSessions[$prefix][$sequence]) === true) {
+	                return $currentItemSessions[$prefix][$sequence];
+	            }
+	        }
+	        
+	        // No such item session found.
+	        return false;
+	    }
+	    catch (InvalidArgumentException $e) {
+	        $msg = "'" . $v->__toString() . "' is not a valid session identifier.";
+	        throw new OutOfRangeException($msg);    
 	    }
 	}
 }

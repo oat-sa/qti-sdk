@@ -14,7 +14,7 @@ use \InvalidArgumentException;
  * The OutcomeProcessingEngine class aims at providing a single engine to execute
  * any OutcomeProcessing object.
  * 
- * If the given State object given as the context is an AssessmentTestContext object,
+ * If the given State object given as the context is an AssessmentTestSession object,
  * all the test-level outcome variables held by this context will be reset to their
  * defaults prior to carrying out the instructions described by the outcomeRules of the
  * OutcomeProcessing.
@@ -103,7 +103,7 @@ class OutcomeProcessingEngine extends AbstractEngine {
 	 * @throws ProcessingException If an error occurs while executing the OutcomeProcessing.
 	 */
 	public function process() {
-		// @todo If given $context is an AssessmentTestContext, reset all
+		// @todo If given $context is an AssessmentTestSesion, reset all
 		// test-level outcome variables (except duration !!!!).
 		$context = $this->getContext();
 		$outcomeProcessing = $this->getComponent();

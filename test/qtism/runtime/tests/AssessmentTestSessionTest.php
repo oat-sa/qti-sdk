@@ -1,12 +1,9 @@
 <?php
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
-
-use qtism\data\state\VariableDeclaration;
-
-use qtism\data\state\OutcomeDeclarationCollection;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\state\VariableDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
@@ -15,10 +12,10 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\tests\AssessmentTestContext;
+use qtism\runtime\tests\AssessmentTestSession;
 use \OutOfBoundsException;
 
-class AssessmentTestContextTest extends QtiSmTestCase {
+class AssessmentTestSessionTest extends QtiSmTestCase {
 	
 	protected $state;
 	
@@ -28,7 +25,7 @@ class AssessmentTestContextTest extends QtiSmTestCase {
 		$xml = new XmlCompactAssessmentTestDocument('1.0');
 		$xml->load(dirname(__FILE__) . '/../../../samples/custom/assessmenttest_context.xml');
 		
-		$this->state = new AssessmentTestContext($xml);
+		$this->state = new AssessmentTestSession($xml);
 		$this->state['OUTCOME1'] = 'String!';
 	}
 	

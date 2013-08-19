@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\TestPartCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
@@ -19,7 +20,7 @@ use qtism\runtime\common\State;
 use qtism\data\state\Weight;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\tests\AssessmentTestContext;
+use qtism\runtime\tests\AssessmentTestSession;
 
 class VariableProcessorTest extends QtiSmTestCase {
 
@@ -66,8 +67,10 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$testPart = new TestPart('P01', $assessmentSections);
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
-		$assessmentTestSession = new AssessmentTestContext($assessmentTest);
-		$assessmentTestSession->beginItemSession('Q01');
+		$assessmentTestSession = new AssessmentTestSession($assessmentTest);
+		$itemSession = new AssessmentItemSession($assessmentItemRef);
+		$itemSession->beginItemSession();
+		$assessmentTestSession->addItemSession($itemSession);
 		
 		$assessmentTestSession['Q01.var1'] = 1337;
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
