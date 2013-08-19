@@ -94,7 +94,7 @@ class VariableProcessor extends ExpressionProcessor {
 				if ($vIdentifier->hasPrefix() === true) {
 					
 					$weight = $state->getWeight($vIdentifier->getPrefix() . '.' . $weightIdentifier);
-						
+					
 					// From IMS QTI:
 					//Weights only apply to item variables with base types integer and float.
 					// If the item variable is of any other type the weight is ignored.

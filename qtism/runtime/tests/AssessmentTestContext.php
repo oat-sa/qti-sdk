@@ -18,9 +18,6 @@ use \OutOfBoundsException;
 /**
  * The Context of an AssessmentTest Instance.
  * 
- * AssessmentTextContext objects can run in strict mode. If this mode is enabled, OutOfBoundsException will be thrown
- * if requested (with the bracket ([]) notation variables do not exist in the context. Otherwise, when an unexistent 
- * variable is requested, the NULL value is returned.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -33,6 +30,13 @@ class AssessmentTestContext extends State {
 	 * @var AssessmentItemRefCollection
 	 */
 	private $assessmentItemRefs;
+	
+	/**
+	 * An array containing current assessmentItemSessions.
+	 * 
+	 * @var array
+	 */
+	private $assessmentItemSessions = array();
 	
 	/**
 	 * Create a new AssessmentTestContext object.
@@ -48,42 +52,9 @@ class AssessmentTestContext extends State {
 		$this->setAssessmentItemRefs($itemRefs);
 		
 		// Take the outcomeDeclaration objects of the global scope.
-		foreach ($assessmentTest->getComponentsByClassName('outcomeDeclaration', false) as $globalOutcome) {
+		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
 			$this->setVariable(OutcomeVariable::createFromDataModel($globalOutcome));
 		}
-		
-		// Take the outcomeDeclaration/responseDeclaration objects from the
-		// the item scopes.
-		foreach ($this->getAssessmentItemRefs() as $itemRef) {
-			
-			foreach ($itemRef->getOutcomeDeclarations() as $outcome) {
-				$var = OutcomeVariable::createFromDataModel($outcome);
-				$unprefixedIdentifier = $var->getIdentifier();
-				$var->setIdentifier($itemRef->getIdentifier() . '.' . $unprefixedIdentifier);
-				$this->setVariable($var);
-			}
-			
-			foreach ($itemRef->getResponseDeclarations() as $resp) {
-				$var = ResponseVariable::createFromDataModel($resp);
-				$unprefixedIdentifier = $var->getIdentifier();
-				$var->setIdentifier($itemRef->getIdentifier() . '.' . $unprefixedIdentifier);
-				$this->setVariable($var);
-			}
-		}
-	}
-	
-	/**
-	 * Returns the test-level outcome variables.
-	 */
-	public function getTestLevelOutcomeVariables() {
-		// @todo implement AssessmentTestContext::getTestLevelOutcomeVariables.
-	}
-	
-	/**
-	 * Returns the item-level variables (both outcome and response variables).
-	 */
-	public function getItemLevelVariables() {
-		// @todo implement AssessmentTestContext::getItemLevelVariables.
 	}
 	
 	/**
@@ -102,6 +73,24 @@ class AssessmentTestContext extends State {
 	 */
 	protected function getAssessmentItemRefs() {
 		return $this->assessmentItemRefs;
+	}
+	
+	/**
+	 * Get the array of running assessment item sessions.
+	 * 
+	 * @return array An array containing the running assessment item sessions.
+	 */
+	protected function &getAssessmentItemSessions() {
+	    return $this->assessmentItemSessions;
+	}
+	
+	/**
+	 * Set the array of running assessment item sessions.
+	 * 
+	 * @param array $assessmentItemSession The array of running assessment item sessions.
+	 */
+	protected function setAssessmentItemSessions(array &$assessmentItemSessions) {
+	    $this->assessmentItemSessions = $assessmentItemSessions;
 	}
 	
 	/**
@@ -148,38 +137,86 @@ class AssessmentTestContext extends State {
 	}
 	
 	/**
-	 * Add a variable (Variable object) to the current context.
+	 * Add a variable (Variable object) to the current context. Variables that can be set using this method
+	 * must have simple variable identifiers, in order to target the global AssessmentTestSession scope only.
 	 * 
 	 * @param Variable $variable A Variable object to add to the current context.
-	 * @throws InvalidArgumentException If the identifier of the variable is prefixed by an item identifier, but this is item is not referenced is not referenced in the current context.
+	 * @throws OutOfRangeException If the identifier of the given $variable is not a simple variable identifier (no prefix, no sequence number).
 	 */
 	public function setVariable(Variable $variable) {
-		$v = new VariableIdentifier($variable->getIdentifier());
+	    
+	    try {
+	        $v = new VariableIdentifier($variable->getIdentifier());
+	        
+	        if ($v->hasPrefix() === true) {
+	            $msg = "The variables set to the AssessmentTestSession global scope must have simple variable identifiers. ";
+	            $msg.= "'" . $v->__toString() . "' given.";
+	            throw new OutOfRangeException($msg);
+	        }
+	    }
+	    catch (InvalidArgumentException $e) {
+	        $variableIdentifier = $variable->getIdentifier();
+	        $msg = "The identifier '${variableIdentifier}' of the variable to set is invalid.";
+	        throw new OutOfRangeException($msg, 0, $e);
+	    }
+		
 		$data = &$this->getDataPlaceHolder();
 		$data[$v->__toString()] = $variable;
 	}
 	
 	/**
-	 * Get a variable value from the current context using the bracket ([]) notation.
+	 * Get a variable from any scope of the AssessmentTestSession.
+	 * 
+	 * @return Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
+	 */
+	public function getVariable($variableIdentifier) {
+	    $v = new VariableIdentifier($variableIdentifier);
+	    
+	    if ($v->hasPrefix() === false) {
+	        $data = &$this->getDataPlaceHolder();
+	        if (isset($data[$v->getVariableName()])) {
+	            return $data[$v->getVariableName()];
+	        }
+	    }
+	    else {
+	        // given with prefix.
+	        $prefix = $v->getPrefix();
+	        $itemSessions = &$this->getAssessmentItemSessions();
+	        if (isset($itemSessions[$prefix])) {
+	            
+	            $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+	            if (($itemSessions[$prefix][$sequence])) {
+	               
+	                $session = $itemSessions[$prefix][$sequence];
+	                return $session->getVariable($v->getVariableName());
+	            }
+	        }
+	    }
+	    
+	    return null;
+	}
+	
+	/**
+	 * Get a variable value from the current session using the bracket ([]) notation.
+	 * 
+	 * The value can be retrieved for any variables in the scope of the AssessmentTestSession. In other words,
+	 * 
+	 * * Outcome variables in the global scope of the AssessmentTestSession,
+	 * * Outcome and Response variables in TestPart/AssessmentSection scopes.
 	 * 
 	 * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
 	 * @throws OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
-	 * @throws OutOfBoundsException If strict mode enabled only. If a variable cannot be found.
 	 */
 	public function offsetGet($offset) {
 		
-		if (gettype($offset) !== 'string') {
-			$msg = "An AssessmentTestContext object must be addressed by string.";
-			throw new OutOfRangeException($msg);
-		}
-		
 		try {
 			$v = new VariableIdentifier($offset);
-			$data = &$this->getDataPlaceHolder();
 			
 			if ($v->hasPrefix() === false) {
 				// Simple variable name.
 				// -> This means the requested variable is in the global test scope.
+			    $data = &$this->getDataPlaceHolder();
+			    
 				$varName = $v->getVariableName();
 				if (isset($data[$varName]) === false) {
 					return null;
@@ -189,12 +226,24 @@ class AssessmentTestContext extends State {
 			}
 			else {
 				
-				if (isset($data[$offset])) {
-					return $data[$offset]->getValue();
-				}
-				else {
-					return null;
-				}
+				// prefix given.
+				
+				// - prefix targets an item?
+			    $itemSessions = &$this->getAssessmentItemSessions();
+			    $prefix = $v->getPrefix();
+			    if (isset($itemSessions[$prefix])) {
+			        $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+			        	
+			        if (isset($itemSessions[$prefix][$sequence])) {
+			            $session = $itemSessions[$prefix][$sequence];
+			            	
+			            if (($var = $session->getVariable($v->getVariableName())) !== null) {
+			                return $var->getValue();
+			            }
+			        }
+			    }
+			    
+			    return null;
 			}
 		}
 		catch (InvalidArgumentException $e) {
@@ -204,11 +253,10 @@ class AssessmentTestContext extends State {
 	}
 	
 	/**
-	 * Set the value of a variable with identifier $offset. Offset cannot contain a sequence number. Indeed,
-	 * the AssessmentTestContext object takes care itself of the sequencing of the values. It cannot be done manually.
+	 * Set the value of a variable with identifier $offset.
 	 * 
 	 * @throws OutOfRangeException If $offset is not a string or an invalid variable identifier.
-	 * @throws OutOfBoundsException If a variable cannot be found or if trying to set a variable's value with a sequence number.
+	 * @throws OutOfBoundsException If the variable with identifier $offset cannot be found.
 	 */
 	public function offsetSet($offset, $value) {
 		
@@ -219,10 +267,10 @@ class AssessmentTestContext extends State {
 		
 		try {
 			$v = new VariableIdentifier($offset);
-			$data = &$this->getDataPlaceHolder();
 			
 			if ($v->hasPrefix() === false) {
 				// global scope request.
+				$data = &$this->getDataPlaceHolder();
 				$varName = $v->getVariableName();
 				if (isset($data[$varName]) === false) {
 					$msg = "The variable '${varName}' to be set does not exist in the current context.";
@@ -230,20 +278,28 @@ class AssessmentTestContext extends State {
 				}
 				
 				$data[$offset]->setValue($value);
-			}
-			else if ($v->hasSequenceNumber() === false) {
-				// prefix given, no sequence number
-				if (isset($data[$offset])) {
-					$data[$offset]->setValue($value);
-				}
-				else {
-					$msg = "No variable '" . $v->getVariableName() . "' found for item '" . $v->getPrefix() . "'.";
-					throw new OutOfBoundsException($msg);
-				}
+				return;
 			}
 			else {
-				// prefix and sequence number given.
-				$msg = "The variable '${offset}' cannot be set using a sequence number.";
+				// prefix given.
+				
+				// - prefix targets an item ?
+				$itemSessions = &$this->getAssessmentItemSessions();
+				$prefix = $v->getPrefix();
+				if (isset($itemSessions[$prefix])) {
+					$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+					
+					if (isset($itemSessions[$prefix][$sequence])) {
+					    $session = $itemSessions[$prefix][$sequence];
+					    
+					    if (($var = $session->getVariable($v->getVariableName())) !== null) {
+					        $var->setValue($value);
+					        return;
+					    }
+					}
+				}
+
+				$msg = "The variable '" . $v->__toString() . "' does not exist in the current context.";
 				throw new OutOfBoundsException($msg);
 			}
 		}
@@ -255,18 +311,14 @@ class AssessmentTestContext extends State {
 	}
 	
 	/**
-	 * Unset a given variable's value identified by $offset from the current context.
+	 * Unset a given variable's value identified by $offset from the global scope of the AssessmentTestSession.
 	 * Please not that unsetting a variable's value keep the variable still instantiated
-	 * in the context with the previous value replaced by NULL.
+	 * in the context with its value replaced by NULL.
 	 * 
-	 * If strict mode is enabled, an OutOfBoundsException will be thrown if:
 	 * 
-	 * * The $offset contains a sequence number.
-	 * * The $offset refers to an unexistent variable.
-	 * 
-	 * @param string $offset
-	 * @throws OutOfRangeException
-	 * @throws OutOfBoundsException
+	 * @param string $offset A simple variable identifier (no prefix, no sequence number).
+	 * @throws OutOfRangeException If $offset is not a simple variable identifier.
+	 * @throws OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
 	 */
 	public function offsetUnset($offset) {
 		$data = &$this->getDataPlaceHolder();
@@ -274,38 +326,74 @@ class AssessmentTestContext extends State {
 		// Valid identifier?
 		try {
 			$v = new VariableIdentifier($offset);
+			
+			if ($v->hasPrefix() === true) {
+			    $msg = "Only variables in the global scope of an AssessmentTestSession may be unset. '${offset}' is not in the global scope.";
+			    throw new OutOfBoundsException($msg);
+			}
+			
+			if (isset($data[$offset]) === true) {
+			    $data[$offset]->setValue(null);
+			}
+			else {
+			    $msg = "The variable '${offset}' does not exist in the AssessmentTestSession's global scope.";
+			    throw new OutOfBoundsException($msg); 
+			}
 		}
 		catch (InvalidArgumentException $e) {
-			$msg = "The variable identifier '${offset}' is invalid.";
+			$msg = "The variable identifier '${offset}' is not a valid variable identifier.";
 			throw new OutOfRangeException($msg, 0, $e);
-		}
-		
-		if ($v->hasSequenceNumber() === true) {
-			$msg = "Variables contained in AssessmentTestContext objects cannot be unset with a sequence number.";
-			throw new OutOfBoundsException($msg);
-		}
-		
-		// No strict mode.
-		if (isset($data[$offset]) === true) {
-			$data[$offset]->setValue(null);
 		}
 	}
 	
 	/**
-	 * Check if a given variable identified by $offset exists in the 
-	 * current context.
+	 * Check if a given variable identified by $offset exists in the global scope
+	 * of the AssessmentTestSession.
 	 * 
-	 * This method throws an OutOfRangeException in strict mode only, 
-	 * if the identifier $offset is a invalid identifier.
-	 * 
-	 * This method throws an OutOfBoundsException in strict mode only,
-	 * if the identifier $offset does not match any variable in the current state.
-	 * 
-	 * @throws OutOfRangeException In strict mode only, if the given $offset is not a valid variable identifier.
 	 * @return boolean Whether the variable identified by $offset exists in the current context.
+	 * @throws OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
 	 */
 	public function offsetExists($offset) {
-		$data = &$this->getDataPlaceHolder();
-		return isset($data[$offset]);
+	    try {
+	        $v = new VariableIdentifier($offset);
+	        
+	        if ($v->hasPrefix() === true) {
+	            $msg = "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ";
+	            $msg = "identifiers (no prefix, no sequence number). '" . $v->__toString() . "' given.";
+	            throw new OutOfRangeException($msg, 0, $e);
+	        }
+	        
+	        $data = &$this->getDataPlaceHolder();
+	        return isset($data[$offset]);
+	    }
+	    catch (InvalidArgumentException $e) {
+	       $msg = "'${offset}' is not a valid variable identifier.";
+	       throw new OutOfRangeException($msg);
+	    }
+	}
+	
+	/**
+	 * Begin an item session for the assessmentItemRef identified by the given $identifier.
+	 * 
+	 * @param string $identifier A QTI Identifier.
+	 * @throws OutOfBoundsException If $identifier does not refer to any assessmentItemRef of the assessmentTest.
+	 */
+	public function beginItemSession($identifier) {
+	    $assessmentItemRefs = $this->getAssessmentItemRefs();
+	    if (isset($assessmentItemRefs[$identifier]) === true) {
+	        $itemSession = new AssessmentItemSession($assessmentItemRefs[$identifier]);
+	        
+	        $currentItemSessions = &$this->getAssessmentItemSessions();
+	        if (isset($currentItemSessions[$identifier]) === false) {
+	            // No item session registered for item $identifier.
+	            $currentItemSessions[$identifier] = array();
+	        }
+
+	        $currentItemSessions[$identifier][] = $itemSession;
+	    }
+	    else {
+	        $msg = "No assessmentItemRef with identifier '${identifier}' found in the current assessmentTest.";
+	        throw new OutOfBoundsException($msg);
+	    }
 	}
 }

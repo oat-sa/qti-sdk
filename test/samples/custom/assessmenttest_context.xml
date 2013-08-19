@@ -9,6 +9,8 @@
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" fixed="false" timeDependent="false">
 				<weight identifier="W01" value="1.0"/>
 				<weight identifier="W02" value="1.1"/>
+				<outcomeDeclaration identifier="var1" cardinality="single" baseType="integer"/>
+				<outcomeDeclaration identifier="var2" cardinality="float" baseType="multiple"/>
 				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="integer"/>
 				<outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float"/>
 			</assessmentItemRef>

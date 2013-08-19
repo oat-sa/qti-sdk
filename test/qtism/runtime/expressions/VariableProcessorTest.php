@@ -41,9 +41,10 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		// multiple cardinality test.
 		$val = new OrderedContainer(BaseType::INTEGER, array(10, 12));
-		$var2 = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::INTEGER, $val);
+		$var2 = new OutcomeVariable('var2', Cardinality::ORDERED, BaseType::INTEGER, $val);
 		$state->setVariable($var2);
 		$variableExpr = $this->createComponentFromXml('<variable identifier="var2"/>');
+		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
 		$this->assertEquals(10, $result[0]);
@@ -55,6 +56,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$weights = new WeightCollection(array(new Weight('weight1', 1.1)));
 		$assessmentItemRef->setWeights($weights);
 		$assessmentItemRef->addOutcomeDeclaration(new OutcomeDeclaration('var1', BaseType::INTEGER, Cardinality::SINGLE));
+		$assessmentItemRef->addOutcomeDeclaration(new OutcomeDeclaration('var2', BaseType::FLOAT, Cardinality::MULTIPLE));
 		
 		$assessmentItemRefs = new AssessmentItemRefCollection(array($assessmentItemRef));
 		$assessmentTest = new AssessmentTest('A01', 'An assessmentTest');
@@ -64,20 +66,21 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$testPart = new TestPart('P01', $assessmentSections);
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
-		$var1 = new OutcomeVariable('Q01.var1', Cardinality::SINGLE, BaseType::INTEGER, 1337);
-		$state = new AssessmentTestContext($assessmentTest);
-		$state['Q01.var1'] = 1337;
+		$assessmentTestSession = new AssessmentTestContext($assessmentTest);
+		$assessmentTestSession->beginItemSession('Q01');
+		
+		$assessmentTestSession['Q01.var1'] = 1337;
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
 		
 		$variableProcessor = new VariableProcessor($variableExpr);
-		$variableProcessor->setState($state);
+		$variableProcessor->setState($assessmentTestSession);
 		
 		// -- single cardinality test.
 		$result = $variableProcessor->process();
 		$this->assertInternalType('float', $result);
 		$this->assertEquals(1470.7, $result);
 		// The value in the state must be intact.
-		$this->assertEquals(1337, $state['Q01.var1']);
+		$this->assertEquals(1337, $assessmentTestSession['Q01.var1']);
 		
 		// What if the indicated weight is not found?
 		$weights['weight1']->setIdentifier('weight2');
@@ -88,16 +91,14 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$weights['weight2']->setIdentifier('weight1');
 		
 		// -- multiple cardinality test.
-		$val = new MultipleContainer(BaseType::FLOAT, array(10.1, 12.1));
-		$var2 = new OutcomeVariable('Q01.var2', Cardinality::MULTIPLE, BaseType::FLOAT, $val);
-		$state->setVariable($var2);
+		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(10.1, 12.1));
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var2" weightIdentifier="weight1"/>');
 		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();
 		$this->assertEquals(11.11, $result[0]);
 		$this->assertEquals(13.31, $result[1]);
 		// The value in the state must be unchanged.
-		$stateVal = $state['Q01.var2'];
+		$stateVal = $assessmentTestSession['Q01.var2'];
 		$this->assertEquals(10.1, $stateVal[0]);
 		$this->assertEquals(12.1, $stateVal[1]);
 		

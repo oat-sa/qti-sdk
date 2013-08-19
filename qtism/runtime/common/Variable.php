@@ -201,6 +201,10 @@ abstract class Variable {
 			$this->value = $value;
 			return;
 		}
+		else if (($this->isMultiple() || $this->isRecord()) && is_null($value) === true) {
+		    $this->value = $value;
+		    return;
+		}
 		else if (($this->isMultiple() || $this->isRecord()) && $value instanceof Container) {
 			if ($value->getCardinality() === $this->getCardinality()) {
 				
