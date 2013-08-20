@@ -28,4 +28,15 @@ class IdentifierCollection extends AbstractCollection {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+	public function __toString() {
+	    $strArray = array();
+	    $dataPlaceHolder = &$this->getDataPlaceHolder();
+	    
+	    foreach (array_keys($dataPlaceHolder) as $k) {
+	        $strArray[] = $dataPlaceHolder[$k];
+	    }
+	    
+	    return implode(',', $strArray);
+	}
 }

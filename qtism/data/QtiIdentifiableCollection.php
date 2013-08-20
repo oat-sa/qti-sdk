@@ -93,7 +93,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 		if (is_null($offset) === false) {
 			$msg = "No specfic offset can be set in a QtiIdentifiableCollection. ";
 			$msg.= "The offset is always infered from the 'identifier' attribute of ";
-			$msg.= "the given QtiIdentifier object.";
+			$msg.= "the given QtiIdentifier object. Given offset is '${offset}'";
 			
 			throw new OutOfRangeException($msg);
 		}
@@ -152,5 +152,15 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 				$this->offsetSet(null, $subject);
 			}
 		}
+	}
+	
+	public function __clone() {
+	    $oldPlaceHolder = $this->getDataPlaceHolder();
+	    $newPlaceHolder = array();
+	    $this->setDataPlaceHolder($newPlaceHolder);
+	    
+	    foreach (array_keys($oldPlaceHolder) as $k) {
+	        $this->offsetSet(null, $oldPlaceHolder[$k]);
+	    }
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\collections\IdentifierCollection;
+
 use qtism\data\QtiComponentIterator;
 use qtism\data\AssessmentTest;
 use qtism\data\TestPart;
@@ -10,6 +12,15 @@ use qtism\data\AssessmentSection;
 use \Iterator;
 
 /**
+ * The Route class represents a linear route to be taken accross a given
+ * selection of AssessmentItemRef objects.
+ * 
+ * A Route object is composed of RouteItem objects which are all composed
+ * of three components:
+ * 
+ * * An AssessmentItemRef object.
+ * * An AssessmentSection object, which is the parent section of the AssessmentItemRef.
+ * * A TestPart object, which is the parent object (direct or indirect) of the AssessmentSection.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -20,6 +31,10 @@ class Route implements Iterator {
     
     private $position = 0;
     
+    /**
+     * Create a new Route object.
+     * 
+     */
     public function __construct() {
         $this->setPosition(0);
     }
@@ -36,6 +51,11 @@ class Route implements Iterator {
         return $this->routeItems;
     }
     
+    /**
+     * Add a new RouteItem object at the end of the Route.
+     * 
+     * @param RouteItem $routeItem A RouteItemObject.
+     */
     public function addRouteItem(RouteItem $routeItem) {
         $routeItems = &$this->getRouteItems();
         array_push($routeItems, $routeItem);
@@ -45,6 +65,11 @@ class Route implements Iterator {
         $this->setPosition(0);
     }
     
+    /**
+     * Get the current RouteItem object.
+     * 
+     * @return RouteItem A RouteItem object.
+     */
     public function current() {
         $routeItems = &$this->getRouteItems();
         return $routeItems[$this->getPosition()];
@@ -63,6 +88,12 @@ class Route implements Iterator {
         return isset($routeItems[$this->getPosition()]);
     }
     
+    /**
+     * Create a Route object from a given AssessmentTest object.
+     * 
+     * @param AssessmentTest $assessmentTest
+     * @return Route A Route object.
+     */
     public static function createFromAssessmentTest(AssessmentTest $assessmentTest) {
         $iterator = new QtiComponentIterator($assessmentTest);
         $route = new Route();
@@ -89,5 +120,22 @@ class Route implements Iterator {
         }
         
         return $route;
+    }
+    
+    /**
+     * Get the sequence of identifiers formed by the identifiers of each
+     * assessmentItemRef object of the route, in the order they must be taken.
+     * 
+     * @return IdentifierCollection
+     */
+    public function getIdentifierSequence() {
+        $routeItems = &$this->getRouteItems();
+        $collection = new IdentifierCollection();
+        
+        foreach (array_keys($routeItems) as $k) {
+            $collection[] = $routeItems[$k]->getAssessmentItemRef()->getIdentifier();
+        }
+        
+        return $collection;
     }
 }

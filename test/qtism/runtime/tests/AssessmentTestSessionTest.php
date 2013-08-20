@@ -24,14 +24,30 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		parent::setUp();
 		
 		$xml = new XmlCompactAssessmentTestDocument('1.0');
-		$xml->load(dirname(__FILE__) . '/../../../samples/custom/assessmenttest_context.xml');
+		$xml->load(self::samplesDir() . 'custom/assessmenttest_context.xml');
 		
-		$this->state = new AssessmentTestSession($xml);
+		$this->state = AssessmentTestSession::instantiate($xml);
 		$this->state['OUTCOME1'] = 'String!';
 	}
 	
 	public function getState() {
 		return $this->state;
+	}
+	
+	public function testInstantiate() {
+	    $doc = new XmlAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/selection_and_ordering.xml');
+	    
+	    // Instantiation with selection enabled, ordering disabled.
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc, true, false);
+	    $route = $assessmentTestSession->getRoute();
+	    $idSequence = $route->getIdentifierSequence()->__toString();
+	    
+	    $possibleSequence1 = 'Q1,Q2,Q3,Q7,Q8,Q9,Q10,Q11,Q12';
+	    $possibleSequence2 = 'Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12';
+	    
+	    $this->assertFalse($possibleSequence1 == $idSequence && $possibleSequence2 == $idSequence);
+	    $this->assertTrue($possibleSequence1 == $idSequence || $possibleSequence2 == $idSequence);
 	}
 	
 	/**

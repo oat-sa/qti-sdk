@@ -5,6 +5,7 @@
 	identifier="selection_and_ordering" title="Selection and Ordering">
 	<testPart identifier="testPart" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" fixed="false" title="Section S01" visible="true">
+			<selection select="1"/>
 			<assessmentSection identifier="S01A" fixed="false" title="Section S01A" visible="true">
 				<assessmentItemRef identifier="Q1" href="./Q1.xml" fixed="false"/>
 				<assessmentItemRef identifier="Q2" href="./Q2.xml" fixed="false"/>

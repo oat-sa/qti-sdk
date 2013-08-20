@@ -176,8 +176,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * 
 	 * @return array The collection as an array of data.
 	 */
-	public function getArrayCopy() {
-		return $this->dataPlaceHolder;
+	public function getArrayCopy($preserveKeys = false) {
+		return ($preserveKeys === true) ? $this->dataPlaceHolder : array_values($this->dataPlaceHolder);
 	}
 	
 	/**

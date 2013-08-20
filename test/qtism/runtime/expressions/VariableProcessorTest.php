@@ -67,7 +67,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$testPart = new TestPart('P01', $assessmentSections);
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
-		$assessmentTestSession = new AssessmentTestSession($assessmentTest);
+		$assessmentTestSession = AssessmentTestSession::instantiate($assessmentTest);
 		$itemSession = new AssessmentItemSession($assessmentItemRef);
 		$itemSession->beginItemSession();
 		$assessmentTestSession->addItemSession($itemSession);

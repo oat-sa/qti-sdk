@@ -183,6 +183,15 @@ class AssessmentSection extends SectionPart {
 	}
 	
 	/**
+	 * Whether the AssessmentSection holds a Selection object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasSelection() {
+	    return is_null($this->getSelection()) === false;
+	}
+	
+	/**
 	 * Get the ordering rule for this section. Returns null
 	 * if no ordering is applied to the section.
 	 * 
@@ -199,6 +208,15 @@ class AssessmentSection extends SectionPart {
 	 */
 	public function setOrdering(Ordering $ordering) {
 		$this->ordering = $ordering;
+	}
+	
+	/**
+	 * Whether the AssessmentSection holds an Ordering object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasOrdering() {
+	    return is_null($this->getOrdering()) === false;
 	}
 	
 	/**
@@ -257,5 +275,20 @@ class AssessmentSection extends SectionPart {
 		}
 		
 		return new QtiComponentCollection($comp);
+	}
+	
+	public function __clone() {
+	    parent::__clone();
+	    
+	    $this->setRubricBlocks(clone $this->getRubricBlocks());
+	    $this->setSectionParts(clone $this->getSectionParts());
+	    
+	    if ($this->hasOrdering() === true) {
+	        $this->setOrdering(clone $this->getOrdering());
+	    }
+	    
+	    if ($this->hasSelection() === true) {
+	        $this->setSelection(clone $this->getSelection());
+	    }
 	}
 }

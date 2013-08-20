@@ -240,6 +240,15 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	}
 	
 	/**
+	 * Whether the SectionPart holds an ItemSessionControl object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasItemSessionControl() {
+	    return is_null($this->getItemSessionControl()) === false;
+	}
+	
+	/**
 	 * Set the amount of time a candidate is allowed for this section.
 	 * Returns null value if not specified.
 	 * 
@@ -247,6 +256,15 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 */
 	public function getTimeLimits() {
 		return $this->timeLimits;
+	}
+	
+	/**
+	 * Whether the SectionPart holds a TimeLimits object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTimeLimits() {
+	    return is_null($this->getTimeLimits()) === false;
 	}
 	
 	/**
@@ -321,5 +339,21 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 		foreach ($this->getObservers() as $observer) {
 			$observer->update($this);
 		}
+	}
+	
+	public function __clone() {
+	    $this->setBranchRules(clone $this->getBranchRules());
+	    $this->setPreConditions(clone $this->getPreConditions());
+	    
+	    if ($this->hasItemSessionControl() === true) {
+	        $this->setItemSessionControl(clone $this->getItemSessionControl());
+	    }
+	    
+	    if ($this->hasTimeLimits() === true) {
+	        $this->setTimeLimits(clone $this->getTimeLimits());
+	    }
+	    
+	    // Reset observers.
+	    $this->setObservers(new SplObjectStorage());
 	}
 }

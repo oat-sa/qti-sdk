@@ -17,6 +17,7 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
+use \SplStack;
 use \InvalidArgumentException;
 use \OutOfRangeException;
 use \OutOfBoundsException;
@@ -47,17 +48,26 @@ class AssessmentTestSession extends State {
 	private $assessmentItemSessions = array();
 	
 	/**
+	 * The route to be taken by this AssessmentTestSession.
+	 * 
+	 * @var Route
+	 */
+	private $route;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
+	 * @param 
 	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
 	 */
-	public function __construct(AssessmentTest $assessmentTest) {
+	public function __construct(AssessmentTest $assessmentTest, Route $route) {
 		
 		parent::__construct();
 		
 		$itemRefs = new AssessmentItemRefCollection($assessmentTest->getComponentsByClassName('assessmentItemRef')->getArrayCopy());
 		$this->setAssessmentItemRefs($itemRefs);
+		$this->setRoute($route);
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
@@ -99,6 +109,24 @@ class AssessmentTestSession extends State {
 	 */
 	protected function setAssessmentItemSessions(array &$assessmentItemSessions) {
 	    $this->assessmentItemSessions = $assessmentItemSessions;
+	}
+	
+	/**
+	 * Get the Route object describing the succession of items to be possibly taken.
+	 * 
+	 * @return Route A Route object.
+	 */
+	public function getRoute() {
+	    return $this->route;
+	}
+	
+	/**
+	 * Set the Route object describing the succession of items to be possibly taken.
+	 * 
+	 * @param Route $route A route object.
+	 */
+	public function setRoute(Route $route) {
+	    $this->route = $route;
 	}
 	
 	/**
@@ -467,10 +495,42 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
-	public static function instantiate(AssessmentTest $assessmentTest, $selection = true, $ordering = true) {
+	public static function instantiate(AssessmentTest $assessmentTest, $select = true, $order = true) {
 	    // 1. Apply selection and ordering.
+	    $trail = new SplStack();
+	    $parents = new SplStack();
+	    $mark = array();
+	    
+	    $trail->push($assessmentTest);
+	    
+	    while ($trail->count() > 0) {
+	        
+	        $current = $trail->pop();
+	        
+	        if (!in_array($current, $mark, true)) {
+
+	            if ($current instanceof AssessmentSection) {
+	                array_push($mark, $current);
+	                $trail->push($current);
+	                $parents->push($current);
+	            }
+
+	            $children = $current->getComponents()->getArrayCopy();
+	            foreach (array_reverse($children) as $child) {
+	                    $trail->push($child);
+	            }
+	        }
+	        else if (in_array($current, $mark, true) && $current instanceof AssessmentSection) {
+	            $selection = new BasicSelection($current);
+	            $newSection = $selection->select();
+	            
+	            $parent = $parents->pop();
+	            $parent->setSectionParts($newSection->getSectionParts());
+	        }
+	    }
 	    
 	    // 2. Build the route.
 	    $route = Route::createFromAssessmentTest($assessmentTest);
+	    return new static($assessmentTest, $route);
 	}
 }
