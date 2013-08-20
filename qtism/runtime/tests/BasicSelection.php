@@ -5,6 +5,7 @@ namespace qtism\runtime\tests;
 use qtism\data\SectionPartCollection;
 use qtism\data\AssessmentSection;
 use qtism\runtime\tests\AbstractSelection;
+use \SplObjectStorage;
 
 /**
  * The BasicSelection class implements the basic Selection logic described by QTI.
@@ -43,21 +44,29 @@ class BasicSelection extends AbstractSelection {
                 throw new SelectionException($msg, SelectionException::LOGIC_ERROR);
             }
             
+            $indexRef = new SplObjectStorage();
             $selectionBag = $sectionParts->getArrayCopy();
-            $newSectionParts = new SectionPartCollection();
+            $newSectionParts = array();
+            
+            foreach ($selectionBag as $k => $bagItem) {
+                $indexRef[$bagItem] = $k;
+            }
             
             for ($i = 0; $i < $select; $i++) {
             
                 $bagSize = count($selectionBag);
-                $newSectionParts[] = $selectionBag[mt_rand(0, $childCount -1)];
+                $randIndex = mt_rand(0, $childCount -1);
+                $newSectionParts[$indexRef[$selectionBag[$randIndex]]] = $selectionBag[$randIndex];
             
                 if ($withReplacement === false) {
-                    unset($selectionBag[$i]);
+                    unset($selectionBag[$randIndex]);
+                    $selectionBag = array_values($selectionBag);
                     $childCount--;
                 }
             }
             
-            $assessmentSection->setSectionParts($newSectionParts);
+            ksort($newSectionParts);
+            $assessmentSection->setSectionParts(new SectionPartCollection($newSectionParts));
            
         }
         

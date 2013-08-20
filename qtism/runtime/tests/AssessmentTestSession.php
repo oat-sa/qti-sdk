@@ -517,12 +517,17 @@ class AssessmentTestSession extends State {
 
 	            $children = $current->getComponents()->getArrayCopy();
 	            foreach (array_reverse($children) as $child) {
-	                    $trail->push($child);
+	                $trail->push($child);
 	            }
 	        }
 	        else if (in_array($current, $mark, true) && $current instanceof AssessmentSection) {
-	            $selection = new BasicSelection($current);
-	            $newSection = $selection->select();
+	            
+	            $newSection = $current;
+	            
+	            if ($select === true) {
+	                $selection = new BasicSelection($current);
+	                $newSection = $selection->select();
+	            }
 	            
 	            $parent = $parents->pop();
 	            $parent->setSectionParts($newSection->getSectionParts());

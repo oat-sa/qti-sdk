@@ -23,6 +23,7 @@
 			<assessmentItemRef identifier="Q9" href="./Q9.xml" fixed="false"/>
 		</assessmentSection>
 		<assessmentSection identifier="S03" fixed="false" title="Section S03" visible="true">
+			<selection select="2"/>
 			<assessmentItemRef identifier="Q10" href="./Q10.xml" fixed="false"/>
 			<assessmentItemRef identifier="Q11" href="./Q11.xml" fixed="false"/>
 			<assessmentItemRef identifier="Q12" href="./Q12.xml" fixed="false"/>

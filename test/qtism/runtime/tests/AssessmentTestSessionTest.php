@@ -39,15 +39,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc->load(self::samplesDir() . 'custom/selection_and_ordering.xml');
 	    
 	    // Instantiation with selection enabled, ordering disabled.
-	    $assessmentTestSession = AssessmentTestSession::instantiate($doc, true, false);
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
 	    $route = $assessmentTestSession->getRoute();
-	    $idSequence = $route->getIdentifierSequence()->__toString();
-	    
-	    $possibleSequence1 = 'Q1,Q2,Q3,Q7,Q8,Q9,Q10,Q11,Q12';
-	    $possibleSequence2 = 'Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12';
-	    
-	    $this->assertFalse($possibleSequence1 == $idSequence && $possibleSequence2 == $idSequence);
-	    $this->assertTrue($possibleSequence1 == $idSequence || $possibleSequence2 == $idSequence);
 	}
 	
 	/**
