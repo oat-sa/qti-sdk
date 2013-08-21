@@ -69,7 +69,8 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 			'
 			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" navigationMode="linear" submissionMode="individual">
 				<assessmentSection identifier="section1" title="My Section 1" visible="true">
-					<assessmentItemRef identifier="Q01" href="Q01.xml" fixed="false"/>
+					<selection select="3"/>
+		            <assessmentItemRef identifier="Q01" href="Q01.xml" fixed="false"/>
 					<assessmentItemRef identifier="Q02" href="Q02.xml" fixed="false"/>
 					<assessmentItemRef identifier="Q03" href="Q03.xml" fixed="false"/>
 				</assessmentSection>
@@ -89,6 +90,7 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$assessmentSections = $component->getAssessmentSections();
 		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
 		$this->assertEquals('section1', $assessmentSections['section1']->getIdentifier());
+		$this->assertTrue($assessmentSections['section1']->hasSelection());
 		
 		$assessmentSection = $assessmentSections['section1'];
 		$this->assertEquals(3, count($assessmentSection->getSectionParts()));

@@ -36,11 +36,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	
 	public function testInstantiate() {
 	    $doc = new XmlAssessmentTestDocument();
-	    $doc->load(self::samplesDir() . 'custom/selection_and_ordering.xml');
+	    $doc->load(self::samplesDir() . 'custom/selection_and_ordering_with_replacement.xml');
 	    
-	    // Instantiation with selection enabled, ordering disabled.
 	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
 	    $route = $assessmentTestSession->getRoute();
+	    //var_dump($route->getIdentifierSequence()->__toString());
 	}
 	
 	/**

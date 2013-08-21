@@ -86,12 +86,10 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(1337, $assessmentTestSession['Q01.var1']);
 		
 		// What if the indicated weight is not found?
-		$weights['weight1']->setIdentifier('weight2');
+		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight2" />');
+		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();
 		$this->assertEquals(1337, $result);
-		
-		// Remember! the identifier has changed... Magic isn't it ? x)
-		$weights['weight2']->setIdentifier('weight1');
 		
 		// -- multiple cardinality test.
 		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(10.1, 12.1));
@@ -104,11 +102,5 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$stateVal = $assessmentTestSession['Q01.var2'];
 		$this->assertEquals(10.1, $stateVal[0]);
 		$this->assertEquals(12.1, $stateVal[1]);
-		
-		// What if the indicated weight is not found?
-		unset($weights['weight1']);
-		$result = $variableProcessor->process();
-		$this->assertEquals(10.1, $result[0]);
-		$this->assertEquals(12.1, $result[1]);
 	}
 }

@@ -236,7 +236,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML(
 			'
 			<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="rootAssessmentSection" title="Root Assessment Section" visible="true">
-				<assessmentSection identifier="sub1AssessmentSection" title="Sub1 Assessment Section" visible="true">
+				<selection select="2" withReplacement="true"/>
+		        <assessmentSection identifier="sub1AssessmentSection" title="Sub1 Assessment Section" visible="true">
 					<assessmentItemRef identifier="Q01" href="./questions/Q01.xml"/>
 					<assessmentItemRef identifier="Q02" href="./questions/Q02.xml"/>
 				</assessmentSection>
@@ -260,6 +261,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $component);
 		$this->assertEquals('rootAssessmentSection', $component->getIdentifier());
 		$this->assertEquals(2, count($component->getSectionParts()));
+		$this->assertTrue($component->hasSelection());
+		$this->assertEquals(2, $component->getSelection()->getSelect());
 		
 		$sectionParts = $component->getSectionParts();
 		$this->assertEquals('sub1AssessmentSection', $sectionParts['sub1AssessmentSection']->getIdentifier());

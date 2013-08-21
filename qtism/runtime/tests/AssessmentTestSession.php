@@ -2,7 +2,9 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\AssessmentSectionCollection;
 
+use qtism\data\SectionPart;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\AssessmentSection;
@@ -497,40 +499,39 @@ class AssessmentTestSession extends State {
 	
 	public static function instantiate(AssessmentTest $assessmentTest, $select = true, $order = true) {
 	    // 1. Apply selection and ordering.
-	    $trail = new SplStack();
-	    $parents = new SplStack();
-	    $mark = array();
-	    
-	    $trail->push($assessmentTest);
-	    
-	    while ($trail->count() > 0) {
+	    foreach ($assessmentTest->getTestParts() as $testPart) {
 	        
-	        $current = $trail->pop();
+	        $newAssessmentSections = new AssessmentSectionCollection();
 	        
-	        if (!in_array($current, $mark, true)) {
+	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
+	            $trail = array();
+	            $mark = array();
+	            
+	            array_push($trail, array($assessmentSection, $testPart));
+	            
+	            while (count($trail) > 0) {
+	               
+	                $currentTrail = array_pop($trail);
+	                $current = $currentTrail[0];
+	                $parent = $currentTrail[1];
+	                
+	                if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
+	                    // 1st pass on assessmentSection.
+	                    array_push($mark, $current);
+	                    array_push($trail, $currentTrail);
+                        
+	                    foreach (array_reverse($current->getSectionParts()->getArrayCopy()) as $sectionPart) {
+	                        array_push($trail, array($sectionPart, $current));
+	                    }
+	                }
+	                else if (in_array($current, $mark, true)) {
+	                    // 2nd pass on assessmentSection.
+	                    $selection = new BasicSelection($current);
+	                    $newSectionPart = $selection->select();
 
-	            if ($current instanceof AssessmentSection) {
-	                array_push($mark, $current);
-	                $trail->push($current);
-	                $parents->push($current);
+	                    $current->setSectionParts($newSectionPart->getSectionParts());
+	                }
 	            }
-
-	            $children = $current->getComponents()->getArrayCopy();
-	            foreach (array_reverse($children) as $child) {
-	                $trail->push($child);
-	            }
-	        }
-	        else if (in_array($current, $mark, true) && $current instanceof AssessmentSection) {
-	            
-	            $newSection = $current;
-	            
-	            if ($select === true) {
-	                $selection = new BasicSelection($current);
-	                $newSection = $selection->select();
-	            }
-	            
-	            $parent = $parents->pop();
-	            $parent->setSectionParts($newSection->getSectionParts());
 	        }
 	    }
 	    

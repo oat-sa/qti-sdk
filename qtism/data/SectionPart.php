@@ -129,7 +129,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 			$this->notify();
 		}
 		else {
-			$msg = "'{identifier}' is not a valid QTI Identifier.";
+			$msg = "'${identifier}' is not a valid QTI Identifier.";
 			throw new InvalidArgumentException($msg);
 		}
 	}

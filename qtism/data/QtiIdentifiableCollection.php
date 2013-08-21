@@ -160,7 +160,9 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	    $this->setDataPlaceHolder($newPlaceHolder);
 	    
 	    foreach (array_keys($oldPlaceHolder) as $k) {
-	        $this->offsetSet(null, $oldPlaceHolder[$k]);
+	        $cloned = clone $oldPlaceHolder[$k];
+	        $cloned->attach($this);
+	        $this->offsetSet(null, $cloned);
 	    }
 	}
 }
