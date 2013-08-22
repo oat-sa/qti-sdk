@@ -295,6 +295,20 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		return array_keys($data);
 	}
 	
+	public function merge(AbstractCollection $collection) {
+	    if (get_class($this) === get_class($collection)) {
+	        $newData = array_merge($this->getDataPlaceHolder(), $collection->getDataPlaceHolder());
+	        $this->setDataPlaceHolder($newData);
+	    }
+	}
+	
+	public function intersect(AbstractCollection $collection) {
+	    if (get_class($this) === get_class($collection)) {
+	        $newData = array_intersect($this->getDataPlaceHolder(), $collection->getDataPlaceHolder());
+	        $this->setDataPlaceHolder($newData);
+	    }
+	}
+	
 	public function __clone() {
 		foreach ($this->getDataPlaceHolder() as $key => $value) {
 			if (gettype($value) === 'object') {

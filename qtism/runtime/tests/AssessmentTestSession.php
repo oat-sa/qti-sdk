@@ -60,8 +60,7 @@ class AssessmentTestSession extends State {
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
-	 * @param 
-	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
+	 * @param Route $route The sequence of items that has to be taken for the session.
 	 */
 	public function __construct(AssessmentTest $assessmentTest, Route $route) {
 		

@@ -197,4 +197,8 @@ class AssessmentItemRef extends SectionPart {
 		
 		return new QtiComponentCollection($comp);
 	}
+	
+	public function __toString() {
+	    return $this->getIdentifier();
+	}
 }
