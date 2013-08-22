@@ -276,19 +276,4 @@ class AssessmentSection extends SectionPart {
 		
 		return new QtiComponentCollection($comp);
 	}
-	
-	public function __clone() {
-	    parent::__clone();
-	    
-	    $this->setRubricBlocks(clone $this->getRubricBlocks());
-	    $this->setSectionParts(clone $this->getSectionParts());
-	    
-	    if ($this->hasOrdering() === true) {
-	        $this->setOrdering(clone $this->getOrdering());
-	    }
-	    
-	    if ($this->hasSelection() === true) {
-	        $this->setSelection(clone $this->getSelection());
-	    }
-	}
 }

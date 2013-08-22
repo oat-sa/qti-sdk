@@ -532,13 +532,13 @@ class AssessmentTestSession extends State {
 	                        $poppedRoutes[] = array_pop($routeStack);
 	                    }
 	                    
-	                    $selection = new BasicSelection($current, new RouteCollection(array_reverse($poppedRoutes)));
+	                    $selection = new BasicSelection($current, new SelectableRouteCollection(array_reverse($poppedRoutes)));
 	                    $selectedRoute = $selection->select();
 	                    array_push($routeStack, $selectedRoute);
 	                }
 	                else if ($current instanceof AssessmentItemRef) {
 	                    // leaf node.
-	                    $route = new Route();
+	                    $route = new SelectableRoute($current->isFixed(), $current->isRequired());
 	                    $routeItem = new RouteItem($current, $currentAssessmentSection, $testPart);
 	                    $route->addRouteItem($routeItem);
 	                    array_push($routeStack, $route);
@@ -548,7 +548,7 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $finalRoutes = $routeStack;
-	    $route = new Route();
+	    $route = new SelectableRoute();
 	    foreach ($finalRoutes as $finalRoute) {
 	        $route->appendRoute($finalRoute);
 	    }

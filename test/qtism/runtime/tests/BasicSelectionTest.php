@@ -2,8 +2,8 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\RouteItem;
-use qtism\runtime\tests\RouteCollection;
-use qtism\runtime\tests\Route;
+use qtism\runtime\tests\SelectableRouteCollection;
+use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\BasicSelection;
 use qtism\data\storage\xml\XmlAssessmentTestDocument;
 
@@ -23,7 +23,7 @@ class BasicSelectionTest extends QtiSmTestCase {
         $s01a = $doc->getComponentByIdentifier('S01A', true);
         $this->assertEquals('S01A', $s01a->getIdentifier());
         
-        $s01aRoute = new Route();
+        $s01aRoute = new SelectableRoute();
         foreach ($s01a->getSectionParts() as $sectionPart) {
             $routeItem = new RouteItem($sectionPart, $s01a, $testPart);
             $s01aRoute->addRouteItem($routeItem);
@@ -33,13 +33,13 @@ class BasicSelectionTest extends QtiSmTestCase {
         $s01b = $doc->getComponentByIdentifier('S01B', true);
         $this->assertEquals('S01B', $s01b->getIdentifier());
         
-        $s01bRoute = new Route();
+        $s01bRoute = new SelectableRoute();
         foreach ($s01b->getSectionParts() as $sectionPart) {
             $routeItem = new RouteItem($sectionPart, $s01b, $testPart);
             $s01bRoute->addRouteItem($routeItem);
         }
         
-        $selection = new BasicSelection($s01, new RouteCollection(array($s01aRoute, $s01bRoute)));
+        $selection = new BasicSelection($s01, new SelectableRouteCollection(array($s01aRoute, $s01bRoute)));
         $selectedRoute = $selection->select();
         
         $routeCheck1 = self::isRouteCorrect($selectedRoute, array('Q1', 'Q2', 'Q3'));
@@ -49,7 +49,7 @@ class BasicSelectionTest extends QtiSmTestCase {
         $this->assertTrue($routeCheck1 === true || $routeCheck2 === true);
     }
     
-    private static function isRouteCorrect(Route $route, array $expectedIdentifiers) {
+    private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers) {
         
         $i = 0;
         foreach ($route as $routeItem) {

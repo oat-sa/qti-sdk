@@ -11,7 +11,7 @@ use InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteCollection extends AbstractCollection {
+class SelectableRouteCollection extends AbstractCollection {
 
 	/**
 	 * Check if $value is a Route object
@@ -19,8 +19,8 @@ class RouteCollection extends AbstractCollection {
 	 * @throws InvalidArgumentException If $value is not a Route object.
 	 */
 	protected function checkType($value) {
-		if (!$value instanceof Route) {
-			$msg = "RouteCollection class only accept Route objects, '" . gettype($value) . "' given.";
+		if (!$value instanceof SelectableRoute) {
+			$msg = "SelectableRouteCollection class only accept SelectableRoute objects, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
 	}

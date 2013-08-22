@@ -197,13 +197,4 @@ class AssessmentItemRef extends SectionPart {
 		
 		return new QtiComponentCollection($comp);
 	}
-	
-	public function __clone() {
-	    parent::__clone();
-	    
-	    $this->setCategories(clone $this->getCategories());
-	    $this->setTemplateDefaults(clone $this->getTemplateDefaults());
-	    $this->setVariableMappings(clone $this->getVariableMappings());
-	    $this->setWeights(clone $this->getWeights());
-	}
 }
