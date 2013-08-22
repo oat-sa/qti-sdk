@@ -5,29 +5,53 @@
 	identifier="selection_and_ordering" title="Selection and Ordering">
 	<testPart identifier="testPart" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" fixed="false" title="Section S01" visible="true">
-			<selection select="7" withReplacement="true"/>
+			<selection select="1"/>
 			<assessmentSection identifier="S01A" fixed="false" title="Section S01A" visible="true">
-				<assessmentItemRef identifier="Q1" href="./Q1.xml" fixed="false"/>
-				<assessmentItemRef identifier="Q2" href="./Q2.xml" fixed="false"/>
-				<assessmentItemRef identifier="Q3" href="./Q3.xml" fixed="false"/>
+				<assessmentItemRef identifier="Q1" href="./Q1.xml"/>
+				<assessmentItemRef identifier="Q2" href="./Q2.xml" required="true"/>
+				<assessmentItemRef identifier="Q3" href="./Q3.xml"/>
 			</assessmentSection>
 			<assessmentSection identifier="S01B" fixed="false" title="Section S01B" visible="true">
-				<selection select="6" withReplacement="true"/>
-				<assessmentItemRef identifier="Q4" href="./Q1.xml" fixed="false"/>
-				<assessmentItemRef identifier="Q5" href="./Q5.xml" fixed="false"/>
-				<assessmentItemRef identifier="Q6" href="./Q6.xml" fixed="false"/>
+				<assessmentItemRef identifier="Q4" href="./Q1.xml"/>
+				<assessmentItemRef identifier="Q5" href="./Q5.xml"/>
+				<assessmentItemRef identifier="Q6" href="./Q6.xml" />
 			</assessmentSection>
 		</assessmentSection>
 		<assessmentSection identifier="S02" fixed="false" title="Section S02" visible="true">
-			<assessmentItemRef identifier="Q7" href="./Q7.xml" fixed="false"/>
-			<assessmentItemRef identifier="Q8" href="./Q8.xml" fixed="false"/>
-			<assessmentItemRef identifier="Q9" href="./Q9.xml" fixed="false"/>
+			<assessmentItemRef identifier="Q7" href="./Q7.xml"/>
+			<assessmentItemRef identifier="Q8" href="./Q8.xml"/>
+			<assessmentItemRef identifier="Q9" href="./Q9.xml"/>
 		</assessmentSection>
 		<assessmentSection identifier="S03" fixed="false" title="Section S03" visible="true">
 			<selection select="3" withReplacement="true"/>
-			<assessmentItemRef identifier="Q10" href="./Q10.xml" fixed="false"/>
-			<assessmentItemRef identifier="Q11" href="./Q11.xml" fixed="false"/>
-			<assessmentItemRef identifier="Q12" href="./Q12.xml" fixed="false"/>
+			<assessmentItemRef identifier="Q10" href="./Q10.xml"/>
+			<assessmentItemRef identifier="Q11" href="./Q11.xml"/>
+			<assessmentItemRef identifier="Q12" href="./Q12.xml"/>
+		</assessmentSection>
+		<assessmentSection identifier="S04" fixed="false" title="Section S04" visible="true">
+			<selection select="4" withReplacement="true"/>
+			<assessmentItemRef identifier="Q13" href="./Q13.xml" required="true"/>
+			<assessmentItemRef identifier="Q14" href="./Q14.xml"/>
+			<assessmentItemRef identifier="Q15" href="./Q15.xml"/>
+			<assessmentItemRef identifier="Q16" href="./Q16.xml" required="true"/>
+			<assessmentItemRef identifier="Q17" href="./Q17.xml"/>
+			<assessmentItemRef identifier="Q18" href="./Q18.xml"/>
+		</assessmentSection>
+		<assessmentSection identifier="S05" fixed="false" title="Section S05" visible="true">
+			<selection select="3" withReplacement="true"/>
+			<assessmentSection identifier="S05A" fixed="false" title="Section S05A" visible="true">
+				<selection select="4" withReplacement="true"/>
+				<assessmentSection identifier="S05AA" fixed="false" title="Section S05AA" visible="true">
+					<assessmentItemRef identifier="Q19" href="./Q19.xml"/>
+					<assessmentItemRef identifier="Q20" href="./Q20.xml"/>
+					<assessmentItemRef identifier="Q21" href="./21.xml"/>
+				</assessmentSection>
+				<assessmentSection identifier="S05AB" fixed="false" title="Section S05AB" visible="true">
+					<assessmentItemRef identifier="Q22" href="./Q22.xml"/>
+					<assessmentItemRef identifier="Q23" href="./Q23.xml"/>
+					<assessmentItemRef identifier="Q24" href="./Q24.xml"/>
+				</assessmentSection>
+			</assessmentSection>
 		</assessmentSection>
 	</testPart>
 </assessmentTest>

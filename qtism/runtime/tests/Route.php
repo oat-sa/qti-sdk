@@ -123,6 +123,18 @@ class Route implements Iterator {
     }
     
     /**
+     * Append all the RouteItem objects contained in $route
+     * to this Route.
+     * 
+     * @param Route $route A Route object.
+     */
+    public function appendRoute(Route $route) {
+        foreach ($route as $routeItem) {
+            $this->addRouteItem($routeItem);
+        }    
+    }
+    
+    /**
      * Get the sequence of identifiers formed by the identifiers of each
      * assessmentItemRef object of the route, in the order they must be taken.
      * 

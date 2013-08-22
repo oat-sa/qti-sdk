@@ -40,7 +40,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
 	    $route = $assessmentTestSession->getRoute();
-	    //var_dump($route->getIdentifierSequence()->__toString());
 	}
 	
 	/**

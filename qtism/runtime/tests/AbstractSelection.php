@@ -30,12 +30,21 @@ abstract class AbstractSelection {
     private $assessmentSection;
     
     /**
+     * The Route objects that are selectable for the selection to be performed.
+     * 
+     * @var RouteCollection
+     */
+    private $selectableRoutes;
+    
+    /**
      * Create a new AbstractSelector object.
      * 
-     * @param AssessmentSection $assessmentSection An AssessmentSection object.
+     * @param AssessmentSection $assessmentSection An AssessmentSection object which represents the QTI Data Model assessmentSection on which the selection occurs.
+     * @param RouteCollection $selectableRoutes The collection of Routes that are selectable for this selection.
      */
-    public function __construct(AssessmentSection $assessmentSection) {
+    public function __construct(AssessmentSection $assessmentSection, RouteCollection $selectableRoutes) {
         $this->setAssessmentSection($assessmentSection);
+        $this->setSelectableRoutes($selectableRoutes);
     }
     
     /**
@@ -58,13 +67,27 @@ abstract class AbstractSelection {
     }
     
     /**
-     * Select the direct children components of the AssessmentSection on which the selection must be applied. If the withReplacement attribute
-     * of the Selection is set to (boolean) true, multiple occurences of children elements might occur. In this case, the identifiers of the
-     * selected elements must be suffixed with a QTI sequence number. For instance, if assessmentItemRef 'Q01' is selected 3 times from 
-     * assessmentSection 'S01', assessmentItemRef objects ['Q01.1','Q01.2','Q01.3', 'Q02', ...] will compose the 'S01' assessmentSection. The same rule
-     * applies on children AssessmentSection objects.
+     * Get the collection of Route objects that are selectable for the selection to be performed.
      * 
-     * @return AssessmentSection An AssessmentSection object on which the selection is applied.
+     * @return RouteCollection A collection of Route objects.
+     */
+    public function getSelectableRoutes() {
+        return $this->selectableRoutes;
+    }
+    
+    /**
+     * Set the collection of Route objects that are selectable for the selection to be performed.
+     * 
+     * @param RouteCollection $selectableRoutes
+     */
+    public function setSelectableRoutes(RouteCollection $selectableRoutes) {
+        $this->selectableRoutes = $selectableRoutes;
+    }
+    
+    /**
+     * Select the direct children components of the AssessmentSection on which the selection must be applied.
+     * 
+     * @return Route A Route objects describing the selection.
      * @throws SelectionException
      */
     abstract public function select();

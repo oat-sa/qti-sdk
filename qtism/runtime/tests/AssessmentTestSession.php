@@ -499,44 +499,60 @@ class AssessmentTestSession extends State {
 	
 	public static function instantiate(AssessmentTest $assessmentTest, $select = true, $order = true) {
 	    // 1. Apply selection and ordering.
+	    $routeStack = array();
+	    
 	    foreach ($assessmentTest->getTestParts() as $testPart) {
-	        
-	        $newAssessmentSections = new AssessmentSectionCollection();
-	        
+	       
 	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
 	            $trail = array();
 	            $mark = array();
 	            
-	            array_push($trail, array($assessmentSection, $testPart));
+	            array_push($trail, $assessmentSection);
 	            
 	            while (count($trail) > 0) {
 	               
-	                $currentTrail = array_pop($trail);
-	                $current = $currentTrail[0];
-	                $parent = $currentTrail[1];
+	                $current = array_pop($trail);
 	                
 	                if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
 	                    // 1st pass on assessmentSection.
+	                    $currentAssessmentSection = $current;
+	                    
 	                    array_push($mark, $current);
-	                    array_push($trail, $currentTrail);
-                        
+	                    array_push($trail, $current);
+	                    
 	                    foreach (array_reverse($current->getSectionParts()->getArrayCopy()) as $sectionPart) {
-	                        array_push($trail, array($sectionPart, $current));
+	                        array_push($trail, $sectionPart);
 	                    }
 	                }
 	                else if (in_array($current, $mark, true)) {
 	                    // 2nd pass on assessmentSection.
-	                    $selection = new BasicSelection($current);
-	                    $newSectionPart = $selection->select();
-
-	                    $current->setSectionParts($newSectionPart->getSectionParts());
+	                    // Pop N routeItems where N is the children count of $current.
+	                    $poppedRoutes = array();
+	                    for ($i = 0; $i < count($current->getSectionParts()); $i++) {
+	                        $poppedRoutes[] = array_pop($routeStack);
+	                    }
+	                    
+	                    $selection = new BasicSelection($current, new RouteCollection(array_reverse($poppedRoutes)));
+	                    $selectedRoute = $selection->select();
+	                    array_push($routeStack, $selectedRoute);
+	                }
+	                else if ($current instanceof AssessmentItemRef) {
+	                    // leaf node.
+	                    $route = new Route();
+	                    $routeItem = new RouteItem($current, $currentAssessmentSection, $testPart);
+	                    $route->addRouteItem($routeItem);
+	                    array_push($routeStack, $route);
 	                }
 	            }
 	        }
 	    }
 	    
-	    // 2. Build the route.
-	    $route = Route::createFromAssessmentTest($assessmentTest);
-	    return new static($assessmentTest, $route);
+	    $finalRoutes = $routeStack;
+	    $route = new Route();
+	    foreach ($finalRoutes as $finalRoute) {
+	        $route->appendRoute($finalRoute);
+	    }
+	    
+	    return new AssessmentTestSession($assessmentTest, $route);
 	}
 }
