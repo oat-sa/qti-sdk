@@ -200,10 +200,6 @@ class AssessmentItemSession extends State {
 	 * 'completionStatus' will be created and set to an appropriate default value automatically.
 	 * 
 	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
-	 * * The AssessmentItemSession object is set up with a default INITIAL state. Built-in outcome/response variables are then set.
-	 * 
-	 * After the instantiation of the AssessmentItemSession object, you can update the values of variables accordingly, and set up
-	 * the current state of the session.
 	 * 
 	 * @param ExtendedAssessmentItemRef $assessmentItemRef The description of the item that the session handles.
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
@@ -212,17 +208,12 @@ class AssessmentItemSession extends State {
 	 */
 	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
-		$this->setAssessmentItemRef($assessmentItemRef);
 		
-		// Acceptable latency time is by default "0 seconds". In
-		// other words, no additional time is given.
+		$this->setState(AssessmentItemSessionState::NOT_SELECTED);
 		$this->setAcceptableLatency(new Duration('PT0S'));
-		$this->setState(AssessmentItemSessionState::INITIAL);
+		$this->setAssessmentItemRef($assessmentItemRef);
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
-		$this->beginItemSession();
-		
-		// Set-up default ItemSessionControl object.
 		$this->setItemSessionControl(new ItemSessionControl());
 	}
 	

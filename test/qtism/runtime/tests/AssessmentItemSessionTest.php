@@ -18,6 +18,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     public function testInstantiation() {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
         
         // No timelimits by default.
         $this->assertFalse($itemSession->hasTimeLimits());
@@ -51,6 +52,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     
     public function testEvolutionBasic() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();
         // when the first attempt occurs, the response variable must get their default value.
@@ -97,6 +99,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         // No late submission allowed.
         $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
         $itemSession->setTimeLimits($timeLimits);
+        $itemSession->beginItemSession();
         
         // End the attempt before minTime of 1 second.
         $itemSession->beginAttempt();
@@ -140,6 +143,8 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT1S'), true);
         $itemSession->setTimeLimits($timeLimits);
         
+        $itemSession->beginItemSession();
+        
         $itemSession->beginAttempt();
         $itemSession['RESPONSE'] = 'ChoiceB';
         sleep(2);
@@ -160,6 +165,8 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
         $itemSession->setTimeLimits($timeLimits);
+        
+        $itemSession->beginItemSession();
         
         // Sleep 3 second to respect minTime and stay in the acceptable latency time.
         $itemSession->beginAttempt();
@@ -197,6 +204,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts($count);
         $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
         
         for ($i = 0; $i < $count; $i++) {
             // Here, manual set up of responses.
@@ -232,6 +240,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     
     public function testEvolutionAdaptiveItem() {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession->beginItemSession();
         
         // reminder, the value of maxAttempts is ignored when dealing with
         // adaptive items.
@@ -265,6 +274,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     
     public function testDurationBrutalSessionClosing() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
         $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
         
         $itemSession->beginAttempt();
@@ -281,6 +291,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSessionControl->setValidateResponses(true);
         $itemSession->setItemSessionControl($itemSessionControl);
         
+        $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         // Set an invalid response.
         $responses = new State();
@@ -304,6 +315,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
         $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();
         try {
@@ -317,6 +329,8 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     
     public function testSkippingAllowed() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        
         $itemSession->beginAttempt();
         $itemSession->skip();
         
@@ -330,6 +344,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setValidateResponses(false);
         $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();
         $responses = new State();

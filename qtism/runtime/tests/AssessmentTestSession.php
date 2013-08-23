@@ -2,23 +2,17 @@
 
 namespace qtism\runtime\tests;
 
-use qtism\data\AssessmentSectionCollection;
-use qtism\data\SectionPart;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
-use qtism\data\AssessmentSection;
-use qtism\data\TestPart;
-use qtism\data\QtiComponentIterator;
-use qtism\data\QtiIdentifiableCollection;
-use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\AssessmentTest;
+use qtism\data\TestPart;
+use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
-use \SplStack;
 use \InvalidArgumentException;
 use \OutOfRangeException;
 use \OutOfBoundsException;
@@ -35,11 +29,11 @@ use \LogicException;
 class AssessmentTestSession extends State {
 	
 	/**
-	 * An array containing current assessmentItemSessions.
+	 * A map containing current assessmentItemSessions by AssessmentItemRef.
 	 * 
-	 * @var array
+	 * @var SplObjectStorage
 	 */
-	private $assessmentItemSessions = array();
+	public $assessmentItemSessions = array();
 	
 	/**
 	 * The route to be taken by this AssessmentTestSession.
@@ -47,6 +41,13 @@ class AssessmentTestSession extends State {
 	 * @var Route
 	 */
 	private $route;
+	
+	/**
+	 * The state of the AssessmentTestSession.
+	 * 
+	 * @var integer
+	 */
+	private $state;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -63,6 +64,8 @@ class AssessmentTestSession extends State {
 		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
 			$this->setVariable(OutcomeVariable::createFromDataModel($globalOutcome));
 		}
+		
+		$this->setState(AssessmentTestSessionState::INITIAL);
 	}
 	
 	/**
@@ -108,6 +111,30 @@ class AssessmentTestSession extends State {
 	 */
 	public function setRoute(Route $route) {
 	    $this->route = $route;
+	}
+	
+	/**
+	 * Get the current status of the AssessmentTestSession.
+	 * 
+	 * @return integer A value from the AssessmentTestSessionState enumeration.
+	 */
+	public function getState() {
+	    return $this->state;
+	}
+	
+	/**
+	 * Set the current status of the AssessmentTestSession.
+	 * 
+	 * @param integer $state A value from the AssessmentTestSessionState enumeration.
+	 */
+	public function setState($state) {
+	    if (in_array($state, AssessmentTestSessionState::asArray()) === true) {
+	        $this->state = $state;
+	    }
+	    else {
+	        $msg = "The state argument must be a value from the AssessmentTestSessionState enumeration";
+	        throw new InvalidArgumentException($msg);
+	    }
 	}
 	
 	/**
@@ -414,8 +441,54 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
-	public function beginTestSession() {
+	protected function initializeItemSessions() {
+	    $route = $this->getRoute();
+	    $oldPosition = $route->getPosition();
 	    
+	    foreach ($this->getRoute() as $routeItem) {
+	        $itemRef = $routeItem->getAssessmentItemRef();
+	        $navigationMode = $routeItem->getTestPart()->getNavigationMode();
+	        $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
+	        
+	        $session = new AssessmentItemSession($itemRef, $navigationMode, $submissionMode);
+	        $this->addItemSession($session, $routeItem->getOccurence());
+	    }
+	    
+	    $route->setPosition($oldPosition);
+	}
+	
+	public function beginTestSession() {
+	    // Initialize item sessions.
+	    $this->initializeItemSessions();
+	    
+	    // Select the eligible items for the candidate.
+	    $this->selectEligibleItems();
+	    
+	    // The test session has now begun.
+	    $this->setState(AssessmentTestSessionState::INTERACTING);
+	}
+	
+	/**
+	 * Select the eligible items from the current one to the last
+	 * following item in the route which is in linear navigation mode.
+	 * 
+	 * AssessmentItemSession objects related to the eligible items
+	 * will be instantiated.
+	 * 
+	 */
+	protected function selectEligibleItems() {
+	    $route = $this->getRoute();
+	    $oldPosition = $route->getPosition();
+	    
+	    while($route->valid() === true && $route->isLinear() === true) {
+	        $routeItem = $route->current();
+	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	        $session->beginItemSession();
+	        
+	        $route->next();
+	    }
+	    
+	    $route->setPosition($oldPosition);
 	}
 	
 	/**
@@ -424,12 +497,12 @@ class AssessmentTestSession extends State {
 	 * @param AssessmentItemSession $session
 	 * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
 	 */
-	public function addItemSession(AssessmentItemSession $session) {
+	protected function addItemSession(AssessmentItemSession $session, $occurence = 0) {
 	    
 	    $assessmentItemRefs = $this->getAssessmentItemRefs();
 	    $sessionAssessmentItemRefIdentifier = $session->getAssessmentItemRef()->getIdentifier();
 	    
-	    if (isset($assessmentItemRefs[$sessionAssessmentItemRefIdentifier]) === false) {
+	    if ($this->getAssessmentItemRefs()->contains($session->getAssessmentItemRef()) === false) {
 	        // The session that is requested to be set is bound to an item
 	        // which is not referenced in the test. This is a pure logic error.
 	        $msg = "The item session to set is bound to an unknown AssessmentItemRef.";
@@ -443,7 +516,7 @@ class AssessmentTestSession extends State {
 	        $currentItemSessions[$sessionAssessmentItemRefIdentifier] = array();
 	    }
 	   
-	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][] = $session; 
+	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][$occurence] = $session; 
 	}
 	
 	/**
@@ -454,30 +527,20 @@ class AssessmentTestSession extends State {
 	 * @return AssessmentItemSession|false The related AssessmentItemSession object or false if not found.
 	 * @throws OutOfRangeException If $sessionIdentifier is not a valid variable identifier.
 	 */
-	public function getItemSession($sessionIdentifier) {
+	protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
 	    
-	    try {
-	        $v = new VariableIdentifier($sessionIdentifier);
-	        
-	        $currentItemSessions = &$this->getAssessmentItemSessions();
-	        
-	        if ($v->hasPrefix() === true && isset($currentItemSessions[$v->getPrefix()]) === true) {
-	            
-	            $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
-	            $prefix = $v->getPrefix();
-	            
-	            if (isset($currentItemSessions[$prefix][$sequence]) === true) {
-	                return $currentItemSessions[$prefix][$sequence];
-	            }
-	        }
-	        
-	        // No such item session found.
-	        return false;
-	    }
-	    catch (InvalidArgumentException $e) {
-	        $msg = "'" . $v->__toString() . "' is not a valid session identifier.";
-	        throw new OutOfRangeException($msg);    
-	    }
+	    $itemIdentifier = $assessmentItemRef->getIdentifier();
+        $currentItemSessions = &$this->getAssessmentItemSessions();
+        
+        if (isset($currentItemSessions[$itemIdentifier]) === true) {
+            
+            if (isset($currentItemSessions[$itemIdentifier][$occurence]) === true) {
+                return $currentItemSessions[$itemIdentifier][$occurence];
+            }
+        }
+        
+        // No such item session found.
+        return false;
 	}
 	
 	/**
@@ -495,12 +558,57 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Get the current route item.
+	 * Get the current Route Item.
 	 * 
 	 * @return RouteItem A RouteItem object.
 	 */
 	protected function getCurrentRouteItem() {
 	    return $this->getRoute()->current();
+	}
+	
+	/**
+	 * Get the current AssessmentItemRef.
+	 * 
+	 * @return AssessmentItemRef An AssessmentItemRef object.
+	 */
+	protected function getCurrentAssessmentItemRef() {
+	    return $this->getCurrentRouteItem()->getAssessmentItemRef();
+	}
+	
+	/**
+	 * Get the current AssessmentSection.
+	 * 
+	 * @return AssessmentSection An AssessmentSection object.
+	 */
+	protected function getCurrentAssessmentSection() {
+	    return $this->getCurrentRouteItem()->getAssessmentSection();
+	}
+	
+	/**
+	 * Get the current TestPart.
+	 * 
+	 * @return TestPart A TestPart object.
+	 */
+	protected function getCurrentTestPart() {
+	    return $this->getCurrentRouteItem()->getTestPart();
+	}
+	
+	/**
+	 * Get the current navigation mode.
+	 * 
+	 * @return integer A value from the NavigationMode enumeration.
+	 */
+	protected function getCurrentNavigationMode() {
+	    return $this->getCurrentTestPart()->getNavigationMode();
+	}
+	
+	/**
+	 * Get the current submission mode.
+	 * 
+	 * @return integer A value from the SubmissionMode enumeration.
+	 */
+	protected function getCurrentSubmissionMode() {
+	    return $this->getCurrentTestPart()->getSubmissionMode();
 	}
 	
 	public static function instantiate(AssessmentTest $assessmentTest) {

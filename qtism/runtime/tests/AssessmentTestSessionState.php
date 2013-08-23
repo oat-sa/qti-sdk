@@ -35,6 +35,7 @@ class AssessmentTestSessionState implements Enumeration {
     
     public static function getConstantByName($name) {
 		switch (strtolower($name)) {
+		    
 			case 'initial':
 				return self::INITIAL;
 			break;
@@ -63,6 +64,7 @@ class AssessmentTestSessionState implements Enumeration {
 	
 	public static function getNameByConstant($constant) {
 	    switch ($constant) {
+	        
 	        case self::INITIAL:
 	            return 'initial';
 	        break;

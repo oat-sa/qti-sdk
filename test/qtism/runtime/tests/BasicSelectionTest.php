@@ -11,7 +11,7 @@ class BasicSelectionTest extends QtiSmTestCase {
     
     public function testBasicSelection() {
         $doc = new XmlAssessmentTestDocument();
-        $doc->load(self::samplesDir() . 'custom/selection_and_ordering.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering.xml');
         
         $testPart = $doc->getComponentByIdentifier('testPart');
         $this->assertEquals('testPart', $testPart->getIdentifier());

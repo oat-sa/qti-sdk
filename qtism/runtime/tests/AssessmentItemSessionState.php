@@ -13,12 +13,15 @@ use qtism\common\enums\Enumeration;
  */
 class AssessmentItemSessionState extends AssessmentTestSessionState {
 	
+    const NOT_SELECTED = -1;
+    
 	const SOLUTION = 5;
 	
 	const REVIEW = 6;
 	
 	public static function asArray() {
 		return array_merge(AssessmentTestSessionState::asArray(), array(
+		    'NOT_SELECTED' => self::NOT_SELECTED,
 			'SOLUTION' => self::SOLUTION,
 			'REVIEW' => self::REVIEW
 		));
@@ -26,6 +29,10 @@ class AssessmentItemSessionState extends AssessmentTestSessionState {
 	
 	public static function getConstantByName($name) {
 		switch (strtolower($name)) {
+		    case 'notselected':
+		        return self::NOT_SELECTED;
+		    break;
+		    
 			case 'solution':
 				return self::SOLUTION;
 			break;
@@ -42,6 +49,10 @@ class AssessmentItemSessionState extends AssessmentTestSessionState {
 	
 	public static function getNameByConstant($constant) {
 		switch ($constant) {
+		    case self::NOT_SELECTED:
+		        return 'notSelected';
+		    break;
+		    
 			case self::SOLUTION:
 				return 'solution';
 			break;

@@ -230,7 +230,7 @@ abstract class Variable {
 				throw new InvalidArgumentException($msg);
 			}
 		}
-			
+	    
 		Utils::throwBaseTypeTypingError($this->getBaseType(), $value);
 	}
 	

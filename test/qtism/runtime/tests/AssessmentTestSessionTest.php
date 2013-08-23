@@ -2,7 +2,6 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
 use qtism\data\state\VariableDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\common\VariableIdentifier;
@@ -14,6 +13,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\AssessmentTestSessionState;
 use \OutOfBoundsException;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
@@ -24,7 +24,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		parent::setUp();
 		
 		$xml = new XmlCompactAssessmentTestDocument('1.0');
-		$xml->load(self::samplesDir() . 'custom/assessmenttest_context.xml');
+		$xml->load(self::samplesDir() . 'custom/runtime/assessmenttest_context.xml');
 		
 		$this->state = AssessmentTestSession::instantiate($xml);
 		$this->state['OUTCOME1'] = 'String!';
@@ -34,12 +34,43 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		return $this->state;
 	}
 	
-	public function testInstantiate() {
-	    $doc = new XmlAssessmentTestDocument();
-	    $doc->load(self::samplesDir() . 'custom/selection_and_ordering_with_replacement.xml');
+	public function testInstantiateOne() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
 	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
-	    $route = $assessmentTestSession->getRoute();
+	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+
+	    $assessmentTestSession->beginTestSession();
+	    $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+	    
+	    // all outcome variables should have their default value set.
+	    // all response variables should be set to NULL.
+	    foreach ($doc->getComponentsByClassName('assessmentItemRef') as $itemRef) {
+	        $score = $assessmentTestSession[$itemRef->getIdentifier() . '.SCORE'];
+	        $this->assertInternalType('float', $score);
+	        $this->assertEquals(0.0, $score);
+	        
+	        $response = $assessmentTestSession[$itemRef->getIdentifier() . '.RESPONSE'];
+	        $this->assertSame(null, $response);
+	    }
+	}
+	
+	public function testInstantiateTwo() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    // check Q01.1, Q01.2, Q01.3 item session initialization.
+	    for ($i = 1; $i <= 3; $i++) {
+	        $score = $assessmentTestSession["Q01.${i}.SCORE"];
+	        $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+	        $this->assertInternalType('float', $score);
+	        $this->assertEquals(0.0, $score);
+	        $this->assertSame(null, $response);
+	    }
+	    
 	}
 	
 	/**

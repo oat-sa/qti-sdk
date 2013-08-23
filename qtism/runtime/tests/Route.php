@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\NavigationMode;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\QtiComponentIterator;
@@ -74,11 +75,11 @@ class Route implements Iterator {
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
     }
     
-    protected function getPosition() {
+    public function getPosition() {
         return $this->position;
     }
     
-    protected function setPosition($position) {
+    public function setPosition($position) {
         $this->position = $position;
     }
     
@@ -202,6 +203,27 @@ class Route implements Iterator {
     public function valid() {
         $routeItems = &$this->getRouteItems();
         return isset($routeItems[$this->getPosition()]);
+    }
+    
+    /**
+     * Whether the current RouteItem is the last of the route.
+     * 
+     * @return boolean
+     */
+    public function isLast() {
+        $nextPosition = $this->getPosition() + 1;
+        $routeItems = &$this->getRouteItems();
+        return !isset($routeItems[$nextPosition]);
+    }
+    
+    /**
+     * Whether the next RouteItem in the route is in linear
+     * navigation mode.
+     * 
+     * @return boolean
+     */
+    public function isLinear() {
+        return $this->current()->getTestPart()->getNavigationMode() === NavigationMode::LINEAR;
     }
     
     /**
