@@ -36,6 +36,13 @@ class RouteItem {
     private $assessmentSection;
     
     /**
+     * The occurence number.
+     * 
+     * @var integer
+     */
+    private $occurence = 0;
+    
+    /**
      * Create a new RouteItem object.
      * 
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
@@ -91,6 +98,32 @@ class RouteItem {
      */
     public function setAssessmentSection(AssessmentSection $assessmentSection) {
         $this->assessmentSection = $assessmentSection;
+    }
+    
+    /**
+     * Set the occurence number.
+     * 
+     * @param integer $occurence An occurence number.
+     */
+    public function setOccurence($occurence) {
+        $this->occurence = $occurence;
+    }
+    
+    /**
+     * Get the occurence number.
+     * 
+     * @return integer An occurence number.
+     */
+    public function getOccurence() {
+        return $this->occurence;
+    }
+    
+    /**
+     * Increment the occurence number by 1.
+     * 
+     */
+    public function incrementOccurenceNumber() {
+        $this->setOccurence($this->getOccurence() + 1);
     }
     
     /**

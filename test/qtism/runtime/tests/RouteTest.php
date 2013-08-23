@@ -10,6 +10,8 @@ use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TestPart;
 use qtism\runtime\tests\Route;
+use qtism\data\TestPartCollection;
+use qtism\data\AssessmentItemRefCollection;
 
 class RouteTest extends QtiSmTestCase {
     
@@ -35,17 +37,21 @@ class RouteTest extends QtiSmTestCase {
         $sectionPartsS2 = new SectionPartCollection(array($q5, $q6));
         $assessmentSections['S2']->setSectionParts($sectionPartsS2);
         
-        
         $testPart = new TestPart('TP1', $assessmentSections);
         $testPart->setAssessmentSections($assessmentSections);
         
         $route = new Route();
-        $route->addRouteItem(new RouteItem($sectionPartsS1['Q1'], $assessmentSections['S1'], $testPart));
-        $route->addRouteItem(new RouteItem($sectionPartsS1['Q2'], $assessmentSections['S1'], $testPart));
-        $route->addRouteItem(new RouteItem($sectionPartsS1['Q3'], $assessmentSections['S1'], $testPart));
-        $route->addRouteItem(new RouteItem($sectionPartsS1['Q4'], $assessmentSections['S1'], $testPart));
-        $route->addRouteItem(new RouteItem($sectionPartsS2['Q5'], $assessmentSections['S2'], $testPart));
-        $route->addRouteItem(new RouteItem($sectionPartsS2['Q6'], $assessmentSections['S2'], $testPart));
+        $route->addRouteItem($sectionPartsS1['Q1'], $assessmentSections['S1'], $testPart);
+        $route->addRouteItem($sectionPartsS1['Q2'], $assessmentSections['S1'], $testPart);
+        $route->addRouteItem($sectionPartsS1['Q3'], $assessmentSections['S1'], $testPart);
+        $route->addRouteItem($sectionPartsS1['Q4'], $assessmentSections['S1'], $testPart);
+        $route->addRouteItem($sectionPartsS2['Q5'], $assessmentSections['S2'], $testPart);
+        $route->addRouteItem($sectionPartsS2['Q6'], $assessmentSections['S2'], $testPart);
+        
+        // Only 1 one occurence of each selected item found?
+        foreach (array_merge($sectionPartsS1->getArrayCopy(), $sectionPartsS2->getArrayCopy()) as $itemRef) {
+            $this->assertEquals(1, $route->getOccurenceCount($itemRef));
+        }
         
         $assessmentItemRefs = $route->getAssessmentItemRefs();
         $this->assertEquals(6, count($assessmentItemRefs));
@@ -81,4 +87,44 @@ class RouteTest extends QtiSmTestCase {
         $this->assertEquals(2, count($s1MathRefs));
     }
     
+    public function testOccurences() {
+        $assessmentItemRefs = new AssessmentItemRefCollection();
+        $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q1.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q1.xml');
+        
+        $assessmentSections = new AssessmentSectionCollection();
+        $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSections['S1']->setSectionParts($assessmentItemRefs);
+        
+        $testParts = new TestPartCollection();
+        $testParts[] = new TestPart('T1', $assessmentSections);
+        
+        $route = new Route();
+        $this->assertEquals(0, $route->getOccurenceCount($assessmentItemRefs['Q2']));
+        
+        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+        
+        $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q1']));
+        $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q2']));
+        $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q3']));
+        
+        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+        $this->assertEquals(2, $route->getOccurenceCount($assessmentItemRefs['Q3']));
+        
+        // Get the second route item in the route.
+        $routeItem2 = $route->getRouteItemAt(1);
+        $this->assertEquals('Q2', $routeItem2->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals(0, $routeItem2->getOccurence());
+        
+        $routeItem3 = $route->getRouteItemAt(2);
+        $this->assertEquals('Q3', $routeItem3->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals(0, $routeItem3->getOccurence());
+        
+        $routeItem4 = $route->getRouteItemAt(3);
+        $this->assertEquals('Q3', $routeItem4->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals(1, $routeItem4->getOccurence());
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\processing;
 
+use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\rules\RuleProcessorFactory;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\ProcessingException;
@@ -103,9 +104,18 @@ class OutcomeProcessingEngine extends AbstractEngine {
 	 * @throws ProcessingException If an error occurs while executing the OutcomeProcessing.
 	 */
 	public function process() {
-		// @todo If given $context is an AssessmentTestSesion, reset all
+		// If given $context is an AssessmentTestSesion, reset all
 		// test-level outcome variables (except duration !!!!).
+		//
+		// As per QTI Spec:
+		// The values of the test's outcome variables are always reset to their defaults prior 
+		// to carrying out the instructions described by the outcomeRules.
 		$context = $this->getContext();
+		
+		if ($context instanceof AssessmentTestSession) {
+		    $context->resetOutcomeVariables();
+		}
+		
 		$outcomeProcessing = $this->getComponent();
 	    foreach ($outcomeProcessing->getOutcomeRules() as $rule) {
 	        $processor = $this->getRuleProcessorFactory()->createProcessor($rule);

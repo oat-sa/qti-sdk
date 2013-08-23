@@ -36,13 +36,6 @@ use \LogicException;
 class AssessmentTestSession extends State {
 	
 	/**
-	 * A shortcut to assessmentItemRefs.
-	 * 
-	 * @var AssessmentItemRefCollection
-	 */
-	private $assessmentItemRefs;
-	
-	/**
 	 * An array containing current assessmentItemSessions.
 	 * 
 	 * @var array
@@ -65,9 +58,6 @@ class AssessmentTestSession extends State {
 	public function __construct(AssessmentTest $assessmentTest, Route $route) {
 		
 		parent::__construct();
-		
-		$itemRefs = new AssessmentItemRefCollection($assessmentTest->getComponentsByClassName('assessmentItemRef')->getArrayCopy());
-		$this->setAssessmentItemRefs($itemRefs);
 		$this->setRoute($route);
 		
 		// Take the outcomeDeclaration objects of the global scope.
@@ -77,21 +67,12 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Set the assessmentItemRef objects involved in the context.
-	 * 
-	 * @param AssessmentItemRefCollection $assessmentItemRefs A Collection of AssessmentItemRef objects.
-	 */
-	protected function setAssessmentItemRefs(AssessmentItemRefCollection $assessmentItemRefs) {
-		$this->assessmentItemRefs = $assessmentItemRefs;
-	}
-	
-	/**
 	 * Get the assessmentItemRef objects involved in the context.
 	 * 
 	 * @return AssessmentItemRefCollection A Collection of AssessmentItemRef objects.
 	 */
 	protected function getAssessmentItemRefs() {
-		return $this->assessmentItemRefs;
+		return $this->getRoute()->getAssessmentItemRefs();
 	}
 	
 	/**
@@ -496,7 +477,21 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
-	public static function instantiate(AssessmentTest $assessmentTest, $select = true, $order = true) {
+	/**
+	 * Reset all test-level outcome variables to tgeir defaults.
+	 * 
+	 */
+	public function resetOutcomeVariables() {
+	    $data = &$this->getDataPlaceHolder();
+	    
+	    foreach (array_keys($data) as $k) {
+	        if ($data[$k] instanceof OutcomeVariable) {
+	            $data[$k]->applyDefaultValue();
+	        }
+	    }
+	}
+	
+	public static function instantiate(AssessmentTest $assessmentTest) {
 	    // 1. Apply selection and ordering.
 	    $routeStack = array();
 	    
@@ -538,8 +533,7 @@ class AssessmentTestSession extends State {
 	                else if ($current instanceof AssessmentItemRef) {
 	                    // leaf node.
 	                    $route = new SelectableRoute($current->isFixed(), $current->isRequired());
-	                    $routeItem = new RouteItem($current, $currentAssessmentSection, $testPart);
-	                    $route->addRouteItem($routeItem);
+	                    $route->addRouteItem($current, $currentAssessmentSection, $testPart);
 	                    array_push($routeStack, $route);
 	                }
 	            }

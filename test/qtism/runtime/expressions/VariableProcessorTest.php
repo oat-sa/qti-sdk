@@ -69,8 +69,8 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		$assessmentTestSession = AssessmentTestSession::instantiate($assessmentTest);
 		$itemSession = new AssessmentItemSession($assessmentItemRef);
-		$itemSession->beginItemSession();
 		$assessmentTestSession->addItemSession($itemSession);
+		$itemSession->beginItemSession();
 		
 		$assessmentTestSession['Q01.var1'] = 1337;
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');

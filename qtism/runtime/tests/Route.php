@@ -11,6 +11,7 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use \Iterator;
 use \SplObjectStorage;
+use \OutOfBoundsException;
 
 /**
  * The Route class represents a linear route to be taken accross a given
@@ -50,6 +51,13 @@ class Route implements Iterator {
      */
     private $assessmentItemRefSectionMap;
     
+    /**
+     * A map where each item is bound to a number of occurences.
+     * 
+     * @var SplObjectStorage
+     */
+    private $assessmentItemRefOccurenceCount;
+    
     private $routeItems = array();
     
     private $position = 0;
@@ -63,6 +71,7 @@ class Route implements Iterator {
         $this->setAssessmentItemRefs(new AssessmentItemRefCollection());
         $this->setAssessmentItemRefCategoryMap(array());
         $this->setAssessmentItemRefSectionMap(array());
+        $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
     }
     
     protected function getPosition() {
@@ -138,43 +147,34 @@ class Route implements Iterator {
     }
     
     /**
+     * Get the map where AssessmentItemRef objects involved in the route are stored
+     * with a number of occurence.
+     * 
+     * @return SplObjectStorage
+     */
+    protected function getAssessmentItemRefOccurenceMap() {
+        return $this->assessmentItemRefOccurenceCount;
+    }
+    
+    /**
+     * Set the map where AssessmentItemRef objects involved in the route are stored
+     * with a number of occurence.
+     * 
+     * @param SplObjectStorage $assessmentItemRefOccurenceCount
+     */
+    protected function setAssessmentItemRefOccurenceMap(SplObjectStorage $assessmentItemRefOccurenceCount) {
+        $this->assessmentItemRefOccurenceCount = $assessmentItemRefOccurenceCount;
+    }
+    
+    /**
      * Add a new RouteItem object at the end of the Route.
      * 
      * @param RouteItem $routeItem A RouteItemObject.
      */
-    public function addRouteItem(RouteItem $routeItem) {
+    public function addRouteItem(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection, TestPart $testPart) {
         // Push the routeItem in the track :) !
-        $routeItems = &$this->getRouteItems();
-        array_push($routeItems, $routeItem);
-        
-        // Reference the assessmentItemRef object of the RouteItem
-        // for a later use.
-        $assessmentItemRef = $routeItem->getAssessmentItemRef();
-        $this->getAssessmentItemRefs()->attach($assessmentItemRef);
-        
-        // Reference the assessmentItemRef object of the RouteItem
-        // by category for a later use.
-        $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        foreach ($assessmentItemRef->getCategories() as $category) {
-            if (isset($categoryMap[$category]) === false) {
-                $categoryMap[$category] = new AssessmentItemRefCollection();
-            }
-            
-            $categoryMap[$category][] = $assessmentItemRef;
-        }
-        
-        $this->setAssessmentItemRefCategoryMap($categoryMap);
-        
-        // Reference the AssessmentItemRef object of the RouteItem
-        // by section for a later use.
-        $sectionMap = $this->getAssessmentItemRefSectionMap();
-        $assessmentSectionIdentifier = $routeItem->getAssessmentSection()->getIdentifier();
-        if (isset($sectionMap[$assessmentSectionIdentifier]) === false) {
-            $sectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
-        }
-        $sectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
-        
-        $this->setAssessmentItemRefSectionMap($sectionMap);
+        $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
+        $this->registerAssessmentItemRef($routeItem);
     }
     
     public function rewind() {
@@ -211,23 +211,84 @@ class Route implements Iterator {
      * @param Route $route A Route object.
      */
     public function appendRoute(Route $route) {
+        $routeItems = &$this->getRouteItems();
+        
         foreach ($route as $routeItem) {
-            $this->addRouteItem($routeItem);
+            $this->registerAssessmentItemRef(clone $routeItem);
         }    
+    }
+    
+    /**
+     * For more convience, the processing related to the AssessmentItemRef object contained
+     * in a newly added RouteItem object is gathered in this method. The following process
+     * will occur:
+     * 
+     * * The RouteItem object is inserted in the RouteItem array for storage.
+     * * The assessmentItemRef is added to the occurence map.
+     * * The assessmentItemRef is added to the category map.
+     * * The assessmentItemRef is added to the section map.
+     * 
+     * @param RouteItem $routeItem
+     */
+    protected function registerAssessmentItemRef(RouteItem $routeItem) {
+        $routeItems = &$this->getRouteItems();
+        array_push($routeItems, $routeItem);
+        
+        // For more convenience ;)
+        $assessmentItemRef = $routeItem->getAssessmentItemRef();
+        
+        // Count the number of occurences for the assessmentItemRef.
+        $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
+        if (isset($occurenceMap[$assessmentItemRef]) === false) {
+            $occurenceMap[$assessmentItemRef] = 0;
+        }
+        
+        $occurenceMap[$assessmentItemRef] += 1;
+        $routeItem->setOccurence($occurenceMap[$assessmentItemRef] - 1);
+        
+        // Reference the assessmentItemRef object of the RouteItem
+        // for a later use.
+        $this->getAssessmentItemRefs()->attach($assessmentItemRef);
+        
+        // Reference the assessmentItemRef object of the RouteItem
+        // by category for a later use.
+        $categoryMap = $this->getAssessmentItemRefCategoryMap();
+        foreach ($assessmentItemRef->getCategories() as $category) {
+            if (isset($categoryMap[$category]) === false) {
+                $categoryMap[$category] = new AssessmentItemRefCollection();
+            }
+            
+            $categoryMap[$category][] = $assessmentItemRef;
+        }
+        
+        $this->setAssessmentItemRefCategoryMap($categoryMap);
+        
+        // Reference the AssessmentItemRef object of the RouteItem
+        // by section for a later use.
+        $sectionMap = $this->getAssessmentItemRefSectionMap();
+        $assessmentSectionIdentifier = $routeItem->getAssessmentSection()->getIdentifier();
+        if (isset($sectionMap[$assessmentSectionIdentifier]) === false) {
+            $sectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
+        }
+        $sectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
+        
+        $this->setAssessmentItemRefSectionMap($sectionMap);
     }
     
     /**
      * Get the sequence of identifiers formed by the identifiers of each
      * assessmentItemRef object of the route, in the order they must be taken.
      * 
+     * @param boolean $withSequenceNumber Whether to return the sequence number in the identifier or not.
      * @return IdentifierCollection
      */
-    public function getIdentifierSequence() {
+    public function getIdentifierSequence($withSequenceNumber = true) {
         $routeItems = &$this->getRouteItems();
         $collection = new IdentifierCollection();
         
         foreach (array_keys($routeItems) as $k) {
-            $collection[] = $routeItems[$k]->getAssessmentItemRef()->getIdentifier();
+            $virginIdentifier = $routeItems[$k]->getAssessmentItemRef()->getIdentifier();
+            $collection[] = ($withSequenceNumber === true) ? $virginIdentifier . '.' . ($routeItems[$k]->getOccurence() + 1) : $virginIdentifier;
         }
         
         return $collection;
@@ -306,6 +367,45 @@ class Route implements Iterator {
             $bySection->intersect($byCategory);
             
             return $bySection;
+        }
+    }
+    
+    /**
+     * Get the number of occurences found in the route for the given $assessmentItemRef.
+     * If $assessmentItemRef is not involved in the route, the returned result is 0.
+     * 
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @return integer The number of occurences found in the route for $assessmentItemRef.
+     */
+    public function getOccurenceCount(AssessmentItemRef $assessmentItemRef) {
+        
+        $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
+        if (isset($occurenceMap[$assessmentItemRef]) === true) {
+            return $occurenceMap[$assessmentItemRef];
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    /**
+     * Get a RouteItem object at $position in the route sequence. Please be careful that the route sequence index
+     * begins at 0. In other words, the first route item in the sequence will be found at position 0, the second
+     * at position 1, ...
+     * 
+     * @param integer $position The position of the requested RouteItem object in the route sequence.
+     * @return RouteItem The RouteItem found at $position.
+     * @throws OutOfBoundsException If no RouteItem is found at $position.
+     */
+    public function getRouteItemAt($position) {
+        $routeItems = &$this->getRouteItems();
+        
+        if (isset($routeItems[$position]) === true) {
+            return $routeItems[$position];
+        }
+        else {
+            $msg = "No RouteItem object found at position '${position}'.";
+            throw new OutOfBoundsException($msg);
         }
     }
 }
