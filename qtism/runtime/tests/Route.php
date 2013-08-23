@@ -341,6 +341,7 @@ class Route implements Iterator {
     
     /**
      * Get a subset of AssessmentItemRef objects. The criterias are the $sectionIdentifier
+     * and categories.
      * 
      * @param string $sectionIdentifier The identifier of the section.
      * @param string|IdentifierCollection $category A string or a collection of identifiers to filter the categories of items.

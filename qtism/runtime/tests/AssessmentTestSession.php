@@ -3,7 +3,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\AssessmentSectionCollection;
-
 use qtism\data\SectionPart;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
@@ -391,15 +390,15 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Begin an item session for the assessmentItemRef identified by the given $identifier.
+	 * Begin an item session for a given AssessmentItemRef.
 	 * 
-	 * @param string $identifier A QTI Identifier.
-	 * @throws OutOfBoundsException If $identifier does not refer to any assessmentItemRef of the assessmentTest.
+	 * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef you want to session to begin.
+	 * @throws OutOfBoundsException If no such AssessmentItemRef is referenced in the route to be taken.
 	 */
-	protected function beginItemSession($identifier) {
+	protected function beginItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
 	    $assessmentItemRefs = $this->getAssessmentItemRefs();
-	    if (isset($assessmentItemRefs[$identifier]) === true) {
-	        $itemSession = new AssessmentItemSession($assessmentItemRefs[$identifier]);
+	    if (isset($assessmentItemRefs[$assessmentItemRef->getIdentifier()]) === true) {
+	        $itemSession = new AssessmentItemSession($assessmentItemRef);
 	        
 	        $currentItemSessions = &$this->getAssessmentItemSessions();
 	        if (isset($currentItemSessions[$identifier]) === false) {
@@ -413,6 +412,10 @@ class AssessmentTestSession extends State {
 	        $msg = "No assessmentItemRef with identifier '${identifier}' found in the current assessmentTest.";
 	        throw new OutOfBoundsException($msg);
 	    }
+	}
+	
+	public function beginTestSession() {
+	    
 	}
 	
 	/**
@@ -478,7 +481,7 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Reset all test-level outcome variables to tgeir defaults.
+	 * Reset all test-level outcome variables to their defaults.
 	 * 
 	 */
 	public function resetOutcomeVariables() {
@@ -489,6 +492,15 @@ class AssessmentTestSession extends State {
 	            $data[$k]->applyDefaultValue();
 	        }
 	    }
+	}
+	
+	/**
+	 * Get the current route item.
+	 * 
+	 * @return RouteItem A RouteItem object.
+	 */
+	protected function getCurrentRouteItem() {
+	    return $this->getRoute()->current();
 	}
 	
 	public static function instantiate(AssessmentTest $assessmentTest) {
