@@ -28,6 +28,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		
 		$this->state = AssessmentTestSession::instantiate($xml);
 		$this->state['OUTCOME1'] = 'String!';
+		ini_set('max_execution_time', 1);
 	}
 	
 	public function getState() {

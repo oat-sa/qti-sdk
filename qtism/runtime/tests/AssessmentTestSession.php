@@ -28,12 +28,12 @@ use \LogicException;
  */
 class AssessmentTestSession extends State {
 	
-	/**
-	 * A map containing current assessmentItemSessions by AssessmentItemRef.
-	 * 
-	 * @var SplObjectStorage
-	 */
-	public $assessmentItemSessions = array();
+    /**
+     * The AssessmentItemSession store.
+     * 
+     * @var AssessmentItemSessionStore
+     */
+	private $assessmentItemSessionStore;
 	
 	/**
 	 * The route to be taken by this AssessmentTestSession.
@@ -59,6 +59,7 @@ class AssessmentTestSession extends State {
 		
 		parent::__construct();
 		$this->setRoute($route);
+		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
@@ -75,24 +76,6 @@ class AssessmentTestSession extends State {
 	 */
 	protected function getAssessmentItemRefs() {
 		return $this->getRoute()->getAssessmentItemRefs();
-	}
-	
-	/**
-	 * Get the array of running assessment item sessions.
-	 * 
-	 * @return array An array containing the running assessment item sessions.
-	 */
-	protected function &getAssessmentItemSessions() {
-	    return $this->assessmentItemSessions;
-	}
-	
-	/**
-	 * Set the array of running assessment item sessions.
-	 * 
-	 * @param array $assessmentItemSession The array of running assessment item sessions.
-	 */
-	protected function setAssessmentItemSessions(array &$assessmentItemSessions) {
-	    $this->assessmentItemSessions = $assessmentItemSessions;
 	}
 	
 	/**
@@ -135,6 +118,24 @@ class AssessmentTestSession extends State {
 	        $msg = "The state argument must be a value from the AssessmentTestSessionState enumeration";
 	        throw new InvalidArgumentException($msg);
 	    }
+	}
+	
+	/**
+	 * Get the AssessmentItemSessionStore.
+	 * 
+	 * @return AssessmentItemSessionStore
+	 */
+	protected function getAssessmentItemSessionStore() {
+	    return $this->assessmentItemSessionStore;
+	}
+	
+	/**
+	 * Set the AssessmentItemSessionStore.
+	 * 
+	 * @param AssessmentItemSessionStore $assessmentItemSessionStore
+	 */
+	protected function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore) {
+	    $this->assessmentItemSessionStore = $assessmentItemSessionStore;
 	}
 	
 	/**
@@ -224,16 +225,12 @@ class AssessmentTestSession extends State {
 	    }
 	    else {
 	        // given with prefix.
-	        $prefix = $v->getPrefix();
-	        $itemSessions = &$this->getAssessmentItemSessions();
-	        if (isset($itemSessions[$prefix])) {
-	            
-	            $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
-	            if (($itemSessions[$prefix][$sequence])) {
-	               
-	                $session = $itemSessions[$prefix][$sequence];
-	                return $session->getVariable($v->getVariableName());
-	            }
+	        $store = $this->getAssessmentItemSessionStore();
+	        $items = $this->getAssessmentItemRefs();
+	        $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+	        if ($store->hasAssessmentItemSession($items[$v->getPrefix()], $sequence)) {
+	            $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
+	            return $session->getVariable($v->getVariableName());
 	        }
 	    }
 	    
@@ -273,19 +270,15 @@ class AssessmentTestSession extends State {
 				// prefix given.
 				
 				// - prefix targets an item?
-			    $itemSessions = &$this->getAssessmentItemSessions();
-			    $prefix = $v->getPrefix();
-			    if (isset($itemSessions[$prefix])) {
-			        $sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
-			        	
-			        if (isset($itemSessions[$prefix][$sequence])) {
-			            $session = $itemSessions[$prefix][$sequence];
-			            	
-			            if (($var = $session->getVariable($v->getVariableName())) !== null) {
-			                return $var->getValue();
-			            }
-			        }
-			    }
+				
+				$store = $this->getAssessmentItemSessionStore();
+				$items = $this->getAssessmentItemRefs();
+				$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+				
+				if ($store->hasAssessmentItemSession($items[$v->getPrefix()], $sequence)) {
+				    $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
+				    return $session[$v->getVariableName()];
+				}
 			    
 			    return null;
 			}
@@ -328,23 +321,18 @@ class AssessmentTestSession extends State {
 				// prefix given.
 				
 				// - prefix targets an item ?
-				$itemSessions = &$this->getAssessmentItemSessions();
-				$prefix = $v->getPrefix();
-				if (isset($itemSessions[$prefix])) {
-					$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
-					
-					if (isset($itemSessions[$prefix][$sequence])) {
-					    $session = $itemSessions[$prefix][$sequence];
-					    
-					    if (($var = $session->getVariable($v->getVariableName())) !== null) {
-					        $var->setValue($value);
-					        return;
-					    }
-					}
+				$store = $this->getAssessmentItemSessionStore();
+				$items = $this->getAssessmentItemRefs();
+				$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+				
+				if ($store->hasAssessmentItemSession($items[$v->getPrefix()], $sequence)) {
+				    $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
+				    $session[$v->getVariableName()] = $value;
 				}
-
-				$msg = "The variable '" . $v->__toString() . "' does not exist in the current context.";
-				throw new OutOfBoundsException($msg);
+                else {
+                    $msg = "The variable '" . $v->__toString() . "' does not exist in the current context.";
+                    throw new OutOfBoundsException($msg);
+                }
 			}
 		}
 		catch (InvalidArgumentException $e) {
@@ -509,35 +497,23 @@ class AssessmentTestSession extends State {
 	        throw new LogicException($msg);
 	    }
 	    
-	    $currentItemSessions = &$this->getAssessmentItemSessions();
-	    
-	    // Something already registered?
-	    if (isset($currentItemSessions[$sessionAssessmentItemRefIdentifier]) === false) {
-	        $currentItemSessions[$sessionAssessmentItemRefIdentifier] = array();
-	    }
-	   
-	    $currentItemSessions[$sessionAssessmentItemRefIdentifier][$occurence] = $session; 
+	    $this->getAssessmentItemSessionStore()->addAssessmentItemSession($session, $occurence);
 	}
 	
+	
 	/**
-	 * Get the AssessmentItemSession object related to $sessionIdentifier. If no AssessmentItemSession
-	 * object with that given $sessionIdentifier is handled by the AssessmentTestSession, false is returned.
+	 * Get an assessment item session.
 	 * 
-	 * @param string $sessionIdentifier A valid variable identifier.
-	 * @return AssessmentItemSession|false The related AssessmentItemSession object or false if not found.
-	 * @throws OutOfRangeException If $sessionIdentifier is not a valid variable identifier.
+	 * @param AssessmentItemRef $assessmentItemRef
+	 * @param integer $occurence
+	 * @return AssessmentItemSession|false
 	 */
 	protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
 	    
-	    $itemIdentifier = $assessmentItemRef->getIdentifier();
-        $currentItemSessions = &$this->getAssessmentItemSessions();
-        
-        if (isset($currentItemSessions[$itemIdentifier]) === true) {
-            
-            if (isset($currentItemSessions[$itemIdentifier][$occurence]) === true) {
-                return $currentItemSessions[$itemIdentifier][$occurence];
-            }
-        }
+	    $store = $this->getAssessmentItemSessionStore();
+	    if ($store->hasAssessmentItemSession($assessmentItemRef, $occurence) === true) {
+	        return $store->getAssessmentItemSession($assessmentItemRef, $occurence);
+	    }
         
         // No such item session found.
         return false;
