@@ -62,8 +62,11 @@ class AssessmentTestSession extends State {
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		
 		// Take the outcomeDeclaration objects of the global scope.
+		// Instantiate them with their defaults.
 		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
-			$this->setVariable(OutcomeVariable::createFromDataModel($globalOutcome));
+		    $variable = OutcomeVariable::createFromDataModel($globalOutcome);
+			$variable->applyDefaultValue();
+		    $this->setVariable($variable);
 		}
 		
 		$this->setState(AssessmentTestSessionState::INITIAL);
@@ -275,8 +278,7 @@ class AssessmentTestSession extends State {
 				$items = $this->getAssessmentItemRefs();
 				$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
 				
-				if ($store->hasAssessmentItemSession($items[$v->getPrefix()], $sequence)) {
-				    $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
+				if (isset($items[$v->getPrefix()]) && ($session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence)) !== false) {
 				    return $session[$v->getVariableName()];
 				}
 			    
@@ -324,15 +326,20 @@ class AssessmentTestSession extends State {
 				$store = $this->getAssessmentItemSessionStore();
 				$items = $this->getAssessmentItemRefs();
 				$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
+				$prefix = $v->getPrefix();
 				
-				if ($store->hasAssessmentItemSession($items[$v->getPrefix()], $sequence)) {
-				    $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
-				    $session[$v->getVariableName()] = $value;
+				try {
+				    if (isset($items[$prefix]) && ($session = $this->getItemSession($items[$prefix], $sequence)) !== false) {
+				        $session[$v->getVariableName()] = $value;
+				        return;
+				    }
 				}
-                else {
-                    $msg = "The variable '" . $v->__toString() . "' does not exist in the current context.";
-                    throw new OutOfBoundsException($msg);
-                }
+				catch (OutOfBoundsException $e) {
+				    // The session could be retrieved, but no such variable into it.
+				}
+				
+				$msg = "The variable '" . $v->__toString() . "' does not exist in the current context.";
+				throw new OutOfBoundsException($msg);
 			}
 		}
 		catch (InvalidArgumentException $e) {
@@ -429,6 +436,10 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
+	/**
+	 * Initialize the AssessmentItemSession for the whole route.
+	 * 
+	 */
 	protected function initializeItemSessions() {
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
@@ -471,7 +482,10 @@ class AssessmentTestSession extends State {
 	    while($route->valid() === true && $route->isLinear() === true) {
 	        $routeItem = $route->current();
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-	        $session->beginItemSession();
+	        
+	        if ($session->getState() === AssessmentItemSessionState::NOT_SELECTED) {
+	            $session->beginItemSession();
+	        }
 	        
 	        $route->next();
 	    }
@@ -536,46 +550,66 @@ class AssessmentTestSession extends State {
 	/**
 	 * Get the current Route Item.
 	 * 
-	 * @return RouteItem A RouteItem object.
+	 * @return RouteItem|false A RouteItem object or false if the state of the assessment test session is INITIAL.
 	 */
 	protected function getCurrentRouteItem() {
-	    return $this->getRoute()->current();
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getRoute()->current();
+	    }
+	    
+	    return false;
 	}
 	
 	/**
 	 * Get the current AssessmentItemRef.
 	 * 
-	 * @return AssessmentItemRef An AssessmentItemRef object.
+	 * @return AssessmentItemRef|false An AssessmentItemRef object or false if the state of the assessment test session is INITIAL.
 	 */
-	protected function getCurrentAssessmentItemRef() {
-	    return $this->getCurrentRouteItem()->getAssessmentItemRef();
+	public function getCurrentAssessmentItemRef() {
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getCurrentRouteItem()->getAssessmentItemRef();
+	    }
+
+	    return false;
 	}
 	
 	/**
 	 * Get the current AssessmentSection.
 	 * 
-	 * @return AssessmentSection An AssessmentSection object.
+	 * @return AssessmentSection|false An AssessmentSection object or false if the state of the assessment test session is INITIAL.
 	 */
-	protected function getCurrentAssessmentSection() {
-	    return $this->getCurrentRouteItem()->getAssessmentSection();
+	public function getCurrentAssessmentSection() {
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getCurrentRouteItem()->getAssessmentSection();
+	    }
+	   
+	    return false;
 	}
 	
 	/**
 	 * Get the current TestPart.
 	 * 
-	 * @return TestPart A TestPart object.
+	 * @return TestPart A TestPart object or false if the state of the assessment test session is INITIAL.
 	 */
-	protected function getCurrentTestPart() {
-	    return $this->getCurrentRouteItem()->getTestPart();
+	public function getCurrentTestPart() {
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getCurrentRouteItem()->getTestPart();
+	    }
+	    
+	    return false;
 	}
 	
 	/**
 	 * Get the current navigation mode.
 	 * 
-	 * @return integer A value from the NavigationMode enumeration.
+	 * @return integer|false A value from the NavigationMode enumeration or false if the state of the assessment test session is INITIAL.
 	 */
-	protected function getCurrentNavigationMode() {
-	    return $this->getCurrentTestPart()->getNavigationMode();
+	public function getCurrentNavigationMode() {
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getCurrentTestPart()->getNavigationMode();
+	    }
+	    
+	    return false;
 	}
 	
 	/**
@@ -583,8 +617,12 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @return integer A value from the SubmissionMode enumeration.
 	 */
-	protected function getCurrentSubmissionMode() {
-	    return $this->getCurrentTestPart()->getSubmissionMode();
+	public function getCurrentSubmissionMode() {
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        return $this->getCurrentTestPart()->getSubmissionMode();
+	    }
+	    
+	    return false;
 	}
 	
 	public static function instantiate(AssessmentTest $assessmentTest) {

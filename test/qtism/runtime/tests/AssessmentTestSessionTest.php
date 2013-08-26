@@ -1,6 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\data\NavigationMode;
+use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\data\state\VariableDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -28,7 +30,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		
 		$this->state = AssessmentTestSession::instantiate($xml);
 		$this->state['OUTCOME1'] = 'String!';
-		ini_set('max_execution_time', 1);
 	}
 	
 	public function getState() {
@@ -41,9 +42,27 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
 	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+	    
+	    // You cannot get information on the current elements of 
+	    // the test session when INITIAL state is in force.
+	    $this->assertFalse($assessmentTestSession->getCurrentAssessmentItemRef());
+	    $this->assertFalse($assessmentTestSession->getCurrentAssessmentSection());
+	    $this->assertFalse($assessmentTestSession->getCurrentNavigationMode());
+	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
+	    $this->assertFalse($assessmentTestSession->getCurrentTestPart());
 
 	    $assessmentTestSession->beginTestSession();
 	    $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+	    
+	    // Now that the test session has begun, you can get information
+	    // about the current elements of the session.
+	    $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
+	    $this->assertEquals('S01', $assessmentTestSession->getCurrentAssessmentSection()->getIdentifier());
+	    $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertInternalType('integer', $assessmentTestSession->getCurrentNavigationMode());
+	    $this->assertEquals(NavigationMode::LINEAR, $assessmentTestSession->getCurrentNavigationMode());
+	    $this->assertInternalType('integer', $assessmentTestSession->getCurrentSubmissionMode());
+	    $this->assertEquals(SubmissionMode::INDIVIDUAL, $assessmentTestSession->getCurrentSubmissionMode());
 	    
 	    // all outcome variables should have their default value set.
 	    // all response variables should be set to NULL.
@@ -55,6 +74,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $response = $assessmentTestSession[$itemRef->getIdentifier() . '.RESPONSE'];
 	        $this->assertSame(null, $response);
 	    }
+	    
+	    // test-level outcome variables should be initialized
+	    // with their default values.
+	    $this->assertInternalType('float', $assessmentTestSession['SCORE']);
+	    $this->assertEquals(0.0, $assessmentTestSession['SCORE']);
 	}
 	
 	public function testInstantiateTwo() {
@@ -71,7 +95,80 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $this->assertEquals(0.0, $score);
 	        $this->assertSame(null, $response);
 	    }
+	}
+	
+	public function testSetVariableValuesAfterInstantiationOne() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	     
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
 	    
+	    // Change the value of the global SCORE.
+	    $this->assertEquals(0.0, $assessmentTestSession['SCORE']);
+	    $assessmentTestSession['SCORE'] = 20.0;
+	    $this->assertEquals(20.0, $assessmentTestSession['SCORE']);
+	    
+	    // the assessment test session has no variable MAXSCORE.
+	    $this->assertSame(null, $assessmentTestSession['MAXSCORE']);
+	    try {
+	        $assessmentTestSession['MAXSCORE'] = 20.0;
+	        // An exception must be thrown in this case!
+	        $this->assertTrue(false);
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $this->assertTrue(true);
+	    }
+	    
+	    // Change the value of Q01.SCORE.
+	    $this->assertEquals(0.0, $assessmentTestSession['Q01.SCORE']);
+	    $assessmentTestSession['Q01.SCORE'] = 1.0;
+	    $this->assertEquals(1.0, $assessmentTestSession['Q01.SCORE']);
+	    
+	    // Q01 has no 'MAXSCORE' variable.
+	    $this->assertSame(null, $assessmentTestSession['Q01.MAXSCORE']);
+	    try {
+	        $assessmentTestSession['Q01.MAXSCORE'] = 1.0;
+	        // An exception must be thrown !
+	        $this->assertTrue(false);
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $this->assertTrue(true);
+	    }
+	    
+	    // No item Q04.
+	    $this->assertSame(null, $assessmentTestSession['Q04.SCORE']);
+	    try {
+	        $assessmentTestSession['Q04.SCORE'] = 1.0;
+	        // Because no such item, outofbounds.
+	        $this->assertTrue(false);
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $this->assertTrue(true);
+	    }
+	}
+	
+	public function testSetVariableValuesAfterInstantiationTwo() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
+	
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	     
+	    // Change the value of Q01.2.SCORE.
+	    $this->assertEquals(0.0, $assessmentTestSession['Q01.2.SCORE']);
+	    $assessmentTestSession['Q01.2.SCORE'] = 1.0;
+	    $this->assertEquals(1.0, $assessmentTestSession['Q01.2.SCORE']);
+	    
+	    // There is only 3 occurences of Q01. Try to go out of bounds.
+	    try {
+	        $assessmentTestSession['Q01.4.SCORE'] = 1.0;
+	        // An OutOfBoundsException must be raised!
+	        $this->assertTrue(false);  
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $this->assertTrue(true);
+	    }
 	}
 	
 	/**

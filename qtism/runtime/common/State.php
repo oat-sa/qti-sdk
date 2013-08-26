@@ -4,6 +4,7 @@ namespace qtism\runtime\common;
 
 use qtism\common\collections\AbstractCollection;
 use \OutOfRangeException;
+use \OutOfBoundsException;
 use \InvalidArgumentException;
 
 /**
@@ -15,6 +16,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see qtism\runtime\common\Variable For a description of the Variable class.
  * @see \OutOfRangeException For a description of the SPL OutOfRangeException class.
+ * @see \OutOfBoundsException For a description of the SPL OutOfRangeException class.
  * @see \InvalidArgumentException For a description of the SPL InvalidArgumentException class.
  */
 class State extends AbstractCollection {
@@ -65,7 +67,7 @@ class State extends AbstractCollection {
 	 * 
 	 * @param string|Variable $variable The identifier of the variable or a Variable object to unset.
 	 * @throws InvalidArgumentException If $variable is not a string nor a Variable object.
-	 * @throws OutOfRangeException If no variable in the current state matches $variable.
+	 * @throws OutOfBoundsException If no variable in the current state matches $variable.
 	 */
 	public function unsetVariable($variable) {
 		$data = &$this->getDataPlaceHolder();
@@ -86,7 +88,7 @@ class State extends AbstractCollection {
 		}
 		else {
 			$msg = "No Variable object with identifier '${variableIdentifier}' found in the current State object.";
-			throw new OutOfRangeException($msg);
+			throw new OutOfBoundsException($msg);
 		}
 	}
 	
@@ -99,7 +101,7 @@ class State extends AbstractCollection {
 			}
 			else {
 				$msg = "No Variable object with identifier '${offset}' found in the current State object.";
-				throw new OutOfRangeException($msg);
+				throw new OutOfBoundsException($msg);
 			}
 		}
 		else {

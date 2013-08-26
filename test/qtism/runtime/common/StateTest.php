@@ -59,7 +59,7 @@ class StateTest extends QtiSmTestCase {
 	}
 	
 	public function testAddressingInvalidOne() {
-		$this->setExpectedException('\\OutOfRangeException');
+		$this->setExpectedException('\\OutOfBoundsException');
 		$state = new State();
 		$state['var'] = new ResponseDeclaration('var', BaseType::POINT, Cardinality::ORDERED);
 	}
