@@ -104,17 +104,7 @@ class OutcomeProcessingEngine extends AbstractEngine {
 	 * @throws ProcessingException If an error occurs while executing the OutcomeProcessing.
 	 */
 	public function process() {
-		// If given $context is an AssessmentTestSesion, reset all
-		// test-level outcome variables (except duration !!!!).
-		//
-		// As per QTI Spec:
-		// The values of the test's outcome variables are always reset to their defaults prior 
-		// to carrying out the instructions described by the outcomeRules.
 		$context = $this->getContext();
-		
-		if ($context instanceof AssessmentTestSession) {
-		    $context->resetOutcomeVariables();
-		}
 		
 		$outcomeProcessing = $this->getComponent();
 	    foreach ($outcomeProcessing->getOutcomeRules() as $rule) {

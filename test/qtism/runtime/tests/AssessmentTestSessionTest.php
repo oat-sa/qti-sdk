@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
@@ -14,8 +15,10 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionState;
+use qtism\runtime\tests\AssessmentTestSessionException;
 use \OutOfBoundsException;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
@@ -55,6 +58,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertFalse($assessmentTestSession->getCurrentNavigationMode());
 	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
 	    $this->assertFalse($assessmentTestSession->getCurrentTestPart());
+	    $this->assertFalse($assessmentTestSession->getCurrentRemainingAttempts());
 
 	    $assessmentTestSession->beginTestSession();
 	    $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
@@ -68,6 +72,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(NavigationMode::LINEAR, $assessmentTestSession->getCurrentNavigationMode());
 	    $this->assertInternalType('integer', $assessmentTestSession->getCurrentSubmissionMode());
 	    $this->assertEquals(SubmissionMode::INDIVIDUAL, $assessmentTestSession->getCurrentSubmissionMode());
+	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    
 	    // all outcome variables should have their default value set.
 	    // all response variables should be set to NULL.
@@ -174,6 +179,93 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    catch (OutOfBoundsException $e) {
 	        $this->assertTrue(true);
 	    }
+	}
+	
+	public function testLinearSkipAll() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    
+	    $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+	    $this->assertEquals('S01', $assessmentTestSession->getCurrentAssessmentSection()->getIdentifier());
+	    $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
+	    
+	    $assessmentTestSession->skip();
+	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+	    
+	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
+	    $assessmentTestSession->skip();
+	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+	    
+	    $assessmentTestSession->skip();
+	    
+	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+	    $this->assertFalse($assessmentTestSession->getCurrentAssessmentItemRef());
+	    $this->assertFalse($assessmentTestSession->getCurrentAssessmentSection());
+	    $this->assertFalse($assessmentTestSession->getCurrentTestPart());
+	    $this->assertFalse($assessmentTestSession->getCurrentNavigationMode());
+	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
+	}
+	
+	public function testLinearAnswerAll() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    
+	    // Q01 - Correct Response = 'ChoiceA'.
+	    $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $assessmentTestSession->beginAttempt();
+	    $responses = new State();
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'));
+	    $assessmentTestSession->endAttempt($responses);
+	    $assessmentTestSession->moveNext();
+	    
+	    // Q02 - Correct Response = 'ChoiceB'.
+	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $assessmentTestSession->beginAttempt();
+	    $responses = new State();
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC')); // -> incorrect x)
+	    $assessmentTestSession->endAttempt($responses);
+	    $assessmentTestSession->moveNext();
+	    
+	    // Q03 - Correct Response = 'ChoiceC'.
+	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $assessmentTestSession->beginAttempt();
+	    $responses = new State();
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC'));
+	    $assessmentTestSession->endAttempt($responses);
+	    $assessmentTestSession->moveNext();
+	    
+	    // Check the final state of the test session.
+	    // - Q01
+	    $this->assertEquals('ChoiceA', $assessmentTestSession['Q01.RESPONSE']);
+	    $this->assertInternalType('float', $assessmentTestSession['Q01.SCORE']);
+	    $this->assertEquals(1.0, $assessmentTestSession['Q01.SCORE']);
+	    $this->assertInternalType('integer', $assessmentTestSession['Q01.numAttempts']);
+	    $this->assertEquals(1, $assessmentTestSession['Q01.numAttempts']);
+	    
+	    // - Q02
+	    $this->assertEquals('ChoiceC', $assessmentTestSession['Q02.RESPONSE']);
+	    $this->assertInternalType('float', $assessmentTestSession['Q02.SCORE']);
+	    $this->assertEquals(0.0, $assessmentTestSession['Q02.SCORE']);
+	    $this->assertInternalType('integer', $assessmentTestSession['Q02.numAttempts']);
+	    $this->assertEquals(1, $assessmentTestSession['Q02.numAttempts']);
+	    
+	    // - Q03
+	    $this->assertEquals('ChoiceC', $assessmentTestSession['Q03.RESPONSE']);
+	    $this->assertInternalType('float', $assessmentTestSession['Q03.SCORE']);
+	    $this->assertEquals(1.0, $assessmentTestSession['Q03.SCORE']);
+	    $this->assertInternalType('integer', $assessmentTestSession['Q03.numAttempts']);
+	    $this->assertEquals(1, $assessmentTestSession['Q03.numAttempts']);
+	    
+	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	}
 	
 	/**

@@ -48,13 +48,18 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // State is correct?
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $itemSession->getState());
+        
+        // Remaining attempts correct?
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
     }
     
     public function testEvolutionBasic() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
+        $this->assertEquals(0, $itemSession->getRemainingAttempts());
         // when the first attempt occurs, the response variable must get their default value.
         // in our case, no default value. The RESPONSE variable must remain NULL.
         $this->assertSame(null, $itemSession['RESPONSE']);
@@ -102,7 +107,9 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSession->beginItemSession();
         
         // End the attempt before minTime of 1 second.
+        $this->assertEquals(2, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
         
         try {
             $itemSession->endAttempt();
@@ -121,6 +128,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // Try again by waiting too much to respect max time.
         $itemSession->beginAttempt();
+        $this->assertEquals(0, $itemSession->getRemainingAttempts());
         sleep(3);
         
         try {
@@ -160,7 +168,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSession->setAcceptableLatency(new Duration('PT1S'));
         
         $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setMaxAttempts(2);
+        $itemSessionControl->setMaxAttempts(3);
         $itemSession->setItemSessionControl($itemSessionControl);
         
         $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
@@ -185,6 +193,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
             $this->assertEquals('PT4S', $itemSession['duration']->__toString());
             $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+            $this->assertEquals(0, $itemSession->getRemainingAttempts());
         }
     }
     
@@ -246,9 +255,13 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         // adaptive items.
         
         // First attempt, just fail the item.
+        // We do not known how much attempts to complete.
+        $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
+        $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         $itemSession['RESPONSE'] = 'ChoiceE';
         $itemSession->endAttempt();
+        $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         
         $this->assertEquals(1, $itemSession['numAttempts']);
         $this->assertEquals('incomplete', $itemSession['completionStatus']);
@@ -257,6 +270,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // Second attempt, give the correct answer to be allowed to go to the next item.
         $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+        $this->assertEquals(0, $itemSession->getRemainingAttempts());
         $this->assertEquals('completed', $itemSession['completionStatus']);
         $this->assertInternalType('float', $itemSession['SCORE']);
         $this->assertEquals(1.0, $itemSession['SCORE']);

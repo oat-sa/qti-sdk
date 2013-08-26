@@ -718,6 +718,32 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Get the number of remaining attempts possible for the item session.
+	 * Be careful! If the item of the session is adaptive but not yet completed, -1 is returned
+	 * because there is no way to determine how much remain attempts are possible.
+	 * 
+	 * @return integer The number of remaining items.
+	 */
+	public function getRemainingAttempts() {
+	    $itemRef = $this->getAssessmentItemRef();
+	    if ($itemRef->isAdaptive() === false && $this['completionStatus'] !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus'] !== self::COMPLETION_STATUS_INCOMPLETE) {
+	        // The item is non-adaptative and is not completed nor time exceeded.
+	        return $this->getItemSessionControl()->getMaxAttempts() - $this['numAttempts'];
+	    }
+	    else if ($itemRef->isAdaptive() === false) {
+	        // Completion status is completed or incomplete (time exceeded).
+	        return 0;
+	    }
+	    else if ($itemRef->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+	        // The item is adaptive and completed.
+	        return 0;
+	    }
+	    
+	    // The item is adaptive, and is not completed yet.
+	    return -1;
+	}
+	
+	/**
 	 * Get a cloned $duration with the acceptable latency of the item
 	 * session added.
 	 * 

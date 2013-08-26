@@ -260,6 +260,15 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	}
 	
 	/**
+	 * Whether the TestPart holds an ItemSessionControl object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasItemSessionControl() {
+	    return is_null($this->getItemSessionControl()) === false;
+	}
+	
+	/**
 	 * Get the TimeLimits applied to this Test Part. Returns null if there is no
 	 * TimeLimits to apply.
 	 * 
@@ -277,6 +286,15 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 */
 	public function setTimeLimits(TimeLimits $timeLimits) {
 		$this->timeLimits = $timeLimits;
+	}
+	
+	/**
+	 * Whether the TestPart holds a TimeLimits object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTimeLimits() {
+	    return is_null($this->getTimeLimits()) === false;
 	}
 	
 	/**
