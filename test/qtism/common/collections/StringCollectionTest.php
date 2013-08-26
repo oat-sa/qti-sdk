@@ -17,6 +17,11 @@ class StringCollectionTest extends QtiSmTestCase {
 		$this->collection = new StringCollection();
 	}
 	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->collection);
+	}
+	
 	public function testAddString() {
 		$string = 'foobar';
 		$this->collection[] = $string;

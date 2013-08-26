@@ -59,9 +59,27 @@ class Route implements Iterator {
      */
     private $assessmentItemRefOccurenceCount;
     
+    /**
+     * The RouteItem objects the Route is composed with.
+     * 
+     * @var array
+     */
     private $routeItems = array();
     
+    /**
+     * The current position in the route.
+     * 
+     * @var integer
+     */
     private $position = 0;
+    
+    /**
+     * A collection of identifier representing all the item categories
+     * involved in the route.
+     * 
+     * @var IdentifierCollection
+     */
+    private $categories;
     
     /**
      * Create a new Route object.
@@ -73,6 +91,7 @@ class Route implements Iterator {
         $this->setAssessmentItemRefCategoryMap(array());
         $this->setAssessmentItemRefSectionMap(array());
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
+        $this->setCategories(new IdentifierCollection());
     }
     
     public function getPosition() {
@@ -168,6 +187,24 @@ class Route implements Iterator {
     }
     
     /**
+     * Set the collection of item categories involved in the route.
+     * 
+     * @param IdentifierCollection $categories A collection of QTI Identifiers.
+     */
+    protected function setCategories(IdentifierCollection $categories) {
+        $this->categories = $categories;
+    }
+    
+    /**
+     * Get the collection of item categories involved in the route.
+     * 
+     * @return IdentifierCollection A collection of QTI Identifiers.
+     */
+    public function getCategories() {
+        return $this->categories;
+    }
+    
+    /**
      * Add a new RouteItem object at the end of the Route.
      * 
      * @param RouteItem $routeItem A RouteItemObject.
@@ -192,14 +229,27 @@ class Route implements Iterator {
         return $routeItems[$this->getPosition()];
     }
     
+    /**
+     * Get the current key corresponding to the current RouteItem object.
+     * 
+     * @return integer The returned key is the position of the current RouteItem object in the Route.
+     */
     public function key() {
         return $this->getPosition();
     }
     
+    /**
+     * Set the Route as its next position in the RouteItem sequence.
+     */
     public function next() {
         $this->setPosition($this->getPosition() + 1);
     }
     
+    /**
+     * Whether the Route is still valid while iterating.
+     * 
+     * @return boolean
+     */
     public function valid() {
         $routeItems = &$this->getRouteItems();
         return isset($routeItems[$this->getPosition()]);
@@ -279,8 +329,12 @@ class Route implements Iterator {
             if (isset($categoryMap[$category]) === false) {
                 $categoryMap[$category] = new AssessmentItemRefCollection();
             }
-            
             $categoryMap[$category][] = $assessmentItemRef;
+            
+            $categories = $this->getCategories();
+            if ($categories->contains($category) === false) {
+                $categories[] = $category;
+            }
         }
         
         $this->setAssessmentItemRefCategoryMap($categoryMap);
@@ -335,7 +389,9 @@ class Route implements Iterator {
         
         foreach ($categories as $cat) {
             if (isset($categoryMap[$cat]) === true) {
-                $result->merge($categoryMap[$cat]);
+                foreach ($categoryMap[$cat] as $item) {
+                    $result[] = $item;
+                }
             }
         }
 
@@ -363,32 +419,27 @@ class Route implements Iterator {
     
     /**
      * Get a subset of AssessmentItemRef objects. The criterias are the $sectionIdentifier
-     * and categories.
+     * and categories to be included/excluded.
      * 
      * @param string $sectionIdentifier The identifier of the section.
-     * @param string|IdentifierCollection $category A string or a collection of identifiers to filter the categories of items.
+     * @param IdentifierCollection $includeCategories A collection of category identifiers to be included in the selection.
+     * @param IdentifierCollection $excludeCategories A collection of category identifiers to be excluded from the selection.
+     * @return AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
+     * 
      */
-    public function getAssessmentItemRefsSubset($sectionIdentifier = '', $category = '') {
+    public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null) {
+        $bySection = (empty($sectionIdentifier) === true) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
         
-        if (empty($sectionIdentifier) && empty($category)) {
-            return $this->getAssessmentItemRefs();
+        if (is_null($includeCategories) === false) {
+            // We will perform the search by category inclusion.
+            return $bySection->intersect($this->getAssessmentItemRefsByCategory($includeCategories));
         }
-        else if (empty($sectionIdentifier)) {
-            // by category only.
-            return $this->getAssessmentItemRefsByCategory($category);
-        }
-        else if (empty($category)) {
-            // by section only.
-            return $this->getAssessmentItemRefsBySection($sectionIdentifier);
+        else if (is_null($excludeCategories) === false) {
+            // Perform the category by exclusion.
+            $categories = $this->getCategories()->diff($excludeCategories);
+            return $bySection->intersect($this->getAssessmentItemRefsByCategory($categories));
         }
         else {
-            // both.
-            $bySection = $this->getAssessmentItemRefsBySection($sectionIdentifier);
-            $byCategory = $this->getAssessmentItemRefsByCategory($category);
-            
-            // get the intersection.
-            $bySection->intersect($byCategory);
-            
             return $bySection;
         }
     }

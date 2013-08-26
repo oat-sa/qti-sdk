@@ -295,17 +295,55 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 		return array_keys($data);
 	}
 	
+	/**
+	 * Merge the collection with another one.
+	 * 
+	 * @param AbstractCollection $collection
+	 */
 	public function merge(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {
-	        $newData = array_merge($this->getDataPlaceHolder(), $collection->getDataPlaceHolder());
+	        $first = $this->getDataPlaceHolder();
+	        $second = $collection->getDataPlaceHolder();
+	        $newData = array_merge($first, $second);
 	        $this->setDataPlaceHolder($newData);
+	    }
+	    else {
+	        $msg = "Only collections with the same type may be merged.";
+	        throw new InvalidArgumentException($msg);
 	    }
 	}
 	
+	/**
+	 * Get the difference between this collection and another one.
+	 * 
+	 * @param AbstractCollection $collection
+	 * @return AbstractCollection
+	 */
+	public function diff(AbstractCollection $collection) {
+	    if (get_class($this) === get_class($collection)) {
+	        $newData = array_diff($this->getDataPlaceHolder(), $collection->getDataPlaceHolder());
+	        return new static($newData);
+	    }
+	    else {
+	        $msg = "Difference may apply only on two collection of the same type.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the intersection between this collection and another one.
+	 * 
+	 * @param AbstractCollection $collection
+	 * @return AbstractCollection
+	 */
 	public function intersect(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {
 	        $newData = array_intersect($this->getDataPlaceHolder(), $collection->getDataPlaceHolder());
-	        $this->setDataPlaceHolder($newData);
+	        return new static($newData);
+	    }
+	    else {
+	        $msg = "Intersection may apply only on two collections of the same type.";
+	        throw new InvalidArgumentException($msg);
 	    }
 	}
 	

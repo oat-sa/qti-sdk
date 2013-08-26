@@ -17,6 +17,11 @@ class IdentifierCollectionTest extends QtiSmTestCase {
 		$this->collection = new IdentifierCollection();
 	}
 	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->collection);
+	}
+	
 	public function testAddIdentifier() {
 		$string = 'foobar';
 		$this->collection[] = $string;

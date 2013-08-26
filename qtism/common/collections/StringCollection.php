@@ -23,4 +23,15 @@ class StringCollection extends AbstractCollection {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+    /**
+	 * Whether the collection contains a given $string.
+	 * 
+	 * @param mixed $value A string.
+	 * @return boolean Whether the collection contains $value.
+	 */
+	public function contains($value) {
+		$data = &$this->getDataPlaceHolder();
+		return in_array($value, $data);
+	}
 }

@@ -32,6 +32,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		$this->state['OUTCOME1'] = 'String!';
 	}
 	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->state);
+	}
+	
 	public function getState() {
 		return $this->state;
 	}

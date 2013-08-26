@@ -11,7 +11,7 @@ use qtism\common\utils\Format as Format;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IdentifierCollection extends AbstractCollection {
+class IdentifierCollection extends StringCollection {
 
 	/**
 	 * Check if $value is a valid QTI Identifier.

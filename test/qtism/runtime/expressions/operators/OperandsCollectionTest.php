@@ -18,6 +18,11 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->operands = new OperandsCollection();
 	}
 	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->operands);
+	}
+	
 	/**
 	 * 
 	 * @return OperandsCollection

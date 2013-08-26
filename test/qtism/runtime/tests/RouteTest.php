@@ -80,11 +80,17 @@ class RouteTest extends QtiSmTestCase {
         $section1Refs = $route->getAssessmentItemRefsSubset('S1');
         $this->assertEquals(4, count($section1Refs));
         
-        $mathRefs = $route->getAssessmentItemRefsSubset('', 'mathematics');
+        $mathRefs = $route->getAssessmentItemRefsSubset('', new IdentifierCollection(array('mathematics')));
         $this->assertEquals(3, count($mathRefs));
         
-        $s1MathRefs = $route->getAssessmentItemRefsSubset('S1', 'mathematics');
+        $s1MathRefs = $route->getAssessmentItemRefsSubset('S1', new IdentifierCollection(array('mathematics')));
         $this->assertEquals(2, count($s1MathRefs));
+        
+        // go by exclusion.
+        $exclusionRefs = $route->getAssessmentItemRefsSubset('', null, new IdentifierCollection(array('sciences', 'expert')));
+        $this->assertEquals(3, count($exclusionRefs));
+        $this->assertTrue(isset($exclusionRefs['Q3']));
+        $this->assertTrue(isset($exclusionRefs['Q6']));
     }
     
     public function testOccurences() {

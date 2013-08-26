@@ -10,7 +10,13 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase {
 	private $marshallerFactory;
 	
 	public function setUp() {
+	    parent::setUp();
 		$this->marshallerFactory = new MarshallerFactory();
+	}
+	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->marshallerFactory);
 	}
 	
 	public function getMarshallerFactory() {

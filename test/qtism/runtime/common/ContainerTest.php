@@ -33,6 +33,11 @@ class ContainerTest extends QtiSmTestCase {
 		$this->container = new Container();
 	}
 	
+	public function tearDown() {
+	    parent::tearDown();
+	    unset($this->container);
+	}
+	
 	/**
 	 * @dataProvider validValueProvider
 	 */
