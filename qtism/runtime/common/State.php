@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\common;
 
+use qtism\data\VariableCollection;
+
 use qtism\common\collections\AbstractCollection;
 use \OutOfRangeException;
 use \OutOfBoundsException;

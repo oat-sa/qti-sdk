@@ -824,6 +824,40 @@ class AssessmentTestSession extends State {
 	    $this->setState(AssessmentTestSessionState::CLOSED);
 	}
 	
+	/**
+	 * Get the item sessions held by the test session by item reference $identifier.
+	 * 
+	 * @param string $identifier An item reference $identifier e.g. Q04. Prefixed or sequenced identifiers e.g. Q04.1.X are considered to be malformed.
+	 * @return AssessmentItemSessionCollection|false A collection of AssessmentItemSession objects or false if no item session could be found for $identifier.
+	 * @throws InvalidArgumentException If the given $identifier is malformed.
+	 */
+	public function getAssessmentItemSessions($identifier) {
+	    try {
+	        $v = new VariableIdentifier($identifier);
+	        
+	        if ($v->hasPrefix() === true || $v->hasSequenceNumber() === true) {
+	            $msg = "'${identifier}' is not a valid item reference identifier.";
+	            throw new InvalidArgumentException($msg, 0, $e);
+	        }
+	        
+	        $itemRefs = $this->getAssessmentItemRefs();
+	        if (isset($itemRefs[$identifier]) === false) {
+	            return false;
+	        }
+	        
+	        try {
+	            return $this->getAssessmentItemSessionStore()->getAssessmentItemSessions($itemRefs[$identifier]);
+	        }
+	        catch (OutOfBoundsException $e) {
+	            return false;
+	        }
+	    }
+	    catch (InvalidArgumentException $e) {
+	        $msg = "'${identifier}' is not a valid item reference identifier.";
+	        throw new InvalidArgumentException($msg, 0, $e);
+	    }
+	}
+	
 	public static function instantiate(AssessmentTest $assessmentTest) {
 	    // 1. Apply selection and ordering.
 	    $routeStack = array();

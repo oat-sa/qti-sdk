@@ -1,4 +1,5 @@
 <?php
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\common\State;
@@ -266,6 +267,46 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(1, $assessmentTestSession['Q03.numAttempts']);
 	    
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+	}
+	
+	public function testGetAssessmentItemSessions() {
+	    // --- Test with single occurence items.
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    
+	    foreach (array('Q01', 'Q02', 'Q03') as $identifier) {
+	        $sessions = $assessmentTestSession->getAssessmentItemSessions($identifier);
+	        $this->assertEquals(1, count($sessions));
+	        $this->assertEquals($identifier, $sessions[0]->getAssessmentItemRef()->getIdentifier());
+	    }
+	    
+	    // Malformed $identifier.
+	    try {
+	        $sessions = $assessmentTestSession->getAssessmentItemSessions('Q04.1');
+	        $this->assertFalse(true);
+	    }
+	    catch (InvalidArgumentException $e) {
+	        $this->assertTrue(true);
+	    }
+	    
+	    // Unknown assessmentItemRef.
+	    $this->assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
+	    
+	    // --- Test with multiple occurence items.
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    
+	    $sessions = $assessmentTestSession->getAssessmentItemSessions('Q01');
+	    $this->assertEquals(3, count($sessions));
+	    for ($i = 0; $i < count($sessions); $i++) {
+	        $this->assertEquals('Q01', $sessions[$i]->getAssessmentItemRef()->getIdentifier());
+	    }
 	}
 	
 	/**
