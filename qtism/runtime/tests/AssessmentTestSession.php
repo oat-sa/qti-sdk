@@ -150,7 +150,7 @@ class AssessmentTestSession extends State {
 	 * actual identifier of the weight.
 	 * 
 	 * @param string|VariableIdentifier $identifier A prefixed string identifier or a PrefixedVariableName object.
-	 * @return false|float The weight corresponding to $identifier or false if such a weight do not exist.
+	 * @return false|Weight The weight corresponding to $identifier or false if such a weight do not exist.
 	 * @throws InvalidArgumentException If $identifier is malformed string, not a VariableIdentifier object, or if the VariableIdentifier object has no prefix.
 	 */
 	public function getWeight($identifier) {
@@ -883,6 +883,16 @@ class AssessmentTestSession extends State {
 	 */
 	public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null) {
 	    return $this->getRoute()->getAssessmentItemRefsSubset($sectionIdentifier, $includeCategories, $excludeCategories);
+	}
+	
+	/**
+	 * Get the number of items in the current Route. In other words, the total number
+	 * of item occurences the candidate can take during the test.
+	 * 
+	 * @return integer
+	 */
+	public function getRouteCount() {
+	    return $this->getRoute()->count();
 	}
 	
 	/**

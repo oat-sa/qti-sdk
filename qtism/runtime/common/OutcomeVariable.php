@@ -30,21 +30,21 @@ class OutcomeVariable extends Variable {
 	/**
 	 * The normal maximum.
 	 * 
-	 * @var boolean|float|double
+	 * @var boolean|float
 	 */
 	private $normalMaximum = false;
 	
 	/**
 	 * The normal minimum.
 	 * 
-	 * @var boolean|float|double
+	 * @var boolean|float
 	 */
 	private $normalMinimum = false;
 	
 	/**
 	 * The mastery value.
 	 * 
-	 * @var boolean|float|double
+	 * @var boolean|float
 	 */
 	private $masteryValue = false;
 	

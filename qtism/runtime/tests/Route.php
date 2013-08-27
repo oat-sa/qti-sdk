@@ -463,6 +463,15 @@ class Route implements Iterator {
     }
     
     /**
+     * Get the number of RoutItem objects held by the Route.
+     * 
+     * @return integer
+     */
+    public function count() {
+        return count($this->getRouteItems());
+    }
+    
+    /**
      * Get a RouteItem object at $position in the route sequence. Please be careful that the route sequence index
      * begins at 0. In other words, the first route item in the sequence will be found at position 0, the second
      * at position 1, ...
