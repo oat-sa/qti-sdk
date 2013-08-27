@@ -2,8 +2,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\NavigationMode;
-
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
@@ -873,6 +873,24 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
+	/**
+	 * Get a subset of AssessmentItemRef objects involved in the test session.
+	 * 
+	 * @param string $sectionIdentifier An optional section identifier.
+	 * @param IdentifierCollection $includeCategories The optional item categories to be included in the subset.
+	 * @param IdentifierCollection $excludeCategories The optional item categories to be excluded from the subset.
+	 * @return AssessmentItemRefCollection A collection of AssessmentItemRef objects that match all the given criteria.
+	 */
+	public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null) {
+	    return $this->getRoute()->getAssessmentItemRefsSubset($sectionIdentifier, $includeCategories, $excludeCategories);
+	}
+	
+	/**
+	 * Instantiate a new AssessmentItemSession from an AssessmentTest object.
+	 * 
+	 * @param AssessmentTest $assessmentTest The AssessmentTest to be instantiated as a new AssessmentTestSession object.
+	 * @return AssessmentTestSession An instantiated AssessmentTestSession object.
+	 */
 	public static function instantiate(AssessmentTest $assessmentTest) {
 	    // 1. Apply selection and ordering.
 	    $routeStack = array();
