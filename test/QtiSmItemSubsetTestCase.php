@@ -23,6 +23,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase {
 	    $doc->load($testFilePath);
 	    
 	    $testSession = AssessmentTestSession::instantiate($doc);
+	    $testSession->beginTestSession();
 	    $this->setTestSession($testSession);
 	}
 	

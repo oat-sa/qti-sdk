@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\runtime\common\State;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\common\collections\IdentifierCollection;
 use qtism\runtime\tests\AssessmentTestSession;
@@ -52,23 +53,6 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	}
 	
 	/**
-	 * Set the AssessmentTestSession to be used while processing the ItemSubset expression.
-	 * 
-	 * @param State $state An AssessmentTestSession object.
-	 * @throws InvalidArgumentException If $state is not an AssessmentTestSession object.
-	 */
-	public function setState(State $state) {
-	    if ($state instanceof AssessmentTestSession) {
-	        parent::setState($state);
-	    }
-	    else {
-	        $msg = "The ItemSubsetProcessor class only accepts states that are AssessmentTestSession ";
-	        $msg.= "objects. Indeed, Outcome Processing only takes place at the test-level.";
-	        throw new InvalidArgumentException($msg);
-	    }
-	}
-	
-	/**
 	 * A convenience method enabling you to get the sectionIdentifier attribute value
 	 * of the ItemSubset expression to be processed.
 	 * 
@@ -96,7 +80,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	 * @return IdentifierCollection A collection of category identifiers or NULL if no categories to be excluded were specified.
 	 */
 	protected function getExcludeCategories() {
-	    $categories = $this->getExpression->getExcludeCategories();
+	    $categories = $this->getExpression()->getExcludeCategories();
 	    return (count($categories) === 0) ? null : $categories;
 	}
 	
@@ -108,12 +92,4 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	protected function getItemSubset() {
 	    return $this->getState()->getItemSubset($this->getSectionIdentifier(), $this->getIncludeCategories(), $this->getExcludeCategories());
 	}
-	
-	/**
-	 * Process the related ItemSubset expression.
-	 * 
-	 * @return mixed A value depending on the ItemSubset expression to be processed.
-	 * @throws ExpressionProcessingException
-	 */
-	public abstract function process();
 }
