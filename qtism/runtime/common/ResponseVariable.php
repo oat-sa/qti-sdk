@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\Comparable;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Mapping;
 use qtism\data\state\AreaMapping;
@@ -114,6 +115,15 @@ class ResponseVariable extends Variable {
 	}
 	
 	/**
+	 * Whether the ResponseVariable holds a CorrectResponse object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasCorrectResponse() {
+	    return is_null($this->getCorrectResponse()) === false;
+	}
+	
+	/**
 	 * Set the mapping.
 	 * 
 	 * @param Mapping $mapping A Mapping object from the QTI Data Model.
@@ -147,6 +157,27 @@ class ResponseVariable extends Variable {
 	 */
 	public function getAreaMapping() {
 		return $this->areaMapping;
+	}
+	
+	/**
+	 * Whether the value of the ResponseVariable matches its
+	 * correct response.
+	 * 
+	 * @return boolean
+	 */
+	public function isCorrect() {
+	    if ($this->hasCorrectResponse() === true) {
+	        $correctResponse = $this->getCorrectResponse();
+	        
+	        if ($correctResponse instanceof Comparable) {
+	            return $correctResponse->equals($this->getValue());
+	        }
+	        else {
+	            return $correctResponse === $this->getValue();
+	        }
+	    }
+	    
+	    return false;
 	}
 	
 	public static function createFromDataModel(VariableDeclaration $variableDeclaration) {

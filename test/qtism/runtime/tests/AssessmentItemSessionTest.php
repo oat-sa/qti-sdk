@@ -197,12 +197,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         }
     }
     
-    /**
-     * 
-     * @param integer $count The number of attempts to perform.
-     * @param array $attempts An array of string which are QTI identifiers, corresponding to a choice.
-     * @param array $expected The expected SCORE value in relation with the $attempts
-     */
+   
     public function testEvolutionBasicMultipleAttempts() {
         
         $count = 5;
@@ -364,6 +359,36 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $responses = new State();
         $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD'));
         $itemSession->endAttempt($responses);
+    }
+    
+    public function testIsCorrect() {
+        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
+        
+        // The item session is in NOT_SELECTED mode, then false is returned directly.
+        $this->assertFalse($itemSession->isCorrect());
+
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        // No response given, false is returned.
+        $this->assertFalse($itemSession->isCorrect());
+        
+        $state = new State();
+        $state->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'));
+        $itemSession->endAttempt($state);
+        
+        // Wrong answer ('ChoiceB' is the correct one), the session is not correct.
+        $this->assertEquals('incomplete', $itemSession['completionStatus']);
+        $this->assertFalse($itemSession->isCorrect());
+        
+        $state['RESPONSE'] = 'ChoiceB';
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt($state);
+        
+        // Correct answer, the session is correct!
+        $this->assertTrue($itemSession->isCorrect());
+        $this->assertEquals('completed', $itemSession['completionStatus']);
     }
     
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {

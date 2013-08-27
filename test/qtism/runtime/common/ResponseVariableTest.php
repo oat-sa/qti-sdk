@@ -66,11 +66,17 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertEquals(3, count($areaMapEntries));
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $areaMapEntries[0]->getCoords());
 		
+		$this->assertTrue($responseVariable->hasCorrectResponse());
 		$correctResponse = $responseVariable->getCorrectResponse();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $correctResponse);
 		$this->assertEquals(2, count($correctResponse));
 		$this->assertTrue($correctResponse[0]->equals(new Pair('A', 'B')));
 		$this->assertTrue($correctResponse[1]->equals(new Pair('E', 'F')));
+		
+		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('E', 'F'))));
+		$this->assertTrue($responseVariable->isCorrect());
+		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new Pair('E', 'F'), new Pair('A', 'B'))));
+		$this->assertFalse($responseVariable->isCorrect());
 		
 		// If I reinitialize the value, we must find a NULL container into this variable.
 		$responseVariable->initialize();

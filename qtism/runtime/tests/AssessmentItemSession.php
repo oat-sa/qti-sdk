@@ -481,7 +481,7 @@ class AssessmentItemSession extends State {
 	        $msg.= "completion status is already set to 'complete'";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
-	    else if ($this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
+	    else if ($itemRef->isAdaptive() === false && $this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
 	        // Max duration already exceeded.
 	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
@@ -741,6 +741,43 @@ class AssessmentItemSession extends State {
 	    
 	    // The item is adaptive, and is not completed yet.
 	    return -1;
+	}
+	
+	/**
+	 * Whether all non built-in response variables held by the session match their
+	 * associated correct response.
+	 * 
+	 * If the item session has the NOT_SELECTED state, false is directly returned because
+	 * it is certain that there is no correct response yet in the session.
+	 * 
+	 * @return boolean
+	 * @throws AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
+	 */
+	public function isCorrect() {
+	    
+	    if ($this->getState() === AssessmentItemSessionState::NOT_SELECTED) {
+	        // The session cannot be considered as correct if not yet selected
+	        // for presentation to the candidate.    
+	        return false;
+	    }
+	    
+	    $data = &$this->getDataPlaceHolder();
+	    $excludedVariableIdentifiers = array('numAttempts', 'duration');
+	    
+	    foreach (array_keys($data) as $identifier) {
+	        $var = $data[$identifier];
+	        
+	        if ($var instanceof ResponseVariable && in_array($var->getIdentifier(), $excludedVariableIdentifiers) === false) {
+	            $isCorrect = $var->isCorrect();
+	             
+	            if ($isCorrect === false) {
+	                return false;
+	            }
+	        }
+	    }
+	    
+	    // All responses are correct.
+	    return true;
 	}
 	
 	/**
