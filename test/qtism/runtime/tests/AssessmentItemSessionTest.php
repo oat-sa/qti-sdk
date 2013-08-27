@@ -18,7 +18,20 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     public function testInstantiation() {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        // isPresented? isCorrect? isResponded? isSelected?
+        $this->assertFalse($itemSession->isPresented());
+        $this->assertFalse($itemSession->isCorrect());
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertFalse($itemSession->isSelected());
+        
         $itemSession->beginItemSession();
+        // After beginItemSession...
+        // isPresented? isCorrect? isResponded? isSelected?
+        $this->assertFalse($itemSession->isPresented());
+        $this->assertFalse($itemSession->isCorrect());
+        $this->assertFalse($itemSession->isResponded());
+        $this->assertTrue($itemSession->isSelected());
         
         // No timelimits by default.
         $this->assertFalse($itemSession->hasTimeLimits());
@@ -56,9 +69,12 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     public function testEvolutionBasic() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
+        $this->assertTrue($itemSession->isSelected());
         
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
+        $this->assertEquals(1, $itemSession['numAttempts']);
+        $this->assertTrue($itemSession->isPresented());
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
         // when the first attempt occurs, the response variable must get their default value.
         // in our case, no default value. The RESPONSE variable must remain NULL.
@@ -73,6 +89,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         // is a matter of choice.
         $resp = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB');
         $itemSession->endAttempt(new State(array($resp)));
+        $this->assertTrue($itemSession->isResponded());
         
         // The ItemSessionControl for this session was not specified, it is then
         // the default one, with default values. Because maxAttempts is not specified,
@@ -80,6 +97,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         $this->assertEquals('completed', $itemSession['completionStatus']);
         $this->assertEquals(1, $itemSession['numAttempts']);
+        $this->assertTrue($itemSession->isCorrect());
         
         // If we now try to begin a new attempt, we get a logic exception.
         try {

@@ -157,6 +157,10 @@ class AssessmentTestSession extends State {
 		if (gettype($identifier) === 'string') {
 			try {
 				$identifier = new VariableIdentifier($identifier);
+				if ($identifier->hasSequenceNumber() === true) {
+				    $msg = "The identifier ('${identifier}') cannot contain a sequence number.";
+				    throw new InvalidArgumentException($msg);
+				}
 			}
 			catch (InvalidArgumentException $e) {
 				$msg = "'${identifier}' is not a valid variable identifier.";
@@ -168,20 +172,31 @@ class AssessmentTestSession extends State {
 			throw new InvalidArgumentException($msg);
 		}
 		
+		// identifier with prefix or not, no sequence number.
 		if ($identifier->hasPrefix() === false) {
-			$msg = "The given variable identifier '" . $identifier->getIdentifier() . "' has no prefix.";
-			throw new InvalidArgumentException($msg);
+			$itemRefs = $this->getAssessmentItemRefs();
+		    foreach ($itemRefs->getKeys() as $itemKey) {
+		        $itemRef = $itemRefs[$itemKey];
+		        $weights = $itemRef->getWeights();
+		        
+		        foreach ($weights->getKeys() as $weightKey) {
+		            if ($weightKey === $identifier->__toString()) {
+		                return $weights[$weightKey];
+		            }
+		        }
+		    }
 		}
-		
-		// get the item the weight should belong to.
-		$assessmentItemRefs = $this->getAssessmentItemRefs();
-		$expectedItemId = $identifier->getPrefix();
-		if (isset($assessmentItemRefs[$expectedItemId])) {
-			$weights = $assessmentItemRefs[$expectedItemId]->getWeights();
-			
-			if (isset($weights[$identifier->getVariableName()])) {
-				return $weights[$identifier->getVariableName()];
-			}
+		else {
+		    // get the item the weight should belong to.
+		    $assessmentItemRefs = $this->getAssessmentItemRefs();
+		    $expectedItemId = $identifier->getPrefix();
+		    if (isset($assessmentItemRefs[$expectedItemId])) {
+		        $weights = $assessmentItemRefs[$expectedItemId]->getWeights();
+		        	
+		        if (isset($weights[$identifier->getVariableName()])) {
+		            return $weights[$identifier->getVariableName()];
+		        }
+		    }
 		}
 		
 		return false;

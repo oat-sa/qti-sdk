@@ -326,18 +326,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	}
 	
 	/**
-	 * @dataProvider getWeightProviderNoPrefix
-	 * 
-	 * @param string $identifier
-	 */
-	public function testGetWeightBadPrefix($identifier) {
-		$state = $this->getState();
-		
-		$this->setExpectedException('\\InvalidArgumentException');
-		$weight = $state->getWeight($identifier);
-	}
-	
-	/**
 	 * @dataProvider getWeightNotFoundProvider
 	 * 
 	 * @param string $identifier
@@ -350,26 +338,40 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		$this->assertSame(false, $weight);
 	}
 	
+	/**
+	 * @dataProvider getWeightMalformed
+	 * 
+	 * @param string $identifier
+	 */
+	public function testGetWeightMalformed($identifier) {
+	    $state = $this->getState();
+	    $this->setExpectedException('\\InvalidArgumentException');
+	    $state->getWeight($identifier);
+	}
+	
 	public function getWeightProvider() {
 		return array(
 			array('Q01.W01', 1.0),
-			array('Q01.W02', 1.1)
-		);
-	}
-	
-	public function getWeightProviderNoPrefix() {
-		return array(
-			array('W01'),
-			array('W02'),
-			array('Q01'),
-			array('_Q01.W01') // malformed
+			array('Q01.W02', 1.1),
+		    array('W01', 1.0),
+		    array('W02', 1.1)
 		);
 	}
 	
 	public function getWeightNotFoundProvider() {
 		return array(
 			array('Q01.W03'),
-			array('Q02.W02')
+			array('Q02.W02'),
+		    array('Q01'),
+		    array('W04')
 		);
+	}
+	
+	public function getWeightMalformed() {
+	    return array(
+	        array('_Q01'),
+	        array('_Q01.SCORE'),
+	        array('Q04.1.W01'),
+	    );
 	}
 }

@@ -781,6 +781,52 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Whether the item of the session has been attempted (at least once). In other words, items which the user has interacted,
+	 * whether or not they provided a response.
+	 * 
+	 * @return boolean
+	 */
+	public function isPresented() {
+	    return $this['numAttempts'] > 0;
+	}
+	
+	/**
+	 * Whether the item of the session has been selected for presentation to the candidate, regardless of whether the candidate
+	 * has attempted them or not.
+	 * 
+	 * @return boolean
+	 */
+	public function isSelected() {
+	    return $this->getState() !== AssessmentItemSessionState::NOT_SELECTED;
+	}
+	
+	/**
+	 * Whether the item of the session has been attempted (at least once) and for which at least one response was given.
+	 * 
+	 * @return boolean
+	 */
+	public function isResponded() {
+	    
+	    if ($this->isPresented() === false) {
+	        return false;
+	    }
+	    
+	    $excludedResponseVariables = array('numAttempts', 'duration');
+	    foreach ($this->getKeys() as $k) {
+	        $var = $this->getVariable($k);
+	        
+	        if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
+	            
+	            if ($var->getValue() !== $var->getDefaultValue()) {
+	                return true;
+	            }
+	        }
+	    }
+	    
+	    return false;
+	}
+	
+	/**
 	 * Get a cloned $duration with the acceptable latency of the item
 	 * session added.
 	 * 
