@@ -53,8 +53,8 @@
 			</assessmentItemRef>
 		</assessmentSection>
 		
-		<assessmentSection identifier="S02" title="Section 2" visible="true" category="chemistry">
-			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+		<assessmentSection identifier="S02" title="Section 2" visible="true">
+			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false" category="chemistry">
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 					<correctResponse>
 						<value>W G1</value>
