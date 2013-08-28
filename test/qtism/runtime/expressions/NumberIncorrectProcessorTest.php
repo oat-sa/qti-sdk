@@ -79,7 +79,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
+	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(6, $processor->process());
 	    $session->moveNext();

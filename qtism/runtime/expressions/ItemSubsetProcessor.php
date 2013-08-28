@@ -97,8 +97,8 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	    $sourceIdentifier = $targetIdentifier;
 	    
 	    foreach ($assessmentItemRef->getVariableMappings() as $variableMapping) {
-	        if ($variableMapping->getTargetIdentifier() === $targetIdentifier) {
-	            $sourceIdentifier = $variableMapping->getSourceIdentifier();
+	        if ($variableMapping->getTarget() === $targetIdentifier) {
+	            $sourceIdentifier = $variableMapping->getSource();
 	            break;
 	        }
 	    }

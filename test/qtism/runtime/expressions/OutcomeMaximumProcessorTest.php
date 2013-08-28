@@ -38,6 +38,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase {
 	public function outcomeMaximumProvider() {
 	    return array(
 	        array(self::getOutcomeMaximum('SCORE'), null), // NULL values involved, the expression returns NULL systematically.
+	        array(self::getOutcomeMaximum('SCOREX'), null), // No variable at all matches.
 	        array(self::getOutcomeMaximum('SCORE', '', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(2.5, 1.5))),
 	        array(self::getOutcomeMaximum('SCORE', 'W0X', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(2.5, 1.5))), // Weight not found then not applied.
 	        array(self::getOutcomeMaximum('SCORE', 'W01', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(5.0, 3.0))),

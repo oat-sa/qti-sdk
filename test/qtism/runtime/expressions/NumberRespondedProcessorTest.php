@@ -76,7 +76,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Q06
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
+	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(4, $processor->process());
 	    $session->moveNext();

@@ -61,11 +61,11 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
 	        foreach ($itemSessions as $itemSession) {
 	            
 	           // Apply variable mapping on $outcomeIdentifier.
-	           $outcomeIdentifier = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier);
+	           $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier);
 	            
-	           if (isset($itemSession[$outcomeIdentifier]) && $itemSession->getVariable($outcomeIdentifier) instanceof OutcomeVariable) {
+	           if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
 	                
-	                $var = $itemSession->getVariable($outcomeIdentifier);
+	                $var = $itemSession->getVariable($id);
 	                    
                     // Does this OutcomeVariable contain a value for normalMaximum?
                     if (($normalMaximum = $var->getNormalMaximum()) !== false) {
@@ -84,6 +84,9 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
                         // the result is NULL.
                         return null;
                     }
+	            }
+	            else {
+	                return null;
 	            }
 	        }
 	    }

@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\OutcomeMinimum;
@@ -42,38 +43,33 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor {
 	 */
 	public function process() {
 	    $itemSubset = $this->getItemSubset();
-	    
-	    if (count($itemSubset) === 0) {
-	        return null;
-	    }
-	    
 	    $testSession = $this->getState();
 	    $outcomeIdentifier = $this->getExpression()->getOutcomeIdentifier();
 	    // If no weightIdentifier specified, its value is an empty string ('').
 	    $weightIdentifier = $this->getExpression()->getWeightIdentifier();
 	    $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight($weightIdentifier);
-	    $result = new MultipleContainer(BaseType);
+	    $result = new MultipleContainer(BaseType::FLOAT);
 	    
 	    foreach ($itemSubset as $item) {
 	        $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 	        
 	        foreach ($itemSessions as $itemSession) {
-
-	           // Variable mapping is in force.
-	           $outcomeIdentifier = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier); 
 	            
-	           if (isset($itemSession[$outcomeIdentifier]) && $itemSession->getVariable($outcomeIdentifier) instanceof OutcomeVariable) {
-	                
-	                $var = $itemSession->getVariable($outcomeIdentifier);
+	           // Variable mapping is in force.
+	           $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier); 
+	            
+	           if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
+	               
+	                $var = $itemSession->getVariable($id);
 	                 
                     // Does this OutcomeVariable contain a value for normalMaximum?
                     if (($normalMinimum = $var->getNormalMinimum()) !== false) {
-                        
                         if ($weight === false) {
                             // No weight to be applied.
                             $result[] = $normalMinimum;
                         }
                         else {
+                            
                             // A weight has to be applied.
                             $result[] = floatval($normalMinimum *= $weight->getValue());
                         }

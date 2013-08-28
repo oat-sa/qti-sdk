@@ -6,18 +6,36 @@
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false" category="mathematics chemistry">
+				<variableMapping sourceIdentifier="scoring" targetIdentifier="SCORE"/>
 				<weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceA</value>
 					</correctResponse>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+				<outcomeDeclaration identifier="scoring" cardinality="single" baseType="float">
 					<defaultValue>
 						<value>0</value>
 					</defaultValue>
 				</outcomeDeclaration>
-				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+				<responseProcessing>
+				    <responseCondition>
+				        <responseIf>
+				            <match>
+				                <variable identifier="RESPONSE"/>
+				                <correct identifier="RESPONSE"/>
+				            </match>
+				            <setOutcomeValue identifier="scoring">
+				                <baseValue baseType="float">1</baseValue>
+				            </setOutcomeValue>
+				        </responseIf>
+				        <responseElse>
+				            <setOutcomeValue identifier="scoring">
+				                <baseValue baseType="float">0</baseValue>
+				            </setOutcomeValue>
+				        </responseElse>
+				    </responseCondition>
+				</responseProcessing>
 			</assessmentItemRef>
 			
 			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false" category="maximum">
@@ -89,14 +107,33 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false" category="mathematics">
-				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+			<assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false" category="mathematics minimum">
+				<variableMapping sourceIdentifier="mySc0r3" targetIdentifier="SCORE"/>
+				<variableMapping sourceIdentifier="answer" targetIdentifier="RESPONSE"/>
+				<responseDeclaration identifier="answer" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>A</value>
 					</correctResponse>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
-				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+				<outcomeDeclaration identifier="mySc0r3" cardinality="single" baseType="float" normalMinimum="1"/>
+				<responseProcessing>
+				    <responseCondition>
+				        <responseIf>
+				            <match>
+				                <variable identifier="answer"/>
+				                <correct identifier="answer"/>
+				            </match>
+				            <setOutcomeValue identifier="mySc0r3">
+				                <baseValue baseType="float">1</baseValue>
+				            </setOutcomeValue>
+				        </responseIf>
+				        <responseElse>
+				            <setOutcomeValue identifier="mySc0r3">
+				                <baseValue baseType="float">0</baseValue>
+				            </setOutcomeValue>
+				        </responseElse>
+				    </responseCondition>
+				</responseProcessing>
 			</assessmentItemRef>
 		</assessmentSection>
 		
