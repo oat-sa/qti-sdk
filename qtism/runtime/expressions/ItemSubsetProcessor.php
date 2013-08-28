@@ -90,6 +90,10 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	 * @return AssessmentItemRefCollection A collection of AssessmentItemRef object that match the criteria expressed by the ItemSubset expression to be processed.
 	 */
 	protected function getItemSubset() {
-	    return $this->getState()->getItemSubset($this->getSectionIdentifier(), $this->getIncludeCategories(), $this->getExcludeCategories());
+	    $sectionIdentifier = $this->getSectionIdentifier();
+	    $includeCategories = $this->getIncludeCategories();
+	    $excludeCategories = $this->getExcludeCategories();
+	    
+	    return $this->getState()->getItemSubset($sectionIdentifier, $includeCategories, $excludeCategories);
 	}
 }

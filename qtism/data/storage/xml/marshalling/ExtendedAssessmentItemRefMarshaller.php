@@ -68,6 +68,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 		$compactAssessmentItemRef->setTemplateDefaults($baseComponent->getTemplateDefaults());
 		$compactAssessmentItemRef->setWeights($baseComponent->getWeights());
 		$compactAssessmentItemRef->setVariableMappings($baseComponent->getVariableMappings());
+		$compactAssessmentItemRef->setCategories($baseComponent->getCategories());
 		
 		$responseDeclarationElts = self::getChildElementsByTagName($element, 'responseDeclaration');
 		$responseDeclarations = new ResponseDeclarationCollection();

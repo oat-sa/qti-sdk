@@ -436,8 +436,7 @@ class Route implements Iterator {
         }
         else if (is_null($excludeCategories) === false) {
             // Perform the category by exclusion.
-            $categories = $this->getCategories()->diff($excludeCategories);
-            return $bySection->intersect($this->getAssessmentItemRefsByCategory($categories));
+            return $bySection->diff($this->getAssessmentItemRefsByCategory($excludeCategories));
         }
         else {
             return $bySection;

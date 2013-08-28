@@ -1,6 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentTestSession;
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\collections\IdentifierCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\SectionPartCollection;
@@ -88,8 +90,10 @@ class RouteTest extends QtiSmTestCase {
         
         // go by exclusion.
         $exclusionRefs = $route->getAssessmentItemRefsSubset('', null, new IdentifierCollection(array('sciences', 'expert')));
-        $this->assertEquals(3, count($exclusionRefs));
+        $this->assertEquals(4, count($exclusionRefs));
         $this->assertTrue(isset($exclusionRefs['Q3']));
+        $this->assertTrue(isset($exclusionRefs['Q4']));
+        $this->assertTrue(isset($exclusionRefs['Q5']));
         $this->assertTrue(isset($exclusionRefs['Q6']));
     }
     
