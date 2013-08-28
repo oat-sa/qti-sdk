@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
-
 use qtism\data\storage\xml\XmlAssessmentTestDocument;
 use qtism\data\AssessmentTest;
 use \DOMDocument;
@@ -100,7 +100,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$doc = new XmlAssessmentTestDocument('2.1');
 		$file = self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen.xml';
 		$doc->load($file);
-		$compactDoc = XmlCompactAssessmentTestDocument::createFromXmlAssessmentTestDocument($doc);
+		$compactDoc = XmlCompactAssessmentTestDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 		
 		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlCompactAssessmentTestDocument', $compactDoc);
 		$this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getIdentifier());

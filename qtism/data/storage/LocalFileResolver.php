@@ -1,9 +1,7 @@
 <?php
 namespace qtism\data\storage;
 
-use qtism\common\Resolver;
 use qtism\common\ResolutionException;
-use \InvalidArgumentException;
 
 /**
  * The LocalFileResolver class resolve relative paths to canonical
@@ -12,9 +10,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class LocalFileResolver implements Resolver {
-	
-	private $basePath = '';
+class LocalFileResolver extends FileResolver {
 	
 	/**
 	 * Create a new LocalFileResolver object.
@@ -22,33 +18,8 @@ class LocalFileResolver implements Resolver {
 	 * @param string $basePath The base path from were the URLs will be resolved.
 	 * @throws InvalidArgumentException If $basePath is not a valid string value.
 	 */
-	public function __construct($basePath) {
-		$this->setBasePath($basePath);
-	}
-	
-	/**
-	 * Set the base path from where the URLs will be resolved.
-	 * 
-	 * @param string $basePath A base path.
-	 * @throws InvalidArgumentException If $basePath is not a valid string value.
-	 */
-	public function setBasePath($basePath) {
-		if (is_string($basePath)) {
-			$this->basePath = $basePath;
-		}
-		else {
-			$msg = "The basePath argument must be a valid string, '" . gettype($basePath) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
-	 * Get the base path from where the URLs will be resolved.
-	 * 
-	 * @return string
-	 */
-	public function getBasePath() {
-		return $this->basePath;
+	public function __construct($basePath = '') {
+		parent::__construct($basePath);
 	}
 	
 	/**

@@ -2,6 +2,7 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\AssessmentSectionRef;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -88,7 +89,7 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	 * @return XmlCompactAssessmentTestDocument An XmlCompactAssessmentTestDocument object.
 	 * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
-	public static function createFromXmlAssessmentTestDocument(XmlAssessmentTestDocument $xmlAssessmentTestDocument) {
+	public static function createFromXmlAssessmentTestDocument(XmlAssessmentTestDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
 		$compactXml = new static();
 		$compactXml->setIdentifier($xmlAssessmentTestDocument->getIdentifier());
 		$compactXml->setOutcomeDeclarations($xmlAssessmentTestDocument->getOutcomeDeclarations());
@@ -99,6 +100,16 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 		$compactXml->setTitle($xmlAssessmentTestDocument->getTitle());
 		$compactXml->setToolName($xmlAssessmentTestDocument->getToolName());
 		$compactXml->setToolVersion($xmlAssessmentTestDocument->getToolVersion());
+		
+		// File resolution.
+		$sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUri());
+		
+		if (is_null($itemResolver) === true) {
+		    $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUri());
+		}
+		else {
+		    $itemResolver->setBasePath($xmlAssessmentTestDocument->getUri());
+		}
 		
 		// It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
 		$trail = array(); // trailEntry[0] = a component, trailEntry[1] = from where we are coming (parent).
@@ -146,7 +157,8 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 								$baseUri = $component->getUri();
 							}
 							
-							self::resolveAssessmentItemRef($compactRef, $baseUri);
+							$itemResolver->setBasePath($baseUri);
+							self::resolveAssessmentItemRef($compactRef, $itemResolver);
 							$previousParts->replace($component, $compactRef);
 							break;
 						}
@@ -155,7 +167,7 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 				else if ($component instanceof AssessmentSectionRef) {
 					// We follow the unreferenced AssessmentSection as if it was
 					// the 1st pass.
-					$assessmentSection = self::resolveAssessmentSectionRef($component, $xmlAssessmentTestDocument->getUri());
+					$assessmentSection = self::resolveAssessmentSectionRef($component, $sectionResolver);
 					$previousParts = $previous->getSectionParts();
 					foreach ($previousParts as $k => $previousPart) {
 						if ($previousParts[$k] === $component) {
@@ -179,12 +191,11 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	 * outcome/responseDeclarations to the compact one.
 	 * 
 	 * @param ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
-	 * @param string $baseUri The URI which describe the location of the file containing the assessment item ref, that will help to resolve relative URIs. 
+	 * @param FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, $baseUri) {
+	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver) {
 		try {
-			$resolver = new LocalFileResolver($baseUri);
 			$href = $resolver->resolve($compactAssessmentItemRef->getHref());
 			
 			$doc = new XmlAssessmentItemDocument();
@@ -215,13 +226,12 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	 * Dereference the file referenced by an assessmentSectionRef.
 	 * 
 	 * @param AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
-	 * @param string $baseUri The URI of the owner document.
+	 * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
 	 * @return XmlAssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
 	 */
-	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, $baseUri) {
+	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver) {
 		try {
-			$resolver = new LocalFileResolver($baseUri);
 			$href = $resolver->resolve($assessmentSectionRef->getHref());
 			
 			$doc = new XmlAssessmentSectionDocument('2.1');
