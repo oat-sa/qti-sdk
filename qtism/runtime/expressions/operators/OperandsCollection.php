@@ -471,7 +471,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 		
 		$data = &$this->getDataPlaceHolder();
 		if ($count === 1) {
-			return array_pop($data);
+			return new OperandsCollection(array(array_pop($data)));
 		}
 		
 		$returnValue = new OperandsCollection();
