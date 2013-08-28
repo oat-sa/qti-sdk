@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\OutcomeMaximum;
@@ -52,12 +53,15 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
 	    // If no weightIdentifier specified, its value is an empty string ('').
 	    $weightIdentifier = $this->getExpression()->getWeightIdentifier();
 	    $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight($weightIdentifier);
-	    $result = new MultipleContainer(BaseType);
+	    $result = new MultipleContainer(BaseType::FLOAT);
 	    
 	    foreach ($itemSubset as $item) {
 	        $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 	        
 	        foreach ($itemSessions as $itemSession) {
+	            
+	           // Apply variable mapping on $outcomeIdentifier.
+	           $outcomeIdentifier = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier);
 	            
 	           if (isset($itemSession[$outcomeIdentifier]) && $itemSession->getVariable($outcomeIdentifier) instanceof OutcomeVariable) {
 	                

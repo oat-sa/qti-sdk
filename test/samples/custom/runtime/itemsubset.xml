@@ -6,6 +6,7 @@
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false" category="mathematics chemistry">
+				<weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceA</value>
@@ -19,7 +20,7 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false" category="maximum">
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair">
 					<correctResponse>
 						<value>A P</value>
@@ -32,11 +33,11 @@
 						<mapEntry mapKey="D L" mappedValue="1"/>
 					</mapping>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="2.5"/>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
 
-			<assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false" category="mathematics">
+			<assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false" category="mathematics minimum">
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
 					<correctResponse>
 						<value>H</value>
@@ -48,7 +49,7 @@
 						<mapEntry mapKey="Cl" mappedValue="-1"/>
 					</mapping>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMinimum="-2"/>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
 		</assessmentSection>
@@ -69,7 +70,7 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false" category="minimum maximum">
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair">
 					<correctResponse>
 						<value>C B</value>
@@ -84,7 +85,7 @@
 						<mapEntry mapKey="C D" mappedValue="1"/>
 					</mapping>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMinimum="0.5" normalMaximum="1.5"/>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
 			
@@ -101,7 +102,7 @@
 		
 		<assessmentSection identifier="S03" title="Section 3" visible="true">
 			<selection select="3" withReplacement="true"/>
-			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false" category="minimum">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="point">
 					<correctResponse>
 						<value>102 113</value>
@@ -110,7 +111,7 @@
 						<areaMapEntry shape="circle" coords="102,113,16" mappedValue="1"/>
 					</areaMapping>
 				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMinimum="1"/>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point"/>
 			</assessmentItemRef>
 		</assessmentSection>

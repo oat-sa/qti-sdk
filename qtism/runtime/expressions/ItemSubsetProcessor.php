@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\data\AssessmentItemRef;
+
 use qtism\runtime\common\State;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\common\collections\IdentifierCollection;
@@ -82,6 +84,26 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	protected function getExcludeCategories() {
 	    $categories = $this->getExpression()->getExcludeCategories();
 	    return (count($categories) === 0) ? null : $categories;
+	}
+	
+	/**
+	 * Convenience method that returns the mapped variable identifier from $targetIdentifier.
+	 * 
+	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object where variable mappings can be found.
+	 * @param string $targetIdentifier A targetIdentifier to be replaced by a sourceIdentifier.
+	 * @return string The mapped identifier or $targetIdentifier if no mapping could be established.
+	 */
+	protected static function getMappedVariableIdentifier(AssessmentItemRef $assessmentItemRef, $targetIdentifier) {
+	    $sourceIdentifier = $targetIdentifier;
+	    
+	    foreach ($assessmentItemRef->getVariableMappings() as $variableMapping) {
+	        if ($variableMapping->getTargetIdentifier() === $targetIdentifier) {
+	            $sourceIdentifier = $variableMapping->getSourceIdentifier();
+	            break;
+	        }
+	    }
+	    
+	    return $sourceIdentifier;
 	}
 	
 	/**

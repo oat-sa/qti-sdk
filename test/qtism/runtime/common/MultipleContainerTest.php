@@ -1,11 +1,10 @@
 <?php
 
+require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
 use qtism\common\datatypes\Point;
-
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
-
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
@@ -103,5 +102,11 @@ class MultipleContainerTest extends QtiSmTestCase {
 		$c1 = new MultipleContainer(BaseType::INTEGER, array(5, 4, 3, 2, 1));
 		$c2 = new MultipleContainer(BaseType::INTEGER, array(1, 6, 7, 8, 5));
 		$this->assertFalse($c1->equals($c2));
+	}
+	
+	public function testEqualsTwo() {
+	    $c1 = new MultipleContainer(BaseType::FLOAT, array(2.75, 1.65));
+	    $c2 = new MultipleContainer(BaseType::FLOAT, array(2.75, 1.65));
+	    $this->assertTrue($c1->equals($c2));
 	}
 }
