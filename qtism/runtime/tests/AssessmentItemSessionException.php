@@ -72,6 +72,13 @@ class AssessmentItemSessionException extends Exception {
 	const SKIPPING_FORBIDDEN = 6;
 	
 	/**
+	 * Error code to use when a sequence of states is violated.
+	 * 
+	 * @var integer
+	 */
+	const STATE_VIOLATION = 7;
+	
+	/**
 	 * The AssessmentItemSession object which threw the error.
 	 * 
 	 * @var AssessmentItemSession

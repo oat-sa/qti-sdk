@@ -281,6 +281,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertInternalType('float', $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']);
         
+        $itemSession->beginAttempt();
         // Second attempt, give the correct answer to be allowed to go to the next item.
         $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
