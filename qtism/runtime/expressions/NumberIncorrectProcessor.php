@@ -1,8 +1,6 @@
 <?php
-
 namespace qtism\runtime\expressions;
 
-use qtism\data\expressions\NumberCorrect;
 use qtism\data\expressions\NumberIncorrect;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -42,24 +40,19 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor {
 	 */
 	public function process() {
 	    $testSession = $this->getState();
-	    $incorrectExpression = $this->getExpression();
+	    $itemSubset = $this->getItemSubset();
+	    $numberIncorrect = 0;
 	    
-	    $correctExpression = new NumberCorrect();
-	    $correctExpression->setSectionIdentifier($incorrectExpression->getIdentifier());
-	    $correctExpression->setIncludeCategories($incorrectExpression->getIncludeCategories());
-	    $correctExpression->setExcludeCategories($incorrectExpression->getExcludeCategories());
-	    
-	    $correctProcessor = new CorrectProcessor($correctExpression);
-	    $correctProcessor->setState($testSession);
-	    
-	    try {
-	        $numberCorrect = $correctProcessor->process();
-	        $totalItemOccurences = $itemSession->getRouteCount();
-	        return $totalItemOccurences - $numberCorrect;
+	    foreach ($itemSubset as $item) {
+	        $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
+	        
+	        foreach ($itemSessions as $itemSession) {
+	            if ($itemSession->isCorrect() === false) {
+	                $numberIncorrect++;
+	            }
+	        }
 	    }
-	    catch (ExpressionProcessingException $e) {
-	        $msg = "An error occured while processing a NumberIncorrect expression.";
-	        throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::RUNTIME_ERROR, $e);
-	    }
+	    
+	    return $numberIncorrect;
 	}
 }
