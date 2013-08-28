@@ -91,7 +91,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor {
 	                    $var = $itemSession->getVariable($variableIdentifier);
 	                    
 	                    // Single cardinality? Does it match the baseType?
-	                    if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true) {
+	                    if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
 	                        $val = $var->getValue();
 	                        
 	                        if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true) {
