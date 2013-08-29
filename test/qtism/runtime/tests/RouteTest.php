@@ -100,8 +100,8 @@ class RouteTest extends QtiSmTestCase {
     public function testOccurences() {
         $assessmentItemRefs = new AssessmentItemRefCollection();
         $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q1.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q1.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q3.xml');
         
         $assessmentSections = new AssessmentSectionCollection();
         $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
@@ -111,7 +111,6 @@ class RouteTest extends QtiSmTestCase {
         $testParts[] = new TestPart('T1', $assessmentSections);
         
         $route = new Route();
-        $this->assertEquals(0, $route->getOccurenceCount($assessmentItemRefs['Q2']));
         
         $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
         $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
@@ -136,5 +135,103 @@ class RouteTest extends QtiSmTestCase {
         $routeItem4 = $route->getRouteItemAt(3);
         $this->assertEquals('Q3', $routeItem4->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals(1, $routeItem4->getOccurence());
+    }
+    
+    public function testIsX() {
+        $route = self::buildSimpleRoute();
+        
+        // Q1
+        $this->assertTrue($route->isNavigationLinear());
+        $this->assertFalse($route->isNavigationNonLinear());
+        $this->assertTrue($route->isSubmissionIndividual());
+        $this->assertFalse($route->isSubmissionSimultaneous());
+        $this->assertTrue($route->isFirst());
+        $this->assertFalse($route->isLast());
+        $route->next();
+        
+        // Q2
+        $this->assertTrue($route->isNavigationLinear());
+        $this->assertFalse($route->isNavigationNonLinear());
+        $this->assertTrue($route->isSubmissionIndividual());
+        $this->assertFalse($route->isSubmissionSimultaneous());
+        $this->assertFalse($route->isFirst());
+        $this->assertFalse($route->isLast());
+        $route->next();
+        
+        // Q3
+        $this->assertTrue($route->isNavigationLinear());
+        $this->assertFalse($route->isNavigationNonLinear());
+        $this->assertTrue($route->isSubmissionIndividual());
+        $this->assertFalse($route->isSubmissionSimultaneous());
+        $this->assertFalse($route->isFirst());
+        $this->assertTrue($route->isLast());
+        
+        $route->next();
+        $this->assertFalse($route->valid());
+    }
+    
+    public function testPreviousNext() {
+        $route = self::buildSimpleRoute();
+        $this->assertEquals(0, $route->getPosition());
+        
+        // We are at first position, nothing should happen.
+        // Q1
+        $route->previous();
+        $this->assertEquals(0, $route->getPosition());
+        $this->assertEquals('Q1', $route->current()->getAssessmentItemRef()->getIdentifier());
+        
+        // go to Q2
+        $route->next();
+        $this->assertEquals(1, $route->getPosition());
+        $this->assertEquals('Q2', $route->current()->getAssessmentItemRef()->getIdentifier());
+        
+        // go to Q3
+        $route->next();
+        $this->assertEquals(2, $route->getPosition());
+        $this->assertEquals('Q3', $route->current()->getAssessmentItemRef()->getIdentifier());
+        
+        // go back to Q2
+        $route->previous();
+        $this->assertEquals(1, $route->getPosition());
+        $this->assertEquals('Q2', $route->current()->getAssessmentItemRef()->getIdentifier());
+        
+        // go to Q3
+        $route->next();
+        $this->assertEquals('Q3', $route->current()->getAssessmentItemRef()->getIdentifier());
+        
+        // go beyond the digital nirvana, end of test.
+        $route->next();
+        $this->assertFalse($route->valid());
+    }
+    
+    /**
+     * Build a simple route:
+     * 
+     * * Q1 - S1 - T1
+     * * Q2 - S1 - T1
+     * * Q3 - S1 - T1
+     * 
+     * @return Route
+     */
+    protected static function buildSimpleRoute() {
+        $assessmentItemRefs = new AssessmentItemRefCollection();
+        $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
+        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q3.xml');
+        
+        $assessmentSections = new AssessmentSectionCollection();
+        $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSections['S1']->setSectionParts($assessmentItemRefs);
+        
+        $testParts = new TestPartCollection();
+        $testParts[] = new TestPart('T1', $assessmentSections);
+        
+        $route = new Route();
+        
+        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+        
+        return $route;
     }
 }

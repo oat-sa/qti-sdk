@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\common\collections\IdentifierCollection;
@@ -239,7 +240,19 @@ class Route implements Iterator {
     }
     
     /**
-     * Set the Route as its next position in the RouteItem sequence.
+     * Set the Route as its previous position in the RouteItem sequence. If the current
+     * RouteItem is the first one prior to call next(), the Route remains in the same position.
+     */
+    public function previous() {
+        $position = $this->getPosition();
+        if ($position > 0) {
+            $this->setPosition(--$position);
+        }
+    }
+    
+    /**
+     * Set the Route as its next position in the RouteItem sequence. If the current
+     * RouteItem is the last one prior to call next(), the iterator becomes invalid.
      */
     public function next() {
         $this->setPosition($this->getPosition() + 1);
@@ -267,13 +280,52 @@ class Route implements Iterator {
     }
     
     /**
-     * Whether the next RouteItem in the route is in linear
+     * Whether the current RouteItem is the first of the route.
+     * 
+     * @return boolean
+     */
+    public function isFirst() {
+        return $this->getPosition() === 0;
+    }
+    
+    /**
+     * Whether the current RouteItem in the route is in linear
      * navigation mode.
      * 
      * @return boolean
      */
-    public function isLinear() {
+    public function isNavigationLinear() {
         return $this->current()->getTestPart()->getNavigationMode() === NavigationMode::LINEAR;
+    }
+    
+    /**
+     * Whether the current RouteItem in the route is in non-linear
+     * navigation mode.
+     * 
+     * @return boolean
+     */
+    public function isNavigationNonLinear() {
+        return !$this->isNavigationLinear();
+    }
+    
+    /**
+     * Whether the current RouteItem in the route is in individual
+     * submission mode.
+     * 
+     * @return boolean
+     */
+    public function isSubmissionIndividual() {
+        return $this->current()->getTestPart()->getSubmissionMode() === SubmissionMode::INDIVIDUAL;
+    }
+    
+    /**
+     * Whether the current RouteItem in the route is in simultaneous
+     * submission mode.
+     * 
+     * @return boolean
+     */
+    public function isSubmissionSimultaneous() {
+        return !$this->isSubmissionIndividual();
     }
     
     /**

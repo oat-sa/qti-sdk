@@ -525,7 +525,7 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
 	    
-	    while($route->valid() === true && $route->isLinear() === true) {
+	    while($route->valid() === true && $route->isNavigationLinear() === true) {
 	        $routeItem = $route->current();
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	        

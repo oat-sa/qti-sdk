@@ -244,11 +244,30 @@ class AssessmentItemSession extends State {
 	
 	/**
 	 * Set the ItemSessionControl object which describes the way to control
-	 * the item session.
+	 * the item session. If the current session is in a SIMULTANEOUS submission
+	 * mode context, the maxAttempt attribute of $itemSessionControl is
+	 * automatically set to 1.
 	 * 
 	 * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
 	 */
 	public function setItemSessionControl(ItemSessionControl $itemSessionControl) {
+	    
+	    /* If the current submission mode is SIMULTANEOUS, only 1 attempt is allowed per item.
+	     * 
+	     * From IMS QTI:
+	     * 
+	     * In simultaneous mode, response processing cannot take place until the testPart is 
+	     * complete so each item session passes between the interacting and suspended states only.
+	     * By definition the candidate can take one and only one attempt at each item and feedback
+	     * cannot be seen during the test. Whether or not the candidate can return to review
+	     * their responses and/or any item-level feedback after the test, is outside the scope
+	     * of this specification. Simultaneous mode is typical of paper-based tests.
+	     * 
+	     */
+	    if ($this->getSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+	        $itemSessionControl->setMaxAttempts(1);
+	    }
+	    
 		$this->itemSessionControl = $itemSessionControl;
 	}
 	
@@ -637,7 +656,7 @@ class AssessmentItemSession extends State {
 	        $this->endItemSession();
 	        $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;   
 	    }
-		else if ($this->getAssessmentItemRef()->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+		else if ($this->getAssessmentItemRef()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 		    
 		    $this->endItemSession();
 		}
