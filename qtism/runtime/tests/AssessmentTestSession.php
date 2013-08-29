@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\common\ProcessingException;
+use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\NavigationMode;
 use qtism\runtime\tests\AssessmentItemSessionException;
@@ -53,6 +55,13 @@ class AssessmentTestSession extends State {
 	private $state;
 	
 	/**
+	 * The AssessmentTest the AssessmentTestSession is an instance of.
+	 * 
+	 * @var AssessmentTest
+	 */
+	private $assessmentTest;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -61,18 +70,37 @@ class AssessmentTestSession extends State {
 	public function __construct(AssessmentTest $assessmentTest, Route $route) {
 		
 		parent::__construct();
+		$this->setAssessmentTest($assessmentTest);
 		$this->setRoute($route);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
-		foreach ($assessmentTest->getOutcomeDeclarations() as $globalOutcome) {
+		foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $globalOutcome) {
 		    $variable = OutcomeVariable::createFromDataModel($globalOutcome);
 			$variable->applyDefaultValue();
 		    $this->setVariable($variable);
 		}
 		
 		$this->setState(AssessmentTestSessionState::INITIAL);
+	}
+	
+	/**
+	 * Get the AssessmentTest object the AssessmentTestSession is an instance of.
+	 * 
+	 * @return AssessmentTest An AssessmentTest object.
+	 */
+	public function getAssessmentTest() {
+	    return $this->assessmentTest;
+	}
+	
+	/**
+	 * Set the AssessmentTest object the AssessmentTestSession is an instance of.
+	 * 
+	 * @param AssessmentTest $assessmentTest
+	 */
+	protected function setAssessmentTest(AssessmentTest $assessmentTest) {
+	    $this->assessmentTest = $assessmentTest;
 	}
 	
 	/**
@@ -703,7 +731,7 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Skip the current item.
+	 * Skip the current item. A call to moveNext() is automatically performed.
 	 * 
 	 * @throws AssessmentItemSessionException If the current item cannot be skipped or if timings are not respected.
 	 * @throws AssessmentTestSessionException If the test session is not running.
@@ -759,7 +787,7 @@ class AssessmentTestSession extends State {
 	 * Ask the test session for moving the next assessment item to be taken by candidate, with respect
 	 * to the preConditions and branchRules of the assessment test.
 	 * 
-	 * @throws AssessmentTestSessionException If the test session is not running.
+	 * @throws AssessmentTestSessionException If the test session is not running or an error occurs during the transition.
 	 */
 	public function moveNext() {
 	    if ($this->isRunning() === false) {
@@ -798,7 +826,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Apply outcome processing at test-level.
 	 * 
-	 * @throws AssessmentTestSessionException If the test is not at its last route item.
+	 * @throws AssessmentTestSessionException If the test is not at its last route item or if an error occurs at OutcomeProcessing time.
 	 */
 	protected function outcomeProcessing() {
 	    if ($this->getRoute()->isLast() === false) {
@@ -806,12 +834,23 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    // As per QTI Spec:
-	    // The values of the test's outcome variables are always reset to their defaults prior
-	    // to carrying out the instructions described by the outcomeRules.
-	    $this->resetOutcomeVariables();
-	    
-	    // @todo apply outcome processing at the end of the route.
+	    if ($this->getAssessmentTest()->hasOutcomeProcessing() === true) {
+	        // As per QTI Spec:
+	        // The values of the test's outcome variables are always reset to their defaults prior
+	        // to carrying out the instructions described by the outcomeRules.
+	        $this->resetOutcomeVariables();
+	         
+	        $outcomeProcessing = $this->getAssessmentTest()->getOutcomeProcessing();
+	        
+	        try {
+	            $outcomeProcessingEngine = new OutcomeProcessingEngine($outcomeProcessing, $this);
+	            $outcomeProcessingEngine->process();
+	        }
+	        catch (ProcessingException $e) {
+	            $msg = "An error occured while processing OutcomeProcessing.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::OUTCOME_PROCESSING_ERROR, $e);
+	        }
+	    }
 	}
 	
 	/**

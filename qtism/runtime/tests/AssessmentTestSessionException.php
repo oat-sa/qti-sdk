@@ -37,6 +37,14 @@ class AssessmentTestSessionException extends Exception {
     const NAVIGATION_MODE_VIOLATION = 2;
     
     /**
+     * Code to use when an error occurs while running the outcome processing
+     * relate to the AssessmentTest.
+     * 
+     * @var int
+     */
+    const OUTCOME_PROCESSING_ERROR = 3;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.

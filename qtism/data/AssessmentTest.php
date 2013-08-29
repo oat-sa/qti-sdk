@@ -315,6 +315,15 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	}
 	
 	/**
+	 * Whether the AssessmentTest holds an OutcomeProcessing object.
+	 * 
+	 * @return boolean
+	 */
+	public function hasOutcomeProcessing() {
+	    return is_null($this->getOutcomeProcessing()) !== true;
+	}
+	
+	/**
 	 * Get the feedbacks associated to the AssessmentTest.
 	 * 
 	 * @return TestFeedbackCollection A collection of TestFeedback objects.

@@ -20,6 +20,10 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
+use qtism\common\datatypes\Point;
+use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\Pair;
+use qtism\runtime\common\MultipleContainer;
 use \OutOfBoundsException;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
@@ -267,6 +271,83 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(1, $assessmentTestSession['Q03.numAttempts']);
 	    
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+	}
+	
+	/**
+	 * @dataProvider linearOutcomeProcessingProvider
+	 * 
+	 * @param array $responses
+	 * @param array $outcomes
+	 */
+	public function testLinearOutcomeProcessing(array $responses, array $outcomes) {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+	     
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $assessmentTestSession->beginTestSession();
+	    
+	    // There must be 8 outcome variables to be checked:
+	    // NCORRECTS01, NCORRECTS02, NCORRECTS03, NINCORRECT, NRESPONDED
+	    // NPRESENTED, NSELECTED, PERCENT_CORRECT.
+	    $this->assertEquals(array_keys($outcomes), array('NCORRECTS01', 'NCORRECTS02', 'NCORRECTS03', 'NINCORRECT', 'NRESPONSED', 'NPRESENTED', 'NSELECTED', 'PERCENT_CORRECT'));
+	    
+	    // The selection of items for the test is 9.
+	    $this->assertEquals(9, count($responses));
+	    
+	    foreach ($responses as $resp) {
+	        $assessmentTestSession->beginAttempt();
+	        $assessmentTestSession->endAttempt($resp);
+	        $assessmentTestSession->moveNext();
+	    }
+	    
+	    foreach ($outcomes as $outcomeIdentifier => $outcomeValue) {
+	        $this->assertInternalType((is_int($outcomeValue)) ? 'integer' : 'float', $assessmentTestSession[$outcomeIdentifier]);
+	        
+	        if ($outcomeIdentifier !== 'PERCENT_CORRECT') {
+	            $this->assertEquals($outcomeValue, $assessmentTestSession[$outcomeIdentifier]);
+	        }
+	        else {
+	            $this->assertEquals(round($outcomeValue, 2), round($assessmentTestSession[$outcomeIdentifier], 2));
+	        }
+	    }
+	}
+	
+	public function linearOutcomeProcessingProvider() {
+	    $returnValue = array();
+	    
+	    // Test 1.
+	    $outcomes = array('NCORRECTS01' => 2, 'NCORRECTS02' => 1, 'NCORRECTS03' => 1, 'NINCORRECT' => 5, 'NRESPONSED' => 9, 'NPRESENTED' => 9, 'NSELECTED' => 9, 'PERCENT_CORRECT' => 44.44);
+	    $responses = array();
+	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))); // SCORE = 1 - Correct
+	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))))); // SCORE = 3 - Incorrect
+	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('H', 'O'))))); // SCORE = 2 - Correct
+	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'Sp'), new DirectedPair('G2', 'Su')))))); // SCORE = 0 - Incorrect
+	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D'), new Pair('B', 'D')))))); // SCORE = 1 - Incorrect
+	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'))); // SCORE = 1 - Correct
+	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(105, 105)))); // SCORE = 1 - Incorrect
+	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(13, 37)))); // SCORE = 0 - Incorrect
+	    
+	    $test = array($responses, $outcomes);
+	    $returnValue[] = $test;
+	    
+	    // Test 2 (full correct).
+	    $outcomes = array('NCORRECTS01' => 3, 'NCORRECTS02' => 3, 'NCORRECTS03' => 3, 'NINCORRECT' => 0, 'NRESPONSED' => 9, 'NPRESENTED' => 9, 'NSELECTED' => 9, 'PERCENT_CORRECT' => 100.00);
+	    $responses = array();
+	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))); // SCORE = 1 - Correct
+	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))); // SCORE = 4 - Correct
+	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('H', 'O'))))); // SCORE = 2 - Correct
+	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))))); // SCORE = 3 - Correct
+	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D')))))); // SCORE = 2 - Correct
+	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'))); // SCORE = 1 - Correct
+	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 0 - Correct
+	     
+	    $test = array($responses, $outcomes);
+	    $returnValue[] = $test;
+	    
+	    return $returnValue;
 	}
 	
 	public function testGetAssessmentItemSessions() {

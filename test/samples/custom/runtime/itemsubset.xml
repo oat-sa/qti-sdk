@@ -3,6 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
 	identifier="itemsubset" title="Item Subset">
+	<outcomeDeclaration identifier="NCORRECTS01" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NCORRECTS02" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NCORRECTS03" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NINCORRECT" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NRESPONSED" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NPRESENTED" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="NSELECTED" cardinality="single" baseType="integer"/>
+    <outcomeDeclaration identifier="PERCENT_CORRECT" cardinality="single" baseType="float"/>
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false" category="mathematics chemistry">
@@ -153,4 +161,36 @@
 			</assessmentItemRef>
 		</assessmentSection>
 	</testPart>
+	<outcomeProcessing>
+        <setOutcomeValue identifier="NCORRECTS01">
+            <numberCorrect sectionIdentifier="S01"/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NCORRECTS02">
+            <numberCorrect sectionIdentifier="S02"/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NCORRECTS03">
+            <numberCorrect sectionIdentifier="S03"/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NINCORRECT">
+            <numberIncorrect/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NRESPONSED">
+            <numberResponded/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NPRESENTED">
+            <numberPresented/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="NSELECTED">
+            <numberSelected/>
+        </setOutcomeValue>
+        <setOutcomeValue identifier="PERCENT_CORRECT">
+            <product>
+                <baseValue baseType="float">100.0</baseValue>
+                <divide>
+                    <numberCorrect/>
+                    <numberSelected/>
+                </divide>
+            </product>
+        </setOutcomeValue>
+    </outcomeProcessing>
 </assessmentTest>
