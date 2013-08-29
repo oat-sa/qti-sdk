@@ -458,4 +458,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        array('Q04.1.W01'),
 	    );
 	}
+	
+	public function testSelectionAndOrdering() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
+	}
 }

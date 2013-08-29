@@ -87,7 +87,7 @@ abstract class AbstractSelection {
     /**
      * Select the direct children components of the AssessmentSection on which the selection must be applied.
      * 
-     * @return SelectableRoute A SelectableRoute object describing the selection.
+     * @return SelectableRouteCollection A collection of selected SelectableRoute object describing the selection.
      * @throws SelectionException
      */
     abstract public function select();

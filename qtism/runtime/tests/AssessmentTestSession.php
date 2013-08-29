@@ -976,8 +976,19 @@ class AssessmentTestSession extends State {
 	                    }
 	                    
 	                    $selection = new BasicSelection($current, new SelectableRouteCollection(array_reverse($poppedRoutes)));
-	                    $selectedRoute = $selection->select();
-	                    array_push($routeStack, $selectedRoute);
+	                    $selectedRoutes = $selection->select();
+	                    
+	                    // Shuffling can be applied on selected routes.
+	                    // $route will contain the final result of the selection + ordering.
+	                    // @todo Apply Ordering here !!!!
+	                    
+	                    
+                        $route = new SelectableRoute($current->isFixed(), $current->isRequired(), $current->isVisible());
+	                    foreach ($selectedRoutes as $r) {
+	                        $route->appendRoute($r);
+	                    }
+	                    
+	                    array_push($routeStack, $route);
 	                }
 	                else if ($current instanceof AssessmentItemRef) {
 	                    // leaf node.

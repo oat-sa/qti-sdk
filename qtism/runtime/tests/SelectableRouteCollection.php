@@ -24,4 +24,30 @@ class SelectableRouteCollection extends AbstractCollection {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+	/**
+	 * Swap Route at position $key1 with the Route
+	 * at position $key2.
+	 *
+	 * @param int $position1 A RouteItem position.
+	 * @param int $position2 A RouteItem position.
+	 * @throws OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
+	 */
+	public function swap($position1, $position2) {
+	    $routes = &$this->getDataPlaceHolder();
+	
+	    if (isset($routes[$position1]) === false) {
+	        $msg = "No Route object at position '${position1}'.";
+	        throw new OutOfBoundsException($msg);
+    	}
+    	
+    	if (isset($routesItems[$position2]) === false) {
+    	    $msg = "No Route object at position '${position2}'.";
+    	    throw new OutOfBoundsException($msg);
+    	}
+    	
+    	$temp = $routes[$position2];
+    	$routes[$position2] = $routes[$position1];
+    	$routes[$position1] = $temp;
+	}
 }

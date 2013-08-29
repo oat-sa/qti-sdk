@@ -100,30 +100,4 @@ class SelectableRoute extends Route {
     public function setRequired($required) {
         $this->required = $required;
     }
-    
-    /**
-     * Swap RouteItem at position $key1 with the RouteItem
-     * at position $key2.
-     * 
-     * @param int $position1 A RouteItem position.
-     * @param int $position2 A RouteItem position.
-     * @throws OutOfBoundsException If $position1 or $position2 are not poiting to any RouteItem.
-     */
-    public function swap($position1, $position2) {
-        $routeItems = &$this->getRouteItems();
-        
-        if (isset($routeItems[$position1]) === false) {
-            $msg = "No RouteItem object at position '${position1}'.";
-            throw new OutOfBoundsException($msg);
-        }
-        
-        if (isset($routeItems[$position2]) === false) {
-            $msg = "No RouteItem object at position '${position2}'.";
-            throw new OutOfBoundsException($msg);
-        }
-        
-        $temp = $routeItems[$position2];
-        $routeItems[$position2] = $routeItems[$position1];
-        $routeItems[$position1] = $temp;
-    }
 }

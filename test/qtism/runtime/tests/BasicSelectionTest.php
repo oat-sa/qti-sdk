@@ -38,7 +38,12 @@ class BasicSelectionTest extends QtiSmTestCase {
         }
         
         $selection = new BasicSelection($s01, new SelectableRouteCollection(array($s01aRoute, $s01bRoute)));
-        $selectedRoute = $selection->select();
+        $selectedRoutes = $selection->select();
+        
+        $selectedRoute = new SelectableRoute();
+        foreach ($selectedRoutes as $r) {
+            $selectedRoute->appendRoute($r);
+        }
         
         $routeCheck1 = self::isRouteCorrect($selectedRoute, array('Q1', 'Q2', 'Q3'));
         $routeCheck2 = self::isRouteCorrect($selectedRoute, array('Q4', 'Q5', 'Q6'));

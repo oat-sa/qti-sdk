@@ -22,7 +22,7 @@ class BasicSelection extends AbstractSelection {
      * Select the child elements of the AssessmentSection object
      * held by the Selection object.
      * 
-     * @return SelectableRoute A Route object describing the performed selection.
+     * @return SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
      * @throws SelectionException If the select attribute of the Selection exceeds the number of child elements but the withReplacement attribute is set to true.
      */
     public function select() {
@@ -31,8 +31,8 @@ class BasicSelection extends AbstractSelection {
         $sectionParts = $assessmentSection->getSectionParts();
         $selectableRoutes = $this->getSelectableRoutes();
         
-        // Will contain the final result of the selection.
-        $route = new SelectableRoute($assessmentSection->isFixed(), $assessmentSection->isRequired(), $assessmentSection->isVisible());
+        // final result.
+        $routesSelection = new SelectableRouteCollection();
         
         if (is_null($selection) === false) {
             
@@ -91,7 +91,7 @@ class BasicSelection extends AbstractSelection {
                 // How many time is this item selected?
                 if ($selections[$selectable] > 0) {
                     for ($i = 0; $i < $selections[$selectable]; $i++) {
-                        $route->appendRoute($selectable);
+                        $routesSelection[] = $selectable;
                     }
                 }
             }
@@ -99,10 +99,11 @@ class BasicSelection extends AbstractSelection {
         else {
             // Return the original routes as a single one.
             foreach ($selectableRoutes as $originalRoute) {
-                $route->appendRoute($originalRoute);
+                $routesSelection[] = $originalRoute;
             }
         }
+       
         
-        return $route;
+        return $routesSelection;
     }
 }
