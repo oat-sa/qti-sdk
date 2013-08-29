@@ -82,16 +82,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 								
 								// relevant mapping found.
 								$mappedValue = $mapEntry->getMappedValue();
-								
-								if ($mapping->hasLowerBound() && $mappedValue < $mapping->getLowerBound()) {
-									return $mapping->getLowerBound();
-								} 
-								else if ($mapping->hasUpperBound() && $mappedValue > $mapping->getUpperBound()) {
-									return $mapping->getUpperBound();
-								}
-								else {
-									return $mappedValue;
-								}
+								return $mappedValue;
 							}
 						}
 						
@@ -120,19 +111,20 @@ class MapResponseProcessor extends ExpressionProcessor {
 						
 						if (count($mapped) === 0) {
 							// No relevant mapping found at all.
-							return $mapping->getDefaultValue();
+							$result = $mapping->getDefaultValue();
+						}
+						
+						// When mapping a container, try to apply lower or upper bound.
+						if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
+							return $mapping->getLowerBound();
+						}
+						else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
+							return $mapping->getUpperBound();
 						}
 						else {
-							if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-								return $mapping->getLowerBound();
-							}
-							else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-								return $mapping->getUpperBound();
-							}
-							else {
-								return $result;
-							}
+							return $result;
 						}
+						
 					}
 					else {
 						$msg = "MapResponse cannot be applied on a RECORD container.";

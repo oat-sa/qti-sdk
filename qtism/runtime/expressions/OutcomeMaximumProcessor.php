@@ -62,6 +62,10 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
 	            
 	           // Apply variable mapping on $outcomeIdentifier.
 	           $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier);
+	           if ($id === false) {
+	               // Variable name conflict.
+	               continue;
+	           }
 	            
 	           if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
 	                

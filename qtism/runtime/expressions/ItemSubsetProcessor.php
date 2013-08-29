@@ -91,15 +91,20 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor {
 	 * 
 	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object where variable mappings can be found.
 	 * @param string $targetIdentifier A targetIdentifier to be replaced by a sourceIdentifier.
-	 * @return string The mapped identifier or $targetIdentifier if no mapping could be established.
+	 * @return string|false The mapped identifier or $targetIdentifier if no mapping could be established.
 	 */
 	protected static function getMappedVariableIdentifier(AssessmentItemRef $assessmentItemRef, $targetIdentifier) {
+	    // return false if no mapping found.
 	    $sourceIdentifier = $targetIdentifier;
 	    
 	    foreach ($assessmentItemRef->getVariableMappings() as $variableMapping) {
 	        if ($variableMapping->getTarget() === $targetIdentifier) {
 	            $sourceIdentifier = $variableMapping->getSource();
 	            break;
+	        }
+	        else if ($variableMapping->getSource() === $targetIdentifier) {
+	            // Conflict.
+	            $sourceIdentifier = false;
 	        }
 	    }
 	    

@@ -57,7 +57,11 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor {
 	            
 	           // Variable mapping is in force.
 	           $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $outcomeIdentifier); 
-	            
+	           if ($id === false) {
+	               // Variable name conflict.
+	               continue;
+	           }
+	           
 	           if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
 	               
 	                $var = $itemSession->getVariable($id);

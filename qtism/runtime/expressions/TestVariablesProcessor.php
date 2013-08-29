@@ -64,7 +64,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor {
 	    $testSession = $this->getState();
 	    $itemSubset = $this->getItemSubset();
 	    $baseTypes = $this->getExpression()->getBaseType();
-	    $outcomeIdentifier = $this->getExpression()->getVariableIdentifier();
+	    $variableIdentifier = $this->getExpression()->getVariableIdentifier();
 	    $weightIdentifier = $this->getExpression()->getWeightIdentifier();
 	    $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight($weightIdentifier);
 	    $values = array();
@@ -86,13 +86,18 @@ class TestVariablesProcessor extends ItemSubsetProcessor {
 	        foreach ($itemSessions as $itemSession) {
 	            
 	            // Variable mapping takes place.
-	            $variableIdentifier = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $variableIdentifier);
+	            $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $variableIdentifier);
+	            if ($id === false) {
+	                // variable name conflict.
+	                continue;
+	            }
 	            
 	            // For each variable of the item session matching $outcomeIdentifier...
-	            foreach ($itemSession->getKeys() as $variableIdentifier) {
+	            foreach ($itemSession->getKeys() as $identifier) {
 	                
-	                if ($variableIdentifier === $outcomeIdentifier) {
-	                    $var = $itemSession->getVariable($variableIdentifier);
+	                if ($identifier === $id) {
+	                    $var = $itemSession->getVariable($id);
+	                    
 	                    
 	                    // Single cardinality? Does it match the baseType?
 	                    if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
