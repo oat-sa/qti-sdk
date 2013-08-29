@@ -300,6 +300,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $assessmentTestSession->moveNext();
 	    }
 	    
+	    $this->assertFalse($assessmentTestSession->isRunning());
+	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+	    
 	    foreach ($outcomes as $outcomeIdentifier => $outcomeValue) {
 	        $this->assertInternalType((is_int($outcomeValue)) ? 'integer' : 'float', $assessmentTestSession[$outcomeIdentifier]);
 	        
