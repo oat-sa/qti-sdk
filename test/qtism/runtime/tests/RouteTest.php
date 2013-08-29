@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once (dirname(__FILE__) . '/../../../QtiSmRouteTestCase.php');
 
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
@@ -15,7 +15,7 @@ use qtism\runtime\tests\Route;
 use qtism\data\TestPartCollection;
 use qtism\data\AssessmentItemRefCollection;
 
-class RouteTest extends QtiSmTestCase {
+class RouteTest extends QtiSmRouteTestCase {
     
     public function testRouteTest() {
         
@@ -202,36 +202,5 @@ class RouteTest extends QtiSmTestCase {
         // go beyond the digital nirvana, end of test.
         $route->next();
         $this->assertFalse($route->valid());
-    }
-    
-    /**
-     * Build a simple route:
-     * 
-     * * Q1 - S1 - T1
-     * * Q2 - S1 - T1
-     * * Q3 - S1 - T1
-     * 
-     * @return Route
-     */
-    protected static function buildSimpleRoute() {
-        $assessmentItemRefs = new AssessmentItemRefCollection();
-        $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q3.xml');
-        
-        $assessmentSections = new AssessmentSectionCollection();
-        $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
-        $assessmentSections['S1']->setSectionParts($assessmentItemRefs);
-        
-        $testParts = new TestPartCollection();
-        $testParts[] = new TestPart('T1', $assessmentSections);
-        
-        $route = new Route();
-        
-        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
-        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
-        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
-        
-        return $route;
     }
 }
