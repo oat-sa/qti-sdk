@@ -15,7 +15,7 @@ use qtism\data\AssessmentSection;
  * section for each test session. If no selection rules are given we assume that 
  * all elements are to be selected.
  * 
- * @author Jérôme Bogaerts
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @link http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10093 QTI Test Structure
  *
  */

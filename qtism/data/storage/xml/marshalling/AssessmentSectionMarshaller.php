@@ -53,10 +53,10 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 				}
 				
 				// Deal with ordering elements.
-				$orderingElements = $element->getElementsByTagName('ordering');
-				if ($orderingElements->length == 1) {
-					$marshaller = $this->getMarshallerFactory()->createMarshaller($orderingElements->item(0));
-					$object->setOrdering($marshaller->unmarshall($orderingElements->item(0)));
+				$orderingElements = static::getChildElementsByTagName($element, 'ordering');
+				if (count($orderingElements) == 1) {
+					$marshaller = $this->getMarshallerFactory()->createMarshaller($orderingElements[0]);
+					$object->setOrdering($marshaller->unmarshall($orderingElements[0]));
 				}
 				
 				// Deal with rubrickBlocks.

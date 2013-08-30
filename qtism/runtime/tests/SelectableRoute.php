@@ -35,16 +35,26 @@ class SelectableRoute extends Route {
     private $required;
     
     /**
+     * If the RouteItems must be kept together.
+     * 
+     * @var boolean
+     */
+    private $keepTogether;
+    
+    /**
      * Create a new SelectableRoute object.
      * 
      * @param boolean $fixed If the SelectableRoute is fixed.
+     * @param boolean $required If the SelectableRoutei is required.
      * @param boolean $visible If the SelectableRoute is visible.
+     * @param boolean $keepTogether If the SelectableRoute must be kept together.
      */
-    public function __construct($fixed = false, $required = false, $visible = true) {
+    public function __construct($fixed = false, $required = false, $visible = true, $keepTogether = true) {
         parent::__construct();
         $this->setFixed($fixed);
         $this->setRequired($required);
         $this->setVisible($visible);
+        $this->setKeepTogether($keepTogether);
     }
     
     /**
@@ -99,5 +109,23 @@ class SelectableRoute extends Route {
      */
     public function setRequired($required) {
         $this->required = $required;
+    }
+    
+    /**
+     * Set whether or not the RouteItem objects held by the Route must be kept together.
+     * 
+     * @param boolean $keepTogether
+     */
+    public function setKeepTogether($keepTogether) {
+        $this->keepTogether = $keepTogether;
+    }
+    
+    /**
+     * Whether the RouteItem objects held by the Route must be kept together.
+     * 
+     * @return boolean
+     */
+    public function mustKeepTogether() {
+        return $this->keepTogether;
     }
 }

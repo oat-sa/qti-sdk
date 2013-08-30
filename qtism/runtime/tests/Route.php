@@ -210,7 +210,7 @@ class Route implements Iterator {
      * 
      * @param RouteItem $routeItem A RouteItemObject.
      */
-    public function addRouteItem(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection, TestPart $testPart) {
+    public function addRouteItem(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection = null, TestPart $testPart) {
         // Push the routeItem in the track :) !
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
         $this->registerAssessmentItemRef($routeItem);
@@ -541,5 +541,22 @@ class Route implements Iterator {
             $msg = "No RouteItem object found at position '${position}'.";
             throw new OutOfBoundsException($msg);
         }
+    }
+    
+    /**
+     * Get the last RouteItem object composing the Route.
+     * 
+     * @return RouteItem The last RouteItem of the Route.
+     * @throws OutOfBoundsException If the Route is empty.
+     */
+    public function getLastRouteItem() {
+        $routeItems = &$this->getRouteItems();
+        $routeItemsCount = count($routeItems);
+        
+        if ($routeItemsCount === 0) {
+            $msg = "Cannot get the last RouteItem of the Route while it is empty.";
+            throw new OutOfBoundsException($msg);
+        }
+        return $routeItems[$routeItemsCount - 1];
     }
 }

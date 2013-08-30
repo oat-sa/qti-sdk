@@ -28,7 +28,6 @@ class BasicSelection extends AbstractSelection {
     public function select() {
         $assessmentSection = $this->getAssessmentSection();
         $selection = $assessmentSection->getSelection();
-        $sectionParts = $assessmentSection->getSectionParts();
         $selectableRoutes = $this->getSelectableRoutes();
         
         // final result.
@@ -37,7 +36,7 @@ class BasicSelection extends AbstractSelection {
         if (is_null($selection) === false) {
             
             $select = $selection->getSelect();
-            $childCount = count($sectionParts);
+            $childCount = count($selectableRoutes);
             $withReplacement = $selection->isWithReplacement();
             
             if ($select > $childCount && $withReplacement !== true) {

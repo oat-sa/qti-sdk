@@ -347,6 +347,17 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	    }
 	}
 	
+	/**
+	 * Reset the keys of the collection. This method is similar
+	 * in behaviour with PHP's array_values.
+	 * 
+	 */
+	public function resetKeys() {
+	    $data = &$this->getDataPlaceHolder();
+	    $newData = array_values($data);
+	    $this->setDataPlaceHolder($newData);
+	}
+	
 	public function __clone() {
 		foreach ($this->getDataPlaceHolder() as $key => $value) {
 			if (gettype($value) === 'object') {

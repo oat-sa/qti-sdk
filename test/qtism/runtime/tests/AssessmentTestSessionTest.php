@@ -466,4 +466,44 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
 	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
 	}
+	
+	public function testOrderingBasic() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
+	     
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(3, $assessmentTestSession->getRouteCount());
+	}
+	
+	public function testOrderingBasicFixed() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
+	    
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(5, $assessmentTestSession->getRouteCount());
+	}
+    
+	public function testOrderingVisible() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
+	     
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(9, $assessmentTestSession->getRouteCount());
+	}
+	
+	public function testOrderingInvisibleDontKeepTogether() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
+	
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
+	}
+	
+	public function testOrderingInvisibleKeepTogether() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
+	
+	    $assessmentTestSession = AssessmentTestSession::instantiate($doc);
+	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
+	}
 }

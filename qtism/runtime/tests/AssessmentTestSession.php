@@ -949,6 +949,7 @@ class AssessmentTestSession extends State {
 	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
 	            $trail = array();
 	            $mark = array();
+	            $visibleSectionStack = array();
 	            
 	            array_push($trail, $assessmentSection);
 	            
@@ -959,6 +960,10 @@ class AssessmentTestSession extends State {
 	                if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
 	                    // 1st pass on assessmentSection.
 	                    $currentAssessmentSection = $current;
+	                    
+	                    if ($currentAssessmentSection->isVisible() === true) {
+	                        array_push($visibleSectionStack, $currentAssessmentSection);
+	                    }
 	                    
 	                    array_push($mark, $current);
 	                    array_push($trail, $current);
@@ -978,15 +983,28 @@ class AssessmentTestSession extends State {
 	                    $selection = new BasicSelection($current, new SelectableRouteCollection(array_reverse($poppedRoutes)));
 	                    $selectedRoutes = $selection->select();
 	                    
+	                    // The last visible AssessmentSection from the top to the bottom of the tree
+	                    // is useful to know which RubrikBlock to apply on selected RouteItems
+	                    $lastVisible = array_pop($visibleSectionStack);
+	                    if (count($visibleSectionStack) === 0) {
+	                        // top-level AssessmentSection, the visible container is actually the TestPart it belongs to.
+	                        $lastVisible = $testPart;
+	                    }
+	                    
 	                    // Shuffling can be applied on selected routes.
 	                    // $route will contain the final result of the selection + ordering.
-	                    // @todo Apply Ordering here !!!!
+	                    $ordering = new BasicOrdering($current, $selectedRoutes);
+	                    $selectedRoutes = $ordering->order();
 	                    
-	                    
-                        $route = new SelectableRoute($current->isFixed(), $current->isRequired(), $current->isVisible());
+                        $route = new SelectableRoute($current->isFixed(), $current->isRequired(), $current->isVisible(), $current->mustKeepTogether());
 	                    foreach ($selectedRoutes as $r) {
 	                        $route->appendRoute($r);
 	                    }
+	                    
+	                    // Add to the last item of the selection the branch rules of the AssessmentSection/testPart
+	                    // on which the selection is applied.
+	                    $lastRouteItem = $route->getLastRouteItem();
+	                    $lastRouteItem->addBranchRules($current->getBranchRules());
 	                    
 	                    array_push($routeStack, $route);
 	                }

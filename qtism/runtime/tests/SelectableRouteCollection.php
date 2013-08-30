@@ -4,6 +4,7 @@ namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
 use InvalidArgumentException as InvalidArgumentException;
+use \OutOfBoundsException;
 
 /**
  * A collection that aims at storing Route objects.
@@ -41,7 +42,7 @@ class SelectableRouteCollection extends AbstractCollection {
 	        throw new OutOfBoundsException($msg);
     	}
     	
-    	if (isset($routesItems[$position2]) === false) {
+    	if (isset($routes[$position2]) === false) {
     	    $msg = "No Route object at position '${position2}'.";
     	    throw new OutOfBoundsException($msg);
     	}
@@ -49,5 +50,24 @@ class SelectableRouteCollection extends AbstractCollection {
     	$temp = $routes[$position2];
     	$routes[$position2] = $routes[$position1];
     	$routes[$position1] = $temp;
+	}
+	
+	/**
+	 * Insert the SelectableRoute object $route at $position.
+	 *
+	 * @param SelectableRoute $route A SelectableRoute object.
+	 * @param integer $position An integer index where $route must be placed.
+	 */
+	public function insertAt(SelectableRoute $route, $position) {
+	    $data = &$this->getDataPlaceHolder();
+	    if ($position === 0) {
+	        array_unshift($data, $route);
+	    }
+	    else if ($position === (count($data))) {
+	        array_push($data, $route);
+	    }
+	    else {
+	        array_splice($data, $position, 0, array($route));
+	    }
 	}
 }
