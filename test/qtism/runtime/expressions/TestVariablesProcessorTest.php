@@ -31,7 +31,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q01.scoring']);
 		$this->assertEquals(1.0, $session['Q01.scoring']);
-		$session->moveNext();
 		
 		// S01.Q02 - set an incorrect response but close to the correct one ['A P', 'D L'], SCORE = 3
 		$session->beginAttempt();
@@ -39,7 +38,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q02.SCORE']);
 		$this->assertEquals(3.0, $session['Q02.SCORE']);
-		$session->moveNext();
 		
 		// S01.Q03 - set a correct response ['H', '0'], SCORE = 2
 		$session->beginAttempt();
@@ -47,7 +45,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q03.SCORE']);
 		$this->assertEquals(2.0, $session['Q03.SCORE']);
-		$session->moveNext();
 		
 		// S02.Q04 - set an incorrect response ['W Sp', 'G2 Su'], SCORE = 0
 		$session->beginAttempt();
@@ -55,7 +52,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q04.SCORE']);
 		$this->assertEquals(0.0, $session['Q04.SCORE']);
-		$session->moveNext();
 		
 		// S02.Q05 - set an incorrect response ['C B', 'C D', 'B D'], SCORE = 1 (max = 2)
 		$session->beginAttempt();
@@ -63,7 +59,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q05.SCORE']);
 		$this->assertEquals(1.0, $session['Q05.SCORE']);
-		$session->moveNext();
 		
 		// S02.Q06 - set an correct response 'A', mySc0r3 = 1
 		$session->beginAttempt();
@@ -71,7 +66,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q06.mySc0r3']);
 		$this->assertEquals(1.0, $session['Q06.mySc0r3']);
-		$session->moveNext();
 		
 		// S03.Q07.1 - set an incorrect but in shape response '105 105', SCORE = 1
 		$session->beginAttempt();
@@ -79,7 +73,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q07.1.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.1.SCORE']);
-		$session->moveNext();
 		
 		// S03.Q07.2 - set a perfectly correct response '102 113', SCORE = 1
 		$session->beginAttempt();
@@ -87,7 +80,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q07.2.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.2.SCORE']);
-		$session->moveNext();
 		
 		// S03.Q07.3 - set an absolutely incorrect response '13 37', SCORE = 0
 		$session->beginAttempt();
@@ -95,7 +87,6 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->endAttempt($responses);
 		$this->assertInternalType('float', $session['Q07.3.SCORE']);
 		$this->assertEquals(0.0, $session['Q07.3.SCORE']);
-		$session->moveNext();
 		
 		$processor = new TestVariablesProcessor($expression);
 	    $processor->setState($session);

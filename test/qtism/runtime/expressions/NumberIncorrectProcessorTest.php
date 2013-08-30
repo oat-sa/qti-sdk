@@ -39,7 +39,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(8, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(2, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q02
 	    $responses->reset();
@@ -51,7 +50,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(8, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(2, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q03
 	    // Incorrect!
@@ -67,7 +65,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(7, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q05
 	    // Incorrect!
@@ -82,7 +79,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(6, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.1
 	    // Incorrect
@@ -91,7 +87,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(100, 100)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(6, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.2
 	    // Incorrect!
@@ -100,7 +95,6 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(10, 10)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(6, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.3
 	    // Correct!

@@ -230,7 +230,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $responses = new State();
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'));
 	    $assessmentTestSession->endAttempt($responses);
-	    $assessmentTestSession->moveNext();
 	    
 	    // Q02 - Correct Response = 'ChoiceB'.
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
@@ -238,7 +237,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $responses = new State();
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC')); // -> incorrect x)
 	    $assessmentTestSession->endAttempt($responses);
-	    $assessmentTestSession->moveNext();
 	    
 	    // Q03 - Correct Response = 'ChoiceC'.
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
@@ -246,7 +244,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $responses = new State();
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC'));
 	    $assessmentTestSession->endAttempt($responses);
-	    $assessmentTestSession->moveNext();
 	    
 	    // Check the final state of the test session.
 	    // - Q01
@@ -297,7 +294,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    foreach ($responses as $resp) {
 	        $assessmentTestSession->beginAttempt();
 	        $assessmentTestSession->endAttempt($resp);
-	        $assessmentTestSession->moveNext();
 	    }
 	    
 	    $this->assertFalse($assessmentTestSession->isRunning());

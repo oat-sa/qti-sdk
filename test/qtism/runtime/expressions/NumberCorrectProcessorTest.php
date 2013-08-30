@@ -39,7 +39,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(1, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(1, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q02
 	    $responses->reset();
@@ -51,7 +50,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(1, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(1, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q03
 	    // Incorrect!
@@ -67,7 +65,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(2, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q05
 	    // Incorrect!
@@ -82,7 +79,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(3, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.1
 	    // Incorrect
@@ -92,7 +88,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.1.SCORE']);
 	    $this->assertEquals(3, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.2
 	    // Incorrect!
@@ -102,7 +97,6 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $session->endAttempt($responses);
 	    $this->assertEquals(0, $session['Q07.2.SCORE']);
 	    $this->assertEquals(3, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.3
 	    // Correct!

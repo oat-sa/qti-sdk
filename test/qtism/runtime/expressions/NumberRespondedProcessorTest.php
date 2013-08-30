@@ -39,7 +39,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(1, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(1, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q02
 	    $responses->reset();
@@ -51,7 +50,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $this->assertEquals(2, $processor->process());
 	    $processor->setExpression($includeMathResponded);
 	    $this->assertEquals(1, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q03
 	    $session->beginAttempt();
@@ -66,7 +64,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $session->endAttempt($responses);
 	    $this->assertEquals(3, $session['Q04.SCORE']);
 	    $this->assertEquals(3, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q05
 	    $session->beginAttempt();
@@ -79,7 +76,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A'));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(4, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.1
 	    $responses->reset();
@@ -88,7 +84,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.1.SCORE']);
 	    $this->assertEquals(5, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.2
 	    $responses->reset();
@@ -97,7 +92,6 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    $session->endAttempt($responses);
 	    $this->assertEquals(0, $session['Q07.2.SCORE']);
 	    $this->assertEquals(6, $processor->process());
-	    $session->moveNext();
 	    
 	    // Q07.3
 	    $responses->reset();

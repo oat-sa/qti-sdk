@@ -767,10 +767,13 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * End an attempt for the current item in the route.
+	 * End an attempt for the current item in the route. If the current navigation mode
+	 * is LINEAR, the TestSession moves automatically to the next step in the route or
+	 * the end of the session if the responded item is the last one.
 	 * 
 	 * @param State $responses
 	 * @throws AssessmentTestSessionException
+	 * @throws AssessmentItemSessionException
 	 */
 	public function endAttempt(State $responses) {
 	    if ($this->isRunning() === false) {
@@ -781,6 +784,11 @@ class AssessmentTestSession extends State {
 	    $routeItem = $this->getCurrentRouteItem();
 	    $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	    $session->endAttempt($responses);
+	    
+	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	        // Go automatically to the next step in the route.
+	        $this->moveNext();
+	    }
 	}
 	
 	/**
