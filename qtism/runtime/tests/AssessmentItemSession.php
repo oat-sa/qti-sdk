@@ -303,7 +303,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param DateTime $timeReference A DateTime object.
 	 */
-	protected function setTimeReference(DateTime $timeReference) {
+	public function setTimeReference(DateTime $timeReference) {
 	    $this->timeReference = $timeReference;
 	}
 	
