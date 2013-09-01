@@ -131,13 +131,19 @@ class State extends AbstractCollection {
 	/**
 	 * Reset all test-level outcome variables to their defaults.
 	 * 
+	 * @param boolean $preserveBuiltIn Whether the built-in outcome variable 'completionStatus'.
 	 */
-	public function resetOutcomeVariables() {
+	public function resetOutcomeVariables($preserveBuiltIn = true) {
 	    $data = &$this->getDataPlaceHolder();
 	    
 	    foreach (array_keys($data) as $k) {
 	        if ($data[$k] instanceof OutcomeVariable) {
-	            $data[$k]->applyDefaultValue();
+	        	if ($preserveBuiltIn === true && $k === 'completionStatus') {
+	        		continue;
+	        	}
+	        	else {
+	        		$data[$k]->applyDefaultValue();	
+	        	}
 	        }
 	    }
 	}

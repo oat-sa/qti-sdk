@@ -637,7 +637,16 @@ class AssessmentItemSession extends State {
 	    }
 	    
 	    // Apply response processing.
+	    // As per QTI 2.1 specs, For Non-adaptive Items, the values of the outcome variables are reset to their 
+	    // default values prior to each invocation of responseProcessing. For Adaptive Items the outcome variables 
+	    // retain the values that were assigned to them during the previous invocation of response processing. 
+	    // For more information, see Response Processing.
 	    if ($responseProcessing === true) {
+	    	
+	    	if ($this->getAssessmentItemRef()->isAdaptive() === false) {
+	    		$this->resetOutcomeVariables();
+	    	}
+	    	
 	        $responseProcessing = $this->getAssessmentItemRef()->getResponseProcessing();
 	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
 	        $engine->process();
