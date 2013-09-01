@@ -618,20 +618,6 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Reset all test-level outcome variables to their defaults.
-	 * 
-	 */
-	public function resetOutcomeVariables() {
-	    $data = &$this->getDataPlaceHolder();
-	    
-	    foreach (array_keys($data) as $k) {
-	        if ($data[$k] instanceof OutcomeVariable) {
-	            $data[$k]->applyDefaultValue();
-	        }
-	    }
-	}
-	
-	/**
 	 * Get the current Route Item.
 	 * 
 	 * @return RouteItem|false A RouteItem object or false if the test session is not running.
