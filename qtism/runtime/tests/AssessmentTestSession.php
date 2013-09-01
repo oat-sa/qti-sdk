@@ -18,6 +18,7 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
+use \SplObjectStorage;
 use \InvalidArgumentException;
 use \OutOfRangeException;
 use \OutOfBoundsException;
@@ -62,6 +63,14 @@ class AssessmentTestSession extends State {
 	private $assessmentTest;
 	
 	/**
+	 * A map (indexed by AssessmentItemRef objects) to store
+	 * the last occurence that has one of its variable updated.
+	 * 
+	 * @var SplObjectStorage
+	 */
+	private $lastOccurenceUpdate;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -73,6 +82,7 @@ class AssessmentTestSession extends State {
 		$this->setAssessmentTest($assessmentTest);
 		$this->setRoute($route);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
+		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -785,6 +795,9 @@ class AssessmentTestSession extends State {
 	    $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	    $session->endAttempt($responses);
 	    
+	    // Update the lastly updated item occurence.
+	    $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	    
 	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
 	        // Go automatically to the next step in the route.
 	        $this->moveNext();
@@ -940,6 +953,62 @@ class AssessmentTestSession extends State {
 	 */
 	public function getRouteCount() {
 	    return $this->getRoute()->count();
+	}
+	
+	/**
+	 * Get the map of last occurence updates.
+	 * 
+	 * @return SplObjectStorage A map.
+	 */
+	protected function getLastOccurenceUpdate() {
+		return $this->lastOccurenceUpdate;
+	}
+	
+	/**
+	 * Set the map of last occurence updates.
+	 * 
+	 * @param SplObjectStorage $lastOccurenceUpdate A map.
+	 */
+	protected function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate) {
+		$this->lastOccurenceUpdate = $lastOccurenceUpdate;
+	}
+	
+	/**
+	 * Notify which $occurence of $assessmentItemRef was the last updated.
+	 * 
+	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+	 * @param integer $occurence An occurence number for $assessmentItemRef.
+	 */
+	protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence) {
+		$lastOccurenceUpdate = $this->getLastOccurenceUpdate();
+		$lastOccurenceUpdate[$assessmentItemRef] = $occurence;
+	}
+	
+	/**
+	 * Returns which occurence of item was lastly updated.
+	 * 
+	 * @param AssessmentItemRef|string $assessmentItemRef An AssessmentItemRef object.
+	 * @return int|false The occurence number of the lastly updated item session for the given $assessmentItemRef or false if no occurence was updated yet.
+	 */
+	public function whichLastOccurenceUpdate($assessmentItemRef) {
+		if (is_string($assessmentItemRef) === true) {
+			$assessmentItemRefs = $this->getAssessmentItemRefs();
+			if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
+				$assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];
+			}
+		}
+		else if (!$assessmentItemRef instanceof AssessmentItemRef) {
+			$msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
+			throw new InvalidArgumentException($msg);
+		}
+		
+		$lastOccurenceUpdate = $this->getLastOccurenceUpdate();
+		if (isset($lastOccurenceUpdate[$assessmentItemRef]) === true) {
+			return $lastOccurenceUpdate[$assessmentItemRef];
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**

@@ -349,6 +349,27 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    return $returnValue;
 	}
 	
+	public function testWichLastOccurenceUpdate() {
+		$doc = new XmlCompactAssessmentTestDocument();
+		$doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
+		
+		$assessmentTestSession = AssessmentTestSession::instantiate($doc);
+		$assessmentTestSession->beginTestSession();
+		
+		$this->assertFalse($assessmentTestSession->whichLastOccurenceUpdate($doc->getComponentByIdentifier('Q01')));
+		
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+		$assessmentTestSession->endAttempt($responses);
+		
+		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
+		
+		$assessmentTestSession->skip();
+		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
+		
+		$assessmentTestSession->endAttempt($responses);
+		$this->assertEquals(2, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
+	}
+	
 	public function testGetAssessmentItemSessions() {
 	    // --- Test with single occurence items.
 	    $doc = new XmlCompactAssessmentTestDocument();
