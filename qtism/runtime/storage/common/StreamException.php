@@ -11,7 +11,7 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StreamException extends Exception {
+abstract class StreamException extends Exception {
     
     /**
      * Unknown error.
