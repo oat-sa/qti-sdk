@@ -4,7 +4,6 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\runtime\storage\binary\BinaryStream;
 use qtism\runtime\storage\binary\BinaryStreamReader;
 use qtism\runtime\storage\binary\BinaryStreamReaderException;
-use qtism\runtime\storage\common\StreamReaderException;
 
 class BinaryStreamReaderTest extends QtiSmTestCase {
 	
@@ -53,7 +52,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             // EOF reached.
             $tinyInt = $reader->readTinyInt();
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::TINYINT, $e->getCode());
         }
         
@@ -64,7 +63,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $reader->readTinyInt();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }
@@ -91,7 +90,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $short = $reader->readShort();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::SHORT, $e->getCode());
         }
         
@@ -103,7 +102,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $short = $reader->readShort();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }
@@ -138,7 +137,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $int = $reader->readInt();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::INT, $e->getCode());
         }
         
@@ -150,7 +149,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $int = $reader->readInt();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }
@@ -172,7 +171,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $bool = $reader->readBool();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::BOOLEAN, $e->getCode());
         }
         
@@ -182,7 +181,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $stream->close();
             $bool = $reader->readBool();
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }
@@ -208,7 +207,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $string = $reader->readString();
             $this->assertTrue(false);
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::STRING, $e->getCode());
         }
         
@@ -218,7 +217,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $stream->close();
             $string = $reader->readString();
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }
@@ -243,7 +242,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
         try {
             $float = $reader->readFloat();
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::FLOAT, $e->getCode());
         }
         
@@ -253,7 +252,7 @@ class BinaryStreamReaderTest extends QtiSmTestCase {
             $stream->close();
             $float = $reader->readFloat();
         }
-        catch (StreamReaderException $e) {
+        catch (BinaryStreamReaderException $e) {
             $this->assertEquals(BinaryStreamReaderException::NOT_OPEN, $e->getCode());
         }
     }

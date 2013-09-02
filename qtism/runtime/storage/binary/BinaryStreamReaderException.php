@@ -2,7 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\storage\common\StreamReaderException;
+use \Exception;
 
 /**
  * The BinaryStreamReaderException class represents the error
@@ -12,7 +12,28 @@ use qtism\runtime\storage\common\StreamReaderException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamReaderException extends StreamReaderException {
+class BinaryStreamReaderException extends Exception {
+    
+    /**
+     * Unknown error.
+     *
+     * @var integer
+     */
+    const UNKNOWN = 0;
+    
+    /**
+     * A closed BinaryStream object is given as the stream to be read.
+     *
+     * @var integer
+     */
+    const NOT_OPEN = 1;
+    
+    /**
+     * The AbstractStreamReader that caused the error.
+     *
+     * @var AbstractStreamReader
+     */
+    private $source;
     
     /**
      * An error occured while reading a tinyint.
@@ -63,4 +84,34 @@ class BinaryStreamReaderException extends StreamReaderException {
      */
     const BINARY = 8;
     
+    /**
+     * Create a new BinaryStreamReaderException object.
+     *
+     * @param string $message A human-readable message.
+     * @param AbstractStreamReader $source The StreamReader object that caused the error.
+     * @param integer $code An exception code. See class constants.
+     * @param Exception $previous An optional previously thrown exception.
+     */
+    public function __construct($message, BinaryStreamReader $source, $code = 0, Exception $previous = null) {
+        parent::__construct($message, $code, $previous);
+        $this->setSource($source);
+    }
+    
+    /**
+     * Get the BinaryStreamReader object that caused the error.
+     *
+     * @param BinaryStreamReader $source A BinaryStreamReader object.
+     */
+    protected function setSource(BinaryStreamReader $source) {
+        $this->source = $source;
+    }
+    
+    /**
+     * Set the BinaryStreamReader object that caused the error.
+     *
+     * @return BinaryStreamReader A BinaryStreamReader object.
+     */
+    public function getSource() {
+        return $this->source;
+    }
 }

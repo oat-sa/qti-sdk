@@ -2,7 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\storage\common\AbstractStreamReader;
+use qtism\runtime\storage\common\IStream;
 
 /**
  * The BinaryStreamReader aims at providing the needed methods to
@@ -11,7 +11,49 @@ use qtism\runtime\storage\common\AbstractStreamReader;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamReader extends AbstractStreamReader {
+class BinaryStreamReader {
+    
+    /**
+     * The IStream object to read.
+     *
+     * @var IStream.
+     */
+    private $stream;
+    
+    /**
+     * Create a new BinaryStreamReader object.
+     *
+     * @param IStream $stream An IStream object to be read.
+     * @throws StreamReaderException If $stream is not open yet.
+     */
+    public function __construct(IStream $stream) {
+        $this->setStream($stream);
+    }
+    
+    /**
+     * Get the IStream object to be read.
+     *
+     * @return IStream An IStream object.
+     */
+    protected function getStream() {
+        return $this->stream;
+    }
+    
+    /**
+     * Set the IStream object to be read.
+     *
+     * @param IStream $stream An IStream object.
+     * @throws StreamReaderException If the $stream is not open yet.
+     */
+    protected function setStream(IStream $stream) {
+    
+        if ($stream->isOpen() === false) {
+            $msg = "A BinaryStreamReader do not accept closed streams to be read.";
+            throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN);
+        }
+    
+        $this->stream = $stream;
+    }
     
     /**
      * Read a single byte unsigned integer from the current binary stream.
