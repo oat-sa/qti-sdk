@@ -5,13 +5,13 @@ namespace qtism\runtime\storage\binary;
 use qtism\runtime\storage\common\IStream;
 
 /**
- * The BinaryStreamReader aims at providing the needed methods to
+ * The BinaryStreamAccess aims at providing the needed methods to
  * easily read the data inside BinaryStream objects.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamReader {
+class BinaryStreamAccess {
     
     /**
      * The IStream object to read.
@@ -21,7 +21,7 @@ class BinaryStreamReader {
     private $stream;
     
     /**
-     * Create a new BinaryStreamReader object.
+     * Create a new BinaryStreamAccess object.
      *
      * @param IStream $stream An IStream object to be read.
      * @throws StreamReaderException If $stream is not open yet.
@@ -48,8 +48,8 @@ class BinaryStreamReader {
     protected function setStream(IStream $stream) {
     
         if ($stream->isOpen() === false) {
-            $msg = "A BinaryStreamReader do not accept closed streams to be read.";
-            throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN);
+            $msg = "A BinaryStreamAccess do not accept closed streams to be read.";
+            throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN);
         }
     
         $this->stream = $stream;
@@ -58,7 +58,7 @@ class BinaryStreamReader {
     /**
      * Read a single byte unsigned integer from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return integer
      */
     public function readTinyInt() {
@@ -67,14 +67,14 @@ class BinaryStreamReader {
             return ord($bin);
         }
         catch (BinaryStreamException $e) {
-            $this->handleBinaryStreamException($e, BinaryStreamReaderException::TINYINT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT);
         }
     }
     
     /**
      * Read a 2 bytes unsigned integer from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return integer
      */
     public function readShort() {
@@ -83,14 +83,14 @@ class BinaryStreamReader {
             return current(unpack('S', $bin));
         }
         catch (BinaryStreamException $e) {
-            $this->handleBinaryStreamException($e, BinaryStreamReaderException::SHORT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
         }
     }
     
     /**
      * Read a 8 bytes signed integer from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return integer
      */
     public function readInt() {
@@ -99,14 +99,14 @@ class BinaryStreamReader {
             return current(unpack('l', $bin));
         }
         catch (BinaryStreamException $e) {
-            $this->handleBinaryStreamException($e, BinaryStreamReaderException::INT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT);
         }
     }
     
     /**
      * Read a double precision float from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return integer
      */
     public function readFloat() {
@@ -115,35 +115,35 @@ class BinaryStreamReader {
             return current(unpack('d', $bin));
         }
         catch (BinaryStreamException $e) {
-            $this->handleBinaryStreamException($e, BinaryStreamReaderException::FLOAT);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT);
         }
     }
     
     /**
      * Read a boolean value from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return boolean
      */
     public function readBool() {
         try {
             return ($this->readTinyInt() === 0) ? false : true;
         }
-        catch (BinaryStreamReaderException $e) {
+        catch (BinaryStreamAccessException $e) {
             switch ($e->getCode()) {
-                case BinaryStreamReaderException::NOT_OPEN:
+                case BinaryStreamAccessException::NOT_OPEN:
                     $msg = "Cannot read a boolean float from a closed binary stream.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                     break;
             
-                case BinaryStreamReaderException::TINYINT:
+                case BinaryStreamAccessException::TINYINT:
                     $msg = "An error occured while reading a boolean.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::BOOLEAN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::BOOLEAN, $e);
                     break;
             
                 default:
                     $msg = "An unknown error occured while reading a double precision float.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::UNKNOWN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
             }
         }
@@ -152,7 +152,7 @@ class BinaryStreamReader {
     /**
      * Read a string value from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return string
      */
     public function readString() {
@@ -161,23 +161,23 @@ class BinaryStreamReader {
             return $this->getStream()->read($length);
         }
         catch (BinaryStreamException $e) {
-            $this->handleBinaryStreamException($e, BinaryStreamReaderException::STRING);
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
         }
-        catch (BinaryStreamReaderException $e) {
+        catch (BinaryStreamAccessException $e) {
             switch ($e->getCode()) {
-                case BinaryStreamReaderException::NOT_OPEN:
+                case BinaryStreamAccessException::NOT_OPEN:
                     $msg = "Cannot read the length of a string from a closed binary stream.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                     break;
                 
-                case BinaryStreamReaderException::SHORT:
+                case BinaryStreamAccessException::SHORT:
                     $msg = "An error occured while reading the length of a string.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::STRING, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::STRING, $e);
                     break;
                 
                 default:
                     $msg = "An unknown error occured while reading the length of a string.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::UNKNOWN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
             }
         }
@@ -186,70 +186,70 @@ class BinaryStreamReader {
     /**
      * Read binary data from the current binary stream.
      * 
-     * @throws BinaryStreamReaderException
+     * @throws BinaryStreamAccessException
      * @return string A binary string.
      */
     public function readBinary() {
         try {
             return $this->readString();
         }
-        catch (BinaryStreamReaderException $e) {
+        catch (BinaryStreamAccessException $e) {
             switch ($e->getCode()) {
-                case BinaryStreamReaderException::NOT_OPEN:
+                case BinaryStreamAccessException::NOT_OPEN:
                     $msg = "Cannot read binary data from a closed binary stream.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                     break;
                 
-                case BinaryStreamReaderException::SHORT:
+                case BinaryStreamAccessException::SHORT:
                     $msg = "An error occured while reading binary data.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::BINARY, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::BINARY, $e);
                     break;
                 
                 default:
                     $msg = "An unknown error occured while reading binary data.";
-                    throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::UNKNOWN, $e);
+                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
             }
         }
     }
     
     /**
-     * Handle a BinaryStreamException in order to throw the relevant BinaryStreamReaderException.
+     * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      * 
      * @param BinaryStreamException $e The BinaryStreamException object to deal with.
-     * @param unknown_type $typeError The BinaryStreamReader exception code to be trown in case of READ error.
-     * @throws BinaryStreamReaderException The resulting BinaryStreamReaderException.
+     * @param unknown_type $typeError The BinaryStreamAccess exception code to be trown in case of READ error.
+     * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
     protected function handleBinaryStreamException(BinaryStreamException $e, $typeError) {
         
         $strType = 'unknown datatype';
         
         switch ($typeError) {
-            case BinaryStreamReaderException::BOOLEAN:
+            case BinaryStreamAccessException::BOOLEAN:
                 $strType = 'boolean';
             break;
             
-            case BinaryStreamReaderException::BINARY:
+            case BinaryStreamAccessException::BINARY:
                 $strType = 'binary data';
             break;
             
-            case BinaryStreamReaderException::FLOAT:
+            case BinaryStreamAccessException::FLOAT:
                 $strType = 'double precision float';
             break;
             
-            case BinaryStreamReaderException::INT:
+            case BinaryStreamAccessException::INT:
                 $strType = 'integer';
             break;
             
-            case BinaryStreamReaderException::SHORT:
+            case BinaryStreamAccessException::SHORT:
                 $strType = 'short integer';
             break;
             
-            case BinaryStreamReaderException::STRING:
+            case BinaryStreamAccessException::STRING:
                 $strType = 'string';
             break;
             
-            case BinaryStreamReaderException::TINYINT:
+            case BinaryStreamAccessException::TINYINT:
                 $strType = 'tiny integer';
             break;
         }
@@ -257,17 +257,17 @@ class BinaryStreamReader {
         switch ($e->getCode()) {
             case BinaryStreamException::NOT_OPEN:
                 $msg = "Cannot read ${strType} from a closed binary stream.";
-                throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::NOT_OPEN, $e);
+                throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                 break;
         
             case BinaryStreamException::READ:
                 $msg = "An error occured while reading a ${strType}.";
-                throw new BinaryStreamReaderException($msg, $this, $typeError, $e);
+                throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
                 break;
         
             default:
                 $msg = "An unknown error occured while reading a ${strType}.";
-                throw new BinaryStreamReaderException($msg, $this, BinaryStreamReaderException::UNKNOWN, $e);
+                throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
         }
     }

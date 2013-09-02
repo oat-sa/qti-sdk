@@ -5,14 +5,14 @@ namespace qtism\runtime\storage\binary;
 use \Exception;
 
 /**
- * The BinaryStreamReaderException class represents the error
+ * The BinaryStreamAccessException class represents the error
  * that could occur while reading/extracting data from a BinaryStream
  * object.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamReaderException extends Exception {
+class BinaryStreamAccessException extends Exception {
     
     /**
      * Unknown error.
@@ -85,31 +85,31 @@ class BinaryStreamReaderException extends Exception {
     const BINARY = 8;
     
     /**
-     * Create a new BinaryStreamReaderException object.
+     * Create a new BinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
      * @param AbstractStreamReader $source The StreamReader object that caused the error.
      * @param integer $code An exception code. See class constants.
      * @param Exception $previous An optional previously thrown exception.
      */
-    public function __construct($message, BinaryStreamReader $source, $code = 0, Exception $previous = null) {
+    public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
         $this->setSource($source);
     }
     
     /**
-     * Get the BinaryStreamReader object that caused the error.
+     * Get the BinaryStreamAccess object that caused the error.
      *
-     * @param BinaryStreamReader $source A BinaryStreamReader object.
+     * @param BinaryStreamAccess $source A BinaryStreamAccess object.
      */
-    protected function setSource(BinaryStreamReader $source) {
+    protected function setSource(BinaryStreamAccess $source) {
         $this->source = $source;
     }
     
     /**
-     * Set the BinaryStreamReader object that caused the error.
+     * Set the BinaryStreamAccess object that caused the error.
      *
-     * @return BinaryStreamReader A BinaryStreamReader object.
+     * @return BinaryStreamAccess A BinaryStreamAccess object.
      */
     public function getSource() {
         return $this->source;
