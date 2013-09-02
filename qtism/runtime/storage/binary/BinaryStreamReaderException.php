@@ -14,8 +14,6 @@ use qtism\runtime\storage\common\StreamReaderException;
  */
 class BinaryStreamReaderException extends StreamReaderException {
     
-    
-    
     /**
      * An error occured while reading a tinyint.
      * 
