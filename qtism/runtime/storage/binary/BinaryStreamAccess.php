@@ -72,6 +72,21 @@ class BinaryStreamAccess {
     }
     
     /**
+     * Write a single byte unsigned integer in the current binary stream.
+     * 
+     * @param integer $tinyInt
+     * @throws BinaryStreamAccessException
+     */
+    public function writeTinyInt($tinyInt) {
+        try {
+            $this->getStream()->write(chr($tinyInt));
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT, false);
+        }
+    }
+    
+    /**
      * Read a 2 bytes unsigned integer from the current binary stream.
      * 
      * @throws BinaryStreamAccessException
@@ -84,6 +99,21 @@ class BinaryStreamAccess {
         }
         catch (BinaryStreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
+        }
+    }
+    
+    /**
+     * Write a 2 bytes unsigned integer in the current binary stream.
+     * 
+     * @param integer $short
+     * @throws BinaryStreamAccessException
+     */
+    public function writeShort($short) {
+        try {
+            $this->getStream()->write(pack('S', $short));
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT, false);
         }
     }
     
@@ -104,6 +134,21 @@ class BinaryStreamAccess {
     }
     
     /**
+     * Write a 8 bytes signed integer in the current binary stream.
+     * 
+     * @param integer $int
+     * @throws BinaryStreamAccessException
+     */
+    public function writeInt($int) {
+        try {
+            $this->getStream()->write(pack('l', $int));
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT, false);
+        }
+    }
+    
+    /**
      * Read a double precision float from the current binary stream.
      * 
      * @throws BinaryStreamAccessException
@@ -120,6 +165,21 @@ class BinaryStreamAccess {
     }
     
     /**
+     * Write a double precision float in the current binary stream.
+     * 
+     * @param float $float
+     * @throws BinaryStreamAccessException
+     */
+    public function writeFloat($float) {
+        try {
+            $this->getStream()->write(pack('l', $float));
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
+        }
+    }
+    
+    /**
      * Read a boolean value from the current binary stream.
      * 
      * @throws BinaryStreamAccessException
@@ -127,25 +187,27 @@ class BinaryStreamAccess {
      */
     public function readBool() {
         try {
-            return ($this->readTinyInt() === 0) ? false : true;
+            $int = ord($this->getStream()->read(1));
+            return ($int === 0) ? false : true;
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::BOOLEAN);
+        }
+    }
+    
+    /**
+     * Write a boolean value from the current binary stream.
+     * 
+     * @param boolean $boolean
+     * @throws BinaryStreamAccessException
+     */
+    public function writeBool($boolean) {
+        try {
+            $val = ($boolean === true) ? 1 : 0;
+            $this->getStream()->write(chr($val));
         }
         catch (BinaryStreamAccessException $e) {
-            switch ($e->getCode()) {
-                case BinaryStreamAccessException::NOT_OPEN:
-                    $msg = "Cannot read a boolean float from a closed binary stream.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
-                    break;
-            
-                case BinaryStreamAccessException::TINYINT:
-                    $msg = "An error occured while reading a boolean.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::BOOLEAN, $e);
-                    break;
-            
-                default:
-                    $msg = "An unknown error occured while reading a double precision float.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
-                break;
-            }
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }
     
@@ -157,29 +219,28 @@ class BinaryStreamAccess {
      */
     public function readString() {
         try {
-            $length = $this->readShort();
+            $binLength = $this->getStream()->read(2);
+            $length = current(unpack('S', $binLength));
             return $this->getStream()->read($length);
         }
         catch (BinaryStreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
         }
-        catch (BinaryStreamAccessException $e) {
-            switch ($e->getCode()) {
-                case BinaryStreamAccessException::NOT_OPEN:
-                    $msg = "Cannot read the length of a string from a closed binary stream.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
-                    break;
-                
-                case BinaryStreamAccessException::SHORT:
-                    $msg = "An error occured while reading the length of a string.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::STRING, $e);
-                    break;
-                
-                default:
-                    $msg = "An unknown error occured while reading the length of a string.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
-                break;
-            }
+    }
+    
+    /**
+     * Write a string value from in the current binary string.
+     * 
+     * @param string $string
+     * @throws BinaryStreamAccessException
+     */
+    public function writeString($string) {
+        $len = strlen($string);
+        try {
+            $this->getStream()->write(pack('S', $len) . $string);
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING, false);
         }
     }
     
@@ -190,37 +251,28 @@ class BinaryStreamAccess {
      * @return string A binary string.
      */
     public function readBinary() {
-        try {
-            return $this->readString();
-        }
-        catch (BinaryStreamAccessException $e) {
-            switch ($e->getCode()) {
-                case BinaryStreamAccessException::NOT_OPEN:
-                    $msg = "Cannot read binary data from a closed binary stream.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
-                    break;
-                
-                case BinaryStreamAccessException::SHORT:
-                    $msg = "An error occured while reading binary data.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::BINARY, $e);
-                    break;
-                
-                default:
-                    $msg = "An unknown error occured while reading binary data.";
-                    throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
-                break;
-            }
-        }
+        return $this->readString();
+    }
+    
+    /**
+     * Write binary data in the current binary stream.
+     * 
+     * @param string $binary
+     * @throws BinaryStreamAccessException
+     */
+    public function writeBinary($binary) {
+        $this->writeString($binary);
     }
     
     /**
      * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      * 
      * @param BinaryStreamException $e The BinaryStreamException object to deal with.
-     * @param unknown_type $typeError The BinaryStreamAccess exception code to be trown in case of READ error.
+     * @param integer $typeError The BinaryStreamAccess exception code to be trown in case of READ error.
+     * @param boolean $read Wheter the error occured in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
-    protected function handleBinaryStreamException(BinaryStreamException $e, $typeError) {
+    protected function handleBinaryStreamException(BinaryStreamException $e, $typeError, $read = true) {
         
         $strType = 'unknown datatype';
         
@@ -254,19 +306,22 @@ class BinaryStreamAccess {
             break;
         }
         
+        $strAction = ($read === true) ? 'reading' : 'writing';
+        
         switch ($e->getCode()) {
             case BinaryStreamException::NOT_OPEN:
-                $msg = "Cannot read ${strType} from a closed binary stream.";
+                $strAction = ucfirst($strAction);
+                $msg = "${strAction} a ${strType} from a closed binary stream is impossible.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                 break;
         
             case BinaryStreamException::READ:
-                $msg = "An error occured while reading a ${strType}.";
+                $msg = "An error occured while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
                 break;
         
             default:
-                $msg = "An unknown error occured while reading a ${strType}.";
+                $msg = "An unknown error occured while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
                 break;
         }
