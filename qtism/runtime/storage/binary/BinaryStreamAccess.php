@@ -123,7 +123,7 @@ class BinaryStreamAccess {
      * @throws BinaryStreamAccessException
      * @return integer
      */
-    public function readInt() {
+    public function readInteger() {
         try {
             $bin = $this->getStream()->read(4);
             return current(unpack('l', $bin));
@@ -139,7 +139,7 @@ class BinaryStreamAccess {
      * @param integer $int
      * @throws BinaryStreamAccessException
      */
-    public function writeInt($int) {
+    public function writeInteger($int) {
         try {
             $this->getStream()->write(pack('l', $int));
         }
@@ -185,7 +185,7 @@ class BinaryStreamAccess {
      * @throws BinaryStreamAccessException
      * @return boolean
      */
-    public function readBool() {
+    public function readBoolean() {
         try {
             $int = ord($this->getStream()->read(1));
             return ($int === 0) ? false : true;
@@ -201,7 +201,7 @@ class BinaryStreamAccess {
      * @param boolean $boolean
      * @throws BinaryStreamAccessException
      */
-    public function writeBool($boolean) {
+    public function writeBoolean($boolean) {
         try {
             $val = ($boolean === true) ? 1 : 0;
             $this->getStream()->write(chr($val));

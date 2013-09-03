@@ -158,29 +158,29 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
-        $int = $reader->readInt();
+        $int = $reader->readInteger();
         $this->assertInternalType('integer', $int);
         $this->assertEquals(0, $int);
         
-        $int = $reader->readInt();
+        $int = $reader->readInteger();
         $this->assertInternalType('integer', $int);
         $this->assertEquals(1, $int);
         
-        $int = $reader->readInt();
+        $int = $reader->readInteger();
         $this->assertInternalType('integer', $int);
         $this->assertEquals(-1, $int);
         
-        $int = $reader->readInt();
+        $int = $reader->readInteger();
         $this->assertInternalType('integer', $int);
         $this->assertEquals(2147483647, $int);
         
-        $int = $reader->readInt();
+        $int = $reader->readInteger();
         $this->assertInternalType('integer', $int);
         $this->assertEquals(-2147483648, $int);
         
         // reach EOF.
         try {
-            $int = $reader->readInt();
+            $int = $reader->readInteger();
             $this->assertTrue(false);
         }
         catch (BinaryStreamAccessException $e) {
@@ -192,7 +192,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
             $stream = $this->getEmptyStream();
             $reader = new BinaryStreamAccess($stream);
             $stream->close();
-            $int = $reader->readInt();
+            $int = $reader->readInteger();
             $this->assertTrue(false);
         }
         catch (BinaryStreamAccessException $e) {
@@ -204,30 +204,30 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
         
-        $access->writeInt(0);
-        $access->writeInt(1);
-        $access->writeInt(-1);
-        $access->writeInt(2147483647);
-        $access->writeInt(-2147483648);
+        $access->writeInteger(0);
+        $access->writeInteger(1);
+        $access->writeInteger(-1);
+        $access->writeInteger(2147483647);
+        $access->writeInteger(-2147483648);
         $stream->rewind();
         
-        $val = $access->readInt();
+        $val = $access->readInteger();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(0, $val);
         
-        $val = $access->readInt();
+        $val = $access->readInteger();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(1, $val);
         
-        $val = $access->readInt();
+        $val = $access->readInteger();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(-1, $val);
         
-        $val = $access->readInt();
+        $val = $access->readInteger();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(2147483647, $val);
         
-        $val = $access->readInt();
+        $val = $access->readInteger();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(-2147483648, $val);
     }
@@ -237,16 +237,16 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
-        $bool = $reader->readBool();
+        $bool = $reader->readBoolean();
         $this->assertInternalType('boolean', $bool);
         $this->assertFalse($bool);
         
-        $bool = $reader->readBool();
+        $bool = $reader->readBoolean();
         $this->assertInternalType('boolean', $bool);
         $this->assertTrue($bool);
         
         try {
-            $bool = $reader->readBool();
+            $bool = $reader->readBoolean();
             $this->assertTrue(false);
         }
         catch (BinaryStreamAccessException $e) {
@@ -257,7 +257,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
             $stream = $this->getEmptyStream();
             $reader = new BinaryStreamAccess($stream);
             $stream->close();
-            $bool = $reader->readBool();
+            $bool = $reader->readBoolean();
         }
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
@@ -268,15 +268,15 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
         
-        $access->writeBool(true);
-        $access->writeBool(false);
+        $access->writeBoolean(true);
+        $access->writeBoolean(false);
         $stream->rewind();
         
-        $val = $access->readBool();
+        $val = $access->readBoolean();
         $this->assertInternalType('boolean', $val);
         $this->assertTrue($val);
         
-        $val = $access->readBool();
+        $val = $access->readBoolean();
         $this->assertInternalType('boolean', $val);
         $this->assertFalse($val);
     }

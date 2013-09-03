@@ -88,7 +88,7 @@ class BinaryStreamAccessException extends Exception {
      * Create a new BinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param AbstractStreamReader $source The StreamReader object that caused the error.
+     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
      * @param Exception $previous An optional previously thrown exception.
      */

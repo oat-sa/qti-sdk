@@ -136,14 +136,18 @@ class BinaryStream implements IStream {
      * Read $length bytes from the BinaryStream.
      * 
      * @throws BinaryStreamException If the stream is closed or if there is no such $length bytes to be read or if EOF already reached.
+     * @return string The read value or an empty string if length = 0.
      */
     public function read($length) {
         
-        if ($this->isOpen() === false) {
+        if ($length === 0) {
+            return '';
+        }
+        else if ($this->isOpen() === false) {
             $msg = "Cannot call read() on a closed stream";
             throw new BinaryStreamException($msg, $this, BinaryStreamException::NOT_OPEN);
         }
-        else if ($this->eof() === true) {
+        else if ($length > 0 && $this->eof() === true) {
             $msg = "Cannot call read() while EOF reached.";
             throw new BinaryStreamException($msg, $this, BinaryStreamException::READ);
         }
