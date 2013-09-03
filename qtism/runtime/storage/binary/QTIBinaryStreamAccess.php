@@ -62,13 +62,8 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
                 $values = new RecordContainer();
                 for ($i = 0; $i < $count; $i++) {
                     $isNull = $this->readBoolean();
-                    if ($isNull === true) {
-                        $values[] = null;
-                    }
-                    else {
-                        $val = $this->readRecordField();
-                        $values[$val[0]] = $val[1];
-                    }
+                    $val = $this->readRecordField($isNull);
+                    $values[$val[0]] = $val[1];
                 }
                 
                 $variable->setValue($values);
@@ -104,19 +99,93 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
     }
     
     /**
+     * Write the value of $variable in the current binary stream.
+     * 
+     * @param Variable $variable A QTI Runtime Variable object.
+     * @throws QTIBinaryStreamAccessException
+     */
+    public function writeVariableValue(Variable $variable) {
+        try {
+            $value = $variable->getValue();
+            $cardinality = $variable->getCardinality();
+            $baseType = $variable->getBaseType();
+            
+            if (is_null($value) === true) {
+                $this->writeBoolean(true);
+                return;
+            }
+            
+            // Non-null value.
+            $this->writeBoolean(false);
+            
+            if ($cardinality === Cardinality::RECORD) {
+                // is-scalar
+                $this->writeBoolean(false);
+            
+                // count
+                $this->writeShort(count($value));
+            
+                // content
+                foreach ($value as $k => $v) {
+                    $this->writeRecordField(array($k, $v), is_null($v));
+                }
+            }
+            else {
+                $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
+            
+                if ($cardinality === Cardinality::SINGLE) {
+                    // is-scalar
+                    $this->writeBoolean(true);
+            
+                    // content
+                    call_user_func(array($this, $toCall), $value);
+                }
+                else {
+                    // is-scalar
+                    $this->writeBoolean(false);
+                    
+                    // count
+                    $this->writeShort(count($value));
+                    
+                    // MULTIPLE or ORDERED
+                    foreach ($value as $v) {
+                        if (is_null($v) === false) {
+                            $this->writeBoolean(false);
+                            call_user_func(array($this, $toCall), $v);
+                        }
+                        else {
+                            $this->writeBoolean(true);
+                        }
+                    }
+                }
+            }
+        }
+        catch (BinaryStreamAccessExceptionn $e) {
+            $msg = "An error occured while writing a Variable value.";
+            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::VARIABLE, $e);
+        }
+    }
+    
+    /**
      * Read a record field value from the current binary stream. A record field is
      * composed of a key string and a value.
      * 
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
      * @throws QTIBinaryStreamAccessException
      */
-    public function readRecordField() {
+    public function readRecordField($isNull = false) {
         try {
             $key = $this->readString();
-            $baseType = $this->readTinyInt();
             
-            $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
-            $value = call_user_func(array($this, $toCall));
+            if ($isNull === false) {
+                $baseType = $this->readTinyInt();
+                
+                $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
+                $value = call_user_func(array($this, $toCall));
+            }
+            else {
+                $value = null;
+            }
             
             return array($key, $value);
         }
@@ -132,17 +201,21 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * @param array $recordField An array where index 0 is the key string, and the index 1 is the value.
      * @throws QTIBinaryStreamAccessException
      */
-    public function writeRecordField(array $recordField) {
+    public function writeRecordField(array $recordField, $isNull = false) {
         try {
+            $this->writeBoolean($isNull);
             $key = $recordField[0];
-            $value = $recordField[1];
-            $baseType = Utils::inferBaseType($value);
-            
             $this->writeString($key);
-            $this->writeTinyInt($baseType);
-            $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
             
-            call_user_func(array($this, $toCall), $value);
+            if ($isNull === false) {
+                $value = $recordField[1];
+                $baseType = Utils::inferBaseType($value);
+                
+                $this->writeTinyInt($baseType);
+                $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
+                
+                call_user_func(array($this, $toCall), $value);
+            }
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a Record Field.";
@@ -239,7 +312,8 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function writePair(Pair $pair) {
         try {
-            $this->writeString($pair->getFirst(), $pair->getSecond());
+            $this->writeString($pair->getFirst());
+            $this->writeString($pair->getSecond());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a pair.";

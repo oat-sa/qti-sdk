@@ -204,7 +204,10 @@ class Container extends AbstractCollection implements Comparable {
 		foreach (array_keys($data) as $k) {
 			$d = $data[$k];
 			$type = gettype($d);
-			if ($type === 'object') {
+			if (is_null($d) === true) {
+			    $strings[] = 'NULL';
+			}
+			else if ($type === 'object') {
 				$strings[] = $d->__toString();
 			}
 			else if ($type === 'boolean') {
