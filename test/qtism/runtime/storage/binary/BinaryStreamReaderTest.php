@@ -68,6 +68,30 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
     }
     
+    public function testWriteTinyInt() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeTinyInt(0);
+        $access->writeTinyInt(1);
+        $access->writeTinyInt(255);
+        $stream->rewind();
+        
+        $reader = new BinaryStreamAccess($stream);
+        
+        $val = $reader->readTinyInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(0, $val);
+        
+        $val = $reader->readTinyInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(1, $val);
+        
+        $val = $reader->readTinyInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(255, $val);
+    }
+    
     public function testReadShort() {
         $stream = new BinaryStream(pack('S', 0) . pack('S', 1) . pack ('S', 65535));
         $stream->open();
@@ -105,6 +129,28 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
+    }
+    
+    public function testWriteShort() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeShort(0);
+        $access->writeShort(1);
+        $access->writeShort(65535);
+        $stream->rewind();
+        
+        $val = $access->readShort();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(0, $val);
+        
+        $val = $access->readShort();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(1, $val);
+        
+        $val = $access->readShort();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(65535, $val);
     }
     
     public function testReadInt() {
@@ -154,6 +200,38 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
     }
     
+    public function testWriteInt() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeInt(0);
+        $access->writeInt(1);
+        $access->writeInt(-1);
+        $access->writeInt(2147483647);
+        $access->writeInt(-2147483648);
+        $stream->rewind();
+        
+        $val = $access->readInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(0, $val);
+        
+        $val = $access->readInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(1, $val);
+        
+        $val = $access->readInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(-1, $val);
+        
+        $val = $access->readInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(2147483647, $val);
+        
+        $val = $access->readInt();
+        $this->assertInternalType('integer', $val);
+        $this->assertEquals(-2147483648, $val);
+    }
+    
     public function testReadBool() {
         $stream = new BinaryStream("\x00\x01");
         $stream->open();
@@ -184,6 +262,23 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
+    }
+    
+    public function testWriteBool() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeBool(true);
+        $access->writeBool(false);
+        $stream->rewind();
+        
+        $val = $access->readBool();
+        $this->assertInternalType('boolean', $val);
+        $this->assertTrue($val);
+        
+        $val = $access->readBool();
+        $this->assertInternalType('boolean', $val);
+        $this->assertFalse($val);
     }
     
     public function testReadString() {
@@ -222,6 +317,28 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
     }
     
+    public function testWriteString() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeString('');
+        $access->writeString('A');
+        $access->writeString('binary');
+        $stream->rewind();
+        
+        $val = $access->readString();
+        $this->assertInternalType('string', $val);
+        $this->assertEquals('', $val);
+        
+        $val = $access->readString();
+        $this->assertInternalType('string', $val);
+        $this->assertEquals('A', $val);
+        
+        $val = $access->readString();
+        $this->assertInternalType('string', $val);
+        $this->assertEquals('binary', $val);
+    }
+    
     public function testReadFloat() {
         $stream = new BinaryStream(pack('d', 0.0) . pack('d', -M_PI) . pack('d', M_2_PI));
         $stream->open();
@@ -255,5 +372,27 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
+    }
+    
+    public function testWriteFloat() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeFloat(0.0);
+        $access->writeFloat(-M_PI);
+        $access->writeFloat(M_2_PI);
+        $stream->rewind();
+        
+        $val = $access->readFloat();
+        $this->assertInternalType('float', $val);
+        $this->assertEquals(round(0.0, 3), round($val, 3));
+        
+        $val = $access->readFloat();
+        $this->assertInternalType('float', $val);
+        $this->assertEquals(round(-M_PI, 3), round($val, 3));
+        
+        $val = $access->readFloat();
+        $this->assertInternalType('float', $val);
+        $this->assertEquals(round(M_2_PI, 3), round($val, 3));
     }
 }

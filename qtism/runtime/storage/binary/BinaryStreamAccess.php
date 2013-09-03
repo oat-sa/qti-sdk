@@ -172,7 +172,7 @@ class BinaryStreamAccess {
      */
     public function writeFloat($float) {
         try {
-            $this->getStream()->write(pack('l', $float));
+            $this->getStream()->write(pack('d', $float));
         }
         catch (BinaryStreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
