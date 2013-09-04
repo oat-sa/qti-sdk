@@ -508,7 +508,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
     public function readAssessmentItemSession(AssessmentTestSeeker $seeker) {
         try {
             $itemRefPosition = $this->readShort();
-            $assessmentItemRef = $seeker->seek('assessmentItemRef', $itemRefPosition);
+            $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
             
             $session = new AssessmentItemSession($assessmentItemRef);
             $session->setState($this->readTinyInt());
@@ -525,7 +525,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $variable = null;
                 
                 try {
-                    $variable = $seeker->seek(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
+                    $variable = $seeker->seekComponent(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
                 }
                 catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
@@ -549,5 +549,17 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $msg = "No assessmentItemRef found at position ${itemRefPosition} in the assessmentTest tree structure.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         }
+    }
+    
+    
+    
+    /**
+     * Write an AssessmetnItemSession from the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker
+     * @param AssessmentItemSession $session
+     */
+    public function writeAssessmentItemSession(AssessmentTestSeeker $seeker, AssessmentItemSession $session) {
+        
     }
 }

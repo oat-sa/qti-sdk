@@ -139,7 +139,7 @@ class AssessmentTestSeeker {
      * @param integer $position A position in the AssessmentTest tree.
      * @return boolean|QtiComponent A QtiComponent object or false if it is not found.
      */
-    public function getFromComponentStore($class, $position) {
+    protected function getComponentFromComponentStore($class, $position) {
         
         $componentStore = &$this->getComponentStore();
         $component = false;
@@ -152,6 +152,27 @@ class AssessmentTestSeeker {
     }
     
     /**
+     * Get the position in the AssessmentTest tree for $component.
+     * 
+     * @param QtiComponent $component
+     * @return false|integer The position of $component in the AssessmentTest tree ir false if it could not be found.
+     */
+    protected function getPositionFromComponentStore(QtiComponent $component) {
+        
+        $componentStore = &$this->getComponentStore();
+        $position = false;
+        $class = $component->getQtiClassName();
+        
+        if (isset($componentStore[$class]) === true) {
+            if (($search = array_search($component, $componentStore[$class], true)) !== false) {
+                $position = $search;
+            }
+        }
+        
+        return $position;
+    }
+    
+    /**
      * Seek for a QtiComponent object that has $class for QTI class name
      * and that is in position $position in the AssessmentTest tree.
      * 
@@ -160,9 +181,9 @@ class AssessmentTestSeeker {
      * @return QtiComponent The QtiComponent object that corresponds to $class and $position.
      * @throws OutOfBoundsException If no such QtiComponent could be found in the AssessmentTest tree.
      */
-    public function seek($class, $position) {
+    public function seekComponent($class, $position) {
         
-        if (($component = $this->getFromComponentStore($class, $position)) !== false) {
+        if (($component = $this->getComponentFromComponentStore($class, $position)) !== false) {
             // Already explored!
             return $component;
         }
@@ -183,6 +204,39 @@ class AssessmentTestSeeker {
         }
         
         $msg = "Unable to find a QtiComponent object with QTI class '${class}' at position '${position}'.";
+        throw new OutOfBoundsException($msg);
+    }
+    
+    /**
+     * Seek for the position of $component in the AssessmentTest tree.
+     * 
+     * @param QtiComponent $component A QtiComponent object which is supposed to be in the AssessmentTest tree.
+     * @return integer The position of $component in the AssessmentTest tree.
+     * @throws OutOfBoundsException If no such $component could be found in the AssessmentTest tree.
+     */
+    public function seekPosition(QtiComponent $component) {
+        
+        if (($position = $this->getPositionFromComponentStore($component)) !== false) {
+            // Already explored.
+            return $position;
+        }
+        
+        // We have to find it!
+        $iterator = $this->getIterator();
+        
+        while ($iterator->valid() === true) {
+            $current = $iterator->current();
+            $newPosition = $this->addToComponentStore($current);
+            
+            $iterator->next();
+            
+            if ($current === $component) {
+                return $newPosition;
+            }
+        }
+        
+        $class = $component->getQtiClassName();
+        $msg = "Unable to find the position of a QtiComponent with QTI class '${class}'.";
         throw new OutOfBoundsException($msg);
     }
     
