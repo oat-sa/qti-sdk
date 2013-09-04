@@ -117,4 +117,18 @@ class AssessmentItemSessionStore {
             throw new OutOfBoundsException($msg);
         }
     }
+    
+    /**
+     * Whether the given $assessmentItemRef has multiple sessions registered in the store.
+     * 
+     * * If $assessmentItemRef is unknown by the store or there is a single session for this $assessmentItemRef, true is returned.
+     * * If $assessmentItemRef is known by the store and there are more than a single session for this $assessmentItemRef, false is returned.
+     * 
+     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @return boolean
+     */
+    public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef) {
+        $shelves = $this->getShelves();
+        return isset($shelves[$assessmentItemRef]) && count($shelves[$assessmentItemRef]) > 1;
+    }
 }

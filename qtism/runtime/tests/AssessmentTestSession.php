@@ -332,10 +332,30 @@ class AssessmentTestSession extends State {
 				
 				$store = $this->getAssessmentItemSessionStore();
 				$items = $this->getAssessmentItemRefs();
-				$sequence = ($v->hasSequenceNumber() === true) ? $v->getSequenceNumber() - 1 : 0;
 				
-				if (isset($items[$v->getPrefix()]) && ($session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence)) !== false) {
-				    return $session[$v->getVariableName()];
+				if (isset($items[$v->getPrefix()]) === true) {
+				    
+				    $itemRef = $items[$v->getPrefix()];
+				    
+				    // This item is known to be in the route.
+				    if ($v->hasSequenceNumber() === true) {
+				        $sequence = $v->getSequenceNumber() - 1;
+				    }
+				    else if ($this->getAssessmentItemSessionStore()->hasMultipleOccurences($itemRef) === true) {
+				        // No sequence number provided + multiple occurence of this item in the route.
+				        $sequence = $this->whichLastOccurenceUpdate($itemRef);
+				        if ($sequence === false) {
+				            return null;
+				        }
+				    }
+				    else {
+				        // No sequence number provided + single occurence of this item in the route.
+				        $sequence = 0;
+				    }
+				    
+				    if (($session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence)) !== false) {
+				        return $session[$v->getVariableName()];
+				    }
 				}
 			    
 			    return null;
