@@ -36,53 +36,60 @@ class BinaryStreamAccessException extends Exception {
     private $source;
     
     /**
-     * An error occured while reading a tinyint.
+     * An error occured while reading|writing a tinyint.
      * 
      * @var integer
      */
     const TINYINT = 2;
     
     /**
-     * An error occured while reading a short int.
+     * An error occured while reading|writing a short int.
      * 
      * @var integer
      */
     const SHORT = 3;
     
     /**
-     * An error occured while reading an int.
+     * An error occured while reading|writing an int.
      * 
      * @var integer
      */
     const INT = 4;
     
     /**
-     * An error occured while reading a float.
+     * An error occured while reading|writing a float.
      * 
      * @var integer
      */
     const FLOAT = 5;
     
     /**
-     * An error occured while reading a boolean.
+     * An error occured while reading|writing a boolean.
      * 
      * @var integer
      */
     const BOOLEAN = 6;
     
     /**
-     * An error occured while reading a string.
+     * An error occured while reading|writing a string.
      * 
      * @var integer
      */
     const STRING = 7;
     
     /**
-     * An error occured while reading binary data.
+     * An error occured while reading|writing binary data.
      * 
      * @var integer
      */
     const BINARY = 8;
+    
+    /**
+     * An error occured while reading|writing a DateTime.
+     * 
+     * @var integer
+     */
+    const DATETIME = 9;
     
     /**
      * Create a new BinaryStreamAccessException object.

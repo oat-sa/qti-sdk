@@ -3,6 +3,7 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\runtime\storage\common\IStream;
+use \DateTime;
 
 /**
  * The BinaryStreamAccess aims at providing the needed methods to
@@ -265,6 +266,39 @@ class BinaryStreamAccess {
     }
     
     /**
+     * Read a DateTime from the current binary stream.
+     * 
+     * @return DateTime A DateTime object.
+     * @throws BinaryStreamAccessException
+     */
+    public function readDateTime() {
+        try {
+            $timeStamp = current(unpack('l', $this->getStream()->read(4)));
+            $date = new DateTime();
+            return $date->setTimestamp($timeStamp);
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME);
+        }
+    }
+    
+    /**
+     * Write a DateTime from the current binary stream.
+     * 
+     * @param DateTime $dateTime A DateTime object.
+     * @throws BinaryStreamAccessException
+     */
+    public function writeDateTime(DateTime $dateTime) {
+        try {
+            $timeStamp = $dateTime->getTimestamp();
+            $this->getStream()->write(pack('l', $timeStamp));
+        }
+        catch (BinaryStreamException $e) {
+            $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME, false);
+        }
+    }
+    
+    /**
      * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      * 
      * @param BinaryStreamException $e The BinaryStreamException object to deal with.
@@ -303,6 +337,10 @@ class BinaryStreamAccess {
             
             case BinaryStreamAccessException::TINYINT:
                 $strType = 'tiny integer';
+            break;
+            
+            case BinaryStreamAccessException::DATETIME:
+                $strType = 'datetime';
             break;
         }
         

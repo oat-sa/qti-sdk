@@ -4,6 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\runtime\storage\binary\BinaryStream;
 use qtism\runtime\storage\binary\BinaryStreamAccess;
 use qtism\runtime\storage\binary\BinaryStreamAccessException;
+use \DateTime;
 
 class BinaryStreamAccessTest extends QtiSmTestCase {
 	
@@ -90,6 +91,46 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $val = $reader->readTinyInt();
         $this->assertInternalType('integer', $val);
         $this->assertEquals(255, $val);
+    }
+    
+    public function testReadDateTime() {
+        $date = new DateTime('2013:09:04 09:37:09');
+        $stream = new BinaryStream(pack('l', $date->getTimestamp()));
+        $stream->open();
+        $access = new BinaryStreamAccess($stream);
+        
+        $date = $access->readDateTime();
+        $this->assertEquals(1378280229, $date->getTimestamp());
+        
+        try {
+            // EOF
+            $date = $access->readDateTime();
+            $this->assertTrue(false);
+        }
+        catch (BinaryStreamAccessException $e) {
+            $this->assertEquals(BinaryStreamAccessException::DATETIME, $e->getCode());
+        }
+        
+        try {
+            $stream->rewind();
+            $stream->close();
+            $date = $access->readDateTime();
+            $this->assertFalse(true);
+        }
+        catch (BinaryStreamAccessException $e) {
+            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
+        }
+    }
+    
+    public function testWriteDateTime() {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        
+        $access->writeDateTime(new DateTime('2013:09:04 09:37:09'));
+        $stream->rewind();
+        
+        $date = $access->readDateTime();
+        $this->assertEquals(1378280229, $date->getTimestamp());
     }
     
     public function testReadShort() {
