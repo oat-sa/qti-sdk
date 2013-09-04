@@ -18,16 +18,16 @@ use qtism\runtime\common\Variable;
 use qtism\runtime\storage\common\IStream;
 
 /**
- * The QTIBinaryStreamAccess aims at providing access to QTI data stored
+ * The QtiBinaryStreamAccess aims at providing access to QTI data stored
  * in a binary form such as variable values, item sessions, ...
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QTIBinaryStreamAccess extends BinaryStreamAccess {
+class QtiBinaryStreamAccess extends BinaryStreamAccess {
     
     /**
-     * Create a new QTIBinaryStreamAccess object.
+     * Create a new QtiBinaryStreamAccess object.
      * 
      * @param IStream $stream The IStream object to be accessed.
      * @throws BinaryStreamAccessException If $stream is not open yet.
@@ -92,11 +92,11 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a Variable value.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::VARIABLE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
         catch (InvalidArgumentException $e) {
             $msg = "Datatype mismatch for variable '${varId}'.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::VARIABLE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
     }
     
@@ -104,7 +104,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write the value of $variable in the current binary stream.
      * 
      * @param Variable $variable A QTI Runtime Variable object.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeVariableValue(Variable $variable) {
         try {
@@ -164,7 +164,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessExceptionn $e) {
             $msg = "An error occured while writing a Variable value.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::VARIABLE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
     }
     
@@ -173,7 +173,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * composed of a key string and a value.
      * 
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function readRecordField($isNull = false) {
         try {
@@ -193,7 +193,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a Record Field.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::RECORDFIELD, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD, $e);
         }
     }
     
@@ -201,7 +201,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a record field value in the current binary stream. A record field is composed of a key string and a value.
      * 
      * @param array $recordField An array where index 0 is the key string, and the index 1 is the value.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeRecordField(array $recordField, $isNull = false) {
         try {
@@ -221,14 +221,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a Record Field.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::RECORDFIELD);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD);
         }
     }
     
     /**
      * Read an identifier from the current binary stream.
      * 
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return string An identifier.
      */
     public function readIdentifier() {
@@ -237,7 +237,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading an identifier.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::IDENTIFIER, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::IDENTIFIER, $e);
         }
     }
     
@@ -245,7 +245,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write an identifier in the current binary stream.
      * 
      * @param string $identifier A QTI Identifier.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeIdentifier($identifier) {
         try {
@@ -253,14 +253,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing an identifier.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::IDENTIFIER, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::IDENTIFIER, $e);
         }
     }
     
     /**
      * Read a Point from the current binary stream.
      * 
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return Point A Point object.
      */
     public function readPoint() {
@@ -269,7 +269,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a point.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::POINT, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::POINT, $e);
         }
     }
     
@@ -277,7 +277,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a Point in the current binary stream.
      * 
      * @param Point $point A Point object.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writePoint(Point $point) {
        try {
@@ -286,14 +286,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
        } 
        catch (BinaryStreamAccessException $e) {
            $msg = "An error occured while writing a point.";
-           throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::POINT, $e);
+           throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::POINT, $e);
        }
     }
     
     /**
      * Read a Pair from the current binary stream.
      * 
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return Pair A Pair object.
      */
     public function readPair() {
@@ -302,7 +302,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a pair.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::PAIR, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PAIR, $e);
         }
     }
     
@@ -310,7 +310,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a Pair in the current binary stream.
      * 
      * @param Pair $pair A Pair object.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writePair(Pair $pair) {
         try {
@@ -319,14 +319,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a pair.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::PAIR, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PAIR, $e);
         }
     }
     
     /**
      * Read a DirectedPair from the current binary stream.
      *
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return Pair A DirectedPair object.
      */
     public function readDirectedPair() {
@@ -335,7 +335,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a directedPair.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::DIRECTEDPAIR, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
         }
     }
     
@@ -343,7 +343,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a DirectedPair in the current binary stream.
      * 
      * @param DirectedPair $directedPair A DirectedPair object.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeDirectedPair(DirectedPair $directedPair) {
         try {
@@ -352,14 +352,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a directedPair.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::DIRECTEDPAIR, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
         }
     }
     
     /**
      * Read a Duration from the current binary stream.
      * 
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return Duration A Duration object.
      */
     public function readDuration() {
@@ -368,7 +368,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a duration.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::DURATION, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DURATION, $e);
         }
     }
     
@@ -376,7 +376,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a Duration in the current binary stream.
      * 
      * @param Duration $duration A Duration object.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeDuration(Duration $duration) {
         try {
@@ -384,14 +384,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a duration.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::DURATION, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DURATION, $e);
         }
     }
     
     /**
      * Read a URI (Uniform Resource Identifier) from the current binary stream.
      * 
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return string A URI.
      */
     public function readUri() {
@@ -400,7 +400,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a URI.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::URI, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::URI, $e);
         }
     }
     
@@ -408,7 +408,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write a URI (Uniform Resource Identifier) in the current binary stream.
      * 
      * @param string $uri A URI.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeUri($uri) {
         try {
@@ -416,14 +416,14 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a URI.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::URI, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::URI, $e);
         }
     }
     
     /**
      * Read a File from the current binary stream.
      *
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      * @return string A File binary content.
      */
     public function readFile() {
@@ -432,7 +432,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a QTI file binary content.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::FILE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
     
@@ -440,7 +440,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write A file composed by some $binaryContent into the current binary stream.
      * 
      * @param string $binaryContent A binary string.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeFile($binaryContent) {
         try {
@@ -448,7 +448,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a QTI file binary content.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::FILE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
     
@@ -464,7 +464,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading an intOrIdentifier.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::INTORIDENTIFIER, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER, $e);
         }
     }
     
@@ -472,7 +472,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
      * Write an intOrIdentifier in the current binary stream.
      * 
      * @param integer|string $intOrIdentifier An integer or a string value.
-     * @throws QTIBinaryStreamAccessException
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeIntOrIdentifier($intOrIdentifier) {
         try {
@@ -486,12 +486,12 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
             }
             else {
                 $msg = "The intOrIdentifier value to be written must be an integer or a string, '" . gettype($intOrIdentifier) . "' given.";
-                throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::INTORIDENTIFIER);
+                throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER);
             }
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing an intOrIdentifier.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::INTORIDENTIFIER, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER, $e);
         }
     }
     
@@ -506,7 +506,7 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading an assessment item session.";
-            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::ITEM_SESSION, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         }
     }
 }

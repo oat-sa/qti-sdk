@@ -16,12 +16,12 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Variable;
 use qtism\runtime\storage\binary\BinaryStream;
-use qtism\runtime\storage\binary\QTIBinaryStreamAccess;
-use qtism\runtime\storage\binary\QTIBinaryStreamAccessException;
+use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
+use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-class QTIBinaryStreamAccessTest extends QtiSmTestCase {
+class QtiBinaryStreamAccessTest extends QtiSmTestCase {
 	
     /**
      * @dataProvider readVariableValueProvider
@@ -33,7 +33,7 @@ class QTIBinaryStreamAccessTest extends QtiSmTestCase {
     public function testReadVariableValue(Variable $variable, $binary, $expectedValue) {
         $stream = new BinaryStream($binary);
         $stream->open();
-        $access = new QTIBinaryStreamAccess($stream);
+        $access = new QtiBinaryStreamAccess($stream);
         $access->readVariableValue($variable);
         
         if (is_scalar($expectedValue) === true) {
@@ -159,7 +159,7 @@ class QTIBinaryStreamAccessTest extends QtiSmTestCase {
     public function testWriteVariableValue(Variable $variable) {
         $stream = new BinaryStream();
         $stream->open();
-        $access = new QTIBinaryStreamAccess($stream);
+        $access = new QtiBinaryStreamAccess($stream);
         
         // Write the variable value.
         $access->writeVariableValue($variable);

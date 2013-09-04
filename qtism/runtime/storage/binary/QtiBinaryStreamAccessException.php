@@ -4,7 +4,7 @@ namespace qtism\runtime\storage\binary;
 
 use \Exception;
 
-class QTIBinaryStreamAccessException extends BinaryStreamAccessException {
+class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
     
     /**
      * An error occured while reading/writing a Variable.
@@ -84,7 +84,7 @@ class QTIBinaryStreamAccessException extends BinaryStreamAccessException {
     const ITEM_SESSION = 20;
     
     /**
-     * Create a new QTIBinaryStreamAccessException object.
+     * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
      * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
