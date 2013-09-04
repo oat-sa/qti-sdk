@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\AssessmentItemSession;
+use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\DirectedPair;
@@ -490,6 +492,21 @@ class QTIBinaryStreamAccess extends BinaryStreamAccess {
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing an intOrIdentifier.";
             throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::INTORIDENTIFIER, $e);
+        }
+    }
+    
+    public function readAssessmentItemSession(AssessmentItemRef $assessmentItemRef) {
+        try {
+            $session = new AssessmentItemSession($assessmentItemRef);
+            $session->setState($this->readTinyInt());
+            $session['numAttempts'] = $this->readTinyInt();
+            $session['duration'] = $this->readDuration();
+            $session['completionStatus'] = $this->readString();
+            $session->setTimeReference($this->readDateTime());
+        }
+        catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading an assessment item session.";
+            throw new QTIBinaryStreamAccessException($msg, $this, QTIBinaryStreamAccessException::ITEM_SESSION, $e);
         }
     }
 }

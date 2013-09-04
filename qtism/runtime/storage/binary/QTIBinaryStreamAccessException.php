@@ -7,74 +7,81 @@ use \Exception;
 class QTIBinaryStreamAccessException extends BinaryStreamAccessException {
     
     /**
-     * An error occured while reading a Variable.
+     * An error occured while reading/writing a Variable.
      * 
      * @var integer
      */
     const VARIABLE = 10;
     
     /**
-     * An error occured while reading a Record Field.
+     * An error occured while reading/writing a Record Field.
      * 
      * @var integer
      */
     const RECORDFIELD = 11;
     
     /**
-     * An error occured while reading a QTI identifier.
+     * An error occured while reading/writing a QTI identifier.
      * 
      * @var integer
      */
     const IDENTIFIER = 12;
     
     /**
-     * An error occured while reading a QTI point.
+     * An error occured while reading/writing a QTI point.
      * 
      * @var integer
      */
     const POINT = 13;
     
     /**
-     * An error occured while reading a QTI pair.
+     * An error occured while reading/writing a QTI pair.
      * 
      * @var integer
      */
     const PAIR = 14;
     
     /**
-     * An error occured while reading a QTI directedPair.
+     * An error occured while reading/writing a QTI directedPair.
      * 
      * @var integer
      */
     const DIRECTEDPAIR = 15;
     
     /**
-     * An error occured while reading a QTI duration.
+     * An error occured while reading/writing a QTI duration.
      * 
      * @var integer
      */
     const DURATION = 16;
     
     /**
-     * An error occured while reading a URI.
+     * An error occured while reading/writing a URI.
      * 
      * @var integer
      */
     const URI = 17;
     
     /**
-     * An error occured while reading File's binary data.
+     * An error occured while reading/writing File's binary data.
      * 
      * @var integer
      */
     const FILE = 18;
     
     /**
-     * An error occured while reading an intOrIdentifier.
+     * An error occured while reading/writing an intOrIdentifier.
      * 
      * @var integer
      */
     const INTORIDENTIFIER = 19;
+    
+    /**
+     * An error occured while reading/writing an assessment item session.
+     * 
+     * @var integer
+     */
+    const ITEM_SESSION = 20;
     
     /**
      * Create a new QTIBinaryStreamAccessException object.

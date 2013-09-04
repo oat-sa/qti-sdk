@@ -1,8 +1,8 @@
 <?php
 
-
 require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\QtiComponentIterator;
@@ -11,7 +11,7 @@ use qtism\data\expressions\BaseValue;
 
 class QtiComponentIteratorTest extends QtiSmTestCase {
 	
-	public function testSimple() {
+	/*public function testSimple() {
 		$baseValues = new ExpressionCollection();
 		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
 		$baseValues[] = new BaseValue(BaseType::INTEGER, 25);
@@ -40,7 +40,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		$iterator->next();
 		$this->assertFalse($iterator->valid());
 		$this->assertTrue($iterator->current() === null);
-	}
+	}*/
 	
 	public function testAvoidRecursions() {
 		$baseValues = new ExpressionCollection();
@@ -58,5 +58,20 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		}
 		
 		$this->assertEquals($iterations, 4);
+	}
+	
+	public function testClassSelection() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+	    
+	    $iterator = new QtiComponentIterator($doc, array('responseProcessing'));
+	    $i = 0;
+	    
+	    foreach ($iterator as $responseProcessing) {
+	        $this->assertEquals($iterator->key(), 'responseProcessing');
+	        $i++;
+	    }
+	    
+	    $this->assertEquals(7, $i);
 	}
 }

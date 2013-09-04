@@ -238,4 +238,16 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef {
 		
 		return $compactRef;
 	}
+	
+	public function getComponents() {
+	    $components = array_merge(parent::getComponents()->getArrayCopy(), 
+	                              $this->getResponseDeclarations()->getArrayCopy(),
+	                              $this->getOutcomeDeclarations()->getArrayCopy());
+	    
+	    if ($this->hasResponseProcessing() === true) {
+	        $components[] = $this->getResponseProcessing();
+	    }
+	    
+	    return new QtiComponentCollection($components);
+	}
 }

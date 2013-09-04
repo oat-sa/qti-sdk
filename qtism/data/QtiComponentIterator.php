@@ -90,12 +90,20 @@ class QtiComponentIterator implements Iterator {
 	private $currentContainer = null;
 	
 	/**
+	 * The QTI classes the Iterator must take into account.
+	 * 
+	 * @var array
+	 */
+	private $classes;
+	
+	/**
 	 * Create a new QtiComponentIterator object.
 	 * 
 	 * @param QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
 	 */
-	public function __construct(QtiComponent $rootComponent) {
+	public function __construct(QtiComponent $rootComponent, array $classes = array()) {
 		$this->setRootComponent($rootComponent);
+		$this->setClasses($classes);
 		$this->rewind();
 	}
 	
@@ -146,7 +154,28 @@ class QtiComponentIterator implements Iterator {
 	}
 	
 	/**
+	 * Set the QTI classes the Iterator must take into account.
 	 * 
+	 * @param array $classes An array of QTI class names.
+	 */
+	protected function setClasses(array $classes) {
+	    $this->classes = $classes;
+	}
+	
+	/**
+	 * Get the QTI classes the Iterator must take into account.
+	 * 
+	 * @return array An array of QTI class names.
+	 */
+	protected function &getClasses() {
+	    return $this->classes;
+	}
+	
+	/**
+	 * Push a trail entry on the trail.
+	 * 
+	 * @param QTIComponent $source From where we are coming from.
+	 * @param QTIComponentCollection $components The next components to explore.
 	 */
 	protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components) {
 		
@@ -244,6 +273,7 @@ class QtiComponentIterator implements Iterator {
 	public function rewind() {
 		$trail = array();
 		$this->setTrail($trail);
+		$classes = &$this->getClasses();
 		
 		$traversed = array();
 		$this->setTraversed($traversed);
@@ -251,7 +281,7 @@ class QtiComponentIterator implements Iterator {
 		$root = $this->getRootComponent();
 		$this->pushOnTrail($root, $root->getComponents());
 		
-		if (count($this->getTrail()) > 0) {
+		while(count($this->getTrail()) > 0) {
 			$trailEntry = $this->popFromTrail();
 			
 			$this->setValid(true);
@@ -259,11 +289,16 @@ class QtiComponentIterator implements Iterator {
 			$this->setCurrentContainer($trailEntry[0]);
 			$this->markTraversed($this->getCurrentComponent());
 			$this->pushOnTrail($this->getCurrentComponent(), $this->getCurrentComponent()->getComponents());
+			
+			if (empty($classes) === true || in_array($this->getCurrentComponent()->getQtiClassName(), $classes) === true) {
+			    break;
+			}
 		}
-		else {
-			$this->setValid(false);
-			$this->setCurrentComponent(null);
-			$this->setCurrentContainer(null);
+		
+		if (count($this->getTrail()) === 0) {
+		    $this->setValid(false);
+		    $this->setCurrentComponent(null);
+		    $this->setCurrentContainer(null);
 		}
 	}
 	
@@ -294,18 +329,25 @@ class QtiComponentIterator implements Iterator {
 	public function next() {
 		
 		if (count($this->getTrail()) > 0) {
+		    
+		    $classes = &$this->getClasses();
 			
 			while(count($this->getTrail()) > 0) {
 				$trailEntry = $this->popFromTrail();
 				$component = $trailEntry[1];
 				$source = $trailEntry[0];
 				
-				if (!$this->isTraversed($component)) {
+				if ($this->isTraversed($component) === false) {
 					$this->setCurrentComponent($component);
 					$this->setCurrentContainer($source);
 					$this->pushOnTrail($component, $this->getCurrentComponent()->getComponents());
 					$this->markTraversed($this->getCurrentComponent());
-					return;
+					
+					if (empty($classes) === true || in_array($component->getQTIClassName(), $classes) === true) {
+					    // If all classes are seeked or the current component has a class name
+					    // that must be seeked, stop the iteration.
+					    return;
+					}
 				}
 			}
 			
