@@ -1,7 +1,7 @@
 <?php
 
+use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
-
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\datatypes\Point;
@@ -384,5 +384,29 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
         $this->assertInternalType('string', $session['RESPONSE']);
         $this->assertEquals('ChoiceA', $session['RESPONSE']);
+    }
+    
+    public function testWriteAssessmentItemSession() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration'));
+        $stream = new BinaryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        
+        $session = new AssessmentItemSession($doc->getComponentByIdentifier('Q02'));
+        $session->beginItemSession();
+        
+        $access->writeAssessmentItemSession($seeker, $session);
+        
+        $stream->rewind();
+        $session = $access->readAssessmentItemSession($seeker);
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
+        $this->assertEquals('PT0S', $session['duration']->__toString());
+        $this->assertEquals(0, $session['numAttempts']);
+        $this->assertEquals('not_attempted', $session['completionStatus']);
+        $this->assertEquals(0.0, $session['SCORE']);
+        $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
     }
 }

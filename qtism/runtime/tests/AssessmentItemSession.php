@@ -321,7 +321,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @return DateTime A DateTime object.
 	 */
-	protected function getTimeReference() {
+	public function getTimeReference() {
 	    return $this->timeReference;
 	}
 	

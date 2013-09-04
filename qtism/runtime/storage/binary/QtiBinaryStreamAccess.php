@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\state\OutcomeDeclaration;
@@ -512,10 +513,16 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             
             $session = new AssessmentItemSession($assessmentItemRef);
             $session->setState($this->readTinyInt());
-            $session['numAttempts'] = $this->readTinyInt();
-            $session['duration'] = $this->readDuration();
-            $session['completionStatus'] = $this->readString();
-            $session->setTimeReference($this->readDateTime());
+            
+            if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
+                $session['numAttempts'] = $this->readTinyInt();
+                $session['duration'] = $this->readDuration();
+                $session['completionStatus'] = $this->readString();
+                
+                if ($session['numAttempts'] > 0) {
+                    $session->setTimeReference($this->readDateTime());
+                }
+            }
             
             $varCount = $this->readTinyInt();
             for ($i = 0; $i < $varCount; $i++) {
@@ -551,15 +558,61 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         }
     }
     
-    
-    
     /**
      * Write an AssessmetnItemSession from the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker
-     * @param AssessmentItemSession $session
+     * @param AssessmentTestSeeker $seeker The AssessmentTestSeeker object from where the position of components will be pulled out.
+     * @param AssessmentItemSession $session An AssessmentItemSession object.
+     * @throws QtiBinaryStreamAccessException
      */
     public function writeAssessmentItemSession(AssessmentTestSeeker $seeker, AssessmentItemSession $session) {
-        
+        try {
+            $this->writeShort($seeker->seekPosition($session->getAssessmentItemRef()));
+            $this->writeTinyInt($session->getState());
+            
+            if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
+                $this->writeTinyInt($session['numAttempts']);
+                $this->writeDuration($session['duration']);
+                $this->writeString($session['completionStatus']);
+                
+                if ($session['numAttempts'] > 0) {
+                    $this->writeDateTime($session->getTimeReference());
+                }
+            }
+            
+            // minus the 3 built-in variables
+            $varCount = count($session) - 3;
+            $this->writeTinyInt($varCount);
+            
+            $itemOutcomes = $session->getAssessmentItemRef()->getOutcomeDeclarations();
+            $itemResponses = $session->getAssessmentItemRef()->getResponseDeclarations();
+            
+            foreach ($session->getKeys() as $varId) {
+                if (in_array($varId, array('numAttempts', 'duration', 'completionStatus')) === false) {
+                    
+                    $var = $session->getVariable($varId);
+                    $isOutcome = $var instanceof OutcomeVariable;
+                    $variableDeclaration = ($isOutcome === true) ? $itemOutcomes[$varId] : $itemResponses[$varId];
+                    
+                    try {
+                        $this->writeBoolean($isOutcome);
+                        $this->writeShort($seeker->seekPosition($variableDeclaration));
+                        $this->writeVariableValue($var);
+                    }
+                    catch (OutOfBoundsException $e) {
+                        $msg = "No variable found in the assessmentTest tree structure.";
+                        throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                    }
+                }
+            }
+        }
+        catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing an assessment item session.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+        }
+        catch (OutOfBoundsException $e) {
+            $msg = "No assessmentItemRef found in the assessmentTest tree structure.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+        }
     }
 }
