@@ -142,6 +142,8 @@ class AssessmentItemSession extends State {
      * An acceptable latency to be applied
      * on duration when timelimits are in
      * force.
+     * 
+     * @var Duration
      */
     private $acceptableLatency;
     
