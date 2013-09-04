@@ -217,6 +217,13 @@ class AssessmentItemSession extends State {
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
+		
+		// -- Create the built-in response variables.
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION));
+			
+		// -- Create the built-in outcome variables.
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER));
 	}
 	
 	/**
@@ -468,13 +475,6 @@ class AssessmentItemSession extends State {
 		    $responseVariable->initialize();
 		    $this->setVariable($responseVariable);
 		}
-		
-		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER));
-		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION));
-		 
-		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, self::COMPLETION_STATUS_UNKNOWN));
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);

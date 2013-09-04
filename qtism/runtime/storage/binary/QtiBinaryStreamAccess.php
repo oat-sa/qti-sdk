@@ -2,6 +2,10 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
@@ -495,17 +499,54 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         }
     }
     
-    public function readAssessmentItemSession(AssessmentItemRef $assessmentItemRef) {
+    /**
+     * Read an AssessmentItemSession from the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function readAssessmentItemSession(AssessmentTestSeeker $seeker) {
         try {
+            $itemRefPosition = $this->readShort();
+            $assessmentItemRef = $seeker->seek('assessmentItemRef', $itemRefPosition);
+            
             $session = new AssessmentItemSession($assessmentItemRef);
             $session->setState($this->readTinyInt());
             $session['numAttempts'] = $this->readTinyInt();
             $session['duration'] = $this->readDuration();
             $session['completionStatus'] = $this->readString();
             $session->setTimeReference($this->readDateTime());
+            
+            $varCount = $this->readTinyInt();
+            for ($i = 0; $i < $varCount; $i++) {
+                $isOutcome = $this->readBoolean();
+                $varPosition = $this->readShort();
+                
+                $variable = null;
+                
+                try {
+                    $variable = $seeker->seek(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
+                }
+                catch (OutOfBoundsException $e) {
+                    $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
+                    throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                }
+                
+                $variable = ($variable instanceof OutcomeDeclaration) ? OutcomeVariable::createFromDataModel($variable) : ResponseVariable::createFromDataModel($variable);
+                
+                // If we are here, we have our variable.
+                $this->readVariableValue($variable);
+                $session->setVariable($variable);
+            }
+            
+            return $session;
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading an assessment item session.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+        }
+        catch (OutOfBoundsException $e) {
+            $msg = "No assessmentItemRef found at position ${itemRefPosition} in the assessmentTest tree structure.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         }
     }

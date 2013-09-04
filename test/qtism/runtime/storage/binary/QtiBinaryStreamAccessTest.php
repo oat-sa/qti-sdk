@@ -1,7 +1,10 @@
 <?php
 
-use qtism\common\datatypes\Point;
+use qtism\runtime\tests\AssessmentItemSessionState;
 
+use qtism\runtime\storage\common\AssessmentTestSeeker;
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\common\datatypes\Point;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\Comparable;
@@ -344,5 +347,42 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(array('key1' => null)))),
             array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => 25.5, 'key3' => 2, 'key4' => 'String!', 'key5' => null, 'key6' => true))))
         );
+    }
+    
+    public function testReadAssessmentItemSession() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $position = pack('S', 0); // Q01
+        $state = "\x01"; // INTERACTING
+        $numAttempts = "\x02"; // 2
+        $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
+        $completionStatus = pack('S', 10) . 'incomplete';
+        $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
+        $varCount = "\x02"; // 2 variables (SCORE & RESPONSE).
+        
+        $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
+        $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
+        
+        $bin = implode('', array($position, $state, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
+        $stream = new BinaryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration'));
+        
+        $session = $access->readAssessmentItemSession($seeker);
+        
+        $this->assertEquals('Q01', $session->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
+        $this->assertEquals(2, $session['numAttempts']);
+        $this->assertEquals('PT0S', $session['duration']->__toString());
+        $this->assertEquals('incomplete', $session['completionStatus']);
+        $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
+        $this->assertInternalType('float', $session['scoring']);
+        $this->assertEquals(1.0, $session['scoring']);
+        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
+        $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());
+        $this->assertInternalType('string', $session['RESPONSE']);
+        $this->assertEquals('ChoiceA', $session['RESPONSE']);
     }
 }
