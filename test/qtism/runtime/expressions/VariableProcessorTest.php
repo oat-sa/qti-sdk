@@ -1,4 +1,8 @@
 <?php
+use qtism\runtime\common\ResponseVariable;
+
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\AssessmentItemSession;
@@ -100,5 +104,72 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$stateVal = $assessmentTestSession['Q01.var2'];
 		$this->assertEquals(10.1, $stateVal[0]);
 		$this->assertEquals(12.1, $stateVal[1]);
+	}
+	
+	public function testMultipleOccurences() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
+	    
+	    $session = AssessmentTestSession::instantiate($doc);
+	    $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.SCORE"/>');
+	    $occurenceVariableExpression = $this->createComponentFromXml('<variable identifier="Q01.1.SCORE"/>');
+	    $variableProcessor = new VariableProcessor($variableExpr);
+	    $variableProcessor->setState($session);
+	    
+	    // non begun test session.
+	    $this->assertSame(null, $variableProcessor->process());
+	    $variableProcessor->setExpression($occurenceVariableExpression);
+	    $this->assertSame(null, $variableProcessor->process());
+	    
+	    // begun test session.
+	    $variableProcessor->setExpression($variableExpr);
+	    $session->beginTestSession();
+	    
+	    // Why not 0.0? Because when using a non sequenced variable identifier
+	    // for an item with multiple occurence, the very last instance submitted becomes
+	    // the item where the values will be pulled out. No instances were submitted yet
+	    // and NULL is returned.
+	    $this->assertSame(null, $variableProcessor->process());
+	    $variableProcessor->setExpression($occurenceVariableExpression);
+	    
+	    // Why not NULL? Because we are in a linear test and Q01 is eligible for selection.
+	    // The item session is then instantiated. Outcome variables are set to their default
+	    // when the item session instantiation occurs.
+	    $this->assertSame(0.0, $variableProcessor->process());
+	    
+	    // Q01.1
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+	    
+	    $variableProcessor->setExpression($variableExpr);
+	    $result = $variableProcessor->process();
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(1.0, $result);
+	    
+	    $variableProcessor->setExpression($occurenceVariableExpression);
+	    $result = $variableProcessor->process();
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(1.0, $result);
+	    
+	    // Q01.2
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+	    
+	    $variableProcessor->setExpression($variableExpr);
+	    $result = $variableProcessor->process();
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(0.0, $result);
+	    
+	    // $occurenceVariableExpression still targets Q01.1
+	    $variableProcessor->setExpression($occurenceVariableExpression);
+	    $result = $variableProcessor->process();
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(1.0, $result);
+	    
+	    // $occurenceVariableExpression now targets Q01.2
+	    $occurenceVariableExpression->setIdentifier('Q01.2.SCORE');
+	    $result = $variableProcessor->process();
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(0.0, $result);
 	}
 }

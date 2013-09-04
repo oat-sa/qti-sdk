@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\SubmissionMode;
+
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\common\collections\IdentifierCollection;
@@ -344,7 +346,11 @@ class AssessmentTestSession extends State {
 				    else if ($this->getAssessmentItemSessionStore()->hasMultipleOccurences($itemRef) === true) {
 				        // No sequence number provided + multiple occurence of this item in the route.
 				        $sequence = $this->whichLastOccurenceUpdate($itemRef);
-				        if ($sequence === false) {
+				        
+				        // As per QTI 2.1 specs, The value of an item variable taken from an item instantiated multiple times from the 
+				        // same assessmentItemRef (through the use of selection withReplacement) is taken from the last instance submitted
+				        // if submission is simultaneous, otherwise it is undefined.
+				        if ($sequence === false || $this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
 				            return null;
 				        }
 				    }
@@ -353,8 +359,13 @@ class AssessmentTestSession extends State {
 				        $sequence = 0;
 				    }
 				    
-				    if (($session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence)) !== false) {
+				    try {
+				        $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
 				        return $session[$v->getVariableName()];
+				    }
+				    catch (OutOfBoundsException $e) {
+				        // No such session referenced in the session store.
+				        return null;
 				    }
 				}
 			    

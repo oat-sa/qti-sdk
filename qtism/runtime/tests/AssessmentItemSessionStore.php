@@ -78,7 +78,7 @@ class AssessmentItemSessionStore {
     public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
         $shelves = $this->getShelves();
         
-        if (isset($shelves[$assessmentItemRef][$occurence]) === true) {
+        if (isset($shelves[$assessmentItemRef]) && isset($shelves[$assessmentItemRef][$occurence]) === true) {
             return $this->shelves[$assessmentItemRef][$occurence];
         }
         else {

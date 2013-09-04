@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\runtime\common\Utils;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -75,13 +76,8 @@ class VariableProcessor extends ExpressionProcessor {
 		$variableIdentifier = $this->getExpression()->getIdentifier();
 		$weightIdentifier = $this->getExpression()->getWeightIdentifier();
 		
-		$variable = $state->getVariable($variableIdentifier);
+		$variableValue = $state[$variableIdentifier];
 		
-		if (empty($variable)) {
-			return null; 
-		}
-		
-		$variableValue = $variable->getValue();
 		if (empty($variableValue)) {
 			return $variableValue; // Even if empty string, it is considered by QTI as null.
 		}
@@ -91,16 +87,18 @@ class VariableProcessor extends ExpressionProcessor {
 			
 			try {
 				$vIdentifier = new VariableIdentifier($variableIdentifier);
-				if ($vIdentifier->hasPrefix() === true) {
+				if ($vIdentifier->hasPrefix() === true && empty($weightIdentifier) === false) {
 					
 					$weight = $state->getWeight($vIdentifier->getPrefix() . '.' . $weightIdentifier);
+					$baseType = Utils::inferBaseType($variableValue);
+					$cardinality = Utils::inferCardinality($variableValue);
 					
 					// From IMS QTI:
-					//Weights only apply to item variables with base types integer and float.
+					// Weights only apply to item variables with base types integer and float.
 					// If the item variable is of any other type the weight is ignored.
-					if (!empty($weight) && ($variable->getBaseType() == BaseType::INTEGER || $variable->getBaseType() == BaseType::FLOAT)) {
+					if (!empty($weight) && ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT)) {
 					
-						if ($variable->getCardinality() == Cardinality::SINGLE) {
+						if ($cardinality === Cardinality::SINGLE) {
 							$variableValue *= $weight->getValue();
 						}
 						else {
@@ -120,7 +118,7 @@ class VariableProcessor extends ExpressionProcessor {
 			catch (InvalidArgumentException $e) {
 				// Invalid $variableIdentifier.
 				$msg = "Invalid identifier '${variableIdentifier}' given for variable identifier.";
-				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
+				throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE, $e);
 			}
 			
 		}
