@@ -615,4 +615,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         }
     }
+    
+    public function readRouteItem(AssessmentTestSeeker $seeker) {
+        
+        
+    }
 }

@@ -557,6 +557,25 @@ class Route implements Iterator {
             $msg = "Cannot get the last RouteItem of the Route while it is empty.";
             throw new OutOfBoundsException($msg);
         }
+        
         return $routeItems[$routeItemsCount - 1];
+    }
+    
+    /**
+     * Get the first RouteItem object composing the Route.
+     * 
+     * @throws OutOfBoundsException If the Route is empty.
+     * @return RouteItem The first RouteItem of the Route.
+     */
+    public function getFirstRouteItem() {
+        $routeItems = &$this->getRouteItems();
+        $routeItemsCount = count($routeItems);
+        
+        if ($routeItemsCount === 0) {
+            $msg = "Cannot get the first RouteItem of the Route while it is empty.";
+            throw new OutOfBoundsException($msg);
+        }
+        
+        return $routeItems[0];
     }
 }

@@ -2,8 +2,9 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\rules\PreConditionCollection;
+use qtism\data\rules\PreCondition;
 use qtism\data\rules\BranchRule;
-
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\TestPart;
@@ -46,6 +47,13 @@ class RouteItem {
     private $branchRules;
     
     /**
+     * The PreCondition objects to be applied prior to the RouteItem.
+     * 
+     * @var PreConditionCollection
+     */
+    private $preConditions;
+    
+    /**
      * The occurence number.
      * 
      * @var integer
@@ -65,8 +73,10 @@ class RouteItem {
         $this->setAssessmentSection($assessmentSection);
         $this->setTestPart($testPart);
         $this->setBranchRules(new BranchRuleCollection());
+        $this->setPreConditions(new PreConditionCollection());
         
         $this->addBranchRules($assessmentItemRef->getBranchRules());
+        $this->addPreConditions($assessmentItemRef->getPreConditions());
     }
     
     /**
@@ -146,7 +156,7 @@ class RouteItem {
      * 
      * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
      */
-    protected function setBranchRules(BranchRuleCollection $branchRules) {
+    public function setBranchRules(BranchRuleCollection $branchRules) {
         $this->branchRules = $branchRules;
     }
     
@@ -167,6 +177,44 @@ class RouteItem {
     public function addBranchRules(BranchRuleCollection $branchRules) {
         foreach ($branchRules as $branchRule) {
             $this->addBranchRule($branchRule);
+        }
+    }
+    
+    /**
+     * Get the PreCondition objects to be applied prior to the RouteItem.
+     *
+     * @return PreConditionCollection A collection of PreCondition objects.
+     */
+    public function getPreConditions() {
+        return $this->preConditions;
+    }
+    
+    /**
+     * Set the PreCondition objects to be applied prior to the RouteItem.
+     *
+     * @param PreConditionCollection $preConditions A collection of PreCondition objects.
+     */
+    public function setPreConditions(PreConditionCollection $preConditions) {
+        $this->preConditions = $preConditions;
+    }
+    
+    /**
+     * Add a PreCondition object to be applied prior to the RouteItem.
+     *
+     * @param PreCondition $preCondition A PreCondition object to be added.
+     */
+    public function addPreCondition(PreCondition $preCondition) {
+        $this->getPreConditions()->attach($preCondition);
+    }
+    
+    /**
+     * Add some PreConditon objects to be applied prior to the RouteItem.
+     *
+     * @param PreConditionCollection $preConditions A collection of PreCondition object.
+     */
+    public function addPreConditions(PreConditionCollection $preConditions) {
+        foreach ($preConditions as $preCondition) {
+            $this->addPreCondition($preCondition);
         }
     }
     

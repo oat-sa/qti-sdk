@@ -1097,8 +1097,11 @@ class AssessmentTestSession extends State {
 	                    
 	                    // Add to the last item of the selection the branch rules of the AssessmentSection/testPart
 	                    // on which the selection is applied.
-	                    $lastRouteItem = $route->getLastRouteItem();
-	                    $lastRouteItem->addBranchRules($current->getBranchRules());
+	                    $route->getLastRouteItem()->addBranchRules($current->getBranchRules());
+	                    
+	                    // Do the same as for branch rules for pre conditions, except that they must be
+	                    // attached on the first item of the route.
+	                    $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
 	                    
 	                    array_push($routeStack, $route);
 	                }

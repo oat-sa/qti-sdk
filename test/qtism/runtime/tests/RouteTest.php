@@ -50,6 +50,9 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->addRouteItem($sectionPartsS2['Q5'], $assessmentSections['S2'], $testPart);
         $route->addRouteItem($sectionPartsS2['Q6'], $assessmentSections['S2'], $testPart);
         
+        $this->assertEquals('Q1', $route->getFirstRouteItem()->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q6', $route->getLastRouteItem()->getAssessmentItemRef()->getIdentifier());
+        
         // Only 1 one occurence of each selected item found?
         foreach (array_merge($sectionPartsS1->getArrayCopy(), $sectionPartsS2->getArrayCopy()) as $itemRef) {
             $this->assertEquals(1, $route->getOccurenceCount($itemRef));
