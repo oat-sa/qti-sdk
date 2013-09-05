@@ -84,6 +84,13 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
     const ITEM_SESSION = 20;
     
     /**
+     * An error occured while reading/writing a route item.
+     * 
+     * @var integer
+     */
+    const ROUTE_ITEM = 21;
+    
+    /**
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.

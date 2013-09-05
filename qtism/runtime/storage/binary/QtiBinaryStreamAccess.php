@@ -2,6 +2,10 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\RouteItem;
+
+use qtism\data\rules\PreConditionCollection;
+use qtism\data\rules\BranchRuleCollection;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
@@ -616,8 +620,89 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         }
     }
     
+    /**
+     * Read a route item from the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components will be pulled out by position.
+     * @throws QtiBinaryStreamAccessException
+     * @return RouteItem
+     */
     public function readRouteItem(AssessmentTestSeeker $seeker) {
         
+        try {
+            $occurence = $this->readTinyInt();
+            $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
+            $section = $seeker->seekComponent('assessmentSection', $this->readShort());
+            $testPart = $seeker->seekComponent('testPart', $this->readShort());
+            
+            $branchRulesCount = $this->readTinyInt();
+            $branchRules = new BranchRuleCollection();
+            
+            for ($i = 0; $i < $branchRulesCount; $i++) {
+                $branchRules[] = $seeker->seekComponent('branchRule', $this->readShort());
+            }
+            
+            $preConditionsCount = $this->readTinyInt();
+            $preConditions = new PreConditionCollection();
+            
+            for ($i = 0; $i < $preConditionsCount; $i++) {
+                $preConditions[] = $seeker->seekComponent('preCondition', $this->readShort());
+            }
+            
+            $routeItem = new RouteItem($itemRef, $section, $testPart);
+            $routeItem->setOccurence($occurence);
+            $routeItem->setBranchRules($branchRules);
+            $routeItem->setPreConditions($preConditions);
+            
+            return $routeItem;
+        }
+        catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading a route item.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
+        }
+        catch (OutOfBoundsException $e) {
+            $msg = "A QTI Component was not found in the assessmentTest tree structure.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
+        }
+    }
+    
+    /**
+     * Write a route item in the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @param RouteItem $routeItem A RouteItem object.
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function writeRouteItem(AssessmentTestSeeker $seeker, RouteItem $routeItem) {
         
+        try {
+            $this->writeTinyInt($routeItem->getOccurence());
+            $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
+            $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
+            $this->writeShort($seeker->seekPosition($routeItem->getTestPart()));
+            
+            $branchRules = $routeItem->getBranchRules();
+            $this->writeTinyInt(count($branchRules));
+            
+            foreach ($branchRules as $branchRule) {
+                $this->writeShort($seeker->seekPosition($branchRule));
+            }
+            
+            $preConditions = $routeItem->getPreConditions();
+            $this->writeTinyInt(count($preConditions));
+            
+            foreach ($preConditions as $preCondition) {
+                $this->writeShort($seeker->seekPosition($preCondition));
+            }
+        
+        }
+        catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing a route item.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
+        }
+        catch (OutOfBoundsException $e) {
+            $msg = "A QTI Component was not found in the assessmentTest tree structure.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
+        }
     }
 }
