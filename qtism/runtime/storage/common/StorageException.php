@@ -14,13 +14,37 @@ use \Exception;
 class StorageException extends Exception {
     
     /**
-     * The error code to be use when the nature of the error
+     * The error code to be used when the nature of the error
      * is unknown. Should be used in absolute necessity. Otherwise,
      * use the appropriate error code.
      * 
      * @var integer
      */
     const UNKNOWN = 0;
+    
+    /**
+     * Error code to be used when an error occurs while
+     * instantiating an AssessmentTestSession.
+     * 
+     * @var integer
+     */
+    const INSTANTIATION = 1;
+    
+    /**
+     * Error code to use when an error occurs while
+     * persisting an AssessmentTestSession.
+     * 
+     * @var integer
+     */
+    const PERSITANCE = 2;
+    
+    /**
+     * Error code to use when an error occurs while
+     * retrieving an AssessmentTestSession.
+     * 
+     * @var integer
+     */
+    const RETRIEVAL = 3;
     
     /**
      * Create a new StorageException instance.

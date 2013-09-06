@@ -42,7 +42,7 @@ class AssessmentItemSessionStore {
     }
     
     /**
-     * Set the SplObjectStorage object that will store AssessmentItemSessionCollection objects
+     * Get the SplObjectStorage object that will store AssessmentItemSessionCollection objects
      * by AssessmentItemRef.
      * 
      * @return SplObjectStorage An SplObjectStorage object that will store AssessmentItemSessionCollection objects.

@@ -208,11 +208,22 @@ class Route implements Iterator {
     /**
      * Add a new RouteItem object at the end of the Route.
      * 
-     * @param RouteItem $routeItem A RouteItemObject.
+     * @param AssessmentItemRef $assessmentItemRef
+     * @param AssessmentSection $assessmentSection
+     * @param TestPart $testPart
      */
     public function addRouteItem(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection = null, TestPart $testPart) {
         // Push the routeItem in the track :) !
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
+        $this->registerAssessmentItemRef($routeItem);
+    }
+    
+    /**
+     * Add a new RouteItem object at the end of the Route.
+     * 
+     * @param RouteItem $routeItem A RouteItemObject.
+     */
+    public function addRouteItemObject(RouteItem $routeItem) {
         $this->registerAssessmentItemRef($routeItem);
     }
     

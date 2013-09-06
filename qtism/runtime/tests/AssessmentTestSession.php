@@ -212,7 +212,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @return AssessmentItemSessionStore
 	 */
-	protected function getAssessmentItemSessionStore() {
+	public function getAssessmentItemSessionStore() {
 	    return $this->assessmentItemSessionStore;
 	}
 	
@@ -221,7 +221,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param AssessmentItemSessionStore $assessmentItemSessionStore
 	 */
-	protected function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore) {
+	public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore) {
 	    $this->assessmentItemSessionStore = $assessmentItemSessionStore;
 	}
 	
