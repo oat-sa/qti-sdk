@@ -37,6 +37,13 @@ use \LogicException;
 class AssessmentTestSession extends State {
 	
     /**
+     * A unique ID for this AssessmentTestSession.
+     * 
+     * @var string
+     */
+    private $sessionId;
+    
+    /**
      * The AssessmentItemSession store.
      * 
      * @var AssessmentItemSessionStore
@@ -94,7 +101,41 @@ class AssessmentTestSession extends State {
 		    $this->setVariable($variable);
 		}
 		
+		$this->setSessionId('no_session_id');
 		$this->setState(AssessmentTestSessionState::INITIAL);
+	}
+	
+	/**
+	 * Set the unique session ID for this AssessmentTestSession.
+	 * 
+	 * @param string $sessionId A unique ID.
+	 * @throws InvalidArgumentException If $sessionId is not a string or is empty.
+	 */
+	public function setSessionId($sessionId) {
+	    
+	    if (is_string($sessionId) === true) {
+	        
+	        if (empty($sessionId) === false) {
+	            $this->sessionId = $sessionId;
+	        }
+	        else {
+	            $msg = "The 'sessionId' argument must be a non-empty string.";
+	            throw new InvalidArgumentException($msg);
+	        }
+	    }
+	    else {
+	        $msg = "The 'sessionId' argument must be a string, '" . gettype($sessionId) . "' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the unique session ID for this AssessmentTestSession.
+	 * 
+	 * @return string A unique ID.
+	 */
+	public function getSessionId() {
+	    return $this->sessionId;
 	}
 	
 	/**

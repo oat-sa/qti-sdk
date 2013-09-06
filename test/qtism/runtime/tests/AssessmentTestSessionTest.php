@@ -94,6 +94,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // with their default values.
 	    $this->assertInternalType('float', $assessmentTestSession['SCORE']);
 	    $this->assertEquals(0.0, $assessmentTestSession['SCORE']);
+	    
+	    // No session ID should be set, this is the role of AssessmentTestSession Storage Services.
+	    $this->assertEquals('no_session_id', $assessmentTestSession->getSessionId());
 	}
 	
 	public function testInstantiateTwo() {
