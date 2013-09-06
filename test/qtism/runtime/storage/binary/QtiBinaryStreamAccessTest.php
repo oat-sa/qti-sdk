@@ -1,5 +1,6 @@
 <?php
 
+use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
@@ -408,5 +409,59 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('not_attempted', $session['completionStatus']);
         $this->assertEquals(0.0, $session['SCORE']);
         $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
+    }
+    
+    public function testReadRouteItem() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $bin = '';
+        $bin .= "\x00"; // occurence = 0
+        $bin .= pack('S', 2); // item-tree-position = Q03
+        $bin .= pack('S', 0); // section-tree-position = S01
+        $bin .= pack('S', 0); // part-tree-position = P01
+        $bin .= "\x00"; // branchrules-count = 0
+        $bin .= "\x00"; // preconditions-count = 0;
+        
+        $stream = new BinaryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        
+        $routeItem = $access->readRouteItem($seeker);
+        $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
+        $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
+        $this->assertInternalType('integer', $routeItem->getOccurence());
+        $this->assertEquals(0, $routeItem->getOccurence());
+        $this->assertEquals(0, count($routeItem->getBranchRules()));
+        $this->assertEquals(0, count($routeItem->getPreConditions()));
+    }
+    
+    public function testWriteRouteItem() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $stream = new BinaryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        
+        // Get route item at index 2 which is the route item describing
+        // item occurence 0 of Q03.
+        $testSession = AssessmentTestSession::instantiate($doc);
+        $routeItem = $testSession->getRoute()->getRouteItemAt(2);
+        
+        $access->writeRouteItem($seeker, $routeItem);
+        $stream->rewind();
+        
+        $routeItem = $access->readRouteItem($seeker);
+        $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('S01', $routeItem->getAssessmentSection()->getIdentifier());
+        $this->assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
+        $this->assertInternalType('integer', $routeItem->getOccurence());
+        $this->assertEquals(0, $routeItem->getOccurence());
+        $this->assertEquals(0, count($routeItem->getBranchRules()));
+        $this->assertEquals(0, count($routeItem->getPreConditions()));
     }
 }
