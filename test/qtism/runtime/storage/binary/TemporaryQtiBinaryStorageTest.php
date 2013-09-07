@@ -4,8 +4,10 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\datatypes\Pair;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\data\QtiComponentIterator;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -71,6 +73,22 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $session->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'M')))))));
+        
+        $this->assertInternalType('float', $session['Q02.SCORE']);
+        $this->assertEquals(1.0, $session['Q02.SCORE']);
+        
+        // Q03 - Skip.
+        $session->skip();
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        
+        // Q04 - Correct response.
+        $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('S02', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
     }
     
 }

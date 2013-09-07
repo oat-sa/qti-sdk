@@ -891,6 +891,7 @@ class AssessmentTestSession extends State {
 	    
 	    $route = $this->getRoute();
 	    $route->next();
+	    $this->selectEligibleItems();
 	    
 	    if ($route->valid() === false) {
 	        // This is the end of the test session.

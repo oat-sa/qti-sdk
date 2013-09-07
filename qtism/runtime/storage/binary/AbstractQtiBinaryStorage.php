@@ -126,6 +126,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $access->writeTinyInt($route->getPosition());
             
             // Persist the Route of the AssessmentTestSession and the related item sessions.
+            $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             
             foreach ($route as $routeItem) {
@@ -166,9 +167,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             // build the route and the item sessions.
             $route = new Route();
             $itemSessionStore = new AssessmentItemSessionStore();
+            $routeCount = $access->readTinyInt();
             
-            while ($stream->eof() === false) {
-                
+           for ($i = 0; $i < $routeCount; $i++) {
                 $routeItem = $access->readRouteItem($this->getSeeker());
                 $itemSession = $access->readAssessmentItemSession($this->getSeeker());
             
