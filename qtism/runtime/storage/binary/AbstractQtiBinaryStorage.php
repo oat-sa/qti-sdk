@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\Route;
 use qtism\data\Document;
@@ -136,6 +137,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
                 $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
             }
             
+            // Persist the test-level global scope.
+            foreach ($assessmentTestSession->getKeys() as $outcomeIdentifier) {
+            	$outcomeVariable = $assessmentTestSession->getVariable($outcomeIdentifier);
+            	$access->writeVariableValue($outcomeVariable);
+            }
+            
             $this->persistStream($assessmentTestSession, $stream);
             
             $stream->close();
@@ -182,6 +189,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
+            
+            // build the test-level global scope, composed of Outcome Variables.
+            foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {
+            	$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+            	$access->readVariableValue($outcomeVariable);
+            	$assessmentTestSession->setVariable($outcomeVariable);
+            }
             
             $stream->close();
             

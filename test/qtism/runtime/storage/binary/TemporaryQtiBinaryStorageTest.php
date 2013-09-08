@@ -51,8 +51,14 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
                 $itemSessionCount++;
             }
         }
-        
         $this->assertEquals(9, $itemSessionCount);
+        
+        // The outcome variables composing the test-level global scope
+        // must be set with their default value if any.
+        foreach ($doc->getOutcomeDeclarations() as $outcomeDeclaration) {
+        	$this->assertFalse(is_null($session[$outcomeDeclaration->getIdentifier()]));
+        	$this->assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]);	
+        }
         
         // Q01 - Correct response.
         $this->assertInternalType('float', $session['Q01.scoring']);
