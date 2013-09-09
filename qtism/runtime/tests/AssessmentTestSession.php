@@ -3,7 +3,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\SubmissionMode;
-
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\processing\OutcomeProcessingEngine;
 use qtism\common\collections\IdentifierCollection;
@@ -804,13 +803,30 @@ class AssessmentTestSession extends State {
 	 * @return boolean
 	 * @throws AssessmentTestSessionException If the test session is not running.
 	 */
-	public function isAdaptive() {
+	public function isCurrentAssessmentItemAdaptive() {
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
 	    return $this->getCurrentAssessmentItemRef()->isAdaptive();
+	}
+	
+	/**
+	 * Whether the current item is in INTERACTIVE mode.
+	 * 
+	 * @throws AssessmentTestSessionException If the test session is not running.
+	 */
+	public function isCurrentAssessmentItemInteracting() {
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    $store = $this->getAssessmentItemSessionStore();
+	    $currentItem = $this->getCurrentAssessmentItemRef();
+	    $currentOccurence = $this->getCurrentAssessmentItemRefOccurence();
+	    return $store->getAssessmentItemSession($currentItem, $currentOccurence)->getState() === AssessmentItemSessionState::INTERACTING;
 	}
 	
 	/**

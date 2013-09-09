@@ -200,18 +200,18 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertEquals('S01', $assessmentTestSession->getCurrentAssessmentSection()->getIdentifier());
 	    $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
-	    $this->assertFalse($assessmentTestSession->isAdaptive());
+	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
-	    $this->assertFalse($assessmentTestSession->isAdaptive());
+	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
-	    $this->assertFalse($assessmentTestSession->isAdaptive());
+	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $assessmentTestSession->skip();
 	    
@@ -232,10 +232,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q01 - Correct Response = 'ChoiceA'.
 	    $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemInteracting());
 	    $assessmentTestSession->beginAttempt();
+	    $this->assertTrue($assessmentTestSession->isCurrentAssessmentItemInteracting());
 	    $responses = new State();
 	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'));
 	    $assessmentTestSession->endAttempt($responses);
+	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemInteracting());
 	    
 	    // Q02 - Correct Response = 'ChoiceB'.
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
