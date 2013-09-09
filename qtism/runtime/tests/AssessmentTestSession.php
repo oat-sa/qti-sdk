@@ -784,7 +784,7 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Get the number of remaining item for the current item in the route.
+	 * Get the number of remaining items for the current item in the route.
 	 * 
 	 * @return integer|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
 	 */
@@ -796,6 +796,21 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    return false;
+	}
+	
+	/**
+	 * Whether the current item is adaptive.
+	 * 
+	 * @return boolean
+	 * @throws AssessmentTestSessionException If the test session is not running.
+	 */
+	public function isAdaptive() {
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    return $this->getCurrentAssessmentItemRef()->isAdaptive();
 	}
 	
 	/**

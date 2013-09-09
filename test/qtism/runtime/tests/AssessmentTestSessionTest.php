@@ -200,15 +200,18 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertEquals('S01', $assessmentTestSession->getCurrentAssessmentSection()->getIdentifier());
 	    $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
+	    $this->assertFalse($assessmentTestSession->isAdaptive());
 	    
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+	    $this->assertFalse($assessmentTestSession->isAdaptive());
 	    
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+	    $this->assertFalse($assessmentTestSession->isAdaptive());
 	    
 	    $assessmentTestSession->skip();
 	    
