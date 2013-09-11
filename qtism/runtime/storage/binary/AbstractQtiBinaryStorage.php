@@ -163,7 +163,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             }
             
             $route->setPosition($currentPosition);
-            $assessmentTestSession = new AssessmentTestSession($this->getAssessmentTest(), $route);
+            $factory = $this->getFactory();
+            $factory->setRoute($route);
+            $assessmentTestSession = $factory->createAssessmentTestSession();
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
