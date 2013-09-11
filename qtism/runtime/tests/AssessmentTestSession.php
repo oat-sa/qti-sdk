@@ -1196,6 +1196,6 @@ class AssessmentTestSession extends State {
 	    
 	    $factory->setRoute($route);
 	    
-	    return $factory->createAssessmentTestSesion();
+	    return $factory->createAssessmentTestSession();
 	}
 }

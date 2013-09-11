@@ -75,7 +75,7 @@ class AbstractAssessmentTestSessionFactory {
      * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws RuntimeException If no Route has been provided to the factory yet.
      */
-    public function createAssessmentTestSesion() {
+    public function createAssessmentTestSession() {
         if (is_null($this->getRoute() === true)) {
             $msg = "No Route has been set in the factory. The AssessmentTestSession cannot be instantiated without it.";
             throw new RuntimeException($msg);

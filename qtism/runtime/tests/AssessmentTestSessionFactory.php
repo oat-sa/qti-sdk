@@ -20,8 +20,8 @@ class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory 
      * 
      * @throws RuntimeException If no Route has been given to the factory yet.
      */
-    public function createAssessmentTestSesion() {
-        parent::createAssessmentTestSesion();
+    public function createAssessmentTestSession() {
+        parent::createAssessmentTestSession();
         
         return new AssessmentTestSession($this->getAssessmentTest(), $this->getRoute());
     }
