@@ -2,7 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\Route;
@@ -34,10 +34,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Create a new AbstractQtiBinaryStorage.
      * 
-     * @param AssessmentTestSessionFactory
+     * @param AbstractAssessmentTestSessionFactory
      * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
-    public function __construct(AssessmentTestSessionFactory $factory) {
+    public function __construct(AbstractAssessmentTestSessionFactory $factory) {
         parent::__construct($factory);
         
         $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration',
