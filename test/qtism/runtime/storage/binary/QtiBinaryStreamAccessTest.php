@@ -1,5 +1,6 @@
 <?php
 
+use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -449,7 +450,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
-        $testSession = AssessmentTestSession::instantiate($doc);
+        $testSessionFactory = new AssessmentTestSessionFactory($doc);
+        $testSession = AssessmentTestSession::instantiate($testSessionFactory);
         $routeItem = $testSession->getRoute()->getRouteItemAt(2);
         
         $access->writeRouteItem($seeker, $routeItem);

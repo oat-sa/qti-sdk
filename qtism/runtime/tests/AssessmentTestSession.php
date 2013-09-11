@@ -1107,11 +1107,11 @@ class AssessmentTestSession extends State {
 	 * @param AssessmentTest $assessmentTest The AssessmentTest to be instantiated as a new AssessmentTestSession object.
 	 * @return AssessmentTestSession An instantiated AssessmentTestSession object.
 	 */
-	public static function instantiate(AssessmentTest $assessmentTest) {
+	public static function instantiate(AssessmentTestSessionFactory $factory) {
 	    // 1. Apply selection and ordering.
 	    $routeStack = array();
 	    
-	    foreach ($assessmentTest->getTestParts() as $testPart) {
+	    foreach ($factory->getAssessmentTest()->getTestParts() as $testPart) {
 	       
 	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
 	            $trail = array();
@@ -1194,6 +1194,8 @@ class AssessmentTestSession extends State {
 	        $route->appendRoute($finalRoute);
 	    }
 	    
-	    return new AssessmentTestSession($assessmentTest, $route);
+	    $factory->setRoute($route);
+	    
+	    return $factory->createAssessmentTestSesion();
 	}
 }

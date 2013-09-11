@@ -2,7 +2,7 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\runtime\common\Utils;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -90,8 +90,8 @@ class VariableProcessor extends ExpressionProcessor {
 				if ($vIdentifier->hasPrefix() === true && empty($weightIdentifier) === false) {
 					
 					$weight = $state->getWeight($vIdentifier->getPrefix() . '.' . $weightIdentifier);
-					$baseType = Utils::inferBaseType($variableValue);
-					$cardinality = Utils::inferCardinality($variableValue);
+					$baseType = RuntimeUtils::inferBaseType($variableValue);
+					$cardinality = RuntimeUtils::inferCardinality($variableValue);
 					
 					// From IMS QTI:
 					// Weights only apply to item variables with base types integer and float.

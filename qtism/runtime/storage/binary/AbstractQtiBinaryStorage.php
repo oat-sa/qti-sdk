@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\Route;
@@ -100,7 +101,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         }
         
         try {
-            $session = AssessmentTestSession::instantiate($this->getAssessmentTest());
+            $testSessionFactory = new AssessmentTestSessionFactory($this->getAssessmentTest());
+            $session = AssessmentTestSession::instantiate($testSessionFactory);
             $session->setSessionId($sessionId);
             
             return $session;
