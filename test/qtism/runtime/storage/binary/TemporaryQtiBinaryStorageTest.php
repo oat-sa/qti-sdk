@@ -2,6 +2,7 @@
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Pair;
@@ -27,7 +28,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
                                 'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
         $seeker = new AssessmentTestSeeker($doc, $seekerClasses);
         
-        $storage = new TemporaryQtiBinaryStorage($doc);
+        $testSessionFactory = new AssessmentTestSessionFactory($doc);
+        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
         

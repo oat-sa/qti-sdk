@@ -34,11 +34,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Create a new AbstractQtiBinaryStorage.
      * 
-     * @param AssessmentTest $assessmentTest An AssessmentTest object implementing the Document interface.
+     * @param AssessmentTestSessionFactory
      * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
-    public function __construct(AssessmentTest $assessmentTest) {
-        parent::__construct($assessmentTest);
+    public function __construct(AssessmentTestSessionFactory $factory) {
+        parent::__construct($factory);
         
         $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration',
                                 'responseDeclaration', 'branchRule', 'preCondition');
@@ -65,29 +65,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     }
     
     /**
-     * Set the AssessmentTest definition on which the AbstractQtiBinaryStorage focuses on
-     * to instantiate, retrieve and persist AssessmentTestSession objects.
-     * 
-     * Because this Storage implementation needs to identify in a unique manner the AssessmentTest he focuses
-     * on, it only accepts AssessmentTest objects implementing the Document interface which provides the URI
-     * of the AssessmentTest definition.
-     * 
-     * @param AssessmentTest An AssessmentTest object which implements the Document interface.
-     * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
-     */
-    protected function setAssessmentTest(AssessmentTest $assessmentTest) {
-        if ($assessmentTest instanceof Document === false) {
-            $msg = "This AssessmentTestSession Storage Service implementation only accepts to use ";
-            $msg.= "AssessmentTest definition implementing the Document interface.";
-            throw new InvalidArgumentException($msg);
-        }
-        else {
-            // Accepted!
-            parent::setAssessmentTest($assessmentTest);
-        }
-    }
-    
-    /**
      * Instantiate a new AssessmentTestSession.
      * 
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
@@ -101,8 +78,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         }
         
         try {
-            $testSessionFactory = new AssessmentTestSessionFactory($this->getAssessmentTest());
-            $session = AssessmentTestSession::instantiate($testSessionFactory);
+            $session = AssessmentTestSession::instantiate($this->getFactory());
             $session->setSessionId($sessionId);
             
             return $session;

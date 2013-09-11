@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\storage\common;
 
+use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\AssessmentTest;
 use \LogicException;
@@ -22,40 +23,46 @@ use \LogicException;
 abstract class AbstractStorage {
     
     /**
-     * The AssessmentTest definition on which the AssessmentTestSession Storage Service
-     * focuses on.
+     * The factory to be used to instantiate AssessmentTestSession objects.
      * 
-     * @var AssessmentTest
+     * @var AbstractAssessmentTestSessionFactory
      */
-    private $assessmentTest;
+    private $factory;
     
     /**
      * Create a new AbstracStorage object.
      * 
-     * @param AssessmentTest $assessmentTest The AssessmentTest definition that is used by the storage implementation as a pattern.
+     * @param AbstractAssessmentTestSessionFactory The factory to be used to instantiate AssessmentTestSession objects.
      */
-    public function __construct(AssessmentTest $assessmentTest) {
-        $this->setAssessmentTest($assessmentTest);
+    public function __construct(AbstractAssessmentTestSessionFactory $factory) {
+        $this->setFactory($factory);
     }
     
     /**
-     * Set the AssessmentTest object that the AssessmentTestSession Storage Service
-     * uses as a pattern for instantiation, retrieval and persistance.
+     * Set the factory to be used to instantiate AssessmentTestSession objects.
      * 
-     * @param AssessmentTest $assessmentTest An AssessmentTest object.
+     * @param AbstractAssessmentTestSessionFactory
      */
-    protected function setAssessmentTest(AssessmentTest $assessmentTest) {
-        $this->assessmentTest = $assessmentTest;
+    protected function setFactory(AbstractAssessmentTestSessionFactory $factory) {
+        $this->factory = $factory;
     }
     
     /**
-     * Get the AssessmentTest object that the AssessmentTestSession Storage Service
-     * uses as a pattern for instantiation, retrieval and persistance.
+     * Get the factory to be used to instantiate AssessmentTestSession objects.
      *
+     * @return AbstractAssessmentTestSessionFactory
+     */
+    protected function getFactory() {
+        return $this->factory;
+    }
+    
+    /**
+     * Get the AssessmentTest definition used by the storage as a pattern test definition.
+     * 
      * @return AssessmentTest An AssessmentTest object.
      */
     protected function getAssessmentTest() {
-        return $this->assessmentTest;
+        return $this->getFactory()->getAssessmentTest();
     }
     
     /**
