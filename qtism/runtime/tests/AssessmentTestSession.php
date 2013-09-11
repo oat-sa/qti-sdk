@@ -1102,12 +1102,12 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Instantiate a new AssessmentItemSession from an AssessmentTest object.
+	 * Instantiate a new AssessmentItemSession from a factory.
 	 * 
-	 * @param AssessmentTest $assessmentTest The AssessmentTest to be instantiated as a new AssessmentTestSession object.
+	 * @param AbstractAssessmentTestSessionFactory $factory
 	 * @return AssessmentTestSession An instantiated AssessmentTestSession object.
 	 */
-	public static function instantiate(AssessmentTestSessionFactory $factory) {
+	public static function instantiate(AbstractAssessmentTestSessionFactory $factory) {
 	    // 1. Apply selection and ordering.
 	    $routeStack = array();
 	    
