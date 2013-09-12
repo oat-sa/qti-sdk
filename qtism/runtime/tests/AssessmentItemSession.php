@@ -491,6 +491,7 @@ class AssessmentItemSession extends State {
 	 * * ResponseVariables are applied their default value.
 	 * * The completionStatus variable changes to 'unknown'.
 	 *
+	 * @throws AssessmentItemSessionException
 	 */
 	public function beginAttempt() {
 	    

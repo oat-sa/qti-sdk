@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\common\datatypes\Duration;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
@@ -408,6 +409,19 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         // Correct answer, the session is correct!
         $this->assertTrue($itemSession->isCorrect());
         $this->assertEquals('completed', $itemSession['completionStatus']);
+    }
+    
+    public function testStandaloneItemSession() {
+        $doc = new XmlAssessmentItemDocument('2.1');
+        $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
+        
+        $itemSession = new AssessmentItemSession($doc);
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A')));
+        $itemSession->endAttempt($responses);
+        $this->assertInternalType('float', $itemSession['SCORE']);
+        $this->assertEquals(1.0, $itemSession['SCORE']);
     }
     
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {
