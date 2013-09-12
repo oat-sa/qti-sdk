@@ -14,7 +14,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface IAssessmentItem {
+interface IAssessmentItem extends QtiIdentifiable {
     
     /**
      * Set whether the item is time dependent or not.
@@ -87,19 +87,4 @@ interface IAssessmentItem {
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
-    
-    /**
-     * Get the identifier.
-     *
-     * @return string A QTI identifier.
-     */
-    public function getIdentifier();
-    
-    /**
-     * Set the identifier.
-     *
-     * @param string $identifier A QTI Identifier.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
-     */
-    public function setIdentifier($identifier);
 }
