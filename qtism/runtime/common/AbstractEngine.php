@@ -114,12 +114,4 @@ abstract class AbstractEngine implements Processable {
 		$item = new StackTraceItem($this->getComponent(), $message);
 		$this->getStackTrace()->push($item);
 	}
-	
-	/**
-	 * Process the target QtiComponent.
-	 * 
-	 * @return mixed|null The result of the processing if any or NULL if no result.
-	 * @throws ProcessingException
-	 */
-	public abstract function process();
 }
