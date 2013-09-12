@@ -402,7 +402,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    foreach (array('Q01', 'Q02', 'Q03') as $identifier) {
 	        $sessions = $assessmentTestSession->getAssessmentItemSessions($identifier);
 	        $this->assertEquals(1, count($sessions));
-	        $this->assertEquals($identifier, $sessions[0]->getAssessmentItemRef()->getIdentifier());
+	        $this->assertEquals($identifier, $sessions[0]->getAssessmentItem()->getIdentifier());
 	    }
 	    
 	    // Malformed $identifier.
@@ -428,7 +428,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $sessions = $assessmentTestSession->getAssessmentItemSessions('Q01');
 	    $this->assertEquals(3, count($sessions));
 	    for ($i = 0; $i < count($sessions); $i++) {
-	        $this->assertEquals('Q01', $sessions[$i]->getAssessmentItemRef()->getIdentifier());
+	        $this->assertEquals('Q01', $sessions[$i]->getAssessmentItem()->getIdentifier());
 	    }
 	}
 	

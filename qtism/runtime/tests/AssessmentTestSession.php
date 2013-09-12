@@ -657,9 +657,9 @@ class AssessmentTestSession extends State {
 	protected function addItemSession(AssessmentItemSession $session, $occurence = 0) {
 	    
 	    $assessmentItemRefs = $this->getAssessmentItemRefs();
-	    $sessionAssessmentItemRefIdentifier = $session->getAssessmentItemRef()->getIdentifier();
+	    $sessionAssessmentItemRefIdentifier = $session->getAssessmentItem()->getIdentifier();
 	    
-	    if ($this->getAssessmentItemRefs()->contains($session->getAssessmentItemRef()) === false) {
+	    if ($this->getAssessmentItemRefs()->contains($session->getAssessmentItem()) === false) {
 	        // The session that is requested to be set is bound to an item
 	        // which is not referenced in the test. This is a pure logic error.
 	        $msg = "The item session to set is bound to an unknown AssessmentItemRef.";

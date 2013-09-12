@@ -59,7 +59,7 @@ class AssessmentItemSessionStore {
      */
     public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0) {
         $shelves = $this->getShelves();
-        $assessmentItemRef = $assessmentItemSession->getAssessmentItemRef();
+        $assessmentItemRef = $assessmentItemSession->getAssessmentItem();
         
         if (isset($shelves[$assessmentItemRef]) === false) {
             $shelves[$assessmentItemRef] = new AssessmentItemSessionCollection();

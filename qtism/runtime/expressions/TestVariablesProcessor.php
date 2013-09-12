@@ -86,7 +86,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor {
 	        foreach ($itemSessions as $itemSession) {
 	            
 	            // Variable mapping takes place.
-	            $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItemRef(), $variableIdentifier);
+	            $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItem(), $variableIdentifier);
 	            if ($id === false) {
 	                // variable name conflict.
 	                continue;

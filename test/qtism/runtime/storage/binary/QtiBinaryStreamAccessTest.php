@@ -374,7 +374,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $session = $access->readAssessmentItemSession($seeker);
         
-        $this->assertEquals('Q01', $session->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
         $this->assertEquals(2, $session['numAttempts']);
         $this->assertEquals('PT0S', $session['duration']->__toString());

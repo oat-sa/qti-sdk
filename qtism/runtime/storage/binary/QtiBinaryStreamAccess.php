@@ -571,7 +571,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function writeAssessmentItemSession(AssessmentTestSeeker $seeker, AssessmentItemSession $session) {
         try {
-            $this->writeShort($seeker->seekPosition($session->getAssessmentItemRef()));
+            $this->writeShort($seeker->seekPosition($session->getAssessmentItem()));
             $this->writeTinyInt($session->getState());
             
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
@@ -588,8 +588,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $varCount = count($session) - 3;
             $this->writeTinyInt($varCount);
             
-            $itemOutcomes = $session->getAssessmentItemRef()->getOutcomeDeclarations();
-            $itemResponses = $session->getAssessmentItemRef()->getResponseDeclarations();
+            $itemOutcomes = $session->getAssessmentItem()->getOutcomeDeclarations();
+            $itemResponses = $session->getAssessmentItem()->getResponseDeclarations();
             
             foreach ($session->getKeys() as $varId) {
                 if (in_array($varId, array('numAttempts', 'duration', 'completionStatus')) === false) {

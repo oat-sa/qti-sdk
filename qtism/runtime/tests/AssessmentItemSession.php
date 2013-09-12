@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
 use qtism\runtime\expressions\CorrectProcessor;
 use qtism\runtime\expressions\ExpressionProcessingException;
@@ -10,7 +11,6 @@ use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ItemSessionControl;
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
@@ -191,9 +191,9 @@ class AssessmentItemSession extends State {
 	 * The ExtendedAssessmentItemRef describing the item the session
 	 * handles.
 	 * 
-	 * @var ExtendedAssessmentItemRef
+	 * @var IAssessmentItem
 	 */
-	private $assessmentItemRef;
+	private $assessmentItem;
 	
 	/**
 	 * Create a new AssessmentItemSession object.
@@ -203,17 +203,17 @@ class AssessmentItemSession extends State {
 	 * 
 	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
 	 * 
-	 * @param ExtendedAssessmentItemRef $assessmentItemRef The description of the item that the session handles.
+	 * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
 	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
 	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(ExtendedAssessmentItemRef $assessmentItemRef, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+	public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
 		
 		$this->setState(AssessmentItemSessionState::NOT_SELECTED);
 		$this->setAcceptableLatency(new Duration('PT0S'));
-		$this->setAssessmentItemRef($assessmentItemRef);
+		$this->setAssessmentItem($assessmentItem);
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
@@ -428,23 +428,23 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * Set the ExtendendedAssessmentItemRef object which describes the item to be handled
+	 * Set the IAssessmentItem object which describes the item to be handled
 	 * by the session.
 	 * 
-	 * @param ExtendedAssessmentItemRef $assessmentItemRef An ExtendedAssessmentItemRef object.
+	 * @param IAssessmentItem $assessmentItem An IAssessmentItem object.
 	 */
-	public function setAssessmentItemRef(ExtendedAssessmentItemRef $assessmentItemRef) {
-	    $this->assessmentItemRef = $assessmentItemRef;
+	public function setAssessmentItem(IAssessmentItem $assessmentItem) {
+	    $this->assessmentItem = $assessmentItem;
 	}
 	
 	/**
-	 * Get the ExtendedAssessmentItemRef object which describes the item to be handled by the
+	 * Get the IAssessmentItem object which describes the item to be handled by the
 	 * session.
 	 * 
-	 * @return ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
+	 * @return IAssessmentItem An IAssessmentItem object.
 	 */
-	public function getAssessmentItemRef() {
-	    return $this->assessmentItemRef;
+	public function getAssessmentItem() {
+	    return $this->assessmentItem;
 	}
 	
 	/**
@@ -459,7 +459,7 @@ class AssessmentItemSession extends State {
 	public function beginItemSession() {
 	    
 		// We initialize the item session and its variables.
-		foreach ($this->getAssessmentItemRef()->getOutcomeDeclarations() as $outcomeDeclaration) {
+		foreach ($this->getAssessmentItem()->getOutcomeDeclarations() as $outcomeDeclaration) {
 		    // Outcome variables are instantiantiated as part of the item session.
 		    // Their values may be initialized with a default value if they have one.
 		    $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
@@ -468,7 +468,7 @@ class AssessmentItemSession extends State {
 		    $this->setVariable($outcomeVariable);
 		}
 		
-		foreach ($this->getAssessmentItemRef()->getResponseDeclarations() as $responseDeclaration) {
+		foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
 		    // Response variables are instantiated as part of the item session.
 		    // Their values are always initialized to NULL.
 		    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
@@ -495,7 +495,7 @@ class AssessmentItemSession extends State {
 	public function beginAttempt() {
 	    
 	    // Are we allowed to begin a new attempt?
-	    $itemRef = $this->getAssessmentItemRef();
+	    $itemRef = $this->getAssessmentItem();
 	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
@@ -645,11 +645,11 @@ class AssessmentItemSession extends State {
 	    // For more information, see Response Processing.
 	    if ($responseProcessing === true) {
 	    	
-	    	if ($this->getAssessmentItemRef()->isAdaptive() === false) {
+	    	if ($this->getAssessmentItem()->isAdaptive() === false) {
 	    		$this->resetOutcomeVariables();
 	    	}
 	    	
-	        $responseProcessing = $this->getAssessmentItemRef()->getResponseProcessing();
+	        $responseProcessing = $this->getAssessmentItem()->getResponseProcessing();
 	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
 	        $engine->process();
 	    }
@@ -667,11 +667,11 @@ class AssessmentItemSession extends State {
 	        $this->endItemSession();
 	        $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;   
 	    }
-		else if ($this->getAssessmentItemRef()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+		else if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
 		    
 		    $this->endItemSession();
 		}
-		else if ($this->getAssessmentItemRef()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
+		else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
 		    
 		    $this->endItemSession();
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
@@ -733,13 +733,13 @@ class AssessmentItemSession extends State {
 	    // allowSkipping is taken into account only if submission mode is INDIVIDUAL.
 	    if ($this->getItemSessionControl()->doesAllowSkipping() === false && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
 	        // Skipping not allowed.
-	        $itemIdentifier = $this->getAssessmentItemRef()->getIdentifier();
+	        $itemIdentifier = $this->getAssessmentItem()->getIdentifier();
 	        $msg = "Skipping item '${itemIdentifier}' is not allowed.";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::SKIPPING_FORBIDDEN);
 	    }
 	    else {
 	        // Detect all response variables and submit them with their default value or NULL.
-	        foreach ($this->getAssessmentItemRef()->getResponseDeclarations() as $responseDeclaration) {
+	        foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
 	            $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
 	        }
 	         
@@ -755,7 +755,7 @@ class AssessmentItemSession extends State {
 	 * @return integer The number of remaining items.
 	 */
 	public function getRemainingAttempts() {
-	    $itemRef = $this->getAssessmentItemRef();
+	    $itemRef = $this->getAssessmentItem();
 	    if ($itemRef->isAdaptive() === false && $this['completionStatus'] !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus'] !== self::COMPLETION_STATUS_INCOMPLETE) {
 	        // The item is non-adaptative and is not completed nor time exceeded.
 	        return $this->getItemSessionControl()->getMaxAttempts() - $this['numAttempts'];
