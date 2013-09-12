@@ -19,7 +19,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExtendedAssessmentItemRef extends AssessmentItemRef {
+class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessmentItem {
 	
 	/**
 	 * The outcomeDeclarations found in the referenced assessmentItem.
