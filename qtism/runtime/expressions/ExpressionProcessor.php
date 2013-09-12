@@ -74,15 +74,4 @@ abstract class ExpressionProcessor implements Processable {
 	public function getState() {
 		return $this->state;
 	}
-	
-	/**
-	 * Implementations of ExpressionProcessor must include their processing
-	 * business logic in this method in order to return a QTI Runtime compliant
-	 * value reflecting the logic expressed by the QTI Data Model Expression
-	 * to be processed.
-	 * 
-	 * @return mixed A QTI Runtime compliant value.
-	 * @throws ExpressionProcessingException If something wrong occurs during processing.
-	 */
-	abstract public function process();
 }

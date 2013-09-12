@@ -74,13 +74,4 @@ abstract class RuleProcessor implements Processable {
 	public function getState() {
 		return $this->state;
 	}
-	
-	/**
-	 * Process the Rule object to be processed.
-	 * 
-	 * @return mixed A QTI Runtime compliant value or void if nothing to return.
-	 * @throws RuleProcessingException If an error occurs while processing the Rule object.
-	 */
-	public abstract function process();
-	
 }
