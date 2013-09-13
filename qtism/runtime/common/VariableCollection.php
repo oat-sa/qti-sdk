@@ -1,6 +1,6 @@
 <?php
 
-namespace qtism\data;
+namespace qtism\runtime\common;
 
 use qtism\common\collections\AbstractCollection;
 use qtism\runtime\common\Variable;
@@ -20,7 +20,6 @@ class VariableCollection extends AbstractCollection {
 	 * @throws InvalidArgumentException If $value is not a Variable object.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
 		if (!$value instanceof Variable) {
 			$msg = "The VariableCollection class only accept Variable objects, '${value}' given.";
 			throw new InvalidArgumentException($msg);

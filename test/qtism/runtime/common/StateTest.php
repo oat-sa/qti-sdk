@@ -1,12 +1,12 @@
 <?php
 
-use qtism\data\state\ResponseDeclaration;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\data\state\ResponseDeclaration;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\VariableCollection;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
@@ -68,5 +68,21 @@ class StateTest extends QtiSmTestCase {
 		$this->setExpectedException('\\OutOfRangeException');
 		$state = new State();
 		$var = $state[3];
+	}
+	
+	public function testGetAllVariables() {
+	    $state = new State();
+	    $this->assertEquals(0, count($state->getAllVariables()));
+	    
+	    $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::INTEGER, 25));
+	    $this->assertEquals(1, count($state->getAllVariables()));
+	    
+	    $state->setVariable(new OutcomeVariable('SCORE1', Cardinality::SINGLE, BaseType::BOOLEAN, true));
+	    $this->assertEquals(2, count($state->getAllVariables()));
+	    
+	    unset($state['RESPONSE1']);
+	    $this->assertEquals(1, count($state->getAllVariables()));
+	    
+	    $this->assertInstanceOf('qtism\\runtime\\common\\VariableCollection', $state->getAllVariables());
 	}
 }

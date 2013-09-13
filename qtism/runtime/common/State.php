@@ -2,8 +2,7 @@
 
 namespace qtism\runtime\common;
 
-use qtism\data\VariableCollection;
-
+use qtism\runtime\common\VariableCollection;
 use qtism\common\collections\AbstractCollection;
 use \OutOfRangeException;
 use \OutOfBoundsException;
@@ -61,6 +60,15 @@ class State extends AbstractCollection {
 		else {
 			return null;
 		}
+	}
+	
+	/**
+	 * Get all the Variable objects that compose the State.
+	 * 
+	 * @return VariableCollection A collection of Variable objects.
+	 */
+	public function getAllVariables() {
+	    return new VariableCollection($this->getDataPlaceHolder());
 	}
 	
 	/**
