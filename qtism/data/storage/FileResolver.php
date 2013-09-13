@@ -54,6 +54,4 @@ abstract class FileResolver implements Resolver {
     public function getBasePath() {
 		return $this->basePath;
 	}
-    
-    abstract public function resolve($url);
 }
