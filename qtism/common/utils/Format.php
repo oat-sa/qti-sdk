@@ -34,26 +34,31 @@ class Format {
 	 * @link http://www.w3.org/TR/2000/REC-xml-20001006
 	 * @return boolean Wether $string is a valid identifier.
 	 */
-	public static function isIdentifier($string) {
-		$letter = self::getPerlXmlLetter();
-		$digit = self::getPerlXmlDigit();
-		$combiningChar = self::getPerlXmlCombiningChar();
-		$extender = self::getPerlXmlExtender();
-		
-		$string = str_split($string);
-		$first = array_shift($string);
-		
-		if (preg_match("/(?:_|${letter})/u", $first) === 1) {
-			foreach ($string as $s) {
-				if (preg_match("/${letter}|${digit}/u", $s) === 0 && preg_match("/${combiningChar}|${extender}/u", $s) === 0 && preg_match("/_|\\-|\\./u", $s) === 0) {
-					return false;
-				}
-			}
+	public static function isIdentifier($string, $strict = true) {
+		if ($strict === true) {
+			$letter = self::getPerlXmlLetter();
+			$digit = self::getPerlXmlDigit();
+			$combiningChar = self::getPerlXmlCombiningChar();
+			$extender = self::getPerlXmlExtender();
 			
-			return true;
+			$string = str_split($string);
+			$first = array_shift($string);
+			
+			if (preg_match("/(?:_|${letter})/u", $first) === 1) {
+				foreach ($string as $s) {
+					if (preg_match("/${letter}|${digit}/u", $s) === 0 && preg_match("/${combiningChar}|${extender}/u", $s) === 0 && preg_match("/_|\\-|\\./u", $s) === 0) {
+						return false;
+					}
+				}
+				
+				return true;
+			}
+			else {
+				return false;
+			}	
 		}
 		else {
-			return false;
+			return preg_match("/[a-zA-Z_][a-zA-Z0-9_\.]*/u", $string) === 1;
 		}
 	}
 	

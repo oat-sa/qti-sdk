@@ -90,7 +90,7 @@ class Variable extends Expression {
 	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
-		if (Format::isIdentifier($identifier)) {
+		if (Format::isIdentifier($identifier, false)) {
 			$this->identifier = $identifier;
 		}
 		else {
