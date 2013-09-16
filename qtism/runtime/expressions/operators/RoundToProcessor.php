@@ -91,7 +91,7 @@ class RoundToProcessor extends OperatorProcessor {
 		$roundingMode = $this->getExpression()->getRoundingMode();
 		$figures = $this->getExpression()->getFigures();
 		
-		if (is_string($figures)) {
+		if (gettype($figures) === 'string') {
 			// try to recover the value from the state.
 			$figuresIdentifier = Utils::sanitizeVariableRef($figures);
 			$figures = $state[$figuresIdentifier];

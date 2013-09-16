@@ -59,7 +59,7 @@ class RecordContainer extends Container {
 	 * @throws RuntimeException If $offset is not a string.
 	 */
 	public function offsetSet($offset, $value) {
-		if (is_string($offset)) {
+		if (gettype($offset) === 'string') {
 			$this->checkType($value);
 			$placeholder = &$this->getDataPlaceHolder();
 			$placeholder[$offset] = $value;

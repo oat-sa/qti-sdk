@@ -205,7 +205,7 @@ class Utils {
 	 * @return string A sanitized Uniform Resource Identifier.
 	 */
 	public static function sanitizeUri($uri) {
-		if (is_string($uri)) {
+		if (gettype($uri) === 'string') {
 			return rtrim($uri, '/');
 		}
 		

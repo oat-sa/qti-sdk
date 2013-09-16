@@ -63,7 +63,7 @@ class CorrectResponse extends QtiComponent {
 	 * @throws InvalidArgumentException If $interpretation is not a string.
 	 */
 	public function setInterpretation($interpretation) {
-		if (is_string($interpretation)) {
+		if (gettype($interpretation) === 'string') {
 			$this->interpretation = $interpretation;
 		}
 		else {

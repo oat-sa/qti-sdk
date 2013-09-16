@@ -66,7 +66,7 @@ class AnyN extends Operator {
 	 * @throws InvalidArgumentException If $min is not an integer nor a variable reference.
 	 */
 	public function setMin($min) {
-		if (is_int($min) || (is_string($min) && Format::isVariableRef($min))) {
+		if (is_int($min) || (gettype($min) === 'string' && Format::isVariableRef($min))) {
 			$this->min = $min;
 		}
 		else {
@@ -91,7 +91,7 @@ class AnyN extends Operator {
 	 * @throws InvalidArgumentException If $max is not an integer nor a variable reference.
 	 */
 	public function setMax($max) {
-		if (is_int($max) || (is_string($max) && Format::isVariableRef($max))) {
+		if (is_int($max) || (gettype($max) === 'string' && Format::isVariableRef($max))) {
 			$this->max = $max;
 		}
 		else {

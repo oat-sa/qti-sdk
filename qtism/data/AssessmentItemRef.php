@@ -102,7 +102,7 @@ class AssessmentItemRef extends SectionPart {
 	 * @throws InvalidArgumentException If $href is not a string.
 	 */
 	public function setHref($href) {
-		if (is_string($href)) {
+		if (gettype($href) === 'string') {
 			$this->href = $href;
 		}
 		else {

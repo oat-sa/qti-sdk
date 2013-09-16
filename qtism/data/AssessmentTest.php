@@ -179,7 +179,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
-		if (is_string($title)) {
+		if (gettype($title) === 'string') {
 			$this->title = $title;
 		}
 		else {
@@ -205,7 +205,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $toolName is not a string.
 	 */
 	public function setToolName($toolName) {
-		if (is_string($toolName)) {
+		if (gettype($toolName) === 'string') {
 			$this->toolName = $toolName;
 		}
 		else {
@@ -232,7 +232,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $toolVersion is not a string.
 	 */
 	public function setToolVersion($toolVersion) {
-		if (is_string($toolVersion)) {
+		if (gettype($toolVersion) === 'string') {
 			$this->toolVersion = $toolVersion;
 		}
 		else {

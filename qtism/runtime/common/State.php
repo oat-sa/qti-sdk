@@ -82,7 +82,7 @@ class State extends AbstractCollection {
 	public function unsetVariable($variable) {
 		$data = &$this->getDataPlaceHolder();
 		
-		if (is_string($variable)) {
+		if (gettype($variable) === 'string') {
 			$variableIdentifier = $variable;
 		}
 		else if ($variable instanceof Variable) {
@@ -103,7 +103,7 @@ class State extends AbstractCollection {
 	}
 	
 	public function offsetSet($offset, $value) {
-		if (is_string($offset) && !empty($offset)) {
+		if (gettype($offset) === 'string' && empty($offset) === false) {
 			$placeholder = &$this->getDataPlaceHolder();
 			
 			if (isset($placeholder[$offset])) {
@@ -121,7 +121,7 @@ class State extends AbstractCollection {
 	}
 	
 	public function offsetGet($offset) {
-		if (is_string($offset) && !empty($offset)) {
+		if (gettype($offset) === 'string' && empty($offset) === false) {
 			$data = &$this->getDataPlaceHolder();
 			if (isset($data[$offset])) {
 				return $data[$offset]->getValue();

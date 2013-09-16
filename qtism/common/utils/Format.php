@@ -143,7 +143,7 @@ class Format {
 	 */
 	public static function isUri($string) {
 		// @todo find the ultimate URI validation rule.
-		return is_string($string);
+		return gettype($string) === 'string';
 		
 		// Thanks to Wizard04.
 		$pattern = "<^([a-z0-9+.-]+):(?://(?:((?:[a-z0-9-._~!$&'\(\)*+,;=:]|%[0-9A-F]{2})*)@)?((?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*)(?::(\d*))?(/(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?|(/?(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})+(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?)(?:\?((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?(?:#((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?$>i";
@@ -221,7 +221,7 @@ class Format {
 	 * @return boolean Whether $string can be converted to a boolean.
 	 */
 	public static function isBoolean($string) {
-		if (is_string($string)) {
+		if (gettype($string) === 'string') {
 			$string = self::toLowerTrim($string);
 			if ($string == 'true') {
 				return true;
@@ -241,11 +241,11 @@ class Format {
 	/**
 	 * Whether a given $string can be cast into a Point datatype.
 	 * 
-	 * @param string $string A string value
+	 * @param string $string A string value.
 	 * @return boolean Wheter $string can be transformed to a Point datatype.
 	 */
 	public static function isPoint($string) {
-		if (is_string($string)) {
+		if (gettype($string) === 'string') {
 			$parts = explode("\x20", $string);
 			if (count($parts) == 2) {
 				if (self::isInteger($parts[0]) && self::isInteger($parts[1])) {
@@ -257,9 +257,15 @@ class Format {
 		return false;
 	}
 	
+	/**
+	 * Whether a given $string can be cast into the file baseType.
+	 * 
+	 * @param string $string A string value.
+	 * @return boolean
+	 */
 	public static function isFile($string) {
-		// @todo implement Format::isFile.
-		throw new \RuntimeException("Format::isFile method not implemented yet.");
+		// @todo implement File baseType as a complex type.
+		return gettype($string) === 'string';
 	}
 	
 	/**

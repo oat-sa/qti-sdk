@@ -104,7 +104,7 @@ class AssessmentSection extends SectionPart {
 	 * @throws InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
-		if (is_string($title)) {
+		if (gettype($title) === 'string') {
 			$this->title = $title;
 		}
 		else {

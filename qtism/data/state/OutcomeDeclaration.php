@@ -176,7 +176,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * @throws InvalidArgumentException If $interpretation is not a string.
 	 */
 	public function setInterpretation($interpretation) {
-		if (is_string($interpretation)) {
+		if (gettype($interpretation) === 'string') {
 			$this->interpretation = $interpretation;
 		}
 		else {
@@ -201,7 +201,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * @throws InvalidArgumentException If $longInterpretation is not a string.
 	 */
 	public function setLongInterpretation($longInterpretation) {
-		if (is_string($longInterpretation)) {
+		if (gettype($longInterpretation) === 'string') {
 			$this->longInterpretation = $longInterpretation;
 		}
 		else {

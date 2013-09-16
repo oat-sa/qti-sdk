@@ -78,7 +78,7 @@ class RoundTo extends Operator {
 	 * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
 	 */
 	public function setFigures($figures) {
-		if (is_int($figures) || (is_string($figures) && Format::isVariableRef($figures))) {
+		if (is_int($figures) || (gettype($figures) === 'string' && Format::isVariableRef($figures))) {
 			$this->figures = $figures;
 		}
 		else {

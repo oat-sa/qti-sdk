@@ -47,7 +47,7 @@ class PatternMatch extends Operator {
 	 * @throws InvalidArgumentException If $pattern is not a string value.
 	 */
 	public function setPattern($pattern) {
-		if (is_string($pattern)) {
+		if (gettype($pattern) === 'string') {
 			$this->pattern = $pattern;
 		}
 		else {

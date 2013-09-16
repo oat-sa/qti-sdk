@@ -47,7 +47,7 @@ class Duration implements Comparable {
 	 * @throws InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
 	 */
 	public function __construct($intervalSpec) {
-		if (is_string($intervalSpec) && !empty($intervalSpec)) {
+		if (gettype($intervalSpec) === 'string' && empty($intervalSpec) === false) {
 			try {
 				$d1 = new DateTime();
 				$d2 = new DateTime();

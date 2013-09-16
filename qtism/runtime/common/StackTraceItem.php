@@ -76,7 +76,7 @@ class StackTraceItem {
 	 * @throws InvalidArgumentException If $traceMessage is not a string.
 	 */
 	public function setTraceMessage($traceMessage) {
-		if (is_string($traceMessage)) {
+		if (gettype($traceMessage) === 'string') {
 			$this->traceMessage = $traceMessage;
 		}
 		else {

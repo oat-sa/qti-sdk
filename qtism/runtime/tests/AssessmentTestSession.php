@@ -112,7 +112,7 @@ class AssessmentTestSession extends State {
 	 */
 	public function setSessionId($sessionId) {
 	    
-	    if (is_string($sessionId) === true) {
+	    if (gettype($sessionId) === 'string') {
 	        
 	        if (empty($sessionId) === false) {
 	            $this->sessionId = $sessionId;
@@ -1081,7 +1081,7 @@ class AssessmentTestSession extends State {
 	 * @return int|false The occurence number of the lastly updated item session for the given $assessmentItemRef or false if no occurence was updated yet.
 	 */
 	public function whichLastOccurenceUpdate($assessmentItemRef) {
-		if (is_string($assessmentItemRef) === true) {
+		if (gettype($assessmentItemRef) === 'string') {
 			$assessmentItemRefs = $this->getAssessmentItemRefs();
 			if (isset($assessmentItemRefs[$assessmentItemRef]) === true) {
 				$assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];

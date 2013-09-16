@@ -21,7 +21,7 @@ class Utils {
 	 * @return string A sanitized variableRef.
 	 */
 	public static function sanitizeVariableRef($variableRef) {
-		if (is_string($variableRef)) {
+		if (gettype($variableRef) === 'string') {
 			return trim($variableRef, '{}');
 		}
 		else {

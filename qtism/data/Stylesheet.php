@@ -81,7 +81,7 @@ class Stylesheet extends QtiComponent {
 	 * @throws InvalidArgumentException If $href is not a string.
 	 */
 	public function setHref($href) {
-		if (is_string($href)) {
+		if (gettype($href) === 'string') {
 			$this->href = $href;
 		}
 		else {
@@ -106,7 +106,7 @@ class Stylesheet extends QtiComponent {
 	 * @throws InvalidArgumentException If $type is not a string.
 	 */
 	public function setType($type) {
-		if (is_string($type)) {
+		if (gettype($type) === 'string') {
 			$this->type = $type;
 		}
 		else {
@@ -156,7 +156,7 @@ class Stylesheet extends QtiComponent {
 	 * @throws InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
-		if (is_string($title)) {
+		if (gettype($title) === 'string') {
 			$this->title = $title;
 		}
 		else {

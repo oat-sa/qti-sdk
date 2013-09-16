@@ -117,7 +117,7 @@ abstract class Variable {
 	 * @throws InvalidArgumentException If $identifier is not a string.
 	 */
 	public function setIdentifier($identifier) {
-		if (is_string($identifier)) {
+		if (gettype($identifier) === 'string') {
 			$this->identifier = $identifier;
 		}
 		else {

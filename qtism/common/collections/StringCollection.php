@@ -18,7 +18,7 @@ class StringCollection extends AbstractCollection {
 	 * @throws InvalidArgumentException If $value is not a valid string.
 	 */
 	protected function checkType($value) {
-		if (!is_string($value)) {
+		if (gettype($value) !== 'string') {
 			$msg = "StringCollection class only accept string values, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}

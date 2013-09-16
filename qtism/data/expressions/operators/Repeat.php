@@ -50,7 +50,7 @@ class Repeat extends Operator {
 	 * @throws InvalidArgumentException If $numberRepeats is not an integer nor a valid QTI variable reference.
 	 */
 	public function setNumberRepeats($numberRepeats) {
-		if (is_int($numberRepeats) || (is_string($numberRepeats) && Format::isVariableRef($numberRepeats))) {
+		if (is_int($numberRepeats) || (gettype($numberRepeats) === 'string' && Format::isVariableRef($numberRepeats))) {
 			$this->numberRepeats = $numberRepeats;
 		}
 		else {

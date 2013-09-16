@@ -234,7 +234,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
-		if (is_string($title)) {
+		if (gettype($title) === 'string') {
 			$this->title = $title;
 		}
 		else {
@@ -260,7 +260,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $content is not a string.
 	 */
 	public function setContent($content) {
-		if (is_string($content)) {
+		if (gettype($content) === 'string') {
 			$this->content = $content;
 		}
 		else {

@@ -446,7 +446,7 @@ class Route implements Iterator {
     public function getAssessmentItemRefsByCategory($category) {
         
         $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        $categories = (is_string($category)) ? array($category) : $category->getArrayCopy();
+        $categories = (gettype($category) === 'string') ? array($category) : $category->getArrayCopy();
 
         $result = new AssessmentItemRefCollection();
         

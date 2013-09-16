@@ -86,7 +86,7 @@ class EqualProcessor extends OperatorProcessor {
 		else {
 			$tolerance = $expression->getTolerance();
 			
-			if (is_string($tolerance[0])) {
+			if (gettype($tolerance[0]) === 'string') {
 				$strTolerance = $tolerance;
 				$tolerance = array();
 				
@@ -106,7 +106,7 @@ class EqualProcessor extends OperatorProcessor {
 				
 				$tolerance[] = $varValue;
 				
-				if (isset($strTolerance[1]) && is_string($strTolerance[1])) {
+				if (isset($strTolerance[1]) && gettype($strTolerance[1]) === 'string') {
 					// A second variableRef to handle.
 					$tolerance1Name = Utils::sanitizeVariableRef($strTolerance[1]);
 					

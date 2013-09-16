@@ -58,7 +58,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if ($v instanceof Container && $v->isNull()) {
 				return true;
 			}
-			else if ((is_string($v) && empty($v)) || is_null($v)) {
+			else if ((gettype($v) === 'string' && empty($v)) || is_null($v)) {
 				return true;
 			}
 		}
@@ -170,7 +170,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
 				return false;
 			}
-			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!is_string($v) || empty($v))) {
+			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (gettype($v) !== 'string' || empty($v))) {
 				return false;
 			}
 		}

@@ -19,7 +19,7 @@ class IdentifierCollection extends StringCollection {
 	 * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
 	 */
 	protected function checkType($value) {
-		if (!is_string($value)) {
+		if (gettype($value) !== 'string') {
 			$msg = "IdentifierCollection class only accept string values, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}

@@ -108,7 +108,7 @@ class Utils {
 			break;
 					
 			case BaseType::STRING:
-				return is_string($value);
+				return gettype($value) === 'string';
 			break;
 					
 			case BaseType::URI:

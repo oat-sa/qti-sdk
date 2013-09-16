@@ -72,7 +72,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 						foreach ($mapping->getMapEntries() as $mapEntry) {
 							
 							$val = $state[$identifier];
-							if (is_string($val) && $mapEntry->isCaseSensitive()) {
+							if (gettype($val) === 'string' && $mapEntry->isCaseSensitive()) {
 								$val = mb_strtolower($val, 'UTF-8');
 							}
 							
@@ -97,7 +97,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 						
 						foreach ($mapping->getMapEntries() as $mapEntry) {
 							$val = $state[$identifier];
-							if (is_string($val) && $mapEntry->isCaseSensitive()) {
+							if (gettype($val) === 'string' && $mapEntry->isCaseSensitive()) {
 								$val = mb_strtolower($val, 'UTF-8');
 							}
 							

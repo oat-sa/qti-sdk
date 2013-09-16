@@ -132,7 +132,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * @throws InvalidArgumentException If $lang is not a string.
 	 */
 	public function setLang($lang = '') {
-		if (is_string($lang)) {
+		if (gettype($lang) === 'string') {
 			$this->lang = $lang;
 		}
 		else {

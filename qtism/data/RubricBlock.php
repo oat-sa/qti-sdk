@@ -101,7 +101,7 @@ class RubricBlock extends QtiComponent {
 	 * @throws InvalidArgumentException If $use is not a string.
 	 */
 	public function setUse($use) {
-		if (is_string($use)) {
+		if (gettype($use) === 'string') {
 			$this->use = $use;
 		}
 		else {
@@ -135,7 +135,7 @@ class RubricBlock extends QtiComponent {
 	 * @throws InvalidArgumentException If $content is not a string.
 	 */
 	public function setContent($content) {
-		if (is_string($content)) {
+		if (gettype($content) === 'string') {
 			$this->content = $content;
 		}
 		else {

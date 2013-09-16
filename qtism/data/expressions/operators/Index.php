@@ -48,7 +48,7 @@ class Index extends Operator {
 	 * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
 	 */
 	public function setN($n) {
-		if (is_int($n) || (is_string($n) && Format::isVariableRef($n))) {
+		if (is_int($n) || (gettype($n) === 'string' && Format::isVariableRef($n))) {
 			$this->n = $n;
 		}
 		else {

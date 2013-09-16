@@ -115,7 +115,7 @@ class ResponseProcessing extends QtiComponent {
 	 * @throws InvalidArgumentException If $template is not a valid URI nor an empty string.
 	 */
 	public function setTemplate($template) {
-		if (Format::isUri($template) === true || (is_string($template) === true && empty($template) === true)) {
+		if (Format::isUri($template) === true || (gettype($template) === 'string' && empty($template) === true)) {
 			$this->template = $template;
 		}
 		else {
@@ -151,7 +151,7 @@ class ResponseProcessing extends QtiComponent {
 	 * @throws InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
 	 */
 	public function setTemplateLocation($templateLocation) {
-		if (Format::isUri($templateLocation) === true || (is_string($templateLocation) === true && empty($templateLocation) === true)) {
+		if (Format::isUri($templateLocation) === true || (gettype($templateLocation) === 'string' && empty($templateLocation) === true)) {
 			$this->templateLocation = $templateLocation;
 		}
 		else {
