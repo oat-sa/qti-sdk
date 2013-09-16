@@ -18,7 +18,6 @@ class AssessmentSectionCollection extends QtiIdentifiableCollection {
 	 * @throws InvalidArgumentException If $value is not a AssessmentSection object.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
 		if (!$value instanceof AssessmentSection) {
 			$msg = "AssessmentSectionCollection class only accept AssessmentSection objects, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);

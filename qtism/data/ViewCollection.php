@@ -19,7 +19,6 @@ class ViewCollection extends IntegerCollection {
 	 * @throws InvalidArgumentException If $value is not a valid View enumeration value.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
 		if (!in_array($value, View::asArray())) {
 			$msg = "The ViewsCollection class only accept View enumeration values, '${value}' given.";
 			throw new InvalidArgumentException($msg); 

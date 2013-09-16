@@ -19,8 +19,6 @@ class AreaMapEntryCollection extends QtiComponentCollection {
 	 * @throws InvalidArgumentException If the given $value is not an instance of AreaMapEntry.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
-		
 		if (!$value instanceof AreaMapEntry) {
 			$msg = "AreaMapEntryCollection only accepts to store AreaMapEntry objects, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);

@@ -18,7 +18,6 @@ class AssessmentItemRefCollection extends SectionPartCollection {
 	 * @throws InvalidArgumentException If $value is not a AssessmentItemRef object.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
 		if (!$value instanceof AssessmentItemRef) {
 			$msg = "AssessmentItemRefCollection class only accept AssessmentItemRef objects, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);

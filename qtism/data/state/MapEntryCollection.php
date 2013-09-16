@@ -19,8 +19,6 @@ class MapEntryCollection extends QtiComponentCollection {
 	 * @throws InvalidArgumentException If the given $value is not an instance of MapEntry.
 	 */
 	protected function checkType($value) {
-		parent::checkType($value);
-		
 		if (!$value instanceof MapEntry) {
 			$msg = "MapEntryCollection only accepts to store MapEntry objects, '" . gettype($value) . "' given.";
 			throw new InvalidArgumentException($msg);

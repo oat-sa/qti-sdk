@@ -30,8 +30,6 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	}
 	
 	protected function checkType($value) {
-		parent::checkType($value);
-		
 		if (!$value instanceof QtiIdentifiable) {
 			$msg = "The QtiIdentifiable class only accepts to store QtiIdentifiable objects.";
 			throw new InvalidArgumentException($msg);
