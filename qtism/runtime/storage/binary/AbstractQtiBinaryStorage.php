@@ -109,10 +109,16 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             
             foreach ($route as $routeItem) {
+                // Deal with RouteItem
                 $access->writeRouteItem($this->getSeeker(), $routeItem);
-            
+                
+                // Deal with ItemSessio related to the previously written RouteItem.
                 $itemSession = $itemSessionStore->getAssessmentItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
                 $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
+                
+                // Deal with PendingResponses
+                // -- pendingresponses-count
+                $access->writeTinyInt(0);
             }
             
             // Persist the test-level global scope.
@@ -157,6 +163,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
            for ($i = 0; $i < $routeCount; $i++) {
                 $routeItem = $access->readRouteItem($this->getSeeker());
                 $itemSession = $access->readAssessmentItemSession($this->getSeeker());
+                
+                // pendingResponses-count
+                $pendingResponsesCount = $access->readTinyInt();
             
                 $route->addRouteItemObject($routeItem);
                 $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
