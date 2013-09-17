@@ -72,6 +72,9 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
         
+        // Because Q01 is not a multi-occurence item in the route, isLastOccurenceUpdate always return false.
+        $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
         
@@ -119,16 +122,29 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($sessionId);
         
         // Q07.1 - Incorrect response (but inside the circle).
+        $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        // We now test the lastOccurence update for this multi-occurence item.
+        $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
         
         // Q07.2 Incorrect response (outside the circle).
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(200, 200)))));
+        $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
         
         // Q07.3 Correct response (perfectly on the point).
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());

@@ -1059,8 +1059,25 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param SplObjectStorage $lastOccurenceUpdate A map.
 	 */
-	protected function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate) {
+	public function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate) {
 		$this->lastOccurenceUpdate = $lastOccurenceUpdate;
+	}
+	
+	/**
+	 * Whether a given item occurence is the last updated.
+	 * 
+	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+	 * @param integer $occurence An occurence number
+	 * @return boolean
+	 */
+	public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence) {
+	    if (($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) {
+	        if ($occurence === $lastUpdate) {
+	            return true;
+	        }
+	    }
+	    
+	    return false;
 	}
 	
 	/**
