@@ -288,6 +288,89 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	}
 	
+	public function testLinearSimultaneousSubmission() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
+	    $this->assertTrue($doc->isExclusivelyLinear());
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $session->beginTestSession();
+	    
+	    // Q01 - Correct.
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+	    
+	    // !!! The Response must be stored in the session, but no score must be computed.
+	    // This is the same for the next items.
+	    $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']);
+	    $this->assertEquals(0.0, $session['Q01.scoring']);
+	    $this->assertEquals(1, count($session->getPendingResponses()));
+	    
+	    // Q02 - Incorrect (but SCORE = 3)
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))))));
+	    $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))));
+	    $this->assertEquals(0.0, $session['Q02.SCORE']);
+	    $this->assertEquals(2, count($session->getPendingResponses()));
+	    
+	    // Q03 - Skip.
+	    $session->beginAttempt();
+	    $session->skip();
+	    // When skipping, the pending responses consist of all response variable
+	    // with their default value applied.
+	    $this->assertEquals(3, count($session->getPendingResponses()));
+	    
+	    // Q04 - Skip.
+	    $session->beginAttempt();
+	    $session->skip();
+	    $this->assertEquals(4, count($session->getPendingResponses()));
+	    
+	    // Q05 - Skip.
+	    $session->beginAttempt();
+	    $session->skip();
+	    $this->assertEquals(5, count($session->getPendingResponses()));
+	    
+	    // Q06 - Skip.
+	    $session->beginAttempt();
+	    $session->skip();
+	    $this->assertEquals(6, count($session->getPendingResponses()));
+	    
+	    // Q07.1 - Correct.
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
+	    $this->assertInternalType('float', $session['Q07.1.SCORE']);
+	    $this->assertEquals(0.0, $session['Q07.1.SCORE']);
+	    $this->assertEquals(7, count($session->getPendingResponses()));
+	    
+	    // Q07.2 - Incorrect (but SCORE = 1).
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 113)))));
+	    $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 113)));
+	    $this->assertEquals(0.0, $session['Q07.2.SCORE']);
+	    $this->assertEquals(8, count($session->getPendingResponses()));
+	    
+	    // Q07.3 - Incorrect (and SCORE = 0).
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(50, 60)))));
+	    $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(50, 60)));
+	    $this->assertEquals(0.0, $session['Q07.3.SCORE']);
+	    
+	    // This is the end of the test. Then, the pending responses were flushed.
+	    // We also have to check if the deffered response processing took place.
+	    $this->assertEquals(0, count($session->getPendingResponses()));
+	    
+	    $this->assertEquals(1.0, $session['Q01.scoring']);
+	    $this->assertEquals(3.0, $session['Q02.SCORE']);
+	    $this->assertEquals(0.0, $session['Q03.SCORE']);
+	    $this->assertEquals(0.0, $session['Q04.SCORE']);
+	    $this->assertEquals(0.0, $session['Q05.SCORE']);
+	    $this->assertEquals(0.0, $session['Q06.mySc0r3']);
+	    
+	    // Did the test-level outcome processing take place?
+	    $this->assertEquals(9, $session['NPRESENTED']);
+	}
+	
 	/**
 	 * @dataProvider linearOutcomeProcessingProvider
 	 * 

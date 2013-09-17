@@ -747,8 +747,9 @@ class AssessmentItemSession extends State {
 	        foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
 	            $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
 	        }
-	         
-	        $this->endAttempt();
+
+	        // End the attempt with a null state.
+	        $this->endAttempt(null, $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL);
 	    }
 	}
 	
@@ -871,5 +872,45 @@ class AssessmentItemSession extends State {
 	    $duration = clone $duration;
 	    $duration->add($this->getAcceptableLatency());
 	    return $duration;
+	}
+	
+	/**
+	 * Get the ResponseVariable objects contained in the AssessmentItemSession.
+	 * 
+	 * @param boolean $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
+	 * @return State A State object composed exclusively with ResponseVariable objects.
+	 */
+	public function getResponseVariables($builtIn = true) {
+	    
+	    $state = new State();
+	    $data = $this->getDataPlaceHolder();
+	    
+	    foreach ($data as $id => $var) {
+	        if ($var instanceof ResponseVariable && ($builtIn === true || in_array($id, array('duration', 'numAttempts')) === false)) {
+	            $state->setVariable($var);
+	        }
+	    }
+	    
+	    return $state;
+	}
+	
+	/**
+	 * Get the OutcomeVariable objects contained in the AssessmentItemSession.
+	 * 
+	 * @param boolean $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
+	 * @return State A State object composed exclusively with OutcomeVariable objects.
+	 */
+	public function getOutcomeVariables($builtIn = true) {
+	    
+	    $state = new State();
+	    $data = $this->getDataPlaceHolder();
+	    
+	    foreach ($data as $id => $var) {
+	        if ($var instanceof OutcomeVariable && ($builtIn === true || $id !== 'completionStatus')) {
+	            $state->setVariable($var);
+	        }
+	    }
+	    
+	    return $state;
 	}
 }

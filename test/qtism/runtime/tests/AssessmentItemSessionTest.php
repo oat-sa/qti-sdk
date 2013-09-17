@@ -112,6 +112,39 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         }
     }
     
+    public function testGetResponseVariables() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        
+        // Get response variables with built-in ones.
+        $responses = $itemSession->getResponseVariables();
+        $this->assertEquals(3, count($responses));
+        $this->assertTrue(isset($responses['RESPONSE']));
+        $this->assertTrue(isset($responses['numAttempts']));
+        $this->assertTrue(isset($responses['duration']));
+        
+        // Get response variables but ommit built-in ones.
+        $responses = $itemSession->getResponseVariables(false);
+        $this->assertEquals(1, count($responses));
+        $this->assertTrue(isset($responses['RESPONSE']));
+    }
+    
+    public function testGetOutcomeVariables() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        
+        // Get outcome variables with the built-in ones included.
+        $outcomes = $itemSession->getOutcomeVariables();
+        $this->assertEquals(2, count($outcomes));
+        $this->assertTrue(isset($outcomes['SCORE']));
+        $this->assertTrue(isset($outcomes['completionStatus']));
+        
+        // Get outcome variables without the built-in 'completionStatus'.
+        $outcomes = $itemSession->getOutcomeVariables(false);
+        $this->assertEquals(1, count($outcomes));
+        $this->assertTrue(isset($outcomes['SCORE']));
+    }
+    
     public function testEvolutionBasicTimeLimitsUnderflowOverflow() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         

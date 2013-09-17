@@ -102,6 +102,7 @@ class AssessmentTestSession extends State {
 		$this->setRoute($route);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
+		$this->setPendingResponses(new PendingResponsesCollection());
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -889,9 +890,16 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException(msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    $routeItem = $this->getCurrentRouteItem();
-	    $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	    $item = $this->getCurrentAssessmentItemRef();
+	    $occurence = $this->getCurrentAssessmentItemRefOccurence();
+	    $session = $this->getItemSession($item, $occurence);
 	    $session->skip();
+	    
+	    if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+	        // Store the responses for a later processing at the end of the test part.
+	        $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
+	        $this->addPendingResponses($pendingResponses);
+	    }
 	    
 	    $this->nextRouteItem();
 	}
