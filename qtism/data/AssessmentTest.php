@@ -454,4 +454,29 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 			$observer->update($this);
 		}
 	}
+	
+	/**
+	 * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
+	 * the result will be false.
+	 * 
+	 * @return boolean
+	 */
+	public function isExclusivelyLinear() {
+	    $testParts = $this->getTestParts();
+	    if (count($testParts) === 0) {
+	        return false;
+	    }
+	    
+	    $result = true;
+	    
+	    foreach ($testParts as $testPart) {
+	        if ($testPart->getNavigationMode() !== NavigationMode::LINEAR) {
+	            $result = false;
+	            $testParts->rewind();
+	            break;
+	        }
+	    }
+	    
+	    return $result;
+	}
 }

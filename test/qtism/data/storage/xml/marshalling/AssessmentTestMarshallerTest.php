@@ -112,6 +112,7 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('My Assessment Test', $component->getTitle());
 		$this->assertEquals('QTIStateMachine', $component->getToolName());
 		$this->assertEquals('1.0b', $component->getToolVersion());
+		$this->assertTrue($component->isExclusivelyLinear());
 		
 		$this->assertEquals(1, count($component->getTestFeedbacks()));
 		$this->assertEquals(1, count($component->getTestParts()));
