@@ -644,6 +644,10 @@ class AssessmentItemSession extends State {
 	    // default values prior to each invocation of responseProcessing. For Adaptive Items the outcome variables 
 	    // retain the values that were assigned to them during the previous invocation of response processing. 
 	    // For more information, see Response Processing.
+	    //
+	    // The responseProcessing can be skipped by given a false value to $responseProcessing. Why?
+	    // Because when the SubmissionMode is SubmissionMode::SIMULTANEOUS, the responseProcessing must
+	    // deffered to the end of the current testPart.
 	    if ($responseProcessing === true) {
 	    	
 	    	if ($this->getAssessmentItem()->isAdaptive() === false) {

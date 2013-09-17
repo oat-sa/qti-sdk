@@ -45,6 +45,14 @@ class AssessmentTestSessionException extends Exception {
     const OUTCOME_PROCESSING_ERROR = 3;
     
     /**
+     * Code to use when an error occurs while running the response processing
+     * related to a postponed response submission.
+     * 
+     * @var integer
+     */
+    const RESPONSE_PROCESSING_ERROR = 4;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.

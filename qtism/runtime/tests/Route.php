@@ -589,4 +589,30 @@ class Route implements Iterator {
         
         return $routeItems[0];
     }
+    
+    /**
+     * Whether the current RouteItem is the last of the current TestPart.
+     * 
+     * @return boolean
+     * @throws OutOfBoundsException If the Route is empty.
+     */
+    public function isLastOfTestPart() {
+        $count = $this->count();
+        if ($count === 0) {
+            $msg = "Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.";
+            throw new OutOfBoundsException($msg);
+        }
+        
+        $nextPosition = $this->getPosition() + 1;
+        if ($nextPosition >= $count) {
+            // This is the last routeitem of the whole route.
+            return true;
+        }
+        else {
+            $currentTestPart = $this->current()->getTestPart();
+            $nextTestPart = $this->getRouteItemAt($nextPosition)->getTestPart();
+            
+            return $currentTestPart !== $nextTestPart;
+        }
+    }
 }

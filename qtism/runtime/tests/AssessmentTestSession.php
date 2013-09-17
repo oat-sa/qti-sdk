@@ -2,6 +2,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\processing\ResponseProcessingEngine;
+
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\processing\OutcomeProcessingEngine;
@@ -77,6 +79,15 @@ class AssessmentTestSession extends State {
 	 * @var SplObjectStorage
 	 */
 	private $lastOccurenceUpdate;
+	
+	/**
+	 * A Collection of PendingResponses objects. These objects aims at storing
+	 * responses that are waiting for response processing in simultaneous submission
+	 * mode.
+	 * 
+	 * @var PendingResponsesCollection
+	 */
+	private $pendingResponses;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -222,6 +233,42 @@ class AssessmentTestSession extends State {
 	 */
 	public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore) {
 	    $this->assessmentItemSessionStore = $assessmentItemSessionStore;
+	}
+	
+	/**
+	 * Get the pending responses that are waiting for response processing
+	 * when the simultaneous sumbission mode is in force.
+	 * 
+	 * @return PendingResponsesCollection A collection of PendingResponses objects.
+	 */
+	public function getPendingResponses() {
+	    return $this->pendingResponses;
+	}
+	
+	/**
+	 * Set the pending responses that are waiting for response processing when the simultaneous
+	 * submission mode is in force.
+	 * 
+	 * @param PendingResponsesCollection $pendingResponses A collection of PendingResponses objects.
+	 */
+	public function setPendingResponses(PendingResponsesCollection $pendingResponses) {
+	    $this->pendingResponses = $pendingResponses;
+	}
+	
+	/**
+	 * Add a set of responses for which the response processing is postponed.
+	 * 
+	 * @param PendingResponses $pendingResponses
+	 * @throws AssessmentTestSessionException If the current submission mode is not simultaneous.
+	 */
+	protected function addPendingResponses(PendingResponses $pendingResponses) { 
+	    if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {   
+	        $this->getPendingResponses()->attach($pendingResponses);
+	    }
+	    else {
+	        $msg = "Cannot add pending responses while the current submission mode is not SIMULTANEOUS";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
 	}
 	
 	/**
@@ -881,16 +928,67 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $routeItem = $this->getCurrentRouteItem();
-	    $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-	    $session->endAttempt($responses);
+	    $currentItem = $routeItem->getAssessmentItemRef();
+	    $currentOccurence = $routeItem->getOccurence();
+	    $session = $this->getItemSession($currentItem, $currentOccurence);
 	    
-	    // Update the lastly updated item occurence.
-	    $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	    if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+	        
+	        // Store the responses for a later processing.
+	        $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
+	        $session->endAttempt($responses, false);
+	        
+	        // If the current item occurence is the last of the current test part,
+	        // we process the deffered response processing.
+	        if ($this->getRoute()->isLastOfTestPart() === true) {
+	            $this->defferedResponseProcessing();
+	        }
+	    }
+	    else {
+	        $session->endAttempt($responses);
+	        // Update the lastly updated item occurence.
+	        $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	    }
 	    
 	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
 	        // Go automatically to the next step in the route.
 	        $this->moveNext();
 	    }
+	}
+	
+	/**
+	 * Apply the response processing on pending responses due to
+	 * the simultaneous submission mode in force.
+	 * 
+	 * @return PendingResponsesCollection The collection of PendingResponses objects that were processed.
+	 * @throws AssessmentTestSessionException If an error occurs while processing the pending responses.
+	 */
+	protected function defferedResponseProcessing() {
+	    $itemSessionStore = $this->getAssessmentItemSessionStore();
+	    $pendingResponses = $this->getPendingResponses();
+	    
+	    foreach ($pendingResponses as $pendingResponses) {
+	        
+	        $item = $pendingResponses->getAssessmentItemRef();
+	        $occurence = $pendingResponses->getOccurence();
+	        $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
+	        $engine = new ResponseProcessingEngine($item->getResponseProcessing(), $itemSession);
+	        
+	        try {
+	            $engine->process();
+	        }
+	        catch (ProcessingException $e) {
+	            $msg = "An error occured during postponed response processing.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
+	        }
+	    }
+	    
+	    $result = $pendingResponses;
+	    
+	    // Reset the pending responses, they are now processed.
+	    $this->setPendingResponses(new PendingResponsesCollection());
+	    
+	    return $result;
 	}
 	
 	/**

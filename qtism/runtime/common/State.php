@@ -156,7 +156,7 @@ class State extends AbstractCollection {
 	    }
 	}
 	
-	public function checkType($value) {
+	protected function checkType($value) {
 		if (!$value instanceof Variable) {
 			$msg = "A State object stores Variable objects only.";
 			throw new InvalidArgumentException($msg);
