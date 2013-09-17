@@ -3,15 +3,16 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\runtime\tests\RouteItem;
-
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\State;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AssessmentItemSession;
+use qtism\runtime\tests\PendingResponses;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
 use qtism\common\datatypes\Duration;
@@ -701,8 +702,92 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
         }
         catch (OutOfBoundsException $e) {
-            $msg = "A QTI Component was not found in the assessmentTest tree structure.";
+            $msg = "A QTI Component position was not found in the assessmentTest tree structure.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ROUTE_ITEM, $e);
         }
+    }
+    
+    /**
+     * Read a PendingResponse object from the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @return PendingResponses A PendingResponses object.
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function readPendingResponses(AssessmentTestSeeker $seeker) {
+    	try {
+    		// Read the state.
+	    	$state = new State();
+	    	$varCount = $this->readTinyInt();
+	    	
+	    	for ($i = 0; $i < $varCount; $i++) {
+	    		$responseDeclaration = $seeker->seekComponent('responseDeclaration', $this->readShort());
+	    		$responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+	    		$this->readVariableValue($responseVariable);
+	    		$state->setVariable($responseVariable);
+	    	}
+	    	
+	    	// Read the assessmentItemRef.
+	    	$itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
+	    	
+	    	// Read the occurence number.
+	    	$occurence = $this->readTinyInt();
+	    	
+	    	return new PendingResponses($state, $itemRef, $occurence);
+    	}
+    	catch (BinaryStreamAccessException $e) {
+    		$msg = "An error occured while reading some pending responses.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+    	}
+    	catch (OutOfBoundsException $e) {
+    		$msg = "A QTI component was not found in the assessmentTest tree structure.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+    	}
+    }
+    
+    /**
+     * Write a PendingResponses object in the current binary stream.
+     * 
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where positions in the assessmentTest tree will be pulled out.
+     * @param PendingResponses $pendingResponses The read PendingResponses object.
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function writePendingResponses(AssessmentTestSeeker $seeker, PendingResponses $pendingResponses) {
+    	try {
+    		$state = $pendingResponses->getState();
+    		$itemRef = $pendingResponses->getAssessmentItemRef();
+    		$occurence = $pendingResponses->getOccurence();
+    		
+    		// Write the state.
+    		$responseDeclarations = $itemRef->getResponseDeclarations();
+    		$varCount = count($state);
+    		$this->writeTinyInt($varCount);
+    		
+    		foreach ($state as $responseVariable) {
+    			$respId = $responseVariable->getIdentifier();
+    			if (isset($responseDeclarations[$respId]) === true) {
+    				$this->writeShort($seeker->seekPosition($responseDeclarations[$respId]));
+    				$this->writeVariableValue($responseVariable);
+    			}
+    			else {
+    				$msg = "No response variable with identifier '${respId}' found in related assessmentItemRef.";
+    				throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES);
+    			}
+    		}
+    		
+    		// Write the assessmentItemRef.
+    		$this->writeShort($seeker->seekPosition($itemRef));
+    		
+    		// Write the occurence number.
+    		$this->writeTinyInt($occurence);
+    	}
+    	catch (BinaryStreamAccessException $e) {
+    		$msg = "An error occured while reading some pending responses.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+    	}
+    	catch (OutOfBoundsException $e) {
+    		$msg = "A QTI component position could not be found in the assessmentTest tree structure.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+    	}
     }
 }

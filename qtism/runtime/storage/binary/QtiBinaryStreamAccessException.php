@@ -91,6 +91,13 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
     const ROUTE_ITEM = 21;
     
     /**
+     * An error occured while reading/writing pending responses.
+     * 
+     * @var integer
+     */
+    const PENDING_RESPONSES = 22;
+    
+    /**
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.

@@ -15,6 +15,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -465,5 +466,64 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(0, $routeItem->getOccurence());
         $this->assertEquals(0, count($routeItem->getBranchRules()));
         $this->assertEquals(0, count($routeItem->getPreConditions()));
+    }
+    
+    public function testReadPendingResponses() {
+    	$doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $bin = '';
+        $bin.= "\x01"; // variable-count = 1.
+        $bin.= pack('S', 0); // response-declaration-position = 0
+        $bin.= pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // variable-value = 'ChoiceA' (identifier)
+        $bin.= pack('S', 0); // item-tree-position = 0
+        $bin.= "\x00"; // occurence = 0
+        
+        $stream = new BinaryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        
+        $pendingResponses = $access->readPendingResponses($seeker);
+        $state = $pendingResponses->getState();
+        $this->assertEquals(1, count($state));
+        $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $state->getVariable('RESPONSE'));
+        $this->assertEquals('ChoiceA', $state['RESPONSE']);
+        
+        $itemRef = $pendingResponses->getAssessmentItemRef();
+        $this->assertEquals('Q01', $itemRef->getIdentifier());
+        
+        $this->assertEquals(0, $pendingResponses->getOccurence());
+        $this->assertInternalType('integer', $pendingResponses->getOccurence());
+    }
+    
+    public function testWritePendingResponses() {
+    	$doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $stream = new BinaryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream);
+        
+        $factory = new AssessmentTestSessionFactory($doc);
+        $session = AssessmentTestSession::instantiate($factory);
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+        
+        $store = $session->getPendingResponseStore();
+        $pendingResponses = $store->getPendingResponses($doc->getComponentByIdentifier('Q01'));
+        $access->writePendingResponses($seeker, $pendingResponses);
+        
+        $stream->rewind();
+        $pendingResponses = $access->readPendingResponses($seeker);
+        
+        $state = $pendingResponses->getState();
+        $this->assertEquals('ChoiceB', $state['RESPONSE']);
+        $this->assertEquals('Q01', $pendingResponses->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals(0, $pendingResponses->getOccurence());
+        $this->assertInternalType('integer', $pendingResponses->getOccurence());
     }
 }
