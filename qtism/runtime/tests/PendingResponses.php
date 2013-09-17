@@ -43,7 +43,7 @@ class PendingResponses {
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef the pending responses are related to.
      * @param integer $occurence The occurence number of the item the pending responses are related to.
      */
-    public function __construct(State $state, AssessmentItemRef $assessmentItemRef, $occurence) {
+    public function __construct(State $state, AssessmentItemRef $assessmentItemRef, $occurence = 0) {
         $this->setState($state);
         $this->setAssessmentItemRef($assessmentItemRef);
         $this->setOccurence($occurence);
