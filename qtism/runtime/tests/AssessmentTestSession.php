@@ -3,7 +3,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\runtime\processing\ResponseProcessingEngine;
-
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\processing\OutcomeProcessingEngine;
@@ -81,13 +80,12 @@ class AssessmentTestSession extends State {
 	private $lastOccurenceUpdate;
 	
 	/**
-	 * A Collection of PendingResponses objects. These objects aims at storing
-	 * responses that are waiting for response processing in simultaneous submission
-	 * mode.
+	 * A Store of PendingResponse objects that are used to postpone
+	 * response processing in SIMULTANEOUS submission mode.
 	 * 
-	 * @var PendingResponsesCollection
+	 * @var PendingResponseStore
 	 */
-	private $pendingResponses;
+	private $pendingResponseStore;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -102,7 +100,7 @@ class AssessmentTestSession extends State {
 		$this->setRoute($route);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
-		$this->setPendingResponses(new PendingResponsesCollection());
+		$this->setPendingResponseStore(new PendingResponseStore());
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -243,17 +241,27 @@ class AssessmentTestSession extends State {
 	 * @return PendingResponsesCollection A collection of PendingResponses objects.
 	 */
 	public function getPendingResponses() {
-	    return $this->pendingResponses;
+	    return $this->getPendingResponseStore()->getAllPendingResponses();
 	}
 	
 	/**
-	 * Set the pending responses that are waiting for response processing when the simultaneous
-	 * submission mode is in force.
+	 * Get the PendingResponses objects store used to postpone
+	 * response processing in SIMULTANEOUS submission mode.
 	 * 
-	 * @param PendingResponsesCollection $pendingResponses A collection of PendingResponses objects.
+	 * @return PendingResponseStore A PendingResponseStore object.
 	 */
-	public function setPendingResponses(PendingResponsesCollection $pendingResponses) {
-	    $this->pendingResponses = $pendingResponses;
+	public function getPendingResponseStore() {
+	    return $this->pendingResponseStore;
+	}
+	
+	/**
+	 * Set the PendingResponses objects store used to postpone
+	 * response processing in SIMULTANEOUS submission mode.
+	 * 
+	 * @param PendingResponseStore $pendingResponseStore
+	 */
+	public function setPendingResponseStore(PendingResponseStore $pendingResponseStore) {
+	    $this->pendingResponseStore = $pendingResponseStore;
 	}
 	
 	/**
@@ -264,7 +272,7 @@ class AssessmentTestSession extends State {
 	 */
 	protected function addPendingResponses(PendingResponses $pendingResponses) { 
 	    if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {   
-	        $this->getPendingResponses()->attach($pendingResponses);
+	        $this->getPendingResponseStore()->addPendingResponses($pendingResponses);
 	    }
 	    else {
 	        $msg = "Cannot add pending responses while the current submission mode is not SIMULTANEOUS";
@@ -994,7 +1002,7 @@ class AssessmentTestSession extends State {
 	    $result = $pendingResponses;
 	    
 	    // Reset the pending responses, they are now processed.
-	    $this->setPendingResponses(new PendingResponsesCollection());
+	    $this->setPendingResponseStore(new PendingResponseStore());
 	    
 	    return $result;
 	}
