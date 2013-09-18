@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
@@ -108,6 +109,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             // Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
+            $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
             
             foreach ($route as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
@@ -124,7 +126,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
                 $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
                 
                 // Deal with PendingResponses
-                $access->writeBoolean(false);
+                if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
+                    $access->writeBoolean(true);
+                    $access->writePendingResponses($this->getSeeker(), $pendingResponses);
+                }
+                else {
+                    $access->writeBoolean(false);
+                }
             }
             
             // Persist the test-level global scope.
@@ -165,6 +173,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $route = new Route();
             $lastOccurenceUpdate = new SplObjectStorage();
             $itemSessionStore = new AssessmentItemSessionStore();
+            $pendingResponseStore = new PendingResponseStore();
             $routeCount = $access->readTinyInt();
             
            for ($i = 0; $i < $routeCount; $i++) {
@@ -177,7 +186,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
                 }
                 
                 // pending-responses
-                $hasPendingResponses = $access->readBoolean();
+                if ($access->readBoolean() === true) {
+                    $pendingResponseStore->addPendingResponses($access->readPendingResponses($this->getSeeker()));
+                }
             
                 $route->addRouteItemObject($routeItem);
                 $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
@@ -191,6 +202,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
+            $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             
             // build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {

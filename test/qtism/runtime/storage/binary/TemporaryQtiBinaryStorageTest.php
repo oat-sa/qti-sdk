@@ -170,4 +170,119 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT'], 3));
     }
     
+    public function testLinearNavigationSimultaneousSubmission() {
+        
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
+        $factory = new AssessmentTestSessionFactory($doc);
+        $storage = new TemporaryQtiBinaryStorage($factory);
+        $sessionId = 'linearSimultaneous1337';
+        $session = $storage->instantiate($sessionId);
+        $session->beginTestSession();
+        
+        // Nothing in pending responses. The test has just begun.
+        $this->assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q01 - Correct
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(1, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']);
+        $this->assertEquals(0.0, $session['Q01.scoring']);
+        
+        // Q02 - Correct
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))));
+        $this->assertEquals(0.0, $session['Q02.SCORE']);
+        $this->assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q03 - Skip
+        $session->beginAttempt();
+        $session->skip();
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(3, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q04 - Skip
+        $session->beginAttempt();
+        $session->skip();
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(4, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q05 - Skip
+        $session->beginAttempt();
+        $session->skip();
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(5, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q06 - Skip
+        $session->beginAttempt();
+        $session->skip();
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(6, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        
+        // Q07.1 - Correct
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
+        $this->assertEquals(0.0, $session['Q07.1.SCORE']);
+        
+        // Q07.2 - Incorrect but in the circle
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 114)));
+        $this->assertEquals(0.0, $session['Q07.2.SCORE']);
+        
+        // Q07.3 - Incorrect and out of the circle
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(30, 13)))));
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        
+        // Response processing should have taken place beauce this is the end of the current test part.
+        // The Pending Response Store should be then flushed and now empty.
+        $this->assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(30, 13)));
+        $this->assertEquals(0.0, $session['Q07.3.SCORE']);
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        
+        // Let's check the overall Assessment Test Session state.
+        $this->assertEquals(1.0, $session['Q01.scoring']);
+        $this->assertEquals(4.0, $session['Q02.SCORE']);
+        $this->assertInternalType('float', $session['Q03.SCORE']);
+        $this->assertEquals(0.0, $session['Q03.SCORE']);
+        $this->assertInternalType('float', $session['Q04.SCORE']);
+        $this->assertEquals(0.0, $session['Q04.SCORE']);
+        $this->assertInternalType('float', $session['Q05.SCORE']);
+        $this->assertEquals(0.0, $session['Q05.SCORE']);
+        $this->assertInternalType('float', $session['Q06.mySc0r3']);
+        $this->assertEquals(0.0, $session['Q06.mySc0r3']);
+        $this->assertEquals(1.0, $session['Q07.1.SCORE']);
+        $this->assertEquals(1.0, $session['Q07.2.SCORE']);
+        $this->assertInternalType('float', $session['Q07.3.SCORE']);
+        $this->assertEquals(0.0, $session['Q07.3.SCORE']);
+        $this->assertEquals(2, $session['NCORRECTS01']);
+        $this->assertEquals(0, $session['NCORRECTS02']);
+        $this->assertEquals(1, $session['NCORRECTS03']);
+        $this->assertEquals(6, $session['NINCORRECT']);
+        $this->assertEquals(5, $session['NRESPONSED']);
+        $this->assertEquals(9, $session['NPRESENTED']);
+        $this->assertEquals(9, $session['NSELECTED']);
+        $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT'], 3));
+    }
 }
