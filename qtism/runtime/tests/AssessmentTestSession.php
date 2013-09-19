@@ -88,6 +88,14 @@ class AssessmentTestSession extends State {
 	private $pendingResponseStore;
 	
 	/**
+	 * Whether the Assessment Test Session must move automatically
+	 * to the next RouteItem after ending an attempt.
+	 * 
+	 * @var boolean
+	 */
+	private $autoForward;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -101,6 +109,7 @@ class AssessmentTestSession extends State {
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		$this->setPendingResponseStore(new PendingResponseStore());
+		$this->setAutoForward(true);
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -278,6 +287,34 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot add pending responses while the current submission mode is not SIMULTANEOUS";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
+	}
+	
+	/**
+	 * Set whether the test session must move automatically
+	 * to the next RouteItem when ending an attempt.
+	 * 
+	 * @param boolean $autoForward
+	 * @throws InvalidArgumentException If $autoForward is not a boolean.
+	 */
+	public function setAutoForward($autoForward) {
+	    $type = gettype($autoForward);
+	    if ($type === 'boolean') {
+	        $this->autoForward = $autoForward;
+	    }
+	    else {
+	        $msg = "The 'autoForward' argument must be a boolean, '${type}' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Know whether the test session must move automatically to
+	 * the next RouteItem when ending an attempt.
+	 * 
+	 * @return boolean
+	 */
+	public function mustAutoForward() {
+	    return $this->autoForward;
 	}
 	
 	/**
@@ -966,7 +1003,7 @@ class AssessmentTestSession extends State {
 	        $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	    }
 	    
-	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	    if ($this->mustAutoForward() === true) {
 	        // Go automatically to the next step in the route.
 	        $this->moveNext();
 	    }

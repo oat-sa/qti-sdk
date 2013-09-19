@@ -141,6 +141,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             	$access->writeVariableValue($outcomeVariable);
             }
             
+            // Deal with test session configuration.
+            // -- AutoForward
+            $access->writeBoolean($assessmentTestSession->mustAutoForward());
+            
             $this->persistStream($assessmentTestSession, $stream);
             
             $stream->close();
@@ -169,7 +173,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
             
-            // build the route and the item sessions.
+            // Build the route and the item sessions.
             $route = new Route();
             $lastOccurenceUpdate = new SplObjectStorage();
             $itemSessionStore = new AssessmentItemSessionStore();
@@ -204,12 +208,16 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             
-            // build the test-level global scope, composed of Outcome Variables.
+            // Build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {
             	$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
             	$access->readVariableValue($outcomeVariable);
             	$assessmentTestSession->setVariable($outcomeVariable);
             }
+            
+            // Deal with test session configuration.
+            // -- AutoForward
+            $assessmentTestSession->setAutoForward($access->readBoolean());
             
             $stream->close();
             
