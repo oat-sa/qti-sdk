@@ -135,15 +135,15 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
                 }
             }
             
+            // Deal with test session configuration.
+            // -- AutoForward
+            $access->writeBoolean($assessmentTestSession->mustAutoForward());
+            
             // Persist the test-level global scope.
             foreach ($assessmentTestSession->getKeys() as $outcomeIdentifier) {
             	$outcomeVariable = $assessmentTestSession->getVariable($outcomeIdentifier);
             	$access->writeVariableValue($outcomeVariable);
             }
-            
-            // Deal with test session configuration.
-            // -- AutoForward
-            $access->writeBoolean($assessmentTestSession->mustAutoForward());
             
             $this->persistStream($assessmentTestSession, $stream);
             
@@ -207,6 +207,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
+
+            // Deal with test session configuration.
+            // -- AutoForward
+            $assessmentTestSession->setAutoForward($access->readBoolean());
             
             // Build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {
@@ -214,11 +218,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             	$access->readVariableValue($outcomeVariable);
             	$assessmentTestSession->setVariable($outcomeVariable);
             }
-            
-            // Deal with test session configuration.
-            // -- AutoForward
-            $assessmentTestSession->setAutoForward($access->readBoolean());
-            
+
             $stream->close();
             
             return $assessmentTestSession;

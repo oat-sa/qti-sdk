@@ -285,4 +285,25 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(9, $session['NSELECTED']);
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT'], 3));
     }
+    
+    public function testAutoForward() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart',
+                        'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
+        $seeker = new AssessmentTestSeeker($doc, $seekerClasses);
+        
+        $testSessionFactory = new AssessmentTestSessionFactory($doc);
+        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
+        $session = $storage->instantiate();
+        $session->beginTestSession();
+        $sessionId = $session->getSessionId();
+        
+        $this->assertTrue($session->mustAutoForward());
+        $session->setAutoForward(false);
+        
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        $this->assertFalse($session->mustAutoForward());
+    }
 }
