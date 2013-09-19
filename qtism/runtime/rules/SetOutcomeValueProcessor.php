@@ -2,10 +2,12 @@
 
 namespace qtism\runtime\rules;
 
+use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\rules\SetOutcomeValue;
 use qtism\data\rules\Rule;
+use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
@@ -82,6 +84,12 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		
 		// The variable exists, its new value is processed.
 		try {
+		    // A lot of people designing QTI items want to put float values
+		    // in integer baseType'd variables... So let's go for type juggling!
+		    if (RuntimeUtils::inferBaseType($val) === BaseType::FLOAT && $var->getBaseType() === BaseType::INTEGER) {
+		        $val = intval($val);
+		    }
+		    
 			$var->setValue($val);
 		}
 		catch (InvalidArgumentException $e) {

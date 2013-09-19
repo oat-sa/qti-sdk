@@ -1270,6 +1270,24 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
+	 * Whether the candidate is authorized to move backward depending on the current context
+	 * of the test session.
+	 * 
+	 * * If the current navigation mode is LINEAR, false is returned.
+	 * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
+	 * 
+	 * @return boolean
+	 */
+	public function canMoveBackward() {
+	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	        return false;
+	    }
+	    else {
+	        return $this->getRoute()->getPosition() > 0;
+	    }
+	}
+	
+	/**
 	 * Instantiate a new AssessmentItemSession from a factory.
 	 * 
 	 * @param AbstractAssessmentTestSessionFactory $factory
