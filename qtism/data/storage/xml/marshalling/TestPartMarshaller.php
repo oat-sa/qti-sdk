@@ -71,7 +71,7 @@ class TestPartMarshaller extends Marshaller {
 			if (($navigationMode = static::getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
 				
 				if (($submissionMode = static::getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
-					
+				    
 					// We do not use the regular DOMElement::getElementsByTagName method
 					// because it is recursive. We only want the first level elements with
 					// tagname = 'assessmentSection'.
@@ -88,6 +88,7 @@ class TestPartMarshaller extends Marshaller {
 						$submissionMode = SubmissionMode::getConstantByName($submissionMode);
 						$object = new TestPart($identifier, $assessmentSections, $navigationMode, $submissionMode);
 						
+						// testFeedbacks
 						$testFeedbackElements = $element->getElementsByTagName('testFeedback');
 						$testFeedbacks = new TestFeedbackCollection();
 						for ($i = 0; $i < $testFeedbackElements->length; $i++) {
@@ -95,6 +96,14 @@ class TestPartMarshaller extends Marshaller {
 							$testFeedbacks[] = $marshaller->marshall($testFeedbackElements->item($i));
 						}
 						$object->setTestFeedbacks($testFeedbacks);
+						
+						// timeLimits
+						$timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
+						if (count($timeLimitsElts) === 1) {
+						    $marshaller = $this->getMarshallerFactory()->createMarshaller($timeLimitsElts[0]);
+						    $timeLimits = $marshaller->unmarshall($timeLimitsElts[0]);
+						    $object->setTimeLimits($timeLimits);
+						}
 						
 						return $object;
 					}

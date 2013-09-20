@@ -68,6 +68,7 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML(
 			'
 			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" navigationMode="linear" submissionMode="individual">
+		        <timeLimits minTime="60" maxTime="120" allowLateSubmission="true"/>
 				<assessmentSection identifier="section1" title="My Section 1" visible="true">
 					<selection select="3"/>
 		            <assessmentItemRef identifier="Q01" href="Q01.xml" fixed="false"/>
@@ -86,6 +87,7 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('part1', $component->getIdentifier());
 		$this->assertEquals(NavigationMode::LINEAR, $component->getNavigationMode());
 		$this->assertEquals(SubmissionMode::INDIVIDUAL, $component->getSubmissionMode());
+		$this->assertTrue($component->hasTimeLimits());
 		
 		$assessmentSections = $component->getAssessmentSections();
 		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections['section1']);
