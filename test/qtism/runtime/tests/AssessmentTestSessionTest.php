@@ -1,9 +1,8 @@
 <?php
 
-use qtism\runtime\tests\AssessmentTestSessionFactory;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
@@ -512,6 +511,68 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(3, count($sessions));
 	    for ($i = 0; $i < count($sessions); $i++) {
 	        $this->assertEquals('Q01', $sessions[$i]->getAssessmentItem()->getIdentifier());
+	    }
+	}
+	
+	public function testGetPreviousRouteItem() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $session->beginTestSession();
+	    
+	    // Try to get the previous route item but... there is no one because
+	    // we are at the first item.
+	    try {
+	        $previousRouteItem = $session->getPreviousRouteItem();
+	        
+	        // An Exception should have been thrown.
+	        $this->assertrue(false, 'An exception should have been thrown.');
+	    }
+	    catch (OutOfBoundsException $e) {
+	        // Exception successfuly thrown.
+	        $this->assertTrue(true);
+	    }
+	    
+	    // Q01.
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q02.
+	    $previousRouteItem = $session->getPreviousRouteItem();
+	    $this->assertEquals('Q01', $previousRouteItem->getAssessmentItemRef()->getIdentifier());
+	}
+	
+	public function testNextRouteItem() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $session->beginTestSession();
+	    
+	    // Q01
+	    $nextRouteItem = $session->getNextRouteItem();
+	    $this->assertEquals('Q02', $nextRouteItem->getAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q02
+	    $nextRouteItem = $session->getNextRouteItem();
+	    $this->assertEquals('Q03', $nextRouteItem->getAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q03
+	    // There is no more next route items.
+	    try {
+	        $nextRouteItem = $session->getNextRouteItem();
+	        $this->assertTrue(false, 'An exception should have been thrown.');
+	    }
+	    catch (OutOfBoundsException $e) {
+	        // Exception successfuly thrown dude!
+	        $this->assertTrue(true);
 	    }
 	}
 	

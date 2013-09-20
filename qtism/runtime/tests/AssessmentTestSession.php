@@ -923,6 +923,50 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
+	 * Get the Previous RouteItem object in the route.
+	 * 
+	 * @throws AssessmentTestSessionException If the AssessmentTestSession is not running.
+	 * @throws OutOfBoundsException If the current position in the route is 0.
+	 * @return RouteItem A RouteItem object.
+	 */
+	public function getPreviousRouteItem() {
+	     if ($this->isRunning() === false) {
+	         $msg = "Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED";
+	         throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	     }
+	     
+	     try {
+	         return $this->getRoute()->getPrevious();
+	     }
+	     catch (OutOfBoundsException $e) {
+	         $msg = "There is no previous route item because the current position in the route sequence is 0";
+	         throw new OutOfBoundsException($msg, 0, $e);
+	     }
+	}
+	
+	/**
+	 * Get the Next RouteItem object in the route.
+	 * 
+	 * @throws AssessmentTestSessionException
+	 * @throws OutOfBoundsException
+	 * @return RouteItem A RouteItem object.
+	 */
+	public function getNextRouteItem() {
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    try {
+	        return $this->getRoute()->getNext();
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $msg = "There is not next route item because the current position in the route sequence is the last one.";
+	        throw new OutOfBoundsException($msg, 0, $e);
+	    }
+	}
+	
+	/**
 	 * Skip the current item. A call to moveNext() is automatically performed.
 	 * 
 	 * @throws AssessmentItemSessionException If the current item cannot be skipped or if timings are not respected.
