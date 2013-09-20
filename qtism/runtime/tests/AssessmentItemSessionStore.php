@@ -73,6 +73,7 @@ class AssessmentItemSessionStore {
      * 
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param integer $occurence An occurence number.
+     * @return AssessmentItemSession An AssessmentItemSession object.
      * @throws OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
     public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {

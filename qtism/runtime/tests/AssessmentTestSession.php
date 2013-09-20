@@ -727,7 +727,8 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
 	    
-	    while($route->valid() === true && $route->isNavigationLinear() === true) {
+	    // In this loop, we select at least the first routeItem we find as eligible.
+	    while($route->valid() === true ) {
 	        $routeItem = $route->current();
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	        
@@ -735,7 +736,16 @@ class AssessmentTestSession extends State {
 	            $session->beginItemSession();
 	        }
 	        
-	        $route->next();
+	        if ($route->isNavigationLinear() === false) {
+	            // We cannot foresee more items to be selected for presentation
+	            // because the rest of the sequence is non-linear.
+	            break;
+	        }
+	        else {
+	            // We continue to search for route items that are selectable for
+	            // presentation to the candidate.
+	            $route->next();
+	        }
 	    }
 	    
 	    $route->setPosition($oldPosition);
@@ -1328,6 +1338,38 @@ class AssessmentTestSession extends State {
 	    }
 	    else {
 	        return $this->getRoute()->getPosition() > 0;
+	    }
+	}
+	
+	/**
+	 * Get the Jump description objects describing to which RouteItem the candidate
+	 * is able to "jump" to when the NONLINEAR navigation mode is in force.
+	 * 
+	 * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
+	 * 
+	 * @return JumpCollection A collection of Jump objects.
+	 */
+	public function getPossibleJumps() {
+	    $jumps = new JumpCollection();
+	    
+	    if ($this->isRunning() === false || $this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	        // No possible jumps.
+	        return $jumps;
+	    }
+	    else {
+	        // Scan the route for "jumpable" items.
+	        foreach ($this->getRoute()->getCurrentTestPartRouteItems() as $routeItem) {
+	            $itemRef = $routeItem->getAssessmentItemRef();
+	            $occurence = $routeItem->getOccurence();
+	            
+	            // get the session related to this route item.
+	            $store = $this->getAssessmentItemSessionStore();
+	            $itemSession = $store->getAssessmentItemSession($itemRef, $occurence);
+	            
+	            $jumps[] = new Jump($itemRef, $occurence, $itemSession);
+	        }
+	        
+	        return $jumps;
 	    }
 	}
 	

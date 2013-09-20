@@ -246,4 +246,13 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->setExpectedException('\\OutOfBoundsException');
         $route->getPrevious();
     }
+    
+    public function testGetCurrentTestPartRouteItems() {
+        $route = self::buildSimpleRoute();
+        $routeItems = $route->getCurrentTestPartRouteItems();
+        $this->assertEquals(3, count($routeItems));
+        $this->assertEquals('Q1', $routeItems[0]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q2', $routeItems[1]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q3', $routeItems[2]->getAssessmentItemRef()->getIdentifier());
+    }
 }

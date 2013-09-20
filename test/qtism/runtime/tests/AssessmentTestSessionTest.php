@@ -1,7 +1,10 @@
 <?php
 
+use qtism\runtime\tests\AssessmentItemSessionState;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
@@ -574,6 +577,59 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        // Exception successfuly thrown dude!
 	        $this->assertTrue(true);
 	    }
+	}
+	
+	public function testPossibleJumps() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
+	    
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    
+	    // The session has not begun, the candidate is not able to jump anywhere.
+	    $this->assertEquals(0, count($session->getPossibleJumps()));
+	    
+	    $session->beginTestSession();
+	    $jumps = $session->getPossibleJumps();
+	    $this->assertEquals(6, count($jumps));
+	    $this->assertEquals('Q01', $jumps[0]->getAssessmentItemRef()->getIdentifier('Q01'));
+	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
+	    $this->assertEquals('Q02', $jumps[1]->getAssessmentItemRef()->getIdentifier('Q02'));
+	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
+	    $this->assertEquals('Q03', $jumps[2]->getAssessmentItemRef()->getIdentifier('Q03'));
+	    $this->assertEquals('Q04', $jumps[3]->getAssessmentItemRef()->getIdentifier('Q04'));
+	    $this->assertEquals('Q05', $jumps[4]->getAssessmentItemRef()->getIdentifier('Q05'));
+	    $this->assertEquals('Q06', $jumps[5]->getAssessmentItemRef()->getIdentifier('Q06'));
+	    
+	    // The session has begun, the candidate is able to jump anywhere in testPart 'P01'.
+	    for ($i = 0; $i < 6; $i++) {
+	        $session->beginAttempt();
+	        $session->skip();
+	    }
+	    
+	    // We should be now in testPart 'PO2'.
+	    $this->assertEquals('P02', $session->getCurrentTestPart()->getIdentifier());
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
+	    
+	    $jumps = $session->getPossibleJumps();
+	    $this->assertEquals(3, count($jumps));
+	    $this->assertEquals('Q07', $jumps[0]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
+	    $this->assertEquals(0, $jumps[0]->getOccurence());
+	    $this->assertEquals('Q07', $jumps[1]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
+	    $this->assertEquals(1, $jumps[1]->getOccurence());
+	    $this->assertEquals('Q07', $jumps[2]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(2, $jumps[2]->getOccurence());
+	    
+	    for ($i = 0; $i < 3; $i++) {
+	        $session->beginAttempt();
+	        $session->skip();
+	    }
+	    
+	    // This is the end of the test session so no more possible jumps.
+	    $this->assertEquals(0, count($session->getPossibleJumps()));
 	}
 	
 	/**

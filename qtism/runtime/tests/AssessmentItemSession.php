@@ -863,6 +863,26 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Whether a new attempt is possible for this AssessmentItemSession.
+	 * 
+	 * @return boolean
+	 */
+	public function isAttemptable() {
+	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+	        return false;
+	    }
+	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
+	        return false;
+	    }
+	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
+	        return false;
+	    }
+	    else {
+	        return true;
+	    }
+	}
+	
+	/**
 	 * Get a cloned $duration with the acceptable latency of the item
 	 * session added.
 	 * 

@@ -61,6 +61,13 @@ class Route implements Iterator {
     private $assessmentItemRefOccurenceCount;
     
     /**
+     * A map where each RouteItem is bound to a test part.
+     * 
+     * @var SplObjectStorage
+     */
+    private $testPartMap;
+    
+    /**
      * The RouteItem objects the Route is composed with.
      * 
      * @var array
@@ -93,6 +100,7 @@ class Route implements Iterator {
         $this->setAssessmentItemRefSectionMap(array());
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
         $this->setCategories(new IdentifierCollection());
+        $this->setTestPartMap(new SplObjectStorage());
     }
     
     public function getPosition() {
@@ -188,6 +196,24 @@ class Route implements Iterator {
     }
     
     /**
+     * Set the map where RouteItem objects are gathered by TestPart.
+     * 
+     * @param SplObjectStorage $testPartMap
+     */
+    protected function setTestPartMap(SplObjectStorage $testPartMap) {
+        $this->testPartMap = $testPartMap;
+    }
+    
+    /**
+     * Get the map where RouteItem objects are gathered by TestPart.
+     * 
+     * @return SplObjectStorage
+     */
+    protected function getTestPartMap() {
+        return $this->testPartMap;
+    }
+    
+    /**
      * Set the collection of item categories involved in the route.
      * 
      * @param IdentifierCollection $categories A collection of QTI Identifiers.
@@ -216,6 +242,7 @@ class Route implements Iterator {
         // Push the routeItem in the track :) !
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
         $this->registerAssessmentItemRef($routeItem);
+        $this->registerTestPart($routeItem);
     }
     
     /**
@@ -225,6 +252,7 @@ class Route implements Iterator {
      */
     public function addRouteItemObject(RouteItem $routeItem) {
         $this->registerAssessmentItemRef($routeItem);
+        $this->registerTestPart($routeItem);
     }
     
     public function rewind() {
@@ -349,7 +377,12 @@ class Route implements Iterator {
         $routeItems = &$this->getRouteItems();
         
         foreach ($route as $routeItem) {
-            $this->registerAssessmentItemRef(clone $routeItem);
+            
+            // @todo find why it must be cloned, I can't remember.
+            $clone = clone $routeItem;
+            
+            $this->registerAssessmentItemRef($clone);
+            $this->registerTestPart($clone);
         }    
     }
     
@@ -412,6 +445,25 @@ class Route implements Iterator {
         $sectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
         
         $this->setAssessmentItemRefSectionMap($sectionMap);
+    }
+    
+    /**
+     * Register all needed information about the TestPart involved in a given
+     * $routeItem.
+     * 
+     * @param RouteItem $routeItem A RouteItem object.
+     */
+    protected function registerTestPart(RouteItem $routeItem) {
+        $testPartMap = $this->getTestPartMap();
+        $testPart = $routeItem->getTestPart();
+        
+        if (isset($testPartMap[$testPart]) === false) {
+            $testPartMap[$testPart] = array();
+        }
+        
+        $target = $testPartMap[$testPart];
+        $target[] = $routeItem;
+        $testPartMap[$testPart] = $target;
     }
     
     /**
@@ -645,5 +697,21 @@ class Route implements Iterator {
         }
         
         return $this->getRouteItemAt($this->getPosition() + 1);
+    }
+    
+    /**
+     * Get the RouteItem objects involved in the current TestPart.
+     * 
+     * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
+     */
+    public function getCurrentTestPartRouteItems() {
+        $testPartMap = $this->getTestPartMap();
+        $routeItems = new RouteItemCollection();
+        
+        foreach ($testPartMap[$this->current()->getTestPart()] as $routeItem) {
+            $routeItems[] = $routeItem;
+        }
+        
+        return $routeItems;
     }
 }

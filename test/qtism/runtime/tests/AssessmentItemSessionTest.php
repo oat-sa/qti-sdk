@@ -33,6 +33,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertFalse($itemSession->isCorrect());
         $this->assertFalse($itemSession->isResponded());
         $this->assertTrue($itemSession->isSelected());
+        $this->assertTrue($itemSession->isAttemptable());
         
         // No timelimits by default.
         $this->assertFalse($itemSession->hasTimeLimits());
@@ -65,6 +66,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // Remaining attempts correct?
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
+        $this->assertTrue($itemSession->isAttemptable());
     }
     
     public function testEvolutionBasic() {
@@ -73,6 +75,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertTrue($itemSession->isSelected());
         
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
+        $this->assertTrue($itemSession->isAttemptable());
         $itemSession->beginAttempt();
         $this->assertEquals(1, $itemSession['numAttempts']);
         $this->assertTrue($itemSession->isPresented());
@@ -102,6 +105,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // If we now try to begin a new attempt, we get a logic exception.
         try {
+            $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             
             // An exception MUST be thrown.
@@ -264,6 +268,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         for ($i = 0; $i < $count; $i++) {
             // Here, manual set up of responses.
+            $this->assertTrue($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             
             // simulate some time... 1 second to answer the item.
@@ -286,6 +291,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // one more and we get an expection... :)
         try {
+            $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
         }
@@ -303,6 +309,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         
         // First attempt, just fail the item.
         // We do not known how much attempts to complete.
+        $this->assertTrue($itemSession->isAttemptable());
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
@@ -326,6 +333,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         // If you now try to attempt again, exception because already completed.
         
         try {
+            $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
             $this->assertTrue(false);
         }
@@ -339,6 +347,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $itemSession->beginItemSession();
         $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
         
+        $this->assertTrue($itemSession->isAttemptable());
         $itemSession->beginAttempt();
         sleep(1);
         
@@ -360,6 +369,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC'));
         
         try {
+            $this->assertFalse($itemSession->isAttemptable());
             $itemSession->endAttempt($responses);
             $this->assertTrue(false);
         }
