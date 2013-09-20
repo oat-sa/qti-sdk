@@ -615,4 +615,35 @@ class Route implements Iterator {
             return $currentTestPart !== $nextTestPart;
         }
     }
+    
+    /**
+     * Get the previous RouteItem in the route.
+     * 
+     * @return RouteItem The previous RouteItem in the Route.
+     * @throws OutOfBoundsException If there is no previous RouteItem in the route. In other words, the current RouteItem in the route is the first one of the sequence.
+     */
+    public function getPrevious() {
+        $currentPosition = $this->getPosition();
+        if ($currentPosition === 0) {
+            $msg = "The current RouteItem is the first one in the route. There is no previous RouteItem";
+            throw new OutOfBoundsException($msg);
+        }
+        
+        return $this->getRouteItemAt($currentPosition - 1);
+    }
+    
+    /**
+     * Get the next RouteItem in the route.
+     * 
+     * @return RouteItem The previous RouteItem in the Route.
+     * @throws OutOfBoundsException If there is no next RouteItem in the route. In other words, the current RouteItem in the route is the last one of the sequence.
+     */
+    public function getNext() {
+        if ($this->isLast() === true) {
+            $msg = "The current RouteItem is the last one in the route. There is no next RouteItem.";
+            throw new OutOfBoundsException($msg);
+        }
+        
+        return $this->getRouteItemAt($this->getPosition() + 1);
+    }
 }

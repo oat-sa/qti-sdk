@@ -206,4 +206,44 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->next();
         $this->assertFalse($route->valid());
     }
+    
+    public function testGetNext() {
+        $route = self::buildSimpleRoute();
+        
+        // Q1 - First position.
+        $nextItem = $route->getNext();
+        $this->assertEquals('Q2', $nextItem->getAssessmentItemRef()->getIdentifier());
+        $route->next();
+        
+        // Q2 - Second position.
+        $nextItem = $route->getNext();
+        $this->assertEquals('Q3', $nextItem->getAssessmentItemRef()->getIdentifier());
+        $route->next();
+        
+        // Q3 - Thrid position, there is no next route item.
+        $this->setExpectedException('\\OutOfBoundsException');
+        $nextItem = $route->getNext();
+    }
+    
+    public function testGetPrevious() {
+        $route = self::buildSimpleRoute();
+        $route->next();
+        
+        // Q2 - Second postion.
+        $previousItem = $route->getPrevious();
+        $this->assertEquals('Q1', $previousItem->getAssessmentItemRef()->getIdentifier());
+        $route->next();
+        
+        // Q3 - Third position.
+        $previousItem = $route->getPrevious();
+        $this->assertEquals('Q2', $previousItem->getAssessmentItemRef()->getIdentifier());
+        
+        // Go to Q1 to test exception.
+        $route->previous();
+        $route->previous();
+        
+        $this->assertEquals('Q1', $route->current()->getAssessmentItemRef()->getIdentifier());
+        $this->setExpectedException('\\OutOfBoundsException');
+        $route->getPrevious();
+    }
 }
