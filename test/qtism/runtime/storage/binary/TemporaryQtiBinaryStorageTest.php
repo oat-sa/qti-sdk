@@ -306,4 +306,22 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($sessionId);
         $this->assertFalse($session->mustAutoForward());
     }
+    
+    public function testNonLinear() {
+        $doc = new XmlCompactAssessmentTestDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
+        $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart',
+                        'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
+        $seeker = new AssessmentTestSeeker($doc, $seekerClasses);
+        
+        $testSessionFactory = new AssessmentTestSessionFactory($doc);
+        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
+        $session = $storage->instantiate();
+        $session->beginTestSession();
+        $sessionId = $session->getSessionId();
+        
+        $storage->persist($session);
+        $session = $storage->retrieve($sessionId);
+        
+    }
 }

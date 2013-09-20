@@ -40,4 +40,15 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($component->getMaxTime() . '', 'PT1M40S');
 		$this->assertEquals($component->doesAllowLateSubmission(), false);
 	}
+	
+	public function testUnmarshallZero() {
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<timeLimits xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" minTime="0" maxTime="0"/>');
+	    $element = $dom->documentElement;
+	    
+	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $this->assertInstanceOf('qtism\\data\\TimeLimits', $component);
+	}
 }

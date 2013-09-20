@@ -13,7 +13,7 @@ use qtism\common\enums\Enumeration;
  */
 class AssessmentItemSessionState extends AssessmentTestSessionState {
 	
-    const NOT_SELECTED = -1;
+    const NOT_SELECTED = 255;
     
 	const SOLUTION = 5;
 	
