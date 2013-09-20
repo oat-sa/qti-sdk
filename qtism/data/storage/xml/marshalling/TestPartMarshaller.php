@@ -88,14 +88,31 @@ class TestPartMarshaller extends Marshaller {
 						$submissionMode = SubmissionMode::getConstantByName($submissionMode);
 						$object = new TestPart($identifier, $assessmentSections, $navigationMode, $submissionMode);
 						
-						// testFeedbacks
-						$testFeedbackElements = $element->getElementsByTagName('testFeedback');
-						$testFeedbacks = new TestFeedbackCollection();
-						for ($i = 0; $i < $testFeedbackElements->length; $i++) {
-							$marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackElements->item($i));
-							$testFeedbacks[] = $marshaller->marshall($testFeedbackElements->item($i));
+						// preConditions
+						$preConditionElts = self::getChildElementsByTagName($element, 'preCondition');
+						$preConditions = new PreConditionCollection();
+						foreach ($preConditionElts as $preConditionElt) {
+						    $marshaller = $this->getMarshallerFactory()->createMarshaller($preConditionElt);
+						    $preConditions[] = $marshaller->unmarshall($preConditionElt);
 						}
-						$object->setTestFeedbacks($testFeedbacks);
+						$object->setPreConditions($preConditions);
+						
+						// branchRules
+						$branchRuleElts = self::getChildElementsByTagName($element, 'branchRule');
+						$branchRules = new BranchRuleCollection();
+						foreach ($branchRuleElts as $branchRuleElt) {
+						    $marshaller = $this->getMarshallerFactory()->createMarshaller($branchRuleElt);
+						    $branchRules[] = $marshaller->unmarshall($branchRuleElt);
+						}
+						$object->setBranchRules($branchRules);
+						
+						// itemSessionControl
+						$itemSessionControlElts = self::getChildElementsByTagName($element, 'itemSessionControl');
+						if (count($itemSessionControlElts) === 1) {
+						    $marshaller = $this->getMarshallerFactory()->createMarshaller($itemSessionControlElts[0]);
+						    $itemSessionControl = $marshaller->unmarshall($itemSessionControlElts[0]);
+						    $object->setItemSessionControl($itemSessionControl);
+						}
 						
 						// timeLimits
 						$timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
@@ -104,6 +121,15 @@ class TestPartMarshaller extends Marshaller {
 						    $timeLimits = $marshaller->unmarshall($timeLimitsElts[0]);
 						    $object->setTimeLimits($timeLimits);
 						}
+						
+						// testFeedbacks
+						$testFeedbackElts = self::getChildElementsByTagName($element, 'testFeedback');
+						$testFeedbacks = new TestFeedbackCollection();
+						foreach ($testFeedbackElts as $testFeedbackElt) {
+							$marshaller = $this->getMarshallerFactory()->createMarshaller($testFeedbackElt);
+							$testFeedbacks[] = $marshaller->unmarshall($testFeedbackElt);
+						}
+						$object->setTestFeedbacks($testFeedbacks);
 						
 						return $object;
 					}

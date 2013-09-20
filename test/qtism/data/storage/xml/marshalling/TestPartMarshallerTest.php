@@ -68,6 +68,21 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML(
 			'
 			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" navigationMode="linear" submissionMode="individual">
+		        <preCondition>
+		            <not>
+		                <baseValue baseType="boolean">true</baseValue>
+		            </not>
+		        </preCondition>
+		        <branchRule target="Q05">
+		            <equal>
+		                <sum>
+		                    <baseValue baseType="integer">1</baseValue>
+		                    <baseValue baseType="integer">1</baseValue>
+		                </sum>
+		                <baseValue baseType="integer">2</baseValue>
+		            </equal>
+		        </branchRule>
+		        <itemSessionControl maxAttempts="1"/>
 		        <timeLimits minTime="60" maxTime="120" allowLateSubmission="true"/>
 				<assessmentSection identifier="section1" title="My Section 1" visible="true">
 					<selection select="3"/>
@@ -75,6 +90,12 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 					<assessmentItemRef identifier="Q02" href="Q02.xml" fixed="false"/>
 					<assessmentItemRef identifier="Q03" href="Q03.xml" fixed="false"/>
 				</assessmentSection>
+		        <testFeedback identifier="feedback1" access="atEnd" outcomeIdentifier="outcome1" showHide="show">
+		            <div>Feedback1</div>
+		        </testFeedback>
+		        <testFeedback identifier="feedback2" access="atEnd" outcomeIdentifier="outcome2" showHide="show">
+		            <div>Feedback2</div>
+		        </testFeedback>
 			</testPart>
 			'
 		);
@@ -96,5 +117,17 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		
 		$assessmentSection = $assessmentSections['section1'];
 		$this->assertEquals(3, count($assessmentSection->getSectionParts()));
+		
+		$branchRules = $component->getBranchRules();
+		$this->assertEquals(1, count($branchRules));
+		$this->assertEquals('Q05', $branchRules[0]->getTarget());
+		$branchRuleCondition = $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $branchRules[0]->getExpression());
+		
+		$preConditions = $component->getPreConditions();
+		$this->assertEquals(1, count($preConditions));
+		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Not', $preConditions[0]->getExpression());
+		
+		$this->assertTrue($component->hasItemSessionControl());
+		$this->assertTrue($component->hasTimeLimits());
 	}
 }
