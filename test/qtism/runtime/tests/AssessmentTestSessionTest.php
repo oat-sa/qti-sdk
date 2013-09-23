@@ -820,6 +820,149 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(9, $session['NPRESENTED']);
 	}
 	
+	public function testMoveNextLinear() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+	
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	
+	    $session->beginTestSession();
+	    $this->assertEquals(NavigationMode::LINEAR, $session->getCurrentNavigationMode());
+	    
+	    try {
+	        $session->moveNext();
+	        $this->assertTrue(false);
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION, $e->getCode());
+	    }
+	}
+	
+	public function testMoveBackLinear() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+	
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	
+	    $session->beginTestSession();
+	    $this->assertEquals(NavigationMode::LINEAR, $session->getCurrentNavigationMode());
+	     
+	    try {
+	        $session->moveBack();
+	        $this->assertTrue(false);
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION, $e->getCode());
+	    }
+	}
+	
+	public function testMoveNextAndBackNonLinearIndividual() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_nonlinear.xml');
+	    
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    
+	    $session->beginTestSession();
+	    $this->assertEquals(NavigationMode::NONLINEAR, $session->getCurrentNavigationMode());
+	    $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getCurrentSubmissionMode());
+	    
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->moveNext();
+	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->moveBack();
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    
+	    try {
+	        // We are at the very first route item and want to move back... ouch!
+	        $session->moveBack();
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::LOGIC_ERROR, $e->getCode());
+	    }
+	    
+	    // We should still be on Q01.
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->moveNext(); // Q02
+	    $session->moveNext(); // Q03
+	    $session->moveNext(); // Q04
+	    $session->moveNext(); // Q05
+	    $session->moveNext(); // Q06
+	    $session->moveNext(); // Q07.1
+	    $session->moveNext(); // Q07.2
+	    $session->moveNext(); // Q07.3
+	    
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
+	    $session->moveNext();
+	    
+	    // OutcomeProcessing?
+	    $this->assertInternalType('float', $session['PERCENT_CORRECT']);
+	    $this->assertEquals(0.0, $session['PERCENT_CORRECT']);
+	    $this->assertEquals(9, $session['NSELECTED']);
+	}
+	
+	public function testMoveNextAndBackNonLinearSimultaneous() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
+	     
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	     
+	    $session->beginTestSession();
+	    $this->assertEquals(NavigationMode::NONLINEAR, $session->getCurrentNavigationMode());
+	    $this->assertEquals(SubmissionMode::SIMULTANEOUS, $session->getCurrentSubmissionMode());
+	    
+	    // Q01.
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+	    
+	    // Q02.
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	    
+	    // Q03.
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('O'))))));
+	    
+	    // Q04.
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q05
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    try {
+	        // We are at the end of the testPart but Q06 not responsed. Cannot moveNext.
+	        $session->moveNext();
+	        $this->assertTrue(false);
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
+	    }
+	    
+	    // Q06.
+	    // (no scores computed yet).
+	    $this->assertEquals(0.0, $session['Q01.scoring']);
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // We are now in another test part and some scores were processed for test part P01.
+	    $this->assertEquals(1.0, $session['Q01.scoring']);
+	    
+	    // Try to move back and get out of the test part without full completion.
+	    try {
+	        $session->moveBack();
+	        $this->assertTrue(false);
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
+	    }
+	}
+	
 	/**
 	 * @dataProvider getWeightProvider
 	 * 

@@ -23,7 +23,9 @@ class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory 
     public function createAssessmentTestSession() {
         parent::createAssessmentTestSession();
         
-        return new AssessmentTestSession($this->getAssessmentTest(), $this->getRoute());
+        $session = new AssessmentTestSession($this->getAssessmentTest(), $this->getRoute());
+        $session->setAcceptableLatency($this->getAcceptableLatency());
+        return $session;
     }
     
 }

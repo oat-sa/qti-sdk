@@ -281,6 +281,7 @@ class Route implements Iterator {
     /**
      * Set the Route as its previous position in the RouteItem sequence. If the current
      * RouteItem is the first one prior to call next(), the Route remains in the same position.
+     * 
      */
     public function previous() {
         $position = $this->getPosition();
@@ -665,6 +666,32 @@ class Route implements Iterator {
             $nextTestPart = $this->getRouteItemAt($nextPosition)->getTestPart();
             
             return $currentTestPart !== $nextTestPart;
+        }
+    }
+    
+    /**
+     * Whether the current RouteItem is the first of the current TestPart.
+     * 
+     * @return boolean
+     * @throws OutOfBoundsException If the Route is empty.
+     */
+    public function isFirstOfTestPart() {
+        $count = $this->count();
+        if ($count === 0) {
+            $msg = "Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.";
+            throw new OutOfBoundsException($msg);    
+        }
+        
+        $previousPosition = $this->getPosition() - 1;
+        if ($previousPosition === 0) {
+            // This is the very first RouteItem of the whole Route.
+            return true;
+        }
+        else if ($this->getRouteItemAt($previousPosition)->getTestPart() !== $this->current()->getTestPart()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
     

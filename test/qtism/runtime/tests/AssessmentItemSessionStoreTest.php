@@ -27,4 +27,19 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase {
         $this->assertTrue($store->hasMultipleOccurences($itemRef1));
     }
     
+    public function testGetAllAssessmentItemSessions() {
+        $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
+        $itemRef2 = new ExtendedAssessmentItemRef('Q02', './Q02.xml');
+        $itemRef3 = new ExtendedAssessmentItemRef('Q03', './Q03.xml');
+        
+        $store = new AssessmentItemSessionStore();
+        $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1), 0);
+        $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1), 1);
+        $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1), 3);
+        $this->assertEquals(3, count($store->getAllAssessmentItemSessions()));
+        
+        $store->addAssessmentItemSession(new AssessmentItemSession($itemRef2), 0);
+        $store->addAssessmentItemSession(new AssessmentItemSession($itemRef3), 0);
+        $this->assertEquals(5, count($store->getAllAssessmentItemSessions()));
+    }
 }

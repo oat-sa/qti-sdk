@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\Duration;
 use qtism\data\AssessmentTest;
 use \RuntimeException;
 
@@ -28,8 +29,16 @@ class AbstractAssessmentTestSessionFactory {
      */
     private $assessmentTest;
     
+    /**
+     * The acceptable latency time for AssessmentTestSessions and their item sessions.
+     * 
+     * @var Duration
+     */
+    private $acceptableLatency;
+    
     public function __construct(AssessmentTest $assessmentTest) {
         $this->setAssessmentTest($assessmentTest);
+        $this->setAcceptableLatency(new Duration('PT0S'));
     }
     
     /**
@@ -66,6 +75,24 @@ class AbstractAssessmentTestSessionFactory {
      */
     public function getAssessmentTest() {
         return $this->assessmentTest;
+    }
+    
+    /**
+     * Set the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
+     * 
+     * @param Duration $latency A Duration object.
+     */
+    public function setAcceptableLatency(Duration $latency) {
+        $this->acceptableLatency = $latency;
+    }
+    
+    /**
+     * Get the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
+     * 
+     * @return Duration A Duration object.
+     */
+    public function getAcceptableLatency() {
+        return $this->acceptableLatency;
     }
     
     /**

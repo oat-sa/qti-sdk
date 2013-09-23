@@ -132,4 +132,22 @@ class AssessmentItemSessionStore {
         $shelves = $this->getShelves();
         return isset($shelves[$assessmentItemRef]) && count($shelves[$assessmentItemRef]) > 1;
     }
+    
+    /**
+     * Get all the AssessmentItemSession objects held by the store.
+     * 
+     * @return AssessmentItemSessionCollection A collection of AssessmentItemSession objects.
+     */
+    public function getAllAssessmentItemSessions() {
+        $shelves = $this->getShelves();
+        $collection = new AssessmentItemSessionCollection();
+        
+        foreach ($shelves as $itemRef) {
+            foreach ($shelves[$itemRef] as $session) {
+                $collection[] = $session;
+            }
+        }
+        
+        return $collection;
+    }
 }

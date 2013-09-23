@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\Duration;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
@@ -96,6 +97,13 @@ class AssessmentTestSession extends State {
 	private $autoForward;
 	
 	/**
+	 * The acceptable latencty time for the AssessmentTestSession.
+	 * 
+	 * @var Duration
+	 */
+	private $acceptableLatency;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -110,6 +118,7 @@ class AssessmentTestSession extends State {
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		$this->setPendingResponseStore(new PendingResponseStore());
 		$this->setAutoForward(true);
+		$this->setAcceptableLatency(new Duration('PT0S'));
 		
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -698,6 +707,7 @@ class AssessmentTestSession extends State {
 	        }
 	        // else ... No time limits !
 	        
+	        $session->setAcceptableLatency($this->getAcceptableLatency());
 	        $this->addItemSession($session, $routeItem->getOccurence());
 	    }
 	    
@@ -1015,7 +1025,10 @@ class AssessmentTestSession extends State {
 	        }
 	    }
 	    
-	    $this->moveNext();
+	    if ($this->mustAutoForward() === true) {
+	        // Go automatically to the next step in the route.
+	        $this->nextRouteItem();
+	    }
 	}
 	
 	/**
@@ -1092,7 +1105,7 @@ class AssessmentTestSession extends State {
 	    
 	    if ($this->mustAutoForward() === true) {
 	        // Go automatically to the next step in the route.
-	        $this->moveNext();
+	        $this->nextRouteItem();
 	    }
 	}
 	
@@ -1199,8 +1212,7 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Ask the test session for moving the next assessment item to be taken by candidate, with respect
-	 * to the preConditions and branchRules of the assessment test.
+	 * Ask the test session to move to next RouteItem in the Route sequence.
 	 * 
 	 * @throws AssessmentTestSessionException If the test session is not running or an error occurs during the transition.
 	 */
@@ -1209,8 +1221,52 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
+	    else if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+	        $msg = "Cannot invoke move AssessmentTestSession::moveNext() in LINEAR navigation mode.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
+	    }
+	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
+	        
+	        if ($this->isCurrentTestPartComplete() === false) {
+	            $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	        }
+	        else {
+	            // The testPart is complete so deffered response processing must take place.
+	            $this->defferedResponseProcessing();
+	        }	        
+	    }
 	    
 	    $this->nextRouteItem();
+	}
+	
+	/**
+	 * Ask the test session to move to the previous RouteItem in the Route sequence.
+	 * 
+	 * @throws AssessmentTestSessionException If the test session is not running or an error occurs during the transition.
+	 */
+	public function moveBack() {
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    else if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+	        $msg = "Cannot invoke AssessmentTestSession::moveBack() in LINEAR navigation mode.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
+	    } 
+	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
+	        
+	        if ($this->isCurrentTestPartComplete() === false) {
+	            $msg = "Cannot move to the previous Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	        }
+	        else {
+	            // The testPart is complete so deffered response processing must take place.
+	            $this->defferedResponseProcessing();
+	        }
+	    }
+	    
+	    $this->previousRouteItem();
 	}
 	
 	/**
@@ -1237,6 +1293,30 @@ class AssessmentTestSession extends State {
 	        // 2. End the test session.
 	        $this->endTestSession();
 	    }
+	}
+	
+	/**
+	 * Move to the previous item in the route.
+	 * 
+	 * @throws AssessmentTestSessionException If the test is not running or if trying to go to the previous route item in LINEAR navigation mode or if the current route item is the very first one in the route sequence.
+	 */
+	protected function previousRouteItem() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    else if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	        $msg = "Cannot move backward in the route item sequence while the LINEAR navigation mode is in force.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
+	    }
+	    else if ($this->getRoute()->getPosition() === 0) {
+	         $msg = "Cannot move backward in the route item sequence while the current position is the very first one of the AssessmentTestSession.";
+	         throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);   
+	    }
+	    
+	    $this->getRoute()->previous();
+	    $this->selectEligibleItems();
 	}
 	
 	/**
@@ -1491,6 +1571,24 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    return count($this->getRoute()->getCurrentTestPartRouteItems()) === count($this->getPendingResponses());
+	}
+	
+	/**
+	 * Set the acceptable latency time for the AssessmentTestSession.
+	 * 
+	 * @param Duration $latency A Duration object.
+	 */
+	public function setAcceptableLatency(Duration $latency) {
+	    $this->acceptableLatency = $latency;
+	}
+	
+	/**
+	 * Get the acceptable latency time for the AssessmentTestSession.
+	 * 
+	 * @return Duration A Duration object.
+	 */
+	public function getAcceptableLatency() {
+	    return $this->acceptableLatency;
 	}
 	
 	/**
