@@ -53,6 +53,13 @@ class AssessmentTestSessionException extends Exception {
     const RESPONSE_PROCESSING_ERROR = 4;
     
     /**
+     * Code to use when an error occurs while transmitting item/test results.
+     * 
+     * @var integer
+     */
+    const RESULT_SUBMISSION_ERROR = 5;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.

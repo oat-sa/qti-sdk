@@ -1055,6 +1055,15 @@ class AssessmentTestSession extends State {
 	        $session->endAttempt($responses);
 	        // Update the lastly updated item occurence.
 	        $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	        
+	        // Item Results submission.
+	        try {
+	            $this->submitItemResult($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence));
+	        }
+	        catch (AssessmentTestSessionException $e) {
+	            $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
+	        }
 	    }
 	    
 	    if ($this->mustAutoForward() === true) {
@@ -1064,11 +1073,37 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
+	 * AssessmentTestSession implementations must override this method in order
+	 * to submit item results from a given $assessmentItemSession to the appropriate
+	 * data source.
+	 * 
+	 * This method is triggered each time response processing takes place.
+	 * 
+	 * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
+	 * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
+	 */
+	protected function submitItemResult(AssessmentItemSession $assessmentItemSession) {
+	    return;
+	}
+	
+	/**
+	 * AssessmentTestSession implementations must override this method in order to submit test results
+	 * from the current AssessmentTestSession to the appropriate data source.
+	 * 
+	 * This method is triggered once at the end of the AssessmentTestSession. 
+	 * 
+	 * * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
+	 */
+	protected function submitTestResults() {
+	    return;
+	}
+	
+	/**
 	 * Apply the response processing on pending responses due to
 	 * the simultaneous submission mode in force.
 	 * 
 	 * @return PendingResponsesCollection The collection of PendingResponses objects that were processed.
-	 * @throws AssessmentTestSessionException If an error occurs while processing the pending responses.
+	 * @throws AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
 	 */
 	protected function defferedResponseProcessing() {
 	    $itemSessionStore = $this->getAssessmentItemSessionStore();
@@ -1083,10 +1118,16 @@ class AssessmentTestSession extends State {
 	        
 	        try {
 	            $engine->process();
+	            $this->submitItemResult($itemSession);
 	        }
 	        catch (ProcessingException $e) {
 	            $msg = "An error occured during postponed response processing.";
 	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
+	        }
+	        catch (AssessmentTestSessionException $e) {
+	            // An error occured while transmitting the results.
+	            $msg = "An error occured while transmitting item results to the appropriate data source.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
 	        }
 	    }
 	    
@@ -1161,6 +1202,9 @@ class AssessmentTestSession extends State {
 	        try {
 	            $outcomeProcessingEngine = new OutcomeProcessingEngine($outcomeProcessing, $this);
 	            $outcomeProcessingEngine->process();
+	            
+	            // Submit test-level results.
+	            $this->submitTestResults();
 	        }
 	        catch (ProcessingException $e) {
 	            $msg = "An error occured while processing OutcomeProcessing.";
