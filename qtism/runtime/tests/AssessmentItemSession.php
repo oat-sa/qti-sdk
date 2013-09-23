@@ -219,11 +219,11 @@ class AssessmentItemSession extends State {
 		$this->setItemSessionControl(new ItemSessionControl());
 		
 		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER));
-		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION));
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, self::COMPLETION_STATUS_NOT_ATTEMPTED));
 	}
 	
 	/**
@@ -695,7 +695,12 @@ class AssessmentItemSession extends State {
 	    $this->setState(AssessmentItemSessionState::SUSPENDED);
 	}
 	
-	protected function updateDuration() {
+	/**
+	 * Update the duration built-in variable. The update will only take
+	 * place if the current state of the item session is INTERACTING.
+	 * 
+	 */
+	public function updateDuration() {
 	    // If the current state is INTERACTING update duration built-in variable.
 	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
 	        $timeRef = $this->getTimeReference();
@@ -703,6 +708,25 @@ class AssessmentItemSession extends State {
 	        $this['duration']->add($timeRef->diff($now));
 	        $this->setTimeReference(new DateTime());
 	    }
+	}
+	
+	/**
+	 * Get the time that remains to the candidate to submit its responses.
+	 * 
+	 * @return false|Duration A Duration object or false if there is no time limit.
+	 */
+	public function getRemainingTime() {
+	    $this->updateDuration();
+	    
+	    // false = unlimited
+	    $remainingTime = false;
+	    
+	    if ($this->hasTimeLimits() === true && $this->getTimeLimits()->hasMaxTime() === true) {
+	        $remainingTime = clone $this->getTimeLimits()->getMaxTime();
+	        $remainingTime->sub($this['duration']);
+	    }
+	    
+	    return $remainingTime;
 	}
 	
 	/**

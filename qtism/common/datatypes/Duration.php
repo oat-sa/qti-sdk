@@ -269,7 +269,7 @@ class Duration implements Comparable {
 	/**
 	 * Add a duration to this one.
 	 * 
-	 * For instance, P1S + P1S = P2S.
+	 * For instance, PT1S + PT1S = PT2S.
 	 * 
 	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
 	 */
@@ -291,6 +291,30 @@ class Duration implements Comparable {
 		
 		$interval = $d2->diff($d1);
 		$this->setInterval($interval);
+	}
+	
+	/**
+	 * Subtract a duration to this one. If $duration is greather than or equal to
+	 * the current duration, a duration of 0 seconds is returned.
+	 * 
+	 * For instance P2S - P1S = P1S
+	 */
+	public function sub(Duration $duration) {
+	    
+	    if ($duration->longerThanOrEquals($this) === true) {
+	        $this->setInterval(new DateInterval('PT0S'));
+	    }
+	    else {
+	        $refStrDate = '19710101';
+	        $d1 = new DateTime($refStrDate);
+	        $d2 = new DateTime($refStrDate);
+	        
+	        $d1->add(new DateInterval($this->__toString()));
+	        $d2->add(new DateInterval($duration->__toString()));
+	        
+	        $interval = $d1->diff($d2);
+	        $this->setInterval($interval);
+	    }
 	}
 	
 	public function __clone() {

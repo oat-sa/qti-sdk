@@ -356,6 +356,38 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
     }
     
+    public function testRemainingTimeOne() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $timeLimits = new TimeLimits();
+        $timeLimits->setMaxTime(new Duration('PT3S'));
+        $itemSession->setTimeLimits($timeLimits);
+        $itemSession->beginItemSession();
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
+        
+        $itemSession->beginAttempt();
+        sleep(2);
+        $itemSession->updateDuration();
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT1S')));
+        sleep(1);
+        $itemSession->updateDuration();
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+        sleep(1);
+        $itemSession->updateDuration();
+        // It is still 0...
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+        
+        try {
+            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+            // Must be rejected, no more time remaining!!!
+            $this->assertFalse(true);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
+            $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+        }
+    }
+    
     public function testValidateResponsesInForce() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
