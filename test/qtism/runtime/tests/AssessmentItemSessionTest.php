@@ -467,6 +467,21 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertEquals(1.0, $itemSession['SCORE']);
     }
     
+    public function testStandaloneMultipleInteractions() {
+        $doc = new XmlAssessmentItemDocument('2.1');
+        $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
+        
+        $itemSession = new AssessmentItemSession($doc);
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $this->assertEquals(0.0, $itemSession['SCORE']);
+        $this->assertInternalType('float', $itemSession['SCORE']);
+        
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'Choice_3')));
+        $itemSession->endAttempt($responses);
+        $this->assertEquals(6.0, $itemSession['SCORE']);
+    }
+    
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {
         $marshaller = new ExtendedAssessmentItemRefMarshaller();
         $element = self::createDOMElement($xmlString);

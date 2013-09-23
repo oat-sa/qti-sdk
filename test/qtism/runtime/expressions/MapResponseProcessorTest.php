@@ -91,6 +91,26 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(4, $result); // 2.5 taken into account only once!
 	}
 	
+	public function testIndentifier() {
+	    $variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                                                        		<correctResponse>
+                                                        			<value>Choice_3</value>
+                                                        		</correctResponse>
+                                                        		<mapping defaultValue="0">
+                                                        			<mapEntry mapKey="Choice_3" mappedValue="6"/>
+                                                        			<mapEntry mapKey="Choice_4" mappedValue="3"/>
+                                                        		</mapping>
+                                                        	</responseDeclaration>');
+	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+	    $variable->setValue('Choice_3');
+	    $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
+	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+	    $mapResponseProcessor->setState(new State(array($variable)));
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(6.0, $result);
+	                    
+	}
+	
 	public function testVariableNotDefined() {
 		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="INVALID"/>');

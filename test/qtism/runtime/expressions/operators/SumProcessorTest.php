@@ -45,6 +45,17 @@ class SumProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(31.4, $result);
 	}
 	
+	public function testZero() {
+	    $sum = $this->createFakeSumComponent();
+	    
+	    $operands = new OperandsCollection(array(0, 6.0));
+	    $sumProcessor = new SumProcessor($sum, $operands);
+	    $result = $sumProcessor->process();
+	    
+	    $this->assertInternalType('float', $result);
+	    $this->assertEquals(6.0, $result);
+	}
+	
 	public function testInvalidOperandsOne() {
 		$sum = $this->createFakeSumComponent();
 		
