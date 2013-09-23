@@ -89,6 +89,9 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		    if (RuntimeUtils::inferBaseType($val) === BaseType::FLOAT && $var->getBaseType() === BaseType::INTEGER) {
 		        $val = intval($val);
 		    }
+		    else if (RuntimeUtils::inferBaseType($val) === BaseType::INTEGER && $var->getBaseType() === BaseType::FLOAT) {
+		        $val = floatval($val);
+		    }
 		    
 			$var->setValue($val);
 		}
