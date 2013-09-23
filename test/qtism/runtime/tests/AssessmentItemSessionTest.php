@@ -358,6 +358,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     
     public function testRemainingTimeOne() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $this->assertFalse($itemSession->getRemainingTime());
         $timeLimits = new TimeLimits();
         $timeLimits->setMaxTime(new Duration('PT3S'));
         $itemSession->setTimeLimits($timeLimits);
@@ -386,6 +387,23 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
             $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
         }
+    }
+    
+    public function testRemainingTimeTwo() {
+    	// by default, there is no max time limit.
+    	$itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+    	$this->assertFalse($itemSession->getRemainingTime());
+    	
+    	$itemSession->beginItemSession();
+    	$this->assertFalse($itemSession->getRemainingTime());
+    	$itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+    	$this->assertEquals('incomplete', $itemSession['completionStatus']);
+    	
+    	$this->assertFalse($itemSession->getRemainingTime());
+    	$itemSession->beginAttempt();
+    	$itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+    	$this->assertEquals('completed', $itemSession['completionStatus']);
+    	$this->assertFalse($itemSession->getRemainingTime());
     }
     
     public function testValidateResponsesInForce() {
