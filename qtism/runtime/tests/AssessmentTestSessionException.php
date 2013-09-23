@@ -32,7 +32,7 @@ class AssessmentTestSessionException extends Exception {
      * Code to use when a navigation mode violation occurs e.g. while
      * trying to move to the next item but the navigation is LINEAR.
      * 
-     * @var unknown_type
+     * @var integer
      */
     const NAVIGATION_MODE_VIOLATION = 2;
     
@@ -58,6 +58,29 @@ class AssessmentTestSessionException extends Exception {
      * @var integer
      */
     const RESULT_SUBMISSION_ERROR = 5;
+    
+    /**
+     * Error code to use when a logic error is done.
+     * 
+     * @var integer
+     */
+    const LOGIC_ERROR = 6;
+    
+    /**
+     * Error code to use when some responses to items are missing
+     * prior to go further in the AssessmentTestSession flow.
+     * 
+     * @var integer
+     */
+    const MISSING_RESPONSES = 7;
+    
+    /**
+     * Error code to use when a jump is performed outside the current
+     * TestPart.
+     *
+     * @var integer
+     */
+    const FORBIDDEN_JUMP = 8;
     
     /**
      * Create a nex AssessmentTestSessionException.

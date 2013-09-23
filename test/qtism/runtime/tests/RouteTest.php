@@ -53,6 +53,9 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Q1', $route->getFirstRouteItem()->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('Q6', $route->getLastRouteItem()->getAssessmentItemRef()->getIdentifier());
         
+        // Is Q3 in TP1?
+        $this->assertTrue($route->isInTestPart(2, $testPart));
+        
         // Only 1 one occurence of each selected item found?
         foreach (array_merge($sectionPartsS1->getArrayCopy(), $sectionPartsS2->getArrayCopy()) as $itemRef) {
             $this->assertEquals(1, $route->getOccurenceCount($itemRef));

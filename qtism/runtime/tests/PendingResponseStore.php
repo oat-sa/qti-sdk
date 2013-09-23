@@ -22,17 +22,8 @@ class PendingResponseStore {
      */
     private $assessmentItemRefMap;
     
-    /**
-     * A separate collection of the content of the store to be able to return
-     * all the objects stored in one time.
-     * 
-     * @var PendingResponsesCollection
-     */
-    private $allPendingResponses;
-    
     public function __construct() {
         $this->setAssessmentItemRefMap(new SplObjectStorage());
-        $this->setAllPendingResponses(new PendingResponsesCollection());
     }
     
     /**
@@ -59,17 +50,15 @@ class PendingResponseStore {
      * @return PendingResponsesCollection A collection of PendingResponses objects held by the store.
      */
     public function getAllPendingResponses() {
-        return $this->pendingResponses;
-    }
-    
-    /**
-     * Set the separate collection which gathers together all the PendingResponses objects held by
-     * the store.
-     * 
-     * @param PendingResponsesCollection $pendingResponses A collection of PendingResponses objects.
-     */
-    protected function setAllPendingResponses(PendingResponsesCollection $pendingResponses) {
-        $this->pendingResponses = $pendingResponses;
+        $collection = new PendingResponsesCollection();
+        $map = $this->getAssessmentItemRefMap();
+        foreach ($map as $itemRef) {
+            foreach ($map[$itemRef] as $v) {
+                $collection[] = $v;
+            }
+        }
+        
+        return $collection;
     }
     
     /**

@@ -700,6 +700,26 @@ class Route implements Iterator {
     }
     
     /**
+     * Whether the RouteItem at $position in the Route is in the given $testPart.
+     * 
+     * @param integer $position A position in the Route sequence.
+     * @param TestPart $testPart A TestPart object involved in the Route.
+     * @return boolean
+     * @throws OutOfBoundsException If $position is out of the Route bounds.
+     */
+    public function isInTestPart($position, TestPart $testPart) {
+        try {
+            $routeItem = $this->getRouteItemAt($position);
+            return $routeItem->getTestPart() === $testPart;
+        }
+        catch (OutOfBoundsException $e) {
+            // The position does not refer to any RouteItem. This is out of the bounds of the route.
+            $msg = "The position '${position}' is out of the bounds of the route.";
+            throw new OutOfBoundsException($msg, 0, $e);
+        }
+    }
+    
+    /**
      * Get the RouteItem objects involved in the current TestPart.
      * 
      * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
@@ -713,5 +733,14 @@ class Route implements Iterator {
         }
         
         return $routeItems;
+    }
+    
+    /**
+     * Get all the RouteItem objects composing the Route.
+     * 
+     * @return RouteItemCollection A collection of RouteItem objects.
+     */
+    public function getAllRouteItems() {
+        return new RouteItemCollection($this->getRouteItems());
     }
 }

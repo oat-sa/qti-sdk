@@ -980,7 +980,7 @@ class AssessmentTestSession extends State {
 	 * Skip the current item. A call to moveNext() is automatically performed.
 	 * 
 	 * @throws AssessmentItemSessionException If the current item cannot be skipped or if timings are not respected.
-	 * @throws AssessmentTestSessionException If the test session is not running.
+	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
 	 */
 	public function skip() {
 	    
@@ -998,9 +998,24 @@ class AssessmentTestSession extends State {
 	        // Store the responses for a later processing at the end of the test part.
 	        $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
 	        $this->addPendingResponses($pendingResponses);
+	        
+	        // If the current item occurence is the last of the current test part,
+	        // we process the deffered response processing.
+	        if ($this->getRoute()->isLastOfTestPart() === true) {
+	        
+	            if ($this->isCurrentTestPartComplete() === true) {
+	                $this->defferedResponseProcessing();
+	            }
+	            else {
+	                // Some items are not responsed yet! The candidate must respond
+	                // these items prior to moving the next test part.
+	                $msg = "Some responses to items are missing prior to execute deffered response processing.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	            }
+	        }
 	    }
 	    
-	    $this->nextRouteItem();
+	    $this->moveNext();
 	}
 	
 	/**
@@ -1024,7 +1039,7 @@ class AssessmentTestSession extends State {
 	 * is LINEAR, the TestSession moves automatically to the next step in the route or
 	 * the end of the session if the responded item is the last one.
 	 * 
-	 * @param State $responses
+	 * @param State $responses The responses for the curent item in the sequence.
 	 * @throws AssessmentTestSessionException
 	 * @throws AssessmentItemSessionException
 	 */
@@ -1048,7 +1063,16 @@ class AssessmentTestSession extends State {
 	        // If the current item occurence is the last of the current test part,
 	        // we process the deffered response processing.
 	        if ($this->getRoute()->isLastOfTestPart() === true) {
-	            $this->defferedResponseProcessing();
+	            
+	            if ($this->isCurrentTestPartComplete() === true) {
+	                $this->defferedResponseProcessing();
+	            }
+	            else {
+	                // Some items are not responsed yet! The candidate must respond
+	                // these items prior to moving the next test part.
+	                $msg = "Some responses to items are missing prior to execute deffered response processing.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	            }
 	        }
 	    }
 	    else {
@@ -1069,6 +1093,41 @@ class AssessmentTestSession extends State {
 	    if ($this->mustAutoForward() === true) {
 	        // Go automatically to the next step in the route.
 	        $this->moveNext();
+	    }
+	}
+	
+	/**
+	 * Perform a 'jump' to a given position in the Route sequence. The current navigation
+	 * mode must be LINEAR to be able to jump.
+	 * 
+	 * @throws AssessmentTestSessionException If $position is out of the Route bounds. The error code will be FORBIDDEN_JUMP.
+	 */
+	public function jumpTo($position) {
+	    
+	    // Can we jump?
+	    if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+	        $msg = "Jumps are not allowed in LINEAR navigation mode.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
+	    }
+	    
+	    $route = $this->getRoute();
+	    
+	    try {
+	        $currentTestPart = $this->getCurrentTestPart();
+	        
+	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $route->isInTestPart($position, $currentTestPart) === false) {
+	            $msg = "Cannot jump to position '${position}' because the current submission mode is SIMULTANEOUS and the jump target is outside of the current testPart.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
+	        }
+	        
+	        $oldPosition = $route->getPosition();
+	        $this->getRoute()->setPosition($position);
+	        
+	        $this->selectEligibleItems();
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $msg = "Position '${position}' is out of the Route bounds.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
 	    }
 	}
 	
@@ -1391,9 +1450,10 @@ class AssessmentTestSession extends State {
 	 * 
 	 * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
 	 * 
+	 * @param boolean $anywhere Whether the candidate is allowed to jump to any item of the current test or only in the current test part.
 	 * @return JumpCollection A collection of Jump objects.
 	 */
-	public function getPossibleJumps() {
+	public function getPossibleJumps($anywhere = true) {
 	    $jumps = new JumpCollection();
 	    
 	    if ($this->isRunning() === false || $this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
@@ -1401,8 +1461,10 @@ class AssessmentTestSession extends State {
 	        return $jumps;
 	    }
 	    else {
+	        $jumpables = ($anywhere === true) ? $this->getRoute()->getAllRouteItems() : $this->getRoute()->getCurrentTestPartRouteItems();
+	        
 	        // Scan the route for "jumpable" items.
-	        foreach ($this->getRoute()->getCurrentTestPartRouteItems() as $routeItem) {
+	        foreach ($jumpables as $routeItem) {
 	            $itemRef = $routeItem->getAssessmentItemRef();
 	            $occurence = $routeItem->getOccurence();
 	            
@@ -1415,6 +1477,20 @@ class AssessmentTestSession extends State {
 	        
 	        return $jumps;
 	    }
+	}
+	
+	/**
+	 * Whether the current TestPart is complete. In other words, if all the items of the current TestPart were 'responded'.
+	 * 
+	 * @throws AssessmentTestSessionException If the current navigation mode is not SIMULTANEOUS. The error code will be LOGIC_ERROR.
+	 */
+	public function isCurrentTestPartComplete() {
+	    if ($this->getCurrentSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
+	        $msg = "It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
+	    }
+	    
+	    return count($this->getRoute()->getCurrentTestPartRouteItems()) === count($this->getPendingResponses());
 	}
 	
 	/**

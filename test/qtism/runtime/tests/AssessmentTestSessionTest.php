@@ -1,9 +1,8 @@
 <?php
-
-use qtism\runtime\tests\AssessmentItemSessionState;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\runtime\tests\AssessmentItemSessionException;
+use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\common\State;
@@ -587,10 +586,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session = AssessmentTestSession::instantiate($factory);
 	    
 	    // The session has not begun, the candidate is not able to jump anywhere.
-	    $this->assertEquals(0, count($session->getPossibleJumps()));
+	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
 	    
 	    $session->beginTestSession();
-	    $jumps = $session->getPossibleJumps();
+	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(6, count($jumps));
 	    $this->assertEquals('Q01', $jumps[0]->getAssessmentItemRef()->getIdentifier('Q01'));
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
@@ -612,7 +611,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
 	    
-	    $jumps = $session->getPossibleJumps();
+	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(3, count($jumps));
 	    $this->assertEquals('Q07', $jumps[0]->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
@@ -629,7 +628,196 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    }
 	    
 	    // This is the end of the test session so no more possible jumps.
-	    $this->assertEquals(0, count($session->getPossibleJumps()));
+	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
+	}
+	
+	public function testJumps() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
+	     
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	     
+	    $session->beginTestSession();
+	    
+	    // Begin attempt at Q01.
+	    $session->beginAttempt();
+	    
+	    // Moving to Q03 and answer it.
+	    $session->jumpTo(2);
+	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('H', 'O'))))));
+	    $this->assertEquals(2.0, $session['Q03.SCORE']);
+	    
+	    // Come back at Q01.
+	    $session->jumpTo(0);
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+	    $this->assertEquals(1.0, $session['Q01.scoring']);
+	    
+	    // Autoforward enabled so we are at Q02.
+	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	    $this->assertEquals(2.0, $session['Q02.SCORE']);
+	    
+	    // Q03 Again because of autoforward.
+	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    try {
+	        $session->beginAttempt();
+	        // Only a single attemp allowed.
+	        $this->assertFalse(true, 'Only a single attempt is allowed for Q03.');
+	    }
+	    catch (AssessmentItemSessionException $e) {
+	        $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+	    }
+	    
+	    // Move to Q07.2
+	    $session->jumpTo(7);
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 102)))));
+	    $this->assertEquals(1.0, $session['Q07.2.SCORE']);
+	    
+	    // Q07.3
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // End of test, everything ok?
+	    $this->assertInternalType('float', $session['Q01.scoring']);
+	    $this->assertInternalType('float', $session['Q02.SCORE']);
+	    $this->assertInternalType('float', $session['Q03.SCORE']);
+	    $this->assertInternalType('float', $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
+	    $this->assertSame(null, $session['Q05.SCORE']); // Was never selected.
+	    $this->assertSame(null, $session['Q06.mySc0r3']); // Was never selected.
+	    $this->assertSame(null, $session['Q07.1.SCORE']); // Was never selected.
+	    $this->assertInternalType('float', $session['Q07.2.SCORE']);
+	    $this->assertInternalType('float', $session['Q07.3.SCORE']);
+	    
+	    $this->assertEquals(5, $session['NPRESENTED']);
+	    $this->assertEquals(6, $session['NSELECTED']);
+	}
+	
+	public function testJumpsSimultaneous() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
+	
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	
+	    $session->beginTestSession();
+	     
+	    // Begin attempt at Q01.
+	    $session->beginAttempt();
+	     
+	    // Moving to Q03 and answer it.
+	    $session->jumpTo(2);
+	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('H', 'O'))))));
+	     
+	    // Come back at Q01.
+	    $session->jumpTo(0);
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+	     
+	    // Autoforward enabled so we are at Q02.
+	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	     
+	    // Q03 Again because of autoforward.
+	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    try {
+	        $session->beginAttempt();
+	        // Only a single attemp allowed.
+	        $this->assertFalse(true, 'Only a single attempt is allowed for Q03.');
+	    }
+	    catch (AssessmentItemSessionException $e) {
+	        $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+	    }
+	     
+	    // Move to Q07.2. An error must be raised because the current test part is not finished and we are in SIMULTANEOUS MODE.
+	    try {
+	        $session->jumpTo(7);
+	        $this->assertTrue(false, "The submission mode is SIMULTANEOUS but not all the testPart's items are responded. The deffered response processing cannot take place.");
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::FORBIDDEN_JUMP, $e->getCode());
+	    }
+	    
+	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
+	    
+	    // Go back in testPart P01 to complete it. Q04, Q05 and Q06 must be responsed.
+	    $session->jumpTo(3);
+	    // Q04
+	    $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q05
+	    $this->assertEquals('Q05', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q06
+	    $this->assertEquals('Q06', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q07.1
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
+	    
+	    // Jump to Q07.3
+	    $session->jumpTo(8);
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
+	    
+	    try {
+	        $session->skip();
+	        // Simultaneous mode in force but not all responses of P02 given.
+	        $this->assertTrue(false);
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
+	    }
+	    
+	    // Jump to Q07.1
+	    $session->jumpTo(6);
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q07.2
+	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Q07.3 already answered.
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    // Outcome processing has now taken place. Everything OK?
+	    $this->assertEquals(2.0, $session['Q03.SCORE']);
+	    $this->assertEquals(2.0, $session['Q02.SCORE']);
+	    $this->assertEquals(1.0, $session['Q01.scoring']);
+	    $this->assertEquals(0.0, $session['Q04.SCORE']);
+	    $this->assertEquals(0.0, $session['Q05.SCORE']);
+	    $this->assertEquals(0.0, $session['Q06.mySc0r3']);
+	    $this->assertEquals(0.0, $session['Q07.1.SCORE']);
+	    $this->assertEquals(0.0, $session['Q07.2.SCORE']);
+	    $this->assertEquals(0.0, $session['Q07.3.SCORE']);
+	    
+	    $this->assertEquals(9, $session['NSELECTED']);
+	    $this->assertEquals(9, $session['NPRESENTED']);
 	}
 	
 	/**
