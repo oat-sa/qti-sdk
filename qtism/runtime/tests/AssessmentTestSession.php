@@ -1242,10 +1242,6 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    else if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
-	        $msg = "Cannot invoke move AssessmentTestSession::moveNext() in LINEAR navigation mode.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
-	    }
 	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
 	        
 	        if ($this->isCurrentTestPartComplete() === false) {
@@ -1271,10 +1267,6 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    else if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
-	        $msg = "Cannot invoke AssessmentTestSession::moveBack() in LINEAR navigation mode.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION);
-	    } 
 	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
 	        
 	        if ($this->isCurrentTestPartComplete() === false) {

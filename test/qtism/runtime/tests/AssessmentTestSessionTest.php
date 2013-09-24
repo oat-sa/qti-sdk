@@ -821,25 +821,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(9, $session['NPRESENTED']);
 	}
 	
-	public function testMoveNextLinear() {
-	    $doc = new XmlCompactAssessmentTestDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-	
-	    $factory = new AssessmentTestSessionFactory($doc);
-	    $session = AssessmentTestSession::instantiate($factory);
-	
-	    $session->beginTestSession();
-	    $this->assertEquals(NavigationMode::LINEAR, $session->getCurrentNavigationMode());
-	    
-	    try {
-	        $session->moveNext();
-	        $this->assertTrue(false);
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION, $e->getCode());
-	    }
-	}
-	
 	public function testMoveBackLinear() {
 	    $doc = new XmlCompactAssessmentTestDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
