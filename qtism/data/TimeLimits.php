@@ -90,16 +90,14 @@ class TimeLimits extends QtiComponent {
 	 * Set the minimum time.
 	 * 
 	 * @param Duration $minTime A Duration object or null if unlimited.
-	 * @throws InvalidArgumentException If $minTime is not a Duration object nor null.
 	 */
-	public function setMinTime($minTime) {
-		if (is_null($minTime) || $minTime instanceof Duration) {
-			$this->minTime = $minTime;
-		}
-		else {
-			$msg = "MinTime must be a Duration object or null, '" . gettype($minTime) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
+	public function setMinTime(Duration $minTime = null) {
+	    // Prevent to get 0s durations stored.
+	    if (is_null($minTime) === false && $minTime->getSeconds(true) === 0) {
+	        $minTime = null;
+	    }
+	    
+	    $this->minTime = $minTime;
 	}
 	
 	/**
@@ -124,16 +122,14 @@ class TimeLimits extends QtiComponent {
 	 * Set the maximum time or null if unlimited.
 	 * 
 	 * @param Duration $maxTime A duration object or null if unlimited.
-	 * @throws InvalidArgumentException If $maxTime is not a Duration object nor null.
 	 */
-	public function setMaxTime($maxTime) {
-		if (is_null($maxTime) || $maxTime instanceof Duration) {
-			$this->maxTime = $maxTime;
-		}
-		else {
-			$msg = "MaxTime must be a Duration object or null, '" . gettype($maxTime) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
+	public function setMaxTime($maxTime = null) {
+	    // Prevent to get 0s durations stored.
+	    if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {
+	        $minTime = null;
+	    }
+	    
+	    $this->maxTime = $maxTime;
 	}
 	
 	/**
