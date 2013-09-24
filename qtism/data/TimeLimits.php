@@ -126,7 +126,7 @@ class TimeLimits extends QtiComponent {
 	public function setMaxTime($maxTime = null) {
 	    // Prevent to get 0s durations stored.
 	    if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {
-	        $minTime = null;
+	        $maxTime = null;
 	    }
 	    
 	    $this->maxTime = $maxTime;
