@@ -56,6 +56,44 @@ class RouteTest extends QtiSmRouteTestCase {
         // Is Q3 in TP1?
         $this->assertTrue($route->isInTestPart(2, $testPart));
         
+        // What are the RouteItems objects involded in part 'TP1'?
+        $tp1RouteItems = $route->getRouteItemsByTestPart($testPart);
+        $this->assertEquals(6, count($tp1RouteItems));
+        $tp1RouteItems = $route->getRouteItemsByTestPart('TP1');
+        $this->assertEquals(6, count($tp1RouteItems));
+        
+        try {
+            $tp1RouteItems = $route->getRouteItemsByTestPart('TPX');
+            $this->assertFalse(true);
+        }
+        catch (OutOfBoundsException $e) {
+            $this->assertTrue(true);
+        }
+        
+        // What are the RouteItems objects involved in section 'S1'?
+        $s1RouteItems = $route->getRouteItemsByAssessmentSection($assessmentSections['S1']);
+        $this->assertEquals(4, count($s1RouteItems));
+        $this->assertEquals('Q1', $s1RouteItems[0]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q2', $s1RouteItems[1]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q3', $s1RouteItems[2]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q4', $s1RouteItems[3]->getAssessmentItemRef()->getIdentifier());
+        
+        // What are the RouteItems objects involved in section 'S2'?
+        $s2RouteItems = $route->getRouteItemsByAssessmentSection('S2');
+        $this->assertEquals(2, count($s2RouteItems));
+        $this->assertEquals('Q5', $s2RouteItems[0]->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('Q6', $s2RouteItems[1]->getAssessmentItemRef()->getIdentifier());
+        
+        // What are the RouteItems objects involded in an unknown section :-D ?
+        // An OutOfBoundsException must be thrown.
+        try {
+            $sXRouteItems = $route->getRouteItemsByAssessmentSection(new AssessmentSection('SX', 'Unknown Section', true));
+            $this->assertTrue(false, 'An exception must be thrown because the AssessmentSection object is not known by the Route.');
+        }
+        catch (OutOfBoundsException $e) {
+            $this->assertTrue(true);
+        }
+        
         // Only 1 one occurence of each selected item found?
         foreach (array_merge($sectionPartsS1->getArrayCopy(), $sectionPartsS2->getArrayCopy()) as $itemRef) {
             $this->assertEquals(1, $route->getOccurenceCount($itemRef));

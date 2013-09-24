@@ -83,6 +83,22 @@ class AssessmentTestSessionException extends Exception {
     const FORBIDDEN_JUMP = 8;
     
     /**
+     * Error code to use when the maximum duration of a testPart
+     * is reached.
+     * 
+     * @var integer
+     */
+    const TEST_PART_DURATION_OVERFLOW = 9;
+    
+    /**
+     * Error code to use when the maximum duration of an assessmentSection
+     * is reached.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_SECTION_DURATION_OVERFLOW = 10;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.

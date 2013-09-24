@@ -14,6 +14,7 @@ use qtism\data\AssessmentSection;
 use \Iterator;
 use \SplObjectStorage;
 use \OutOfBoundsException;
+use \OutOfRangeException;
 
 /**
  * The Route class represents a linear route to be taken accross a given
@@ -68,6 +69,27 @@ class Route implements Iterator {
     private $testPartMap;
     
     /**
+     * A map where each RouteItem is bound to a test part identifier.
+     * 
+     * @var array
+     */
+    private $testPartIdentifierMap;
+    
+    /**
+     * A map where each RouteItem is bound to an assessment section.
+     * 
+     * @var SplObjectStorage
+     */
+    private $assessmentSectionMap;
+    
+    /**
+     * A map where each RouteItem is bound to an assessment section identifier.
+     * 
+     * @var array
+     */
+    private $assessmentSectionIdentifierMap;
+    
+    /**
      * The RouteItem objects the Route is composed with.
      * 
      * @var array
@@ -101,6 +123,9 @@ class Route implements Iterator {
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
         $this->setCategories(new IdentifierCollection());
         $this->setTestPartMap(new SplObjectStorage());
+        $this->setAssessmentSectionMap(new SplObjectStorage());
+        $this->setTestPartIdentifierMap(array());
+        $this->setAssessmentSectionIdentifierMap(array());
     }
     
     public function getPosition() {
@@ -214,6 +239,60 @@ class Route implements Iterator {
     }
     
     /**
+     * Set the map where RouteItem objects are gathered by TestPart identifier.
+     * 
+     * @param array $testPartIdentifierMap
+     */
+    protected function setTestPartIdentifierMap(array $testPartIdentifierMap) {
+        $this->testPartIdentifierMap = $testPartIdentifierMap;
+    }
+    
+    /**
+     * Get the map where RouteItem objects are gathered by TestPart identifier.
+     * 
+     * @return array
+     */
+    protected function getTestPartIdentifierMap() {
+        return $this->testPartIdentifierMap;
+    }
+    
+    /**
+     * Set the map where RouteItem objects are gathered by AssessmentSection.
+     * 
+     * @param SplObjectStorage $assessmentSectionMap
+     */
+    protected function setAssessmentSectionMap(SplObjectStorage $assessmentSectionMap) {
+        $this->assessmentSectionMap = $assessmentSectionMap;
+    }
+    
+    /**
+     * Get the map where RouteItem objects are gathered by AssessmentSection.
+     * 
+     * @return SplObjectStorage
+     */
+    protected function getAssessmentSectionMap() {
+        return $this->assessmentSectionMap;
+    }
+    
+    /**
+     * Set the map where RouteItem objects are gathered by AssessmentSection identifier.
+     *
+     * @param array $assessmentSectionIdentifierMap
+     */
+    protected function setAssessmentSectionIdentifierMap(array $assessmentSectionIdentifierMap) {
+        $this->assessmentSectionIdentifierMap = $assessmentSectionIdentifierMap;
+    }
+    
+    /**
+     * Get the map where RouteItems objects are gathered by AssessmentSection identifier.
+     * 
+     * @return array
+     */
+    protected function getAssessmentSectionIdentifierMap() {
+        return $this->assessmentSectionIdentifierMap;
+    }
+    
+    /**
      * Set the collection of item categories involved in the route.
      * 
      * @param IdentifierCollection $categories A collection of QTI Identifiers.
@@ -243,6 +322,7 @@ class Route implements Iterator {
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
         $this->registerAssessmentItemRef($routeItem);
         $this->registerTestPart($routeItem);
+        $this->registerAssessmentSection($routeItem);
     }
     
     /**
@@ -253,6 +333,7 @@ class Route implements Iterator {
     public function addRouteItemObject(RouteItem $routeItem) {
         $this->registerAssessmentItemRef($routeItem);
         $this->registerTestPart($routeItem);
+        $this->registerAssessmentSection($routeItem);
     }
     
     public function rewind() {
@@ -384,6 +465,7 @@ class Route implements Iterator {
             
             $this->registerAssessmentItemRef($clone);
             $this->registerTestPart($clone);
+            $this->registerAssessmentSection($clone);
         }    
     }
     
@@ -455,6 +537,7 @@ class Route implements Iterator {
      * @param RouteItem $routeItem A RouteItem object.
      */
     protected function registerTestPart(RouteItem $routeItem) {
+        // Register the RouteItem in the testPartMap.
         $testPartMap = $this->getTestPartMap();
         $testPart = $routeItem->getTestPart();
         
@@ -465,6 +548,47 @@ class Route implements Iterator {
         $target = $testPartMap[$testPart];
         $target[] = $routeItem;
         $testPartMap[$testPart] = $target;
+        
+        // Register the RouteItem in the testPartIdentifierMap.
+        $testPartIdentifierMap = $this->getTestPartIdentifierMap();
+        $id = $testPart->getIdentifier();
+        
+        if (isset($testPartIdentifierMap[$id]) === false) {
+            $testPartIdentifierMap[$id] = array();
+        }
+        
+        $testPartIdentifierMap[$id][] = $routeItem;
+        $this->setTestPartIdentifierMap($testPartIdentifierMap);
+    }
+    
+    /**
+     * Register all needed information about the AssessmentSection involved in a given
+     * $routeItem.
+     * 
+     * @param RouteItem $routeItem A RouteItem object.
+     */
+    protected function registerAssessmentSection(RouteItem $routeItem) {
+        $assessmentSectionMap = $this->getAssessmentSectionMap();
+        $assessmentSection = $routeItem->getAssessmentSection();
+        
+        if (isset($assessmentSectionMap[$assessmentSection]) === false) {
+            $assessmentSectionMap[$assessmentSection] = array();
+        }
+        
+        $target = $assessmentSectionMap[$assessmentSection];
+        $target[] = $routeItem;
+        $assessmentSectionMap[$assessmentSection] = $target;
+        
+        // Register the RouteItem in the assessmentSectionIdentifierMap.
+        $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
+        $id = $assessmentSection->getIdentifier();
+        
+        if (isset($assessmentSectionIdentifierMap) === false) {
+            $assessmentSectionIdentifierMap[$id] = array();
+        }
+        
+        $assessmentSectionIdentifierMap[$id][] = $routeItem;
+        $this->setAssessmentSectionIdentifierMap($assessmentSectionIdentifierMap);
     }
     
     /**
@@ -752,14 +876,80 @@ class Route implements Iterator {
      * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
      */
     public function getCurrentTestPartRouteItems() {
-        $testPartMap = $this->getTestPartMap();
-        $routeItems = new RouteItemCollection();
+        return $this->getRouteItemsByTestPart($this->current()->getTestPart());
+    }
+    
+    /**
+     * Get the RouteItem objects involved in a given test part.
+     * 
+     * @param string|TestPart An identifier or a TestPart object.
+     * @return RouteItemCollection A collection of RouteItem objects involved in the current TestPart.
+     * @throws OutOfBoundsException If $testPart is not referenced in the Route.
+     * @throws OutOfRangeException If $testPart is not a string nor a TestPart object.
+     */
+    public function getRouteItemsByTestPart($testPart) {
         
-        foreach ($testPartMap[$this->current()->getTestPart()] as $routeItem) {
-            $routeItems[] = $routeItem;
+        if (gettype($testPart) === 'string') {
+            $map = $this->getTestPartIdentifierMap();
+            
+            if (isset($map[$testPart]) === false) {
+                $msg = "No testPart with identifier '${testPart}' is referenced in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            return new RouteItemCollection($map[$testPart]);
         }
+        else if ($testPart instanceof TestPart) {
+            $map = $this->getTestPartMap();
+            
+            if (isset($map[$testPart]) === false) {
+                $msg = "The testPart '" . $testPart->getIdentifier() . "' is not referenced in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            return new RouteItemCollection($map[$testPart]);
+        }
+        else {
+            $msg = "The 'testPart' argument must be a string or a TestPart object.";
+            throw new OutOfRangeException($msg);
+        }
+    }
+    
+    /**
+     * Get the RouteItem objects involved in a given AssessmentSection.
+     * 
+     * @param string|AssessmentSection $assessmentSection An AssessmentSection object or an identifier.
+     * @return RouteItemCollection A collection of RouteItem objects involved in $assessmentSection.
+     * @throws OutOfBoundsException If $assessmentSection is not referenced in the Route.
+     * @throws OutOfRangeException If $assessmentSection is not a string nor an AssessmentSection object.
+     */
+    public function getRouteItemsByAssessmentSection($assessmentSection) {
         
-        return $routeItems;
+        if (gettype($assessmentSection) === 'string') {
+            $map = $this->getAssessmentSectionIdentifierMap();
+            
+            if (isset($map[$assessmentSection]) === false) {
+                $msg = "No assessmentSection with identifier '${assessmentSection}' found in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            return new RouteItemCollection($map[$assessmentSection]);
+        }
+        else if ($assessmentSection instanceof AssessmentSection) {
+            $map = $this->getAssessmentSectionMap();
+            $routeItems = new RouteItemCollection();
+            
+            if (isset($map[$assessmentSection]) === false) {
+                $msg = "The assessmentSection '" . $assessmentSection->getIdentifier() . "' is not referenced in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            return new RouteItemCollection($map[$assessmentSection]);
+        }
+        else {
+            $msg = "The 'assessmentSection' argument must be a string or an AssessmentSection object.";
+            throw new OutOfRangeException($msg);
+        }
     }
     
     /**

@@ -2,6 +2,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\TimeLimits;
 use qtism\common\datatypes\Duration;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\data\SubmissionMode;
@@ -471,9 +472,7 @@ class AssessmentTestSession extends State {
 			else {
 				
 				// prefix given.
-				
 				// - prefix targets an item?
-				
 				$store = $this->getAssessmentItemSessionStore();
 				$items = $this->getAssessmentItemRefs();
 				
@@ -507,6 +506,16 @@ class AssessmentTestSession extends State {
 				    }
 				    catch (OutOfBoundsException $e) {
 				        // No such session referenced in the session store.
+				        return null;
+				    }
+				}
+				else if ($v->getVariableName() === 'duration') {
+				    // Try to get a testPart duration.
+				    try {
+				        return $this->getTestPartDuration($v->getPrefix());
+				    }
+				    catch (OutOfBoundsException $e) {
+				        // No such TestPart referenced in the AssessmentTestSession.
 				        return null;
 				    }
 				}
@@ -698,12 +707,6 @@ class AssessmentTestSession extends State {
 	        // Determine the time limits.
 	        if ($itemRef->hasTimeLimits() === true) {
 	            $session->setTimeLimits($itemRef->getTimeLimits());
-	        }
-	        else if ($assessmentSection->hasTimeLimits() === true) {
-	            $session->setTimeLimits($assessmentSection->getTimeLimits());
-	        }
-	        else if ($testPart->hasTimeLimits() === true) {
-	            $session->setTimeLimits($testPart->getTimeLimits());
 	        }
 	        // else ... No time limits !
 	        
@@ -987,7 +990,7 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Skip the current item. A call to moveNext() is automatically performed.
+	 * Skip the current item.
 	 * 
 	 * @throws AssessmentItemSessionException If the current item cannot be skipped or if timings are not respected.
 	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
@@ -998,6 +1001,8 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException(msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
+	    
+	    $this->checkTimeLimits();
 	    
 	    $item = $this->getCurrentAssessmentItemRef();
 	    $occurence = $this->getCurrentAssessmentItemRefOccurence();
@@ -1042,6 +1047,8 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
+	    $this->checkTimeLimits();
+	    
 	    $routeItem = $this->getCurrentRouteItem();
 	    $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	    $session->beginAttempt();
@@ -1066,46 +1073,60 @@ class AssessmentTestSession extends State {
 	    $currentItem = $routeItem->getAssessmentItemRef();
 	    $currentOccurence = $routeItem->getOccurence();
 	    $session = $this->getItemSession($currentItem, $currentOccurence);
+	    $session->updateDuration();
 	    
-	    if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+	    try {
+	        $this->checkTimeLimits();
 	        
-	        // Store the responses for a later processing.
-	        $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
-	        $session->endAttempt($responses, false);
-	        
-	        // If the current item occurence is the last of the current test part,
-	        // we process the deffered response processing.
-	        if ($this->getRoute()->isLastOfTestPart() === true) {
+	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+	             
+	            // Store the responses for a later processing.
+	            $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
+	            $session->endAttempt($responses, false);
+	             
+	            // If the current item occurence is the last of the current test part,
+	            // we process the deffered response processing.
+	            if ($this->getRoute()->isLastOfTestPart() === true) {
+	                 
+	                if ($this->isCurrentTestPartComplete() === true) {
+	                    $this->defferedResponseProcessing();
+	                }
+	                else {
+	                    // Some items are not responsed yet! The candidate must respond
+	                    // these items prior to moving the next test part.
+	                    $msg = "Some responses to items are missing prior to execute deffered response processing.";
+	                    throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	                }
+	            }
+	        }
+	        else {
+	            $session->endAttempt($responses);
+	            // Update the lastly updated item occurence.
+	            $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	             
+	            // Item Results submission.
+	            try {
+	                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence));
+	            }
+	            catch (AssessmentTestSessionException $e) {
+	                $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
+	            }
+	        }
+	         
+	        if ($this->mustAutoForward() === true) {
+	            // Go automatically to the next step in the route.
+	            $this->nextRouteItem();
+	        }
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        if ($e->getCode() === AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW) {
+	            // Move to the next testPart.
+	            $this->nextTestPart();
 	            
-	            if ($this->isCurrentTestPartComplete() === true) {
-	                $this->defferedResponseProcessing();
-	            }
-	            else {
-	                // Some items are not responsed yet! The candidate must respond
-	                // these items prior to moving the next test part.
-	                $msg = "Some responses to items are missing prior to execute deffered response processing.";
-	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	            }
+	            // Rethrow the error.
+	            throw $e;
 	        }
-	    }
-	    else {
-	        $session->endAttempt($responses);
-	        // Update the lastly updated item occurence.
-	        $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-	        
-	        // Item Results submission.
-	        try {
-	            $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence));
-	        }
-	        catch (AssessmentTestSessionException $e) {
-	            $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
-	        }
-	    }
-	    
-	    if ($this->mustAutoForward() === true) {
-	        // Go automatically to the next step in the route.
-	        $this->nextRouteItem();
 	    }
 	}
 	
@@ -1265,7 +1286,7 @@ class AssessmentTestSession extends State {
 	            $this->defferedResponseProcessing();
 	        }
 	    }
-	    
+
 	    $this->previousRouteItem();
 	}
 	
@@ -1292,6 +1313,26 @@ class AssessmentTestSession extends State {
 	        
 	        // 2. End the test session.
 	        $this->endTestSession();
+	    }
+	}
+	
+	/**
+	 * Set the position in the Route at the very next TestPart in the Route sequence.
+	 * 
+	 * @throws AssessmentTestSessionException If the test is currently not running.
+	 */
+	protected function nextTestPart() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    $route = $this->getRoute();
+	    $from = $route->current();
+	    
+	    while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+	        $this->nextRouteItem();
 	    }
 	}
 	
@@ -1589,6 +1630,129 @@ class AssessmentTestSession extends State {
 	 */
 	public function getAcceptableLatency() {
 	    return $this->acceptableLatency;
+	}
+	
+	/**
+	 * Get the duration of a given TestPart by specifying its identifier.
+	 * 
+	 * @param string $identifier The identifier of the TestPart you want to know the duration.
+	 * @throws OutOfBoundsException If $identifier does not reference any TestPart in the AssessmentTestSession.
+	 * @return Duration A Duration object.
+	 */
+	protected function getTestPartDuration($identifier) {
+	    $duration = new Duration('PT0S');
+	     
+	    try {
+	        $involvedRouteItems = $this->getRoute()->getRouteItemsByTestPart($identifier);
+	        $itemSessionStore = $this->getAssessmentItemSessionStore();
+	    
+	        if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	            foreach ($involvedRouteItems as $routeItem) {
+	                $itemSessions = $itemSessionStore->getAssessmentItemSessions($routeItem->getAssessmentItemRef());
+	    
+	                foreach ($itemSessions as $itemSession) {
+	                    $duration->add($itemSession['duration']);
+	                }
+	            }
+	        }
+	         
+	        return $duration;
+	    }
+	    catch (OutOfBoundsException $e) {
+	        // No assessmentSection with $identifier in the Route.
+	        $msg = "No TestPart with identifier '${identifier}' referenced in the AssessmentTestSession.";
+	        throw new OutOfBoundsException($msg, 0, $e);
+	    }
+	}
+	
+	/**
+	 * Get the current time limits in force for the current TestPart.
+	 * 
+	 * @throws AssessmentTestSessionException If the AssessmentTestSession is not running.
+	 * @return null|TimeLimits A TimeLimits object or null if no TimeLimits is in force for the current TestPart.
+	 */
+	public function getTimeLimitsTestPart() {
+	    if ($this->isRunning() === false) {
+	        $msg = "The TimeLimts for the current TestPart cannot be determined if the state of the AssessmentTestSession is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    if (($timeLimits = $this->getCurrentTestPart()->getTimeLimits()) !== null) {
+	        return $timeLimits;
+	    }
+	    else {
+	        return null;
+	    }
+	}
+	
+	/**
+	 * Get the time remaining on the current test part. If no timeLimits is in force
+	 * for the current TestPart, null is returned.
+	 * 
+	 * @return null|Duration
+	 */
+	public function getRemainingTimeTestPart() {
+	    
+	    $remainingTime = null;
+	    
+	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null) {
+	        $remainingTime = clone $timeLimits->getMaxTime();
+	        $remainingTime->sub($this[$this->getCurrentTestPart()->getIdentifier() . '.duration']);
+	    }
+	    
+	    return $remainingTime;
+	}
+	
+	/**
+	 * Checks if the timeLimits in force are respected. If this is not the case, an AssessmentTestSessionException
+	 * will be raised with the appropriate error code.
+	 * 
+	 * @throws AssessmentItemSessionException
+	 */
+	protected function checkTimeLimits() {
+	    
+	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null && $timeLimits->hasMaxTime() === true) {
+	        $currentTestPart = $this->getCurrentTestPart();
+	        $currentDuration = $this[$currentTestPart->getIdentifier() . '.duration'];
+	        $referenceDuration = $timeLimits->getMaxTime();
+	        
+	        if ($currentDuration->getSeconds(true) > $referenceDuration->getSeconds(true)) {
+	            $msg = "Maximum duration of TestPart '" . $currentTestPart->getIdentifier() . "' exceeded.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW);
+	        }
+	    }
+	}
+	
+	/**
+	 * Get the current AssessmentItemSession object.
+	 * 
+	 * @throws AssessmentTestSessionException If the test session is not running.
+	 * @return AssessmentItemSession The current AssessmentItemSession object.
+	 */
+	public function getCurrentAssessmentItemSession() {
+	    
+	    $session = false;
+	    
+	    if ($this->isRunning() === true) {
+	        
+	        $itemRef = $this->getCurrentAssessmentItemRef();
+	        $occurence = $this->getCurrentAssessmentItemRefOccurence();
+	        
+	        $session = $this->getAssessmentItemSessionStore()->getAssessmentItemSession($itemRef, $occurence);
+	    }
+	    
+	    return $session;
+	}
+	
+	/**
+	 * Update the durations involved in the AssessmentTestSession. This method can be useful for stateless systems
+	 * that make use of QtiSm.
+	 */
+	public function updateDuration() {
+	    
+	    if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
+	        $itemSession->updateDuration();
+	    }
 	}
 	
 	/**
