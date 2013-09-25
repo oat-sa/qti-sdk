@@ -358,6 +358,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $position = pack('S', 0); // Q01
         $state = "\x01"; // INTERACTING
+        $hasItemSessionControl = "\x00"; // false
         $numAttempts = "\x02"; // 2
         $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
         $completionStatus = pack('S', 10) . 'incomplete';
@@ -367,11 +368,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
         $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
-        $bin = implode('', array($position, $state, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
+        $bin = implode('', array($position, $state, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
         $stream = new BinaryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration'));
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
         $session = $access->readAssessmentItemSession($seeker);
         
@@ -393,7 +394,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $doc = new XmlCompactAssessmentTestDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration'));
+        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         $stream = new BinaryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);

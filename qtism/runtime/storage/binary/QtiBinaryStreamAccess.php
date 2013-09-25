@@ -519,6 +519,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $session = new AssessmentItemSession($assessmentItemRef);
             $session->setState($this->readTinyInt());
             
+            if ($this->readBoolean() === true) {
+                $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
+                $session->setItemSessionControl($itemSessionControl);
+            }
+            
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
                 $session['numAttempts'] = $this->readTinyInt();
                 $session['duration'] = $this->readDuration();
@@ -574,6 +579,15 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         try {
             $this->writeShort($seeker->seekPosition($session->getAssessmentItem()));
             $this->writeTinyInt($session->getState());
+            
+            $isItemSessionControlDefault = $session->getItemSessionControl()->isDefault();
+            if ($isItemSessionControlDefault === true) {
+                $this->writeBoolean(false);
+            }
+            else {
+                $this->writeBoolean(true);
+                $this->writeShort($seeker->seekPosition($session->getItemSessionControl()));
+            }
             
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
                 $this->writeTinyInt($session['numAttempts']);

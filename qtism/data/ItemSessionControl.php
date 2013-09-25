@@ -286,6 +286,21 @@ class ItemSessionControl extends QtiComponent {
 	}
 	
 	/**
+	 * Whether the values held by the ItemSessionControl are the default ones.
+	 *
+	 * @return boolean
+	 */
+	public function isDefault() {
+	     return $this->getMaxAttempts() === 1 && 
+	             $this->mustShowFeedback() === false && 
+	             $this->doesAllowReview() === true &&
+	             $this->mustShowSolution() === false && 
+	             $this->doesAllowComment() === false && 
+	             $this->mustValidateResponses() === false &&
+	             $this->doesAllowSkipping() === true;
+	}
+	
+	/**
 	 * Set if the responses must be validated.
 	 * 
 	 * @param boolean $validateResponses true if responses must be validated, false if not.

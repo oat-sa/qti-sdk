@@ -43,7 +43,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         parent::__construct($factory);
         
         $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration',
-                                'responseDeclaration', 'branchRule', 'preCondition');
+                                'responseDeclaration', 'branchRule', 'preCondition', 'itemSessionControl');
         
         $this->setSeeker(new AssessmentTestSeeker($this->getAssessmentTest(), $seekerClasses));
     }
