@@ -82,7 +82,7 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		                <baseValue baseType="integer">2</baseValue>
 		            </equal>
 		        </branchRule>
-		        <itemSessionControl maxAttempts="1"/>
+		        <itemSessionControl maxAttempts="0"/>
 		        <timeLimits minTime="60" maxTime="120" allowLateSubmission="true"/>
 				<assessmentSection identifier="section1" title="My Section 1" visible="true">
 					<selection select="3"/>
@@ -128,6 +128,7 @@ class TestPartMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Not', $preConditions[0]->getExpression());
 		
 		$this->assertTrue($component->hasItemSessionControl());
+		$this->assertEquals(0, $component->getItemSessionControl()->getMaxAttempts());
 		$this->assertTrue($component->hasTimeLimits());
 	}
 }

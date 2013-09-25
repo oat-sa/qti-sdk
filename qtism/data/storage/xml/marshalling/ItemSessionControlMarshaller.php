@@ -17,11 +17,7 @@ class ItemSessionControlMarshaller extends Marshaller {
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-		// If max attempts <= 0, it means it was not specified.
-		if ($component->getMaxAttempts() > 0) {
-			static::setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
-		}
-		
+		static::setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
 		static::setDOMElementAttribute($element, 'showFeedback', $component->mustShowFeedback());
 		static::setDOMElementAttribute($element, 'allowReview', $component->doesAllowReview());
 		static::setDOMElementAttribute($element, 'showSolution', $component->mustShowSolution());

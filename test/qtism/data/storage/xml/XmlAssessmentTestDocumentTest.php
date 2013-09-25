@@ -41,6 +41,31 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		}
 	}
 	
+	public function testLoadSimpleItemSessionControlOnTestPart() {
+	    $doc = new XmlAssessmentTestDocument('2.1');
+	    $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
+	    $testParts = $doc->getTestParts();
+	    $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
+	    $this->assertInternalType('integer', 0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+	    $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+	}
+	
+	public function testSaveSimpleItemSessionControlOnTestPart() {
+	    $doc = new XmlAssessmentTestDocument('2.1');
+	    $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    $doc = new XmlAssessmentTestDocument('2.1');
+	    $doc->load($file);
+	    $testParts = $doc->getTestParts();
+	    $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
+	    $this->assertInternalType('integer', 0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+	    $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+	    
+	    unlink($file);
+	}
+	
 	public function testFullyQualified() {
 		$uri = dirname(__FILE__) . '/../../../../samples/custom/fully_qualified_assessmenttest.xml';
 		$doc = new XmlAssessmentTestDocument('2.1');
