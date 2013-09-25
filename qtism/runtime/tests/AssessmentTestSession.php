@@ -1126,10 +1126,10 @@ class AssessmentTestSession extends State {
 	            if ($this->mustAutoForward() === true) {
 	                $this->moveNextTestPart();
 	            }
-	            
-	            // Rethrow the error.
-	            throw $e;
 	        }
+	        
+	        // Rethrow the error.
+	        throw $e;
 	    }
 	}
 	
@@ -1245,19 +1245,35 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
-	        
-	        if ($this->isCurrentTestPartComplete() === false) {
-	            $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	        }
-	        else {
-	            // The testPart is complete so deffered response processing must take place.
-	            $this->defferedResponseProcessing();
-	        }	        
-	    }
 	    
-	    $this->nextRouteItem();
+	    try {
+	        $this->checkTimeLimits();
+	        
+	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
+	             
+	            if ($this->isCurrentTestPartComplete() === false) {
+	                $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	            }
+	            else {
+	                // The testPart is complete so deffered response processing must take place.
+	                $this->defferedResponseProcessing();
+	            }
+	        }
+	         
+	        $this->nextRouteItem();
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        if ($e->getCode() === AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW) {
+	            $this->setPendingResponseStore(new PendingResponseStore());
+	            
+	            if ($this->mustAutoForward() === true) {
+	                $this->moveNextTestPart();
+	            }
+	        }
+	        
+	        throw $e;
+	    }
 	}
 	
 	/**
@@ -1270,19 +1286,33 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
+	    
+	    try {
+	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
+	             
+	            if ($this->isCurrentTestPartComplete() === false) {
+	                $msg = "Cannot move to the previous Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	            }
+	            else {
+	                // The testPart is complete so deffered response processing must take place.
+	                $this->defferedResponseProcessing();
+	            }
+	        }
 	        
-	        if ($this->isCurrentTestPartComplete() === false) {
-	            $msg = "Cannot move to the previous Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	        }
-	        else {
-	            // The testPart is complete so deffered response processing must take place.
-	            $this->defferedResponseProcessing();
-	        }
+	        $this->previousRouteItem();
 	    }
-
-	    $this->previousRouteItem();
+	    catch (AssessmentTestSessionException $e) {
+	        if ($e->getCode() === AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW) {
+	            $this->setPendingResponseStore(new PendingResponseStore());
+	             
+	            if ($this->mustAutoForward() === true) {
+	                $this->moveNextTestPart();
+	            }
+	        }
+	         
+	        throw $e;
+	    }
 	}
 	
 	/**
