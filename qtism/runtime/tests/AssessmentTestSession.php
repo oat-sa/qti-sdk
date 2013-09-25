@@ -1121,8 +1121,11 @@ class AssessmentTestSession extends State {
 	    }
 	    catch (AssessmentTestSessionException $e) {
 	        if ($e->getCode() === AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW) {
-	            // Move to the next testPart.
-	            $this->nextTestPart();
+	            
+	            // Move to the next testPart if AutoForward is true.
+	            if ($this->mustAutoForward() === true) {
+	                $this->moveNextTestPart();
+	            }
 	            
 	            // Rethrow the error.
 	            throw $e;
@@ -1313,7 +1316,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @throws AssessmentTestSessionException If the test is currently not running.
 	 */
-	public function nextTestPart() {
+	public function moveNextTestPart() {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
