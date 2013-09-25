@@ -1032,6 +1032,22 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(1, $session['NRESPONSED']);
 	}
 	
+	public function testUnlimitedAttempts() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
+	     
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $session->beginTestSession();
+	    $session->setAutoForward(false);
+	    
+	    $session->beginAttempt();
+	    $session->skip();
+	    
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+	}
+	
 	/**
 	 * @dataProvider getWeightProvider
 	 * 

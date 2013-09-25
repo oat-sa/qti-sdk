@@ -497,7 +497,7 @@ class AssessmentItemSession extends State {
 	    
 	    // Are we allowed to begin a new attempt?
 	    $itemRef = $this->getAssessmentItem();
-	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED && $this->getItemSessionControl()->getMaxAttempts() !== 0) {
 	        $identifier = $itemRef->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
 	        $msg.= "completion status is already set to 'complete'";
@@ -510,10 +510,14 @@ class AssessmentItemSession extends State {
 	        $msg.= "maximum duration is already exceeded.";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
 	    }
-	    else if ($itemRef->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
-	        $identifier = $itemRef->getIdentifier();
-	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
-	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
+	    else if ($itemRef->isAdaptive() === false) {
+	        $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
+	        
+	        if ($maxAttempts > 0 && $this['numAttempts'] >= $maxAttempts) {
+	            $identifier = $itemRef->getIdentifier();
+	            $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
+	            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
+	        }
 	    }
 	    
 		$data = &$this->getDataPlaceHolder();
@@ -678,7 +682,10 @@ class AssessmentItemSession extends State {
 		}
 		else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
 		    
-		    $this->endItemSession();
+		    if ($this->getItemSessionControl()->getMaxAttempts() !== 0) {
+		        $this->endItemSession();
+		    }
+		    
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
 		// Else ...
