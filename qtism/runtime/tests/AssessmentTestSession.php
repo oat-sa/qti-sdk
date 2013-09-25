@@ -1313,7 +1313,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @throws AssessmentTestSessionException If the test is currently not running.
 	 */
-	protected function nextTestPart() {
+	public function nextTestPart() {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
@@ -1701,7 +1701,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @throws AssessmentItemSessionException
 	 */
-	protected function checkTimeLimits() {
+	public function checkTimeLimits() {
 	    
 	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null && $timeLimits->hasMaxTime() === true) {
 	        $currentTestPart = $this->getCurrentTestPart();
