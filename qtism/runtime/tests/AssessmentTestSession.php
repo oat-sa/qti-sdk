@@ -1691,8 +1691,10 @@ class AssessmentTestSession extends State {
 	    $remainingTime = null;
 	    
 	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null) {
-	        $remainingTime = clone $timeLimits->getMaxTime();
-	        $remainingTime->sub($this[$this->getCurrentTestPart()->getIdentifier() . '.duration']);
+	        if ($timeLimits->hasMaxTime() === true) {
+	            $remainingTime = clone $timeLimits->getMaxTime();
+	            $remainingTime->sub($this[$this->getCurrentTestPart()->getIdentifier() . '.duration']);
+	        }
 	    }
 	    
 	    return $remainingTime;
