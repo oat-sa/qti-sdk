@@ -793,14 +793,17 @@ class AssessmentItemSession extends State {
 	 */
 	public function getRemainingAttempts() {
 	    $itemRef = $this->getAssessmentItem();
-	    if ($itemRef->isAdaptive() === false && $this['completionStatus'] !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus'] !== self::COMPLETION_STATUS_INCOMPLETE) {
+	    if ($itemRef->isAdaptive() === false) {
 	        if ($this->getItemSessionControl()->getMaxAttempts() === 0) {
 	            // 0 means unlimited.
 	            return -1;
 	        }
-	        else {
+	        else if ($this['completionStatus'] !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus'] !== self::COMPLETION_STATUS_INCOMPLETE) {
 	            // The item is non-adaptative and is not completed nor time exceeded.
 	            return $this->getItemSessionControl()->getMaxAttempts() - $this['numAttempts'];
+	        }
+	        else {
+	            return 0;
 	        }
 	        
 	    }

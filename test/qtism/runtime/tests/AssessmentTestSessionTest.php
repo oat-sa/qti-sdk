@@ -1042,10 +1042,14 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->setAutoForward(false);
 	    
 	    $session->beginAttempt();
+	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    $session->skip();
+	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    
 	    $session->beginAttempt();
+	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	}
 	
 	/**
