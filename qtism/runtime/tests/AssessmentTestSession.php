@@ -1288,6 +1288,8 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    try {
+	        $this->checkTimeLimits();
+	        
 	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
 	             
 	            if ($this->isCurrentTestPartComplete() === false) {
