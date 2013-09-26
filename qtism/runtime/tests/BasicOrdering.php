@@ -18,12 +18,13 @@ class BasicOrdering extends AbstractOrdering {
             for ($index = 0; $index < $selectableRoutesCount; $index++) {
                 $selectableRoute = $selectableRoutes[$index];
                 
-                if ($selectableRoute->mustKeepTogether() === false) {
+                if ($selectableRoute->isVisible() === false && $selectableRoute->mustKeepTogether() === false) {
                     $oldIndex = $index;
                     // The RouteItems in the Route must be merged
                     // with the parent's one.
                     unset($selectableRoutes[$index]);
                     
+                    // Split the current selection in multiple selections.
                     foreach ($selectableRoute as $routeItem) {
                         $item = $routeItem->getAssessmentItemRef();
                         $newRoute = new SelectableRoute($item->isFixed(), $item->isRequired(), true, true);

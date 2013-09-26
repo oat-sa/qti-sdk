@@ -1748,7 +1748,7 @@ class AssessmentTestSession extends State {
 	 * @return AssessmentTestSession An instantiated AssessmentTestSession object.
 	 */
 	public static function instantiate(AbstractAssessmentTestSessionFactory $factory) {
-	    // 1. Apply selection and ordering.
+	    
 	    $routeStack = array();
 	    
 	    foreach ($factory->getAssessmentTest()->getTestParts() as $testPart) {
