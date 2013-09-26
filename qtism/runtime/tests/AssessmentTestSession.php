@@ -1013,26 +1013,11 @@ class AssessmentTestSession extends State {
 	        // Store the responses for a later processing at the end of the test part.
 	        $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
 	        $this->addPendingResponses($pendingResponses);
-	        
-	        // If the current item occurence is the last of the current test part,
-	        // we process the deffered response processing.
-	        if ($this->getRoute()->isLastOfTestPart() === true) {
-	        
-	            if ($this->isCurrentTestPartComplete() === true) {
-	                $this->defferedResponseProcessing();
-	            }
-	            else {
-	                // Some items are not responsed yet! The candidate must respond
-	                // these items prior to moving the next test part.
-	                $msg = "Some responses to items are missing prior to execute deffered response processing.";
-	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	            }
-	        }
 	    }
 	    
 	    if ($this->mustAutoForward() === true) {
 	        // Go automatically to the next step in the route.
-	        $this->nextRouteItem();
+	        $this->moveNext();
 	    }
 	}
 	
@@ -1083,21 +1068,6 @@ class AssessmentTestSession extends State {
 	            // Store the responses for a later processing.
 	            $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
 	            $session->endAttempt($responses, false);
-	             
-	            // If the current item occurence is the last of the current test part,
-	            // we process the deffered response processing.
-	            if ($this->getRoute()->isLastOfTestPart() === true) {
-	                 
-	                if ($this->isCurrentTestPartComplete() === true) {
-	                    $this->defferedResponseProcessing();
-	                }
-	                else {
-	                    // Some items are not responsed yet! The candidate must respond
-	                    // these items prior to moving the next test part.
-	                    $msg = "Some responses to items are missing prior to execute deffered response processing.";
-	                    throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	                }
-	            }
 	        }
 	        else {
 	            $session->endAttempt($responses);
@@ -1116,7 +1086,7 @@ class AssessmentTestSession extends State {
 	         
 	        if ($this->mustAutoForward() === true) {
 	            // Go automatically to the next step in the route.
-	            $this->nextRouteItem();
+	            $this->moveNext();
 	        }
 	    }
 	    catch (AssessmentTestSessionException $e) {
