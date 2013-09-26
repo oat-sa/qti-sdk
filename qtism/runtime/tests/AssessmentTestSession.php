@@ -1259,19 +1259,6 @@ class AssessmentTestSession extends State {
 	    
 	    try {
 	        $this->checkTimeLimits();
-	        
-	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isFirstOfTestPart() === true) {
-	             
-	            if ($this->isCurrentTestPartComplete() === false) {
-	                $msg = "Cannot move to the previous Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
-	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	            }
-	            else {
-	                // The testPart is complete so deffered response processing must take place.
-	                $this->defferedResponseProcessing();
-	            }
-	        }
-	        
 	        $this->previousRouteItem();
 	    }
 	    catch (AssessmentTestSessionException $e) {

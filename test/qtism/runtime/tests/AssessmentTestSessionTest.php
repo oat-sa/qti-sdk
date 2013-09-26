@@ -934,15 +934,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // We are now in another test part and some scores were processed for test part P01.
 	    $this->assertEquals(1.0, $session['Q01.scoring']);
-	    
-	    // Try to move back and get out of the test part without full completion.
-	    try {
-	        $session->moveBack();
-	        $this->assertTrue(false);
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
-	    }
 	}
 	
 	public function testTestPartDurations() {
