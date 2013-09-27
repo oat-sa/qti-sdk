@@ -1076,7 +1076,7 @@ class AssessmentTestSession extends State {
 	             
 	            // Item Results submission.
 	            try {
-	                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence));
+	                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
 	            }
 	            catch (AssessmentTestSessionException $e) {
 	                $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
@@ -1146,9 +1146,10 @@ class AssessmentTestSession extends State {
 	 * This method is triggered each time response processing takes place.
 	 * 
 	 * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
+	 * @param integer $occurence The occurence number of the item bound to $assessmentItemSession.
 	 * @throws AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
 	 */
-	protected function submitItemResults(AssessmentItemSession $assessmentItemSession) {
+	protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0) {
 	    return;
 	}
 	
@@ -1184,7 +1185,7 @@ class AssessmentTestSession extends State {
 	        
 	        try {
 	            $engine->process();
-	            $this->submitItemResults($itemSession);
+	            $this->submitItemResults($itemSession, $occurence);
 	        }
 	        catch (ProcessingException $e) {
 	            $msg = "An error occured during postponed response processing.";
