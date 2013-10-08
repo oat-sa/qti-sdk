@@ -72,7 +72,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 	 * * An ExpressionProcessingException is thrown if the variable is not a ResponseVariable.
 	 * * An ExpressionProcessingException is thrown if the cardinality of the variable is RECORD.
 	 * 
-	 * @return a QTI Runtime compliant value.
+	 * @return a QTI float value.
 	 * @throws ExpressionProcessingException
 	 */
 	public function process() {
@@ -114,39 +114,58 @@ class MapResponseProcessor extends ExpressionProcessor {
 					}
 					else if ($variable->isMultiple()) {
 						
-						$result = 0;
+						$result = 0.0;
 						
-						$mapped = array(); // already mapped keys.
-						
-						foreach ($mapping->getMapEntries() as $mapEntry) {
-							$val = $state[$identifier];
-							if (gettype($val) === 'string' && $mapEntry->isCaseSensitive()) {
-								$val = mb_strtolower($val, 'UTF-8');
-							}
-							
-							$mapKey = $mapEntry->getMapKey();
-							
-							if ($val->contains($mapKey) && !in_array($mapKey, $mapped)) {
-								$mapped[] = $mapKey;
-								$result += $mapEntry->getMappedValue(); 
-							}
-						}
-						
-						if (count($mapped) === 0) {
-							// No relevant mapping found at all.
-							$result = $mapping->getDefaultValue();
-						}
-						
-						// When mapping a container, try to apply lower or upper bound.
-						if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-							return $mapping->getLowerBound();
-						}
-						else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-							return $mapping->getUpperBound();
+						if (!is_null($variable->getValue())) {
+						    $mapped = array(); // already mapped keys.
+						    $mapEntries = $mapping->getMapEntries();
+						    
+						    foreach ($variable->getValue() as $val) {
+						        
+						        for ($i = 0; $i < count($mapEntries); $i++) {
+						            
+						            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
+						            
+						            if (gettype($val) === 'string' && $mapEntries[$i]->isCaseSensitive() === false) {
+						                $val = mb_strtolower($val, 'UTF-8');
+						                $mapKey = mb_strtolower($mapKey, 'UTF-8');
+						            }
+						            
+                                    if (($val instanceof Comparable && $val->equals($mapKey) === true) || $val === $mapKey) {
+						                if (in_array($rawMapKey, $mapped, true) === false) {
+						                    $result += $mapEntries[$i]->getMappedValue();
+						                    $mapped[] = $rawMapKey;
+						                    
+						                }
+						                // else...
+						                // This value has already been mapped.
+						                
+						                break;
+						            }
+						        }
+						        
+						        if ($i >= count($mapEntries)) {
+						            // No explicit mapping found for source value $val.
+						            $result += $mapping->getDefaultValue();
+						        }
+						    }
+						    
+						    // When mapping a container, try to apply lower or upper bound.
+						    if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
+						        return $mapping->getLowerBound();
+						    }
+						    else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
+						        return $mapping->getUpperBound();
+						    }
+						    else {
+						        return $result;
+						    }
 						}
 						else {
-							return $result;
+						    // Returns a 0.0 result.
+						    return $result;
 						}
+						
 						
 					}
 					else {

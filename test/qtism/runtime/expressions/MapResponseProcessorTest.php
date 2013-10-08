@@ -1,5 +1,7 @@
 <?php
 
+use qtism\data\expressions\MapResponse;
+
 use qtism\runtime\common\RecordContainer;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
@@ -69,10 +71,10 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$state->setVariable($variable);
 		$mapResponseProcessor->setState($state);
 		
-		// Should return the mapping defaultValue because 'response1' = null.
+		// No value could be tried to be matched.
 		$result = $mapResponseProcessor->process();
 		$this->assertInternalType('float', $result);
-		$this->assertEquals(1, $result);
+		$this->assertEquals(0.0, $result);
 		
 		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B')));
 		$result = $mapResponseProcessor->process();
@@ -92,15 +94,17 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testIndentifier() {
-	    $variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-                                                        		<correctResponse>
-                                                        			<value>Choice_3</value>
-                                                        		</correctResponse>
-                                                        		<mapping defaultValue="0">
-                                                        			<mapEntry mapKey="Choice_3" mappedValue="6"/>
-                                                        			<mapEntry mapKey="Choice_4" mappedValue="3"/>
-                                                        		</mapping>
-                                                        	</responseDeclaration>');
+	    $variableDeclaration = $this->createComponentFromXml('
+	        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                <correctResponse>
+                    <value>Choice_3</value>
+                </correctResponse>
+                <mapping defaultValue="0">
+                    <mapEntry mapKey="Choice_3" mappedValue="6"/>
+                    <mapEntry mapKey="Choice_4" mappedValue="3"/>
+                </mapping>
+            </responseDeclaration>
+	    ');
 	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
 	    $variable->setValue('Choice_3');
 	    $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
@@ -127,6 +131,78 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		
 		$mapResponseProcessor->setState(new State(array($variable)));
 		$mapResponseProcessor->process();
+	}
+	
+	public function testMultipleCardinalityIdentifierToFloat() {
+	    $responseDeclaration = $this->createComponentFromXml('
+	        <responseDeclaration identifier="RESPONSE" baseType="identifier" cardinality="multiple">
+                <correctResponse>
+	                <value>Choice1</value>
+	                <value>Choice6</value>
+	                <value>Choice7</value>
+	            </correctResponse>
+	            <mapping>
+	                <mapEntry mapKey="Choice1" mappedValue="2"/>
+	                <mapEntry mapKey="Choice6" mappedValue="20"/>
+                    <mapEntry mapKey="Choice9" mappedValue="20"/>
+	                <mapEntry mapKey="Choice2" mappedValue="-20"/>
+	                <mapEntry mapKey="Choice3" mappedValue="-20"/>
+	                <mapEntry mapKey="Choice4" mappedValue="-20"/>
+	                <mapEntry mapKey="Choice5" mappedValue="-20"/>
+	                <mapEntry mapKey="Choice7" mappedValue="-20" caseSensitive="false"/>
+	                <!-- no mapping for choice 8 -->
+	            </mapping>
+	        </responseDeclaration>
+	    ');
+	    
+	    $mapResponseExpression = new MapResponse('RESPONSE');
+	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpression);
+	    $state = new State();
+	    $mapResponseProcessor->setState($state);
+	    
+	    // State setup.
+	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+	    $state->setVariable($responseVariable);
+	    
+	    // RESPONSE is an empty container.
+	    $this->assertTrue($responseVariable->isNull());
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(0.0, $result);
+	    $this->assertInternalType('float', $result);
+	    
+	    // RESPONSE is NULL.
+	    $responseVariable->setValue(null);
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(0.0, $result);
+	    $this->assertInternalType('float', $result);
+	    
+	    // RESPONSE is Choice 6, Choice 8.
+	    // Note that Choice 8 has not mapping, the mapping's default value (0) must be then used.
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array('Choice6', 'Choice8'));
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(20.0, $result);
+	    
+	    // Response is Choice 6, Choice 8, but the mapping's default values goes to -1.
+	    $mapping = $responseDeclaration->getMapping();
+	    $mapping->setDefaultValue(-1.0);
+	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
+	    $state->setVariable($responseVariable);
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array('Choice6', 'Choice8'));
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(19.0, $result);
+	    
+	    // Response is 'choice7', and 'identifierX'. choice7 is in lower case but its
+	    // associated entry is case insensitive. It must be then matched.
+	    // 'identifierX' will not be matched at all, the mapping's default value (still -1) will be used.
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array('choice7', 'identifierX'));
+	    $result = $mapResponseProcessor->process();
+	    $this->assertEquals(-21.0, $result);
+	    
+	    // Empty state.
+	    // An exception is raised because no RESPONSE variable found.
+	    $state->reset();
+	    $this->setExpectedException('qtism\\runtime\\expressions\ExpressionProcessingException');
+	    $result = $mapResponseProcessor->process();
 	}
 	
 	public function testOutcomeDeclaration() {
