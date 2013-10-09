@@ -1203,20 +1203,24 @@ class AssessmentTestSession extends State {
 	        $item = $pendingResponses->getAssessmentItemRef();
 	        $occurence = $pendingResponses->getOccurence();
 	        $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
-	        $engine = new ResponseProcessingEngine($item->getResponseProcessing(), $itemSession);
+	        $responseProcessing = $item->getResponseProcessing();
 	        
-	        try {
-	            $engine->process();
-	            $this->submitItemResults($itemSession, $occurence);
-	        }
-	        catch (ProcessingException $e) {
-	            $msg = "An error occured during postponed response processing.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
-	        }
-	        catch (AssessmentTestSessionException $e) {
-	            // An error occured while transmitting the results.
-	            $msg = "An error occured while transmitting item results to the appropriate data source.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
+	        // If the item has a processable response processing...
+	        if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
+	            try {
+	                $engine = new ResponseProcessingEngine($responseProcessing, $itemSession);
+	                $engine->process();
+	                $this->submitItemResults($itemSession, $occurence);
+	            }
+	            catch (ProcessingException $e) {
+	                $msg = "An error occured during postponed response processing.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
+	            }
+	            catch (AssessmentTestSessionException $e) {
+	                // An error occured while transmitting the results.
+	                $msg = "An error occured while transmitting item results to the appropriate data source.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
+	            }
 	        }
 	    }
 	    
