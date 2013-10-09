@@ -680,8 +680,12 @@ class AssessmentItemSession extends State {
 	    	}
 	    	
 	        $responseProcessing = $this->getAssessmentItem()->getResponseProcessing();
-	        $engine = new ResponseProcessingEngine($responseProcessing, $this);
-	        $engine->process();
+	        
+	        // Some items (especially to collect information) have no response processing!
+	        if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
+	            $engine = new ResponseProcessingEngine($responseProcessing, $this);
+	            $engine->process();
+	        }
 	    }
 	     
 	     
