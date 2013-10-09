@@ -113,6 +113,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         }
     }
     
+    /**
+     * Persist an AssessmentTestSession into binary data.
+     * 
+     * The QTI Binary Storage Version that will be used to persist the AssessmentTestSession
+     * will be systematically the one defined in QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION. 
+     * 
+     */
     public function persist(AssessmentTestSession $assessmentTestSession) {
         
         parent::persist($assessmentTestSession);
@@ -122,6 +129,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $stream = new BinaryStream();
             $stream->open();
             $access = new QtiBinaryStreamAccess($stream);
+            
+            // write the QTI Binary Storage version in use to persist the test session.
+            $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
             
             $access->writeTinyInt($assessmentTestSession->getState());
             
@@ -192,6 +202,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $stream->open();
             $access = new QtiBinaryStreamAccess($stream);
             
+            $version = $access->readTinyInt();
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
             

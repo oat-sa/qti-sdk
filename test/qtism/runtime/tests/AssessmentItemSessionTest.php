@@ -1,4 +1,6 @@
 <?php
+use qtism\data\SubmissionMode;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\storage\xml\XmlAssessmentItemDocument;
@@ -530,6 +532,32 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'Choice_3')));
         $itemSession->endAttempt($responses);
         $this->assertEquals(6.0, $itemSession['SCORE']);
+    }
+    
+    public function testSimultaneousSubmissionOnlyOneAttempt() {
+        // We want to test that if the current submission mode is SIMULTANEOUS,
+        // only one attempt is allowed.
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
+        
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
+        $itemSession->beginItemSession();
+        $this->assertEquals(1, $itemSession->getRemainingAttempts());
+        
+        $itemSession->beginAttempt();
+        $this->assertEquals(0, $itemSession->getRemainingAttempts());
+        $itemSession->skip();
+        
+        $this->assertEquals(0, $itemSession->getRemainingAttempts());
+        
+        // Another attempt must lead to an exception.
+        try {
+            $itemSession->beginAttempt();
+            $this->assertTrue(false, 'Nore more attempts should be allowed.');
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+        }
     }
     
     private static function createExtendedAssessmentItemRefFromXml($xmlString) {
