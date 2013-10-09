@@ -1,5 +1,9 @@
 <?php
 
+use qtism\data\SubmissionMode;
+
+use qtism\data\NavigationMode;
+
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -358,6 +362,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $position = pack('S', 0); // Q01
         $state = "\x01"; // INTERACTING
+        $navigationMode = "\x00"; // LINEAR
+        $submissionMode = "\x00"; // INDIVIDUAL
         $hasItemSessionControl = "\x00"; // false
         $numAttempts = "\x02"; // 2
         $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
@@ -368,7 +374,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
         $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
-        $bin = implode('', array($position, $state, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
+        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
         $stream = new BinaryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
@@ -378,6 +384,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
+        $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
+        $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
         $this->assertEquals(2, $session['numAttempts']);
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals('incomplete', $session['completionStatus']);
@@ -407,6 +415,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->rewind();
         $session = $access->readAssessmentItemSession($seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
+        $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
+        $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals(0, $session['numAttempts']);
         $this->assertEquals('not_attempted', $session['completionStatus']);

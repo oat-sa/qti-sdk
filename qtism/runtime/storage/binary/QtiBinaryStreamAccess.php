@@ -540,6 +540,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             
             $session = new AssessmentItemSession($assessmentItemRef);
             $session->setState($this->readTinyInt());
+            $session->setNavigationMode($this->readTinyInt());
+            $session->setSubmissionMode($this->readTinyInt());
             
             if ($this->readBoolean() === true) {
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
@@ -601,6 +603,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         try {
             $this->writeShort($seeker->seekPosition($session->getAssessmentItem()));
             $this->writeTinyInt($session->getState());
+            $this->writeTinyInt($session->getNavigationMode());
+            $this->writeTinyInt($session->getSubmissionMode());
             
             $isItemSessionControlDefault = $session->getItemSessionControl()->isDefault();
             if ($isItemSessionControlDefault === true) {
