@@ -749,6 +749,26 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Set the item session in INTERACTING state.
+	 * 
+	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INITIAL nor SUSPENDED nor MODAL_FEEDBACK nor INTERACTING.
+	 */
+	public function interact() {
+	    
+	    $state = $this->getState();
+	    
+	    if ($state !== AssessmentItemSessionState::INTERACTING) {
+	        if ($state !== AssessmentItemSessionState::INITIAL && $state !== AssessmentItemSessionState::SUSPENDED && $state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
+	            $msg = "Cannot switch from state '" . AssessmentItemSessionState::getNameByConstant($state) . "' to state 'interacting'.";
+	            $code = AssessmentItemSessionException::STATE_VIOLATION;
+	            throw new AssessmentItemSessionException($msg, $this, $code);
+	        } 
+	        
+	        $this->setState(AssessmentItemSessionState::INTERACTING);
+	    }
+	}
+	
+	/**
 	 * Update the duration built-in variable. The update will only take
 	 * place if the current state of the item session is INTERACTING.
 	 * 

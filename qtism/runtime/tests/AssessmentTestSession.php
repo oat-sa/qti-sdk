@@ -49,6 +49,7 @@ use \InvalidArgumentException;
 use \OutOfRangeException;
 use \OutOfBoundsException;
 use \LogicException;
+use \UnexpectedValueException;
 
 /**
  * The AssessmentTestSession class represents a candidate session
@@ -1765,6 +1766,55 @@ class AssessmentTestSession extends State {
 	    
 	    if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
 	        $itemSession->updateDuration();
+	    }
+	}
+	
+	/**
+	 * Put the current item session in SUSPENDED state.
+	 * 
+	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the SUSPENDED state.
+	 * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
+	 * @throws UnexpectedValueException If the current item session cannot be retrieved.
+	 */
+	public function suspendItemSession() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot suspend the item session if the test session is not running.";
+	        $code = AssessmentTestSessionException::STATE_VIOLATION;
+	        throw new AssessmentTestSessionException($msg, $code);
+	    }
+	    else if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
+	        // @throws AssessmentItemSessionException.
+	        $itemSession->suspend();
+	    }
+	    else {
+	        $msg = "Cannot retrieve the current item session.";
+	        throw new UnexpectedValueException($msg);
+	    }
+	    
+	}
+	
+	/**
+	 * Put the current item session in INTERACTING mode.
+	 * 
+	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the INTERACTING state.
+	 * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
+	 * @throws UnexpectedValueException If the current item session cannot be retrieved.
+	 */
+	public function interactWithItemSession() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot set the item session in interacting state if test session is not running.";
+	        $code = AssessmentTestSessionException::STATE_VIOLATION;
+	        throw new AssessmentTestSessionException($msg, $code);
+	    }
+	    else if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
+	        // @throws AssessmentItemSessionException.
+	        $itemSession->interact();
+	    }
+	    else {
+	        $msg = "Cannot retrieve the current item session.";
+	        throw new UnexpectedValueException($msg);
 	    }
 	}
 	

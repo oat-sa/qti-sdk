@@ -1053,6 +1053,50 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	}
 	
+	public function testSuspendInteractItemSession() {
+	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
+	    
+	    $factory = new AssessmentTestSessionFactory($doc);
+	    $session = AssessmentTestSession::instantiate($factory);
+	    
+	    try {
+	        // Try to suspend the item session on a not running test session...
+	        $session->suspendItemSession();
+	        $this->assertTrue(false, 'The item session cannot be suspended on a not running test session.');
+	    }
+	    catch (AssessmentTestSessionException $e) {
+	        $this->assertEquals(AssessmentTestSessionException::STATE_VIOLATION, $e->getCode());
+	    }
+	    
+	    $session->beginTestSession();
+	    
+	    try {
+	        // Try to suspend an item session which is not yet begun.
+	        $session->suspendItemSession();
+	        $this->assertTrue(false, 'The item session cannot be suspended when it is in initial state.');
+	    }
+	    catch (AssessmentItemSessionException $e) {
+	        $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
+	    }
+	    
+	    // Finally, suspend an item session in interacting state.
+	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getCurrentAssessmentItemSession()->getState());
+	    $session->beginAttempt();
+	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
+	    $session->suspendItemSession();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+	    
+	    // Try to re-enter interacting state.
+	    $session->interactWithItemSession();
+	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
+	    
+	    // Finally answer the question :) !
+	    $responses = new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, 'ChoiceA')));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(1.0, $session['Q01.scoring']);
+	}
+	
 	/**
 	 * @dataProvider getWeightProvider
 	 * 
