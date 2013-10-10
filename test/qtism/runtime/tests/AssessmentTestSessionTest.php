@@ -212,17 +212,20 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('P01', $assessmentTestSession->getCurrentTestPart()->getIdentifier());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
+	    $assessmentTestSession->beginAttempt();
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
+	    $assessmentTestSession->beginAttempt();
 	    $assessmentTestSession->skip();
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
+	    $assessmentTestSession->beginAttempt();
 	    $assessmentTestSession->skip();
 	    
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
@@ -464,13 +467,16 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		$this->assertFalse($assessmentTestSession->whichLastOccurenceUpdate($doc->getComponentByIdentifier('Q01')));
 		
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+		$assessmentTestSession->beginAttempt();
 		$assessmentTestSession->endAttempt($responses);
 		
 		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 		
+		$assessmentTestSession->beginAttempt();
 		$assessmentTestSession->skip();
 		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 		
+		$assessmentTestSession->beginAttempt();
 		$assessmentTestSession->endAttempt($responses);
 		$this->assertEquals(2, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 	}
@@ -781,7 +787,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
 	    
 	    try {
-	        $session->skip();
+	        $session->moveNext();
 	        // Simultaneous mode in force but not all responses of P02 given.
 	        $this->assertTrue(false);
 	    }

@@ -84,7 +84,7 @@ class AssessmentItemSessionState extends AssessmentTestSessionState {
 			break;
 			
 			default:
-				return AssessmentTestSessionState::getConstantByName($name);
+				return AssessmentTestSessionState::getNameByConstant($constant);
 			break;
 		}
 	}

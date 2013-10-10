@@ -396,6 +396,7 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     	$this->assertFalse($itemSession->getRemainingTime());
     	
     	$itemSession->beginItemSession();
+    	$itemSession->beginAttempt();
     	$this->assertFalse($itemSession->getRemainingTime());
     	$itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
     	$this->assertEquals('incomplete', $itemSession['completionStatus']);

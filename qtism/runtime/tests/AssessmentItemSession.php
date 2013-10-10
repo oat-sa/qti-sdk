@@ -702,35 +702,50 @@ class AssessmentItemSession extends State {
 	    }
 	    
 	    if ($maxTimeExceeded === true) {
-
 	        // Special case. The maximum time is exceeded but late submission allowed.
 	        $this->endItemSession();
 	        $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;   
 	    }
 		else if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
-		    
 		    $this->endItemSession();
 		}
 		else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $maxAttempts) {
-		    
 		    if ($maxAttempts !== 0) {
 		        $this->endItemSession();
+		    }
+		    else {
+		        // No limit.
+		        $this->setState(AssessmentItemSessionState::INTERACTING);
 		    }
 		    
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
-		// Else ...
-		// Wait for the next attempt.
+		else {
+		    // Wait for the next attempt.
+		    $this->setState(AssessmentItemSessionState::INTERACTING);
+		}
 	}
 	
 	/**
 	 * Suspend the item session. The state will switch to SUSPENDED and the
 	 * 'duration' built-in variable is updated.
 	 * 
+	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
 	 */
 	public function suspend() {
-	    $this->updateDuration();
-	    $this->setState(AssessmentItemSessionState::SUSPENDED);
+	    
+	    $state = $this->getState();
+	    
+	    if ($state !== AssessmentItemSessionState::SUSPENDED) {
+	        if ($state !== AssessmentItemSessionState::INTERACTING && $state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
+	            $msg = "Cannot switch from state '" . AssessmentItemSessionState::getNameByConstant($state) . "' to state 'suspended'.";
+	            $code = AssessmentItemSessionException::STATE_VIOLATION;
+	            throw new AssessmentItemSessionException($msg, $this, $code);
+	        }
+	         
+	        $this->updateDuration();
+	        $this->setState(AssessmentItemSessionState::SUSPENDED);
+	    }
 	}
 	
 	/**
