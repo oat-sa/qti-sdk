@@ -713,17 +713,11 @@ class AssessmentItemSession extends State {
 		    if ($maxAttempts !== 0) {
 		        $this->endItemSession();
 		    }
-		    else {
-		        // No limit.
-		        $this->setState(AssessmentItemSessionState::INTERACTING);
-		    }
 		    
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
-		else {
-		    // Wait for the next attempt.
-		    $this->setState(AssessmentItemSessionState::INTERACTING);
-		}
+		// else...
+		// Wait for the next attempt.
 	}
 	
 	/**
