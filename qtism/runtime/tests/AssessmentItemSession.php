@@ -218,6 +218,15 @@ class AssessmentItemSession extends State {
 	private $assessmentItem;
 	
 	/**
+	 * Whether or not the session (SUSPENDED or INTERACTING) is 
+	 * currently attempting an attempt. In other words, a candidate
+	 * begun an attempt and did not ended it yet.
+	 * 
+	 * @var boolean
+	 */
+	private $attempting = false;
+	
+	/**
 	 * Create a new AssessmentItemSession object.
 	 * 
 	 * * Unless provided in the $variables array, the built-in response/outcome variables 'numAttempts', 'duration' and
@@ -239,6 +248,7 @@ class AssessmentItemSession extends State {
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
+		$this->setAttempting(false);
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
@@ -453,6 +463,31 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Set whether a candidate is currently performing an attempt.
+	 * 
+	 * @param boolean $attempting
+	 * @throws InvalidArgumentException If $attempting is not a boolean value.
+	 */
+	public function setAttempting($attempting) {
+	    if (gettype($attempting) === 'boolean') {
+	        $this->attempting = $attempting;
+	    }
+	    else {
+	        $msg = "The 'attempting' argument must be a boolean value '" . gettype($attempting) . "' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Whether the candidate is currently performing an attempt.
+	 * 
+	 * @return boolean
+	 */
+	public function isAttempting() {
+	    return $this->attempting;
+	}
+	
+	/**
 	 * Start the item session. The item session is started when the related item
 	 * becomes eligible for the candidate.
 	 * 
@@ -564,6 +599,7 @@ class AssessmentItemSession extends State {
 		
 		// The session get the INTERACTING STATE.
 		$this->setState(AssessmentItemSessionState::INTERACTING);
+		$this->setAttempting(true);
 		
 		// Register a time reference that will be used later on to compute the duration built-in variable.
 		$this->setTimeReference(new DateTime());
@@ -710,14 +746,19 @@ class AssessmentItemSession extends State {
 		    $this->endItemSession();
 		}
 		else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $maxAttempts) {
+		    
+		    // Close only if $maxAttempts !== 0 because 0 means no limit!
 		    if ($maxAttempts !== 0) {
 		        $this->endItemSession();
 		    }
 		    
+		    // Even if there is no limit of attempts, we consider the item completed.
 		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
 		}
 		// else...
 		// Wait for the next attempt.
+		
+		$this->setAttempting(false);
 	}
 	
 	/**
@@ -739,6 +780,7 @@ class AssessmentItemSession extends State {
 	         
 	        $this->updateDuration();
 	        $this->setState(AssessmentItemSessionState::SUSPENDED);
+	        
 	    }
 	}
 	
@@ -817,6 +859,7 @@ class AssessmentItemSession extends State {
 	    }
 	   
 		$this->setState(AssessmentItemSessionState::CLOSED);
+		$this->setAttempting(false);
 	}
 	
 	/**
