@@ -800,6 +800,7 @@ class AssessmentItemSession extends State {
 	        } 
 	        
 	        $this->setState(AssessmentItemSessionState::INTERACTING);
+	        $this->setTimeReference(new DateTime());
 	    }
 	}
 	
