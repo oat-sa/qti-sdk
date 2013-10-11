@@ -364,6 +364,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $state = "\x01"; // INTERACTING
         $navigationMode = "\x00"; // LINEAR
         $submissionMode = "\x00"; // INDIVIDUAL
+        $attempting = "\x00"; // false
         $hasItemSessionControl = "\x00"; // false
         $numAttempts = "\x02"; // 2
         $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
@@ -374,7 +375,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
         $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
-        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
+        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
         $stream = new BinaryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
@@ -420,6 +421,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals(0, $session['numAttempts']);
         $this->assertEquals('not_attempted', $session['completionStatus']);
+        $this->assertFalse($session->isAttempting());
         $this->assertEquals(0.0, $session['SCORE']);
         $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
     }

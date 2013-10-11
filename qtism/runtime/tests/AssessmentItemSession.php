@@ -780,7 +780,6 @@ class AssessmentItemSession extends State {
 	         
 	        $this->updateDuration();
 	        $this->setState(AssessmentItemSessionState::SUSPENDED);
-	        
 	    }
 	}
 	

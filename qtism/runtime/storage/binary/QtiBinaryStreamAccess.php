@@ -543,6 +543,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $session->setNavigationMode($this->readTinyInt());
             $session->setSubmissionMode($this->readTinyInt());
             
+            // The is-attempting field was added in Binary Storage v2.
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 2) {
+                $session->setAttempting($this->readBoolean());
+            }
+            
             if ($this->readBoolean() === true) {
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
                 $session->setItemSessionControl($itemSessionControl);
@@ -605,6 +610,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $this->writeTinyInt($session->getState());
             $this->writeTinyInt($session->getNavigationMode());
             $this->writeTinyInt($session->getSubmissionMode());
+            $this->writeBoolean($session->isAttempting());
             
             $isItemSessionControlDefault = $session->getItemSessionControl()->isDefault();
             if ($isItemSessionControlDefault === true) {
