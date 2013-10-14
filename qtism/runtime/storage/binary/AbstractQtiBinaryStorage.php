@@ -35,6 +35,7 @@ use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\AbstractStorage;
+use qtism\common\storage\BinaryStream;
 use \SplObjectStorage;
 use \Exception;
 use \RuntimeException;

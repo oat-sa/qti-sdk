@@ -22,10 +22,10 @@
  * @subpackage 
  *
  */
-namespace qtism\runtime\storage\binary;
+namespace qtism\common\storage;
 
-use qtism\runtime\storage\common\IStream;
-use qtism\runtime\storage\common\StreamException;
+use qtism\common\storage\IStream;
+use qtism\common\storage\StreamException;
 use \Exception;
 
 /**

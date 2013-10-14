@@ -22,60 +22,33 @@
  * @subpackage 
  *
  */
-namespace qtism\runtime\storage\binary;
+namespace qtism\common\storage;
 
-use qtism\runtime\storage\common\IStream;
 use \DateTime;
 
 /**
  * The BinaryStreamAccess aims at providing the needed methods to
- * easily read the data inside BinaryStream objects.
+ * easily read the data contained by BinaryStream objects.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamAccess {
-    
-    /**
-     * The IStream object to read.
-     *
-     * @var IStream.
-     */
-    private $stream;
-    
-    /**
-     * Create a new BinaryStreamAccess object.
-     *
-     * @param IStream $stream An IStream object to be read.
-     * @throws StreamReaderException If $stream is not open yet.
-     */
-    public function __construct(IStream $stream) {
-        $this->setStream($stream);
-    }
-    
-    /**
-     * Get the IStream object to be read.
-     *
-     * @return IStream An IStream object.
-     */
-    protected function getStream() {
-        return $this->stream;
-    }
+class BinaryStreamAccess extends AbstractStreamAccess {
     
     /**
      * Set the IStream object to be read.
      *
      * @param IStream $stream An IStream object.
-     * @throws StreamReaderException If the $stream is not open yet.
+     * @throws StreamAccessException If the $stream is not open yet.
      */
     protected function setStream(IStream $stream) {
     
         if ($stream->isOpen() === false) {
             $msg = "A BinaryStreamAccess do not accept closed streams to be read.";
-            throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN);
+            throw new BinaryStreamAccessException($msg, $this, StreamAccessException::NOT_OPEN);
         }
     
-        $this->stream = $stream;
+       parent::setStream($stream);
     }
     
     /**
@@ -89,7 +62,7 @@ class BinaryStreamAccess {
             $bin = $this->getStream()->read(1);
             return ord($bin);
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT);
         }
     }
@@ -104,7 +77,7 @@ class BinaryStreamAccess {
         try {
             $this->getStream()->write(chr($tinyInt));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT, false);
         }
     }
@@ -120,7 +93,7 @@ class BinaryStreamAccess {
             $bin = $this->getStream()->read(2);
             return current(unpack('S', $bin));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
         }
     }
@@ -135,7 +108,7 @@ class BinaryStreamAccess {
         try {
             $this->getStream()->write(pack('S', $short));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT, false);
         }
     }
@@ -151,7 +124,7 @@ class BinaryStreamAccess {
             $bin = $this->getStream()->read(4);
             return current(unpack('l', $bin));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT);
         }
     }
@@ -166,7 +139,7 @@ class BinaryStreamAccess {
         try {
             $this->getStream()->write(pack('l', $int));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT, false);
         }
     }
@@ -182,7 +155,7 @@ class BinaryStreamAccess {
             $bin = $this->getStream()->read(8);
             return current(unpack('d', $bin));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT);
         }
     }
@@ -197,7 +170,7 @@ class BinaryStreamAccess {
         try {
             $this->getStream()->write(pack('d', $float));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }
@@ -213,7 +186,7 @@ class BinaryStreamAccess {
             $int = ord($this->getStream()->read(1));
             return ($int === 0) ? false : true;
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::BOOLEAN);
         }
     }
@@ -229,7 +202,7 @@ class BinaryStreamAccess {
             $val = ($boolean === true) ? 1 : 0;
             $this->getStream()->write(chr($val));
         }
-        catch (BinaryStreamAccessException $e) {
+        catch (StreamAccessException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT, false);
         }
     }
@@ -246,7 +219,7 @@ class BinaryStreamAccess {
             $length = current(unpack('S', $binLength));
             return $this->getStream()->read($length);
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
         }
     }
@@ -262,7 +235,7 @@ class BinaryStreamAccess {
         try {
             $this->getStream()->write(pack('S', $len) . $string);
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING, false);
         }
     }
@@ -299,7 +272,7 @@ class BinaryStreamAccess {
             $date = new DateTime();
             return $date->setTimestamp($timeStamp);
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME);
         }
     }
@@ -315,7 +288,7 @@ class BinaryStreamAccess {
             $timeStamp = $dateTime->getTimestamp();
             $this->getStream()->write(pack('l', $timeStamp));
         }
-        catch (BinaryStreamException $e) {
+        catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME, false);
         }
     }
@@ -323,12 +296,12 @@ class BinaryStreamAccess {
     /**
      * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      * 
-     * @param BinaryStreamException $e The BinaryStreamException object to deal with.
+     * @param StreamException $e The StreamException object to deal with.
      * @param integer $typeError The BinaryStreamAccess exception code to be trown in case of READ error.
      * @param boolean $read Wheter the error occured in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
-    protected function handleBinaryStreamException(BinaryStreamException $e, $typeError, $read = true) {
+    protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true) {
         
         $strType = 'unknown datatype';
         

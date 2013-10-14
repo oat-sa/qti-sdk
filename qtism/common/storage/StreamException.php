@@ -22,7 +22,7 @@
  * @subpackage 
  *
  */
-namespace qtism\runtime\storage\common;
+namespace qtism\common\storage;
 
 use \Exception;
 

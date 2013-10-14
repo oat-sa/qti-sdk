@@ -22,9 +22,8 @@
  * @subpackage 
  *
  */
-namespace qtism\runtime\storage\binary;
+namespace qtism\common\storage;
 
-use qtism\runtime\storage\common\IStream;
 use \InvalidArgumentException;
 use \OutOfBoundsException;
 

@@ -47,7 +47,8 @@ use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Variable;
-use qtism\runtime\storage\common\IStream;
+use qtism\common\storage\IStream;
+use qtism\common\storage\BinaryStreamAccess;
 
 /**
  * The QtiBinaryStreamAccess aims at providing access to QTI data stored

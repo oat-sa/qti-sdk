@@ -1,9 +1,13 @@
 <?php
+
+use qtism\common\storage\BinaryStreamException;
+
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\storage\binary\BinaryStream;
-use qtism\runtime\storage\binary\BinaryStreamAccess;
-use qtism\runtime\storage\binary\BinaryStreamAccessException;
+use qtism\common\storage\BinaryStream;
+use qtism\common\storage\BinaryStreamAccess;
+use qtism\common\storage\BinaryStreamAccessException;
+use qtism\common\storage\StreamException;
 use \DateTime;
 
 class BinaryStreamAccessTest extends QtiSmTestCase {

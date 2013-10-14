@@ -1,8 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\runtime\storage\binary\BinaryStream;
-use qtism\runtime\storage\binary\BinaryStreamException;
+use qtism\common\storage\BinaryStream;
+use qtism\common\storage\BinaryStreamException;
 
 class BinaryStreamTest extends QtiSmTestCase {
 	
@@ -32,7 +32,7 @@ class BinaryStreamTest extends QtiSmTestCase {
     
     public function testInstantiate() {
         $stream = $this->getBasicStream();
-        $this->assertInstanceOf('qtism\\runtime\\storage\\binary\\BinaryStream', $stream);
+        $this->assertInstanceOf('qtism\\common\\storage\\BinaryStream', $stream);
         
         $this->assertEquals('binary-data', $stream->getBinary());
         $this->assertFalse($stream->isOpen());

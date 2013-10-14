@@ -25,7 +25,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Variable;
-use qtism\runtime\storage\binary\BinaryStream;
+use qtism\common\storage\BinaryStream;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 

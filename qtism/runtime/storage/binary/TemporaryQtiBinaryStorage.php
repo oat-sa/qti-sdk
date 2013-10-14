@@ -26,6 +26,7 @@ namespace qtism\runtime\storage\binary;
 
 use qtism\data\Document;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\common\storage\BinaryStream;
 use \RuntimeException;
 
 /**
