@@ -84,4 +84,14 @@ interface IStream {
      * @throws StreamException If the stream is not open. The error code will be StreamException::NOT_OPEN;
      */
     public function eof();
+    
+    /**
+     * Flushes the stream. In other words, the content of the stream is empty after
+     * calling this method. A call to flush automatically rewinds the stream to its
+     * very begining.
+     * 
+     * @throws StreamException If an error occurs during the flush.
+     * @see IStream::rewind()
+     */
+    public function flush();
 }

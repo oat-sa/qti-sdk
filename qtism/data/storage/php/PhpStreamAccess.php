@@ -6,6 +6,7 @@ use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\common\storage\StreamAccessException;
 use qtism\common\storage\IStream;
 use qtism\common\storage\AbstractStreamAccess;
+use qtism\common\storage\StreamException;
 use \InvalidArgumentException;
 
 /**
@@ -29,32 +30,41 @@ class PhpStreamAccess extends AbstractStreamAccess {
     }
     
     /**
-     * Write a scalar value into the current stream.
+     * Write a scalar value into the current stream. 
+     * 
+     * If the given value is a string, it will be output surrounded by double quotes (") characters.
      * 
      * @param mixed $scalar A PHP scalar value or null.
      * @throws InvalidArgumentException If $scalar is not a PHP scalar value nor null.
      * @throws StreamAccessException If an error occurs while writing the scalar value.
      */
     public function writeScalar($scalar) {
-        if (Utils::isScalar() === false) {
-            $msg = "'${scalar}' is not a PHP scalar value nor null.";
+        if (Utils::isScalar($scalar) === false) {            
+            $msg = "A '" . gettype($scalar) . "' value is not a PHP scalar value nor null.";
             throw new InvalidArgumentException($msg);
         }
         
-        if (is_numeric($scalar) === true) {
-            $this->getStream()->write($scalar);
-        }
-        else if (is_string($scalar) === true) {
-            $escapes = array("\\", '"', "\n", "\t", "\v", "\r", "\f");
-            $replace = array("\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f");
+        try {
+            if (is_numeric($scalar) === true) {
+                $this->getStream()->write($scalar);
+            }
+            else if (is_string($scalar) === true) {
+                $escapes = array("\\", '"', "\n", "\t", "\v", "\r", "\f");
+                $replace = array("\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f");
             
-            $this->getStream()->write("\"${scalar}\"");
+                $scalar = str_replace($escapes, $replace, $scalar); // UTF-8 safe.
+                $this->getStream()->write("\"${scalar}\"");
+            }
+            else if (is_bool($scalar) === true) {
+                $this->getStream()->write(($scalar === true) ? 'true' : 'false');
+            }
+            else if (is_null($scalar) === true) {
+                $this->getStream()->write('null');
+            }
         }
-        else if (is_bool($scalar) === true) {
-            $this->getStream()->write(($scalar === true) ? 'true' : 'false');
-        }
-        else if (is_null($scalar) === true) {
-            $this->getStream()->write('null');
+        catch (StreamException $e) {
+            $msg = "An error occured while writing the scalar value '${scalar}'.";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -65,11 +75,17 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the equality symbol.
      */
     public function writeEquals($spaces = true) {
-        if ($spaces === true) {
-            $this->getStream()->write(' = ');
+        try {
+            if ($spaces === true) {
+                $this->getStream()->write(' = ');
+            }
+            else {
+                $this->getStream()->write('=');
+            }    
         }
-        else {
-            $this->getStream()->write('=');
+        catch (StreamException $e) {
+            $msg = "An error occured while writing the PHP equality symbol (=).";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -79,7 +95,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the equality symbol.
      */
     public function writeNewline() {
-        $this->getStream()->write("\n");
+        try {
+            $this->getStream()->write("\n");
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a newline escape sequence (\\n).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -89,9 +111,15 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the opening tag.
      */
     public function writeOpeningTag($newline = true) {
-        $this->getStream()->write('<?php');
-        if ($newLine === true) {
-            $this->writeNewline();
+        try {
+            $this->getStream()->write('<?php');
+            if ($newline === true) {
+                $this->writeNewline();
+            }    
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a PHP opening tag (<?php).";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -101,10 +129,16 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @param boolean $newline
      */
     public function writeClosingTag($newline = true) {
-        if ($newline === true) {
-            $this->writeNewline();
+        try {
+            if ($newline === true) {
+                $this->writeNewline();
+            }
+            $this->getStream()->write('?>');
         }
-        $this->getStream()->write('?>');
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a PHP closing tag (?>).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -114,9 +148,15 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the semicolon;
      */
     public function writeSemicolon($newline = true) {
-        $this->getStream()->write(';');
-        if ($newline === true) {
-            $this->writeNewline();
+        try {
+            $this->getStream()->write(';');
+            if ($newline === true) {
+                $this->writeNewline();
+            }
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a semicolon (;).";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -126,7 +166,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the colon.
      */
     public function writeColon() {
-        $this->getStream()->write(':');
+        try {
+            $this->getStream()->write(':');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a colon (:).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -135,7 +181,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the scope resolution operator.
      */
     public function writeScopeResolution() {
-        $this->getStream()->write('::');
+        try {
+            $this->getStream()->write('::');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a scope resolution operator (::).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -145,7 +197,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the "Paamayim Nekudotayim".
      */
     public function writePaamayimNekudotayim() {
-        $this->writeScopeResolution();
+        try {
+            $this->writeScopeResolution();
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a Paamayim Nekudotayim.";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -154,7 +212,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the opening parenthesis.
      */
     public function writeOpeningParenthesis() {
-        $this->getStream()->write('(');
+        try {
+            $this->getStream()->write('(');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing an opening parenthesis (().";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -163,7 +227,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the closing parenthesis.
      */
     public function writeClosingParenthesis() {
-        $this->getStream()->write(')');
+        try {
+            $this->getStream()->write(')');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a closing parenthesis ()).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -173,9 +243,15 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the comma.
      */
     public function writeComma($space = true) {
-        $this->getStream()->write(',');
-        if ($space === true) {
-            $this->writeSpace();
+        try {
+            $this->getStream()->write(',');
+            if ($space === true) {
+                $this->writeSpace();
+            }    
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a comma (,).";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -185,7 +261,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the white space.
      */
     public function writeSpace() {
-        $this->getStream()->write(' ');
+        try {
+            $this->getStream()->write(' ');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a white space ( ).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -195,7 +277,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the variable reference.
      */
     public function writeVariable($varname) {
-        $this->getStream()->write('$' . $varname);
+        try {
+            $this->getStream()->write('$' . $varname);
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a variable reference.";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -204,7 +292,13 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the object operator.
      */
     public function writeObjectOperator() {
-        $this->getStream()->write('->');
+        try {
+            $this->getStream()->write('->');
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing an object operator (->).";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -216,14 +310,20 @@ class PhpStreamAccess extends AbstractStreamAccess {
      */
     public function writeFunctionCall($funcname, PhpArgumentCollection $arguments = null) {
         
-        $this->getStream()->write($funcname);
-        $this->writeOpeningParenthesis();
-        
-        if (is_null($arguments) === false) {
-            $this->writeArguments($arguments);
+        try {
+            $this->getStream()->write($funcname);
+            $this->writeOpeningParenthesis();
+            
+            if (is_null($arguments) === false) {
+                $this->writeArguments($arguments);
+            }
+            
+            $this->writeClosingParenthesis();
         }
-        
-        $this->writeClosingParenthesis();
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a function call.";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -237,23 +337,29 @@ class PhpStreamAccess extends AbstractStreamAccess {
      */
     public function writeMethodCall($objectname, $methodname, PhpArgumentCollection $arguments = null, $static = false) {
         
-        $this->writeVariable($objectname);
-        
-        if ($static === false) {
-            $this->writeObjectOperator();
+        try {
+            $this->writeVariable($objectname);
+            
+            if ($static === false) {
+                $this->writeObjectOperator();
+            }
+            else {
+                $this->writePaamayimNekudotayim();
+            }
+            
+            $this->getStream()->write($methodname);
+            $this->writeOpeningParenthesis();
+            
+            if (is_null($arguments) === false) {
+                $this->writeArguments($arguments);
+            }
+            
+            $this->writeClosingParenthesis();
         }
-        else {
-            $this->writePaamayimNekudotayim();
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a method call.";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
-        
-        $this->getStream()->write($methodname);
-        $this->writeOpeningParenthesis();
-        
-        if (is_null($arguments) === false) {
-            $this->writeArguments($arguments);
-        }
-        
-        $this->writeClosingParenthesis();
     }
     
     /**
@@ -263,9 +369,15 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the new operator.
      */
     public function writeNew($space = true) {
-        $this->getStream()->write('new');
-        if ($space === true) {
-            $this->writeSpace();
+        try {
+            $this->getStream()->write('new');
+            if ($space === true) {
+                $this->writeSpace();
+            }    
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a new operator.";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -277,15 +389,21 @@ class PhpStreamAccess extends AbstractStreamAccess {
      */
     public function writeInstantiation($classname, PhpArgumentCollection $arguments = null) {
         
-        $this->writeNew();
-        $this->getStream()->write(str_replace("\\", "\\\\", $classname));
-        $this->writeOpeningParenthesis();
-        
-        if (is_null($arguments) === false) {
-            $this->writeArguments($arguments);
+        try {
+            $this->writeNew();
+            $this->getStream()->write(str_replace("\\", "\\\\", $classname));
+            $this->writeOpeningParenthesis();
+            
+            if (is_null($arguments) === false) {
+                $this->writeArguments($arguments);
+            }
+            
+            $this->writeClosingParenthesis();
         }
-        
-        $this->writeClosingParenthesis();
+        catch (StreamException $e) {
+            $msg = "An error occured while writing an object instantiation.";
+            throw new StreamAccessException($msg, $this, 0, $e);
+        }
     }
     
     /**
@@ -295,15 +413,21 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the sequence of arguments.
      */
     public function writeArguments(PhpArgumentCollection $arguments) {
-        $argsCount = count($arguments);
-        
-        for ($i = 0; $i < $argsCount; $i++) {
-        
-            $this->writeArgument($arguments[$i]);
-        
-            if ($i < $argsCount - 1) {
-                $this->writeComma();
-            }
+        try {
+            $argsCount = count($arguments);
+            
+            for ($i = 0; $i < $argsCount; $i++) {
+            
+                $this->writeArgument($arguments[$i]);
+            
+                if ($i < $argsCount - 1) {
+                    $this->writeComma();
+                }
+            }    
+        }
+        catch (StreamException $e) {
+            $msg = "An error occured while writing a sequence of arguments.";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
     
@@ -314,13 +438,19 @@ class PhpStreamAccess extends AbstractStreamAccess {
      * @throws StreamAccessException If an error occurs while writing the PHP argument.
      */
     public function writeArgument(PhpArgument $argument) {
-        $value = $argument->getValue();
-        
-        if (is_string($value) === true && mb_strpos($value, '$') === 0) {
-            $this->getStream()->write($value);
+        try {
+            $value = $argument->getValue();
+            
+            if (is_string($value) === true && mb_strpos($value, '$') === 0) {
+                $this->getStream()->write($value);
+            }
+            else {
+                $this->writeScalar($value);
+            }
         }
-        else {
-            $this->writeScalar($value);
+        catch (StreamException $e) {
+            $msg = "An error occured while writing an argument with value '${value}'.";
+            throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
 }

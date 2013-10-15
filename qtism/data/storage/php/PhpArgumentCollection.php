@@ -3,6 +3,7 @@
 namespace qtism\data\storage\php;
 
 use qtism\common\collections\AbstractCollection;
+use \InvalidArgumentException;
 
 /**
  * This class aims at storing PhpArgument objects.

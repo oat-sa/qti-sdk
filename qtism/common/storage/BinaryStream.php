@@ -276,4 +276,15 @@ class BinaryStream implements IStream {
     public function getLength() {
         return strlen($this->getBinary());
     }
+    
+    public function flush() {
+        if ($this->isOpen() === true) {
+            $this->setBinary('');
+            $this->rewind();
+        }
+        else {
+            $msg = "Cannot flush a closed stream.";
+            throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN);
+        }
+    }
 }
