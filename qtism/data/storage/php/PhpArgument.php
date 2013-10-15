@@ -2,6 +2,8 @@
 
 namespace qtism\data\storage\php;
 
+use \InvalidArgumentException;
+
 /**
  * Represents a PhpArgument. Two kind of arguments can be represented using
  * this class.
@@ -43,11 +45,11 @@ class PhpArgument {
      * @throws InvalidArgumentException If $value is not a PHP scalar value nor a variable name nor null.
      */
     public function setValue($value) {
-        if (is_scalar($value) === true || is_null($var) === true) {
+        if (Utils::isVariableReference($value) || Utils::isScalar($value)) {
             $this->value = $value;
         }
         else {
-            $msg = "The 'value' argument must be a PHP scalar value or null, '" . gettype($value) . "' given.";
+            $msg = "The 'value' argument must be a PHP scalar value, a variable reference string e.g. '\$foo' or null, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -60,5 +62,25 @@ class PhpArgument {
      */
     public function getValue() {
         return $this->value;
+    }
+    
+    /**
+     * Whether the represented argument is a reference to a variable or a plain
+     * PHP scalar value.
+     * 
+     * @return boolean
+     */
+    public function isVariableReference() {
+        return Utils::isVariableReference($this->getValue());
+    }
+    
+    /**
+     * Whether the represented argument is a PHP scalar value.
+     * 
+     * @return boolean
+     */
+    public function isScalar() {
+        $value = $this->getValue();
+        return Utils::isVariableReference($value) === false && Utils::isScalar($value);
     }
 }

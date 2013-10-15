@@ -28,6 +28,6 @@ class Utils {
      * @return boolean
      */
     static public function isVariableReference($string) {
-        return is_string($string) === true && mb_strpos($string, '$') === 0;
+        return is_string($string) === true && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
     }
 }
