@@ -48,6 +48,7 @@ class MapEntry extends QtiComponent {
 	 * Note: qti:valueType
 	 * 
 	 * @var mixed
+	 * @qtism-bean-param
 	 */
 	private $mapKey;
 	
@@ -57,6 +58,7 @@ class MapEntry extends QtiComponent {
 	 * The mapped value.
 	 * 
 	 * @var float
+	 * @qtism-bean-param
 	 */
 	private $mappedValue;
 	
@@ -66,6 +68,7 @@ class MapEntry extends QtiComponent {
 	 * Used to control whether or not a mapEntry string is matched case sensitively.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $caseSensitive = true;
 	

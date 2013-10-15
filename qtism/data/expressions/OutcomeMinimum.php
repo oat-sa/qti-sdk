@@ -49,6 +49,7 @@ class OutcomeMinimum extends ItemSubset {
 	 * As per the variableIdentifier attribute of testVariables.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $outcomeIdentifier;
 	
@@ -58,6 +59,7 @@ class OutcomeMinimum extends ItemSubset {
 	 * As per the weightIdentifier attribute of testVariables.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $weightIdentifier;
 	

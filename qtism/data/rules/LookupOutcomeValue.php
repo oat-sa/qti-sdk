@@ -46,6 +46,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	 * The identifier of the outcome variable to set.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	
@@ -57,6 +58,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	 * table is a matchTable.
 	 * 
 	 * @var Expression
+	 * @qtism-bean-param
 	 */
 	private $expression;
 	

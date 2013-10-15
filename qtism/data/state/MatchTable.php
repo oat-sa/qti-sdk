@@ -43,6 +43,7 @@ class MatchTable extends LookupTable {
 	 * A collection of MatchTableEntry objects.
 	 * 
 	 * @var MatchTableEntryCollection
+	 * @qtism-bean-param
 	 */
 	private $matchTableEntries;
 	

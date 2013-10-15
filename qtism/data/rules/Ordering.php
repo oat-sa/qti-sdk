@@ -43,6 +43,7 @@ class Ordering extends QtiComponent {
 	 * if false uses the order in which the child elements are defined.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $shuffle = false;
 	

@@ -79,6 +79,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * comma delimited list.
 	 * 
 	 * @var Viewcollection
+	 * @qtism-bean-param
 	 */
 	private $views;
 	
@@ -88,6 +89,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * A human interpretation of the variable's value.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $interpretation = '';
 	
@@ -97,6 +99,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * An optional link (URI) to an extended interpretation of the outcome variable's value.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $longInterpretation = '';
 	
@@ -112,6 +115,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * that the outcome variable itself can take.
 	 * 
 	 * @var boolean|number
+	 * @qtism-bean-param
 	 */
 	private $normalMaximum = false;
 	
@@ -124,6 +128,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * variables, it may be negative.
 	 * 
 	 * @var boolean|number
+	 * @qtism-bean-param
 	 */
 	private $normalMinimum = false;
 	
@@ -136,6 +141,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * above which the aspect being measured is considered to have been mastered by the candidate.
 	 * 
 	 * @var boolean|number
+	 * @qtism-bean-param
 	 */
 	private $masteryValue = false;
 	
@@ -143,6 +149,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * The lookup table. See LookupTable for more information.
 	 * 
 	 * @var LookupTable
+	 * @qtism-bean-param
 	 */
 	private $lookupTable = null;
 	

@@ -43,6 +43,7 @@ class ResponseElseIf extends QtiComponent {
 	 * The expression to be evaluated with the Else If statement.
 	 * 
 	 * @var Expression
+	 * @qtism-bean-param
 	 */
 	private $expression;
 	
@@ -51,6 +52,7 @@ class ResponseElseIf extends QtiComponent {
 	 * if the expression bound to the Else If statement is evaluated to true.
 	 * 
 	 * @var ResponseRuleCollection
+	 * @qtism-bean-param
 	 */
 	private $responseRules;
 	

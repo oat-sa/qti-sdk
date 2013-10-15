@@ -70,6 +70,7 @@ class Variable extends Expression {
 	 * QTI Identifier of the variable.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	
@@ -90,6 +91,7 @@ class Variable extends Expression {
 	 * has base type float.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $weightIdentifier ='';
 	

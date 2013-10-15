@@ -50,6 +50,7 @@ class Mapping extends QtiComponent {
 	 * there is no lower-bound.
 	 * 
 	 * @var float|boolean
+	 * @qtism-bean-param
 	 */
 	private $lowerBound = false;
 	
@@ -60,6 +61,7 @@ class Mapping extends QtiComponent {
 	 * there is no upper-bound.
 	 * 
 	 * @var float|boolean
+	 * @qtism-bean-param
 	 */
 	private $upperBound = false;
 	
@@ -70,6 +72,7 @@ class Mapping extends QtiComponent {
 	 * mapping for a source value is given.
 	 * 
 	 * @var float
+	 * @qtism-bean-param
 	 */
 	private $defaultValue = 0.0;
 
@@ -80,6 +83,7 @@ class Mapping extends QtiComponent {
 	 * single value from the source set onto a single float.
 	 * 
 	 * @var MapEntryCollection
+	 * @qtism-bean-param
 	 */
 	private $mapEntries;
 	

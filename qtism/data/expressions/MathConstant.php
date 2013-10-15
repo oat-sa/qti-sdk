@@ -43,6 +43,7 @@ class MathConstant extends Expression {
 	 * The name of the math constant.
 	 * 
 	 * @var int
+	 * @qtism-bean-param
 	 */
 	private $name;
 	

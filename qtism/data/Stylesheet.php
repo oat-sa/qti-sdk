@@ -41,6 +41,7 @@ class Stylesheet extends QtiComponent {
 	 * The identifier or location of the external stylesheet.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $href;
 	
@@ -50,6 +51,7 @@ class Stylesheet extends QtiComponent {
 	 * The type of the external stylesheet.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $type = 'text/css';
 	
@@ -60,6 +62,7 @@ class Stylesheet extends QtiComponent {
 	 * stylesheet applies.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $media = 'screen';
 	
@@ -69,6 +72,7 @@ class Stylesheet extends QtiComponent {
 	 * An optional title for the stylesheet.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $title = '';
 	

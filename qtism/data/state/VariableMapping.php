@@ -46,6 +46,7 @@ class VariableMapping extends QtiComponent {
 	 * Source variable identifier.
 	 *
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $source;
 	
@@ -53,6 +54,7 @@ class VariableMapping extends QtiComponent {
 	 * Target variable identifier.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $target;
 	

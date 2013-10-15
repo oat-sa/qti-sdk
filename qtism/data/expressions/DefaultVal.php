@@ -46,6 +46,7 @@ class DefaultVal extends Expression {
 	 * The QTI Identifier of the variable you want the default value.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	

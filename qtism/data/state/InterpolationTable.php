@@ -45,6 +45,12 @@ use qtism\data\QtiComponent;
  */
 class InterpolationTable extends LookupTable {
 	
+    /**
+     * A collection of InterpolationTableEntry objects.
+     * 
+     * @var InterpolationTableEntryCollection
+     * @qtism-bean-param
+     */
 	private $interpolationTableEntries;
 	
 	/**

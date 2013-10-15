@@ -40,12 +40,32 @@ use \InvalidArgumentException;
  */
 abstract class Operator extends Expression {
 	
+    /**
+     * The minimal number of operands the operator can take.
+     * 
+     * @var integer
+     */
 	private $minOperands = 0;
 	
+	/**
+	 * The maximal number of operands the operator can take.
+	 * 
+	 * @var integer
+	 */
 	private $maxOperands = -1;
 	
+	/**
+	 * The cardinalities accepted for the input operands.
+	 * 
+	 * @var array
+	 */
 	private $acceptedCardinalities = array();
 	
+	/**
+	 * The baseTypes accepted for the input operands.
+	 * 
+	 * @var array
+	 */
 	private $acceptedBaseTypes = array();
 	
 	/**

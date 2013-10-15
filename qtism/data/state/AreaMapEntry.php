@@ -44,6 +44,7 @@ class AreaMapEntry extends QtiComponent {
 	 * The shape of the area.
 	 * 
 	 * @var int
+	 * @qtism-bean-param
 	 */
 	private $shape;
 	
@@ -54,6 +55,7 @@ class AreaMapEntry extends QtiComponent {
 	 * with the shape.
 	 * 
 	 * @var Coords
+	 * @qtism-bean-param
 	 */
 	private $coords;
 	
@@ -63,6 +65,7 @@ class AreaMapEntry extends QtiComponent {
 	 * The mapped value.
 	 * 
 	 * @var float
+	 * @qtism-bean-param
 	 */
 	private $mappedValue;
 	

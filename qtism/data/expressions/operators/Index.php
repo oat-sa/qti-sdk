@@ -48,6 +48,7 @@ class Index extends Operator {
 	 * The index to lookup.
 	 * 
 	 * @var integer|string
+	 * @qtism-bean-param
 	 */
 	private $n;
 	

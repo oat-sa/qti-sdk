@@ -55,6 +55,7 @@ class MapResponse extends Expression {
 	 * The QTI identifier of the associated mapping.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	

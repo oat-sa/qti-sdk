@@ -58,6 +58,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * entry in the test's metadata. See Metadata and Usage Data for more information.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	
@@ -69,6 +70,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * at any time, but are not required to do so.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $title;
 	
@@ -80,6 +82,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * application specific data, such as labels on the elements of the test rubric.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $toolName = '';
 	
@@ -89,6 +92,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * The tool version attribute allows the tool creating the test to identify its version. This value must only be interpreted in the context of the toolName.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $toolVersion = '';
 	
@@ -99,6 +103,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * test's outcomeProcessing rules.
 	 * 
 	 * @var OutcomeDeclarationCollection
+	 * @qtism-bean-param
 	 */
 	private $outcomeDeclarations;
 	
@@ -108,6 +113,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Optionally controls the amount of time a candidate is allowed for the entire test.
 	 * 
 	 * @var TimeLimits
+	 * @qtism-bean-param
 	 */
 	private $timeLimits = null;
 	
@@ -120,6 +126,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * that part.
 	 * 
 	 * @var TestPartCollection
+	 * @qtism-bean-param
 	 */
 	private $testParts;
 	
@@ -129,6 +136,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * The set of rules used for calculating the values of the test outcomes.
 	 * 
 	 * @var OutcomeProcessing
+	 * @qtism-bean-param
 	 */
 	private $outcomeProcessing = null;
 	
@@ -138,6 +146,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Contains the test-level feedback controlled by the test outcomes.
 	 * 
 	 * @var TestFeedbackCollection
+	 * @qtism-bean-param
 	 */
 	private $testFeedbacks;
 	

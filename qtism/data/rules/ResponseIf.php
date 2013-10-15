@@ -50,6 +50,7 @@ class ResponseIf extends QtiComponent {
 	 * The expression to be evaluated with the If statement.
 	 * 
 	 * @var Expression
+	 * @qtism-bean-param
 	 */
 	private $expression;
 	
@@ -57,6 +58,7 @@ class ResponseIf extends QtiComponent {
 	 * The sub rules to execute if the Expression returns true;
 	 * 
 	 * @var ResponseRuleCollection
+	 * @qtism-bean-param
 	 */
 	private $responseRules;
 	

@@ -49,6 +49,7 @@ abstract class LookupTable extends QtiComponent {
 	 * the NULL value is used. (QTI valueType attribute).
 	 * 
 	 * @var mixed
+	 * @qtism-bean-param
 	 */
 	private $defaultValue = null;
 	

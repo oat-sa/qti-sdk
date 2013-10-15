@@ -46,6 +46,7 @@ class AssessmentSection extends SectionPart {
 	 * The title of the Assessment Section.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $title;
 	
@@ -53,6 +54,7 @@ class AssessmentSection extends SectionPart {
 	 * If the section is visible to the candidate.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $visible = true;
 	
@@ -60,6 +62,7 @@ class AssessmentSection extends SectionPart {
 	 * If the items of the section (if invisible) must be kept together or not.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $keepTogether = true;
 	
@@ -68,6 +71,7 @@ class AssessmentSection extends SectionPart {
 	 * each instance of the test.
 	 * 
 	 * @var Selection
+	 * @qtism-bean-param
 	 */
 	private $selection = null;
 	
@@ -76,6 +80,7 @@ class AssessmentSection extends SectionPart {
 	 * of the section are to be arranged for each instance of the test.
 	 * 
 	 * @var Ordering
+	 * @qtism-bean-param
 	 */
 	private $ordering = null;
 	
@@ -84,6 +89,7 @@ class AssessmentSection extends SectionPart {
 	 * (directly or indirectly) by the section.
 	 * 
 	 * @var RubricBlockCollection
+	 * @qtism-bean-param
 	 */
 	private $rubricBlocks;
 	
@@ -91,6 +97,7 @@ class AssessmentSection extends SectionPart {
 	 * Child elements.
 	 * 
 	 * @var SectionPartCollection
+	 * @qtism-bean-param
 	 */
 	private $sectionParts;
 	

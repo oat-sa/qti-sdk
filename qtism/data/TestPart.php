@@ -47,6 +47,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * the identifier of any assessmentSection or assessmentItemRef.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $identifier;
 	
@@ -54,6 +55,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The navigation mode, a value of the NavigationMode enumeration.
 	 * 
 	 * @var int
+	 * @qtism-bean-param
 	 */
 	private $navigationMode = NavigationMode::LINEAR;
 	
@@ -61,6 +63,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The submission mode, a value of the SubmissionMode enumeration.
 	 * 
 	 * @var int
+	 * @qtism-bean-param
 	 */
 	private $submissionMode = SubmissionMode::INDIVIDUAL;
 	
@@ -71,6 +74,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * if this part is to be skipped.
 	 * 
 	 * @var PreConditionCollection
+	 * @qtism-bean-param
 	 */
 	private $preConditions;
 	
@@ -81,6 +85,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * target as the next part of the test.
 	 * 
 	 * @var BranchRuleCollection
+	 * @qtism-bean-param
 	 */
 	private $branchRules;
 	
@@ -91,6 +96,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * These values may be overridden at section and item level.
 	 * 
 	 * @var ItemSessionControl
+	 * @qtism-bean-param
 	 */
 	private $itemSessionControl = null;
 	
@@ -100,6 +106,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Optionally controls the amount of time a candidate is allowed for this part of the test.
 	 * 
 	 * @var TimeLimits
+	 * @qtism-bean-param
 	 */
 	private $timeLimits = null;
 	
@@ -109,6 +116,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The items contained in each testPart are arranged into sections and sub-sections.
 	 * 
 	 * @var AssessmentSectionCollection
+	 * @qtism-bean-param
 	 */
 	private $assessmentSections;
 	
@@ -118,6 +126,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Test-level feedback specific to this part of the test.
 	 * 
 	 * @var TestFeedbackCollection
+	 * @qtism-bean-param
 	 */
 	private $testFeedbacks;
 	

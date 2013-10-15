@@ -42,6 +42,7 @@ class DefaultValue extends QtiComponent {
 	 * A human readable interpretation of the default value.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $interpretation = '';
 	
@@ -52,6 +53,7 @@ class DefaultValue extends QtiComponent {
 	 * has ordered cardinality.
 	 * 
 	 * @var ValueCollection
+	 * @qtism-bean-param
 	 */
 	private $values;
 	

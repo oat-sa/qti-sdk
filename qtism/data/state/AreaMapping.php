@@ -47,6 +47,7 @@ class AreaMapping extends QtiComponent {
 	 * The lower bound.
 	 * 
 	 * @var boolean|float
+	 * @qtism-bean-param
 	 */
 	private $lowerBound = false;
 	
@@ -54,6 +55,7 @@ class AreaMapping extends QtiComponent {
 	 * The upper bound.
 	 * 
 	 * @var boolean|float
+	 * @qtism-bean-param
 	 */
 	private $upperBound = false;
 	
@@ -61,6 +63,7 @@ class AreaMapping extends QtiComponent {
 	 * The default value.
 	 * 
 	 * @var float
+	 * @qtism-bean-param
 	 */
 	private $defaultValue = 0.0;
 	
@@ -68,6 +71,7 @@ class AreaMapping extends QtiComponent {
 	 * A collection of AreaMapEntry objects.
 	 * 
 	 * @var AreaMapEntry
+	 * @qtism-bean-param
 	 */
 	private $areaMapEntries;
 	

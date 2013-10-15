@@ -40,10 +40,28 @@ use qtism\common\enums\Cardinality;
  */
 class RandomInteger extends Expression {
 	
+    /**
+     * The min attribute value.
+     * 
+     * @var integer
+     * @qtism-bean-param
+     */
 	private $min = 0;
 	
+	/**
+	 * The max attribute value.
+	 * 
+	 * @var integer
+	 * @qtism-bean-param
+	 */
 	private $max;
 	
+	/**
+	 * The step attribute value.
+	 * 
+	 * @var integer
+	 * @qtism-bean-param
+	 */
 	private $step = 1;
 	
 	/**

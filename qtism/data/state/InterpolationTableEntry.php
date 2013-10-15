@@ -43,6 +43,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * The lower bound for the source value to match this entry.
 	 * 
 	 * @var float
+	 * @qtism-bean-param
 	 */
 	private $sourceValue;
 	
@@ -52,6 +53,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * The target value that is used to set the outcome when a match is found.
 	 * 
 	 * @var mixed
+	 * @qtism-bean-param
 	 */
 	private $targetValue;
 	
@@ -63,6 +65,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * match of this entry.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $includeBoundary = true;
 	

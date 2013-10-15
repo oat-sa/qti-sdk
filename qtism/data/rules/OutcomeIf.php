@@ -49,6 +49,7 @@ class OutcomeIf extends QtiComponent {
 	 * The expression to be evaluated with the If statement.
 	 * 
 	 * @var Expression
+	 * @qtism-bean-param
 	 */
 	private $expression;
 	
@@ -56,6 +57,7 @@ class OutcomeIf extends QtiComponent {
 	 * The sub rules to execute if the Expression returns true;
 	 * 
 	 * @var OutcomeRuleCollection
+	 * @qtism-bean-param
 	 */
 	private $outcomeRules;
 	

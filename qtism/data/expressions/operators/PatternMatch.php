@@ -47,6 +47,7 @@ class PatternMatch extends Operator {
 	 * Appendix F of [XML_SCHEMA2].
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $pattern;
 	

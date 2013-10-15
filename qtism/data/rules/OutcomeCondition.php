@@ -49,6 +49,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 	 * An OutcomeIf object.
 	 * 
 	 * @var OutcomeIf
+	 * @qtism-bean-param
 	 */
 	private $outcomeIf;
 	
@@ -56,6 +57,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 	 * A collection of OutcomeElseIf objects.
 	 * 
 	 * @var OutcomeElseIfCollection
+	 * @qtism-bean-param
 	 */
 	private $outcomeElseIfs;
 	
@@ -63,6 +65,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 	 * An optional OutcomeElse object.
 	 * 
 	 * @var OutcomeElse
+	 * @qtism-bean-param
 	 */
 	private $outcomeElse = null;
 	

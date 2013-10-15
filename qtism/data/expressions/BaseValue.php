@@ -44,6 +44,7 @@ class BaseValue extends Expression {
 	 * The baseType of the value.
 	 * 
 	 * @var int
+	 * @qtism-bean-param
 	 */
 	private $baseType;
 	
@@ -51,6 +52,7 @@ class BaseValue extends Expression {
 	 * The actual value.
 	 * 
 	 * @var mixed
+	 * @qtism-bean-param
 	 */
 	private $value;
 	

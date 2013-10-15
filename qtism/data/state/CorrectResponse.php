@@ -42,6 +42,7 @@ class CorrectResponse extends QtiComponent {
 	 * A human readable interpretation of the correct value.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $interpretation = '';
 	
@@ -52,6 +53,7 @@ class CorrectResponse extends QtiComponent {
 	 * is of ordered cardinality.
 	 * 
 	 * @var ValueCollection
+	 * @qtism-bean-param
 	 */
 	private $values;
 	

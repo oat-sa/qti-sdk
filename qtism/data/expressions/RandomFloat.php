@@ -39,8 +39,19 @@ use qtism\common\enums\Cardinality;
  */
 class RandomFloat extends Expression {
 	
+    /**
+     * The min attribute value.
+     * 
+     * @var float
+     */
 	private $min = 0.0;
 	
+	/**
+	 * The max attribute value.
+	 * 
+	 * @var float
+	 * @qtism-bean-param
+	 */
 	private $max;
 	
 	/**

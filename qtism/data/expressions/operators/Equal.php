@@ -51,6 +51,7 @@ class Equal extends Operator {
 	 * exactly, using an absolute range or a relative range.
 	 * 
 	 * @var integer
+	 * @qtism-bean-param
 	 */
 	private $toleranceMode = ToleranceMode::EXACT;
 	
@@ -73,6 +74,7 @@ class Equal extends Operator {
 	 * x*(1-t0/100),x*(1+t1/100)
 	 * 
 	 * @var array
+	 * @qtism-bean-param
 	 */
 	private $tolerance = array();
 	
@@ -82,6 +84,7 @@ class Equal extends Operator {
 	 * Controls whether or not the lower bound is included in the comparison.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $includeLowerBound = true;
 	
@@ -89,6 +92,7 @@ class Equal extends Operator {
 	 * FROM IMS QTI:
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $includeUpperBound = true;
 	

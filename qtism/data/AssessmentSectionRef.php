@@ -60,6 +60,7 @@ class AssessmentSectionRef extends SectionPart {
 	 * must have a unique identifier.
 	 * 
 	 * @var string
+	 * @qtism-bean-param
 	 */
 	private $href;
 	

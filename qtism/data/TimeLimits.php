@@ -55,6 +55,7 @@ class TimeLimits extends QtiComponent {
 	 * null = unlimited
 	 * 
 	 * @var Duration
+	 * @qtism-bean-param
 	 */
 	private $minTime = null;
 	
@@ -64,6 +65,7 @@ class TimeLimits extends QtiComponent {
 	 * null = unlimited
 	 * 
 	 * @var Duration
+	 * @qtism-bean-param
 	 */
 	private $maxTime = null;
 	
@@ -74,6 +76,7 @@ class TimeLimits extends QtiComponent {
 	 * beyond the maxTime should still be accepted.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-param
 	 */
 	private $allowLateSubmission = false;
 	
