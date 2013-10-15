@@ -56,7 +56,7 @@ class AnyN extends Operator {
 	 * The minimum number of sub-expressions that must be true.
 	 * 
 	 * @var integer|string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $min;
 	
@@ -66,7 +66,7 @@ class AnyN extends Operator {
 	 * The maximum number of sub-expressions that may be true.
 	 * 
 	 * @var string|integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $max;
 	

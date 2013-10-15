@@ -46,7 +46,7 @@ class ItemSessionControl extends QtiComponent {
 	 * is controlled by the showFeedback constraint.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $maxAttempts = 1;
 	
@@ -91,7 +91,7 @@ class ItemSessionControl extends QtiComponent {
 	 * variables should be used to determine the visibility of integrated feedback.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $allowReview = true;
 	
@@ -102,7 +102,7 @@ class ItemSessionControl extends QtiComponent {
 	 * way of entering the solution state. The default is false.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $showSolution = false;
 	
@@ -115,7 +115,7 @@ class ItemSessionControl extends QtiComponent {
 	 * is allowed to provide a comment on the item during the session.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $allowComment = false;
 	
@@ -132,7 +132,7 @@ class ItemSessionControl extends QtiComponent {
 	 * individual submission mode. (See Navigation and Submission.)
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $validateResponses = false;
 	
@@ -151,7 +151,7 @@ class ItemSessionControl extends QtiComponent {
 	 * can choose to submit no response, for example, through the provision of a "skip" button.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $allowSkipping = true;
 	

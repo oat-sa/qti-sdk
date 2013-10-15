@@ -49,7 +49,7 @@ class Inside extends Operator {
 	 * The shape of the area.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $shape;
 	
@@ -59,7 +59,7 @@ class Inside extends Operator {
 	 * The size and position of the area, interpreted in conjunction with the shape.
 	 * 
 	 * @var Coords
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $coords;
 	

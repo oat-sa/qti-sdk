@@ -44,7 +44,7 @@ class OutcomeElseIf extends QtiComponent {
 	 * The expression to be evaluated with the Else If statement.
 	 * 
 	 * @var Expression
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $expression;
 	
@@ -53,7 +53,7 @@ class OutcomeElseIf extends QtiComponent {
 	 * if the expression bound to the Else If statement is evaluated to true.
 	 * 
 	 * @var OutcomeRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
 	

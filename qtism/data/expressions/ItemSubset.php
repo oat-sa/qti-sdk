@@ -48,7 +48,7 @@ class ItemSubset extends Expression {
 	 * identifier are matched. Items in sub-sections are included in this definition.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $sectionIdentifier = '';
 	
@@ -58,7 +58,7 @@ class ItemSubset extends Expression {
 	 * If specified, only variables from items with a matching category are included.
 	 * 
 	 * @var IdentifierCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $includeCategories = null;
 	
@@ -68,7 +68,7 @@ class ItemSubset extends Expression {
 	 * If specified, only variables from items with no matching category are included.
 	 * 
 	 * @var IdentifierCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $excludeCategories = null;
 	

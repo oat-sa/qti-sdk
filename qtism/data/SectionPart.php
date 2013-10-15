@@ -47,7 +47,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * must not be the identifier of any testPart.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -59,7 +59,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * elements than the number of required elements it contains.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $required = false;
 	
@@ -71,7 +71,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * elements than the number of required elements it contains.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $fixed = false;
 	
@@ -82,7 +82,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * item or section is to be skipped (in nonlinear mode, pre-conditions are ignored).
 	 * 
 	 * @var PreConditionCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $preConditions;
 	
@@ -93,7 +93,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * target as the next item or section (in nonlinear mode, branch rules are ignored).
 	 * 
 	 * @var BranchRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $branchRules;
 	
@@ -104,7 +104,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * (may be overridden at sub-section or item level).
 	 * 
 	 * @var ItemSessionControl
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $itemSessionControl = null;
 	
@@ -114,7 +114,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable {
 	 * Optionally controls the amount of time a candidate is allowed for this item or section.
 	 * 
 	 * @var TimeLimits
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $timeLimits = null;
 	

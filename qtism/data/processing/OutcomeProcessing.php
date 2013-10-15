@@ -52,7 +52,7 @@ class OutcomeProcessing extends QtiComponent {
 	 * A collection of OutcomeRule objects.
 	 * 
 	 * @var OutcomeRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
 	

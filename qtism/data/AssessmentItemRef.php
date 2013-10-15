@@ -52,7 +52,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A URI to refer the item's file.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $href;
 	
@@ -61,7 +61,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Assessment Item is assigned.
 	 * 
 	 * @var IdentifierCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $categories;
 	
@@ -69,7 +69,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A collection of VariableMapping objects.
 	 * 
 	 * @var VariableMappingCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $variableMappings;
 	
@@ -77,7 +77,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A collection of Weight objects.
 	 * 
 	 * @var WeightCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $weights;
 	
@@ -85,7 +85,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A collection of TemplateDefault objects.
 	 * 
 	 * @var TemplateDefaultCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $templateDefaults;
 	

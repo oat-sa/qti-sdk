@@ -47,7 +47,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * the identifier of any assessmentSection or assessmentItemRef.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -55,7 +55,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The navigation mode, a value of the NavigationMode enumeration.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $navigationMode = NavigationMode::LINEAR;
 	
@@ -63,7 +63,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The submission mode, a value of the SubmissionMode enumeration.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $submissionMode = SubmissionMode::INDIVIDUAL;
 	
@@ -74,7 +74,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * if this part is to be skipped.
 	 * 
 	 * @var PreConditionCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $preConditions;
 	
@@ -85,7 +85,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * target as the next part of the test.
 	 * 
 	 * @var BranchRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $branchRules;
 	
@@ -96,7 +96,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * These values may be overridden at section and item level.
 	 * 
 	 * @var ItemSessionControl
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $itemSessionControl = null;
 	
@@ -106,7 +106,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Optionally controls the amount of time a candidate is allowed for this part of the test.
 	 * 
 	 * @var TimeLimits
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $timeLimits = null;
 	
@@ -116,7 +116,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * The items contained in each testPart are arranged into sections and sub-sections.
 	 * 
 	 * @var AssessmentSectionCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $assessmentSections;
 	
@@ -126,7 +126,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Test-level feedback specific to this part of the test.
 	 * 
 	 * @var TestFeedbackCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $testFeedbacks;
 	

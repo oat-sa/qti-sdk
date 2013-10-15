@@ -41,7 +41,7 @@ class ResponseElse extends QtiComponent {
 	 * A collection of ResponseRule objects to be evaluated.
 	 * 
 	 * @var ResponseRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseRules;
 	

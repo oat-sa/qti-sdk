@@ -44,7 +44,7 @@ class RandomInteger extends Expression {
      * The min attribute value.
      * 
      * @var integer
-     * @qtism-bean-param
+     * @qtism-bean-property
      */
 	private $min = 0;
 	
@@ -52,7 +52,7 @@ class RandomInteger extends Expression {
 	 * The max attribute value.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $max;
 	
@@ -60,7 +60,7 @@ class RandomInteger extends Expression {
 	 * The step attribute value.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $step = 1;
 	

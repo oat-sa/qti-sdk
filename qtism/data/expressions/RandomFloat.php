@@ -50,7 +50,7 @@ class RandomFloat extends Expression {
 	 * The max attribute value.
 	 * 
 	 * @var float
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $max;
 	

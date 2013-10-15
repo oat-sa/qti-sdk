@@ -49,7 +49,7 @@ class InterpolationTable extends LookupTable {
      * A collection of InterpolationTableEntry objects.
      * 
      * @var InterpolationTableEntryCollection
-     * @qtism-bean-param
+     * @qtism-bean-property
      */
 	private $interpolationTableEntries;
 	

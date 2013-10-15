@@ -65,7 +65,7 @@ class RoundTo extends Operator {
 	 * greater than or equal to zero.
 	 * 
 	 * @var integer|string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $figures;
 	
@@ -77,7 +77,7 @@ class RoundTo extends Operator {
 	 * Default value is RoundingMode::SIGNIFICANT_FIGURES.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $roundingMode = RoundingMode::SIGNIFICANT_FIGURES;
 	

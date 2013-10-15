@@ -58,7 +58,7 @@ class BranchRule extends QtiComponent implements Rule {
 	 * The expression of the BranchRule.
 	 * 
 	 * @var Expression
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $expression;
 
@@ -70,7 +70,7 @@ class BranchRule extends QtiComponent implements Rule {
 	 * immediately.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $target;
 	

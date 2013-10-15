@@ -47,7 +47,7 @@ class PreCondition extends QtiComponent {
 	 * The expression that will make the Precondition return true or false. 
 	 * 
 	 * @var Expression
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $expression;
 	

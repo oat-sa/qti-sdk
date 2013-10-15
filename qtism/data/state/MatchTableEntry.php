@@ -37,7 +37,7 @@ class MatchTableEntry extends QtiComponent {
 	 * The source integer that must be matched exactly.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $sourceValue;
 	
@@ -48,7 +48,7 @@ class MatchTableEntry extends QtiComponent {
 	 *
 	 * 
 	 * @var mixed
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $targetValue;
 	

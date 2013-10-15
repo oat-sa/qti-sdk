@@ -59,7 +59,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * namespace. Different items have different namespaces.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -71,7 +71,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * See cardinality for more information.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $cardinality;
 	
@@ -86,7 +86,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * within the runtime data model. Variables with record cardinality have no base-type.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $baseType = -1;
 	
@@ -96,7 +96,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * contain the null value.
 	 * 
 	 * @var DefaultValue
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $defaultValue = null;
 	

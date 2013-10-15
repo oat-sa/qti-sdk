@@ -47,7 +47,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * The outcomeDeclarations found in the referenced assessmentItem.
 	 * 
 	 * @var OutcomeDeclarationCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeDeclarations;
 	
@@ -55,7 +55,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * The responseDeclarations found in the referenced assessmentItem.
 	 * 
 	 * @var ResponseDeclarationCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseDeclarations;
 	
@@ -63,7 +63,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * The responseProcessing found in the referenced assessmentItem
 	 * 
 	 * @var ResponseProcessing
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseProcessing = null;
 	
@@ -71,7 +71,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * The adaptive attribute found in the referenced assessmentItem.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $adaptive = false;
 	
@@ -79,7 +79,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * The timeDependent attribute found in the referenced assessmentItem.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $timeDependent = false;
 	

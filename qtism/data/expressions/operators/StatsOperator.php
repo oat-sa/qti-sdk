@@ -46,7 +46,7 @@ class StatsOperator extends Operator {
 	 * The name of the statistics operator to use.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $name;
 	

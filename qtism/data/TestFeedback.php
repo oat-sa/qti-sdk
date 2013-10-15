@@ -49,7 +49,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * shown in a similar way to feedbackElement (Item Model).
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $access = TestFeedbackAccess::DURING;
 	
@@ -57,7 +57,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * The QTI Identifier of the outcome variable bound to this feedback.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeIdentifier;
 	
@@ -71,7 +71,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * variable matches, or contains, the value of the identifier attribute.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $showHide = ShowHide::SHOW;
 	
@@ -79,7 +79,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * The QTI identifier of the TestFeedback.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -92,7 +92,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * for example as the title of a modal pop-up window or sub-heading in a combined report.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $title;
 	
@@ -106,7 +106,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * The content of the testFeedback must not contain any interactions.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $content;
 	

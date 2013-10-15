@@ -53,7 +53,7 @@ class TestVariables extends ItemSubset {
 	 * are ignored.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $variableIdentifier;
 	
@@ -70,7 +70,7 @@ class TestVariables extends ItemSubset {
 	 * float and integer values are subject to type promotion.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $baseType = -1;
 	
@@ -86,7 +86,7 @@ class TestVariables extends ItemSubset {
 	 * remains consistent with the resulting container type.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $weightIdentifier = '';
 	

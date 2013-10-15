@@ -43,7 +43,7 @@ class RubricBlock extends QtiComponent {
 	 * The views in which the rubric block's content are to be shown.
 	 * 
 	 * @var ViewCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $views;
 	
@@ -51,7 +51,7 @@ class RubricBlock extends QtiComponent {
 	 * The purpose for which the rubric is intended to be used.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $use = '';
 	
@@ -59,7 +59,7 @@ class RubricBlock extends QtiComponent {
 	 * The stylesheets are used to format just the contents of the rubricBlock.
 	 * 
 	 * @var StyleSheetCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $stylesheets;
 	
@@ -68,7 +68,7 @@ class RubricBlock extends QtiComponent {
 	 * The content of the rubrick block as a string.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $content = '';
 	

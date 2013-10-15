@@ -51,7 +51,7 @@ class Repeat extends Operator {
 	 * A number of repetitions or a variable reference.
 	 * 
 	 * @var integer|string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $numberRepeats;
 	

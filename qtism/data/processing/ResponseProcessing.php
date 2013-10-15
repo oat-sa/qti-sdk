@@ -62,7 +62,7 @@ class ResponseProcessing extends QtiComponent {
 	 * A collection of ResponseRule objects.
 	 * 
 	 * @var ResponseRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseRules;
 	
@@ -70,7 +70,7 @@ class ResponseProcessing extends QtiComponent {
 	 * The optional response processing template.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $template = '';
 	
@@ -78,7 +78,7 @@ class ResponseProcessing extends QtiComponent {
 	 * The optional response processing template location.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $templateLocation = '';
 	

@@ -48,7 +48,7 @@ class EqualRounded extends Operator {
 	 * Numbers are rounded to a given number of significantFigures or decimalPlaces.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $roundingMode = RoundingMode::SIGNIFICANT_FIGURES;
 	
@@ -60,7 +60,7 @@ class EqualRounded extends Operator {
 	 * If roundingMode= "decimalPlaces", the value of figures must be an integer greater than or equal to zero.
 	 * 
 	 * @var string|integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $figures;
 	

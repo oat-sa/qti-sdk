@@ -42,7 +42,7 @@ class FieldValue extends Operator {
 	 * The identifier of the field to lookup.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $fieldIdentifier;
 	

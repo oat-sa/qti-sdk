@@ -48,7 +48,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * corresponding entry in the item's metadata.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -56,7 +56,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * The language used in the Item.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $lang = '';
 	
@@ -66,7 +66,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Items are classified into Adaptive Items and Non-adaptive Items.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $adaptive = false;
 	
@@ -82,7 +82,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * The response declarations.
 	 * 
 	 * @var ResponseDeclarationCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseDeclarations;
 	
@@ -90,7 +90,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * The outcome declarations.
 	 * 
 	 * @var OutcomeDeclarationCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeDeclarations;
 	
@@ -98,7 +98,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * The responseProcessing.
 	 * 
 	 * @var ResponseProcessing
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseProcessing = null;
 	

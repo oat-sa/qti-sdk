@@ -44,7 +44,7 @@ class Selection extends QtiComponent {
 	 * The number of child elements to be selected.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $select;
 	
@@ -52,7 +52,7 @@ class Selection extends QtiComponent {
 	 * Selection (combinations) with or without replacement.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $withReplacement = false;
 	

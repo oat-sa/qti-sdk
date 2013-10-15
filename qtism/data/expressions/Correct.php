@@ -44,7 +44,7 @@ class Correct extends Expression {
 	 * The identifier of the response variable you want the correct value.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	

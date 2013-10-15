@@ -48,7 +48,7 @@ class TemplateDefault extends QtiComponent {
 	 * The identifier of the template variable affected.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $templateIdentifier;
 	
@@ -57,7 +57,7 @@ class TemplateDefault extends QtiComponent {
 	 * the declaration of the assossiated variable's templateDeclaration.
 	 * 
 	 * @var Expression
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $expression;
 	

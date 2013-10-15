@@ -53,7 +53,7 @@ class Value extends QtiComponent {
 	 * An empty string means there is no fieldIdentifier.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $fieldIdentifier = '';
 	
@@ -66,7 +66,7 @@ class Value extends QtiComponent {
 	 * A negative value means there is not baseType.
 	 * 
 	 * @var int
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $baseType = -1;
 	
@@ -76,7 +76,7 @@ class Value extends QtiComponent {
 	 * The actual value.
 	 * 
 	 * @var mixed
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $value;
 	
@@ -84,7 +84,7 @@ class Value extends QtiComponent {
 	 * Declare if the value is part of a record.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $isPartOfRecord = false;
 	

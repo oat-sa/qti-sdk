@@ -83,7 +83,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * if necessary).
 	 * 
 	 * @var CorrectResponse
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $correctResponse;
 	
@@ -95,7 +95,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * for information on how to use the mapping.
 	 * 
 	 * @var Mapping
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $mapping = null;
 	
@@ -108,7 +108,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * single points).
 	 * 
 	 * @var AreaMapping
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $areaMapping = null;
 	

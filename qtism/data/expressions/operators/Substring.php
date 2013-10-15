@@ -50,7 +50,7 @@ class Substring extends Operator {
 	 * is a substring of "Shell".
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $caseSensitive = true;
 	

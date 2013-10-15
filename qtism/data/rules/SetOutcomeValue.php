@@ -53,7 +53,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	 * The outcome variable to set.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -64,7 +64,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	 * the base-type and cardinality of the outcome variable being set.
 	 * 
 	 * @var Expression
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $expression;
 	

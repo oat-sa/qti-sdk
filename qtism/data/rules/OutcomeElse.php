@@ -41,7 +41,7 @@ class OutcomeElse extends QtiComponent {
 	 * A collection of OutcomeRule objects to be evaluated.
 	 * 
 	 * @var OutcomeRuleCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
 	

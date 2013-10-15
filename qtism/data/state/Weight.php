@@ -48,7 +48,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	 * A QTI identifier.
 	 * 
 	 * @var string
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $identifier;
 	
@@ -57,7 +57,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	 * variables.
 	 * 
 	 * @var int|float
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $value;
 	

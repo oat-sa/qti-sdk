@@ -80,7 +80,7 @@ class MathOperator extends Operator {
 	 * The name of the mathematical function.
 	 * 
 	 * @var integer
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $name;
 	

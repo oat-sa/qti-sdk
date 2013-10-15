@@ -47,7 +47,7 @@ class StringMatch extends Operator {
 	 * Whether or not the match is to be carried out case sensitively.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $caseSensitive;
 	
@@ -59,7 +59,7 @@ class StringMatch extends Operator {
 	 * second one, otherwise it returns true only if they match entirely.
 	 * 
 	 * @var boolean
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $substring = false;
 	

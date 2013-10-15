@@ -49,7 +49,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	 * A ResponseIf object.
 	 * 
 	 * @var ResponseIf
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseIf;
 	
@@ -57,7 +57,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	 * A collection of ResponseElseIf objects.
 	 * 
 	 * @var ResponseElseIfCollection
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseElseIfs;
 	
@@ -65,7 +65,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	 * An optional ResponseElse object.
 	 * 
 	 * @var ResponseElse
-	 * @qtism-bean-param
+	 * @qtism-bean-property
 	 */
 	private $responseElse = null;
 	
