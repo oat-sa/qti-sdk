@@ -52,7 +52,7 @@ class BeanTest extends QtiSmTestCase {
         }
         
         // --- Try to get information about getter existence.
-        $this->assertTrue($bean->hasGetter('name'));
+        $this->assertTrue($bean->hasGetter('name') !== false);
         // Simply does not exist.
         $this->assertFalse($bean->hasGetter('miniCooper'));
         // Exists but not related to an annotated property.
@@ -184,27 +184,33 @@ class BeanTest extends QtiSmTestCase {
     }
     
     public function testStrictBean() {
-        $mock = new StrictBean('John', 'Dunbar', 'blond');
+        $mock = new StrictBean('John', 'Dunbar', 'blond', true);
         $bean = new Bean($mock, true);
         $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
         
         $this->assertTrue($bean->hasConstructorParameter('firstName'));
         $this->assertTrue($bean->hasConstructorParameter('lastName'));
         $this->assertTrue($bean->hasConstructorParameter('hair'));
+        $this->assertTrue($bean->hasConstructorParameter('cool'));
         $this->assertTrue($bean->hasProperty('firstName'));
         $this->assertTrue($bean->hasProperty('lastName'));
         $this->assertTrue($bean->hasProperty('hair'));
-        $this->assertTrue($bean->hasGetter('firstName'));
-        $this->assertTrue($bean->hasGetter('lastName'));
-        $this->assertTrue($bean->hasGetter('hair'));
+        $this->assertTrue($bean->hasProperty('cool'));
+        $this->assertTrue($bean->hasGetter('firstName') !== false);
+        $this->assertTrue($bean->hasGetter('lastName') !== false);
+        $this->assertTrue($bean->hasGetter('hair') !== false);
+        $this->assertTrue($bean->hasGetter('cool') !== false);
         $this->assertTrue($bean->hasSetter('firstName'));
         $this->assertTrue($bean->hasSetter('lastName'));
         $this->assertTrue($bean->hasSetter('hair'));
+        $this->assertTrue($bean->hasSetter('cool'));
         
-        $this->assertEquals(3, count($bean->getGetters()));
+        $this->assertEquals('isCool', $bean->getGetter('cool')->getName());
+        
+        $this->assertEquals(4, count($bean->getGetters()));
         $this->assertEquals(0, count($bean->getGetters(true)));
         
-        $this->assertEquals(3, count($bean->getSetters()));
+        $this->assertEquals(4, count($bean->getSetters()));
         $this->assertEquals(0, count($bean->getSetters(true)));
     }
 }

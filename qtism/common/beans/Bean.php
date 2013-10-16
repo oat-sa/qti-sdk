@@ -107,12 +107,12 @@ class Bean {
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
         
-        if ($this->hasGetter($propertyName) === false) {
+        if (($getterName = $this->hasGetter($propertyName)) === false) {
             $msg = "The bean has no public getter for a '${propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
         
-        return new BeanMethod($this->getObject()->getName(), 'get' . ucfirst($propertyName));
+        return new BeanMethod($this->getObject()->getName(), $getterName);
     }
     
     /**
@@ -124,14 +124,19 @@ class Bean {
      * * A valid bean property exists for $propertyName.
      * 
      * @param string $propertyName The name of the property the getter is related to.
-     * @return boolean
+     * @return false|string False if not found or the final chosen name for the getter.
      */
     public function hasGetter($propertyName) {
-        $getterName = 'get' . ucfirst($propertyName);
+        $getterNames = self::getPossibleGetterNames($propertyName);
         $hasGetter = false;
         
-        if ($this->getObject()->hasMethod($getterName) === true && $this->hasProperty($propertyName) === true) {
-            $hasGetter = $this->getObject()->getMethod($getterName)->isPublic();
+        foreach ($getterNames as $possibleGetterName) {
+            if ($this->getObject()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true) {
+                if ($this->getObject()->getMethod($possibleGetterName)->isPublic()) {
+                    $hasGetter = $possibleGetterName;
+                    break;
+                }
+            }
         }
         
         return $hasGetter;
@@ -146,10 +151,10 @@ class Bean {
         $methods = new BeanMethodCollection();
         
         foreach ($this->getProperties() as $prop) {
-            if ($this->hasGetter($prop->getName()) === true) {
+            if (($getterName = $this->hasGetter($prop->getName())) !== false) {
                 
                 if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
-                    $methods[] = new BeanMethod($this->getObject()->getName(), 'get' . ucfirst($prop->getName()));
+                    $methods[] = new BeanMethod($this->getObject()->getName(), $getterName);
                 }
             }
         }
@@ -428,5 +433,25 @@ class Bean {
                 }
             }
         }
+    }
+    
+    /**
+     * Get the possible names a bean getter can take for a given $propertyName.
+     * 
+     * Imagine a boolean bean class property named 'formatOutput'. By convention,
+     * its getter can be named 'getFormatOutput', 'isFormatOutput', 'mustFormatOutput'
+     * or 'doesFormatOutput'.
+     * 
+     * @param string $propertyName The name of the property.
+     * @return array An array of possible getter method names for a given $propertyName.
+     */
+    protected static function getPossibleGetterNames($propertyName) {
+        $ucPropName = ucfirst($propertyName);
+        return array(
+            'get' . $ucPropName,
+            'is' . $ucPropName,
+            'must' . $ucPropName,
+            'does' . $ucPropName
+        );
     }
 }

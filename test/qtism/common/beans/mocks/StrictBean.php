@@ -24,10 +24,18 @@ class StrictBean {
      */
     private $hair;
     
-    public function __construct($firstName, $lastName, $hair) {
+    /**
+     * 
+     * @var boolean
+     * @qtism-bean-property
+     */
+    private $cool;
+    
+    public function __construct($firstName, $lastName, $hair, $cool) {
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setHair($hair);
+        $this->setCool($cool);
     }
     
     public function setFirstName($firstName) {
@@ -52,5 +60,13 @@ class StrictBean {
     
     public function getHair() {
         return $this->hair;
+    }
+    
+    public function setCool($cool) {
+        $this->cool = $cool;
+    }
+    
+    public function isCool() {
+        return $this->cool;
     }
 }
