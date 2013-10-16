@@ -187,5 +187,24 @@ class BeanTest extends QtiSmTestCase {
         $mock = new StrictBean('John', 'Dunbar', 'blond');
         $bean = new Bean($mock, true);
         $this->assertInstanceOf('qtism\\common\\beans\\Bean', $bean);
+        
+        $this->assertTrue($bean->hasConstructorParameter('firstName'));
+        $this->assertTrue($bean->hasConstructorParameter('lastName'));
+        $this->assertTrue($bean->hasConstructorParameter('hair'));
+        $this->assertTrue($bean->hasProperty('firstName'));
+        $this->assertTrue($bean->hasProperty('lastName'));
+        $this->assertTrue($bean->hasProperty('hair'));
+        $this->assertTrue($bean->hasGetter('firstName'));
+        $this->assertTrue($bean->hasGetter('lastName'));
+        $this->assertTrue($bean->hasGetter('hair'));
+        $this->assertTrue($bean->hasSetter('firstName'));
+        $this->assertTrue($bean->hasSetter('lastName'));
+        $this->assertTrue($bean->hasSetter('hair'));
+        
+        $this->assertEquals(3, count($bean->getGetters()));
+        $this->assertEquals(0, count($bean->getGetters(true)));
+        
+        $this->assertEquals(3, count($bean->getSetters()));
+        $this->assertEquals(0, count($bean->getSetters(true)));
     }
 }

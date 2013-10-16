@@ -142,12 +142,15 @@ class Bean {
      * 
      * @return BeanMethodCollection A collection of BeanMethod objects.
      */
-    public function getGetters() {
+    public function getGetters($excludeConstructor = false) {
         $methods = new BeanMethodCollection();
         
         foreach ($this->getProperties() as $prop) {
             if ($this->hasGetter($prop->getName()) === true) {
-                $methods[] = new BeanMethod($this->getObject()->getName(), 'get' . ucfirst($prop->getName()));
+                
+                if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
+                    $methods[] = new BeanMethod($this->getObject()->getName(), 'get' . ucfirst($prop->getName()));
+                }
             }
         }
         
@@ -202,12 +205,15 @@ class Bean {
      * 
      * @return BeanMethodCollection A collection of BeanMethod objects.
      */
-    public function getSetters() {
+    public function getSetters($excludeConstructor = false) {
         $methods = new BeanMethodCollection();
         
         foreach ($this->getProperties() as $prop) {
             if ($this->hasSetter($prop->getName()) === true) {
-                $methods[] = new BeanMethod($this->getObject()->getName(), 'set' . ucfirst($prop->getName()));
+                
+                if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
+                    $methods[] = new BeanMethod($this->getObject()->getName(), 'set' . ucfirst($prop->getName()));
+                }
             }
         }
         
@@ -323,6 +329,29 @@ class Bean {
             $msg = "The class '${class}' has no constructor.";
             throw new BeanException($msg, BeanException::NO_CONSTRUCTOR);
         }
+    }
+    
+    /**
+     * Whether the bean has a constructor parameter $parameterName which is related
+     * to a valid bean property.
+     * 
+     * @param string $parameterName The name of the parameter.
+     * @return boolean
+     */
+    public function hasConstructorParameter($parameterName) {
+        $hasConstructorParameter = false;
+        
+        if (($ctor = $this->getObject()->getConstructor()) !== null) {
+            
+            foreach ($ctor->getParameters() as $param) {
+                if ($param->getName() === $parameterName && $this->hasProperty($param->getName()) === true) {
+                    $hasConstructorParameter = true;
+                    break;
+                }
+            }
+        }
+        
+        return $hasConstructorParameter;
     }
     
     /**
