@@ -54,11 +54,12 @@ abstract class PhpMarshaller {
     }
     
     /**
+     * Set the value that has to be marshalled.
      * 
      * @param mixed $toMarshall The value to be marshalled.
      * @throws InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
      */
-    protected function setToMarshall($toMarshall) {
+    public function setToMarshall($toMarshall) {
         if ($this->isMarshallable($toMarshall) === false) {
             $msg = "The value to marshall cannot be managed by this implementation.";
             throw new InvalidArgumentException($msg);
@@ -95,7 +96,12 @@ abstract class PhpMarshaller {
     }
     
     /**
-     * Marshall the value that has to be marshalled.
+     * Marshall the value that has to be marshalled. It is the responsibility
+     * of the marshall method implementation to push all marshalled objects' variable
+     * names on the PhpMarshallingContext's variable names stack.
+     * 
+     * Please be carefull, only objects AND arrays must be pushed on the variable names stack. PHP
+     * scalar values (including the null values) must not appear in the stack.
      * 
      * @throws PhpMarshallingException If an error occurs during the marshalling process.
      */

@@ -57,7 +57,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         $this->assertEquals('foo', $ctx->popFromVariableStack());
         
         $ctx->pushOnVariableStack(array('foo', 'bar'));
-        $this->assertEquals(array('bar', 'foo'), $ctx->popFromVariableStack(2));
+        $this->assertEquals(array('foo', 'bar'), $ctx->popFromVariableStack(2));
         
         $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpStreamAccess', $ctx->getStreamAccess());
     }

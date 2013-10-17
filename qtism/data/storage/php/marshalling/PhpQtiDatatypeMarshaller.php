@@ -35,6 +35,11 @@ use qtism\common\datatypes\QtiDatatype;
 
 class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     
+    /**
+     * Marshall a QtiDatatype object into PHP source code.
+     * 
+     * @throws PhpMarshallingException If an error occurs during marshalling.
+     */
     public function marshall() {
         $toMarshall = $this->getToMarshall();
 
@@ -107,10 +112,13 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
             
             // Marshall the Coords object.
             $coordsArgs = new PhpArgumentCollection(array(new PhpArgument($coords->getShape()), new PhpArgument(new PhpVariable($arrayVarName))));
-            $access->writeVariable($ctx->generateVariableName($coords));
+            $varName = $ctx->generateVariableName($coords);
+            $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
             $access->writeInstantiation(get_class($coords), $coordsArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($varName);
         }
         catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling a Coords object into the PHP source code stream.";
@@ -129,11 +137,14 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
         $access = $ctx->getStreamAccess();
         
         try {
-            $access->writeVariable($ctx->generateVariableName($pair));
+            $varName = $ctx->generateVariableName($pair);
+            $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
             $args = new PhpArgumentCollection(array(new PhpArgument($pair->getFirst()), new PhpArgument($pair->getSecond())));
             $access->writeInstantiation(get_class($pair), $args);
             $access->writeSemicolon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($varName);
         }
         catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling a Pair/DirectedPair object into the PHP source code stream.";
@@ -152,11 +163,14 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
         $access = $ctx->getStreamAccess();
         
         try {
-            $access->writeVariable($ctx->generateVariableName($duration));
+            $varName = $ctx->generateVariableName($duration);
+            $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
             $args = new PhpArgumentCollection(array(new PhpArgument($duration->__toString())));
             $access->writeInstantiation(get_class($duration), $args);
             $access->writeSemiColon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($varName);
         }
         catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling a Duration object into the PHP source code stream.";
@@ -175,11 +189,14 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
         $access = $ctx->getStreamAccess();
         
         try {
-            $access->writeVariable($ctx->generateVariableName($point));
+            $varName = $ctx->generateVariableName($point);
+            $access->writeVariable($varName);
             $access->writeEquals($ctx->mustFormatOutput());
             $args = new PhpArgumentCollection(array(new PhpArgument($point->getX()), new PhpArgument($point->getY())));
             $access->writeInstantiation(get_class($point), $args);
             $access->writeSemicolon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($varName);
         }
         catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling a Point object into the PHP source code stream.";

@@ -60,11 +60,19 @@ class PhpScalarMarshaller extends PhpMarshaller {
      * @throws PhpMarshallingException If an error occurs while marshalling.
      */
     public function marshall() {
-        $streamAccess = $this->getContext()->getStreamAccess();
+        $ctx = $this->getContext();
+        $streamAccess = $ctx->getStreamAccess();
         
         try {
             $scalar = $this->getToMarshall();
+            $varName = $this->getContext()->generateVariableName($scalar);
+            
+            $streamAccess->writeVariable($varName);
+            $streamAccess->writeEquals($ctx->mustFormatOutput());
             $streamAccess->writeScalar($scalar);
+            $streamAccess->writeSemicolon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($varName);
         }
         catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling the scalar value '${scalar}'.";

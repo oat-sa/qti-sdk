@@ -223,7 +223,7 @@ class PhpMarshallingContext {
         $stackCount = count($stack);
         
         if ($stackCount < $quantity) {
-            $msg = "The number of elements in the variable names stack (${stackCount}) exceeds the requested quantity (${quantity}).";
+            $msg = "The number of elements in the variable names stack (${stackCount}) is lower than the requested quantity (${quantity}).";
             throw new RuntimeException($msg);
         }
         
@@ -232,7 +232,7 @@ class PhpMarshallingContext {
             $values[] = $stack->pop();
         }
         
-        return (count($values) === 1) ? $values[0] : $values;
+        return (count($values) === 1) ? $values[0] : array_reverse($values);
     }
     
     /**

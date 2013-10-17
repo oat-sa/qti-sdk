@@ -28,13 +28,13 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase {
 
     public function marshallDataProvider() {
         return array(
-            array("null", null),
-            array("10", 10),
-            array("10.44", 10.44),
-            array("\"\"", ''),
-            array("\"Hello!\"", "Hello!"),
-            array("true", true),
-            array("false", false)    
+            array("\$nullvalue_0 = null;\n", null),
+            array("\$integer_0 = 10;\n", 10),
+            array("\$double_0 = 10.44;\n", 10.44),
+            array("\$string_0 = \"\";\n", ''),
+            array("\$string_0 = \"Hello!\";\n", "Hello!"),
+            array("\$boolean_0 = true;\n", true),
+            array("\$boolean_0 = false;\n", false)    
         );
     }
 }
