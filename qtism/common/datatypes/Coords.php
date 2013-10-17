@@ -27,7 +27,7 @@ namespace qtism\common\datatypes;
 use qtism\common\collections\IntegerCollection;
 use \InvalidArgumentException;
 
-class Coords extends IntegerCollection {
+class Coords extends IntegerCollection implements QtiDatatype {
 	
 	private $shape;
 	

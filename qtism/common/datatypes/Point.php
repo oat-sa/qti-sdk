@@ -38,7 +38,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Point implements Comparable {
+class Point implements Comparable, QtiDatatype {
 	
 	/**
 	 * The position on the x-axis.

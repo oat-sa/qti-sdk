@@ -19,29 +19,19 @@
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
- * @subpackage 
+ * @subpackage
  *
  */
+
 namespace qtism\common\datatypes;
 
 /**
- * From IMS QTI:
- * 
- * A directedPair value represents a pair of identifiers corresponding to a directed 
- * association between two objects. The two identifiers correspond to the source and 
- * destination objects.
+ * A simple marker interface aiming at tagging QTI Complex Datatypes such as
+ * Pair, Duration, Point, ...
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
+ * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  */
-class DirectedPair extends Pair implements QtiDatatype {
-	
-	
-	public function equals($obj) {
-		if (gettype($obj) === 'object' && $obj instanceof self) {
-			return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
-		}
-		
-		return false;
-	}
+interface QtiDatatype {
+    
 }

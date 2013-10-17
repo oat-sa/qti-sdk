@@ -39,7 +39,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Duration implements Comparable {
+class Duration implements Comparable, QtiDatatype {
 	
 	private $interval;
 	
