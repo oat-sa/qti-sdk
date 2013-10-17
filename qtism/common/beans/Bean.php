@@ -97,11 +97,24 @@ class Bean {
     /**
      * Get the getter related to the property with name $propertyName.
      * 
-     * @param string $propertyName The name of the property the getter is related to.
+     * @param string|BeanProperty $property The name of the property/the BeanProperty object the getter is related to.
      * @return BeanMethod A BeanMethod object.
      * @throws BeanException If no such valid bean property or getter exists for the bean.
+     * @throws InvalidArgumentException If $property is not a string nor a Bean
      */
-    public function getGetter($propertyName) {
+    public function getGetter($property) {
+        
+        if (is_string($property) === true) {
+            $propertyName = $property;
+        }
+        else if ($property instanceof BeanProperty) {
+            $propertyName = $property->getName();
+        }
+        else {
+            $msg = "The 'property' argument must be a string or a BeanProperty object.";
+            throw new InvalidArgumentException($msg);
+        }
+        
         if ($this->hasProperty($propertyName) === false) {
             $msg = "The bean has no '${propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
@@ -123,10 +136,23 @@ class Bean {
      * * Its visibility is public.
      * * A valid bean property exists for $propertyName.
      * 
-     * @param string $propertyName The name of the property the getter is related to.
+     * @param string|BeanProperty $property The name of the property/the BeanProperty the getter is related to.
      * @return false|string False if not found or the final chosen name for the getter.
+     * @throws InvalidArgumentException If $property is not a string nor a BeanProperty object.
      */
-    public function hasGetter($propertyName) {
+    public function hasGetter($property) {
+        
+        if (is_string($property) === true) {
+            $propertyName = $property;
+        }
+        else if ($property instanceof BeanProperty) {
+            $propertyName = $property->getName();
+        }
+        else {
+            $msg = "The 'property' argument must be a string or a BeanProperty object.";
+            throw new InvalidArgumentException($msg);
+        }
+        
         $getterNames = self::getPossibleGetterNames($propertyName);
         $hasGetter = false;
         
@@ -165,11 +191,24 @@ class Bean {
     /**
      * Get the setter related to the property with name $propertyName.
      * 
-     * @param string $propertyName The name of the property the setter is related to.
+     * @param string|BeanProperty $property The name of the property/The BeanProperty object the setter is related to.
      * @return BeanMethod A BeanMethod object.
      * @throws BeanException If no such valid bean property or setter exists for the bean.
+     * @throws InvalidArgumentException If $property is not a string nor a BeanProperty object.
      */
-    public function getSetter($propertyName) {
+    public function getSetter($property) {
+        
+        if (is_string($property) === true) {
+            $propertyName = $property;
+        }
+        else if ($property instanceof BeanProperty) {
+            $propertyName = $property->getName();
+        }
+        else {
+            $msg = "The 'property' argument must be a string or a BeanProperty object.";
+            throw new InvalidArgumentException($msg);
+        }
+        
         if ($this->hasProperty($propertyName) === false) {
             $msg = "The bean has no '${propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
@@ -191,10 +230,22 @@ class Bean {
      * * Its visibility is public.
      * * A valid bean property exists for $propertyName.
      * 
-     * @param string $propertyName
+     * @param string|BeanProperty $property The name of the property/the BeanProperty object related to the setter to be checked.
      * @return boolean
      */
-    public function hasSetter($propertyName) {
+    public function hasSetter($property) {
+        
+        if (is_string($property) === true) {
+            $propertyName = $property;
+        }
+        else if ($property instanceof BeanProperty) {
+            $propertyName = $property->getName();
+        }
+        else {
+            $msg = "The 'property' argument must be a string or a BeanProperty object.";
+            throw new InvalidArgumentException($msg);
+        }
+        
         $setterName = 'set' . ucfirst($propertyName);
         $hasSetter = false;
         

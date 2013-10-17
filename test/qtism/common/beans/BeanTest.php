@@ -213,4 +213,38 @@ class BeanTest extends QtiSmTestCase {
         $this->assertEquals(4, count($bean->getSetters()));
         $this->assertEquals(0, count($bean->getSetters(true)));
     }
+    
+    public function testGetGetterByBeanProperty() {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+        
+        $property = $bean->getProperty('cool');
+        $getter = $bean->getGetter($property);
+        $this->assertEquals('isCool', $getter->getName());
+    }
+    
+    public function testGetSetterByBeanProperty() {
+        $mock = new StrictBean('John', 'Dunbar', 'white', false);
+        $bean = new Bean($mock, true);
+    
+        $property = $bean->getProperty('cool');
+        $setter = $bean->getSetter($property);
+        $this->assertEquals('setCool', $setter->getName());
+    }
+    
+    public function testHasGetterByBeanProperty() {
+        $mock = new StrictBean('Mickael', 'Dundie', 'black', true);
+        $bean = new Bean($mock);
+        
+        $property = $bean->getProperty('firstName');
+        $this->assertTrue($bean->hasGetter($property) !== false);
+    }
+    
+    public function testHasSetterByBeanProperty() {
+        $mock = new StrictBean('Mickael', 'Dundie', 'black', true);
+        $bean = new Bean($mock);
+    
+        $property = $bean->getProperty('firstName');
+        $this->assertTrue($bean->hasSetter($property) !== false);
+    }
 }
