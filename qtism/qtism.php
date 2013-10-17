@@ -16,12 +16,11 @@
  *
  * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
+ * The QtiStateMachine PSR-O autoloader.
+ *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
- *
- *
- * The QtiStateMachine PSR-O autoloader.
  */
 namespace qtism;
 
