@@ -24,6 +24,7 @@
 namespace qtism\data\storage\php\marshalling;
 
 use qtism\data\storage\php\PhpStreamAccess;
+use qtism\data\storage\php\marshalling\Utils as PhpMarshallingUtils;
 use \SplStack;
 use \InvalidArgumentException;
 use \RuntimeException;
@@ -36,6 +37,26 @@ use \RuntimeException;
  *
  */
 class PhpMarshallingContext {
+    
+    /**
+     * An array to count variable name generations
+     * for objects. The keys of the array are class names (fully qualified)
+     * and the values the number of times a variable name was generated for this
+     * class.
+     * 
+     * @var array
+     */
+    private $objectCount;
+    
+    /**
+     * An array to count variable name generations for PHP datatypes. The datatypes
+     * are 'integer', 'double', 'boolean', 'string', 'array' + 'null'. These datatypes
+     * correspond to the keys of the array. The values are the number of times a variable
+     * name was generated for this class. 
+     * 
+     * @var array
+     */
+    private $datatypeCount;
     
     /**
      * The stack of object variable names.
@@ -67,6 +88,44 @@ class PhpMarshallingContext {
         $this->setVariableStack(new SplStack());
         $this->setFormatOutput(false);
         $this->setStreamAccess($streamAccess);
+        $this->setObjectCount(array());
+        $this->setDatatypeCount(array('string' => 0, 'boolean' => 0, 'integer' => 0, 'double' => 0, 'array' => 0, 'null' => 0));
+    }
+    
+    /**
+     * Set the object count array.
+     * 
+     * @param array $objectCount
+     */
+    protected function setObjectCount(array $objectCount) {
+        $this->objectCount = $objectCount;
+    }
+    
+    /**
+     * Get the object count array.
+     * 
+     * @return array
+     */
+    protected function getObjectCount() {
+        return $this->objectCount;
+    }
+    
+    /**
+     * Set the datatype count array.
+     * 
+     * @param array $datatypeCount
+     */
+    protected function setDatatypeCount(array $datatypeCount) {
+        $this->datatypeCount = $datatypeCount;
+    }
+    
+    /**
+     * Get the datatype count array.
+     * 
+     * @return array
+     */
+    protected function getDatatypeCount() {
+        return $this->datatypeCount;
     }
     
     /**
@@ -174,5 +233,48 @@ class PhpMarshallingContext {
         }
         
         return (count($values) === 1) ? $values[0] : $values;
+    }
+    
+    /**
+     * Generates a suitable variable name to be used for a given value.
+     * 
+     * @param mixed $value A value.
+     * @return string A variable name without the leading dollar sign ('$').
+     */
+    public function generateVariableName($value) {
+        
+        $occurence = 0;
+        
+        if (is_object($value) === true) {
+            $counter = $this->getObjectCount();
+            $className = get_class($value);
+            
+            if (isset($counter[$className]) === false) {
+                $occurence = 0;
+                $counter[$className] = $occurence;
+            }
+            else {
+                $occurence = $counter[$className];
+            }
+            
+            $counter[$className] += 1;
+            $this->setObjectCount($counter);
+        }
+        else {
+            if (is_null($value) === true) {
+                $type = 'null';
+            }
+            else {
+                $type = gettype($value);
+            }
+            
+            $counter = $this->getDatatypeCount();
+            $occurence = $counter[$type];
+            $counter[$type] += 1;
+            
+            $this->setDatatypeCount($counter);
+        }
+         
+        return PhpMarshallingUtils::variableName($value, $occurence);
     }
 }

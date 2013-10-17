@@ -1,5 +1,11 @@
 <?php
 
+use qtism\common\datatypes\Point;
+
+use qtism\common\datatypes\Shape;
+
+use qtism\common\datatypes\Coords;
+
 use qtism\common\storage\BinaryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
@@ -92,5 +98,28 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
+    }
+    
+    public function testGenerateVariableName() {
+        $ctx = new PhpMarshallingContext($this->getStreamAccess());
+        
+        $this->assertEquals('integer_0', $ctx->generateVariableName(0));
+        $this->assertEquals('integer_1', $ctx->generateVariableName(-10));
+        $this->assertEquals('nullvalue_0', $ctx->generateVariableName(null));
+        $this->assertEquals('nullvalue_1', $ctx->generateVariableName(null));
+        $this->assertEquals('nullvalue_2', $ctx->generateVariableName(null));
+        $this->assertEquals('boolean_0', $ctx->generateVariableName(true));
+        $this->assertEquals('boolean_1', $ctx->generateVariableName(false));
+        $this->assertEquals('double_0', $ctx->generateVariableName(20.3));
+        $this->assertEquals('double_1', $ctx->generateVariableName(0.0));
+        $this->assertEquals('string_0', $ctx->generateVariableName('String!'));
+        $this->assertEquals('string_1', $ctx->generateVariableName('String!'));
+        $this->assertEquals('integer_2', $ctx->generateVariableName(1337));
+        
+        $this->assertEquals('coords_0', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(10, 10, 5))));
+        $this->assertEquals('coords_1', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(10, 10, 3))));
+        $this->assertEquals('point_0', $ctx->generateVariableName(new Point(0, 0)));
+        $this->assertEquals('point_1', $ctx->generateVariableName(new Point(0, 1)));
+        $this->assertEquals('coords_2', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(5, 5, 3))));
     }
 }

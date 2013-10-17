@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
-
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\PhpStreamAccess;
 use qtism\common\storage\BinaryStream;
@@ -345,15 +345,15 @@ class PhpStreamAccessTest extends QtiSmTestCase {
     public function writeFunctionCallDataProvider() {
         return array(
             array('call_user_func()', 'call_user_func', null),
-            array('call_user_func_array($array)', 'call_user_func_array', new PhpArgumentCollection(array(new PhpArgument('$array')))),
-            array('a(true, "This is a test!", 20, 20.3, null, $foo)', 'a', new PhpArgumentCollection(array(new PhpArgument(true), new PhpArgument('This is a test!'), new PhpArgument(20), new PhpArgument(20.3), new PhpArgument(null), new PhpArgument('$foo'))))
+            array('call_user_func_array($array)', 'call_user_func_array', new PhpArgumentCollection(array(new PhpArgument(new PhpVariable('array'))))),
+            array('a(true, "This is a test!", 20, 20.3, null, $foo)', 'a', new PhpArgumentCollection(array(new PhpArgument(true), new PhpArgument('This is a test!'), new PhpArgument(20), new PhpArgument(20.3), new PhpArgument(null), new PhpArgument(new PhpVariable('foo')))))
         );
     }
     
     public function writeInstantiationDataProvider() {
         return array(
             array('new stdClass()', 'stdClass', null),
-            array('new A(true, "This is a test!", 20, 20.3, null, $foo)', 'A', new PhpArgumentCollection(array(new PhpArgument(true), new PhpArgument('This is a test!'), new PhpArgument(20), new PhpArgument(20.3), new PhpArgument(null), new PhpArgument('$foo'))))
+            array('new A(true, "This is a test!", 20, 20.3, null, $foo)', 'A', new PhpArgumentCollection(array(new PhpArgument(true), new PhpArgument('This is a test!'), new PhpArgument(20), new PhpArgument(20.3), new PhpArgument(null), new PhpArgument(new PhpVariable('foo')))))
         );
     }
 }

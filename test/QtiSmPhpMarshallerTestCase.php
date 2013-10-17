@@ -43,7 +43,9 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase {
 	}
 	
 	public function createMarshallingContext() {
-	    return new PhpMarshallingContext($this->getStreamAccess());
+	    $ctx = new PhpMarshallingContext($this->getStreamAccess());
+	    $ctx->setFormatOutput(true);
+	    return $ctx;
 	}
 	
 	protected function setStream(BinaryStream $stream) {

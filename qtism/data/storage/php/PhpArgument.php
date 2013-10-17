@@ -30,11 +30,10 @@ use \InvalidArgumentException;
  * this class.
  * 
  * * A PHP scalar value to be marshalled into PHP source code.
- * * A PHP variable name e.g. '$foo'.
+ * * A PhpVariable object that references a given variable.
  * 
  * The PhpArgument class will automatically write PHP variable names if the given
- * value is prefixed by '$'. Otherwise, it will be written as a marshalled scalar
- * value (bool:true becomes true, string:text becomes "text", ...
+ * value is a PhpVariable object. Otherwise, it will be considered as scalar value.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -51,7 +50,7 @@ class PhpArgument {
     /**
      * Creates a new PhpArgument object.
      * 
-     * @param mixed $value A PHP scalar value or null.
+     * @param mixed $value A PHP scalar value or null or a PhpVariable object.
      * @throws InvalidArgumentException If $value is not a PHP scalar value nor null.
      */
     public function __construct($value) {
@@ -59,18 +58,17 @@ class PhpArgument {
     }
     
     /**
-     * Set the value of the argument. It can be a PHP variable name e.g. '$foo' or 
-     * any kind of PHP scalar value or null.
+     * Set the value of the argument. It can be a PhpVariable object or PHP scalar value or null.
      * 
-     * @param mixed $value A PHP scalar value or a variable name or null.
-     * @throws InvalidArgumentException If $value is not a PHP scalar value nor a variable name nor null.
+     * @param mixed $value A PHP scalar value or a PhpVariable object or null or a PhpVariable object.
+     * @throws InvalidArgumentException If $value is not a PHP scalar value nor a PhpVariable object nor null.
      */
     public function setValue($value) {
-        if (Utils::isVariableReference($value) || Utils::isScalar($value)) {
+        if ($value instanceof PhpVariable || Utils::isScalar($value)) {
             $this->value = $value;
         }
         else {
-            $msg = "The 'value' argument must be a PHP scalar value, a variable reference string e.g. '\$foo' or null, '" . gettype($value) . "' given.";
+            $msg = "The 'value' argument must be a PHP scalar value, a PhpVariable object or null, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -79,7 +77,7 @@ class PhpArgument {
      * Get the value of the argument. It can be a PHP variable name e.g. '$foo' or any
      * kind of PHP scalar value or null.
      * 
-     * @return mixed A variable name or a PHP scalar value or null.
+     * @return mixed A PhpVariable object or a PHP scalar value or null.
      */
     public function getValue() {
         return $this->value;
@@ -92,7 +90,7 @@ class PhpArgument {
      * @return boolean
      */
     public function isVariableReference() {
-        return Utils::isVariableReference($this->getValue());
+        return $this->getValue() instanceof PhpVariable;
     }
     
     /**
@@ -101,7 +99,6 @@ class PhpArgument {
      * @return boolean
      */
     public function isScalar() {
-        $value = $this->getValue();
-        return Utils::isVariableReference($value) === false && Utils::isScalar($value);
+        return Utils::isScalar($this->getValue());
     }
 }

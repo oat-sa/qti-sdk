@@ -41,12 +41,20 @@ class PhpMarshallingException extends Exception {
     const UNKNOWN = 0;
     
     /**
+     * Error code to use when a runtime error occurs
+     * at marshalling time.
+     * 
+     * @var integer
+     */
+    const RUNTIME = 1;
+    
+    /**
      * Error code to use while dealing with the stream where
      * the code has to be put into.
      * 
      * @var integer
      */
-    const STREAM = 1;
+    const STREAM = 2;
     
     /**
      * Create a new PhpMarshallingException object.

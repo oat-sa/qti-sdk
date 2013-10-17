@@ -39,17 +39,20 @@ class Utils {
      * Generate a variable name for a given object. 
      * 
      * 
-     * If $value is an object, the generated variable name
-     * will be $[$object-class-short-name]_$occurence in lower case e.g. $point_0,
-     * $assessmenttest_3, ... 
+     * * If $value is an object, the generated variable name
+     * will be [$object-class-short-name]_$occurence in lower case e.g. 'point_0',
+     * 'assessmenttest_3', ... 
      * 
-     * If $value is a PHP scalar value (not including the null value), the generated
-     * variable name will be $[gettype($value)]_$occurence e.g. $string_1, $boolean_0, ...
+     * * If $value is a PHP scalar value (not including the null value), the generated
+     * variable name will be [gettype($value)]_$occurence e.g. 'string_1', 'boolean_0', ...
      * 
-     * If $value is the null value, the generated variable name will be $nullvalue_$occurence
-     * such as $nullvalue_3.
+     * * If $value is an array, the generated variable name will be array_$occurence such as
+     * 'array_0', 'array_2', ...
      * 
-     * Finally, if the $value cannot be handled by this method, an InvalidArgumentException
+     * * If $value is the null value, the generated variable name will be nullvalue_$occurence
+     * such as 'nullvalue_3'.
+     * 
+     * * Finally, if the $value cannot be handled by this method, an InvalidArgumentException
      * is thrown.
      * 
      * @param mixed $value A value.
@@ -67,16 +70,19 @@ class Utils {
         if (is_object($value) === true) {
             $object = new ReflectionObject($value);
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
-            return '$' . "${className}_${occurence}";
+            return "${className}_${occurence}";
         }
         else {
             // Is it a PHP scalar value?
             if (is_scalar($value) === true) {
-                return '$' . gettype($value) . '_' . $occurence;
+                return gettype($value) . '_' . $occurence;
+            }
+            else if (is_array($value) === true) {
+                return 'array_' . $occurence;
             }
             // null value?
             else if (is_null($value) === true) {
-                return '$nullvalue_' . $occurence;
+                return 'nullvalue_' . $occurence;
             }
             else {
                 $msg = "Cannot handle the given value.";

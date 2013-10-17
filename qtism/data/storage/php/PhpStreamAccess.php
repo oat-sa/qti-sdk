@@ -412,7 +412,7 @@ class PhpStreamAccess extends AbstractStreamAccess {
         
         try {
             $this->writeNew();
-            $this->getStream()->write(str_replace("\\", "\\\\", $classname));
+            $this->getStream()->write($classname);
             $this->writeOpeningParenthesis();
             
             if (is_null($arguments) === false) {
@@ -462,8 +462,8 @@ class PhpStreamAccess extends AbstractStreamAccess {
         try {
             $value = $argument->getValue();
             
-            if (is_string($value) === true && mb_strpos($value, '$') === 0) {
-                $this->getStream()->write($value);
+            if ($argument->isVariableReference() === true) {
+                $this->getStream()->write('$' . $value->getName());
             }
             else {
                 $this->writeScalar($value);

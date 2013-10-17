@@ -1,5 +1,7 @@
 <?php
 
+use qtism\data\storage\php\PhpVariable;
+
 use qtism\data\storage\php\PhpArgument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -9,9 +11,9 @@ class PhpArgumentTest extends QtiSmTestCase {
     public function testPhpArgument() {
         
         // Test a variable reference.
-        $arg = new PhpArgument('$test');
+        $arg = new PhpArgument(new PhpVariable('test'));
         $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpArgument', $arg);
-        $this->assertEquals('$test', $arg->getValue());
+        $this->assertInstanceOf('qtism\\data\\storage\\php\\PhpVariable', $arg->getValue());
         $this->assertTrue($arg->isVariableReference());
         $this->assertFalse($arg->isScalar());
         
