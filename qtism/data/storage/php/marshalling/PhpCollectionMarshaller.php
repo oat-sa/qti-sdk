@@ -59,19 +59,25 @@ class PhpCollectionMarshaller extends PhpMarshaller {
             } 
         }
         
-        $access->writeVariable($valueArrayVarName);
-        $access->writeEquals($ctx->mustFormatOutput());
-        $access->writeFunctionCall('array', $arrayArgs);
-        $access->writeSemicolon($ctx->mustFormatOutput());
-        
-        $collectionVarName = $ctx->generateVariableName($collection);
-        $access->writeVariable($collectionVarName);
-        $access->writeEquals($ctx->mustFormatOutput());
-        $collectionArgs = new PhpArgumentCollection(array(new PhpArgument(new PhpVariable($valueArrayVarName))));
-        $access->writeInstantiation(get_class($collection), $collectionArgs);
-        $access->writeSemicolon($ctx->mustFormatOutput());
-        
-        $ctx->pushOnVariableStack($collectionVarName);
+        try {
+            $access->writeVariable($valueArrayVarName);
+            $access->writeEquals($ctx->mustFormatOutput());
+            $access->writeFunctionCall('array', $arrayArgs);
+            $access->writeSemicolon($ctx->mustFormatOutput());
+            
+            $collectionVarName = $ctx->generateVariableName($collection);
+            $access->writeVariable($collectionVarName);
+            $access->writeEquals($ctx->mustFormatOutput());
+            $collectionArgs = new PhpArgumentCollection(array(new PhpArgument(new PhpVariable($valueArrayVarName))));
+            $access->writeInstantiation(get_class($collection), $collectionArgs);
+            $access->writeSemicolon($ctx->mustFormatOutput());
+            
+            $ctx->pushOnVariableStack($collectionVarName);
+        }
+        catch (StreamAccessException $e) {
+            $msg = "An error occured while marshalling a collection into PHP source code.";
+            throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
+        }
     }
     
     /**

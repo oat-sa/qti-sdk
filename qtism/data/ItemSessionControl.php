@@ -59,6 +59,7 @@ class ItemSessionControl extends QtiComponent {
 	 * The default is false.
 	 * 
 	 * @var boolean
+	 * @qtism-bean-property
 	 */
 	private $showFeedback = false;
 	

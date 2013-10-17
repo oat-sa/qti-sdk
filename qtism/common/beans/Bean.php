@@ -366,25 +366,21 @@ class Bean {
      * Get the constructor parameters of the bean. Only parameters that have the same name
      * than a valid bean property will be returned.
      * 
-     * @throws BeanException If the bean has no constructor.
      */
     public function getConstructorParameters() {
+        $parameters = new BeanParameterCollection();
+        
         if (($ctor = $this->getObject()->getConstructor()) !== null) {
-            $parameters = new BeanParameterCollection();
+            
             
             foreach ($ctor->getParameters() as $param) {
                 if ($this->hasProperty($param->getName()) === true) {
                     $parameters[] = new BeanParameter($this->getObject()->getName(), '__construct', $param->getName());
                 }
             }
-            
-            return $parameters;
         }
-        else {
-            $class = $this->getObject()->getName();
-            $msg = "The class '${class}' has no constructor.";
-            throw new BeanException($msg, BeanException::NO_CONSTRUCTOR);
-        }
+        
+        return $parameters;
     }
     
     /**

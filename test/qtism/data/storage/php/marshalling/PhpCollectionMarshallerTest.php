@@ -1,9 +1,7 @@
 <?php
 
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
-
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
-
 use qtism\common\collections\IntegerCollection;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmPhpMarshallerTestCase.php');

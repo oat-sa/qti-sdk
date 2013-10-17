@@ -97,11 +97,8 @@ abstract class PhpMarshaller {
     
     /**
      * Marshall the value that has to be marshalled. It is the responsibility
-     * of the marshall method implementation to push all marshalled objects' variable
-     * names on the PhpMarshallingContext's variable names stack.
-     * 
-     * Please be carefull, only objects AND arrays must be pushed on the variable names stack. PHP
-     * scalar values (including the null values) must not appear in the stack.
+     * of the marshall method implementation to push all marshalled values on the
+     * variable names stack.
      * 
      * @throws PhpMarshallingException If an error occurs during the marshalling process.
      */
