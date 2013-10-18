@@ -23,6 +23,7 @@
 
 namespace qtism\data\storage\php\marshalling;
 
+use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
@@ -45,16 +46,15 @@ class PhpArrayMarshaller extends PhpMarshaller {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
         $array = $this->getToMarshall();
-        
-        $arrayCount = count($array);
         $args = new PhpArgumentCollection();
         
-        if ($arrayCount > 0) {
-            $poppedVars = $ctx->popFromVariableStack($arrayCount);
-            
-            foreach ($poppedVars as $varName) {
-                $args[] = new PhpArgument(new PhpVariable($varName));
+        foreach ($array as $a) {
+            if (PhpUtils::isScalar($a) === false) {
+                $msg = "The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.";
+                throw new PhpMarshallingException($msg);
             }
+            
+            $args[] = new PhpArgument($a);
         }
         
         $arrayVarName = $ctx->generateVariableName($array);
