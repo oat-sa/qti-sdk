@@ -24,6 +24,7 @@
 namespace qtism\common\beans;
 
 use \InvalidArgumentException;
+use \ReflectionClass;
 use \ReflectionObject;
 use \ReflectionMethod;
 use \ReflectionProperty;
@@ -45,20 +46,26 @@ class Bean {
     /**
      * The object to be wrapped as a bean as a PHP ReflectionObject.
      * 
-     * @var ReflectionObject
+     * @var ReflectionClass
      */
-    private $object;
+    private $class;
     
     /**
      * Create a new Bean object.
      * 
      * @param mixed $object The object to be wrapped as a Bean.
      * @param boolean $strict Whether the given $object must be a strict Bean.
+     * @param string $asInstanceOf The name of the class that should be used for reflection.
      * @throws InvalidArgumentException If $object is not an object.
      */
-    public function __construct($object, $strict = false) {
+    public function __construct($object, $strict = false, $asInstanceOf = '') {
         if (is_object($object) === true) {
-            $this->setObject(new ReflectionObject($object));
+            if (empty($asInstanceOf) === true) {
+                $this->setClass(new ReflectionClass($object));
+            }
+            else {
+                $this->setClass(new ReflectionClass($asInstanceOf));
+            }
             
             if ($strict === true) {
                 try {
@@ -77,21 +84,21 @@ class Bean {
     }
     
     /**
-     * Set the object to be wrapped as a Bean as a PHP ReflectionObject.
+     * Set the object to be wrapped Bean as a PHP ReflectionClass.
      * 
-     * @param ReflectionObject $object A ReflectionObject object. 
+     * @param ReflectionClass $class A ReflectionClass object. 
      */
-    protected function setObject(ReflectionObject $object) {
-        $this->object = $object;
+    protected function setClass(ReflectionClass $class) {
+        $this->class = $class;
     }
     
     /**
-     * Get the object to be wrapped as a Bean as a PHP ReflectionObject.
+     * Get the object to be wrapped as a Bean as a PHP ReflectionClass.
      * 
-     * @return ReflectionObject A ReflectionObject object.
+     * @return ReflectionClass A ReflectionClass object.
      */
-    protected function getObject() {
-        return $this->object;
+    protected function getClass() {
+        return $this->class;
     }
     
     /**
@@ -125,7 +132,7 @@ class Bean {
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
         
-        return new BeanMethod($this->getObject()->getName(), $getterName);
+        return new BeanMethod($this->getClass()->getName(), $getterName);
     }
     
     /**
@@ -157,8 +164,8 @@ class Bean {
         $hasGetter = false;
         
         foreach ($getterNames as $possibleGetterName) {
-            if ($this->getObject()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true) {
-                if ($this->getObject()->getMethod($possibleGetterName)->isPublic()) {
+            if ($this->getClass()->hasMethod($possibleGetterName) === true && $this->hasProperty($propertyName) === true) {
+                if ($this->getClass()->getMethod($possibleGetterName)->isPublic()) {
                     $hasGetter = $possibleGetterName;
                     break;
                 }
@@ -180,7 +187,7 @@ class Bean {
             if (($getterName = $this->hasGetter($prop->getName())) !== false) {
                 
                 if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
-                    $methods[] = new BeanMethod($this->getObject()->getName(), $getterName);
+                    $methods[] = new BeanMethod($this->getClass()->getName(), $getterName);
                 }
             }
         }
@@ -219,7 +226,7 @@ class Bean {
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
         
-        return new BeanMethod($this->getObject()->getName(), 'set' . ucfirst($propertyName));
+        return new BeanMethod($this->getClass()->getName(), 'set' . ucfirst($propertyName));
     }
     
     /**
@@ -249,8 +256,8 @@ class Bean {
         $setterName = 'set' . ucfirst($propertyName);
         $hasSetter = false;
         
-        if ($this->getObject()->hasMethod($setterName) === true && $this->hasProperty($propertyName) === true) {
-            $hasSetter = $this->getObject()->getMethod($setterName)->isPublic();
+        if ($this->getClass()->hasMethod($setterName) === true && $this->hasProperty($propertyName) === true) {
+            $hasSetter = $this->getClass()->getMethod($setterName)->isPublic();
         }
         
         return $hasSetter;
@@ -268,7 +275,7 @@ class Bean {
             if ($this->hasSetter($prop->getName()) === true) {
                 
                 if ($excludeConstructor === false || $this->hasConstructorParameter($prop->getName()) === false) {
-                    $methods[] = new BeanMethod($this->getObject()->getName(), 'set' . ucfirst($prop->getName()));
+                    $methods[] = new BeanMethod($this->getClass()->getName(), 'set' . ucfirst($prop->getName()));
                 }
             }
         }
@@ -287,7 +294,7 @@ class Bean {
      * @return boolean
      */
     public function hasProperty($propertyName) {
-        return $this->isPropertyAnnotated($propertyName);
+       return $this->isPropertyAnnotated($propertyName);
     }
     
     /**
@@ -297,7 +304,7 @@ class Bean {
      * @return BeanProperty A BeanProperty object.
      */
     public function getProperty($propertyName) {
-        $className = $className = $this->getObject()->getName();
+        $className = $className = $this->getClass()->getName();
         
         if ($this->hasProperty($propertyName) === true) {
 
@@ -323,10 +330,23 @@ class Bean {
     public function getProperties() {
         $properties = new BeanPropertyCollection();
         
-        foreach ($this->getObject()->getProperties() as $prop) {
-            if ($this->isPropertyAnnotated($prop->getName()) === true) {
-                $properties[] = new BeanProperty($this->getObject()->getName(), $prop->getName());
+        // Properties already taken into account accross the hierarchy.
+        $registeredProperties = array();
+        $target = $this->getClass();
+        
+        while ($target) {
+            
+            foreach ($target->getProperties() as $prop) {
+                
+                $propName = $prop->getName();
+                
+                if ($this->isPropertyAnnotated($propName) === true && in_array($propName, $registeredProperties) === false) {
+                    $properties[] = new BeanProperty($target->getName(), $propName);
+                    $registeredProperties[] = $propName;
+                }
             }
+            
+            $target = $target->getParentClass();
         }
         
         return $properties;
@@ -370,12 +390,12 @@ class Bean {
     public function getConstructorParameters() {
         $parameters = new BeanParameterCollection();
         
-        if (($ctor = $this->getObject()->getConstructor()) !== null) {
+        if (($ctor = $this->getClass()->getConstructor()) !== null) {
             
             
             foreach ($ctor->getParameters() as $param) {
                 if ($this->hasProperty($param->getName()) === true) {
-                    $parameters[] = new BeanParameter($this->getObject()->getName(), '__construct', $param->getName());
+                    $parameters[] = new BeanParameter($this->getClass()->getName(), '__construct', $param->getName());
                 }
             }
         }
@@ -393,7 +413,7 @@ class Bean {
     public function hasConstructorParameter($parameterName) {
         $hasConstructorParameter = false;
         
-        if (($ctor = $this->getObject()->getConstructor()) !== null) {
+        if (($ctor = $this->getClass()->getConstructor()) !== null) {
             
             foreach ($ctor->getParameters() as $param) {
                 if ($param->getName() === $parameterName && $this->hasProperty($param->getName()) === true) {
@@ -413,14 +433,24 @@ class Bean {
      * @return boolean
      */
     protected function isPropertyAnnotated($propertyName) {
+        $target = $this->getClass();
         $isAnnotated = false;
-        $object = $this->getObject();
         
-        if ($object->hasProperty($propertyName)) {
-            $comment = $object->getProperty($propertyName)->getDocComment();
-            if (empty($comment) === false) {
-                $isAnnotated = mb_strpos($comment, self::ANNOTATION_PROPERTY, 0, 'UTF-8') !== false;
+        while ($target) {
+            
+            if ($target->hasProperty($propertyName)) {
+                $comment = $target->getProperty($propertyName)->getDocComment();
+                if (empty($comment) === false) {
+                    $isAnnotated = mb_strpos($comment, self::ANNOTATION_PROPERTY, 0, 'UTF-8') !== false;
+                    
+                    if ($isAnnotated === true) {
+                        break;
+                    }
+                    
+                }
             }
+            
+            $target = $target->getParentClass();
         }
         
         return $isAnnotated;
@@ -439,9 +469,9 @@ class Bean {
          * to a valid annotated property, and the appropriate
          * getter and setter. (This implies the bean has a constructor)
          */
-        if ($this->getObject()->hasMethod('__construct') === true) {
-            $params = $this->getObject()->getMethod('__construct')->getParameters();
-            $class = $this->getObject()->getName();
+        if ($this->getClass()->hasMethod('__construct') === true) {
+            $params = $this->getClass()->getMethod('__construct')->getParameters();
+            $class = $this->getClass()->getName();
             
             foreach ($params as $param) {
                 $name = $param->getName();
@@ -465,7 +495,7 @@ class Bean {
          * 2nd rule to respect is that any property annotated as a bean property
          * must have the appropriate getter and setter.
          */
-        foreach ($this->getObject()->getProperties() as $prop) {
+        foreach ($this->getClass()->getProperties() as $prop) {
             $name = $prop->getName();
             
             if ($this->hasProperty($name) === true) {

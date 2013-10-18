@@ -54,7 +54,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         $this->assertTrue($ctx->mustFormatOutput());
         
         $ctx->pushOnVariableStack('foo');
-        $this->assertEquals('foo', $ctx->popFromVariableStack());
+        $this->assertEquals(array('foo'), $ctx->popFromVariableStack());
         
         $ctx->pushOnVariableStack(array('foo', 'bar'));
         $this->assertEquals(array('foo', 'bar'), $ctx->popFromVariableStack(2));

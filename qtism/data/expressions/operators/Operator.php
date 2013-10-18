@@ -72,6 +72,7 @@ abstract class Operator extends Expression {
 	 * The sub-expressions.
 	 * 
 	 * @var ExpressionCollection
+	 * @qtism-bean-property
 	 */
 	private $expressions;
 	

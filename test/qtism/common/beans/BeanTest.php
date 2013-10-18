@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\beans\Bean;
 use qtism\common\beans\BeanException;
 

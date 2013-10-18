@@ -207,7 +207,7 @@ class PhpMarshallingContext {
      * Pop a given $quantity of values from the variable names stack.
      * 
      * @param integer $quantity
-     * @return string|array A string ($quantity = 1) or an array of strings ($quantity > 1).
+     * @return array An array of strings.
      * @throws RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
      * @throws InvalidArgumentException If $quantity < 1.
      */
@@ -232,7 +232,7 @@ class PhpMarshallingContext {
             $values[] = $stack->pop();
         }
         
-        return (count($values) === 1) ? $values[0] : array_reverse($values);
+        return array_reverse($values);
     }
     
     /**

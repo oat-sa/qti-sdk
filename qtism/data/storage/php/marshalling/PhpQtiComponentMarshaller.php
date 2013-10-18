@@ -31,13 +31,62 @@ use qtism\data\QtiComponent;
 
 class PhpQtiComponentMarshaller extends PhpMarshaller {
     
+    /**
+     * 
+     * @var string
+     */
+    private $variableName = '';
+    
+    /**
+     * 
+     * @var string
+     */
+    private $asInstanceOf = '';
+    
+    public function __construct(PhpMarshallingContext $context, $toMarshall) {
+        parent::__construct($context, $toMarshall);
+    }
+    
+    /**
+     * 
+     * @param string $asInstanceOf
+     */
+    public function setAsInstanceOf($asInstanceOf) {
+        $this->asInstanceOf = $asInstanceOf;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getAsInstanceOf() {
+        return $this->asInstanceOf;
+    }
+    
+    /**
+     * 
+     * @param string $variableName
+     */
+    public function setVariableName($variableName) {
+        $this->variableName = $variableName;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getVariableName() {
+        return $this->variableName;
+    }
+    
     public function marshall() {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
         $component = $this->getToMarshall();
         
         try {
-            $bean = new Bean($component, true);
+            $asInstanceOf = $this->getAsInstanceOf();
+            $bean = new Bean($component, false, $asInstanceOf);
             
             // -- Component Instantiation.
             $ctorArgs = $bean->getConstructorParameters();
@@ -53,12 +102,12 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
                 }
             }
             
-            
-            $componentVarName = $ctx->generateVariableName($component);
+            $componentVarName = $this->getVariableName();
+            $componentVarName = (empty($componentVarName) === true) ? $ctx->generateVariableName($component) : $componentVarName;
             
             $access->writeVariable($componentVarName);
             $access->writeEquals($ctx->mustFormatOutput());
-            $access->writeInstantiation(get_class($component), $phpArgs);
+            $access->writeInstantiation((empty($asInstanceOf) === true) ? get_class($component) : $asInstanceOf , $phpArgs);
             $access->writeSemicolon($ctx->mustFormatOutput());
             
             // -- Call to setters (that are not involved in the component construction).

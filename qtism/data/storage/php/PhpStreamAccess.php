@@ -66,7 +66,14 @@ class PhpStreamAccess extends AbstractStreamAccess {
         }
         
         try {
-            if (is_numeric($scalar) === true) {
+            if (is_int($scalar) === true) {
+                $this->getStream()->write($scalar);
+            }
+            else if (is_double($scalar) === true) {
+                if (strpos('' . $scalar, '.') === false) {
+                    $scalar = $scalar . '.0';
+                }
+                
                 $this->getStream()->write($scalar);
             }
             else if (is_string($scalar) === true) {

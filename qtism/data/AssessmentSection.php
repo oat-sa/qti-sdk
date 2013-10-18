@@ -207,7 +207,7 @@ class AssessmentSection extends SectionPart {
 	 * 
 	 * @param Selection $selection A selection rule.
 	 */
-	public function setSelection(Selection $selection) {
+	public function setSelection(Selection $selection = null) {
 		$this->selection = $selection;
 	}
 	
@@ -235,7 +235,7 @@ class AssessmentSection extends SectionPart {
 	 * 
 	 * @param Ordering $ordering An Ordering object.
 	 */
-	public function setOrdering(Ordering $ordering) {
+	public function setOrdering(Ordering $ordering = null) {
 		$this->ordering = $ordering;
 	}
 	
