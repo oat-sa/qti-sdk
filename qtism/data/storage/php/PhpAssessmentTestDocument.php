@@ -60,6 +60,7 @@ class PhpAssessmentTestDocument extends AssessmentTest implements Document {
      * 
      */
     public function __construct($version = '2.1') {
+        parent::__construct('noIdentifier', 'noTitle');
         $this->setVersion($version);
         $this->setPhpDocument(new PhpDocument($this));
     }
@@ -116,6 +117,17 @@ class PhpAssessmentTestDocument extends AssessmentTest implements Document {
      */
     public function load($url) {
         $this->getPhpDocument()->load($url);
+        $documentComponent = $this->getPhpDocument()->getDocumentComponent();
+        $this->setIdentifier($documentComponent->getIdentifier());
+        $this->setTitle($documentComponent->getTitle());
+        $this->setToolName($documentComponent->getToolName());
+        $this->setToolVersion($documentComponent->getToolVersion());
+        $this->setOutcomeDeclarations($documentComponent->getOutcomeDeclarations());
+        $this->setTimeLimits($documentComponent->getTimeLimits());
+        $this->setTestParts($documentComponent->getTestParts());
+        $this->setOutcomeProcessing($documentComponent->getOutcomeProcessing());
+        $this->setTestFeedbacks($documentComponent->getTestFeedbacks());
+        
         $this->setUri($url);
     }
     

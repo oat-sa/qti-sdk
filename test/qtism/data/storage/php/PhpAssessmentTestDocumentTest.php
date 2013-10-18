@@ -35,6 +35,22 @@ class PhpAssessmentTestDocumentTest extends QtiSmTestCase {
         unset($file);
     }
     
+    public function testLoadInteractionMixSaschsen() {
+        $xmlDoc = new XmlAssessmentTestDocument('2.1');
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
+        
+        $phpDoc = new PhpAssessmentTestDocument('2.1');
+        $phpDoc->getPhpDocument()->setDocumentComponent($xmlDoc);
+        
+        $file = tempnam('/tmp', 'qsm');
+        $phpDoc->save($file);
+        
+        $phpDoc = new PhpAssessmentTestDocument('2.1');
+        $phpDoc->load($file);
+        
+        $this->assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getIdentifier());
+    }
+    
     public function loadTestSamplesDataProvider() {
         return array(
             array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml'),

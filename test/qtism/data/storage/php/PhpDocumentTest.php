@@ -15,6 +15,8 @@ class PhpDocumentTest extends QtiSmTestCase {
         
         $assessmentTest = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
+        
+        $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
     }
     
      public function testSimpleSave() {
