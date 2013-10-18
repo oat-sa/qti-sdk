@@ -26,15 +26,12 @@ namespace qtism\data\storage\php;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 
 use qtism\common\datatypes\QtiDatatype;
-
 use qtism\data\AssessmentSection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\php\marshalling\PhpCollectionMarshaller;
-
 use qtism\data\storage\php\marshalling\PhpQtiComponentMarshaller;
-
 use qtism\data\QtiIdentifiable;
 use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\common\beans\Bean;
@@ -45,6 +42,7 @@ use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\Utils as PhpUtils;
 use \SplStack;
+use \Exception;
 
 /**
  * Represents a PHP source code document containing the appropriate source code
@@ -204,8 +202,14 @@ class PhpDocument {
             throw new PhpStorageException($msg);
         }
         
-        require($url);
-        $this->setDocumentComponent($rootcomponent);
+        try {
+            require($url);
+            $this->setDocumentComponent($rootcomponent);
+        }
+        catch (Exception $e) {
+            $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
+            throw new PhpStorageException($msg, 0, $e);
+        }
     }
     
     protected static function getBaseImplementation($object) {
