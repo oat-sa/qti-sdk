@@ -592,25 +592,28 @@ class Route implements Iterator {
      */
     protected function registerAssessmentSection(RouteItem $routeItem) {
         $assessmentSectionMap = $this->getAssessmentSectionMap();
-        $assessmentSection = $routeItem->getAssessmentSection();
         
-        if (isset($assessmentSectionMap[$assessmentSection]) === false) {
-            $assessmentSectionMap[$assessmentSection] = array();
+        foreach ($routeItem->getAssessmentSections() as $assessmentSection) {
+            
+            if (isset($assessmentSectionMap[$assessmentSection]) === false) {
+                $assessmentSectionMap[$assessmentSection] = array();
+            }
+            
+            $target = $assessmentSectionMap[$assessmentSection];
+            $target[] = $routeItem;
+            $assessmentSectionMap[$assessmentSection] = $target;
+            
+            // Register the RouteItem in the assessmentSectionIdentifierMap.
+            $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
+            $id = $assessmentSection->getIdentifier();
+            
+            if (isset($assessmentSectionIdentifierMap) === false) {
+                $assessmentSectionIdentifierMap[$id] = array();
+            }
+            
+            $assessmentSectionIdentifierMap[$id][] = $routeItem;
         }
         
-        $target = $assessmentSectionMap[$assessmentSection];
-        $target[] = $routeItem;
-        $assessmentSectionMap[$assessmentSection] = $target;
-        
-        // Register the RouteItem in the assessmentSectionIdentifierMap.
-        $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
-        $id = $assessmentSection->getIdentifier();
-        
-        if (isset($assessmentSectionIdentifierMap) === false) {
-            $assessmentSectionIdentifierMap[$id] = array();
-        }
-        
-        $assessmentSectionIdentifierMap[$id][] = $routeItem;
         $this->setAssessmentSectionIdentifierMap($assessmentSectionIdentifierMap);
     }
     

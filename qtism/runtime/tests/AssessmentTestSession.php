@@ -540,7 +540,13 @@ class AssessmentTestSession extends State {
 				    }
 				    catch (OutOfBoundsException $e) {
 				        // No such TestPart referenced in the AssessmentTestSession.
-				        return null;
+				        // Maybe it's an assessmentSection duration ?
+				        try {
+				            
+				        }
+				        catch (OutOfBoundsException $e) {
+				            return null;
+				        }
 				    }
 				}
 			    
@@ -1653,29 +1659,50 @@ class AssessmentTestSession extends State {
 	 * @return Duration A Duration object.
 	 */
 	protected function getTestPartDuration($identifier) {
-	    $duration = new Duration('PT0S');
-	     
 	    try {
 	        $involvedRouteItems = $this->getRoute()->getRouteItemsByTestPart($identifier);
-	        $itemSessionStore = $this->getAssessmentItemSessionStore();
-	    
-	        if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
-	            foreach ($involvedRouteItems as $routeItem) {
-	                $itemSessions = $itemSessionStore->getAssessmentItemSessions($routeItem->getAssessmentItemRef());
-	    
-	                foreach ($itemSessions as $itemSession) {
-	                    $duration->add($itemSession['duration']);
-	                }
-	            }
-	        }
-	         
-	        return $duration;
+	        return $this->computeRouteItemsDuration($involvedRouteItems);
 	    }
 	    catch (OutOfBoundsException $e) {
-	        // No assessmentSection with $identifier in the Route.
+	        // No TestPart with $identifier in the Route.
 	        $msg = "No TestPart with identifier '${identifier}' referenced in the AssessmentTestSession.";
 	        throw new OutOfBoundsException($msg, 0, $e);
 	    }
+	}
+	
+	/**
+	 * Get the duration of a given AssessmentSection by specifying its identifier.
+	 * 
+	 * @param string $identifier The identifier of the AssessmentSection you want to know the duration.
+	 * @throws OutOfBoundsException If $identifier does not reference any AssessmentSection in the AssessmentTestSession.
+	 * @return Duration A Duration object.
+	 */
+	protected function getAssessmentSectionDuration($identifier) {
+	    try {
+	        $involvedRouteItems = $this->getRoute()->getRouteItemsByAssessmentSection($identifier);
+	        return $this->computeRouteItemsDuration($involveRouteItems);
+	    }
+	    catch (OutOfBoundsException $e) {
+	        $msg = "No AssessmentSection with identifier '${identifier}' referenced in the AssessmentTestSession.";
+	        throw new OutOfBoundsException($msg, 0, $e);
+	    }
+	}
+	
+	protected function computeRouteItemsDuration(RouteItemCollection $routeItems) {
+	    $duration = new Duration('PT0S');
+	    $itemSessionStore = $this->getAssessmentItemSessionStore();
+	     
+	    if ($this->getState() !== AssessmentTestSessionState::INITIAL) {
+	        foreach ($routeItems as $routeItem) {
+	            $itemSessions = $itemSessionStore->getAssessmentItemSessions($routeItem->getAssessmentItemRef());
+	             
+	            foreach ($itemSessions as $itemSession) {
+	                $duration->add($itemSession['duration']);
+	            }
+	        }
+	    }
+	    
+	    return $duration;
 	}
 	
 	/**
