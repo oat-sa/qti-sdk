@@ -33,6 +33,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\TestPart;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
+use qtism\data\AssessmentSectionCollection;
 use \Iterator;
 use \SplObjectStorage;
 use \OutOfBoundsException;
@@ -336,12 +337,12 @@ class Route implements Iterator {
      * Add a new RouteItem object at the end of the Route.
      * 
      * @param AssessmentItemRef $assessmentItemRef
-     * @param AssessmentSection $assessmentSection
+     * @param AssessmentSection|AssessmentSectionCollection $assessmentSections
      * @param TestPart $testPart
      */
-    public function addRouteItem(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection = null, TestPart $testPart) {
+    public function addRouteItem(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart) {
         // Push the routeItem in the track :) !
-        $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart);
+        $routeItem = new RouteItem($assessmentItemRef, $assessmentSections, $testPart);
         $this->registerAssessmentItemRef($routeItem);
         $this->registerTestPart($routeItem);
         $this->registerAssessmentSection($routeItem);

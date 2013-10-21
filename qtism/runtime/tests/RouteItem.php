@@ -29,6 +29,7 @@ use qtism\data\rules\PreCondition;
 use qtism\data\rules\BranchRule;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\AssessmentSection;
+use qtism\data\AssessmentSectionCollection;
 use qtism\data\TestPart;
 use qtism\data\AssessmentItemRef;
 
@@ -55,11 +56,11 @@ class RouteItem {
     private $testPart;
     
     /**
-     * The AssessmentSection object bound to the RouteItem.
+     * The AssessmentSectionCollection object bound to the RouteItem.
      * 
-     * @var AssessmentSection 
+     * @var AssessmentSectionCollection
      */
-    private $assessmentSection;
+    private $assessmentSections;
     
     /**
      * The BranchRule objects to be applied after the RouteItem.
@@ -83,16 +84,22 @@ class RouteItem {
     private $occurence = 0;
     
     /**
-     * Create a new RouteItem object. The $assessmentSection argument might be null if and only if the
-     * RouteItem does not belong to any visible AssessmentSection object.
+     * Create a new RouteItem object.
      * 
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
-     * @param AssessmentSection $assessmentSection The AssessmentSection object bound to the RouteItem.
+     * @param AssessmentSection|AssessmentSectionCollection $assessmentSection The AssessmentSection object bound to the RouteItem.
      * @param TestPart $testPart The TestPart object bound to the RouteItem.
      */
-    public function __construct(AssessmentItemRef $assessmentItemRef, AssessmentSection $assessmentSection = null, TestPart $testPart) {
+    public function __construct(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart) {
         $this->setAssessmentItemRef($assessmentItemRef);
-        $this->setAssessmentSection($assessmentSection);
+        
+        if ($assessmentSections instanceof AssessmentSection) {
+            $this->setAssessmentSection($assessmentSections);
+        }
+        else {
+            $this->setAssessmentSections($assessmentSections);
+        }
+        
         $this->setTestPart($testPart);
         $this->setBranchRules(new BranchRuleCollection());
         $this->setPreConditions(new PreConditionCollection());
@@ -140,10 +147,19 @@ class RouteItem {
     /**
      * Set the AssessmentSection object bound to the RouteItem.
      * 
-     * @param AssessmentSection $assessmentSection
+     * @param AssessmentSection $assessmentSection An AssessmentSection object.
      */
-    public function setAssessmentSection(AssessmentSection $assessmentSection = null) {
-        $this->assessmentSection = $assessmentSection;
+    public function setAssessmentSection(AssessmentSection $assessmentSection) {
+        $this->assessmentSections = new AssessmentSectionCollection(array($assessmentSection));
+    }
+    
+    /**
+     * Set the AssessmentSection objects bound to the RouteItem.
+     * 
+     * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
+     */
+    public function setAssessmentSections(AssessmentSectionCollection $assessmentSections) {
+        $this->assessmentSections = $assessmentSections;
     }
     
     /**
@@ -249,11 +265,23 @@ class RouteItem {
     }
     
     /**
-     * Get the AssessmentSection object bound to the RouteItem.
+     * Get the unique AssessmentSection object bound to the RouteItem. If the RouteItem
+     * is bound to multiple assessment sections, the nearest parent of the RouteItem's item's assessment section
+     * will be returned.
      * 
      * @return AssessmentSection An AssessmentSection object.
      */
     public function getAssessmentSection() {
-        return $this->assessmentSection;
+        $assessmentSections = $this->getAssessmentSections()->getArrayCopy();
+        return $assessmentSections[count($assessmentSections) - 1];
+    }
+    
+    /**
+     * Get the AssessmentSection objects bound to the RouteItem.
+     * 
+     * @return AssessmentSectionCollection An AssessmentSectionCollection object.
+     */
+    public function getAssessmentSections() {
+        return $this->assessmentSections;
     }
 }

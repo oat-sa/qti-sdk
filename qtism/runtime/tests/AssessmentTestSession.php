@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
 use qtism\common\datatypes\Duration;
 use qtism\runtime\processing\ResponseProcessingEngine;
@@ -1830,10 +1831,11 @@ class AssessmentTestSession extends State {
 	    
 	    foreach ($factory->getAssessmentTest()->getTestParts() as $testPart) {
 	       
+	        $assessmentSectionStack = array();
+	        
 	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
 	            $trail = array();
 	            $mark = array();
-	            $visibleSectionStack = array();
 	            
 	            array_push($trail, $assessmentSection);
 	            
@@ -1844,10 +1846,7 @@ class AssessmentTestSession extends State {
 	                if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
 	                    // 1st pass on assessmentSection.
 	                    $currentAssessmentSection = $current;
-	                    
-	                    if ($currentAssessmentSection->isVisible() === true) {
-	                        array_push($visibleSectionStack, $currentAssessmentSection);
-	                    }
+	                    array_push($assessmentSectionStack, $currentAssessmentSection);
 	                    
 	                    array_push($mark, $current);
 	                    array_push($trail, $current);
@@ -1866,14 +1865,6 @@ class AssessmentTestSession extends State {
 	                    
 	                    $selection = new BasicSelection($current, new SelectableRouteCollection(array_reverse($poppedRoutes)));
 	                    $selectedRoutes = $selection->select();
-	                    
-	                    // The last visible AssessmentSection from the top to the bottom of the tree
-	                    // is useful to know which RubrikBlock to apply on selected RouteItems
-	                    $lastVisible = array_pop($visibleSectionStack);
-	                    if (count($visibleSectionStack) === 0) {
-	                        // top-level AssessmentSection, the visible container is actually the TestPart it belongs to.
-	                        $lastVisible = $testPart;
-	                    }
 	                    
 	                    // Shuffling can be applied on selected routes.
 	                    // $route will contain the final result of the selection + ordering.
@@ -1894,11 +1885,12 @@ class AssessmentTestSession extends State {
 	                    $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
 	                    
 	                    array_push($routeStack, $route);
+	                    array_pop($assessmentSectionStack);
 	                }
 	                else if ($current instanceof AssessmentItemRef) {
 	                    // leaf node.
 	                    $route = new SelectableRoute($current->isFixed(), $current->isRequired());
-	                    $route->addRouteItem($current, $currentAssessmentSection, $testPart);
+	                    $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart);
 	                    array_push($routeStack, $route);
 	                }
 	            }

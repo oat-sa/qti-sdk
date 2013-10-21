@@ -1216,4 +1216,105 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
 	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
+	
+	public function testRouteItemAssessmentSections() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_assessmentsections.xml');
+	    
+	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
+	    
+	    $route = $assessmentTestSession->getRoute();
+	    
+	    // Route[0] - S01 -> S01A -> Q01
+	    $this->assertEquals('Q01', $route->getRouteItemAt(0)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(0)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01A']));
+	    // The returned assessment section must be the nearest parent section.
+	    $this->assertEquals('S01A', $route->getRouteItemAt(0)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[1] - S01 -> S01A -> Q02
+	    $this->assertEquals('Q02', $route->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(1)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01A']));
+	    $this->assertEquals('S01A', $route->getRouteItemAt(1)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[2] - S01 -> S01A -> Q03
+	    $this->assertEquals('Q03', $route->getRouteItemAt(2)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(2)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01A']));
+	    $this->assertEquals('S01A', $route->getRouteItemAt(0)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[3] - S01 -> S01B -> Q04
+	    $this->assertEquals('Q04', $route->getRouteItemAt(3)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(3)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01B']));
+	    $this->assertEquals('S01B', $route->getRouteItemAt(3)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[4] - S01 -> S01B -> Q05
+	    $this->assertEquals('Q05', $route->getRouteItemAt(4)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(4)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01B']));
+	    $this->assertEquals('S01B', $route->getRouteItemAt(4)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[5] - S01 -> S01B -> Q06
+	    $this->assertEquals('Q06', $route->getRouteItemAt(5)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(5)->getAssessmentSections();
+	    $this->assertEquals(2, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S01']));
+	    $this->assertTrue(isset($assessmentSections['S01B']));
+	    $this->assertEquals('S01B', $route->getRouteItemAt(5)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[6] - S02 -> Q07
+	    $this->assertEquals('Q07', $route->getRouteItemAt(6)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(6)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S02']));
+	    $this->assertEquals('S02', $route->getRouteItemAt(6)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[7] - S02 -> Q08
+	    $this->assertEquals('Q08', $route->getRouteItemAt(7)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(7)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S02']));
+	    $this->assertEquals('S02', $route->getRouteItemAt(7)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[8] - S02 -> Q09
+	    $this->assertEquals('Q09', $route->getRouteItemAt(8)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(8)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S02']));
+	    $this->assertEquals('S02', $route->getRouteItemAt(8)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[9] - S03 -> Q10
+	    $this->assertEquals('Q10', $route->getRouteItemAt(9)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(9)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S03']));
+	    $this->assertEquals('S03', $route->getRouteItemAt(9)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[10] - S03 -> Q11
+	    $this->assertEquals('Q11', $route->getRouteItemAt(10)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(10)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S03']));
+	    $this->assertEquals('S03', $route->getRouteItemAt(10)->getAssessmentSection()->getIdentifier());
+	    
+	    // Route[11] - S03 -> Q12
+	    $this->assertEquals('Q12', $route->getRouteItemAt(11)->getAssessmentItemRef()->getIdentifier());
+	    $assessmentSections = $route->getRouteItemAt(11)->getAssessmentSections();
+	    $this->assertEquals(1, count($assessmentSections));
+	    $this->assertTrue(isset($assessmentSections['S03']));
+	    $this->assertEquals('S03', $route->getRouteItemAt(11)->getAssessmentSection()->getIdentifier());
+	}
 }
