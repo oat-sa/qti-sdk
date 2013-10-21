@@ -31,5 +31,5 @@ class QtiBinaryConstants {
      * 
      * @var integer
      */
-    const QTI_BINARY_STORAGE_VERSION = 2;
+    const QTI_BINARY_STORAGE_VERSION = 3;
 }

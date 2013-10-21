@@ -432,10 +432,11 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $bin = '';
         $bin .= "\x00"; // occurence = 0
         $bin .= pack('S', 2); // item-tree-position = Q03
-        $bin .= pack('S', 0); // section-tree-position = S01
         $bin .= pack('S', 0); // part-tree-position = P01
+        $bin .= "\x01"; // sections-count = 1
+        $bin .= pack('S', 0); // section-tree-position = S01
         $bin .= "\x00"; // branchrules-count = 0
-        $bin .= "\x00"; // preconditions-count = 0;
+        $bin .= "\x00"; // preconditions-count = 0
         
         $stream = new BinaryStream($bin);
         $stream->open();

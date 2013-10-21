@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;
@@ -680,8 +681,25 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         try {
             $occurence = $this->readTinyInt();
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
-            $section = $seeker->seekComponent('assessmentSection', $this->readShort());
+            
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
+                // Prior to version 3, only a singe assessmentSection might be bound
+                // to the RouteItem.
+                $sections = $seeker->seekComponent('assessmentSection', $this->readShort());
+            }
+            
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
+            
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
+                // From version 3, multiple assessmentSections might be bound
+                // to the RouteItem.
+                $sectionsCount = $this->readTinyInt();
+                $sections = new AssessmentSectionCollection();
+                
+                for ($i = 0; $i < $sectionsCount; $i++) {
+                    $sections[] = $seeker->seekComponent('assessmentSection', $this->readShort());
+                }
+            }
             
             $branchRulesCount = $this->readTinyInt();
             $branchRules = new BranchRuleCollection();
@@ -697,7 +715,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $preConditions[] = $seeker->seekComponent('preCondition', $this->readShort());
             }
             
-            $routeItem = new RouteItem($itemRef, $section, $testPart);
+            $routeItem = new RouteItem($itemRef, $sections, $testPart);
             $routeItem->setOccurence($occurence);
             $routeItem->setBranchRules($branchRules);
             $routeItem->setPreConditions($preConditions);
@@ -726,8 +744,25 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         try {
             $this->writeTinyInt($routeItem->getOccurence());
             $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
-            $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
+            
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
+                // Prior to version 3, only a singe assessmentSection might be bound
+                // to the RouteItem.
+                $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
+            }
+            
             $this->writeShort($seeker->seekPosition($routeItem->getTestPart()));
+            
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
+                $assessmentSections = $routeItem->getAssessmentSections();
+                // From version 3, multiple assessmentSections might be bound
+                // to the RouteItem.
+                $this->writeTinyInt(count($assessmentSections));
+                
+                foreach ($assessmentSections as $assessmentSection) {
+                    $this->writeShort($seeker->seekPosition($assessmentSection));
+                }
+            }
             
             $branchRules = $routeItem->getBranchRules();
             $this->writeTinyInt(count($branchRules));
