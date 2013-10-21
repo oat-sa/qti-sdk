@@ -2,8 +2,6 @@
 
 use qtism\data\storage\xml\XmlDocument;
 
-use qtism\data\storage\xml\XmlAssessmentItemDocument;
-
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 function testAssessmentItems(array $files, $validate = false) {

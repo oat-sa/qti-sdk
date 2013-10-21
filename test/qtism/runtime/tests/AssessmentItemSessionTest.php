@@ -4,7 +4,6 @@ use qtism\data\storage\xml\XmlDocument;
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\SubmissionMode;
-use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\common\datatypes\Duration;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;

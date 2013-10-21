@@ -3,7 +3,6 @@
 use qtism\data\storage\xml\XmlDocument;
 
 use qtism\data\View;
-use qtism\data\storage\xml\XmlAssessmentSectionDocument;
 use qtism\data\AssessmentSection;
 use qtism\data\storage\xml\XmlStorageException;
 

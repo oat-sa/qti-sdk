@@ -27,7 +27,6 @@ namespace qtism\runtime\processing;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\rules\RuleEngine;
-use qtism\data\storage\xml\XmlResponseProcessingDocument;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
 use qtism\runtime\common\State;

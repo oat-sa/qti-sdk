@@ -33,8 +33,6 @@ use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\IXmlDocument;
-use qtism\data\storage\xml\XmlAssessmentItemDocument;
-use qtism\data\storage\xml\XmlAssessmentSectionDocument;
 use \DOMDocument;
 use \Exception;
 

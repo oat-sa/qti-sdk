@@ -3,7 +3,6 @@
 use qtism\data\storage\xml\XmlDocument;
 
 use qtism\data\View;
-use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\data\AssessmentItem;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
