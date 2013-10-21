@@ -23,8 +23,8 @@
 
 namespace qtism\data\storage\php;
 
+use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
-
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\AssessmentSection;
 use qtism\data\processing\ResponseProcessing;
@@ -51,46 +51,21 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PhpDocument {
-    
-    /**
-     * The root component which represents the content of the document.
-     * 
-     * @var QtiComponent
-     */
-    private $documentComponent;
+class PhpDocument extends QtiDocument {
     
     /**
      * Create a new PhpDocument object.
      * 
      * @param QtiComponent $documentComponent The root QtiComponent object to contained by the PhpDocument.
      */
-    public function __construct(QtiComponent $documentComponent = null) {
-        $this->setDocumentComponent($documentComponent);
-    }
-    
-    /**
-     * Set the root QtiComponent object to be contained by the PhpDocument.
-     * 
-     * @param QtiComponent $documentComponent The root QtiComponent to be contained by the PhpDocument.
-     */
-    public function setDocumentComponent(QtiComponent $documentComponent = null) {
-        $this->documentComponent = $documentComponent;
-    }
-    
-    /**
-     * Get the root QtiComponent object to be contained by the PhpDocument.
-     * 
-     * @return QtiComponent The root QtiComponent to be contained by the PhpDocument.
-     */
-    public function getDocumentComponent() {
-        return $this->documentComponent;
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
+        parent::__construct($version, $documentComponent);
     }
     
     /**
      * Save the PhpDocument to a specific location.
      * 
-     * @param string $uri A URL (Uniform Resource Locator) describing where to save the document.
+     * @param string $url A URL (Uniform Resource Locator) describing where to save the document.
      * @throws PhpStorageException If an error occurs while saving.
      */
     public function save($url) {
@@ -193,7 +168,7 @@ class PhpDocument {
     /**
      * Load a PHP QTI document at the specified URL.
      * 
-     * @param unknown_type $url A URL (Uniform Resource Locator) describing where to find the PHP document to load.
+     * @param string $url A URL (Uniform Resource Locator) describing where to find the PHP document to load.
      * @throws PhpStorageException If an error occurs while loading the PHP file located at $url.
      */
     public function load($url) {
@@ -205,6 +180,7 @@ class PhpDocument {
         try {
             require($url);
             $this->setDocumentComponent($rootcomponent);
+            $this->setUrl($url);
         }
         catch (Exception $e) {
             $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
