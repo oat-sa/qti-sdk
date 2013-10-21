@@ -1,11 +1,11 @@
 <?php
 
+use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\AssessmentTest;
 use \DOMDocument;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -20,11 +20,10 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$this->assertTrue($doc->schemaValidate($schema));
 	}
 	
-	public function testLoad(XmlCompactAssessmentTestDocument $doc = null) {
+	public function testLoad(XmlCompactDocument $doc = null) {
 		if (empty($doc)) {
 			
-			$doc = new XmlCompactAssessmentTestDocument('1.0');
-			$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc);
+			$doc = new XmlCompactDocument('1.0');
 			
 			$file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
 			$doc->load($file);
@@ -32,7 +31,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$doc->schemaValidate();
 
-		$testParts = $doc->getTestParts();
+		$testParts = $doc->getDocumentComponent()->getTestParts();
 		$this->assertEquals(1, count($testParts));
 		$assessmentSections = $testParts['testpartID']->getAssessmentSections();
 		$this->assertEquals(1, count($assessmentSections));
@@ -60,7 +59,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	}
 	
 	public function testSave() {
-		$doc = new XmlCompactAssessmentTestDocument('1.0');
+		$doc = new XmlCompactDocument('1.0');
 		$file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
 		$doc->load($file);
 		
@@ -68,7 +67,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$doc->save($file);
 		$this->assertTrue(file_exists($file));
 		
-		$doc = new XmlCompactAssessmentTestDocument('1.0');
+		$doc = new XmlCompactDocument('1.0');
 		$doc->load($file);
 		
 		// retest content...
@@ -83,33 +82,33 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$file = self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
 		$doc->load($file);
 		
-		$compactDoc = XmlCompactAssessmentTestDocument::createFromXmlAssessmentTestDocument($doc);
+		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
 		$file = tempnam('/tmp', 'qsm');
 		$compactDoc->save($file);
 		$this->assertTrue(file_exists($file));
 		
-		$compactDoc = new XmlCompactAssessmentTestDocument('1.0');
+		$compactDoc = new XmlCompactDocument('1.0');
 		$compactDoc->load($file);
 		$this->testLoad($compactDoc);
 		unlink($file);
 		$this->assertFalse(file_exists($file));
 	}
 	
-	public function testCreateFormExploded(XmlCompactAssessmentTestDocument $compactDoc = null) {
+	public function testCreateFormExploded(XmlCompactDocument $compactDoc = null) {
 		$doc = new XmlDocument('2.1');
 		$file = self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen.xml';
 		$doc->load($file);
-		$compactDoc = XmlCompactAssessmentTestDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 		
-		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlCompactAssessmentTestDocument', $compactDoc);
-		$this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getIdentifier());
-		$this->assertEquals('Interaction Mix (Sachsen)', $compactDoc->getTitle());
+		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlCompactDocument', $compactDoc);
+		$this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getDocumentComponent()->getIdentifier());
+		$this->assertEquals('Interaction Mix (Sachsen)', $compactDoc->getDocumentComponent()->getTitle());
 		
-		$outcomeDeclarations = $compactDoc->getOutcomeDeclarations();
+		$outcomeDeclarations = $compactDoc->getDocumentComponent()->getOutcomeDeclarations();
 		$this->assertEquals(2, count($outcomeDeclarations));
 		$this->assertEquals('SCORE', $outcomeDeclarations['SCORE']->getIdentifier());
 		
-		$testParts = $compactDoc->getTestParts();
+		$testParts = $compactDoc->getDocumentComponent()->getTestParts();
 		$this->assertEquals(1, count($testParts));
 		$this->assertEquals('testpartID', $testParts['testpartID']->getIdentifier());
 		$this->assertEquals(NavigationMode::NONLINEAR, $testParts['testpartID']->getNavigationMode());
@@ -141,7 +140,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$compactDoc->save($file);
 		$this->assertTrue(file_exists($file));
 		
-		$compactDoc = new XmlCompactAssessmentTestDocument('1.0');
+		$compactDoc = new XmlCompactDocument('1.0');
 		$compactDoc->load($file);
 		$compactDoc->schemaValidate();
 		

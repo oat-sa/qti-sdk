@@ -1,15 +1,13 @@
 <?php
 
 use qtism\data\SubmissionMode;
-
 use qtism\data\NavigationMode;
-
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
@@ -357,7 +355,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadAssessmentItemSession() {
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
         $position = pack('S', 0); // Q01
@@ -379,7 +377,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream = new BinaryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
         $session = $access->readAssessmentItemSession($seeker);
         
@@ -400,15 +398,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testWriteAssessmentItemSession() {
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         $stream = new BinaryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
-        $session = new AssessmentItemSession($doc->getComponentByIdentifier('Q02'));
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
         
         $access->writeAssessmentItemSession($seeker, $session);
@@ -427,10 +425,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadRouteItem() {
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $bin = '';
         $bin .= "\x00"; // occurence = 0
         $bin .= pack('S', 2); // item-tree-position = Q03
@@ -454,17 +452,17 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testWriteRouteItem() {
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $stream = new BinaryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
-        $testSessionFactory = new AssessmentTestSessionFactory($doc);
+        $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $testSession = AssessmentTestSession::instantiate($testSessionFactory);
         $routeItem = $testSession->getRoute()->getRouteItemAt(2);
         
@@ -482,10 +480,10 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadPendingResponses() {
-    	$doc = new XmlCompactAssessmentTestDocument();
+    	$doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $bin = '';
         $bin.= "\x01"; // variable-count = 1.
         $bin.= pack('S', 0); // response-declaration-position = 0
@@ -511,15 +509,15 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testWritePendingResponses() {
-    	$doc = new XmlCompactAssessmentTestDocument();
+    	$doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $stream = new BinaryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
-        $factory = new AssessmentTestSessionFactory($doc);
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $session = AssessmentTestSession::instantiate($factory);
         $session->beginTestSession();
         
@@ -527,7 +525,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
         
         $store = $session->getPendingResponseStore();
-        $pendingResponses = $store->getPendingResponses($doc->getComponentByIdentifier('Q01'));
+        $pendingResponses = $store->getPendingResponses($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
         $access->writePendingResponses($seeker, $pendingResponses);
         
         $stream->rewind();

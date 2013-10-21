@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\data\AssessmentTest;
+
 use qtism\data\Document;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\common\storage\BinaryStream;
@@ -50,10 +52,9 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      */
     protected function persistStream(AssessmentTestSession $assessmentTestSession, BinaryStream $stream) {
         
-        $assessmentTestUri = $assessmentTestSession->getAssessmentTest()->getUri();
         $sessionId = $assessmentTestSession->getSessionId();
         
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($assessmentTestUri . $sessionId) . '.bin';
+        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         $written = @file_put_contents($path, $stream->getBinary());
         
         if ($written === false || $written === 0) {
@@ -66,15 +67,14 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      * Retrieve the binary representation of the AssessmentTestSession identified by $sessionId which was
      * instantiated from $assessmentTest from the temporary directory of the file system.
      * 
-     * @param Document $assessmentTest The AssessmentTest the retrieved AssessmentTestSession was instantiated from.
+     * @param AssessmentTest $assessmentTest The AssessmentTest the retrieved AssessmentTestSession was instantiated from.
      * @param string $sessionId The session ID of the AssessmentTestSession to retrieve.
      * @return BinaryStream A BinaryStream object.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
-    protected function getRetrievalStream(Document $assessmentTest, $sessionId) {
+    protected function getRetrievalStream(AssessmentTest $assessmentTest, $sessionId) {
         
-        $assessmentTestUri = $assessmentTest->getUri();
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($assessmentTestUri . $sessionId) . '.bin';
+        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         
         $read = @file_get_contents($path);
         

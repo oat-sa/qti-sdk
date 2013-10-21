@@ -3,7 +3,6 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\common\ResponseVariable;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\TestPartCollection;
 use qtism\data\AssessmentSection;
@@ -24,6 +23,7 @@ use qtism\data\state\Weight;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\data\storage\xml\XmlCompactDocument;
 
 class VariableProcessorTest extends QtiSmTestCase {
 
@@ -107,10 +107,10 @@ class VariableProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testMultipleOccurences() {
-	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
-	    $testSessionFactory = new AssessmentTestSessionFactory($doc);
+	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
 	    $session = AssessmentTestSession::instantiate($testSessionFactory);
 	    $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.SCORE"/>');
 	    $occurenceVariableExpression = $this->createComponentFromXml('<variable identifier="Q01.1.SCORE"/>');

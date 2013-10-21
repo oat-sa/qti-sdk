@@ -2,7 +2,7 @@
 
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactDocument;
 
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
@@ -20,10 +20,10 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase {
 	    parent::setUp();
 	    
 	    $testFilePath = self::samplesDir() . 'custom/runtime/itemsubset.xml';
-	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc = new XmlCompactDocument();
 	    $doc->load($testFilePath);
 	    
-	    $testSessionFactory = new AssessmentTestSessionFactory($doc);
+	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
 	    $testSession = AssessmentTestSession::instantiate($testSessionFactory);
 	    $testSession->beginTestSession();
 	    $this->setTestSession($testSession);

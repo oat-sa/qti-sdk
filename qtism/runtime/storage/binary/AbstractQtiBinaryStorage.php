@@ -29,7 +29,6 @@ use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\Route;
-use qtism\data\Document;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AssessmentTestSession;
@@ -258,8 +257,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             return $assessmentTestSession;
         }
         catch (Exception $e) {
-            $assessmentTestUri = $this->getAssessmentTest()->getUri();
-            $msg = "An error occured while retrieving AssessmentTestSession for AssessmentTest '${assessmentTestUri}'.";
+            $msg = "An error occured while retrieving AssessmentTestSession.";
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }
@@ -269,11 +267,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * 
      * Be careful, the implementation of this method must not open the given $stream.
      * 
+     * @param AssessmentTest The AssessmentTestDefinition that defines the AssessmentTestSession to be retrieved.
      * @param string $sessionId A test session identifier.
      * @throws RuntimeException If an error occurs.
      * @return BinaryStream A BinaryStream object.
      */
-    abstract protected function getRetrievalStream(Document $assessmentTest, $sessionId);
+    abstract protected function getRetrievalStream(AssessmentTest $assessmentTest, $sessionId);
     
     /**
      * Persist A BinaryStream that contains the binary data representing $assessmentTestSession

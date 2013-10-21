@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\php\PhpDocument;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\data\storage\xml\XmlDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -21,9 +21,9 @@ class PhpDocumentTest extends QtiSmTestCase {
     
      public function testSimpleSave() {
 
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
-        $phpDoc = new PhpDocument($doc->getXmlDocument()->getDocumentComponent());
+        $phpDoc = new PhpDocument($doc->getDocumentComponent());
         
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);

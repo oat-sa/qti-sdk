@@ -5,7 +5,7 @@ use qtism\data\expressions\Correct;
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\data\AssessmentItemRef;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use \OutOfBoundsException;
 
@@ -13,10 +13,10 @@ class AssessmentTestSeekerTest extends QtiSmTestCase {
 	
     public function testSeekComponent() {
         
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection'));
         
         $ref = $seeker->seekComponent('assessmentItemRef', 0);
         $this->assertEquals('Q01', $ref->getIdentifier());
@@ -53,17 +53,17 @@ class AssessmentTestSeekerTest extends QtiSmTestCase {
     
     public function testSeekPosition() {
         
-        $doc = new XmlCompactAssessmentTestDocument();
+        $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
-        $seeker = new AssessmentTestSeeker($doc, array('assessmentItemRef', 'assessmentSection'));
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection'));
         
-        $this->assertEquals(1, $seeker->seekPosition($doc->getComponentByIdentifier('Q02')));
-        $this->assertEquals(0, $seeker->seekPosition($doc->getComponentByIdentifier('Q01')));
-        $this->assertEquals(0, $seeker->seekPosition($doc->getComponentByIdentifier('S01')));
-        $this->assertEquals(2, $seeker->seekPosition($doc->getComponentByIdentifier('S03')));
-        $this->assertEquals(2, $seeker->seekPosition($doc->getComponentByIdentifier('Q03')));
-        $this->assertEquals(1, $seeker->seekPosition($doc->getComponentByIdentifier('S02')));
+        $this->assertEquals(1, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('Q02')));
+        $this->assertEquals(0, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('Q01')));
+        $this->assertEquals(0, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('S01')));
+        $this->assertEquals(2, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('S03')));
+        $this->assertEquals(2, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('Q03')));
+        $this->assertEquals(1, $seeker->seekPosition($doc->getDocumentComponent()->getComponentByIdentifier('S02')));
         
         try {
             $pos = $seeker->seekPosition(new AssessmentItemRef('Q05', 'Q05.xml'));

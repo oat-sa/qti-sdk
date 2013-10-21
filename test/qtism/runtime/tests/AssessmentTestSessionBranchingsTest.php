@@ -1,9 +1,8 @@
 <?php
 
 use qtism\runtime\tests\AssessmentTestSessionFactory;
-
 use qtism\runtime\tests\AssessmentTestSession;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactDocument;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
@@ -11,10 +10,10 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
 	
     public function testInstantiationSample1() {
         
-        $doc = new XmlCompactAssessmentTestDocument('1.0');
+        $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $factory = new AssessmentTestSessionFactory($doc);
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $testSession = AssessmentTestSession::instantiate($factory);
         
         $route = $testSession->getRoute();

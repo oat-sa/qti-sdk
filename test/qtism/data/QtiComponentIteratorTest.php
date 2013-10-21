@@ -2,7 +2,7 @@
 
 require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
+use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\QtiComponentIterator;
@@ -61,10 +61,10 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 	}
 	
 	public function testClassSelection() {
-	    $doc = new XmlCompactAssessmentTestDocument();
+	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
 	    
-	    $iterator = new QtiComponentIterator($doc, array('responseProcessing'));
+	    $iterator = new QtiComponentIterator($doc->getDocumentComponent(), array('responseProcessing'));
 	    $i = 0;
 	    
 	    foreach ($iterator as $responseProcessing) {
