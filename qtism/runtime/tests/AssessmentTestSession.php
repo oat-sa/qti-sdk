@@ -542,7 +542,7 @@ class AssessmentTestSession extends State {
 				        // No such TestPart referenced in the AssessmentTestSession.
 				        // Maybe it's an assessmentSection duration ?
 				        try {
-				            
+				            return $this->getAssessmentSectionDuration($v->getPrefix());
 				        }
 				        catch (OutOfBoundsException $e) {
 				            return null;
@@ -1680,7 +1680,7 @@ class AssessmentTestSession extends State {
 	protected function getAssessmentSectionDuration($identifier) {
 	    try {
 	        $involvedRouteItems = $this->getRoute()->getRouteItemsByAssessmentSection($identifier);
-	        return $this->computeRouteItemsDuration($involveRouteItems);
+	        return $this->computeRouteItemsDuration($involvedRouteItems);
 	    }
 	    catch (OutOfBoundsException $e) {
 	        $msg = "No AssessmentSection with identifier '${identifier}' referenced in the AssessmentTestSession.";

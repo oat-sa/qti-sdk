@@ -942,7 +942,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(1.0, $session['Q01.scoring']);
 	}
 	
-	public function testTestPartDurations() {
+	public function testTestPartAssessmentSectionsDurations() {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
 	    
@@ -951,21 +951,25 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Try to get a duration on a non-begun test session.
 	    $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
+	    $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
 	    
 	    $session->beginTestSession();
 	    $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
+	    $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
 	    
 	    // Q01.
 	    $session->beginAttempt();
 	    sleep(1);
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
 	    $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
+	    $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
 	    
 	    // Q02.
 	    $session->beginAttempt();
 	    sleep(1);
 	    $session->skip();
 	    $this->assertTrue($session['P01.duration']->equals(new Duration('PT2S')));
+	    $this->assertTrue($session['S01.duration']->equals(new Duration('PT2S')));
 	    
 	    // Try to get a duration that does not exist.
 	    $this->assertSame(null, $session['P02.duration']);
