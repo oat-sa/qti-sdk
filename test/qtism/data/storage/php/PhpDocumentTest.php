@@ -2,7 +2,7 @@
 
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -37,11 +37,11 @@ class PhpDocumentTest extends QtiSmTestCase {
      */
     public function testLoadTestSamples($testUri) {
         // Basic XML -> PHP transormation + save + load
-        $xmlDoc = new XmlAssessmentTestDocument('2.1');
+        $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load($testUri);
     
         $phpDoc = new PhpDocument();
-        $phpDoc->setDocumentComponent($xmlDoc->getXmlDocument()->getDocumentComponent());
+        $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
     
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
@@ -56,11 +56,11 @@ class PhpDocumentTest extends QtiSmTestCase {
     }
     
     public function testLoadInteractionMixSaschsen() {
-        $xmlDoc = new XmlAssessmentTestDocument('2.1');
+        $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
     
         $phpDoc = new PhpDocument();
-        $phpDoc->setDocumentComponent($xmlDoc->getXmlDocument()->getDocumentComponent());
+        $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
     
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);

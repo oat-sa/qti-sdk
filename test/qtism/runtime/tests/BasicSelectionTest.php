@@ -5,22 +5,22 @@ use qtism\runtime\tests\RouteItem;
 use qtism\runtime\tests\SelectableRouteCollection;
 use qtism\runtime\tests\SelectableRoute;
 use qtism\runtime\tests\BasicSelection;
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 
 class BasicSelectionTest extends QtiSmTestCase {
     
     public function testBasicSelection() {
-        $doc = new XmlAssessmentTestDocument();
+        $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering.xml');
         
-        $testPart = $doc->getComponentByIdentifier('testPart');
+        $testPart = $doc->getDocumentComponent()->getComponentByIdentifier('testPart');
         $this->assertEquals('testPart', $testPart->getIdentifier());
         
-        $s01 = $doc->getComponentByIdentifier('S01', true);
+        $s01 = $doc->getDocumentComponent()->getComponentByIdentifier('S01', true);
         $this->assertEquals('S01', $s01->getIdentifier());
         
         // Prepare route selection of S01A.
-        $s01a = $doc->getComponentByIdentifier('S01A', true);
+        $s01a = $doc->getDocumentComponent()->getComponentByIdentifier('S01A', true);
         $this->assertEquals('S01A', $s01a->getIdentifier());
         
         $s01aRoute = new SelectableRoute();
@@ -29,7 +29,7 @@ class BasicSelectionTest extends QtiSmTestCase {
         }
         
         // Prepare route selection of S01B.
-        $s01b = $doc->getComponentByIdentifier('S01B', true);
+        $s01b = $doc->getDocumentComponent()->getComponentByIdentifier('S01B', true);
         $this->assertEquals('S01B', $s01b->getIdentifier());
         
         $s01bRoute = new SelectableRoute();

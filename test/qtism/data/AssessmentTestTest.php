@@ -4,15 +4,15 @@ use qtism\common\datatypes\Duration;
 
 require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 
 class AssessmentTestTest extends QtiSmTestCase {
     
 	public function testTimeLimits() {
-	    $doc = new XmlAssessmentTestDocument();
+	    $doc = new XmlDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/timelimits.xml');
 	    
-	    $testPart = $doc->getComponentByIdentifier('testPartId');
+	    $testPart = $doc->getDocumentComponent()->getComponentByIdentifier('testPartId');
 	    $this->assertTrue($testPart->hasTimeLimits());
 	    $timeLimits = $testPart->getTimeLimits();
 	    

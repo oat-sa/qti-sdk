@@ -4,7 +4,7 @@ use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\AssessmentTest;
 
@@ -18,10 +18,10 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 	 * @param string $uri The URI describing the file to load.
 	 */
 	public function testLoadNoSchemaValidate($uri) {
-		$doc = new XmlAssessmentTestDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
-		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlAssessmentTestDocument', $doc);
-		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc);
+		$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
+		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
 	}
 	
 	/**
@@ -30,13 +30,13 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 	 * @param string $uri The URI describing the file to load.
 	 */
 	public function testLoadSaveSchemaValidate($uri) {
-		$doc = new XmlAssessmentTestDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
 		
 		$file = tempnam('/tmp', 'qsm');
 		$doc->save($file);
 		
-		$doc = new XmlAssessmentTestDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		try {
 			$doc->load($file, true); // validate on load.
 			$this->assertTrue(true);
@@ -73,19 +73,19 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 	public function testLoadInteractionMixSachsen($assessmentTest = null) {
 		
 		if (empty($assessmentTest)) {
-			$doc = new XmlAssessmentTestDocument('2.1');
+			$doc = new XmlDocument('2.1');
 			$doc->load(self::decorateUri('interaction_mix_sachsen/interaction_mix_sachsen.xml'));
 			$assessmentTest = $doc;
 		}
 
 		$assessmentTest->schemaValidate();
 		
-		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
-		$this->assertEquals('InteractionMixSachsen_1901710679', $assessmentTest->getIdentifier());
-		$this->assertEquals('Interaction Mix (Sachsen)', $assessmentTest->getTitle());
+		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest->getDocumentComponent());
+		$this->assertEquals('InteractionMixSachsen_1901710679', $assessmentTest->getDocumentComponent()->getIdentifier());
+		$this->assertEquals('Interaction Mix (Sachsen)', $assessmentTest->getDocumentComponent()->getTitle());
 		
 		// -- OutcomeDeclarations
-		$outcomeDeclarations = $assessmentTest->getOutcomeDeclarations();
+		$outcomeDeclarations = $assessmentTest->getDocumentComponent()->getOutcomeDeclarations();
 		$this->assertEquals(2, count($outcomeDeclarations));
 		
 		$outcomeDeclaration = $outcomeDeclarations['SCORE'];
@@ -117,7 +117,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		$this->assertEquals(18.0, $value->getValue());
 		
 		// -- TestParts
-		$testParts = $assessmentTest->getTestParts();
+		$testParts = $assessmentTest->getDocumentComponent()->getTestParts();
 		$this->assertEquals(1, count($testParts));
 		$testPart = $testParts['testpartID'];
 		$this->assertInstanceOf('qtism\\data\\TestPart', $testPart);
@@ -167,7 +167,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 		}
 		
 		// OutcomeProcessing
-		$outcomeProcessing = $assessmentTest->getOutcomeProcessing();
+		$outcomeProcessing = $assessmentTest->getDocumentComponent()->getOutcomeProcessing();
 		$this->assertInstanceOf('qtism\\data\\processing\\OutcomeProcessing', $outcomeProcessing);
 		$this->assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
 		
@@ -185,19 +185,19 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 	}
 	
 	public function testWriteInteractionMixSachsen() {
-		$doc = new XmlAssessmentTestDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load(self::decorateUri('interaction_mix_sachsen/interaction_mix_sachsen.xml'), true);
 		
 		$file = tempnam('/tmp', 'qsm');
 		$doc->save($file);
 		$this->assertTrue(file_exists($file));
 		
-		$doc = new XmlAssessmentTestDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load($file);
 		$this->testLoadInteractionMixSachsen($doc);
 		
 		// correctly namespaced ?
-		$dom = $doc->getXmlDocument()->getDomDocument();
+		$dom = $doc->getDomDocument();
 		$assessmentTestElt = $dom->documentElement;
 		$this->assertEquals('assessmentTest', $assessmentTestElt->nodeName);
 		$this->assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $assessmentTestElt->namespaceURI);

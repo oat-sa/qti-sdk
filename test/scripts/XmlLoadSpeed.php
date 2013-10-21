@@ -1,6 +1,6 @@
 <?php
 
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 
 use qtism\data\storage\xml\XmlAssessmentItemDocument;
 
@@ -13,7 +13,7 @@ function testAssessmentItems(array $files, $validate = false) {
 	foreach ($files as $f) {
 		$start = microtime();
 		
-		$itemDoc = new XmlAssessmentItemDocument();
+		$itemDoc = new XmlDocument();
 		$itemDoc->load($f, $validate);
 
 		$end = microtime();
@@ -22,8 +22,8 @@ function testAssessmentItems(array $files, $validate = false) {
 		
 		output("Item '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
 		
-		$outcomeDeclarationCount = count($itemDoc->getComponentsByClassName('outcomeDeclaration'));
-		$responseDeclarationCount = count($itemDoc->getComponentsByClassName('responseDeclaration'));
+		$outcomeDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('outcomeDeclaration'));
+		$responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 		
 		outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
 		outputDescription("Memory usage is " . (memory_get_usage()  / pow(1024, 2)) . " MB");
@@ -42,7 +42,7 @@ function testAssessmentTests(array $files, $validate = false) {
 	
 	foreach ($files as $f) {
 		$start = microtime();
-		$testDoc = new XmlAssessmentTestDocument();
+		$testDoc = new XmlDocument();
 		$testDoc->load($f, $validate);
 		
 		$end = microtime();
@@ -51,9 +51,9 @@ function testAssessmentTests(array $files, $validate = false) {
 		
 		output("Test '" . pathinfo($f, PATHINFO_BASENAME) . "' loaded in " . sprintf("%.8f", $spent) . " seconds.");
 		
-		$partCount = count($testDoc->getComponentsByClassName('testPart'));
-		$sectionCount = count($testDoc->getComponentsByClassName('assessmentSection'));
-		$itemCount = count($testDoc->getComponentsByClassName('assessmentItemRef'));
+		$partCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('testPart'));
+		$sectionCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection'));
+		$itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 		
 		outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
 		outputDescription("Memory usage is " . (memory_get_usage()  / pow(1024, 2)) . " MB");

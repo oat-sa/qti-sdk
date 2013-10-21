@@ -1,5 +1,7 @@
 <?php
 
+use qtism\data\storage\xml\XmlDocument;
+
 use qtism\data\View;
 use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\data\AssessmentItem;
@@ -12,10 +14,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	 * @dataProvider validFileProvider
 	 */
 	public function testLoad($uri) {
-		$doc = new XmlAssessmentItemDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
 		
-		$assessmentItem = $doc;
+		$assessmentItem = $doc->getDocumentComponent();
 		$this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
 	}
 	
@@ -23,10 +25,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	 * @dataProvider validFileProvider
 	 */
 	public function testWrite($uri) {
-		$doc = new XmlAssessmentItemDocument('2.1');
+		$doc = new XmlDocument('2.1');
 		$doc->load($uri);
 		
-		$assessmentItem = $doc;
+		$assessmentItem = $doc->getDocumentComponent();
 		$this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
 		
 		$file = tempnam('/tmp', 'qsm');
@@ -42,7 +44,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function testLoad21() {
 		$file = self::samplesDir() . 'ims/items/2_1/associate.xml';
-		$doc = new XmlAssessmentItemDocument();
+		$doc = new XmlDocument();
 		$doc->load($file);
 		
 		$this->assertEquals('2.1', $doc->getVersion());
@@ -50,7 +52,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function testLoad20() {
 		$file = self::samplesDir() . 'ims/items/2_0/associate.xml';
-		$doc = new XmlAssessmentItemDocument();
+		$doc = new XmlDocument();
 		$doc->load($file);
 		
 		$this->assertEquals('2.0', $doc->getVersion());

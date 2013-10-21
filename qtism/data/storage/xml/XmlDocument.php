@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -43,21 +44,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class XmlDocument implements IXmlDocument {
-	
-	/**
-	 * The QTI version used in the XmlDocument.
-	 * 
-	 * @var string
-	 */
-	private $version = '2.1';
-	
-	/**
-	 * The root QTI Component of the parsed XmlDocument.
-	 * 
-	 * @var QtiComponent
-	 */
-	private $documentComponent = null;
+class XmlDocument extends QtiDocument {
 	
 	/**
 	 * The produced domDocument after a successful call to
@@ -68,66 +55,13 @@ class XmlDocument implements IXmlDocument {
 	private $domDocument = null;
 	
 	/**
-	 * The URI describing how/where the document is located in a serialized state.
-	 * 
-	 * @var string
-	 */
-	private $uri = '';
-	
-	/**
 	 * Create a new XmlDocument.
 	 * 
-	 *
 	 * @param string $version The version of the QTI specfication to use in order to load or save an AssessmentTest.
 	 * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
 	 */
-	public function __construct($version, QtiComponent $documentComponent = null) {
-		$this->setVersion($version);
-		$this->setDocumentComponent($documentComponent);
-	}
-	
-	/**
-	 * Set the QTI version in use.
-	 * 
-	 * @param string $version The QTI version e.g. 2.1.
-	 */
-	public function setVersion($version) {
-		$this->version = $version;
-	}
-	
-	/**
-	 * Get the QTI version in use.
-	 * 
-	 * @return string The QTI version in use.
-	 */
-	public function getVersion() {
-		return $this->version;
-	}
-	
-	public function getUri() {
-		return $this->uri;
-	}
-	
-	protected function setUri($uri = '') {
-		$this->uri = StorageUtils::sanitizeUri($uri);
-	}
-	
-	/**
-	 * Set the root QTI component of the parsed XmlDocument.
-	 * 
-	 * @return QtiComponent A QTI Component.
-	 */
-	public function setDocumentComponent(QtiComponent $ownerComponent = null) {
-		$this->documentComponent = $ownerComponent;
-	}
-	
-	/**
-	 * Get the root QTI component of the parsed XmlDocument.
-	 * 
-	 * @return QtiComponent A QTI Component.
-	 */
-	public function getDocumentComponent() {
-		return $this->documentComponent;
+	public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
+		parent::__construct($version, $documentComponent);
 	}
 	
 	/**
@@ -144,10 +78,6 @@ class XmlDocument implements IXmlDocument {
 	 */
 	public function getDomDocument() {
 		return $this->domDocument;
-	}
-	
-	public function getXmlDocument() {
-		return $this;
 	}
 	
 	/**
@@ -189,7 +119,7 @@ class XmlDocument implements IXmlDocument {
 						$this->setDocumentComponent($marshaller->unmarshall($element, $this->getDocumentComponent()));
 						
 						// We now are sure that the URI is valid.
-						$this->setUri($uri);
+						$this->setUrl($uri);
 					}
 					catch (UnmarshallingException $e) {
 						$line = $e->getDOMElement()->getLineNo();
@@ -253,7 +183,7 @@ class XmlDocument implements IXmlDocument {
 					throw new XmlStorageException($msg);
 				}
 				else {
-					$this->setUri($uri);
+					$this->setUrl($uri);
 				}
 			}
 			catch (DOMException $e) {

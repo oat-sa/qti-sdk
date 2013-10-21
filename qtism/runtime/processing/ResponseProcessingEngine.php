@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\processing;
 
+use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\rules\RuleEngine;
 use qtism\data\storage\xml\XmlResponseProcessingDocument;
@@ -181,9 +182,9 @@ class ResponseProcessingEngine extends AbstractEngine {
 			
 			// Open the file and retrieve the rules.
 			$this->trace("loading response processing template '${finalTemplateFile}'");
-			$xml = new XmlResponseProcessingDocument();
+			$xml = new XmlDocument();
 			$xml->load($finalTemplateFile);
-			$rules = $xml->getResponseRules();
+			$rules = $xml->getDocumentComponent()->getResponseRules();
 			$this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
 		}
 		

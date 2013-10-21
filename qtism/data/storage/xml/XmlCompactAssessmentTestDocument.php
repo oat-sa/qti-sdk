@@ -30,10 +30,9 @@ use qtism\data\AssessmentSectionRef;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\xml\XmlStorageException;
-use qtism\data\storage\xml\XmlAssessmentTestDocument;
+use qtism\data\storage\xml\XmlDocument;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\IXmlDocument;
-use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlAssessmentItemDocument;
 use qtism\data\storage\xml\XmlAssessmentSectionDocument;
 use \DOMDocument;
@@ -70,7 +69,7 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	}
 	
 	public function getUri() {
-		return $this->getXmlDocument()->getUri();
+		return $this->getXmlDocument()->getUrl();
 	}
 	
 	/**
@@ -107,38 +106,38 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 	/**
 	 * Create a new instance of XmlCompactAssessmentTestDocument from an XmlAssessmentTestDocument.
 	 * 
-	 * @param XmlAssessmentTestDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
+	 * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
 	 * @return XmlCompactAssessmentTestDocument An XmlCompactAssessmentTestDocument object.
 	 * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
-	public static function createFromXmlAssessmentTestDocument(XmlAssessmentTestDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
+	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
 		$compactXml = new static();
-		$compactXml->setIdentifier($xmlAssessmentTestDocument->getIdentifier());
-		$compactXml->setOutcomeDeclarations($xmlAssessmentTestDocument->getOutcomeDeclarations());
-		$compactXml->setOutcomeProcessing($xmlAssessmentTestDocument->getOutcomeProcessing());
-		$compactXml->setTestFeedbacks($xmlAssessmentTestDocument->getTestFeedbacks());
-		$compactXml->setTestParts($xmlAssessmentTestDocument->getTestParts());
-		$compactXml->setTimeLimits($xmlAssessmentTestDocument->getTimeLimits());
-		$compactXml->setTitle($xmlAssessmentTestDocument->getTitle());
-		$compactXml->setToolName($xmlAssessmentTestDocument->getToolName());
-		$compactXml->setToolVersion($xmlAssessmentTestDocument->getToolVersion());
+		$compactXml->setIdentifier($xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier());
+		$compactXml->setOutcomeDeclarations($xmlAssessmentTestDocument->getDocumentComponent()->getOutcomeDeclarations());
+		$compactXml->setOutcomeProcessing($xmlAssessmentTestDocument->getDocumentComponent()->getOutcomeProcessing());
+		$compactXml->setTestFeedbacks($xmlAssessmentTestDocument->getDocumentComponent()->getTestFeedbacks());
+		$compactXml->setTestParts($xmlAssessmentTestDocument->getDocumentComponent()->getTestParts());
+		$compactXml->setTimeLimits($xmlAssessmentTestDocument->getDocumentComponent()->getTimeLimits());
+		$compactXml->setTitle($xmlAssessmentTestDocument->getDocumentComponent()->getTitle());
+		$compactXml->setToolName($xmlAssessmentTestDocument->getDocumentComponent()->getToolName());
+		$compactXml->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 		
 		// File resolution.
-		$sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUri());
+		$sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
 		
 		if (is_null($itemResolver) === true) {
-		    $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUri());
+		    $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
 		}
 		else {
-		    $itemResolver->setBasePath($xmlAssessmentTestDocument->getUri());
+		    $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
 		}
 		
 		// It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
 		$trail = array(); // trailEntry[0] = a component, trailEntry[1] = from where we are coming (parent).
 		$mark = array();
-		$root = $xmlAssessmentTestDocument;
+		$root = $xmlAssessmentTestDocument->getDocumentComponent();
 		
-		array_push($trail, array($xmlAssessmentTestDocument, $root));
+		array_push($trail, array($root, $root));
 		
 		while (count($trail > 0)) {
 			$trailer = array_pop($trail);
@@ -174,9 +173,9 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 							
 							// If the previous processed component is an XmlAssessmentSectionDocument,
 							// it means that the given baseUri must be adapted.
-							$baseUri = $xmlAssessmentTestDocument->getUri();
+							$baseUri = $xmlAssessmentTestDocument->getUrl();
 							if ($component instanceof XmlAssessmentSectionDocument) {
-								$baseUri = $component->getUri();
+								$baseUri = $component->getUrl();
 							}
 							
 							$itemResolver->setBasePath($baseUri);
@@ -220,23 +219,23 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 		try {
 			$href = $resolver->resolve($compactAssessmentItemRef->getHref());
 			
-			$doc = new XmlAssessmentItemDocument();
+			$doc = new XmlDocument();
 			$doc->load($href);
 			
-			foreach ($doc->getResponseDeclarations() as $resp) {
+			foreach ($doc->getDocumentComponent()->getResponseDeclarations() as $resp) {
 				$compactAssessmentItemRef->addResponseDeclaration($resp);
 			}
 			
-			foreach ($doc->getOutcomeDeclarations() as $out) {
+			foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $out) {
 				$compactAssessmentItemRef->addOutcomeDeclaration($out);
 			}
 			
-			if ($doc->hasResponseProcessing() === true) {
-				$compactAssessmentItemRef->setResponseProcessing($doc->getResponseProcessing());
+			if ($doc->getDocumentComponent()->hasResponseProcessing() === true) {
+				$compactAssessmentItemRef->setResponseProcessing($doc->getDocumentComponent()->getResponseProcessing());
 			}
 			
-			$compactAssessmentItemRef->setAdaptive($doc->isAdaptive());
-			$compactAssessmentItemRef->setTimeDependent($doc->isTimeDependent());
+			$compactAssessmentItemRef->setAdaptive($doc->getDocumentComponent()->isAdaptive());
+			$compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
 		}
 		catch (Exception $e) {
 			$msg = "An error occured while unreferencing file '${href}'.";
@@ -256,9 +255,9 @@ class XmlCompactAssessmentTestDocument extends AssessmentTest implements IXmlDoc
 		try {
 			$href = $resolver->resolve($assessmentSectionRef->getHref());
 			
-			$doc = new XmlAssessmentSectionDocument('2.1');
+			$doc = new XmlDocument();
 			$doc->load($href);
-			return $doc;
+			return $doc->getDocumentComponent();
 		}
 		catch (XmlStorageException $e) {
 			$msg = "An error occured while unreferencing file '${href}'.";

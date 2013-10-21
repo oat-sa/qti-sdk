@@ -1,19 +1,19 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+use qtism\data\storage\xml\XmlDocument;
 
-use qtism\data\storage\xml\XmlResponseProcessingDocument;
+require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 class XmlResponseProcessingDocumentTest extends QtiSmTestCase {
 	
 	public function testLoadMatchCorrect() {
-		$xml = new XmlResponseProcessingDocument('2.1');
+		$xml = new XmlDocument('2.1');
 		$xml->load(self::getTemplatesPath() . '2_1/match_correct.xml');
-		$this->assertInstanceOf('qtism\\data\\processing\\ResponseProcessing', $xml);
-		$this->assertFalse($xml->hasTemplateLocation());
-		$this->assertFalse($xml->hasTemplate());
+		$this->assertInstanceOf('qtism\\data\\processing\\ResponseProcessing', $xml->getDocumentComponent());
+		$this->assertFalse($xml->getDocumentComponent()->hasTemplateLocation());
+		$this->assertFalse($xml->getDocumentComponent()->hasTemplate());
 		
-		$responseRules = $xml->getResponseRules();
+		$responseRules = $xml->getDocumentComponent()->getResponseRules();
 		$this->assertEquals(1, count($responseRules));
 		
 		$responseCondition = $responseRules[0];
@@ -41,7 +41,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase {
 	 * @param string $url
 	 */
 	public function testLoad($url) {
-		$xml = new XmlResponseProcessingDocument();
+		$xml = new XmlDocument();
 		$xml->load($url, true);
 	}
 	

@@ -1,5 +1,7 @@
 <?php
 
+use qtism\data\storage\xml\XmlDocument;
+
 use qtism\data\View;
 use qtism\data\storage\xml\XmlAssessmentSectionDocument;
 use qtism\data\AssessmentSection;
@@ -13,13 +15,13 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase {
 		
 		if (empty($assessmentSection)) {
 			$uri = self::samplesDir(). 'custom/standalone_assessmentsection.xml';
-			$doc = new XmlAssessmentSectionDocument('2.1');
+			$doc = new XmlDocument();
 			$doc->load($uri);
 			
-			$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlAssessmentSectionDocument', $doc);
-			$this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc);
+			$this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
+			$this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc->getDocumentComponent());
 			
-			$assessmentSection = $doc;
+			$assessmentSection = $doc->getDocumentComponent();
 		}
 		
 		$rubricBlocks = $assessmentSection->getRubricBlocks();
@@ -42,10 +44,10 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase {
 	
 	public function testWrite() {
 		$uri = self::samplesDir() . 'custom/standalone_assessmentsection.xml';
-		$doc = new XmlAssessmentSectionDocument('2.1');
+		$doc = new XmlDocument();
 		$doc->load($uri);
 		
-		$assessmentSection = $doc;
+		$assessmentSection = $doc->getDocumentComponent();
 		
 		// Write the file.
 		$uri = tempnam('/tmp', 'qsm');
@@ -54,10 +56,10 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase {
 		
 		// Reload it.
 		$doc->load($uri);
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc);
+		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $doc->getDocumentComponent());
 		
 		// Retest.
-		$this->testLoad($doc);
+		$this->testLoad($doc->getDocumentComponent());
 		
 		unlink($uri);
 	}

@@ -1,4 +1,6 @@
 <?php
+use qtism\data\storage\xml\XmlDocument;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\data\SubmissionMode;
@@ -507,10 +509,10 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     }
     
     public function testStandaloneItemSession() {
-        $doc = new XmlAssessmentItemDocument('2.1');
+        $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
         
-        $itemSession = new AssessmentItemSession($doc);
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'A')));
@@ -520,10 +522,10 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
     }
     
     public function testStandaloneMultipleInteractions() {
-        $doc = new XmlAssessmentItemDocument('2.1');
+        $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
         
-        $itemSession = new AssessmentItemSession($doc);
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $this->assertEquals(0.0, $itemSession['SCORE']);
