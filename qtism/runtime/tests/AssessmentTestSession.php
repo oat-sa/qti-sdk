@@ -1749,7 +1749,7 @@ class AssessmentTestSession extends State {
 	 * Checks if the timeLimits in force are respected. If this is not the case, an AssessmentTestSessionException
 	 * will be raised with the appropriate error code.
 	 * 
-	 * @throws AssessmentItemSessionException
+	 * @throws AssessmentTestSessionException If any time limit in force is exceeded.
 	 */
 	public function checkTimeLimits() {
 	    
