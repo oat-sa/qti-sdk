@@ -1320,5 +1320,49 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(1, count($assessmentSections));
 	    $this->assertTrue(isset($assessmentSections['S03']));
 	    $this->assertEquals('S03', $route->getRouteItemAt(11)->getAssessmentSection()->getIdentifier());
+	    
+	    // Make sure that the assessmentSections are provided in the right order.
+	    // For instance, the correct order for route[0] is [S01, S01A].
+	    $order = array('S01', 'S01A');
+	    $sections = $route->getRouteItemAt(0)->getAssessmentSections();
+	    $this->assertEquals(count($order), count($sections));
+	    $i = 0;
+	    
+	    $sections->rewind();
+	    while ($sections->valid()) {
+	        $current = $sections->current();
+	        $this->assertEquals($order[$i], $current->getIdentifier());
+	        $i++;
+	        $sections->next();
+	    }
+	}
+	
+	public function testGetItemSessionControl() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
+	     
+	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
+	     
+	    $route = $assessmentTestSession->getRoute();
+	    
+	    // Q01 - Must be under control of its own itemSessionControl.
+	    $control = $route->getRouteItemAt(0)->getItemSessionControl();
+	    $this->assertEquals(2, $control->getMaxAttempts());
+	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('Q01') === $control->getOwner());
+	    
+	    // Q07 - Must be under control of the ItemSessionControl of the parent AssessmentSection.
+	    $control = $route->getRouteItemAt(6)->getItemSessionControl();
+	    $this->assertEquals(3, $control->getMaxAttempts());
+	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('S02') === $control->getOwner());
+	    
+	    // Q10 - Is under no control.
+	    $control = $route->getRouteItemAt(9)->getItemSessionControl();
+	    $this->assertSame(null, $control);
+	    
+	    // Q13 - Must be under control of the ItemSessionControl of the parent TestPart.
+	    $control = $route->getRouteItemAt(12)->getItemSessionControl();
+	    $this->assertEquals(4, $control->getMaxAttempts());
+	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('P02') === $control->getOwner());
 	}
 }

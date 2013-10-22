@@ -62,6 +62,10 @@ abstract class QtiDocument {
         $this->documentComponent = $documentComponent;
     }
     
+    /**
+     * 
+     * @return QtiComponent
+     */
     public function getDocumentComponent() {
         return $this->documentComponent;
     }

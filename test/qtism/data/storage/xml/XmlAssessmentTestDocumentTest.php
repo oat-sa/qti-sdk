@@ -76,6 +76,21 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
 	}
 	
+	public function testItemSessionControls() {
+	    $doc = new XmlDocument('2.1');
+	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
+	    
+	    // Q01.
+	    $q01 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+	    $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $q01);
+	    $this->assertEquals(2, $q01->getItemSessionControl()->getMaxAttempts());
+	    
+	    // P02.
+	    $p02 = $doc->getDocumentComponent()->getComponentByIdentifier('P02');
+	    $this->assertInstanceOf('qtism\\data\\TestPart', $p02);
+	    $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
+	}
+	
 	private static function decorateUri($uri) {
 		return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
 	}
