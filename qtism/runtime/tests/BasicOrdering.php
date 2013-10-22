@@ -50,7 +50,7 @@ class BasicOrdering extends AbstractOrdering {
                     foreach ($selectableRoute as $routeItem) {
                         $item = $routeItem->getAssessmentItemRef();
                         $newRoute = new SelectableRoute($item->isFixed(), $item->isRequired(), true, true);
-                        $newRoute->addRouteItem($routeItem->getAssessmentItemRef(), $routeItem->getAssessmentSection(), $routeItem->getTestPart());
+                        $newRoute->addRouteItem($routeItem->getAssessmentItemRef(), $routeItem->getAssessmentSection(), $routeItem->getTestPart(), $routeItem->getAssessmentTest());
                         $selectableRoutes->insertAt($newRoute, $index);
                         $index++;
                     }

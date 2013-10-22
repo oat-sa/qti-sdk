@@ -25,7 +25,7 @@ class BasicSelectionTest extends QtiSmTestCase {
         
         $s01aRoute = new SelectableRoute();
         foreach ($s01a->getSectionParts() as $sectionPart) {
-            $s01aRoute->addRouteItem($sectionPart, $s01a, $testPart);
+            $s01aRoute->addRouteItem($sectionPart, $s01a, $testPart, $doc->getDocumentComponent());
         }
         
         // Prepare route selection of S01B.
@@ -34,7 +34,7 @@ class BasicSelectionTest extends QtiSmTestCase {
         
         $s01bRoute = new SelectableRoute();
         foreach ($s01b->getSectionParts() as $sectionPart) {
-            $s01bRoute->addRouteItem($sectionPart, $s01b, $testPart);
+            $s01bRoute->addRouteItem($sectionPart, $s01b, $testPart, $doc->getDocumentComponent());
         }
         
         $selection = new BasicSelection($s01, new SelectableRouteCollection(array($s01aRoute, $s01bRoute)));

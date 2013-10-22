@@ -1,6 +1,8 @@
 <?php
+
 require_once (dirname(__FILE__) . '/../../../QtiSmRouteTestCase.php');
 
+use qtism\data\AssessmentTest;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\common\collections\IdentifierCollection;
@@ -41,14 +43,15 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $testPart = new TestPart('TP1', $assessmentSections);
         $testPart->setAssessmentSections($assessmentSections);
+        $assessmentTest = new AssessmentTest('test', 'A Test', new TestPartCollection(array($testPart)));
         
         $route = new Route();
-        $route->addRouteItem($sectionPartsS1['Q1'], $assessmentSections['S1'], $testPart);
-        $route->addRouteItem($sectionPartsS1['Q2'], $assessmentSections['S1'], $testPart);
-        $route->addRouteItem($sectionPartsS1['Q3'], $assessmentSections['S1'], $testPart);
-        $route->addRouteItem($sectionPartsS1['Q4'], $assessmentSections['S1'], $testPart);
-        $route->addRouteItem($sectionPartsS2['Q5'], $assessmentSections['S2'], $testPart);
-        $route->addRouteItem($sectionPartsS2['Q6'], $assessmentSections['S2'], $testPart);
+        $route->addRouteItem($sectionPartsS1['Q1'], $assessmentSections['S1'], $testPart, $assessmentTest);
+        $route->addRouteItem($sectionPartsS1['Q2'], $assessmentSections['S1'], $testPart, $assessmentTest);
+        $route->addRouteItem($sectionPartsS1['Q3'], $assessmentSections['S1'], $testPart, $assessmentTest);
+        $route->addRouteItem($sectionPartsS1['Q4'], $assessmentSections['S1'], $testPart, $assessmentTest);
+        $route->addRouteItem($sectionPartsS2['Q5'], $assessmentSections['S2'], $testPart, $assessmentTest);
+        $route->addRouteItem($sectionPartsS2['Q6'], $assessmentSections['S2'], $testPart, $assessmentTest);
         
         $this->assertEquals('Q1', $route->getFirstRouteItem()->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('Q6', $route->getLastRouteItem()->getAssessmentItemRef()->getIdentifier());
@@ -153,18 +156,19 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $testParts = new TestPartCollection();
         $testParts[] = new TestPart('T1', $assessmentSections);
+        $assessmentTest = new AssessmentTest('test', 'A Test', $testParts);
         
         $route = new Route();
         
-        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
-        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
-        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
+        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
+        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
         
         $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q1']));
         $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q2']));
         $this->assertEquals(1, $route->getOccurenceCount($assessmentItemRefs['Q3']));
         
-        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
         $this->assertEquals(2, $route->getOccurenceCount($assessmentItemRefs['Q3']));
         
         // Get the second route item in the route.

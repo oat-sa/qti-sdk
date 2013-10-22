@@ -295,4 +295,14 @@ class AssessmentTestSeeker {
         
         return $count;
     }
+    
+    /**
+     * Get the AssessmentTest object on which the AssessmentTestSeeker
+     * is iterating.
+     * 
+     * @return AssessmentTest An AssessmentTest object.
+     */
+    public function getAssessmentTest() {
+        return $this->getIterator()->getRootComponent();
+    }
 }

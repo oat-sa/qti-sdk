@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\AssessmentTest;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\PreCondition;
 use qtism\data\rules\BranchRule;
@@ -40,6 +41,13 @@ use qtism\data\AssessmentItemRef;
  *
  */
 class RouteItem {
+    
+    /**
+     * The AssessmentTest the RouteItem is bound to.
+     * 
+     * @var AssessmentTest
+     */
+    private $assessmentTest;
     
     /**
      * The AssessmentItemRef object bound to the RouteItem.
@@ -89,9 +97,11 @@ class RouteItem {
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef object bound to the RouteItem.
      * @param AssessmentSection|AssessmentSectionCollection $assessmentSection The AssessmentSection object bound to the RouteItem.
      * @param TestPart $testPart The TestPart object bound to the RouteItem.
+     * @param AssessmentTest $assessmentTest The AssessmentTest object bound to the RouteItem.
      */
-    public function __construct(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart) {
+    public function __construct(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart, AssessmentTest $assessmentTest) {
         $this->setAssessmentItemRef($assessmentItemRef);
+        $this->setAssessmentTest($assessmentTest);
         
         if ($assessmentSections instanceof AssessmentSection) {
             $this->setAssessmentSection($assessmentSections);
@@ -106,6 +116,24 @@ class RouteItem {
         
         $this->addBranchRules($assessmentItemRef->getBranchRules());
         $this->addPreConditions($assessmentItemRef->getPreConditions());
+    }
+    
+    /**
+     * Set the AssessmentTest object bound to the RouteItem.
+     * 
+     * @param AssessmentTest $assessmentTest An AssessmentTest object.
+     */
+    public function setAssessmentTest(AssessmentTest $assessmentTest) {
+        $this->assessmentTest = $assessmentTest;
+    }
+    
+    /**
+     * Get the AssessmentTest object bound to the RouteItem.
+     * 
+     * @return AssessmentTest An AssessmentTest object.
+     */
+    public function getAssessmentTest() {
+        return $this->assessmentTest;
     }
     
     /**
@@ -311,5 +339,34 @@ class RouteItem {
             
             return $inForce;
         }
+    }
+    
+    /**
+     * Get the TimeLimits in force for the RouteItem.
+     * 
+     * @param RouteTimeLimitsCollection $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
+     */
+    public function getTimeLimits($excludeItem = false) {
+        $timeLimits = new RouteTimeLimitsCollection();
+        
+        if (($tl = $this->getAssessmentTest()->getTimeLimits()) !== null) {
+            $timeLimits[] = RouteTimeLimits::createFromTimeLimits($tl, $this->getAssessmentTest());
+        }
+        
+        if (($tl = $this->getTestPart()->getTimeLimits()) !== null) {
+            $timeLimits[] = RouteTimeLimits::createFromTimeLimits($tl, $this->getTestPart());
+        }
+        
+        foreach ($this->getAssessmentSections() as $section) {
+            if (($tl = $section->getTimeLimits()) !== null) {
+                $timeLimits[] = RouteTimeLimits::createFromTimeLimits($tl, $section);
+            }
+        }
+        
+        if ($excludeItem === false && ($tl = $this->getAssessmentItemRef()->getTimeLimits()) !== null) {
+            $timeLimits[] = RouteTimeLimits::createFromTimeLimits($tl, $this->getAssessmentItemRef());
+        }
+        
+        return $timeLimits;
     }
 }

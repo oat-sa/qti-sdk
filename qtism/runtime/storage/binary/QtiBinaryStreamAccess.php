@@ -715,7 +715,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $preConditions[] = $seeker->seekComponent('preCondition', $this->readShort());
             }
             
-            $routeItem = new RouteItem($itemRef, $sections, $testPart);
+            $routeItem = new RouteItem($itemRef, $sections, $testPart, $seeker->getAssessmentTest());
             $routeItem->setOccurence($occurence);
             $routeItem->setBranchRules($branchRules);
             $routeItem->setPreConditions($preConditions);

@@ -3,6 +3,7 @@
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
+use qtism\data\AssessmentTest;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSectionCollection;
@@ -42,12 +43,13 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase {
 	
 	    $testParts = new TestPartCollection();
 	    $testParts[] = new TestPart('T1', $assessmentSections);
+	    $assessmentTest = new AssessmentTest('test', 'A Test', $testParts);
 	
 	    $route = new $routeClass();
 	
-	    $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1']);
-	    $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1']);
-	    $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1']);
+	    $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
+	    $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
+	    $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
 	
 	    return $route;
 	}

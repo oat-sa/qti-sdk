@@ -1910,7 +1910,7 @@ class AssessmentTestSession extends State {
 	                else if ($current instanceof AssessmentItemRef) {
 	                    // leaf node.
 	                    $route = new SelectableRoute($current->isFixed(), $current->isRequired());
-	                    $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart);
+	                    $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart, $factory->getAssessmentTest());
 	                    array_push($routeStack, $route);
 	                }
 	            }

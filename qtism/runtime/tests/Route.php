@@ -339,10 +339,11 @@ class Route implements Iterator {
      * @param AssessmentItemRef $assessmentItemRef
      * @param AssessmentSection|AssessmentSectionCollection $assessmentSections
      * @param TestPart $testPart
+     * @param AssessmentTest $assessmentTest
      */
-    public function addRouteItem(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart) {
+    public function addRouteItem(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart, AssessmentTest $assessmentTest) {
         // Push the routeItem in the track :) !
-        $routeItem = new RouteItem($assessmentItemRef, $assessmentSections, $testPart);
+        $routeItem = new RouteItem($assessmentItemRef, $assessmentSections, $testPart, $assessmentTest);
         $this->registerAssessmentItemRef($routeItem);
         $this->registerTestPart($routeItem);
         $this->registerAssessmentSection($routeItem);

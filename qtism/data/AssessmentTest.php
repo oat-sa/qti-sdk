@@ -510,4 +510,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	    
 	    return $result;
 	}
+	
+	/**
+	 * Whether the AssessmentTest as a TimeLimits component bound to it.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTimeLimits() {
+	    return $this->getTimeLimits() !== null;
+	}
 }
