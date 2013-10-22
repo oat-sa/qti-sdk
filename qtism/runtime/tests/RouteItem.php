@@ -291,22 +291,22 @@ class RouteItem {
      * @return RouteItemSessionControl|null The ItemSessionControl in force or null if the RouteItem is not under ItemSessionControl.
      */
     public function getItemSessionControl() {
-        if (($tl = $this->getAssessmentItemRef()->getItemSessionControl()) !== null) {
-            return RouteItemSessionControl::createFromItemSessionControl($tl, $this->getAssessmentItemRef());
+        if (($isc = $this->getAssessmentItemRef()->getItemSessionControl()) !== null) {
+            return RouteItemSessionControl::createFromItemSessionControl($isc, $this->getAssessmentItemRef());
         }
         else {
             $inForce = null;
             
             // Look in assessmentSections.
             foreach ($this->getAssessmentSections() as $section) {
-                if (($tl = $section->getItemSessionControl()) !== null) {
-                    $inForce = RouteItemSessionControl::createFromItemSessionControl($tl, $section);
+                if (($isc = $section->getItemSessionControl()) !== null) {
+                    $inForce = RouteItemSessionControl::createFromItemSessionControl($isc, $section);
                 }
             }
             
             // Nothing found in assessmentSections, look in testPart.
-            if ($inForce === null && ($tl = $this->getTestPart()->getItemSessionControl()) !== null) {
-                $inForce = RouteItemSessionControl::createFromItemSessionControl($tl, $this->getTestPart());    
+            if ($inForce === null && ($isc = $this->getTestPart()->getItemSessionControl()) !== null) {
+                $inForce = RouteItemSessionControl::createFromItemSessionControl($isc, $this->getTestPart());    
             }
             
             return $inForce;

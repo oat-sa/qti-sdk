@@ -723,16 +723,9 @@ class AssessmentTestSession extends State {
 	        $session = new AssessmentItemSession($itemRef, $navigationMode, $submissionMode);
 	        
 	        // Determine the item session control.
-	        if ($itemRef->hasItemSessionControl() === true) {
-	            $session->setItemSessionControl($itemRef->getItemSessionControl());
+	        if (($control = $routeItem->getItemSessionControl()) !== null) {
+	            $session->setItemSessionControl($control);
 	        }
-	        else if ($assessmentSection->hasItemSessionControl() === true) {
-	            $session->setItemSessionControl($assessmentSection->getItemSessionControl());
-	        }
-	        else if ($testPart->hasItemSessionControl() === true) {
-	            $session->setItemSessionControl($testPart->getItemSessionControl());
-	        }
-	        // else ... It will be a default one.
 	        
 	        // Determine the time limits.
 	        if ($itemRef->hasTimeLimits() === true) {
