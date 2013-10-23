@@ -23,6 +23,7 @@
 
 namespace qtism\data\content;
 
+use qtism\data\QtiComponent;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
@@ -35,7 +36,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class BodyElement {
+abstract class BodyElement extends QtiComponent {
     
     /**
      * From IMS QTI:
@@ -43,8 +44,9 @@ abstract class BodyElement {
      * The id of a body element must be unique within the item.
      * 
      * @var string
+     * @qtism-bean-property
      */
-    private $id;
+    private $id  = '';
     
     /**
      * From IMS QTI:
@@ -57,8 +59,9 @@ abstract class BodyElement {
      * used for user interface designs that go beyond .
      * 
      * @var string
+     * @qtism-bean-property
      */
-    private $class;
+    private $class = '';
     
     /**
      * From IMS QTI:
@@ -67,8 +70,9 @@ abstract class BodyElement {
      * inherited from the enclosing element.
      * 
      * @var string
+     * @qtism-bean-property
      */
-    private $lang;
+    private $lang = '';
     
     /**
      * From IMS QTI:
@@ -78,8 +82,9 @@ abstract class BodyElement {
      * the associated toolName and toolVersion attributes must also be provided.
      * 
      * @var string
+     * @qtism-bean-property
      */
-    private $label;
+    private $label = '';
     
     /**
      * Create a new BodyElement object.
@@ -89,7 +94,7 @@ abstract class BodyElement {
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      */
-    public function __construct($id, $class, $lang, $label) {
+    public function __construct($id = '', $class = '', $lang = '', $label = '') {
         $this->setId($id);
         $this->setClass($class);
         $this->setLang($lang);
@@ -111,12 +116,12 @@ abstract class BodyElement {
      * @param string $id A QTI Identifier.
      * @throws InvalidArgumentException If $id is not a valid QTI identifier.
      */
-    public function setId($id) {
-        if (Format::isIdentifier($string, false) === true) {
-            $this->id($id);
+    public function setId($id = '') {
+        if (is_string($id) && (empty($id) === true || Format::isIdentifier($string, false) === true)) {
+            $this->id = $id;
         }
         else {
-            $msg = "The 'id' argument of a body element must be a valid identifier";
+            $msg = "The 'id' argument of a body element must be a valid identifier or an empty string";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -136,9 +141,9 @@ abstract class BodyElement {
      * @param string $class One or more class names separated by spaces.
      * @throws InvalidArgumentException If $class does not represent valid class name(s).
      */
-    public function setClass($class) {
+    public function setClass($class = '') {
         $class = trim($class);
-        if (Format::isClass($class) === true) {
+        if (is_string($class) && (empty($class) === true || Format::isClass($class) === true)) {
             $this->class = $class;
         }
         else {
@@ -161,7 +166,7 @@ abstract class BodyElement {
      * 
      * @param string $lang An RFC3066 language.
      */
-    public function setLang($lang) {
+    public function setLang($lang = '') {
         $this->lang = $lang;
     }
     
@@ -180,7 +185,7 @@ abstract class BodyElement {
      * @param string $label A string of 256 characters maximum.
      * @throws InvalidArgumentException If $label is not or a string or contains more than 256 characters.
      */
-    public function setLabel($label) {
+    public function setLabel($label = '') {
         if (Format::isString256($label) === true) {
             $this->label = $label;
         }
