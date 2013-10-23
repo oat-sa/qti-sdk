@@ -54,6 +54,34 @@ class FormatTest extends QtiSmTestCase {
 		$this->assertTrue(Format::isUri($string));
 	}
 	
+	/**
+	 * @dataProvider validClassFormatProvider
+	 */
+	public function testValidClassFormatProvider($string) {
+	    $this->assertTrue(Format::isClass($string));
+	}
+	
+	/**
+	 * @dataProvider invalidClassFormatProvider
+	 */
+	public function testInvalidClassFormatProvider($string) {
+	    $this->assertFalse(Format::isClass($string));
+	}
+	
+	/**
+	 * @dataProvider validString256FormatProvider
+	 */
+	public function testValidString256Provider($string) {
+	    $this->assertTrue(Format::isString256($string));
+	}
+	
+	/**
+	 * @dataProvider invalidString256FormatProvider
+	 */
+	public function testInvalidString256Provider($string) {
+	    $this->assertFalse(Format::isString256($string));
+	}
+	
 	public function validIdentifierFormatProvider() {
 		return array(
 			array('_good'),
@@ -116,5 +144,36 @@ class FormatTest extends QtiSmTestCase {
 			array('http://www.taotesting.com'),
 			array('../../index.html')
 		);
+	}
+	
+	public function validClassFormatProvider() {
+	    return array(
+	        array('a'),
+	        array('my-class'),
+	        array('my-class my-other-class'),
+	        array('theclass')
+	    );
+	}
+	
+	public function invalidClassFormatProvider() {
+	    return array(
+	        array("a\tb"),
+	        array(" "),
+	    );
+	}
+	
+	public function validString256FormatProvider() {
+	    return array(
+	        array(""),
+	        array("\t\n\r"),
+	        array("Hello World!"),
+	        array("世界，你好！") // Hello World! 
+	    );
+	}
+	
+	public function invalidString256FormatProvider() {
+	    return array(
+	        array("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue.")          
+	    );
 	}
 }

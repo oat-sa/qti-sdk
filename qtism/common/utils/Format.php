@@ -291,7 +291,7 @@ class Format {
 	}
 	
 	/**
-	 * Wether or not a given string is a variable ref.
+	 * Whether or not a given string is a variable ref.
 	 * 
 	 * @param string $string A given string.
 	 * @return boolean Wheter $string is a valid variable ref.
@@ -310,7 +310,7 @@ class Format {
 	}
 	
 	/**
-	 * Wether or not a given string is a coordinate collection.
+	 * Whether or not a given string is a coordinate collection.
 	 * 
 	 * @param string $string A given string.
 	 * @return boolean Wether $string is a valid coordinate collection.
@@ -318,6 +318,29 @@ class Format {
 	 */
 	public static function isCoords($string) {
 		$pattern = "/^-{0,1}[0-9]+(?:\s*,\s*-{0,1}[0-9]+)*$/";
-		return (preg_match($pattern, $string) === 1) ? true : false;
+		return preg_match($pattern, $string) === 1;
+	}
+	
+	/**
+	 * Whether a given $string is a string value with a maximum
+	 * of 256 characters.
+	 * 
+	 * @param string $string A string value.
+	 * @return boolean
+	 */
+	public static function isString256($string) {
+	    return is_string($string) && mb_strlen($string, 'UTF-8') <= 256;
+	}
+	
+	/**
+	 * Whether a given $string is a valid value for a body element's class
+	 * attribute e.g. 'qti-label' or 'qti-label qti-component'.
+	 * 
+	 * @param string $string A string value.
+	 * @return boolean
+	 */
+	public static function isClass($string) {
+	    $pattern = "/^(?:[^\s]+?(?:\x20){0,1})+$/";
+	    return preg_match($pattern, $string) === 1;
 	}
 }
