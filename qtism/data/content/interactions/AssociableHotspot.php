@@ -28,6 +28,12 @@ use qtism\common\datatypes\Coords;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
+/**
+ * The associableHotspot QTI class.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	
 	/**
@@ -97,12 +103,15 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
+	 * @throws InvalidArgument If one of the constructor's argument is invalid.
 	 */
 	public function __construct($identifier, $matchMax, Shape $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
 		$this->setMatchMax($matchMax);
+		$this->setMatchMin(0);
 		$this->setShape($shape);
 		$this->setCoords($coords);
+		$this->setHotspotLabel('');
 	}
 	
 	/**
