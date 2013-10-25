@@ -24,6 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\content\InlineStatic;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -85,5 +86,9 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	 */
 	public function isRequired() {
 		return $this->required;
+	}
+	
+	public function getComponents() {
+		return new QtiComponentCollection();
 	}
 }

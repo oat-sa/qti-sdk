@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Coords;
 use qtism\common\utils\Format;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -223,5 +224,9 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 */
 	public function getHotspotLabel() {
 		return $this->hotspotLabel;
+	}
+	
+	public function getComponents() {
+		return new QtiComponentCollection();
 	}
 }
