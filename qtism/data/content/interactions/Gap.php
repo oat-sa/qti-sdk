@@ -91,4 +91,8 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
+	
+	public function getQtiClassName() {
+		return 'gap';
+	}
 }

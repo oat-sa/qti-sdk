@@ -37,6 +37,13 @@ use \InvalidArgumentException;
 class Object extends BodyElement implements FlowStatic, InlineStatic {
 	
 	/**
+	 * The content elements of the object.
+	 * 
+	 * @var ObjectFlowCollection
+	 */
+	private $components;
+	
+	/**
 	 * From IMS QTI:
 	 * 
 	 * The data attribute provides a URI for locating the data 
@@ -208,5 +215,27 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 */
 	public function hasHeight() {
 		return $this->height >= 0;
+	}
+	
+	/**
+	 * Get the components composing the Object.
+	 * 
+	 * @return ObjectFlowCollection A collection of ObjectFlow objects.
+	 */
+	public function getComponents() {
+		return $this->components;
+	}
+	
+	/**
+	 * Set the components composing the Object.
+	 * 
+	 * @param ObjectFlowCollection $components
+	 */
+	public function setComponents(ObjectFlowCollection $components) {
+		$this->components = $components;
+	}
+	
+	public function getQtiClassName() {
+		return 'object';
 	}
 }

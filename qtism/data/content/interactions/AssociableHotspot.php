@@ -229,4 +229,8 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
+	
+	public function getQtiClassName() {
+		return 'associableHotspot';
+	}
 }
