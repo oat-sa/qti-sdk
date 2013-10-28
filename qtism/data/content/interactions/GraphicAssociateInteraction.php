@@ -93,6 +93,7 @@ class GraphicAssociateInteraction extends GraphicInteraction {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, Object $object, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
