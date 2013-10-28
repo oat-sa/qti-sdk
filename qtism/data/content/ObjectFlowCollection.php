@@ -23,7 +23,7 @@
 
 namespace qtism\data\content;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ObjectFlowCollection extends AbstractCollection {
+class ObjectFlowCollection extends QtiComponentCollection {
 	
 	/**
 	 * Check whether $value is an ObjectFlow object.

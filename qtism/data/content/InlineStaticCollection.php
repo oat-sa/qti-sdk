@@ -25,7 +25,7 @@
 
 namespace qtism\data\content;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -35,7 +35,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineStaticCollection extends AbstractCollection {
+class InlineStaticCollection extends QtiComponentCollection {
     
     /**
      * Throws an InvalidArgumentException if $value is not an instance of

@@ -116,6 +116,7 @@ class PositionObjectInteraction extends Interaction {
         $this->setMaxChoices($maxChoices);
         $this->setMinChoices(-1);
         $this->setObject($object);
+        $this->setCenterPoint(null);
     }
     
     /**

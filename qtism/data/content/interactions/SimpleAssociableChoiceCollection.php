@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -33,7 +33,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleAssociableChoiceCollection extends AbstractCollection {
+class SimpleAssociableChoiceCollection extends QtiComponentCollection {
     
     /**
      * Check if $value is an instance of SimpleAssociableChoice.

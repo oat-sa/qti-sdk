@@ -23,7 +23,8 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
+use \InvalidArgumentException;
 
 /**
  * A specialization of AbstractCollection aiming at storing PositionObjectInteraction
@@ -32,7 +33,7 @@ use qtism\common\collections\AbstractCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PositionObjectInteractionCollection extends AbstractCollection {
+class PositionObjectInteractionCollection extends QtiComponentCollection {
     
     /**
      * Check whether $value is a PositionObjectInteraction.
