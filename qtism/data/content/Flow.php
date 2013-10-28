@@ -43,7 +43,7 @@ interface Flow extends ObjectFlow {
      * @param string $base A URI or an empty string if the there is no base set.
      * @throws InvalidArgumentException If $base is not a valid URI nor an empty string.
      */
-    public function setBase($base = '');
+    public function setXmlBase($base = '');
     
     /**
      * Get the URI that changes the base for resolving relative URIs
@@ -51,5 +51,5 @@ interface Flow extends ObjectFlow {
      * 
      * @return string A URI or an empty string if no base is set.
      */
-    public function getBase();
+    public function getXmlBase();
 }

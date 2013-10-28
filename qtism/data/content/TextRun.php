@@ -45,7 +45,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      * @var string
      * @qtism-bean-property
      */
-    private $base = '';
+    private $xmlBase = '';
     
     /**
      * The characters contained in the TextRun.
@@ -88,12 +88,12 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      * @param string $base A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setBase($base = '') {
-        if (is_string($base) && (empty($base) || Format::isUri($base))) {
-            $this->base = $base;
+    public function setXmlBase($xmlBase = '') {
+        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
+            $this->xmlBase = $xmlBase;
         }
         else {
-            $msg = "The 'base' argument must be an empty string or a valid URI, '" . $base . "' given";
+            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -103,8 +103,8 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      *
      * @return string An empty string or a URI.
      */
-    public function getBase() {
-        return $this->base;
+    public function getXmlBase() {
+        return $this->xmlBase;
     }
     
     /**

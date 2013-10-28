@@ -44,7 +44,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
      * @var string
      * @qtism-bean-property
      */
-    private $base = '';
+    private $xmlBase = '';
 	
 	/**
 	 * From IMS QTI:
@@ -98,15 +98,15 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 /**
      * Set the base URI of the BlockInteraction.
      *
-     * @param string $base A URI.
+     * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setBase($base = '') {
-        if (is_string($base) && (empty($base) || Format::isUri($base))) {
-            $this->base = $base;
+    public function setXmlBase($xmlBase = '') {
+        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
+            $this->xmlBase = $xmlBase;
         }
         else {
-            $msg = "The 'base' argument must be an empty string or a valid URI, '" . $base . "' given";
+            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -116,7 +116,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
      *
      * @return string An empty string or a URI.
      */
-    public function getBase() {
+    public function getXmlBase() {
         return $this->base;
     }
 }
