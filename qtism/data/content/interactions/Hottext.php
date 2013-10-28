@@ -49,6 +49,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      * The components composing the hottext.
      * 
      * @var InlineStaticCollection
+     * @qtism-bean-property
      */
     private $components;
     
@@ -61,6 +62,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      * Fragment. See Item and Test Fragments for more information.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $base = '';
     
