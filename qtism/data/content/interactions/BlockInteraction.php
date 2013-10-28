@@ -57,6 +57,20 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	private $prompt = '';
 	
 	/**
+	 * Create a new BlockInteraction object.
+	 * 
+	 * @param string $responseIdentifier The identifier of the associated response.
+	 * @param string $id The id of the bodyElement.
+	 * @param string $class The class of the bodyElement.
+	 * @param string $lang The language of the bodyElement.
+	 * @param string $label The label of the bodyElement.
+	 * @throws InvalidArgumentException If one of the argument is invalid.
+	 */
+	public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
+	    parent::__construct($responseIdentifier, $id, $class, $lang, $label);
+	}
+	
+	/**
 	 * Get the prompt for the interaction.
 	 * 
 	 * @return string
