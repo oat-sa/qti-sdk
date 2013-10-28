@@ -54,6 +54,7 @@ class SelectPointInteraction extends GraphicInteraction {
      * multiple cardinality.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $maxChoices = 1;
     
@@ -66,6 +67,7 @@ class SelectPointInteraction extends GraphicInteraction {
      * imposed by maxChoices.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $minChoices = 0;
     
