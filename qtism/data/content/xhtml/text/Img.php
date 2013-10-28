@@ -39,6 +39,7 @@ class Img extends AtomicInline {
      * The img's src attribute.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $src;
     
@@ -46,6 +47,7 @@ class Img extends AtomicInline {
      * The img's src attribute.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $alt;
     
@@ -53,6 +55,7 @@ class Img extends AtomicInline {
      * The img's longdesc attribute.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $longdesc = '';
     
@@ -61,6 +64,7 @@ class Img extends AtomicInline {
      * means that no height is indicated.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $height = -1;
     
@@ -69,6 +73,7 @@ class Img extends AtomicInline {
      * means that no width is indicated.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $width = -1;
     
