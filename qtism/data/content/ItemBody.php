@@ -88,4 +88,8 @@ class ItemBody extends BodyElement {
     public function getComponents() {
         return $this->components;
     }
+    
+    public function getQtiClassName() {
+        return 'itemBody';
+    }
 }
