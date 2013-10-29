@@ -54,6 +54,7 @@ class ItemBody extends BodyElement {
      * The blocks composing the itemBody.
      * 
      * @var BlockCollection
+     * @qtism-bean-property
      */
     private $components;
     
