@@ -89,6 +89,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * bodyElement visible only in the appropriate feedback states.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $identifier;
     
@@ -99,6 +100,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * to strings. See Number Formatting Rules for details.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $format = '';
     
@@ -110,6 +112,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * the form "e+n" is changed to "x 10n".
      * 
      * @var boolean
+     * @qtism-bean-property
      */
     private $powerForm = false;
     
@@ -122,6 +125,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Note: qti:integerOrVariableRef
      * 
      * @var integer|string
+     * @qtism-bean-property
      */
     private $base = 10;
     
@@ -136,6 +140,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * for the index attribute.
      * 
      * @var integer|string
+     * @qtism-bean-property
      */
     private $index = -1;
     
@@ -147,6 +152,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * can override this default with personal preferences or locale settings.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $delimiter = ';';
     
@@ -156,6 +162,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * The field specifier to use when displaying variables of record cardinality.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $field = '';
     
@@ -167,6 +174,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * Implementations can override this default with personal preferences or locale settings.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $mappingIndicator = '=';
     
