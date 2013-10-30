@@ -1022,7 +1022,7 @@ class AssessmentTestSession extends State {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
-	        throw new AssessmentTestSessionException(msg, AssessmentTestSessionException::STATE_VIOLATION);
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
 	    $this->checkTimeLimits();

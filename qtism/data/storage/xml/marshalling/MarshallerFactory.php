@@ -36,7 +36,7 @@ use \ReflectionClass;
  * create appropriate marshallers regarding a specific QtiComponent
  * or DOMElement.
  * 
- * @author jerome
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 class MarshallerFactory {
@@ -105,6 +105,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('responseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 		$this->addMappingEntry('responseElseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 		$this->addMappingEntry('responseElse', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
+		$this->addMappingEntry('em', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('strong', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 	}
 	
 	/**

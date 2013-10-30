@@ -37,6 +37,7 @@ use qtism\data\rules\ResponseElseIf;
 use qtism\data\rules\ResponseElseIfCollection;
 use qtism\data\rules\ResponseElse;
 use \DOMElement;
+use \DOMNode;
 
 class ResponseConditionMarshaller extends RecursiveMarshaller {
 	
@@ -84,7 +85,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
-	protected function isElementFinal(DOMElement $element) {
+	protected function isElementFinal(DOMNode $element) {
 		$exclusion = array('responseIf', 'responseElseIf', 'responseElse', 'responseCondition');
 		return !in_array($element->nodeName, $exclusion);
 	}

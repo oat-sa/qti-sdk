@@ -37,6 +37,7 @@ use qtism\data\rules\OutcomeElseIf;
 use qtism\data\rules\OutcomeElseIfCollection;
 use qtism\data\rules\OutcomeElse;
 use \DOMElement;
+use \DOMNode;
 
 class OutcomeConditionMarshaller extends RecursiveMarshaller {
 	
@@ -84,7 +85,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
-	protected function isElementFinal(DOMElement $element) {
+	protected function isElementFinal(DOMNode $element) {
 		$exclusion = array('outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition');
 		return !in_array($element->nodeName, $exclusion);
 	}

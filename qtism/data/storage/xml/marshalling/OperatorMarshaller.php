@@ -29,6 +29,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Operator;
 use \DOMElement;
+use \DOMNode;
 use \ReflectionClass;
 
 /**
@@ -125,7 +126,7 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
-	protected function isElementFinal(DOMElement $element) {
+	protected function isElementFinal(DOMNode $element) {
 		return !in_array($element->nodeName, static::getOperators());
 	}
 	

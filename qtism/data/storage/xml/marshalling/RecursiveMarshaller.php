@@ -24,10 +24,13 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\TextRun;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\common\collections\AbstractCollection;
 use \DOMElement;
+use \DOMText;
+use \DOMNode;
 use \DOMNodeList;
 
 abstract class RecursiveMarshaller extends Marshaller {
@@ -309,6 +312,11 @@ abstract class RecursiveMarshaller extends Marshaller {
 					$this->pushFinal($node);
 				} 
 				else {
+				    
+				    if ($node instanceof DOMText) {
+				        $node = self::getDOMCradle()->createElement('textRun', $node->nodeValue);
+				    }
+				    
 					// Process it and make its a final element to be used by hierarchical nodes.
 					$marshaller = $this->getMarshallerFactory()->createMarshaller($node);
 					$processed = $marshaller->unmarshall($node);
@@ -327,7 +335,7 @@ abstract class RecursiveMarshaller extends Marshaller {
 	 */
 	abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children);
 	
-	abstract protected function isElementFinal(DOMElement $element);
+	abstract protected function isElementFinal(DOMNode $element);
 	
 	/**
 	 * 

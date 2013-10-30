@@ -30,6 +30,7 @@ use qtism\data\AssessmentSection;
 use qtism\data\SectionPartCollection;
 use qtism\data\content\RubricBlockCollection;
 use \DOMElement;
+use \DOMNode;
 use \DOMXPath;
 use \ReflectionClass;
 
@@ -146,7 +147,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
-	protected function isElementFinal(DOMElement $element) {
+	protected function isElementFinal(DOMNode $element) {
 		return $element->nodeName != 'assessmentSection';
 	}
 	

@@ -267,12 +267,12 @@ abstract class Marshaller {
 	 * @param DOMElement $element A DOMElement object.
 	 * @return array An array of DOMElement objects.
 	 */
-	public static function getChildElements($element) {
+	public static function getChildElements($element, $withText = false) {
 		$children = $element->childNodes;
 		$returnValue = array();
 		
 		for ($i = 0; $i < $children->length; $i++) {
-			if ($children->item($i)->nodeType === XML_ELEMENT_NODE) {
+			if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && $children->item($i)->nodeType === XML_TEXT_NODE)) {
 				$returnValue[] = $children->item($i);
 			}
 		}

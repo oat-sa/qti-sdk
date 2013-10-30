@@ -24,6 +24,7 @@
 namespace qtism\data\content;
 
 use qtism\data\content\BodyElement;
+use \InvalidArgumentException;
 
 /**
  * The QTI simpleInline abstract class which contains inline QTI components
@@ -57,8 +58,9 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
      */
-    public function __construct($id, $class, $lang, $label) {
+    public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new InlineCollection());
     }
@@ -77,7 +79,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * 
      * @param QtiComponentCollection $content A collection of Inline components.
      */
-    public function setCpntent(InlineCollection $content) {
+    public function setContent(InlineCollection $content) {
         $this->content = $content;
     }
     

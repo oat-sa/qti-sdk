@@ -35,6 +35,7 @@ use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeElseIf;
 use \ReflectionClass;
 use \DOMElement;
+use \DOMNode;
 
 class OutcomeControlMarshaller extends RecursiveMarshaller {
 	
@@ -80,7 +81,7 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
-	protected function isElementFinal(DOMElement $element) {
+	protected function isElementFinal(DOMNode $element) {
 		return in_array($element->nodeName, array_merge(array(
 					'exitTest',
 					'lookupOutcomeValue',
