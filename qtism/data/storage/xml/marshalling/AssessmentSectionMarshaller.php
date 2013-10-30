@@ -28,7 +28,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\SectionPartCollection;
-use qtism\data\RubricBlockCollection;
+use qtism\data\content\RubricBlockCollection;
 use \DOMElement;
 use \DOMXPath;
 use \ReflectionClass;

@@ -45,7 +45,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      * @var InlineCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new AtomicBlock object.
@@ -57,16 +57,25 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      */
     public function __construct($id, $class, $lang, $label) {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new InlineCollection());
+        $this->setContent(new InlineCollection());
     }
     
     /**
      * Set the collection of Inline components composing the AtomicBlock.
      * 
-     * @param InlineCollection $inlineComponents A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setComponents(InlineCollection $inlineComponents) {
-        $this->components = $inlineComponents;
+    public function setContent(InlineCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the collection of Inline components composing the AtomicBlock.
+     * 
+     * @return InlineCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -75,7 +84,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      * @return InlineCollection A collection of Inline objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**

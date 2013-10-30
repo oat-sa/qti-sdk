@@ -41,7 +41,7 @@ class Caption extends BodyElement {
      * @var InlineCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Caption object.
@@ -54,7 +54,7 @@ class Caption extends BodyElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new InlineCollection());
+        $this->setContent(new InlineCollection());
     }
     
     /**
@@ -63,16 +63,25 @@ class Caption extends BodyElement {
      * @return InlineCollection A collection of Inline objects.
      */
     public function getComponents() {
-        return $components;
+        return $this->getContent();
     }
     
     /**
      * Set the components composing the caption.
      * 
-     * @param InlineCollection $components A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setComponents(InlineCollection $components) {
-        $this->components = $components;
+    public function setContent(InlineCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the components composing the caption.
+     * 
+     * @return InlineCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

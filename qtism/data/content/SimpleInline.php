@@ -48,7 +48,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * @var InlineCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new SimpleInline object.
@@ -60,7 +60,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      */
     public function __construct($id, $class, $lang, $label) {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new InlineCollection());
+        $this->setContent(new InlineCollection());
     }
     
     /**
@@ -69,16 +69,25 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * @return InlineCollection A collection of Inline components.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the inline components contained by the SimpleInline object.
      * 
-     * @param QtiComponentCollection $inlineComponents A collection of Inline components.
+     * @param QtiComponentCollection $content A collection of Inline components.
      */
-    public function setComponents(InlineCollection $inlineComponents) {
-        $this->components = $inlineComponents;
+    public function setCpntent(InlineCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the inline components contained by the SimpleInline object.
+     * 
+     * @return InlineCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**

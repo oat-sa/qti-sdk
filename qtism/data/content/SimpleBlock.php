@@ -45,7 +45,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      * @var BlockCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new SimpleBlock object.
@@ -57,6 +57,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      */
     public function __construct($id, $class, $lang, $label) {
         parent::__construct($id, $class, $lang, $label);
+        $this->setContent(new BlockCollection());
     }
     
     /**
@@ -65,16 +66,25 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      * @return BlockCollection A collection of Block objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the collection of Block objects composing the SimpleBlock.
      * 
-     * @param BlockCollection $blocks A collection of Block objects.
+     * @param BlockCollection $content A collection of Block objects.
      */
-    public function setComponents(BlockCollection $blocks) {
-        $this->components = $blocks;
+    public function setContent(BlockCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the content of Block objects composing the Simpleblock.
+     * 
+     * @return BlockCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**

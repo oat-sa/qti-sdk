@@ -27,7 +27,7 @@ namespace qtism\data;
 use qtism\data\utils\Reflection;
 use qtism\data\rules\Selection;
 use qtism\data\rules\Ordering;
-use qtism\data\RubricBlockCollection;
+use qtism\data\content\RubricBlockCollection;
 use qtism\data\SectionPartCollection;
 use qtism\data\AssessmentTest;
 use \SplObjectStorage;

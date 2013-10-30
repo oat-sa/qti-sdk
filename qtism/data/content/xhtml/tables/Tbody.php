@@ -40,37 +40,41 @@ class Tbody extends BodyElement {
      * @var TrCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Tbody object.
      * 
-     * @param TrCollection $components A non-empty TrCollection object.
+     * @param TrCollection $content A non-empty TrCollection object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct(TrCollection $components, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents($components);
+        $this->setContent($content);
     }
     
     /**
      * Set the collection of Tr objects composing the Tbody.
      * 
-     * @param TrCollection $components A non-empty TrCollection object.
+     * @param TrCollection $content A non-empty TrCollection object.
      * @throws InvalidArgumentException If $components is empty.
      */
-    public function setComponents(TrCollection $components) {
-        if (count($components) > 0) {
-            $this->components = $components;
+    public function setContent(TrCollection $content) {
+        if (count($content) > 0) {
+            $this->content = $content;
         }
         else {
             $msg = "A Tbody object must be composed of at least 1 Tr object, none given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -79,7 +83,7 @@ class Tbody extends BodyElement {
      * @return TrCollection A collection of Tr objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

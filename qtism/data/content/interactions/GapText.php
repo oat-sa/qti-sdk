@@ -41,8 +41,9 @@ class GapText extends GapChoice {
      * The textOrVariable objects composing the GapText.
      * 
      * @var TextOrVariableCollection
+     * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new GapText object.
@@ -56,7 +57,7 @@ class GapText extends GapChoice {
      */
     public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
-        $this->setComponents(new TextOrVariableCollection());
+        $this->setContent(new TextOrVariableCollection());
     }
     
     /**
@@ -65,16 +66,25 @@ class GapText extends GapChoice {
      * @return TextOrVariableCollection
      */
     public function getComponents() {
-        return $this->components;
+        return $this->content;
     }
     
     /**
      * Set the textOrVariable objects composing the GapText.
      * 
-     * @param TextOrVariableCollection $components
+     * @param TextOrVariableCollection $content
      */
-    public function setComponents(TextOrVariableCollection $components) {
-        $this->components = $components;
+    public function setContent(TextOrVariableCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the textOrVariable objects composing the GapText.
+     * 
+     * @return TextOrVariableCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

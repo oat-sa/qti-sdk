@@ -53,7 +53,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * 
 	 * @var ObjectFlowCollection
 	 */
-	private $components;
+	private $content;
 	
 	/**
 	 * From IMS QTI:
@@ -106,6 +106,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 		$this->setType($type);
 		$this->setWidth(-1);
 		$this->setHeight(-1);
+		$this->setContent(new ObjectFlowCollection());
 	}
 	
 	/**
@@ -260,16 +261,25 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * @return ObjectFlowCollection A collection of ObjectFlow objects.
 	 */
 	public function getComponents() {
-		return $this->components;
+		return $this->getContent();
 	}
 	
 	/**
 	 * Set the components composing the Object.
 	 * 
-	 * @param ObjectFlowCollection $components
+	 * @param ObjectFlowCollection $content
 	 */
-	public function setComponents(ObjectFlowCollection $components) {
-		$this->components = $components;
+	public function setContent(ObjectFlowCollection $content) {
+		$this->content = $content;
+	}
+	
+	/**
+	 * Get the components composing the Object.
+	 * 
+	 * @return ObjectFlowCollection
+	 */
+	public function getContent() {
+	    return $this->content;
 	}
 	
 	public function getQtiClassName() {

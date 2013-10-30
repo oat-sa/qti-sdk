@@ -1,11 +1,8 @@
 <?php
 
 use qtism\data\AssessmentSectionRef;
-
 use qtism\data\AssessmentItemRef;
-
 use qtism\data\SectionPartCollection;
-
 use qtism\data\ItemSessionControl;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentSection;

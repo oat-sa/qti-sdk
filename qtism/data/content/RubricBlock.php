@@ -22,8 +22,11 @@
  */
 
 
-namespace qtism\data;
+namespace qtism\data\content;
 
+use qtism\data\StylesheetCollection;
+use qtism\data\ViewCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -37,7 +40,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RubricBlock extends QtiComponent {
+class RubricBlock extends SimpleBlock {
 	
 	/**
 	 * The views in which the rubric block's content are to be shown.
@@ -63,26 +66,20 @@ class RubricBlock extends QtiComponent {
 	 */
 	private $stylesheets;
 	
-	
 	/**
-	 * The content of the rubrick block as a string.
+	 * Create a new RubricBlock object.
 	 * 
-	 * @var string
-	 * @qtism-bean-property
+	 * @param ViewCollection $views A collection of values from the View enumeration.
+	 * @param string $id The identifier of the bodyElement.
+	 * @param string $class The class of the bodyElement.
+	 * @param string $lang The language of the bodyElement.
+	 * @param string $label The label of the bodyElement.
+	 * @throws InvalidArgumentException If any of the arguments is invalid.
 	 */
-	private $content = '';
-	
-	/**
-	 * Create a new instance of RubricBlock.
-	 * 
-	 * @param ViewCollection $views The views in which the rubric block's content are to be shown.
-	 * @param string $use he purpose for which the rubric is intended to be used.
-	 * @throws InvalidArgumentException If $use is not a string or $
-	 * 
-	 */
-	public function __construct(ViewCollection $views, $use = '') {
+	public function __construct(ViewCollection $views, $id = '', $class = '', $lang = '', $label = '') {
+	    parent::__construct($id, $class, $lang, $label);
 		$this->setViews($views);
-		$this->setUse($use);
+		$this->setUse('');
 		$this->setStylesheets(new StylesheetCollection());
 	}
 	
@@ -156,36 +153,12 @@ class RubricBlock extends QtiComponent {
 		$this->stylesheets = $stylesheets;
 	}
 	
-	/**
-	 * Set the content of the rubrickBlock as a markup string.
-	 * 
-	 * @param string $content
-	 * @throws InvalidArgumentException If $content is not a string.
-	 */
-	public function setContent($content) {
-		if (gettype($content) === 'string') {
-			$this->content = $content;
-		}
-		else {
-			$msg = "The content argument must be a string, '" . gettype($content) . "' given";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
-	 * Get the content of the RubricBlock as a markup string.
-	 * 
-	 * @return string
-	 */
-	public function getContent() {
-		return $this->content;
-	}
-	
 	public function getQtiClassName() {
 		return 'rubricBlock';
 	}
 	
 	public function getComponents() {
-		return new QtiComponentCollection(array_merge($this->getStylesheets()->getArrayCopy()));
+	    $components = parent::getComponents();
+		return new QtiComponentCollection(array_merge($components->getArrayCopy(), $this->getStylesheets()->getArrayCopy()));
 	}
 }

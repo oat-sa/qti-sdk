@@ -24,14 +24,13 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase {
 		}
 		
 		$rubricBlocks = $assessmentSection->getRubricBlocks();
-		$this->assertInstanceOf('qtism\\data\\RubricBlockCollection', $rubricBlocks);
+		$this->assertInstanceOf('qtism\\data\\content\\RubricBlockCollection', $rubricBlocks);
 		$this->assertEquals(1, count($rubricBlocks));
 		
 		$rubricBlock = $rubricBlocks[0];
 		$views = $rubricBlock->getViews();
 		$this->assertEquals(1, count($views));
 		$this->assertEquals(View::CANDIDATE, $views[0]);
-		$this->assertEquals('<p>Instructions for Section A</p>', $rubricBlock->getContent());
 		
 		$assessmentItemRefs = $assessmentSection->getSectionParts();
 		$this->assertInstanceOf('qtism\\data\\SectionPartCollection', $assessmentItemRefs);

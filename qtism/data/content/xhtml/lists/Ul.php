@@ -50,7 +50,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic {
      * @var LiCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Ul object.
@@ -63,16 +63,25 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic {
      */
     public function __construct($id = '', $class = '', $lang = '', $label) {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new LiCollection());
+        $this->setContent(new LiCollection());
     }
     
     /**
      * Set the Li objects composing the Ul.
      * 
-     * @param LiCollection $components A collection of Li objects.
+     * @param LiCollection $content A collection of Li objects.
      */
-    public function setComponents(LiCollection $components) {
-        $this->components = $components;
+    public function setContent(LiCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the Li objects composing the Ul.
+     * 
+     * @return LiCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -81,7 +90,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic {
      * @return LiCollection A collection of Li objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**

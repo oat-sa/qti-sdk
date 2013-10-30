@@ -40,31 +40,31 @@ class Tfoot extends BodyElement {
      * @var TrCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Tfoot object.
      * 
-     * @param TrCollection $components A collection of Tr objects with at least one Tr object.
+     * @param TrCollection $content A collection of Tr objects with at least one Tr object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
      */
-    public function __construct(TrCollection $components, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents($components);
+        $this->setContent($content);
     }
     
     /**
      * Set the Tr objects composing the Tfoot.
      * 
-     * @param TrCollection $components A collection of Tfoot object.
-     * @throws InvalidArgumentException If $components is empty.
+     * @param TrCollection $content A collection of Tfoot object.
+     * @throws InvalidArgumentException If $content is empty.
      */
-    public function setComponents(TrCollection $components) {
-        if (count($components) > 0) {
-            $this->components = $components;
+    public function setContent(TrCollection $content) {
+        if (count($content) > 0) {
+            $this->content = $content;
         }
         else {
             $msg = "A Tfoot object must be composed of at least 1 Tr object, none given.";
@@ -75,10 +75,19 @@ class Tfoot extends BodyElement {
     /**
      * Get the Tr objects composing the Tfoot.
      * 
+     * @return TrCollection
+     */
+    public function getContent() {
+        return $this->content;
+    }
+    
+    /**
+     * Get the Tr objects composing the Tfoot.
+     * 
      * @return TrCollection A collection Tr objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

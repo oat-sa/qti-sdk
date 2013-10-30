@@ -38,8 +38,9 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	 * The elements composing the SimpleAssociableChoice.
 	 * 
 	 * @var FlowStaticCollection
+	 * @qtism-bean-property
 	 */
-	private $components;
+	private $content;
 	
 	/**
 	 * From IMS QTI:
@@ -83,7 +84,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 		parent::__construct($identifier, $id, $class, $lang, $label);
 		$this->setMatchMax($matchMax);
 		$this->setMatchMin(0);
-		$this->setComponents(new FlowStaticCollection());
+		$this->setContent(new FlowStaticCollection());
 	}
 	
 	/**
@@ -127,22 +128,26 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 		}
 	}
 	
-	/**
-	 * Get the elements composing the simpleAssociableChoice.
-	 * 
-	 * @return FlowStaticCollection A collection of FlowStatic objects.
-	 */
 	public function getComponents() {
-		return $this->components;
+		return $this->getContent();
 	}
 	
 	/**
 	 * Set the elements composing the simpleAssociableChoice.
 	 * 
-	 * @param FlowStaticCollection $components A collection of FlowStatic objects.
+	 * @param FlowStaticCollection $content A collection of FlowStatic objects.
 	 */
-	public function setComponents(FlowStaticCollection $components) {
-		$this->components = $components;
+	public function setContent(FlowStaticCollection $content) {
+		$this->content = $content;
+	}
+	
+	/**
+	 * Get the elements composing the simpleAssociableChoice.
+	 * 
+	 * @return FlowStaticCollection A collection of FlowStatic objects.
+	 */
+	public function getContent() {
+	    return $this->content;
 	}
 	
 	/**

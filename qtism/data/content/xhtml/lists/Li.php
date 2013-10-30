@@ -41,11 +41,11 @@ class Li extends BodyElement {
      * @var FlowCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new FlowCollection());
+        $this->setContent(new FlowCollection());
     }
     
     /**
@@ -54,16 +54,25 @@ class Li extends BodyElement {
      * @return FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the Flow objects composing the Li.
      * 
-     * @param FlowCollection $components
+     * @param FlowCollection $content
      */
-    public function setComponents(FlowCollection $components) {
-        $this->components = $components;
+    public function setContent(FlowCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the Flow objects composing the Li.
+     * 
+     * @return FlowCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

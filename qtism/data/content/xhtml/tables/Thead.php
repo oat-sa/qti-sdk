@@ -40,32 +40,32 @@ class Thead extends BodyElement {
      * @var TrCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Thead object.
      * 
-     * @param TrCollection $components The Tr objects composing the Thead.
+     * @param TrCollection $content The Tr objects composing the Thead.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct(TrCollection $components, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents($components);
+        $this->setContent($content);
     }
     
     /**
      * Set the Tr objects composing the Thead.
      * 
-     * @param TrCollection $components A collection of Tr objects.
-     * @throws InvalidArgumentException If $components is empty.
+     * @param TrCollection $content A collection of Tr objects.
+     * @throws InvalidArgumentException If $content is empty.
      */
-    public function setComponents(TrCollection $components) {
-        if (count($components) > 0) {
-            $this->components = $components;
+    public function setContent(TrCollection $content) {
+        if (count($content) > 0) {
+            $this->content = $content;
         }
         else {
             $msg = "A Thead object must be composed of at lease 1 Tr, none given.";
@@ -76,10 +76,19 @@ class Thead extends BodyElement {
     /**
      * Get the Tr objects composing the Thead.
      * 
+     * @return TrCollection
+     */
+    public function getContent() {
+        return $this->content;
+    }
+    
+    /**
+     * Get the Tr objects composing the Thead.
+     * 
      * @return TrCollection A collection of Tr objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

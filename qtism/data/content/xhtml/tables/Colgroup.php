@@ -40,7 +40,7 @@ class Colgroup extends BodyElement {
      * @var ColCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Colgroup object.
@@ -53,6 +53,7 @@ class Colgroup extends BodyElement {
      */
     public function __construct($id = '', $class = '' , $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
+        $this->setContent(new ColCollection());
     }
     
     /**
@@ -61,16 +62,25 @@ class Colgroup extends BodyElement {
      * @return ColCollection A collection of Col objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the collection of Col objects composing the ColGroup.
      * 
-     * @param ColCollection $components A collection of Col objects.
+     * @param ColCollection $content A collection of Col objects.
      */
-    public function setComponents(ColCollection $components) {
-        $this->components = $components;
+    public function setContent(ColCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the collection of Col objects composing the ColGroup.
+     * 
+     * @return ColCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

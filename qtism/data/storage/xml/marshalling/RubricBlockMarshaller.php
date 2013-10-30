@@ -25,9 +25,8 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\StylesheetCollection;
-
 use qtism\data\QtiComponent;
-use qtism\data\RubricBlock;
+use qtism\data\content\RubricBlock;
 use qtism\data\ViewCollection;
 use qtism\data\View;
 use \DOMElement;
@@ -70,11 +69,11 @@ class RubricBlockMarshaller extends Marshaller {
 		}
 		
 		// A RubricBlock contains... blocks !
-		if ($component->getContent() !== '') {
+		/* if ($component->getContent() !== '') {
 			$blocks = static::getDOMCradle()->createDocumentFragment();
 			$blocks->appendXML($component->getContent());
 			$element->appendChild($blocks);
-		}
+		} */
 		
 		return $element;
 	}
@@ -117,7 +116,7 @@ class RubricBlockMarshaller extends Marshaller {
 			
 			$content = self::extractContent($element);
 			if (!empty($content)) {
-				$object->setContent($content);
+				//$object->setContent($content);
 			}
 		}
 		else {

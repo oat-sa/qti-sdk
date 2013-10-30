@@ -40,7 +40,7 @@ class Tr extends BodyElement {
      * @var TableCellCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Tr object.
@@ -53,7 +53,7 @@ class Tr extends BodyElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new TableCellCollection());
+        $this->setContent(new TableCellCollection());
     }
     
     /**
@@ -62,16 +62,25 @@ class Tr extends BodyElement {
      * @return TableCellCollection A collection of TableCell objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the TableCell objects composing the tr.
      * 
-     * @param TableCellCollection $components A collection of TableCell objects.
+     * @param TableCellCollection $content A collection of TableCell objects.
      */
-    public function setComponents(TableCellCollection $components) {
-        $this->components = $components;
+    public function setContent(TableCellCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the TableCell objects composing the tr.
+     * 
+     * @return TableCellCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

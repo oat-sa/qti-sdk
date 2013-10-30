@@ -51,7 +51,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      * @var InlineStaticCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * From IMS QTI:
@@ -78,7 +78,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $id, $class, $lang, $label);
-        $this->setComponents(new InlineStaticCollection());
+        $this->setContent(new InlineStaticCollection());
     }
     
     /**
@@ -109,19 +109,23 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
     /**
      * Set the components composing the hottext.
      * 
-     * @param InlineStaticCollection $components A collection of InlineStatic objects.
+     * @param InlineStaticCollection $content A collection of InlineStatic objects.
      */
-    public function setComponents(InlineStaticCollection $components) {
-        $this->components = $components;
+    public function setContent(InlineStaticCollection $content) {
+        $this->content = $content;
     }
     
     /**
      * Get the components composing the hottext.
      * 
-     * @return InlineStaticCollection A collection of InlineStatic objects.
+     * @return InlineStaticCollection
      */
+    public function getContent() {
+        return $this->content;
+    }
+    
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

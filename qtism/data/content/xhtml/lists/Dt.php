@@ -38,8 +38,9 @@ class Dt extends DlElement {
      * The Inline objects composing the Dt.
      * 
      * @var InlineCollection
+     * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Dt object.
@@ -52,16 +53,25 @@ class Dt extends DlElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label) {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new InlineCollection());
+        $this->setContent(new InlineCollection());
     }
     
     /**
      * Set the Inline objects composing the Dt.
      * 
-     * @param InlineCollection $components A collection of Inline objects.
+     * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setComponents(InlineCollection $components) {
-        $this->components = $components;
+    public function setContent(InlineCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the Inline objects composing the Dt.
+     * 
+     * @return InlineCollection 
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -70,7 +80,7 @@ class Dt extends DlElement {
      * @return InlineCollection The Inline objects composing the Dt.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

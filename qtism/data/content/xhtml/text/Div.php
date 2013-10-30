@@ -53,7 +53,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
      * @var FlowCollection A collection of Flow objects.
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Get the collection of Flow objects composing the Div.
@@ -61,16 +61,25 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
      * @return FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the collection of Flow objects composing the Div.
      * 
-     * @param FlowCollection $flows A collection of Flow objects.
+     * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setComponents(FlowCollection $flows) {
-        $this->setComponents($components);
+    public function setContent(FlowCollection $content) {
+        $this->setContent($content);
+    }
+    
+    /**
+     * Get the collection of Flow objects composing the Div.
+     * 
+     * @return FlowCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**

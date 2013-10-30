@@ -32,8 +32,9 @@ class SimpleChoice extends Choice {
      * The components composing the simpleChoice.
      * 
      * @var FlowStaticCollection
+     * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new SimpleChoice object.
@@ -47,7 +48,7 @@ class SimpleChoice extends Choice {
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $id, $class, $lang, $label);
-        $this->setComponents(new FlowStaticCollection());
+        $this->setContent(new FlowStaticCollection());
     }
     
     /**
@@ -56,16 +57,25 @@ class SimpleChoice extends Choice {
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     /**
      * Set the components composing the simpleChoice.
      * 
-     * @param FlowStaticCollection $components A collection of FlowStatic objects.
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setComponents(FlowStaticCollection $components) {
-        $this->components = $components;
+    public function setContent(FlowStaticCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the components composing the simpleChoice.
+     * 
+     * @return FlowStaticCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     public function getQtiClassName() {

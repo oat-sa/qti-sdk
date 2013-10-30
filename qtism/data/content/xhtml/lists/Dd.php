@@ -40,7 +40,7 @@ class Dd extends DlElement {
      * @var FlowCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Dd object.
@@ -53,16 +53,25 @@ class Dd extends DlElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new FlowCollection());
+        $this->setContent(new FlowCollection());
     } 
     
     /**
      * Set the Flow objects composing the Dd.
      * 
-     * @param FlowCollection $components A collection of Flow objects.
+     * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setComponents(FlowCollection $components) {
-        $this->components = $components;
+    public function setContent(FlowCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Set the Flow objects composing the Dd.
+     * 
+     * @return FlowCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -71,7 +80,7 @@ class Dd extends DlElement {
      * @return FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

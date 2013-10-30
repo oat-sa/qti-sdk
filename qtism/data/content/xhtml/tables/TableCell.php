@@ -93,7 +93,7 @@ abstract class TableCell extends BodyElement {
      * @var FlowCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new TableCell object.
@@ -106,7 +106,7 @@ abstract class TableCell extends BodyElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new FlowCollection());
+        $this->setContent(new FlowCollection());
         $this->setHeaders(new IdentifierCollection());
         $this->setScope(-1);
         $this->setAbbr('');
@@ -310,10 +310,19 @@ abstract class TableCell extends BodyElement {
     /**
      * Set the components composing the TableCell.
      * 
-     * @param FlowCollection $components A collection of Flow objects.
+     * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setComponents(FlowCollection $components) {
-        $this->components = $components;
+    public function setContent(FlowCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the components composing the TableCell.
+     * 
+     * @return FlowCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -322,6 +331,6 @@ abstract class TableCell extends BodyElement {
      * @return FlowCollection
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
 }

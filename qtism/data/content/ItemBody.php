@@ -56,7 +56,7 @@ class ItemBody extends BodyElement {
      * @var BlockCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new ItemBody object.
@@ -69,16 +69,25 @@ class ItemBody extends BodyElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new BlockCollection());
+        $this->setContent(new BlockCollection());
     }
     
     /**
      * Set the Block objects composing the ItemBody.
      * 
-     * @param BlockCollection $components The collection of blocks composing the itemBody.
+     * @param BlockCollection $content The collection of blocks composing the itemBody.
      */
-    public function setComponents(BlockCollection $components) {
-        $this->components;
+    public function setContent(BlockCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the Block objects the ItemBody.
+     * 
+     * @return BlockCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -87,7 +96,7 @@ class ItemBody extends BodyElement {
      * @return BlockCollection A collection of Block objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {

@@ -50,7 +50,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
      * @var DlElementCollection
      * @qtism-bean-property
      */
-    private $components;
+    private $content;
     
     /**
      * Create a new Dl object.
@@ -63,16 +63,25 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setComponents(new DlElementCollection());
+        $this->setContent(new DlElementCollection());
     }
     
     /**
      * Set the DlElement objects composing the Dl.
      * 
-     * @param DlElementCollection $components A collection of DlElement objects.
+     * @param DlElementCollection $content A collection of DlElement objects.
      */
-    public function setComponents(DlElementCollection $components) {
-        $this->components = $components;
+    public function setContent(DlElementCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the DlElement objects composing the Dl.
+     * 
+     * @return DlElementCollection
+     */
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -81,7 +90,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
      * @return DlElementCollection A collection of DlElement objects.
      */
     public function getComponents() {
-        return $this->components;
+        return $this->getContent();
     }
     
     public function getQtiClassName() {
