@@ -66,7 +66,7 @@ class GapText extends GapChoice {
      * @return TextOrVariableCollection
      */
     public function getComponents() {
-        return $this->content;
+        return $this->getContent();
     }
     
     /**
