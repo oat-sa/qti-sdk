@@ -107,6 +107,24 @@ class MarshallerFactory {
 		$this->addMappingEntry('responseElse', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 		$this->addMappingEntry('em', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 		$this->addMappingEntry('strong', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('abbr', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('acronym', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('b', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('big', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('cite', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('code', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('dfn', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('i', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('kbd', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('samp', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('small', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('span', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('sub', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('sup', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('tt', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('var', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('a', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('q', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 	}
 	
 	/**

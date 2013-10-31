@@ -296,9 +296,9 @@ class Duration implements Comparable, QtiDatatype {
 	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
 	 */
 	public function add($duration) {
-		$refStrDate = '19710101';
-		$d1 = new DateTime($refStrDate);
-		$d2 = new DateTime($refStrDate);
+		$refStrDate = '@0';
+		$d1 = new DateTime($refStrDate, new \DateTimeZone('Europe/Luxembourg'));
+		$d2 = new DateTime($refStrDate, new \DateTimeZone('Europe/Luxembourg'));
 		
 		if ($duration instanceof Duration) {
 		    $toAdd = $duration;
@@ -327,7 +327,7 @@ class Duration implements Comparable, QtiDatatype {
 	        $this->setInterval(new DateInterval('PT0S'));
 	    }
 	    else {
-	        $refStrDate = '19710101';
+	        $refStrDate = '@0';
 	        $d1 = new DateTime($refStrDate);
 	        $d2 = new DateTime($refStrDate);
 	        

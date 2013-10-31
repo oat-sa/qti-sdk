@@ -24,7 +24,7 @@
 namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
-
+use qtism\common\utils\Format;
 
 /**
  * The XHTML q class.
@@ -50,8 +50,9 @@ class Q extends SimpleInline {
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      */
-    public function __construct($id, $class, $lang, $label, $cite = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '') {
         parent::__construct($id, $class, $lang, $label);
+        $this->setCite($cite);
     }
     
     /**

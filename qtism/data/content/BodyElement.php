@@ -117,7 +117,7 @@ abstract class BodyElement extends QtiComponent {
      * @throws InvalidArgumentException If $id is not a valid QTI identifier.
      */
     public function setId($id = '') {
-        if (is_string($id) && (empty($id) === true || Format::isIdentifier($string, false) === true)) {
+        if (is_string($id) && (empty($id) === true || Format::isIdentifier($id, false) === true)) {
             $this->id = $id;
         }
         else {

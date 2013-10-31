@@ -120,4 +120,8 @@ class A extends SimpleInline {
     public function getType() {
         return $this->type;
     }
+    
+    public function getQtiClassName() {
+        return 'a';
+    }
 }
