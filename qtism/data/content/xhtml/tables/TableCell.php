@@ -120,7 +120,7 @@ abstract class TableCell extends BodyElement {
      * 
      * @param IdentifierCollection $collection A collection of QTI identifiers.
      */
-    public function setHeaders(IdentifierCollection $collection) {
+    public function setHeaders(IdentifierCollection $headers) {
         $this->headers = $headers;
     }
     

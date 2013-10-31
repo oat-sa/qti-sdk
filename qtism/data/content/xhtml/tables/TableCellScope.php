@@ -84,6 +84,34 @@ class TableCellScope implements Enumeration {
             case 'colgroup':
                 return self::COLGROUP;
             break;
+            
+            default:
+                return false;
+            break;
+        }
+    }
+    
+    public static function getNameByConstant($constant) {
+        switch ($constant) {
+            case self::ROW:
+                return 'row';
+            break;
+            
+            case self::COL:
+                return 'col';
+            break;
+            
+            case self::ROWGROUP:
+                return 'rowgroup';
+            break;
+            
+            case self::COLGROUP:
+                return 'colgroup';
+            break;
+            
+            default:
+                return false;
+            break;
         }
     }
 }

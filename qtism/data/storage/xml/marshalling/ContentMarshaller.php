@@ -24,6 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\xhtml\tables\Td;
+
+use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\SimpleBlock;
 use qtism\data\content\SimpleInline;
 use \DOMElement;
@@ -74,10 +77,22 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         if ($component instanceof SimpleInline) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof Tr) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof Td) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
         if (in_array($element->nodeName, self::$simpleInlines) === true) {
+            return self::getChildElements($element, true);
+        }
+        else if ($element->nodeName === 'tr') {
+            return self::getChildElementsByTagName($element, array('td', 'th'));
+        }
+        else if ($element->nodeName === 'td') {
             return self::getChildElements($element, true);
         }
     }

@@ -51,9 +51,9 @@ class Tr extends BodyElement {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TableCellCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setContent(new TableCellCollection());
+        $this->setContent($content);
     }
     
     /**

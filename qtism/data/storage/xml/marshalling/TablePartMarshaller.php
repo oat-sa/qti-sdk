@@ -63,14 +63,21 @@ class TablePartMarshaller extends Marshaller {
 	 * @throws UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
-		$class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->nodeName);
-	    $component = new $class();
-	    
 	    $trs = new TrCollection();
 	    foreach (self::getChildElementsByTagName($element, 'tr') as $trElt) {
 	        $marshaller = $this->getMarshallerFactory()->createMarshaller($trElt);
 	        $trs[] = $marshaller->unmarshall($trElt);
+	        
 	    }
+	    
+	    if (count($trs) === 0) {
+	        $msg = "A '" . $element->nodeName . "' element must contain at least one 'tr' element.";
+	        throw new UnmarshallingException($msg, $element);
+	    }
+	    
+		$class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->nodeName);
+	    $component = new $class($trs);
+	    
 	    
 		self::fillBodyElement($component, $element);
 		return $component;

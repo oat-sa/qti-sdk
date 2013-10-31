@@ -128,6 +128,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('thead', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
 		$this->addMappingEntry('tbody', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
 		$this->addMappingEntry('tfoot', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
+		$this->addMappingEntry('td', 'qtism\\data\\storage\\xml\\marshalling\\TableCellMarshaller');
+		$this->addMappingEntry('th', 'qtism\\data\\storage\\xml\\marshalling\\TableCellMarshaller');
 	}
 	
 	/**

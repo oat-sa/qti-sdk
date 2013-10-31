@@ -283,7 +283,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * @param TbodyCollection $tbodies A collection of Tbody objects.
      */
     public function setTbodies(TbodyCollection $tbodies) {
-        $this->setTbodies($tbodies);
+        $this->tbodies = $tbodies;
     }
     
     /**
