@@ -248,6 +248,42 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     }
     
     /**
+     * Whether a format attribute value is defined.
+     * 
+     * @return boolean
+     */
+    public function hasFormat() {
+        return $this->getFormat() !== '';
+    }
+    
+    /**
+     * Set whether the variable value (when it's a float) must use the 'e' format
+     * for display.
+     * 
+     * @param boolean $powerForm
+     * @throws InvalidArgumentException
+     */
+    public function setPowerForm($powerForm) {
+        if (is_bool($powerForm) === true) {
+            $this->powerForm = $powerForm;
+        }
+        else {
+            $msg = "The 'powerForm' argument must be a boolean value, '" . gettype($powerForm) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Whether the power form 'e' format must be used to display
+     * float values.
+     * 
+     * @return boolean
+     */
+    public function mustPowerForm() {
+        return $this->powerForm;
+    }
+    
+    /**
      * Set the number base to use when converting integer variables to strings.
      * 
      * @param integer|string $base A base to use for conversion as an integer or a variable reference.

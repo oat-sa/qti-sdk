@@ -25,6 +25,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
+use qtism\data\content\BodyElement;
 use qtism\data\utils\Reflection;
 use qtism\data\storage\xml\Utils;
 use \DOMDocument;
@@ -305,6 +306,57 @@ abstract class Marshaller {
 		}
 		
 		return $returnValue;
+	}
+	
+	/**
+	 * Fill $bodyElement with the following bodyElement:
+	 *
+	 * * id
+	 * * class
+	 * * lang
+	 * * label
+	 *
+	 * @param BodyElement $bodyElement The bodyElement to fill.
+	 * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
+	 * @throws UnmarshallingException If one of the attributes of $element is not valid.
+	 */
+	protected static function fillBodyElement(BodyElement $bodyElement, DOMElement $element) {
+	
+	    try {
+	        $bodyElement->setId($element->getAttribute('id'));
+	        $bodyElement->setClass($element->getAttribute('class'));
+	        $bodyElement->setLang($element->getAttribute('lang'));
+	        $bodyElement->setLabel($element->getAttribute('label'));
+	    }
+	    catch (InvalidArgumentException $e) {
+	        $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label).";
+	        throw new UnmarshallingException($msg, $element, $e);
+	    }
+	}
+	
+	/**
+	 * Fill $element with the attributes of $bodyElement.
+	 *
+	 * @param DOMElement $element The element from where the atribute values will be
+	 * @param BodyElement $bodyElement The bodyElement to be fill.
+	 */
+	protected function fillElement(DOMElement $element, BodyElement $bodyElement) {
+	
+	    if (($id = $bodyElement->getId()) !== '') {
+	        $element->setAttribute('id', $id);
+	    }
+	
+	    if (($class = $bodyElement->getClass()) !== '') {
+	        $element->setAttribute('class', $class);
+	    }
+	
+	    if (($lang = $bodyElement->getLang()) !== '') {
+	        $element->setAttribute('lang', $lang);
+	    }
+	
+	    if (($label = $bodyElement->getLabel()) != '') {
+	        $element->setAttribute('label', $label);
+	    }
 	}
 	
 	/**

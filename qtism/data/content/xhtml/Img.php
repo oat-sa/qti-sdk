@@ -145,7 +145,7 @@ class Img extends AtomicInline {
      * @throws InvalidArgumentException If $longdesc is not a valid URI.
      */
     public function setLongdesc($longdesc) {
-        if (Format::isUri($longdesc) === true) {
+        if (Format::isUri($longdesc) === true || (is_string($longdesc) === true && empty($longdesc) === true)) {
             $this->longdesc = $longdesc;
         }
         else {
@@ -161,6 +161,15 @@ class Img extends AtomicInline {
      */
     public function getLongdesc() {
         return $this->longdesc;
+    }
+    
+    /**
+     * Whether a longdesc attribute is defined.
+     * 
+     * @return boolean
+     */
+    public function hasLongdesc() {
+        return $this->getLongdesc() !== '';
     }
     
     /**
@@ -191,6 +200,15 @@ class Img extends AtomicInline {
     }
     
     /**
+     * Whether a height attribute is defined.
+     * 
+     * @return boolean
+     */
+    public function hasHeight() {
+        return $this->getHeight() >= 0;
+    }
+    
+    /**
      * Set the width attribute. A negative (< 0) value for $width means there
      * is no width indicated.
      * 
@@ -215,6 +233,15 @@ class Img extends AtomicInline {
      */
     public function getWidth() {
         return $this->width;
+    }
+    
+    /**
+     * Whether a width attribute is defined.
+     * 
+     * @return boolean
+     */
+    public function hasWidth() {
+        return $this->getWidth() >= 0;
     }
     
     public function getQtiClassName() {

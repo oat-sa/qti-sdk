@@ -125,6 +125,9 @@ class MarshallerFactory {
 		$this->addMappingEntry('var', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 		$this->addMappingEntry('a', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 		$this->addMappingEntry('q', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
+		$this->addMappingEntry('thead', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
+		$this->addMappingEntry('tbody', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
+		$this->addMappingEntry('tfoot', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
 	}
 	
 	/**

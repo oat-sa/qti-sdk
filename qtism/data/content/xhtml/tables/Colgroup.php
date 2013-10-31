@@ -24,6 +24,7 @@
 namespace qtism\data\content\xhtml\tables;
 
 use qtism\data\content\BodyElement;
+use \InvalidArgumentException;
 
 /**
  * The XHTML colgroup class.
@@ -43,6 +44,14 @@ class Colgroup extends BodyElement {
     private $content;
     
     /**
+     * The span attribute.
+     * 
+     * @var integer
+     * @qtism-bean-property
+     */
+    private $span = 1;
+    
+    /**
      * Create a new Colgroup object.
      * 
      * @param string $id The id of the bodyElement.
@@ -54,6 +63,32 @@ class Colgroup extends BodyElement {
     public function __construct($id = '', $class = '' , $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new ColCollection());
+        $this->setSpan(1);
+    }
+    
+    /**
+     * Set the value for the span attribute.
+     * 
+     * @param integer $span A strictly positive (> 0) integer.
+     * @throws InvalidArgumentException If $span is not a strictly positive integer.
+     */
+    public function setSpan($span) {
+        if (is_int($span) && $span > 0) {
+            $this->span = $span;
+        }
+        else {
+            $msg = "The 'span' argument must be a strictly positive (> 0) integer, '" . gettype($span) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Get the value for the span attribute.
+     * 
+     * @return integer A strictly positive (> 0) integer.
+     */
+    public function getSpan() {
+        return $this->span;
     }
     
     /**
