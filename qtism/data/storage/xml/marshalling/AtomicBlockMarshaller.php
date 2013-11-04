@@ -24,33 +24,27 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\xhtml\tables\TableCellCollection;
-
-use qtism\data\content\xhtml\tables\Tr;
+use qtism\data\content\InlineCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
-use \InvalidArgumentException;
 
 /**
- * The Marshaller implementation for XHTML tr elements of the content model.
+ * The Marshaller implementation for AtomicBlock elements of the content model.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TrMarshaller extends ContentMarshaller {
+class AtomicBlockMarshaller extends ContentMarshaller {
     
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
-        try {
-            $component = new Tr(new TableCellCollection($children->getArrayCopy()));
-            self::fillBodyElement($component, $element);
-            return $component;
-        }
-        catch (InvalidArgumentException $e) {
-            $msg = "A 'tr' element must contain at least one 'td' or 'th' element.";
-            throw new UnmarshallingException($msg, $element);
-        }
+        $fqClass = $this->lookupClass($element);
+        $component = new $fqClass();
+        $component->setContent(new InlineCollection($children->getArrayCopy()));
+        self::fillBodyElement($component, $element);
+        
+        return $component;
     }
     
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
@@ -66,6 +60,6 @@ class TrMarshaller extends ContentMarshaller {
     }
     
     protected function setLookupClasses() {
-        $this->lookupClasses = array("qtism\\data\\content\\xhtml\\tables");
+        $this->lookupClasses = array("qtism\\data\\content\\xhtml\\text");
     }
 }

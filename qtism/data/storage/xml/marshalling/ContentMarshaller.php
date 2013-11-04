@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\AtomicBlock;
 use qtism\data\content\xhtml\tables\Th;
 use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
@@ -59,8 +60,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'customInteraction');
     
-    private static $simpleInlines = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
-                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var');
+    private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
+                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th',
+                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -78,6 +80,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         if ($component instanceof SimpleInline) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof AtomicBlock) {
+            return $component->getContent()->getArrayCopy();
+        }
         else if ($component instanceof Tr) {
             return $component->getContent()->getArrayCopy();
         }
@@ -93,20 +98,11 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     }
     
     protected function getChildrenElements(DOMElement $element) {
-        if (in_array($element->nodeName, self::$simpleInlines) === true) {
+        if (in_array($element->nodeName, self::$simpleComposites) === true) {
             return self::getChildElements($element, true);
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
-        }
-        else if ($element->nodeName === 'td') {
-            return self::getChildElements($element, true);
-        }
-        else if ($element->nodeName === 'th') {
-            return self::getChildElements($element, true);
-        }
-        else if ($element->nodeName === 'caption') {
-            return self::getChildElements($element, true);
         }
     }
     

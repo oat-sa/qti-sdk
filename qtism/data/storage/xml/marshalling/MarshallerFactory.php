@@ -130,6 +130,15 @@ class MarshallerFactory {
 		$this->addMappingEntry('tfoot', 'qtism\\data\\storage\\xml\\marshalling\\TablePartMarshaller');
 		$this->addMappingEntry('td', 'qtism\\data\\storage\\xml\\marshalling\\TableCellMarshaller');
 		$this->addMappingEntry('th', 'qtism\\data\\storage\\xml\\marshalling\\TableCellMarshaller');
+		$this->addMappingEntry('address', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h1', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h2', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h3', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h4', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h5', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('h6', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('p', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('pre', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
 	}
 	
 	/**
