@@ -126,7 +126,7 @@ class TableMarshaller extends Marshaller {
 	        $captionElts = self::getChildElementsByTagName($element, 'caption');
 	        if (count($captionElts) > 0) {
 	            $marshaller = $this->getMarshallerFactory()->createMarshaller($captionElts[0]);
-	            $component->setSummary($marshaller->unmarshall($captionElts[0]));
+	            $component->setCaption($marshaller->unmarshall($captionElts[0]));
 	        }
 	        
 	        $colElts = self::getChildElementsByTagName($element, 'col');

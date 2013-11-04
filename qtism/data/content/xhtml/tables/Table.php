@@ -265,7 +265,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * @return Tfoot A Tfoot object or null.
      */
     public function getTfoot() {
-        return $this->tfoot = $tfoot;
+        return $this->tfoot;
     }
     
     /**

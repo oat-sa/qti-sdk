@@ -112,15 +112,15 @@ class TableCellMarshaller extends ContentMarshaller {
         }
         
         if ($component->hasAxis() === true) {
-            self::setDOMElementAttribute($element, 'axis', $component->setAxis());
+            self::setDOMElementAttribute($element, 'axis', $component->getAxis());
         }
         
         if ($component->hasRowspan() === true) {
-            self::setDOMElementAttribute($element, 'rowspan', $component->setRowspan());
+            self::setDOMElementAttribute($element, 'rowspan', $component->getRowspan());
         }
         
         if ($component->hasColspan() === true) {
-            self::setDOMElementAttribute($element, 'colspan', $component->setColspan());
+            self::setDOMElementAttribute($element, 'colspan', $component->getColspan());
         }
         
         foreach ($component->getContent() as $c) {

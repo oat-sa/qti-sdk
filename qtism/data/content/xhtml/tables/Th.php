@@ -31,6 +31,10 @@ namespace qtism\data\content\xhtml\tables;
  */
 class Th extends TableCell {
     
+    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+        parent::__construct($id, $class, $lang, $label);
+    }
+    
     public function getQtiClassName() {
         return 'th';
     }

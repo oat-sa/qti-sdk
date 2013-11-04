@@ -24,8 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\xhtml\tables\Th;
+use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
-
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\SimpleBlock;
 use qtism\data\content\SimpleInline;
@@ -83,6 +84,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof Td) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof Th) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof Caption) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -93,6 +100,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return self::getChildElementsByTagName($element, array('td', 'th'));
         }
         else if ($element->nodeName === 'td') {
+            return self::getChildElements($element, true);
+        }
+        else if ($element->nodeName === 'th') {
+            return self::getChildElements($element, true);
+        }
+        else if ($element->nodeName === 'caption') {
             return self::getChildElements($element, true);
         }
     }
