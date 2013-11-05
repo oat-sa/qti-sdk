@@ -22,10 +22,10 @@
  */
 
 
-namespace qtism\data;
+namespace qtism\data\content;
 
 use InvalidArgumentException as InvalidArgumentException;
-use qtism\common\collections\AbstractCollection;
+use qtism\data\QtiComponentCollection;
 
 /**
  * A collection that aims at storing Stylesheet objects.
@@ -33,7 +33,7 @@ use qtism\common\collections\AbstractCollection;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StylesheetCollection extends AbstractCollection {
+class StylesheetCollection extends QtiComponentCollection {
 
 	/**
 	 * Check if $value is a Stylesheet object.

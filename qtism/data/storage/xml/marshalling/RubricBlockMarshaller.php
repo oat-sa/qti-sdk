@@ -24,7 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\StylesheetCollection;
+use qtism\data\content\StylesheetCollection;
 use qtism\data\QtiComponent;
 use qtism\data\content\RubricBlock;
 use qtism\data\ViewCollection;

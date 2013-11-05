@@ -25,7 +25,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
-use qtism\data\Stylesheet;
+use qtism\data\content\Stylesheet;
 use \DOMElement;
 
 /**

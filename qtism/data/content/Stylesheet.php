@@ -22,8 +22,9 @@
  */
 
 
-namespace qtism\data;
+namespace qtism\data\content;
 
+use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
 /**

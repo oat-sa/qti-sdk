@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\Stylesheet;
+use qtism\data\content\Stylesheet;
 use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -56,7 +56,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase {
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
-		$this->assertInstanceOf('qtism\\data\\Stylesheet', $component);
+		$this->assertInstanceOf('qtism\\data\\content\\Stylesheet', $component);
 		$this->assertEquals($component->getHref(), 'http://myuri.com');
 		$this->assertEquals($component->getTitle(), 'A pure stylesheet');
 		$this->assertEquals($component->getMedia(), 'screen');
