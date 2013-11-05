@@ -23,6 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\data\QtiComponentCollection;
 use qtism\data\content\Block;
 use qtism\data\content\Flow;
 use \InvalidArgumentException;
@@ -51,10 +52,10 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	 * 
 	 * An optional prompt for the interaction.
 	 * 
-	 * @var string
+	 * @var Prompt
 	 * @qtism-bean-property
 	 */
-	private $prompt = '';
+	private $prompt = null;
 	
 	/**
 	 * Create a new BlockInteraction object.
@@ -73,7 +74,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	/**
 	 * Get the prompt for the interaction.
 	 * 
-	 * @return string
+	 * @return Prompt
 	 */
 	public function getPrompt() {
 		return $this->prompt;
@@ -82,20 +83,22 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	/**
 	 * Set the prompt for the interaction.
 	 * 
-	 * @param string $prompt
-	 * @throws InvalidArgumentException If the given $prompt is not a string value.
+	 * @param Prompt $prompt
 	 */
-	public function setPrompt($prompt = '') {
-		if (is_string($prompt) === true) {
-			$this->prompt = $prompt;
-		}
-		else {
-			$msg = "The 'prompt' argument must be a string value, '" . gettype($prompt) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
+	public function setPrompt($prompt = null) {
+		$this->prompt = $prompt;
 	}
 	
-/**
+	/**
+	 * Whether the BlockInteraction has a prompt.
+	 * 
+	 * @return boolean
+	 */
+	public function hasPrompt() {
+	    return $this->getPrompt() !== null;
+	}
+	
+    /**
      * Set the base URI of the BlockInteraction.
      *
      * @param string $xmlBase A URI.
@@ -118,5 +121,15 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
      */
     public function getXmlBase() {
         return $this->base;
+    }
+    
+    public function getComponents() {
+        
+        $array = array();
+        if ($this->hasPrompt() === true) {
+            $array[] = $this->getPrompt();
+        }
+        
+        return new QtiComponentCollection($array);
     }
 }
