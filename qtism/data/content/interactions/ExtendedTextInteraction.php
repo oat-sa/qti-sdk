@@ -23,6 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -479,5 +480,13 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getFormat() {
         return $this->format;
+    }
+    
+    public function getComponents() {
+        return new QtiComponentCollection();
+    }
+    
+    public function getQtiClassName() {
+        return 'extendedTextInteraction';
     }
 }
