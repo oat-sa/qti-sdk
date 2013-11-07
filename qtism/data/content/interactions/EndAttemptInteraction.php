@@ -26,6 +26,26 @@ namespace qtism\data\content\interactions;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
+/**
+ * From IMS QTI:
+ * 
+ * The end attempt interaction is a special type of interaction which allows 
+ * item authors to provide the candidate with control over the way in which 
+ * the candidate terminates an attempt. The candidate can use the interaction 
+ * to terminate the attempt (triggering response processing) immediately, 
+ * typically to request a hint. It must be bound to a response variable 
+ * with base-type boolean and single cardinality.
+ * 
+ * If the candidate invokes response processing using an endAttemptInteraction 
+ * then the associated response variable is set to true. If response processing 
+ * is invoked in any other way, either through a different endAttemptInteraction 
+ * or through the default method for the delivery engine, then the associated 
+ * response variable is set to false. The default value of the response variable 
+ * is always ignored.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class EndAttemptInteraction extends InlineInteraction {
     
     /**
