@@ -24,6 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\xhtml\lists\Ol;
+use qtism\data\content\xhtml\lists\Ul;
+use qtism\data\content\xhtml\lists\Li;
 use qtism\data\content\AtomicBlock;
 use qtism\data\content\xhtml\tables\Th;
 use qtism\data\content\xhtml\tables\Caption;
@@ -62,7 +65,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th',
-                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre');
+                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -95,6 +98,15 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof Caption) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof Ul) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof Ol) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof Li) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -103,6 +115,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
+        }
+        else if ($element->nodeName === 'ul' || $element->nodeName === 'ol') {
+            return self::getChildElementsByTagName($element, 'li');
         }
     }
     

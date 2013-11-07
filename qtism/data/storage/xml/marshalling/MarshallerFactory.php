@@ -139,6 +139,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('h6', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
 		$this->addMappingEntry('p', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
 		$this->addMappingEntry('pre', 'qtism\\data\\storage\\xml\\marshalling\\AtomicBlockMarshaller');
+		$this->addMappingEntry('ul', 'qtism\\data\\storage\\xml\\marshalling\\ListMarshaller');
+		$this->addMappingEntry('ol', 'qtism\\data\\storage\\xml\\marshalling\\ListMarshaller');
 	}
 	
 	/**

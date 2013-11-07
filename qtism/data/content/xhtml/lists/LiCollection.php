@@ -24,7 +24,7 @@
 namespace qtism\data\content\xhtml\lists;
 
 use qtism\data\QtiComponentCollection;
-\InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing 
