@@ -70,7 +70,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
      * @param FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content) {
-        $this->setContent($content);
+        $this->content = $content;
     }
     
     /**
