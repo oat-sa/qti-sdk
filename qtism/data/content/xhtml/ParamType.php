@@ -67,11 +67,11 @@ class ParamType implements Enumeration {
     public static function getNameByConstant($constant) {
         switch ($constant) {
             case self::DATA:
-                return 'data';
+                return 'DATA';
             break;
             
             case self::REF:
-                return 'ref';
+                return 'REF';
             break;
             
             default:

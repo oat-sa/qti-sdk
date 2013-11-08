@@ -23,6 +23,7 @@
 
 namespace qtism\data\content\xhtml;
 
+use qtism\data\content\ObjectFlow;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;

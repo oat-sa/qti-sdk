@@ -203,7 +203,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * @throws InvalidArgumentException If $height is not an integer value.
 	 */
 	public function setHeight($height) {
-		if (is_int($width) === true) {
+		if (is_int($height) === true) {
 			$this->height = $height;
 		}
 		else {
