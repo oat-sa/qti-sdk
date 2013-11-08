@@ -37,7 +37,7 @@ use \InvalidArgumentException;
 class Dl extends BodyElement implements BlockStatic, FlowStatic {
     
     /**
-     * The base URI of the Ul.
+     * The base URI of the Dl.
      *
      * @var string
      * @qtism-bean-property
@@ -95,5 +95,30 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     
     public function getQtiClassName() {
         return 'dl';
+    }
+    
+    /**
+     * Set the base URI of the Dl.
+     *
+     * @param string $xmlBase A URI.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     */
+    public function setXmlBase($xmlBase = '') {
+        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
+            $this->xmlBase = $xmlBase;
+        }
+        else {
+            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Get the base URI of the Dl.
+     *
+     * @return string An empty string or a URI.
+     */
+    public function getXmlBase() {
+        return $this->xmlBase;
     }
 }

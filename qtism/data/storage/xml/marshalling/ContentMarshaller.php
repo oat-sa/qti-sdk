@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\xhtml\lists\DlElement;
+
+use qtism\data\content\xhtml\lists\Dl;
+
 use qtism\data\content\xhtml\lists\Ol;
 use qtism\data\content\xhtml\lists\Ul;
 use qtism\data\content\xhtml\lists\Li;
@@ -65,7 +69,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th',
-                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li');
+                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -107,6 +111,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof Li) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof Dl) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof DlElement) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -118,6 +128,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'ul' || $element->nodeName === 'ol') {
             return self::getChildElementsByTagName($element, 'li');
+        }
+        else if ($element->nodeName === 'dl') {
+            return self::getChildElementsByTagName($element, array('dd', 'dt'));
         }
     }
     
