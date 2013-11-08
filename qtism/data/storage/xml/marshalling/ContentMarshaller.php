@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\ItemBody;
+
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\xhtml\lists\DlElement;
@@ -123,6 +125,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof Div) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof ItemBody) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -137,6 +142,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'dl') {
             return self::getChildElementsByTagName($element, array('dd', 'dt'));
+        }
+        else if ($element->nodeName === 'itemBody') {
+            return self::getChildElements($element);
         }
     }
     
