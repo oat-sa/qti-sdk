@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\RubricBlock;
+
 use qtism\data\content\ItemBody;
 
 use qtism\data\content\xhtml\text\Div;
@@ -60,7 +62,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     protected $lookupClasses;
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
-                                      'thead', 'tfoot',
+                                      'thead', 'tfoot', 'rubricBlock',
                                       'printedVariable', 'stylesheet', 'choiceInteraction', 'orderInteraction',
                                       'associateInteraction', 'matchInteraction', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',

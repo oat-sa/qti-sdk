@@ -24,6 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\Block;
+use qtism\data\content\Stylesheet;
+use qtism\data\content\BlockCollection;
 use qtism\data\content\StylesheetCollection;
 use qtism\data\QtiComponent;
 use qtism\data\content\RubricBlock;
@@ -68,12 +71,10 @@ class RubricBlockMarshaller extends Marshaller {
 			$element->appendChild($stylesheetMarshaller->marshall($stylesheet));
 		}
 		
-		// A RubricBlock contains... blocks !
-		/* if ($component->getContent() !== '') {
-			$blocks = static::getDOMCradle()->createDocumentFragment();
-			$blocks->appendXML($component->getContent());
-			$element->appendChild($blocks);
-		} */
+		foreach ($component->getContent() as $block) {
+		    $marshaller = $this->getMarshallerFactory()->createMarshaller($block);
+		    $element->appendChild($marshaller->marshall($block));
+		}
 		
 		return $element;
 	}
@@ -106,46 +107,38 @@ class RubricBlockMarshaller extends Marshaller {
 				$object->setUse($value);
 			}
 			
-			$stylesheetElements = $element->getElementsByTagName('stylesheet');
-			$stylesheetCollection = new StylesheetCollection();
-			for ($i = 0; $i < $stylesheetElements->length; $i++) {
-				$marshaller = $this->getMarshallerFactory()->createMarshaller($stylesheetElements->item($i));
-				$stylesheetCollection[] = $marshaller->unmarshall($stylesheetElements->item($i));
-			}
-			$object->setStylesheets($stylesheetCollection);
+			$stylesheets = new StylesheetCollection();
+			$content = new BlockCollection();
 			
-			$content = self::extractContent($element);
-			if (!empty($content)) {
-				//$object->setContent($content);
+			foreach (self::getChildElements($element) as $elt) {
+			    $marshaller = $this->getMarshallerFactory()->createMarshaller($elt);
+			    $cpt = $marshaller->unmarshall($elt);
+			    
+			    if ($cpt instanceof Stylesheet) {
+			        $stylesheets[] = $cpt;
+			    }
+			    else if ($cpt instanceof Block) {
+			        $content[] = $cpt;
+			    }
+			    else {
+			        $msg = "The 'rubricBlock' cannot contain '" . $cpt->getQtiClassName() . "' elements.";
+			        throw new UnmarshallingException($msg, $element);
+			    }
 			}
+			
+			$object->setStylesheets($stylesheets);
+			$object->setContent($content);
+			
+			self::fillBodyElement($object, $element);
+			return $object;
 		}
 		else {
 			$msg = "The mandatory attribute 'views' is missing.";
 			throw new UnmarshallingException($msg, $element);
 		}
-		
-		return $object;
 	}
 	
 	public function getExpectedQtiClassName() {
 		return 'rubricBlock';
-	}
-	
-	/**
-	 * Extract the content (direct children) of a rubricBlock element.
-	 *
-	 * @param DOMElement $element The rubricBlock element you want to extract the content.
-	 * @return string The content of the rubricBlock element as a string. If there is no extractable content, an empty string is returned.
-	 * @throws InvalidArgumentException If $element is not a rubricBlock element.
-	 */
-	protected static function extractContent(DOMElement $element) {
-		if ($element->nodeName == 'rubricBlock') {
-			$markup = $element->ownerDocument->saveXML($element);
-			$innerMarkup = preg_replace('#</{0,1}rubricBlock.*?>#iu', '', $markup);
-			return trim(preg_replace('#\s*<\s*stylesheet.*?>\s*#', '', $innerMarkup));
-		}
-		else {
-			throw new InvalidArgumentException("The element must be a QTI rubricBlock, '" . $element->nodeName . "' element given.");
-		}
 	}
 }
