@@ -50,9 +50,12 @@ class Blockquote extends SimpleBlock {
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
+     * @param string $cite The cite attribute value (URI).
+     * @throws InvalidArgumentException If any of the argument is invalid.
      */
-    public function __construct($id, $class, $lang, $label, $cite = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '') {
         parent::__construct($id, $class, $lang, $label);
+        $this->setCite($cite);
     }
     
     /**
@@ -72,12 +75,21 @@ class Blockquote extends SimpleBlock {
      */
     public function setCite($cite) {
         if (Format::isUri($cite) === true) {
-            
+            $this->cite = $cite;
         }
         else {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * Whether or not a value is defined for the cite attribute.
+     * 
+     * @return boolean
+     */
+    public function hasCite() {
+        return $this->getCite() !== '';
     }
     
     public function getQtiClassName() {
