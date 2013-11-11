@@ -26,6 +26,18 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 	
 	/**
 	 * @dataProvider qtiImplementationGuideAssessmentTestFiles
+	 *
+	 * @param string $uri The URI describing the file to load.
+	 */
+	public function testLoadFromStringNoSchemaValidate($uri) {
+	    $doc = new XmlDocument('2.1');
+	    $doc->loadFromString(file_get_contents($uri));
+	    $this->assertInstanceOf('qtism\\data\\storage\\xml\\XmlDocument', $doc);
+	    $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+	}
+	
+	/**
+	 * @dataProvider qtiImplementationGuideAssessmentTestFiles
 	 * 
 	 * @param string $uri The URI describing the file to load.
 	 */
@@ -46,6 +58,31 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase {
 			$this->assertTrue(false, $e->getMessage());
 			unlink($file);
 		}
+	}
+	
+	/**
+	 * @dataProvider qtiImplementationGuideAssessmentTestFiles
+	 *
+	 * @param string $uri The URI describing the file to load.
+	 */
+	public function testLoadSaveToStringSchemaValidate($uri) {
+	    $doc = new XmlDocument('2.1');
+	    $doc->load($uri);
+	
+	    $file = tempnam('/tmp', 'qsm');
+	    $str = $doc->saveToString();
+	    file_put_contents($file, $str);
+	
+	    $doc = new XmlDocument('2.1');
+	    try {
+	        $doc->load($file, true); // validate on load.
+	        $this->assertTrue(true);
+	        unlink($file);
+	    }
+	    catch (XmlStorageException $e) {
+	        $this->assertTrue(false, $e->getMessage());
+	        unlink($file);
+	    }
 	}
 	
 	public function qtiImplementationGuideAssessmentTestFiles() {

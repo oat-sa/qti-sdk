@@ -75,6 +75,8 @@ class XmlDocument extends QtiDocument {
 	
 	/**
 	 * Get the DOMDocument object in use.
+	 * 
+	 * @return DOMDocument
 	 */
 	public function getDomDocument() {
 		return $this->domDocument;
@@ -83,82 +85,108 @@ class XmlDocument extends QtiDocument {
 	/**
 	 * Load a QTI-XML assessment file. The file will be loaded and represented in
 	 * an AssessmentTest object.
-	 * 
+	 *
 	 * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
-	 * @param sboolean $validate XML Schema validation? Default is false.
+	 * @param boolean $validate XML Schema validation? Default is false.
 	 * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
 	 */
 	public function load($uri, $validate = false) {
-		if (is_readable($uri) && is_file($uri)) {
-			try {
-				$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+	    $this->loadImplementation($uri, $validate, false);
+	    
+	    // We now are sure that the URI is valid.
+	    $this->setUrl($uri);
+	}
+	
+	/**
+	 * Load QTI-XML from string.
+	 *
+	 * @param string $string The QTI-XML string.
+	 * @param boolean $validate XML Schema validation? Default is false.
+	 * @throws XmlStorageException If an error occurs while parsing $string.
+	 */
+	public function loadFromString($string, $validate = false) {
+	    $this->loadImplementation($string, $validate, true);
+	}
+	
+	protected function loadImplementation($data, $validate = false, $fromString = false) {
+		try {
+			$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+			
+			// disable xml warnings and errors and fetch error information as needed.
+			$oldErrorConfig = libxml_use_internal_errors(true);
+			$loadMethod = ($fromString === true) ? 'loadXML' : 'load';
+			$doc = $this->getDomDocument();
+			
+			if (call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
 				
-				// disable xml warnings and errors and fetch error information as needed.
-				$oldErrorConfig = libxml_use_internal_errors(true);
-				
-				if ($this->getDomDocument()->load($uri, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE)) {
-					
-					// Infer the QTI version.
-					if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
-						$this->setVersion($version);
-					}
-					else {
-						$msg = "Cannot infer QTI version for file located at '${uri}'. Is it well formed?";
-						throw new XmlStorageException($msg);
-					}
-					
-					if ($validate === true) {
-						$this->schemaValidate();
-					}
-					
-					try {
-						// Get the root element and unmarshall.
-						$element = $this->getDomDocument()->documentElement;
-						$factory = $this->createMarshallerFactory();
-						$marshaller = $factory->createMarshaller($element);
-						$this->setDocumentComponent($marshaller->unmarshall($element, $this->getDocumentComponent()));
-						
-						// We now are sure that the URI is valid.
-						$this->setUrl($uri);
-					}
-					catch (UnmarshallingException $e) {
-						$line = $e->getDOMElement()->getLineNo();
-						$msg = "An error occured while processing QTI-XML file located at '${uri}' at line ${line}.";
-						throw new XmlStorageException($msg, $e);
-					}
+				// Infer the QTI version.
+				if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
+					$this->setVersion($version);
 				}
 				else {
-					$libXmlErrors = libxml_get_errors();
-					$formattedErrors = self::formatLibXmlErrors($libXmlErrors);
-					
-					libxml_clear_errors();
-					libxml_use_internal_errors($oldErrorConfig);
-					
-					$msg = "An internal occured while parsing QTI-XML file located at '${uri}':\n${formattedErrors}";
-					throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
+					$msg = "Cannot infer QTI version. Is it well formed?";
+					throw new XmlStorageException($msg);
+				}
+				
+				if ($validate === true) {
+					$this->schemaValidate();
+				}
+				
+				try {
+					// Get the root element and unmarshall.
+					$element = $this->getDomDocument()->documentElement;
+					$factory = $this->createMarshallerFactory();
+					$marshaller = $factory->createMarshaller($element);
+					$this->setDocumentComponent($marshaller->unmarshall($element, $this->getDocumentComponent()));
+				}
+				catch (UnmarshallingException $e) {
+					$line = $e->getDOMElement()->getLineNo();
+					$msg = "An error occured while processing QTI-XML at line ${line}.";
+					throw new XmlStorageException($msg, $e);
 				}
 			}
-			catch (DOMException $e) {
-				$line = $e->getLine();
-				$msg = "An error occured while parsing QTI-XML file located at '${uri}' at line ${line}.";
-				throw new XmlStorageException($msg, $e);
+			else {
+				$libXmlErrors = libxml_get_errors();
+				$formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+				
+				libxml_clear_errors();
+				libxml_use_internal_errors($oldErrorConfig);
+				
+				$msg = "An internal occured while parsing QTI-XML:\n${formattedErrors}";
+				throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
 			}
 		}
-		else {
-			$msg = "QTI-XML file located at '${uri}' cannot be open. Please check if the file exists or if it is readable.";
-			throw new XmlStorageException($msg);
+		catch (DOMException $e) {
+			$line = $e->getLine();
+			$msg = "An error occured while parsing QTI-XML at line ${line}.";
+			throw new XmlStorageException($msg, $e);
 		}
 	}
 	
 	/**
 	 * Save the Assessment Document at the location described by $uri. Please be carefull
 	 * to provide an AssessmentTest object to save before calling this method.
-	 * 
+	 *
 	 * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
 	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
 	 */
 	public function save($uri, $formatOutput = true) {
+	    $this->saveImplementation($uri, $formatOutput);
+	}
+	
+	/**
+	 * Save the Assessment Document as an XML string.
+	 *
+	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
+	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+	 */
+	public function saveToString($formatOutput = true) {
+	    return $this->saveImplementation('', $formatOutput);
+	}
+	
+	
+	protected function saveImplementation($uri = '', $formatOutput = true) {
 		$assessmentTest = $this->getDocumentComponent();
 		
 		if (!empty($assessmentTest)) {
@@ -177,17 +205,29 @@ class XmlDocument extends QtiDocument {
 				$this->getDomDocument()->appendChild($rootElement);
 				$this->decorateRootElement($rootElement);
 				
-				if ($this->getDomDocument()->save($uri) === false) {
-					// An error occured while saving.
-					$msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
-					throw new XmlStorageException($msg);
+				if (empty($uri) === false) {
+				    
+				    if ($this->getDomDocument()->save($uri) === false) {
+				        // An error occured while saving.
+				        $msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
+				        throw new XmlStorageException($msg);
+				        
+				        $this->setUrl($uri);
+				    }
 				}
 				else {
-					$this->setUrl($uri);
+				    if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
+				        return $strXml;
+				    }	
+				    else {
+				        // An error occured while saving.
+				        $msg = "An internal error occured while exporting QTI-XML as string.";
+				        throw new XmlStorageException($msg);
+				    }
 				}
 			}
 			catch (DOMException $e) {
-				$msg = "An internal error occured while saving QTI-XML file at '${uri}'. Please check if the path exists or if it is writable.";
+				$msg = "An internal error occured while saving QTI-XML.";
 				throw new XmlStorageException($msg, $e);
 			}
 		}

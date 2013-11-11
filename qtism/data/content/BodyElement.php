@@ -127,6 +127,15 @@ abstract class BodyElement extends QtiComponent {
     }
     
     /**
+     * Whether a value is defined for the id attribute.
+     * 
+     * @return boolean
+     */
+    public function hasId() {
+        return $this->getId() !== '';
+    }
+    
+    /**
      * Get the classes assigned to the body element.
      * 
      * @return string One or more class names separated by spaces.
@@ -153,6 +162,15 @@ abstract class BodyElement extends QtiComponent {
     }
     
     /**
+     * Wehther a value is defined for the class attribute.
+     * 
+     * @return boolean 
+     */
+    public function hasClass() {
+        return $this->getClass() !== '';
+    }
+    
+    /**
      * Get the language of the body element.
      * 
      * @return string An RFC3066 language.
@@ -168,6 +186,15 @@ abstract class BodyElement extends QtiComponent {
      */
     public function setLang($lang = '') {
         $this->lang = $lang;
+    }
+    
+    /**
+     * Whether a value for the lang attribute is defined.
+     * 
+     * @return boolean
+     */
+    public function hasLang() {
+        return $this->getLang() !== '';
     }
     
     /**
@@ -193,5 +220,14 @@ abstract class BodyElement extends QtiComponent {
             $msg = "The 'label' argument must be a string that does not exceed 256 characters.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * Whether a value is defined for the label attribute.
+     * 
+     * @return boolean
+     */
+    public function hasLabel() {
+        return $this->getLabel() !== '';
     }
 }
