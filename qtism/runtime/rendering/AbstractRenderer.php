@@ -36,7 +36,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderer {
+abstract class AbstractRenderer implements Renderable {
     
     /**
      * The rendering context used by the implementation. This attribute
@@ -57,15 +57,6 @@ abstract class AbstractRenderer {
     }
     
     /**
-     * Render a QtiComponent object into another constitution.
-     * 
-     * @param QtiComponent $component
-     * @return mixed The rendered component into another constitution.
-     * @throws RenderingException If something goes wrong while rendering the component.
-     */
-    public abstract function render(QtiComponent $component);
-    
-    /**
      * Set the rendering context for this renderer.
      * 
      * @param AbstractRenderingContext $renderingContext
@@ -81,5 +72,14 @@ abstract class AbstractRenderer {
      */
     public function getRenderingContext() {
         return $this->renderingContext;
+    }
+    
+    /**
+     * Whether a rendering context reference is held by the renderer.
+     * 
+     * @return boolean
+     */
+    public function hasRenderingContext() {
+        return $this->getRenderingContext() !== null;
     }
 }
