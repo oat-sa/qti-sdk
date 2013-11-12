@@ -25,6 +25,8 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingContext;
+
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
@@ -40,9 +42,10 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
     /**
      * Create a new XhtmlAbstractRenderer object.
      *
+     * @param AbstractRenderingContext An optional rendering context to be used e.g. when outside of a rendering engine.
      */
-    public function __construct() {
-        
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
     }
     
     /**

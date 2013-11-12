@@ -26,44 +26,32 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\AbstractRenderingContext;
-
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
 
 /**
- * BodyElement renderer.
+ * TextRun renderer.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BodyElementRenderer extends AbstractXhtmlRenderer {
+class TextRunRenderer extends AbstractXhtmlRenderer {
     
     /**
-     * Create a new BodyElementRenderer object.
+     * Create a new TextRunRenderer object.
      *
      * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
      */
     public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+        $this->setRenderingContext($renderingContext);
     }
     
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement($component->getQtiClassName()));
+        $fragment->appendChild($this->getRenderingContext()->getDocument()->createTextNode($component->getContent()));
     }
     
     public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        
-        if ($component->hasId() === true) {
-            $fragment->firstChild->setAttribute('id', $component->getId());
-        }
-        
-        if ($component->hasClass() === true) {
-            $fragment->firstChild->setAttribute('class', $component->getClass());
-        }
-        
-        if ($component->hasLang() === true) {
-            $fragment->firstChild->setAttribute('lang', $component->getLang());
-        }
+        return;
     }
 }

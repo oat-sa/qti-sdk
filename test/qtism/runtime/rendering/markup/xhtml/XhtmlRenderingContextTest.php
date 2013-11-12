@@ -3,7 +3,7 @@
 use qtism\data\content\xhtml\text\Abbr;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingContext;
 
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class XhtmlRenderingContextTest extends QtiSmTestCase {
 	

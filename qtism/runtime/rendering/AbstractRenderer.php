@@ -39,7 +39,9 @@ use \InvalidArgumentException;
 abstract class AbstractRenderer {
     
     /**
-     * The rendering context used by the implementation.
+     * The rendering context used by the implementation. This attribute
+     * must be set up by dependency injection by the appropriate rendering
+     * engine.
      * 
      * @var AbstractRenderingContext
      */
@@ -48,9 +50,10 @@ abstract class AbstractRenderer {
     /**
      * Create a new AbstractRenderer object.
      * 
+     * @param AbstractRenderingContext $renderingContext A rendering context to use when outside of a suitable rendering engine.
      */
-    public function __construct() {
-        
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        $this->setRenderingContext($renderingContext);
     }
     
     /**
@@ -58,6 +61,7 @@ abstract class AbstractRenderer {
      * 
      * @param QtiComponent $component
      * @return mixed The rendered component into another constitution.
+     * @throws RenderingException If something goes wrong while rendering the component.
      */
     public abstract function render(QtiComponent $component);
     
@@ -66,7 +70,7 @@ abstract class AbstractRenderer {
      * 
      * @param AbstractRenderingContext $renderingContext
      */
-    public function setRenderingContext(AbstractRenderingContext $renderingContext) {
+    public function setRenderingContext(AbstractRenderingContext $renderingContext = null) {
         $this->renderingContext = $renderingContext;
     }
     

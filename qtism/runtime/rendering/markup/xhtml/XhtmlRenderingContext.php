@@ -94,6 +94,8 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('tfoot', $bodyElementRenderer);
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
+        
+        $this->registerRenderer('textRun', new TextRunRenderer());
     }
 
     /**
