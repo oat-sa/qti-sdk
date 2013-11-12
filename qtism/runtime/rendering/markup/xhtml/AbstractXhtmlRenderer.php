@@ -72,7 +72,9 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      */
-    abstract protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component);
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
+        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement($component->getQtiClassName()));
+    }
     
     /**
      * Append the children renderings of $components to the currently rendered $fragment.

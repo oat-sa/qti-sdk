@@ -118,6 +118,8 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     public function __construct(TbodyCollection $tbodies, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setTbodies($tbodies);
+        $this->setColgroups(new ColgroupCollection());
+        $this->setCols(new ColCollection());
     }
     
     /**
@@ -321,7 +323,24 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     }
     
     public function getComponents() {
-        $array = array_merge(array($this->getCaption()), $this->getCols()->getArrayCopy(), $this->getColgroups()->getArrayCopy(), array($this->getThead()), array($this->getTfoot()), $this->getTbodies()->getArrayCopy());
+        $array = array();
+        
+        if ($this->hasCaption() === true) {
+            $array[] = $this->getCaption();
+        }
+        
+        $array = array_merge($array, $this->getCols()->getArrayCopy(), $this->getColgroups()->getArrayCopy());
+        
+        if ($this->hasThead() === true) {
+            $array[] = $this->getThead();
+        }
+        
+        if ($this->hasTfoot() === true) {
+            $array[] = $this->getTfoot();
+        }
+        
+        $array = array_merge($array, $this->getTbodies()->getArrayCopy());
+        
         return new QtiComponentCollection($array);
     }
     

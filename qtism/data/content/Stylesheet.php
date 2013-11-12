@@ -168,6 +168,15 @@ class Stylesheet extends QtiComponent {
 	}
 	
 	/**
+	 * Whether a value is defined for the media attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasMedia() {
+	    return $this->getMedia() !== '';
+	}
+	
+	/**
 	 * Get the title of the stylesheet. Returns an empty string if not specified.
 	 * 
 	 * @return string A title or an empty string if not specified.
@@ -190,6 +199,15 @@ class Stylesheet extends QtiComponent {
 			$msg = "Title must be a string, '" . gettype($title) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
+	}
+	
+	/**
+	 * Whether a value is defined for the title attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTitle() {
+	    return $this->getTitle() !== '';
 	}
 	
 	public function getQtiClassName() {

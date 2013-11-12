@@ -153,7 +153,7 @@ abstract class AbstractRenderingContext {
             return $renderers[$className];
         }
         else {
-            $msg = "No AbstractRenderer implementation registered for QTI class name '${qtiClassName}'.";
+            $msg = "No AbstractRenderer implementation registered for QTI class name '${className}'.";
             throw new RenderingException($msg, RenderingException::NO_RENDERER);
         }
     }
@@ -206,7 +206,7 @@ abstract class AbstractRenderingContext {
             }
         }
         
-        return array_reverse($returnValue);
+        return $returnValue;
     }
     
     /**

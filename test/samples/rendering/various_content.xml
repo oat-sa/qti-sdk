@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itemBody xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd">
+	<div id="main-container" class="container">
+		<h1>The F4U Corsair</h1>
+		<p>
+			The <strong>Chance Vought F4U Corsair</strong> was a carrier-capable fighter aircraft 
+			that saw service primarily in World War II and the Korean War. Demand 
+			for the aircraft soon overwhelmed Vought's manufacturing capability, 
+			resulting in production by Goodyear and Brewster: Goodyear-built Corsairs 
+			were designated <strong>FG</strong> and Brewster-built aircraft <strong>F3A</strong>. 
+			From the first prototype delivery to the U.S. Navy in 1940, to final delivery in 1953 
+			to the French, 12,571 F4U Corsairs were manufactured by Vought,[1] in 16 separate models, 
+			in the longest production run of any piston-engined fighter in U.S. history (1942–53).
+		</p>
+		
+		<table summary="Operational History">
+			<thead>
+				<tr>
+					<th>War</th>
+					<th>Victories</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>World War II</td>
+					<td>240</td>
+				</tr>
+				<tr>
+					<td>Korean War</td>
+					<td>24</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</itemBody>

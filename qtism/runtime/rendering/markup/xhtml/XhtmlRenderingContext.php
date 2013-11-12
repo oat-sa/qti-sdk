@@ -51,8 +51,9 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         parent::__construct();
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
         
+        // The following QTI classes can be rendered
+        // with the BodyElementRenderer.
         $bodyElementRenderer = new BodyElementRenderer();
-        
         $this->registerRenderer('abbr', $bodyElementRenderer);
         $this->registerRenderer('acronym', $bodyElementRenderer);
         $this->registerRenderer('address', $bodyElementRenderer);
@@ -95,7 +96,28 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
         
+        // Both col and components elements can be rendered
+        // by the ColRenderer.
+        $colRenderer = new ColRenderer();
+        $this->registerRenderer('col', $colRenderer);
+        $this->registerRenderer('colgroup', $colRenderer);
+        
+        // Both td and th components can be rendered by the
+        // TableCellRenderer.
+        $tableCellRenderer = new TableCellRenderer();
+        $this->registerRenderer('td', $tableCellRenderer);
+        $this->registerRenderer('th', $tableCellRenderer);
+        
+        // Other bindings...
         $this->registerRenderer('textRun', new TextRunRenderer());
+        $this->registerRenderer('a', new ARenderer());
+        $this->registerRenderer('img', new ImgRenderer());
+        $this->registerRenderer('object', new ObjectRenderer());
+        $this->registerRenderer('param', new ParamRenderer());
+        $this->registerRenderer('q', new QRenderer());
+        $this->registerRenderer('stylesheet', new StylesheetRenderer());
+        $this->registerRenderer('itemBody', new ItemBodyRenderer());
+        $this->registerRenderer('table', new TableRenderer());
     }
 
     /**

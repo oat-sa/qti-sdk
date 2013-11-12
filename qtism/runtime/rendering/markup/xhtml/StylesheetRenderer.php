@@ -25,40 +25,31 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
 
 /**
- * BodyElement renderer.
+ * Stylesheet renderer.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BodyElementRenderer extends AbstractXhtmlRenderer {
+class StylesheetRenderer extends AbstractXhtmlRenderer {
     
-    /**
-     * Create a new BodyElementRenderer object.
-     *
-     * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
+        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement('stylesheet'));
     }
     
     public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+        $fragment->firstChild->setAttribute('rel', 'stylesheet');
+        $fragment->firstChild->setAttribute('href', $component->getHref());
         
-        if ($component->hasId() === true) {
-            $fragment->firstChild->setAttribute('id', $component->getId());
+        if ($component->hasMedia() === true) {
+            $fragment->firstChild->setAttribute('media', $component->getMedia());
         }
         
-        if ($component->hasClass() === true) {
-            $fragment->firstChild->setAttribute('class', $component->getClass());
-        }
-        
-        if ($component->hasLang() === true) {
-            $fragment->firstChild->setAttribute('lang', $component->getLang());
+        if ($component->hasTitle() === true) {
+            $fragment->firstChild->setAttribute('title', $component->getTitle());
         }
     }
 }

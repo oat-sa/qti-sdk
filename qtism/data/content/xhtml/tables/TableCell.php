@@ -134,6 +134,15 @@ abstract class TableCell extends BodyElement {
     }
     
     /**
+     * Whether at least one value is defined for the headers attribute.
+     * 
+     * @return boolean
+     */
+    public function hasHeaders() {
+        return count($this->getHeaders()) > 0;
+    }
+    
+    /**
      * Set the scope attribute.
      * 
      * @param integer $scope A value from the TableCellScope enumeration or -1 if no scope is defined.

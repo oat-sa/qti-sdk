@@ -80,6 +80,15 @@ class Q extends SimpleInline {
         }
     }
     
+    /**
+     * Whether a value is defined for the cite attribute.
+     * 
+     * @return string
+     */
+    public function hasCite() {
+        return $this->getCite() !== '';
+    }
+    
     public function getQtiClassName() {
         return 'q';
     }

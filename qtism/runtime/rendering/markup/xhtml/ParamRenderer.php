@@ -25,40 +25,26 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
-use qtism\data\QtiComponent;
+use qtism\data\content\xhtml\ParamType;
 use qtism\runtime\rendering\AbstractRenderer;
+use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * BodyElement renderer.
+ * Param renderer.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BodyElementRenderer extends AbstractXhtmlRenderer {
-    
-    /**
-     * Create a new BodyElementRenderer object.
-     *
-     * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
-    }
+class ParamRenderer extends AbstractXhtmlRenderer {
     
     public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+        $fragment->firstChild->setAttribute('name', $component->getName());
+        $fragment->firstChild->setAttribute('value', $component->getValue());
+        $fragment->firstChild->setAttribute('valueType', ParamType::getNameByConstant($component->getValueType()));
         
-        if ($component->hasId() === true) {
-            $fragment->firstChild->setAttribute('id', $component->getId());
-        }
-        
-        if ($component->hasClass() === true) {
-            $fragment->firstChild->setAttribute('class', $component->getClass());
-        }
-        
-        if ($component->hasLang() === true) {
-            $fragment->firstChild->setAttribute('lang', $component->getLang());
+        if ($component->hasType() === true) {
+            $fragment->firstChild->setAttribute('type', $component->hasType());
         }
     }
 }

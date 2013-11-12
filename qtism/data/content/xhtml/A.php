@@ -121,6 +121,15 @@ class A extends SimpleInline {
         return $this->type;
     }
     
+    /**
+     * Whether a value is defined for the type attribute.
+     * 
+     * @return boolean
+     */
+    public function hasType() {
+        return $this->getType() !== '';
+    }
+    
     public function getQtiClassName() {
         return 'a';
     }
