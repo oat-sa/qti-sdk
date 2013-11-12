@@ -55,6 +55,14 @@ abstract class AbstractRenderingContext {
     private $renderers;
     
     /**
+     * An array containing the QTI classes to be ignored
+     * for rendering.
+     * 
+     * @var array
+     */
+    private $ignoreClasses = array();
+    
+    /**
      * Create a new AbstractRenderingContext object.
      * 
      */
@@ -79,6 +87,41 @@ abstract class AbstractRenderingContext {
      */
     protected function getRenderers() {
         return $this->renderers;
+    }
+    
+    /**
+     * Set the array containing the QTI class names
+     * to be ignored for rendering.
+     * 
+     * @param array $ignoreClasses
+     */
+    protected function setIgnoreClasses(array $ignoreClasses) {
+        $this->ignoreClasses = $ignoreClasses;
+    }
+    
+    /**
+     * Get the array of containing the QTI class names to be
+     * ignored for rendering.
+     * 
+     * @return array
+     */
+    protected function getIgnoreClasses() {
+        return $this->ignoreClasses;
+    }
+    
+    /**
+     * 
+     * @param array|string $classes
+     */
+    public function ignoreQtiClasses($classes) {
+        if (is_string($classes) === true) {
+            $classes = array($classes);
+        }
+        
+        $ignoreClasses = $this->getIgnoreClasses();
+        $ignoreClasses = array_unique(array_merge($ignoreClasses, $classes));
+        
+        $this->setIgnoreClasses($ignoreClasses);
     }
     
     /**
@@ -149,15 +192,29 @@ abstract class AbstractRenderingContext {
      * Get the renderings related to the children of $component.
      * 
      * @param QtiComponent $component A QtiComponent object to be rendered.
+     * @return array
      */
     public function getChildrenRenderings(QtiComponent $component) {
-        $childCount = count($component->getComponents());
+        
         $returnValue = array();
         
-        for ($i = 0; $i < $childCount; $i++) {
-            $returnValue[] = $this->getRenderingStack()->pop();
+        foreach ($component->getComponents() as $c) {
+            $rendering = $this->getRenderingStack()->pop();
+            
+            if (in_array($c->getQtiClassName(), $this->getIgnoreClasses()) === false) {
+                $returnValue[] = $rendering;
+            }
         }
         
         return array_reverse($returnValue);
+    }
+    
+    /**
+     * Reset the context to its initial state, in order
+     * to be ready for reuse.
+     * 
+     */
+    public function reset() {
+        $this->setRenderingStack(new SplStack());
     }
 }

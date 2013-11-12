@@ -56,8 +56,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
      */
     private $lastRendering = null;
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct() {
+        parent::__construct($this->createRenderingContext());
     }
     
     /**
@@ -126,10 +126,6 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
     
     public function render(QtiComponent $component) {
         
-        if ($this->hasRenderingContext() === false) {
-            $this->setRenderingContext($this->createRenderingContext());
-        }
-        
         $this->setExploration(new SplStack());
         $this->setExplorationMarker(array());
         $this->setLastRendering(null);
@@ -140,7 +136,13 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
         while (count($this->getExploration()) > 0) {
             $this->setExploredComponent($this->getExploration()->pop());
             
-            if ($this->isFinal() === false && $this->isExplored() === false) {
+            // Component is final or not?
+            $final = $this->isFinal();
+            
+            // Component is explored or not?
+            $explored = $this->isExplored();
+            
+            if ($final === false && $explored === false) {
                 // Hierarchical node: 1st pass.
                 $this->markAsExplored($this->getExploredComponent());
                 $this->getExploration()->push($this->getExploredComponent());
@@ -149,13 +151,16 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
                     $this->getExploration()->push($toExplore);
                 }
             }
-            else if ($this->isFinal() === false && $this->isExplored() === true) {
+            else if ($final === false && $explored === true) {
                 // Hierarchical node: 2nd pass.
                 $this->processNode();
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering.
-                    return $this->createFinalRendering();
+                    
+                    $finalRendering = $this->createFinalRendering();
+                    $this->getRenderingContext()->reset();
+                    return $finalRendering;
                 }
             }
             else {
@@ -163,6 +168,15 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
                 $this->processNode();
             }
         }
+    }
+    
+    /**
+     * Ignore the given QTI $classes while rendering.
+     * 
+     * @param string|array $classes A QTI class or an array of QTI classes.
+     */
+    public function ignoreQtiClasses($classes) {
+        $this->getRenderingContext()->ignoreQtiClasses($classes);
     }
     
     /**

@@ -115,4 +115,9 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
     public function getDocument() {
         return $this->document;
     }
+    
+    public function reset() {
+        parent::reset();
+        $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
+    }
 }
