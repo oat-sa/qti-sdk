@@ -724,7 +724,7 @@ class AssessmentTestSession extends State {
 	        
 	        // Determine the item session control.
 	        if (($control = $routeItem->getItemSessionControl()) !== null) {
-	            $session->setItemSessionControl($control);
+	            $session->setItemSessionControl($control->getItemSessionControl());
 	        }
 	        
 	        // Determine the time limits.

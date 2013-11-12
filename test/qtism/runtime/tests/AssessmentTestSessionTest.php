@@ -1348,12 +1348,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q01 - Must be under control of its own itemSessionControl.
 	    $control = $route->getRouteItemAt(0)->getItemSessionControl();
-	    $this->assertEquals(2, $control->getMaxAttempts());
+	    $this->assertEquals(2, $control->getItemSessionControl()->getMaxAttempts());
 	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('Q01') === $control->getOwner());
 	    
 	    // Q07 - Must be under control of the ItemSessionControl of the parent AssessmentSection.
 	    $control = $route->getRouteItemAt(6)->getItemSessionControl();
-	    $this->assertEquals(3, $control->getMaxAttempts());
+	    $this->assertEquals(3, $control->getItemSessionControl()->getMaxAttempts());
 	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('S02') === $control->getOwner());
 	    
 	    // Q10 - Is under no control.
@@ -1362,7 +1362,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q13 - Must be under control of the ItemSessionControl of the parent TestPart.
 	    $control = $route->getRouteItemAt(12)->getItemSessionControl();
-	    $this->assertEquals(4, $control->getMaxAttempts());
+	    $this->assertEquals(4, $control->getItemSessionControl()->getMaxAttempts());
 	    $this->assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('P02') === $control->getOwner());
 	}
 	
@@ -1378,46 +1378,46 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q01
 	    $timeLimits = $route->getRouteItemAt(0)->getTimeLimits();
 	    $this->assertEquals(3, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(400, $timeLimits[1]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(50, $timeLimits[2]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(50, $timeLimits[2]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    // Q02
 	    $timeLimits = $route->getRouteItemAt(1)->getTimeLimits();
 	    $this->assertEquals(2, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(400, $timeLimits[1]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    // Q08
 	    $timeLimits = $route->getRouteItemAt(7)->getTimeLimits();
 	    $this->assertEquals(3, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(400, $timeLimits[1]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(150, $timeLimits[2]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(150, $timeLimits[2]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    // Q12
 	    $timeLimits = $route->getRouteItemAt(11)->getTimeLimits();
 	    $this->assertEquals(2, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(400, $timeLimits[1]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    // Q13
 	    $timeLimits = $route->getRouteItemAt(12)->getTimeLimits();
 	    $this->assertEquals(2, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(200, $timeLimits[1]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(200, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    // Q14
 	    $timeLimits = $route->getRouteItemAt(13)->getTimeLimits();
 	    $this->assertEquals(1, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    
 	    
 	    // Test item's timelimits exclusion.
 	    // Q01
 	    $timeLimits = $route->getRouteItemAt(0)->getTimeLimits(true);
 	    $this->assertEquals(2, count($timeLimits));
-	    $this->assertEquals(600, $timeLimits[0]->getMaxTime()->getSeconds(true));
-	    $this->assertEquals(400, $timeLimits[1]->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	}
 }

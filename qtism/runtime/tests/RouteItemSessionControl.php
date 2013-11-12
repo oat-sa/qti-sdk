@@ -34,7 +34,7 @@ use qtism\data\ItemSessionControl;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteItemSessionControl extends ItemSessionControl {
+class RouteItemSessionControl {
     
     /**
      * The owner of the ItemSessionControl component.
@@ -44,11 +44,20 @@ class RouteItemSessionControl extends ItemSessionControl {
     private $owner;
     
     /**
+     * The encapsulated ItemSessionControl object.
+     * 
+     * @var ItemSessionControl
+     */
+    private $itemSessionControl;
+    
+    /**
      * Create a new RouteItemSessionControl object.
      * 
+     * @param ItemSessionControl $itemSessionControl The encapsulated ItemSessionControl object.
      * @param QtiComponent $owner The owner of the ItemSessionControl component.
      */
-    public function __construct(QtiComponent $owner) {
+    public function __construct(ItemSessionControl $itemSessionControl, QtiComponent $owner) {
+        $this->setItemSessionControl($itemSessionControl);
         $this->setOwner($owner);
     }
     
@@ -71,6 +80,24 @@ class RouteItemSessionControl extends ItemSessionControl {
     }
     
     /**
+     * Get the encapsulated ItemSessionControl object.
+     * 
+     * @return ItemSessionControl
+     */
+    public function getItemSessionControl() {
+        return $this->itemSessionControl;
+    }
+    
+    /**
+     * Set the encapsulated ItemSessionControl object.
+     * 
+     * @param ItemSessionControl $itemSessionControl
+     */
+    public function setItemSessionControl(ItemSessionControl $itemSessionControl) {
+        $this->itemSessionControl = $itemSessionControl;
+    }
+    
+    /**
      * Create a new RouteItemSessionControl object from an existing $itemSessionControl object with a given
      * $owner.
      * 
@@ -79,15 +106,6 @@ class RouteItemSessionControl extends ItemSessionControl {
      * @return RouteItemSessionControl A new RouteItemSessionControl object.
      */
     public static function createFromItemSessionControl(ItemSessionControl $itemSessionControl, QtiComponent $owner) {
-        $control = new static($owner);
-        $control->setAllowComment($itemSessionControl->doesAllowComment());
-        $control->setAllowReview($itemSessionControl->doesAllowReview());
-        $control->setAllowSkipping($itemSessionControl->doesAllowSkipping());
-        $control->setMaxAttempts($itemSessionControl->getMaxAttempts());
-        $control->setShowFeedback($itemSessionControl->mustShowFeedback());
-        $control->setShowSolution($itemSessionControl->mustShowSolution());
-        $control->setValidateResponses($itemSessionControl->mustValidateResponses());
-        
-        return $control;
+        return new static($itemSessionControl, $owner);
     }
 }

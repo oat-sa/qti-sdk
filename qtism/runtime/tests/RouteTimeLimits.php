@@ -35,15 +35,17 @@ use qtism\data\TimeLimits;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteTimeLimits extends TimeLimits {
+class RouteTimeLimits {
     
     /**
      * Create a new RouteTimeLimts object.
      * 
+     * @param TimeLimits $timeLimits
      * @param QtiComponent $owner The owner component of the TimeLimits to be represented.
      */
-    public function __construct($owner) {
-        parent::__construct();
+    public function __construct(TimeLimits $timeLimits, QtiComponent $owner) {
+        $this->setTimeLimits($timeLimits);
+        $this->setOwner($owner);
     }
     
     /**
@@ -52,6 +54,13 @@ class RouteTimeLimits extends TimeLimits {
      * @var QtiComponent
      */
     private $owner;
+    
+    /**
+     * The encapsulated TimeLimits object.
+     * 
+     * @var TimeLimits
+     */
+    private $timeLimits;
     
     /**
      * Get the owner component object of the TimeLimits.
@@ -72,6 +81,24 @@ class RouteTimeLimits extends TimeLimits {
     }
     
     /**
+     * Get the encapsulated TimeLimits object.
+     * 
+     * @return TimeLimits
+     */
+    public function getTimeLimits() {
+        return $this->timeLimits;
+    }
+    
+    /**
+     * Set the encapsulated TimeLimits object.
+     * 
+     * @param TimeLimits $timeLimits
+     */
+    public function setTimeLimits(TimeLimits $timeLimits) {
+        $this->timeLimits = $timeLimits;
+    }
+    
+    /**
      * Create new RouteTimeLimits object from a base TimeLimits object
      * and its owner component.
      * 
@@ -80,11 +107,6 @@ class RouteTimeLimits extends TimeLimits {
      * @return RouteTimeLimits A new RouteTimeLimits object.
      */
     public static function createFromTimeLimits(TimeLimits $timeLimits, QtiComponent $owner) {
-        $limits = new static($owner);
-        $limits->setAllowLateSubmission($timeLimits->doesAllowLateSubmission());
-        $limits->setMaxTime($timeLimits->getMaxTime());
-        $limits->setMinTime($timeLimits->setMinTime());
-        
-        return $limits;
+        return new static($timeLimits, $owner);
     }
 }
