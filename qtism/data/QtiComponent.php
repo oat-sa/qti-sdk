@@ -125,4 +125,37 @@ abstract class QtiComponent {
 		
 		return $foundComponents;
 	}
+	
+	/**
+	 * Get the QtiIdentifiableComponent object contained by this QtiComponent. Be carefull,
+	 * the type of the returned collection depends on the values collected:
+	 * 
+	 * * If all the objects found have a unique identifier within the retrieved set, a QtiIdentifiableCollection is returned.
+	 * * If an identifier collision occurs within the retrieved set, a QtiComponentCollection is returned.
+	 * 
+	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+	 * @return QtiComponentCollection A QtiIdentifiableCollection or a QtiComponentCollection in case of collision.
+	 */
+	public function getIdentifiableComponents($recursive = true) {
+	    
+	    $iterator = ($recursive === true) ? $this->getIterator() : $this->getComponents();
+	    $foundComponents = array();
+	    $identifiers = array();
+	    $collision = false;
+	    
+	    foreach ($iterator as $component) {
+	        if ($component instanceof QtiIdentifiable) {
+                $foundComponents[] = $component;
+                $identifier = $component->getIdentifier();
+                
+                if (in_array($identifier, $identifiers) === true && $collision === false) {
+                    $collision = true;
+                }
+                
+                $identifiers[] = $identifier;
+	        }
+	    }
+	    
+	    return ($collision === true) ? new QtiComponentCollection($foundComponents) : new QtiIdentifiableCollection($foundComponents);
+	}
 }

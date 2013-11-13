@@ -125,4 +125,37 @@ class QtiComponentTest extends QtiSmTestCase {
 		$search = $assessmentSectionRoot->getComponentsByClassName(array('assessmentSection', 'assessmentItemRef'), false);
 		$this->assertEquals(2, count($search));
 	}
+	
+	public function testGetIdentifiableComponentsNoCollision() {
+	    $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
+	    $assessmentItemRef1a = new AssessmentItemRef('Q01', './Q01.xml');
+	    $assessmentItemRef1b = new AssessmentItemRef('Q02', './Q02.xml');
+	    $assessmentSection->setSectionParts(new SectionPartCollection(array($assessmentItemRef1a, $assessmentItemRef1b)));
+	    
+	    $search = $assessmentSection->getIdentifiableComponents();
+	    $this->assertInstanceOf('qtism\\data\\QtiIdentifiableCollection', $search);
+	    
+	    $this->assertEquals(array('Q01', 'Q02'), $search->getKeys());
+	}
+	
+	public function testGetIdentifiableComponentsCollision() {
+	    $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
+	    $assessmentSection1a = new AssessmentSection('S01a', 'Section S01a', true);
+	    $assessmentSection1b = new AssessmentSection('S01b', 'Section S01b', true);
+	    
+	    $assessmentItemRef1a = new AssessmentItemRef('Q01', './Q01.xml');
+	    $assessmentItemRef1b = new AssessmentItemRef('Q01', './Q01.xml');
+	    
+	    $assessmentSection1a->setSectionParts(new SectionPartCollection(array($assessmentItemRef1a)));
+	    $assessmentSection1b->setSectionParts(new SectionPartCollection(array($assessmentItemRef1b)));
+	    $assessmentSection->setSectionParts(new SectionPartCollection(array($assessmentSection1a, $assessmentSection1b)));
+	    
+	    $search = $assessmentSection->getIdentifiableComponents();
+	    $this->assertInstanceOf('qtism\\data\\QtiComponentCollection', $search);
+	    $this->assertEquals(4, count($search));
+	    $this->assertTrue($assessmentSection1a === $search[0]);
+	    $this->assertTrue($assessmentItemRef1a === $search[1]);
+	    $this->assertTrue($assessmentSection1b === $search[2]);
+	    $this->assertTrue($assessmentItemRef1b === $search[3]);
+	}
 }

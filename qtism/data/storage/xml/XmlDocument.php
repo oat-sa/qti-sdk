@@ -248,7 +248,7 @@ class XmlDocument extends QtiDocument {
 			$oldErrorConfig = libxml_use_internal_errors(true); 
 			
 			$doc = $this->getDomDocument();
-			if ($doc->schemaValidate($filename) === false) {
+			if (@$doc->schemaValidate($filename) === false) {
 				
 				$libXmlErrors = libxml_get_errors();
 				$formattedErrors = self::formatLibXmlErrors($libXmlErrors);
