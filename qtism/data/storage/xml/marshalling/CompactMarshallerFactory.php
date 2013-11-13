@@ -32,5 +32,6 @@ class CompactMarshallerFactory extends MarshallerFactory {
 		parent::__construct();
 		
 		$this->addMappingEntry('assessmentItemRef', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller');
+		$this->addMappingEntry('assessmentSection', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentSectionMarshaller');
 	}
 }

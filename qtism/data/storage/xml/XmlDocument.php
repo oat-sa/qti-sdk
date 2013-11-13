@@ -138,7 +138,7 @@ class XmlDocument extends QtiDocument {
 					$element = $this->getDomDocument()->documentElement;
 					$factory = $this->createMarshallerFactory();
 					$marshaller = $factory->createMarshaller($element);
-					$this->setDocumentComponent($marshaller->unmarshall($element, $this->getDocumentComponent()));
+					$this->setDocumentComponent($marshaller->unmarshall($element));
 				}
 				catch (UnmarshallingException $e) {
 					$line = $e->getDOMElement()->getLineNo();

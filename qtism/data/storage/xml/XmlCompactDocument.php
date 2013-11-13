@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\TestPart;
+
+use qtism\data\ExtendedAssessmentSection;
+
 use qtism\data\AssessmentSectionRef;
 use qtism\data\storage\FileResolver;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -145,6 +149,17 @@ class XmlCompactDocument extends XmlDocument {
 	                }
 	                	
 	                array_push($trail, array($assessmentSection, $previous));
+	            }
+	            else if ($component instanceof AssessmentSection) {
+	                $assessmentSection = ExtendedAssessmentSection::createFromAssessmentSection($component);
+	                
+	                $previousParts = ($previous instanceof TestPart) ? $previous->getAssessmentSections() : $previous->getSectionParts();
+	                foreach ($previousParts as $k => $previousPart) {
+	                    if ($previousParts[$k] === $component) {
+	                        $previousParts->replace($component, $assessmentSection);
+	                        break;
+	                    }
+	                }
 	            }
 	            else if ($component === $root) {
 	                // 2nd pass on the root, we have to stop.

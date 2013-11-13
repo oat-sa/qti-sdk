@@ -35,6 +35,9 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$this->assertEquals(1, count($testParts));
 		$assessmentSections = $testParts['testpartID']->getAssessmentSections();
 		$this->assertEquals(1, count($assessmentSections));
+		$assessmentSection = $assessmentSections['Sektion_181865064'];
+		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSection);
+		
 		$assessmentItemRefs = $assessmentSections['Sektion_181865064']->getSectionParts();
 		
 		$itemCount = 0;
@@ -83,6 +86,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$doc->load($file);
 		
 		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+		
 		$file = tempnam('/tmp', 'qsm');
 		$compactDoc->save($file);
 		$this->assertTrue(file_exists($file));
@@ -119,7 +123,8 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$assessmentSections2ndLvl = $assessmentSections1stLvl['Container_45665458']->getSectionParts();
 		$this->assertEquals(1, count($assessmentSections2ndLvl));
-		$this->assertInstanceOf('qtism\\data\\AssessmentSection', $assessmentSections2ndLvl['Sektion_181865064']);
+		$this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $assessmentSections2ndLvl['Sektion_181865064']);
+		$this->assertEquals(0, count($assessmentSections2ndLvl['Sektion_181865064']->getRubricBlockRefs()));
 		$this->assertEquals('Sektion_181865064', $assessmentSections2ndLvl['Sektion_181865064']->getIdentifier());
 		
 		$assessmentItemRefs = $assessmentSections2ndLvl['Sektion_181865064']->getSectionParts();

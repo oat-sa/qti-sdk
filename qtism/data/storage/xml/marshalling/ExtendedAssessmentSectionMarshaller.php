@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\QtiComponentCollection;
 use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiComponent;
@@ -40,10 +41,12 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
     /**
      * Marshall an ExtendedAssessmentSection object into its DOMElement representation.
      *
+     * @param QtiComponent $component
+     * @param array $elements
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component) {
-        $element = parent::marshall($component);
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
+        $element = parent::marshallChildrenKnown($component, $elements);
         
         foreach ($component->getRubricBlockRefs() as $rubricBlockRef) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($rubricBlockRef);
@@ -56,10 +59,12 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
     /**
      * Unmarshall an extendedAssessmentSection element into its QTI data model representation.
      * 
+     * @param DOMElement $element
+     * @param QtiComponentCollection $children
      * @return QtiComponent
      */
-    protected function unmarshall(DOMElement $element) {
-        $baseComponent = parent::unmarshall($element);
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
+        $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
         
         $rubricBlockRefElts = self::getChildElementsByTagName($element, 'rubricBlockRef');

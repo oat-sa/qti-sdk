@@ -72,7 +72,8 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      */
     public function __construct($identifier, $href) {
         $this->setIdentifier($identifier);
-        $this->setHref($href);    
+        $this->setHref($href);
+        $this->setObservers(new SplObjectStorage()); 
     }
     
     /**
