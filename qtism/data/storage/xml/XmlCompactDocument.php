@@ -41,6 +41,41 @@ use \DOMElement;
 
 class XmlCompactDocument extends XmlDocument {
 	
+    /**
+     * Whether or not the rubricBlock elements
+     * must be separated from the core document.
+     * 
+     * @var boolean
+     */
+    private $explodeRubricBlocks = false;
+    
+    /**
+     * Whether or not the rubrickBlock components contained
+     * in the document should be separated from the document.
+     * 
+     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save()
+     * will:
+     * 
+     * * rubricBlock components will be removed from the document.
+     * * replace the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes.
+     * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
+     * 
+     * @param boolean $explodeRubricBlocks
+     */
+    public function setExplodeRubricBlocks($explodeRubricBlocks) {
+        $this->explodeRubricBlocks = $explodeRubricBlocks;
+    }
+    
+    /**
+     * Whether or not the rubricBlock components contained
+     * in the document should be separated from the document.
+     * 
+     * @return boolean
+     */
+    public function mustExplodeRubricBlocks() {
+        return $this->explodeRubricBlocks;
+    }
+    
 	/**
 	 * Override of XmlDocument::createMarshallerFactory in order
 	 * to return an appropriate CompactMarshallerFactory.

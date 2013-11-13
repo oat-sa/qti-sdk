@@ -335,6 +335,35 @@ class QtiComponentIterator implements Iterator {
 	}
 	
 	/**
+	 * Get the parent component of the one given by
+	 * the QtiComponentIterator::current() method.
+	 * 
+	 * This method will return the null value in the following circumstances:
+	 * 
+	 * * The QtiComponentIterator::valid method returns false.
+	 * * The component returned by QtiComponentIterator::current is the root component.
+	 * 
+	 * @return null|QtiComponent The null value if there is no parent, otherwise a QtiComponent.
+	 * @see QtiComponentIterator::current()
+	 */
+	public function parent() {
+	    $parent = null;
+	    
+	    if ($this->valid() === true && $this->current() !== $this->getRootComponent()) {
+	        $trail = &$this->getTrail();
+	        
+	        if (count($trail) > 0) {
+	            $parent = $trail[count($trail) - 1][0];
+	        }
+	        else {
+	            $parent = $this->getRootComponent();
+	        }
+	    }
+	    
+	    return $parent;
+	}
+	
+	/**
 	 * Get the key of the current QtiComponent. The value of the key is actually
 	 * its QTI class name e.g. 'assessmentTest', 'assessmentItemRef', ...
 	 * 

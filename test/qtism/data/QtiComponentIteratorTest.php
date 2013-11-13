@@ -11,7 +11,7 @@ use qtism\data\expressions\BaseValue;
 
 class QtiComponentIteratorTest extends QtiSmTestCase {
 	
-	/*public function testSimple() {
+	public function testSimple() {
 		$baseValues = new ExpressionCollection();
 		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
 		$baseValues[] = new BaseValue(BaseType::INTEGER, 25);
@@ -22,11 +22,14 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		
 		$iterations = 0;
 		foreach ($iterator as $k => $i) {
+		    $this->assertSame($sum, $iterator->parent());
 			$this->assertSame($baseValues[$iterations], $i);
 			$this->assertSame($sum, $iterator->getCurrentContainer());
 			$this->assertEquals($k, $i->getQtiClassName());
 			$iterations++;
 		}
+		
+		$this->assertSame(null, $iterator->parent());
 	}
 	
 	public function testNoChildComponents() {
@@ -40,7 +43,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		$iterator->next();
 		$this->assertFalse($iterator->valid());
 		$this->assertTrue($iterator->current() === null);
-	}*/
+	}
 	
 	public function testAvoidRecursions() {
 		$baseValues = new ExpressionCollection();

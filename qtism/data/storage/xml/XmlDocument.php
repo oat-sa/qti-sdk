@@ -165,6 +165,17 @@ class XmlDocument extends QtiDocument {
 	}
 	
 	/**
+	 * This method can be overriden by subclasses in order to alter a last
+	 * time the data model prior to be saved.
+	 * 
+	 * @param QtiComponent $documentComponent The root component of the model that will be saved.
+	 * @throws XmlStorageException If something wrong occurs.
+	 */
+	protected function beforeSave(QtiComponent $documentComponent) {
+	    return;
+	}
+	
+	/**
 	 * Save the Assessment Document at the location described by $uri. Please be carefull
 	 * to provide an AssessmentTest object to save before calling this method.
 	 *
@@ -186,7 +197,6 @@ class XmlDocument extends QtiDocument {
 	    return $this->saveImplementation('', $formatOutput);
 	}
 	
-	
 	protected function saveImplementation($uri = '', $formatOutput = true) {
 		$assessmentTest = $this->getDocumentComponent();
 		
@@ -198,6 +208,10 @@ class XmlDocument extends QtiDocument {
 			}
 			
 			try {
+			    // If overriden, beforeSave may alter a last time
+			    // the documentComponent prior serialization.
+			    $this->beforeSave($this->getDocumentComponent());
+			    
 				$factory = $this->createMarshallerFactory();
 				$marshaller = $factory->createMarshaller($this->getDocumentComponent());
 				$element = $marshaller->marshall($this->getDocumentComponent());
@@ -228,8 +242,12 @@ class XmlDocument extends QtiDocument {
 				}
 			}
 			catch (DOMException $e) {
-				$msg = "An internal error occured while saving QTI-XML.";
+				$msg = "An internal error occured while saving QTI-XML data.";
 				throw new XmlStorageException($msg, $e);
+			}
+			catch (XmlStorageException $e) {
+			    $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
+			    throw new XmlStorageException($msg, $e);
 			}
 		}
 		else {
