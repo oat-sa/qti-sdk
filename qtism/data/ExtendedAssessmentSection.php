@@ -96,4 +96,10 @@ class ExtendedAssessmentSection extends AssessmentSection {
         
         return $extended;
     }
+    
+    public function getComponents() {
+        $parentComponents = parent::getComponents();
+        $parentComponents->merge($this->getRubricBlockRefs());
+        return $parentComponents;
+    }
 }

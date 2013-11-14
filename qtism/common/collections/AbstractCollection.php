@@ -321,16 +321,18 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * Merge the collection with another one.
 	 * 
 	 * @param AbstractCollection $collection
+	 * @throws InvalidArgumentException If $collection is not a subclass of the target of the call.
 	 */
 	public function merge(AbstractCollection $collection) {
-	    if (get_class($this) === get_class($collection)) {
+	    if (is_subclass_of($collection, get_class($this)) === true) {
 	        $first = $this->getDataPlaceHolder();
 	        $second = $collection->getDataPlaceHolder();
 	        $newData = array_merge($first, $second);
 	        $this->setDataPlaceHolder($newData);
 	    }
 	    else {
-	        $msg = "Only collections with the same type may be merged.";
+	        $msg = "Only collections with compliant types can be merged ";
+	        $msg.= "('" . get_class($this) . "' vs '" . get_class($collection) . "').";
 	        throw new InvalidArgumentException($msg);
 	    }
 	}

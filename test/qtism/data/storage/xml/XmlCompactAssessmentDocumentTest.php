@@ -152,4 +152,43 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		unlink($file);
 		$this->assertFalse(file_exists($file));
 	}
+	
+	public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null) {
+	    if (empty($doc) === true) {
+	        $src = self::samplesDir() . 'custom/runtime/rubricblockref.xml';
+	        $doc = new XmlCompactDocument();
+	        $doc->load($src, true);
+	    }
+	    
+	    // It validates !
+	    $this->assertInstanceOf('qtism\\data\\AssessmentTest', $doc->getDocumentComponent());
+	    
+	    // Did we retrieve the section as ExtendedAssessmentSection objects?
+	    $sections = $doc->getDocumentComponent()->getComponentsByClassName('assessmentSection');
+	    $this->assertEquals(1, count($sections));
+	    $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $sections[0]);
+	    
+	    // Retrieve rubricBlockRefs.
+	    $rubricBlockRefs = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlockRef');
+	    $this->assertEquals(1, count($rubricBlockRefs));
+	    $rubricBlockRef = $rubricBlockRefs[0];
+	    $this->assertInstanceOf('qtism\\data\\content\\RubricBlockRef', $rubricBlockRef);
+	    $this->assertEquals('R01', $rubricBlockRef->getIdentifier());
+	    $this->assertEquals('./R01.xml', $rubricBlockRef->getHref());
+	}
+	
+	public function testSaveRubricBlockRefs() {
+	    $src = self::samplesDir() . 'custom/runtime/rubricblockref.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src);
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    $this->assertTrue(file_exists($file));
+	    $this->testLoadRubricBlockRefs($doc);
+	    
+	    unlink($file);
+	    $this->assertFalse(file_exists($file));
+	}
 }
