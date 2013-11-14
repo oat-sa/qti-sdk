@@ -300,6 +300,23 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	}
 	
 	/**
+	 * Remove $object from the collection. If $object is not in the collection,
+	 * it remains as it is.
+	 * 
+	 * @param  $object The object to remove from the collection.
+	 */
+	public function remove($object) {
+	    
+	    $data = &$this->getDataPlaceHolder();
+	    foreach (array_keys($data) as $k) {
+	        if ($data[$k] === $object) {
+	            unset($data[$k]);
+	            return;
+	        }
+	    }
+	}
+	
+	/**
 	 * Reset the collection to an empty one.
 	 */
 	public function reset() {

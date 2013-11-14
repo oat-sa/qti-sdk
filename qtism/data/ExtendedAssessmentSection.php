@@ -40,6 +40,7 @@ class ExtendedAssessmentSection extends AssessmentSection {
      * extendedAssessmentSection.
      * 
      * @var RubricBlockRefCollection
+     * @qtism-bean-property
      */
     private $rubricBlockRefs;
     

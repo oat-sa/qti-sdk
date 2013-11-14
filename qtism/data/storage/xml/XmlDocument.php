@@ -169,9 +169,10 @@ class XmlDocument extends QtiDocument {
 	 * time the data model prior to be saved.
 	 * 
 	 * @param QtiComponent $documentComponent The root component of the model that will be saved.
+	 * @param string $uri The URI where the saved file is supposed to be stored.
 	 * @throws XmlStorageException If something wrong occurs.
 	 */
-	protected function beforeSave(QtiComponent $documentComponent) {
+	protected function beforeSave(QtiComponent $documentComponent, $uri) {
 	    return;
 	}
 	
@@ -210,7 +211,10 @@ class XmlDocument extends QtiDocument {
 			try {
 			    // If overriden, beforeSave may alter a last time
 			    // the documentComponent prior serialization.
-			    $this->beforeSave($this->getDocumentComponent());
+			    // Note: in use only when saving to a file.
+			    if (empty($uri) === false) {
+			        $this->beforeSave($this->getDocumentComponent(), $uri);
+			    }
 			    
 				$factory = $this->createMarshallerFactory();
 				$marshaller = $factory->createMarshaller($this->getDocumentComponent());

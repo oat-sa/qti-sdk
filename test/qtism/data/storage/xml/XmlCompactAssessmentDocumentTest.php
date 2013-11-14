@@ -191,4 +191,30 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    unlink($file);
 	    $this->assertFalse(file_exists($file));
 	}
+	
+	public function testExplodeRubricBlocks() {
+	    $src = self::samplesDir() . 'custom/runtime/rubricblockrefs_explosion.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src, true);
+	    $doc->setExplodeRubricBlocks(true);
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    
+	    $doc->save($file);
+	    
+	    // Are external rubricBlocks set?
+	    $pathinfo = pathinfo($file);
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_1.xml';
+	    $this->assertTrue(file_exists($path));
+	    unlink($path);
+	    $this->assertFalse(file_exists($path));
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_2.xml';
+	    $this->assertTrue(file_exists($path));
+	    unlink($path);
+	    $this->assertFalse(file_exists($path));
+	    
+	    unlink($file);
+	}
 }

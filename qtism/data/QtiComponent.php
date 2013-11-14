@@ -101,6 +101,7 @@ abstract class QtiComponent {
 	 * 
 	 * @param array|string An array of strings or a string.
 	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+	 * @return QtiComponentCollection
 	 * @throws InvalidArgumentException If $classNames is not an array nor a string value.
 	 */
 	public function getComponentsByClassName($classNames, $recursive = true) {

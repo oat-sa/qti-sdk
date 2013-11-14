@@ -347,20 +347,7 @@ class QtiComponentIterator implements Iterator {
 	 * @see QtiComponentIterator::current()
 	 */
 	public function parent() {
-	    $parent = null;
-	    
-	    if ($this->valid() === true && $this->current() !== $this->getRootComponent()) {
-	        $trail = &$this->getTrail();
-	        
-	        if (count($trail) > 0) {
-	            $parent = $trail[count($trail) - 1][0];
-	        }
-	        else {
-	            $parent = $this->getRootComponent();
-	        }
-	    }
-	    
-	    return $parent;
+	    return $this->getCurrentContainer();
 	}
 	
 	/**
@@ -403,9 +390,11 @@ class QtiComponentIterator implements Iterator {
 			}
 			
 			$this->setValid(false);
+			$this->setCurrentContainer(null);
 		}
 		else {
 			$this->setValid(false);
+			$this->setCurrentContainer(null);
 		}
 	}
 	

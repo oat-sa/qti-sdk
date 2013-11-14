@@ -52,6 +52,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      * The identifier of the rubricBlockRef.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $identifier;
     
@@ -60,6 +61,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      * the definition of the external rubricBlock.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $href;
     

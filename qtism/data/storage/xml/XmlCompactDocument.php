@@ -24,10 +24,12 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\content\RubricBlockRef;
+
+use qtism\data\QtiComponentIterator;
+use qtism\data\QtiComponent;
 use qtism\data\TestPart;
-
 use qtism\data\ExtendedAssessmentSection;
-
 use qtism\data\AssessmentSectionRef;
 use qtism\data\storage\FileResolver;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -38,6 +40,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMElement;
+use \SplObjectStorage;
 
 class XmlCompactDocument extends XmlDocument {
 	
@@ -59,6 +62,9 @@ class XmlCompactDocument extends XmlDocument {
      * * rubricBlock components will be removed from the document.
      * * replace the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
+     * 
+     * Please note that this is took under consideration only when the XmlDocument::save() method
+     * is used.
      * 
      * @param boolean $explodeRubricBlocks
      */
@@ -288,5 +294,53 @@ class XmlCompactDocument extends XmlDocument {
 		$rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
 		$rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
+	}
+	
+	public function beforeSave(QtiComponent $documentComponent, $uri) {
+	    
+	    // Take care of rubricBlock explosion. Transform
+	    // actual rubricBlocks in rubricBlockRefs.
+	    if ($this->mustExplodeRubricBlocks() === true) {
+	        
+	        // Get all rubricBlock elements...
+	        $iterator = new QtiComponentIterator($documentComponent, array('rubricBlock'));
+	        $sectionCount = new SplObjectStorage();
+	        
+	        foreach ($iterator as $rubricBlock) {
+	            // $section contains the assessmentSection the rubricBlock is related to.
+	            $section = $iterator->parent();
+	            
+	            // determine the occurence number of the rubricBlock relative to its section.
+	            if (isset($sectionCount[$section]) === false) {
+	                $sectionCount[$section] = 0;
+	            }
+	            
+	            $sectionCount[$section] = $sectionCount[$section] + 1;
+	            $occurence = $sectionCount[$section];
+	            
+	            // determine a suitable file name for the external rubricBlock definition.
+	            $rubricBlockRefId = 'RB_' . $section->getIdentifier() . '_' . $occurence;
+	            $href = './rubricBlock_' . $rubricBlockRefId . '.xml';
+	            
+	            $doc = new XmlDocument();
+	            $doc->setDocumentComponent($rubricBlock);
+	            
+	            try {
+	                $pathinfo = pathinfo($uri);
+	                $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
+	                
+	                // replace the rubric block with a reference.
+	                $sectionRubricBlocks = $section->getRubricBlocks();
+	                $sectionRubricBlocks->remove($rubricBlock);
+	                
+	                $sectionRubricBlockRefs = $section->getRubricBlockRefs();
+	                $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
+	            }
+	            catch (XmlStorageException $e) {
+	                $msg = "An error occured while creating external rubrickBlock definition(s).";
+	                throw new XmlStorageException($msg, $e);
+	            }
+	        }
+	    }
 	}
 }
