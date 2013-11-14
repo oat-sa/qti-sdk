@@ -23,6 +23,7 @@
 
 namespace qtism\data\storage\php;
 
+use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use qtism\common\datatypes\QtiDatatype;
@@ -197,6 +198,9 @@ class PhpDocument extends QtiDocument {
         }
         else if ($object instanceof ResponseProcessing) {
             return "qtism\\data\\processing\\ResponseProcessing";
+        }
+        else if ($object instanceof ExtendedAssessmentSection) {
+            return 'qtism\\data\\ExtendedAssessmentSection';
         }
         else if ($object instanceof AssessmentSection) {
             return "qtism\\data\\AssessmentSection";
