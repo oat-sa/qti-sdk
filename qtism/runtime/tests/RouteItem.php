@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\content\RubricBlockRefCollection;
+use qtism\data\content\RubricBlockCollection;
 use qtism\data\AssessmentTest;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\PreCondition;
@@ -339,6 +341,40 @@ class RouteItem {
             
             return $inForce;
         }
+    }
+    
+    /**
+     * Get the rubricBlocks related to this routeItem. The returned
+     * rubricBlocks are be ordered from the top most to the bottom of 
+     * the assessmentTest hierarchy.
+     * 
+     * @return RubricBlockCollection A collection of RubricBlock objects.
+     */
+    public function getRubricBlocks() {
+        $rubrics = new RubricBlockCollection();
+        
+        foreach ($this->getAssessmentSections() as $section) {
+            $rubrics->merge($section->getRubricBlocks());
+        }
+        
+        return $rubrics;
+    }
+    
+    /**
+     * Get the rubricBlockRefs related to this routeItem. The returned
+     * rubricBlockRefs are ordered from the top most to the bottom of 
+     * the assessmentTest hierarchy.
+     * 
+     * @return RubricBlockRefCollection A collection of RubricBlockRef objects.
+     */
+    public function getRubricBlockRefs() {
+        $rubrics = new RubricBlockRefCollection();
+        
+        foreach ($this->getAssessmentSections() as $section) {
+            $rubrics->merge($section->getRubricBlockRefs());
+        }
+        
+        return $rubrics;
     }
     
     /**

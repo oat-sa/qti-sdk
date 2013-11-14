@@ -1245,6 +1245,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(2, count($assessmentSections));
 	    $this->assertTrue(isset($assessmentSections['S01']));
 	    $this->assertTrue(isset($assessmentSections['S01A']));
+	    
+	    // Check for the order (from to to bottom of the hierarchy)
+	    $this->assertEquals(array('S01', 'S01A'), $assessmentSections->getKeys());
 	    $this->assertEquals('S01A', $route->getRouteItemAt(1)->getAssessmentSection()->getIdentifier());
 	    
 	    // Route[2] - S01 -> S01A -> Q03
@@ -1419,5 +1422,30 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(2, count($timeLimits));
 	    $this->assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
+	}
+	
+	public function testRubricBlockRefsHierarchy() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/rubricblockrefs_hierarchy.xml', true);
+	    
+	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $route = $session->getRoute();
+	    
+	    // S01 - S01A - Q01
+	    $rubricBlockRefs = $route->getRouteItemAt(0)->getRubricBlockRefs();
+	    $this->assertEquals(array('RB00_MAIN', 'RB01_MATH', 'RB02_MATH'), $rubricBlockRefs->getKeys());
+	    
+	    // S01 - S01A - Q02
+	    $rubricBlockRefs = $route->getRouteItemAt(1)->getRubricBlockRefs();
+	    $this->assertEquals(array('RB00_MAIN', 'RB01_MATH', 'RB02_MATH'), $rubricBlockRefs->getKeys());
+	    
+	    // S01 - S01B - Q03
+	    $rubricBlockRefs = $route->getRouteItemAt(2)->getRubricBlockRefs();
+	    $this->assertEquals(array('RB00_MAIN', 'RB03_BIOLOGY'), $rubricBlockRefs->getKeys());
+	    
+	    // S01C - Q04
+	    $rubricBlockRefs = $route->getRouteItemAt(3)->getRubricBlockRefs();
+	    $this->assertEquals(0, count($rubricBlockRefs));
 	}
 }
