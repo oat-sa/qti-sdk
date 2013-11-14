@@ -118,6 +118,7 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('stylesheet', new StylesheetRenderer());
         $this->registerRenderer('itemBody', new ItemBodyRenderer());
         $this->registerRenderer('table', new TableRenderer());
+        $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
     }
 
     /**

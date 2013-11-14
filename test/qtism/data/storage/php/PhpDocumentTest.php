@@ -93,7 +93,7 @@ class PhpDocumentTest extends QtiSmTestCase {
                         array(self::samplesDir() . 'ims/tests/sets_of_items_with_leading_material/sets_of_items_with_leading_material.xml', 'qtism\\data\\AssessmentTest'),
                         array(self::samplesDir() . 'ims/tests/simple_feedback_test/simple_feedback_test.xml', 'qtism\\data\\AssessmentTest'),
                         array(self::samplesDir() . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'rendering/various_content.xml', 'qtism\\data\\content\\ItemBody')
+                        array(self::samplesDir() . 'rendering/various_content.xml', 'qtism\\data\\content\\RubricBlock')
         );
     }
 }

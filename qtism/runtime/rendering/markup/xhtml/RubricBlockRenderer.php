@@ -29,12 +29,12 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ItemBody renderer.
+ * RubricBlock renderer.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemBodyRenderer extends BodyElementRenderer {
+class RubricBlockRenderer extends BodyElementRenderer {
     
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
         $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement('div'));
@@ -43,6 +43,6 @@ class ItemBodyRenderer extends BodyElementRenderer {
     public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
         
-        $fragment->firstChild->setAttribute('class', $fragment->firstChild->getAttribute('class') . (($component->hasClass()) ? ' ' : '') . 'qti-itemBody');
+        $fragment->firstChild->setAttribute('class', $fragment->firstChild->getAttribute('class') . (($component->hasClass()) ? ' ' : '') . 'qti-rubricBlock');
     }
 }
