@@ -50,7 +50,7 @@ class ImgRenderer extends BodyElementRenderer {
         }
         
         if ($component->hasWidth() === true) {
-            $fragment->firstChild->setAttribute('width', $component->hasWidth());
+            $fragment->firstChild->setAttribute('width', $component->getWidth());
         }
     }
 }

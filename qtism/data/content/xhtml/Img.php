@@ -139,6 +139,15 @@ class Img extends AtomicInline {
     }
     
     /**
+     * Get the value of the alt attribute.
+     * 
+     * @return string A non-empty string.
+     */
+    public function getAlt() {
+        return $this->alt;
+    }
+    
+    /**
      * Get the longdesc attribute.
      * 
      * @param string $longdesc A valid URI.

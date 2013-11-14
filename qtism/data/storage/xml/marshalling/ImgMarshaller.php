@@ -49,9 +49,9 @@ class ImgMarshaller extends Marshaller {
         
         self::setDOMElementAttribute($element, 'src', $component->getSrc());
         self::setDOMElementAttribute($element, 'alt', $component->getAlt());
-        
+
         if ($component->hasWidth() === true) {
-            self::setDOMElementAttribute($element, 'width', $component->getwidth());
+            self::setDOMElementAttribute($element, 'width', $component->getWidth());
         }
         
         if ($component->hasHeight() === true) {

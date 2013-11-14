@@ -24,6 +24,7 @@
 namespace qtism\data\content;
 
 use qtism\data\QtiComponentCollection;
+use \InvalidArgumentException;
 
 /**
  * The atomicInline QTI abstract class.
@@ -39,7 +40,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
      * @var string
      * @qtism-bean-property
      */
-    private $xmlBase;
+    private $xmlBase = '';
     
     /**
      * Create a new AtomicInline object.
