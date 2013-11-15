@@ -83,12 +83,12 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 				}
 				
 				// Deal with rubrickBlocks.
-				$rubricBlockElements = $element->getElementsByTagName('rubricBlock');
-				if ($rubricBlockElements->length > 0) {
+				$rubricBlockElements = static::getChildElementsByTagName($element, 'rubricBlock');
+				if (count($rubricBlockElements) > 0) {
 					$rubricBlocks = new RubricBlockCollection();
-					for ($i = 0; $i < $rubricBlockElements->length; $i++) {
-						$marshaller = $this->getMarshallerFactory()->createMarshaller($rubricBlockElements->item($i));
-						$rubricBlocks[] = $marshaller->unmarshall($rubricBlockElements->item($i));
+					for ($i = 0; $i < count($rubricBlockElements); $i++) {
+						$marshaller = $this->getMarshallerFactory()->createMarshaller($rubricBlockElements[$i]);
+						$rubricBlocks[] = $marshaller->unmarshall($rubricBlockElements[$i]);
 					}
 					
 					$object->setRubricBlocks($rubricBlocks);
