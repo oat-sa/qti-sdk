@@ -25,24 +25,23 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingContext;
+
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * RubricBlock renderer.
+ * RubricBlock renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-rubricBlock' additional CSS class.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 class RubricBlockRenderer extends BodyElementRenderer {
     
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement('div'));
-    }
-    
-    public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        parent::appendAttributes($fragment, $component);
-        
-        $fragment->firstChild->setAttribute('class', $fragment->firstChild->getAttribute('class') . (($component->hasClass()) ? ' ' : '') . 'qti-rubricBlock');
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
+        $this->transform('div');
+        $this->additionalClass('qti-rubricBlock');
     }
 }

@@ -26,7 +26,6 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\AbstractRenderingContext;
-
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
@@ -38,6 +37,14 @@ use \DOMDocumentFragment;
  *
  */
 abstract class AbstractXhtmlRenderer extends AbstractRenderer {
+    
+    /**
+     * A tag name to be used instead of the 
+     * QTI class name for rendering.
+     * 
+     * @var string
+     */
+    private $replacementTagName = '';
     
     /**
      * Create a new XhtmlAbstractRenderer object.
@@ -73,7 +80,8 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param QtiComponent $component
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement($component->getQtiClassName()));
+        $tagName = ($this->hasReplacementTagName() === true) ? $this->getReplacementTagName() : $component->getQtiClassName();
+        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement($tagName));
     }
     
     /**
@@ -96,4 +104,44 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param QtiComponent $component
      */
     abstract protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component);
+    
+    /**
+     * Set the replacement tag name.
+     * 
+     * @param string $replacementTagName
+     */
+    protected function setReplacementTagName($replacementTagName) {
+        $this->replacementTagName = $replacementTagName;
+    }
+    
+    /**
+     * Get the replacement tag name.
+     * 
+     * @return string
+     */
+    protected function getReplacementTagName() {
+        return $this->replacementTagName;
+    }
+    
+    /**
+     * Whether a replacement tag name is defined.
+     * 
+     * @return boolean
+     */
+    protected function hasReplacementTagName() {
+        return $this->getReplacementTagName() !== '';
+    }
+    
+    /**
+     * The renderer will by default render the QTI Component into its markup equivalent, using
+     * the QTI class name returned by the component as the rendered element name.
+     * 
+     * Calling this method will make the renderer use $tagName as the element node name to be
+     * used at rendering time.
+     * 
+     * @param string $tagName A tagname e.g. 'div'.
+     */
+    public function transform($tagName) {
+        $this->setReplacementTagName($tagName);
+    }
 }

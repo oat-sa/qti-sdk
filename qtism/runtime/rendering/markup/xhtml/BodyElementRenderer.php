@@ -39,6 +39,14 @@ use \DOMDocumentFragment;
 class BodyElementRenderer extends AbstractXhtmlRenderer {
     
     /**
+     * A set of additional CSS classes to be added
+     * to the rendered element.
+     *
+     * @var array
+     */
+    private $additionalClasses = array();
+    
+    /**
      * Create a new BodyElementRenderer object.
      *
      * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
@@ -60,5 +68,50 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('lang', $component->getLang());
         }
+        
+        if ($this->hasAdditionalClasses() === true) {
+            $classes = implode("\x20", $this->getAdditionalClasses());
+            $currentClasses = $fragment->firstChild->getAttribute('class');
+            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
+        }
+    }
+    
+    /**
+     * Set the array of additional CSS classes.
+     *
+     * @param array $additionalClasses
+     */
+    protected function setAdditionalClasses(array $additionalClasses) {
+        $this->additionalClasses = $additionalClasses;
+    }
+    
+    /**
+     * Get the array of additional CSS classes.
+     *
+     * @return array
+     */
+    protected function getAdditionalClasses() {
+        return $this->additionalClasses;
+    }
+    
+    /**
+     * Whether additional CSS classes are defined for rendering.
+     *
+     * @return boolean
+     */
+    protected function hasAdditionalClasses() {
+        return count($this->getAdditionalClasses()) > 0;
+    }
+    
+    /**
+     * Add an additional CSS class to be rendered.
+     *
+     * @param string $additionalClass A CSS class.
+     */
+    public function additionalClass($additionalClass) {
+        $additionalClasses = $this->getAdditionalClasses();
+        $additionalClasses[] = $additionalClass;
+        $this->setAdditionalClasses(array_unique($additionalClasses));
     }
 }

@@ -25,24 +25,28 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ItemBody renderer.
+ * ItemBody renderer. This renderer will transform
+ * the itemBody into a 'div' element with an
+ * additional 'qti-itemBody' CSS class. 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 class ItemBodyRenderer extends BodyElementRenderer {
     
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement('div'));
-    }
-    
-    public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        parent::appendAttributes($fragment, $component);
-        
-        $fragment->firstChild->setAttribute('class', $fragment->firstChild->getAttribute('class') . (($component->hasClass()) ? ' ' : '') . 'qti-itemBody');
+    /**
+     * Create a new ItemBodyRenderer.
+     * 
+     * @param AbstractRenderingContext $renderingContext
+     */
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
+        $this->transform('div');
+        $this->additionalClass('qti-itemBody');
     }
 }
