@@ -895,18 +895,27 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // We should still be on Q01.
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
-	    $session->moveNext(); // Q02
-	    $session->moveNext(); // Q03
-	    $session->moveNext(); // Q04
-	    $session->moveNext(); // Q05
-	    $session->moveNext(); // Q06
-	    $session->moveNext(); // Q07.1
-	    $session->moveNext(); // Q07.2
-	    $session->moveNext(); // Q07.3
+	    $session->beginAttempt();
+	    $session->skip(); // Q02
+	    $session->beginAttempt();
+	    $session->skip(); // Q03
+	    $session->beginAttempt();
+	    $session->skip(); // Q04
+	    $session->beginAttempt();
+	    $session->skip(); // Q05
+	    $session->beginAttempt();
+	    $session->skip(); // Q06
+	    $session->beginAttempt();
+	    $session->skip(); // Q07.1
+	    $session->beginAttempt();
+	    $session->skip(); // Q07.2
+	    $session->beginAttempt();
+	    $session->skip(); // Q07.3
 	    
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
-	    $session->moveNext();
+	    $session->beginAttempt();
+	    $session->skip();
 	    
 	    // OutcomeProcessing?
 	    $this->assertInternalType('float', $session['PERCENT_CORRECT']);

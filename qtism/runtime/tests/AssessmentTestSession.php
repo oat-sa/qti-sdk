@@ -1036,11 +1036,19 @@ class AssessmentTestSession extends State {
 	        // Store the responses for a later processing at the end of the test part.
 	        $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
 	        $this->addPendingResponses($pendingResponses);
+	        
+	        if ($this->getRoute()->isLastOfTestPart() === true) {
+	            $this->defferedResponseProcessing();
+	            $this->outcomeProcessing();
+	        }
+	    }
+	    else {
+	        $this->outcomeProcessing();
 	    }
 	    
 	    if ($this->mustAutoForward() === true) {
 	        // Go automatically to the next step in the route.
-	        $this->moveNext();
+	        $this->nextRouteItem();
 	    }
 	}
 	
@@ -1127,7 +1135,7 @@ class AssessmentTestSession extends State {
 	         
 	        if ($this->mustAutoForward() === true) {
 	            // Go automatically to the next step in the route.
-	            $this->moveNext();
+	            $this->nextRouteItem();
 	        }
 	    }
 	    catch (AssessmentTestSessionException $e) {
@@ -1260,6 +1268,13 @@ class AssessmentTestSession extends State {
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
+	    
+	        if ($this->isCurrentTestPartComplete() === false) {
+	            $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	        }
 	    }
 	    
 	    try {
