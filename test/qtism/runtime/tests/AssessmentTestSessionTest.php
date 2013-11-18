@@ -1448,4 +1448,29 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $rubricBlockRefs = $route->getRouteItemAt(3)->getRubricBlockRefs();
 	    $this->assertEquals(0, count($rubricBlockRefs));
 	}
+	
+	public function testRouteItemPosition() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
+	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $route = $session->getRoute();
+	    
+	    // Q01 - position 0.
+	    $routeItem = $route->getRouteItemAt(0);
+	    $this->assertEquals('Q01', $routeItem->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $route->getRouteItemPosition($routeItem));
+	    
+	    // Q02 - position 1.
+	    $routeItem = $route->getRouteItemAt(1);
+	    $this->assertEquals('Q02', $routeItem->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(1, $route->getRouteItemPosition($routeItem));
+	    
+	    // ...
+	    
+	    // Q12 - position 11.
+	    $routeItem = $route->getRouteItemAt(11);
+	    $this->assertEquals('Q12', $routeItem->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(11, $route->getRouteItemPosition($routeItem));
+	}
 }

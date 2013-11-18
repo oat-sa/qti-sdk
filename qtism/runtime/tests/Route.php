@@ -987,4 +987,21 @@ class Route implements Iterator {
     public function getAllRouteItems() {
         return new RouteItemCollection($this->getRouteItems());
     }
+    
+    /**
+     * Get the position of $routeItem in the Route.
+     * 
+     * @param RouteItem $routeItem A RouteItem you want to know the position.
+     * @throws OutOfBoundsException If no such $routeItem is referenced in the Route.
+     * @return integer The position of the routeItem in the Route. The indexes begin at 0.
+     */
+    public function getRouteItemPosition(RouteItem $routeItem) {
+        if (($search = array_search($routeItem, $this->getRouteItems(), true)) !== false) {
+            return $search;
+        }
+        else {
+            $msg = "No such RouteItem object referenced in the Route.";
+            throw new OutOfBoundsException($msg);
+        }
+    }
 }
