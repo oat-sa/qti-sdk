@@ -1595,6 +1595,7 @@ class AssessmentTestSession extends State {
 	    }
 	    else {
 	        $jumpables = ($anywhere === true) ? $this->getRoute()->getAllRouteItems() : $this->getRoute()->getCurrentTestPartRouteItems();
+	        $offset = $this->getRoute()->getRouteItemPosition($jumpables[0]);
 	        
 	        // Scan the route for "jumpable" items.
 	        foreach ($jumpables as $routeItem) {
@@ -1604,8 +1605,8 @@ class AssessmentTestSession extends State {
 	            // get the session related to this route item.
 	            $store = $this->getAssessmentItemSessionStore();
 	            $itemSession = $store->getAssessmentItemSession($itemRef, $occurence);
-	            
-	            $jumps[] = new Jump($itemRef, $occurence, $itemSession);
+	            $jumps[] = new Jump($offset, $itemRef, $occurence, $itemSession);
+	            $offset++;
 	        }
 	        
 	        return $jumps;

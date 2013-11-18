@@ -39,6 +39,14 @@ use \InvalidArgumentException;
 class Jump {
     
     /**
+     * The position in the route the jump
+     * leads to.
+     * 
+     * @var integer
+     */
+    private $position;
+    
+    /**
      * The AssessmentItemRef the candidate can jump to.
      * 
      * @var AssessmentItemRef
@@ -63,15 +71,37 @@ class Jump {
     /**
      * Create a new Jump object.
      * 
+     * @param integer $position The position in the assessment test session's route the jump leads to.
      * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef the candidate can jump to.
      * @param integer $occurence The occurence number of the $assessmentItemRef the candidate can jump to.
      * @param AssessmentItemSession $itemSession The AssessmentItemSession related to $assessmentItemRef.$occurence.
      * @throws InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
-    public function __construct(AssessmentItemRef $assessmentItemRef, $occurence, AssessmentItemSession $itemSession) {
+    public function __construct($position, AssessmentItemRef $assessmentItemRef, $occurence, AssessmentItemSession $itemSession) {
+        $this->setPosition($position);
         $this->setAssessmentItemRef($assessmentItemRef);
         $this->setOccurence($occurence);
         $this->setItemSession($itemSession);
+    }
+    
+    /**
+     * Set the position in the assessment test session's route the
+     * jump leads to.
+     * 
+     * @param integer $position
+     */
+    protected function setPosition($position) {
+        $this->position = $position;
+    }
+    
+    /**
+     * Get the position in the assessment test session's route the
+     * jump leads to.
+     * 
+     * @return integer
+     */
+    public function getPosition() {
+        return $this->position;
     }
     
     /**

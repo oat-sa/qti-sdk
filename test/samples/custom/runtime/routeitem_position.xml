@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
 	identifier="routeitem_positions" title="RouteItem Positions">
-	<testPart identifier="TP01" navigationMode="linear" submissionMode="individual">
+	<testPart identifier="TP01" navigationMode="nonlinear" submissionMode="individual">
 		<assessmentSection identifier="S01" fixed="false" title="Section S01" visible="true">
 			<assessmentSection identifier="S01A" fixed="false" title="Section S01A" visible="true">
 				<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
@@ -89,7 +89,7 @@
 			</assessmentSection>
 		</assessmentSection>
 	</testPart>
-	<testPart identifier="TP02" navigationMode="linear" submissionMode="individual">
+	<testPart identifier="TP02" navigationMode="nonlinear" submissionMode="individual">
 		<assessmentSection identifier="S02" fixed="false" title="Section S02" visible="true">
 			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -132,7 +132,7 @@
 			</assessmentItemRef>
 		</assessmentSection>
 	</testPart>
-	<testPart identifier="TP03" navigationMode="linear" submissionMode="individual">
+	<testPart identifier="TP03" navigationMode="nonlinear" submissionMode="individual">
 		<assessmentSection identifier="S03" fixed="false" title="Section S03" visible="true">
 			<assessmentItemRef identifier="Q10" href="./Q10.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">

@@ -585,7 +585,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    }
 	}
 	
-	public function testPossibleJumps() {
+	public function testPossibleJumpsTestPart() {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
 	    
@@ -599,13 +599,19 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(6, count($jumps));
 	    $this->assertEquals('Q01', $jumps[0]->getAssessmentItemRef()->getIdentifier('Q01'));
+	    $this->assertEquals(0, $jumps[0]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
 	    $this->assertEquals('Q02', $jumps[1]->getAssessmentItemRef()->getIdentifier('Q02'));
+	    $this->assertEquals(1, $jumps[1]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
 	    $this->assertEquals('Q03', $jumps[2]->getAssessmentItemRef()->getIdentifier('Q03'));
+	    $this->assertEquals(2, $jumps[2]->getPosition());
 	    $this->assertEquals('Q04', $jumps[3]->getAssessmentItemRef()->getIdentifier('Q04'));
+	    $this->assertEquals(3, $jumps[3]->getPosition());
 	    $this->assertEquals('Q05', $jumps[4]->getAssessmentItemRef()->getIdentifier('Q05'));
+	    $this->assertEquals(4, $jumps[4]->getPosition());
 	    $this->assertEquals('Q06', $jumps[5]->getAssessmentItemRef()->getIdentifier('Q06'));
+	    $this->assertEquals(5, $jumps[5]->getPosition());
 	    
 	    // The session has begun, the candidate is able to jump anywhere in testPart 'P01'.
 	    for ($i = 0; $i < 6; $i++) {
@@ -621,12 +627,15 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(3, count($jumps));
 	    $this->assertEquals('Q07', $jumps[0]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(6, $jumps[0]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
 	    $this->assertEquals(0, $jumps[0]->getOccurence());
 	    $this->assertEquals('Q07', $jumps[1]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(7, $jumps[1]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
 	    $this->assertEquals(1, $jumps[1]->getOccurence());
 	    $this->assertEquals('Q07', $jumps[2]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(8, $jumps[2]->getPosition());
 	    $this->assertEquals(2, $jumps[2]->getOccurence());
 	    
 	    for ($i = 0; $i < 3; $i++) {
@@ -636,6 +645,19 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // This is the end of the test session so no more possible jumps.
 	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
+	}
+	
+	public function testPossibleJumpsAllTest() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
+	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $session = AssessmentTestSession::instantiate($factory);
+	    $session->beginTestSession();
+	    
+	    $jumps = $session->getPossibleJumps();
+	    $this->assertEquals(12, count($jumps));
+	    
+	    
 	}
 	
 	public function testJumps() {
