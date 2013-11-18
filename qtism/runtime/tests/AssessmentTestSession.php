@@ -1091,12 +1091,30 @@ class AssessmentTestSession extends State {
 	            // Store the responses for a later processing.
 	            $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
 	            $session->endAttempt($responses, false);
+	            
+	            // If the submitted responses are the one of the last
+	            // item of the test part, apply deffered response processing.
+	            if ($this->getRoute()->isLastOfTestPart() === true) {
+	            
+	                if ($this->isCurrentTestPartComplete() === false) {
+	                    $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
+	                    throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
+	                }
+	                else {
+	                    // The testPart is complete so deffered response processing must take place.
+	                    $this->defferedResponseProcessing();
+	                    $this->outcomeProcessing();
+	                }
+	            }
 	        }
 	        else {
 	            $session->endAttempt($responses);
 	            // Update the lastly updated item occurence.
 	            $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	             
+	            // Outcome processing.
+	            $this->outcomeProcessing();
+	            
 	            // Item Results submission.
 	            try {
 	                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
@@ -1246,19 +1264,6 @@ class AssessmentTestSession extends State {
 	    
 	    try {
 	        $this->checkTimeLimits();
-	        
-	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $this->getRoute()->isLastOfTestPart() === true) {
-	             
-	            if ($this->isCurrentTestPartComplete() === false) {
-	                $msg = "Cannot move to the next Test Part while the SIMULTANEOUS navigation mode is in force and not all items of the TestPart were responded.";
-	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::MISSING_RESPONSES);
-	            }
-	            else {
-	                // The testPart is complete so deffered response processing must take place.
-	                $this->defferedResponseProcessing();
-	            }
-	        }
-	         
 	        $this->nextRouteItem();
 	    }
 	    catch (AssessmentTestSessionException $e) {
@@ -1319,11 +1324,6 @@ class AssessmentTestSession extends State {
 	    $this->selectEligibleItems();
 	    
 	    if ($route->valid() === false) {
-	        // This is the end of the test session.
-	        // 1. Apply outcome processing.
-	        $this->outcomeProcessing();
-	        
-	        // 2. End the test session.
 	        $this->endTestSession();
 	    }
 	}
@@ -1375,13 +1375,9 @@ class AssessmentTestSession extends State {
 	/**
 	 * Apply outcome processing at test-level.
 	 * 
-	 * @throws AssessmentTestSessionException If the test is not at its last route item or if an error occurs at OutcomeProcessing time.
+	 * @throws AssessmentTestSessionException If an error occurs at OutcomeProcessing time.
 	 */
 	protected function outcomeProcessing() {
-	    if ($this->getRoute()->isLast() === false) {
-	        $msg = "Outcome Processing may be applied only if the current route item is the last one of the route.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-	    }
 	    
 	    if ($this->getAssessmentTest()->hasOutcomeProcessing() === true) {
 	        // As per QTI Spec:
@@ -1394,9 +1390,6 @@ class AssessmentTestSession extends State {
 	        try {
 	            $outcomeProcessingEngine = new OutcomeProcessingEngine($outcomeProcessing, $this);
 	            $outcomeProcessingEngine->process();
-	            
-	            // Submit test-level results.
-	            $this->submitTestResults();
 	        }
 	        catch (ProcessingException $e) {
 	            $msg = "An error occured while processing OutcomeProcessing.";
@@ -1427,6 +1420,7 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
+	    $this->submitTestResults();
 	    $this->setState(AssessmentTestSessionState::CLOSED);
 	}
 	

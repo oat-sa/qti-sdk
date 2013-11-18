@@ -25,7 +25,6 @@
 namespace qtism\data;
 
 use qtism\common\datatypes\Duration;
-
 use \InvalidArgumentException;
 
 /**
@@ -148,7 +147,7 @@ class TimeLimits extends QtiComponent {
 	 * 
 	 * @param Duration $maxTime A duration object or null if unlimited.
 	 */
-	public function setMaxTime($maxTime = null) {
+	public function setMaxTime(Duration $maxTime = null) {
 	    // Prevent to get 0s durations stored.
 	    if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {
 	        $maxTime = null;
