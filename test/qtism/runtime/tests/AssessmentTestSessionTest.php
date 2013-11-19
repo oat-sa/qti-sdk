@@ -808,15 +808,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
 	    
-	    try {
-	        $session->moveNext();
-	        // Simultaneous mode in force but not all responses of P02 given.
-	        $this->assertTrue(false);
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
-	    }
-	    
 	    // Jump to Q07.1
 	    $session->jumpTo(6);
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
@@ -953,15 +944,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q05
 	    $session->beginAttempt();
 	    $session->skip();
-	    
-	    try {
-	        // We are at the end of the testPart but Q06 not responsed. Cannot moveNext.
-	        $session->moveNext();
-	        $this->assertTrue(false);
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::MISSING_RESPONSES, $e->getCode());
-	    }
 	    
 	    // Q06.
 	    // (no scores computed yet).

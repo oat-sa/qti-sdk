@@ -89,20 +89,12 @@ class AssessmentTestSessionException extends Exception {
     const LOGIC_ERROR = 6;
     
     /**
-     * Error code to use when some responses to items are missing
-     * prior to go further in the AssessmentTestSession flow.
-     * 
-     * @var integer
-     */
-    const MISSING_RESPONSES = 7;
-    
-    /**
      * Error code to use when a jump is performed outside the current
      * TestPart.
      *
      * @var integer
      */
-    const FORBIDDEN_JUMP = 8;
+    const FORBIDDEN_JUMP = 7;
     
     /**
      * Error code to use when the maximum duration of a testPart
@@ -110,7 +102,7 @@ class AssessmentTestSessionException extends Exception {
      * 
      * @var integer
      */
-    const TEST_PART_DURATION_OVERFLOW = 9;
+    const TEST_PART_DURATION_OVERFLOW = 8;
     
     /**
      * Error code to use when the maximum duration of an assessmentSection
@@ -118,7 +110,7 @@ class AssessmentTestSessionException extends Exception {
      * 
      * @var integer
      */
-    const ASSESSMENT_SECTION_DURATION_OVERFLOW = 10;
+    const ASSESSMENT_SECTION_DURATION_OVERFLOW = 9;
     
     /**
      * Create a nex AssessmentTestSessionException.
