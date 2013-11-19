@@ -303,7 +303,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * Remove $object from the collection. If $object is not in the collection,
 	 * it remains as it is.
 	 * 
-	 * @param  $object The object to remove from the collection.
+	 * @param mixed $object The object to remove from the collection.
 	 */
 	public function remove($object) {
 	    
