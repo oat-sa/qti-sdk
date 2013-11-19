@@ -34,6 +34,45 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
+	 * Create a directory in OS temp directory with a unique name.
+	 * 
+	 * @return string The path to the created directory.
+	 */
+	public static function tempDir() {
+	    $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
+	    
+	    // Tempnam creates a file with 600 chmod. Remove
+	    // it and create a directory.
+	    if (file_exists($tmpFile) === true) {
+	        unlink($tmpFile);
+	    }
+	    
+	    mkdir($tmpFile);
+	    
+	    return $tmpFile;
+	}
+	
+	/**
+	 * Create a copy of $source to the temp directory. The copied
+	 * file will receive a unique file name.
+	 * 
+	 * @param string $source The source file to be copied.
+	 * @return string The path to the copied file.
+	 */
+	public static function tempCopy($source) {
+	    $tmpFile = tempnam(sys_get_temp_dir(), 'qsm');
+	    
+	    // Same as for QtiSmTestCase::tempDir...
+	    if (file_exists($tmpFile) === true) {
+	        unlink($tmpFile);
+	    }
+	    
+	    copy($source, $tmpFile);
+	    
+	    return $tmpFile;
+	}
+	
+	/**
 	 * Create a DOMElement from an XML string.
 	 * 
 	 * @param unknown_type $xmlString A string containing XML markup
