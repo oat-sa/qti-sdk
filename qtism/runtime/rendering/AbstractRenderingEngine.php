@@ -166,6 +166,13 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
             else {
                 // Leaf node.
                 $this->processNode();
+                
+                if ($this->getExploredComponent() === $component) {
+                    // End of the rendering (leaf node is actually a lone root).
+                    $finalRendering = $this->createFinalRendering();
+                    $this->getRenderingContext()->reset();
+                    return $finalRendering;
+                }
             }
         }
     }
