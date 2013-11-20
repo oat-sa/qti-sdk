@@ -227,13 +227,19 @@ class MarshallerFactory {
 			// Look for a mapping entry.
 			if ($this->hasMappingEntry($qtiClassName)) {
 				$class = new ReflectionClass($this->getMappingEntry($qtiClassName));
-				$marshaller = $class->newInstanceArgs($args);
 			}
 			else {
 				// Look for default.
 				$className = 'qtism\\data\\storage\\xml\\marshalling\\' . ucfirst($qtiClassName) . 'Marshaller';
 				$class = new ReflectionClass($className);
-				$marshaller = $class->newInstanceArgs($args);
+			}
+			
+			if (empty($args) === true) {
+			    $fqName = $class->getName();
+			    $marshaller = new $fqName();
+			}
+			else {
+			    $marshaller = $class->newInstanceArgs($args);
 			}
 			
 			$marshaller->setMarshallerFactory($this);
