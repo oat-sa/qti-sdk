@@ -389,11 +389,38 @@ class OperandsCollection extends AbstractCollection implements Stack {
 				$value = $this[$i];
 				$testType = RuntimeUtils::inferBaseType($value);
 				
-				if ($testType !== $refType) {
-					return false;
+				/**
+				 * Developper's note:
+				 * 
+				 * Some baseType are considered compatible. Indeed, while identifier,
+				 * string, and uri datatypes cannot be identified separately due to their
+				 * PHP runtime representation (PHP Strings), we consider them similar.
+				 * 
+				 */
+			    if ($testType === BaseType::IDENTIFIER && $refType === BaseType::STRING) {
+				    return true;
+				}
+				else if ($testType === BaseType::STRING && $refType === BaseType::IDENTIFIER) {
+				    return true;
+				}
+				else if ($testType === BaseType::URI && $refType === BaseType::STRING) {
+				    return true;
+				}
+				else if ($testType === BaseType::STRING && $refType === BaseType::URI) {
+				    return true;
+				}
+				else if ($testType === BaseType::URI && $refType === BaseType::IDENTIFIER) {
+				    return true;
+				}
+				else if ($testType === BaseType::IDENTIFIER && $refType === BaseType::URI) {
+				    return true;
+				}
+				else if ($testType !== $refType) {
+				    return false;
 				}
 			}
 			
+			// In any other case, return true.
 			return true;
 		}
 		else {
