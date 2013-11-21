@@ -234,6 +234,8 @@ class MarshallerFactory {
 				$class = new ReflectionClass($className);
 			}
 			
+			// Prevents a bug with PHP 5.3.3
+			// See http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517
 			if (empty($args) === true) {
 			    $fqName = $class->getName();
 			    $marshaller = new $fqName();
