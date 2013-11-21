@@ -26,7 +26,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
 use qtism\data\content\BodyElement;
-use qtism\data\utils\Reflection;
 use qtism\data\storage\xml\Utils;
 use \DOMDocument;
 use \DOMElement;
@@ -35,45 +34,6 @@ use \InvalidArgumentException;
 use \ReflectionClass;
 
 abstract class Marshaller {
-	
-	private static $marshallerMapping = array(	'default' => 'DefaultVal',
-													'null' => 'NullValue',
-													'max' => 'Operator',
-													'min' => 'Operator',
-													'gcd' => 'Operator',
-													'lcm' => 'Operator',
-													'multiple' => 'Operator',
-													'ordered' => 'Operator',
-													'containerSize' => 'Operator',
-													'isNull' => 'Operator',
-													'random' => 'Operator',
-													'member' => 'Operator',
-													'delete' => 'Operator',
-													'contains' => 'Operator',
-													'not' => 'Operator',
-													'and' => 'Operator',
-													'or' => 'Operator',
-													'match' => 'Operator',
-													'lt' => 'Operator',
-													'gt' => 'Operator',
-													'lte' => 'Operator',
-													'gte' => 'Operator',
-													'durationLT' => 'Operator',
-													'durationGTE' => 'Operator',
-													'sum' => 'Operator',
-													'product' => 'Operator',
-													'subtract' => 'Operator',
-													'divide' => 'Operator',
-													'power' => 'Operator',
-													'integerDivide' => 'Operator',
-													'integerModulus' => 'Operator',
-													'truncate' => 'Operator',
-													'round' => 'Operator',
-													'integerToFloat' => 'Operator',
-													'outcomeIf' => 'OutcomeControl',
-													'outcomeElseIf' => 'OutcomeControl',
-													'outcomeElse' => 'OutcomeControl');
-	
 	
 	/**
 	 * The DOMCradle is a DOMDocument object which will be used as a 'DOMElement cradle'. It
@@ -104,10 +64,6 @@ abstract class Marshaller {
 		}
 		
 		return self::$DOMCradle;
-	}
-	
-	protected static function getMarshallerMapping() {
-		return self::$marshallerMapping;
 	}
 	
 	/**

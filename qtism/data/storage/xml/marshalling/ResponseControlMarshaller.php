@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Reflection;
 use qtism\data\expressions\Expression;
 use qtism\data\rules\SetOutcomeValue;
 use qtism\data\rules\LookupOutcomeValue;
@@ -55,12 +56,12 @@ class ResponseControlMarshaller extends RecursiveMarshaller {
 		if ($element->nodeName == 'responseIf' || $element->nodeName == 'responseElseIf') {
 			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
 			$class = new ReflectionClass($className);
-			$object = $class->newInstanceArgs(array($expression, $children));
+			$object = Reflection::newInstance($class, array($expression, $children));
 		}
 		else {
 			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
 			$class = new ReflectionClass($className);
-			$object = $class->newInstanceArgs(array($children));
+			$object = Reflection::newInstance($class, array($children));
 		}
 
 		return $object;

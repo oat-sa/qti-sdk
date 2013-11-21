@@ -24,7 +24,6 @@
 
 namespace qtism\data;
 
-use qtism\data\utils\Reflection;
 use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\processing\OutcomeProcessing;
@@ -374,55 +373,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	
 	public function getQtiClassName() {
 		return 'assessmentTest';
-	}
-	
-	/**
-	 * The __call magic overloading implementation on this class focuses
-	 * on providing a QtiComponent factory. Any QtiComponent available
-	 * in the QTI Data Model must be created using this factory. To create
-	 * a new QtiComponent object, call the AssessmentObject in this way:
-	 * 
-	 * <code>
-	 * $assessmentObject->create + QTI_CLASS_NAME + ($arg1, $arg2, ...).
-	 * </code>
-	 * 
-	 * For instance, if you want to create a new AssessmentItemRef object, write
-	 * the following code:
-	 * 
-	 * <code>
-	 * $item = $assessmentObject->createAssessmentItemRef('Q01', 'Question 1);
-	 * </code>
-	 * 
-	 * The arguments passed to the method are the same as the arguments used
-	 * when directly calling the AssessmentItemRef's constructor, which must
-	 * be used for internal code only.
-	 * 
-	 * @param string $name The name of the method to call.
-	 * @param array $arguments The arguments of the called methods.
-	 * @throws RuntimeException If an error occurs while loading the related class or __constructor.
-	 * @return QtiComponent A QtiComponent object.
-	 */
-	public function __call($name, $arguments) {
-		if (strlen($name) > strlen('create')) {
-			
-			if (substr($name, 0, strlen('create')) === 'create') {
-			
-				$qtiComponent = substr($name, strlen('create'));
-				
-				if ($qtiComponent !== 'AssessmentTest' && !empty($qtiComponent)) {
-					
-					$object = Reflection::instantiateComponent($qtiComponent, $arguments);
-					
-					return $object;
-				}
-				else {
-					$msg = "An AssessmentTest object must be created using its constructor.";
-					throw new RuntimeException($msg);
-				}
-			}
-		}
-		
-		throw new RuntimeException("Unknown method AssessmentTest::${name}.");
 	}
 	
 	public function getComponents() {

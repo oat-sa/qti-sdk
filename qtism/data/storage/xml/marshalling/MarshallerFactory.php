@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils;
 use \DOMElement;
@@ -234,16 +235,8 @@ class MarshallerFactory {
 				$class = new ReflectionClass($className);
 			}
 			
-			// Prevents a bug with PHP 5.3.3
-			// See http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517
-			if (empty($args) === true) {
-			    $fqName = $class->getName();
-			    $marshaller = new $fqName();
-			}
-			else {
-			    $marshaller = $class->newInstanceArgs($args);
-			}
-			
+		
+			$marshaller = Reflection::newInstance($class, $args);
 			$marshaller->setMarshallerFactory($this);
 			return $marshaller;
 		}

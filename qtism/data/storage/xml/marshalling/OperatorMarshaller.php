@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\ExpressionCollection;
@@ -113,7 +114,7 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		}
 		
 		$class = new ReflectionClass($className);
-		return $class->newInstanceArgs(array($children));
+		return Reflection::newInstance($class, array($children));
 	}
 	
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {

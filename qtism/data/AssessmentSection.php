@@ -24,7 +24,6 @@
 
 namespace qtism\data;
 
-use qtism\data\utils\Reflection;
 use qtism\data\rules\Selection;
 use qtism\data\rules\Ordering;
 use qtism\data\content\RubricBlockCollection;
