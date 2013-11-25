@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\runtime\expressions\ExpressionEngine;
+
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
 use qtism\common\datatypes\Duration;
@@ -764,7 +766,7 @@ class AssessmentTestSession extends State {
 	    $oldPosition = $route->getPosition();
 	    
 	    // In this loop, we select at least the first routeItem we find as eligible.
-	    while($route->valid() === true ) {
+	    while ($route->valid() === true) {
 	        $routeItem = $route->current();
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	        
@@ -772,9 +774,9 @@ class AssessmentTestSession extends State {
 	            $session->beginItemSession();
 	        }
 	        
-	        if ($route->isNavigationLinear() === false) {
+	        if ($route->isNavigationLinear() === true) {
 	            // We cannot foresee more items to be selected for presentation
-	            // because the rest of the sequence is non-linear.
+	            // because the rest of the sequence is linear.
 	            break;
 	        }
 	        else {
@@ -1291,7 +1293,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Move to the next item in the route.
 	 * 
-	 * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing.
+	 * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
 	 */
 	protected function nextRouteItem() {
 	    
@@ -1310,10 +1312,50 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $route = $this->getRoute();
-	    $route->next();
+	    $stop = false;
+	    
+	    while ($route->valid() === true && $stop === false) {
+	        
+	        // Branchings?
+	        if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+	            
+	            $branchRules = $route->current()->getBranchRules();
+	            for ($i = 0; $i < count($branchRules); $i++) {
+	                $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
+	                if ($engine->process() === true) {
+	                    
+	                    $target = $branchRules[$i]->getTarget();
+	                    
+	                    if ($target === 'EXIT_TEST') {
+	                        $this->endTestSession();
+	                    }
+	                    else if ($target === 'EXIT_TESTPART') {
+	                        $this->moveNextTestPart();
+	                    }
+	                    else {
+	                        $route->branch($branchRules[$i]->getTarget());
+	                    }
+	                    
+	                    break;
+	                }
+	            }
+	            
+	            if ($i >= count($branchRules)) {
+	                // No branch rule returned true. Simple move next.
+	                $route->next();
+	            }
+	        }
+	        else {
+	            $route->next();
+	        }
+	        
+	        // Preconditions on target?
+	        $stop = true;
+	    }
+	    
 	    $this->selectEligibleItems();
 	    
-	    if ($route->valid() === false) {
+	    if ($route->valid() === false && $this->isRunning() === true) {
 	        $this->endTestSession();
 	    }
 	}

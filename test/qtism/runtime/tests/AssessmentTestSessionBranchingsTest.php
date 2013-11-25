@@ -1,5 +1,11 @@
 <?php
 
+use qtism\runtime\tests\AssessmentTestSessionState;
+
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
+use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
@@ -39,5 +45,75 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         // $routeItemQ04 is the end of the test and has no branchRules.
         $routeItemQ04 = $route->getRouteItemAt(3);
         $this->assertEquals(0, count($routeItemQ04->getBranchRules()));
+    }
+    
+    public function testBranchingSingleSectionLinear1() {
+        $doc = new XmlCompactDocument('1.0');
+        $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
+        
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+        $factory->setAutoForward(false);
+        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession->beginTestSession();
+        
+        // Q01 - We answer correct to bypass Q02.
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $testSession->endAttempt($responses);
+        // Correct? Then we should go to Q03.
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $testSession->moveNext();
+        
+        // Q03 - Are we there? We answer incorrect to take Q04.
+        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceZ')));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        // Q04 - Last item, nothing special.
+        $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD')));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        // Test the global scope.
+        $this->assertFalse($testSession->isRunning());
+        
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this->assertEquals(0.0, $testSession['Q03.SCORE']);
+        $this->assertEquals(1.0, $testSession['Q04.SCORE']);
+    }
+    
+    public function testBranchingSingleSectionLinear2() {
+        $doc = new XmlCompactDocument('1.0');
+        $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
+        
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+        $factory->setAutoForward(false);
+        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession->beginTestSession();
+        
+        // Q01 - We answer correct to move to Q03.
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        // Q03 - We want to reach the EXIT_TEST target.
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC')));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        // We should have reached the end.
+        $this->assertFalse($testSession->isRunning());
+        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::CLOSED);
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this->assertEquals(1.0, $testSession['Q03.SCORE']);
+        $this->assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
     }
 }

@@ -11,7 +11,7 @@
     <outcomeDeclaration identifier="NPRESENTED" cardinality="single" baseType="integer"/>
     <outcomeDeclaration identifier="NSELECTED" cardinality="single" baseType="integer"/>
     <outcomeDeclaration identifier="PERCENT_CORRECT" cardinality="single" baseType="float"/>
-	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+	<testPart identifier="P01" navigationMode="nonlinear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false" category="mathematics chemistry">
 				<variableMapping sourceIdentifier="scoring" targetIdentifier="SCORE"/>

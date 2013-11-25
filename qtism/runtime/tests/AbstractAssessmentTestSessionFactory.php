@@ -58,9 +58,18 @@ class AbstractAssessmentTestSessionFactory {
      */
     private $acceptableLatency;
     
+    /**
+     * Whether the testSession automatically moves to the next route item
+     * when an attempt ends.
+     * 
+     * @var boolean
+     */
+    private $autoForward;
+    
     public function __construct(AssessmentTest $assessmentTest) {
         $this->setAssessmentTest($assessmentTest);
         $this->setAcceptableLatency(new Duration('PT0S'));
+        $this->setAutoForward(true);
     }
     
     /**
@@ -115,6 +124,26 @@ class AbstractAssessmentTestSessionFactory {
      */
     public function getAcceptableLatency() {
         return $this->acceptableLatency;
+    }
+    
+    /**
+     * Set whether or not the test session goes automatically to the next
+     * route item when an attempt ends.
+     * 
+     * @param boolean $autoForward
+     */
+    public function setAutoForward($autoForward) {
+        $this->autoForward = $autoForward;
+    }
+    
+    /**
+     * Whether or not the test session goes automatically to the next
+     * route item when an attempt ends.
+     * 
+     * @return boolean
+     */
+    public function mustAutoForward() {
+        return $this->autoForward;
     }
     
     /**

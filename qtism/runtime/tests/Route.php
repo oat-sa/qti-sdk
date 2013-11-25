@@ -113,6 +113,13 @@ class Route implements Iterator {
     private $assessmentSectionIdentifierMap;
     
     /**
+     * A map where each RouteItem is bound to an assessmentItemRef.
+     * 
+     * @var SplObjectStorage
+     */
+    private $assessmentItemRefMap;
+    
+    /**
      * The RouteItem objects the Route is composed with.
      * 
      * @var array
@@ -149,6 +156,7 @@ class Route implements Iterator {
         $this->setAssessmentSectionMap(new SplObjectStorage());
         $this->setTestPartIdentifierMap(array());
         $this->setAssessmentSectionIdentifierMap(array());
+        $this->setAssessmentItemRefMap(new SplObjectStorage());
     }
     
     public function getPosition() {
@@ -313,6 +321,24 @@ class Route implements Iterator {
      */
     protected function getAssessmentSectionIdentifierMap() {
         return $this->assessmentSectionIdentifierMap;
+    }
+    
+    /**
+     * Set the map where RouteItem objects are gathered by AssessmentItemRef objects.
+     * 
+     * @param SplObjectStorage $assessmentItemRefMap
+     */
+    protected function setAssessmentItemRefMap(SplObjectStorage $assessmentItemRefMap) {
+        $this->assessmentItemRefMap = $assessmentItemRefMap;
+    }
+    
+    /**
+     * Get the map where RouteItem objects are gathered by AssessmentItemRef objects.
+     * 
+     * @return SplObjectStorage
+     */
+    protected function getAssessmentItemRefMap() {
+        return $this->assessmentItemRefMap;
     }
     
     /**
@@ -552,6 +578,10 @@ class Route implements Iterator {
         $sectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
         
         $this->setAssessmentItemRefSectionMap($sectionMap);
+        
+        // Reference the AssessmentItemRef by routeItem.
+        $assessmentItemRefMap = $this->getAssessmentItemRefMap();
+        $assessmentItemRefMap[$assessmentItemRef] = $routeItem;
     }
     
     /**
@@ -986,6 +1016,72 @@ class Route implements Iterator {
      */
     public function getAllRouteItems() {
         return new RouteItemCollection($this->getRouteItems());
+    }
+    
+    /**
+     * Perform a branching on a TestPart, AssessmentSection or AssessmentItemRef with
+     * the given $identifier.
+     * 
+     * @param string $identifier A QTI Identifier to be the target of the branching.
+     * @throws OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route.
+     */
+    public function branch($identifier) {
+        
+        // Check for an assessmentItemRef.
+        $assessmentItemRefs = $this->getAssessmentItemRefs();
+        if (isset($assessmentItemRefs[$identifier]) === true) {
+            
+            $assessmentItemRefMap = $this->getAssessmentItemRefMap();
+            $targetRouteItem = $assessmentItemRefMap[$assessmentItemRefs[$identifier]];
+            
+            if ($targetRouteItem->getTestPart() !== $this->current()->getTestPart()) {
+                // From IMS QTI:
+                // In case of an item or section, the target must refer to an item or section
+                // in the same testPart [...]
+                $msg = "Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            $this->setPosition($this->getRouteItemPosition($targetRouteItem));
+            return;
+        }
+        
+        // Check for a assessmentSection.
+        $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
+        if (isset($assessmentSectionIdentifierMap[$identifier]) === true) {
+            
+            if ($assessmentSectionIdentifierMap[$identifier][0]->getTestPart() !== $this->current()->getTestPart()) {
+                // From IMS QTI:
+                // In case of an item or section, the target must refer to an item or section
+                // in the same testPart [...]
+                $msg = "Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            // We branch to the first RouteItem belonging to the section.
+            $this->setPosition($this->getRouteItemPosition($assessmentSectionIdentifierMap[$identifier][0]));
+            return;
+        }
+        
+        // Check for a testPart.
+        $testPartIdentifierMap = $this->getTestPartIdentifierMap();
+        if (isset($testPartIdentifierMap[$identifier]) === true) {
+            
+            // We branch to the first RouteItem belonging to the testPart.
+            if ($testPartIdentifierMap[$identifier][0]->getTestPart() === $this->current()->getTestPart()) {
+                // From IMS QTI:
+                // For testParts, the target must refer to another testPart.
+                $msg = "Cannot branch to the same testPart.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+            // We branch to the first RouteItem belonging to the testPart.
+            $this->setPosition($this->getRouteItemPosition($testPartIdentifierMap[$identifier][0]));
+        }
+        
+        // No such identifier referenced in the route, cannot branch.
+        $msg = "No such identifier '${identifier}' found in the route for branching.";
+        throw new OutOfBoundsException($msg);
     }
     
     /**

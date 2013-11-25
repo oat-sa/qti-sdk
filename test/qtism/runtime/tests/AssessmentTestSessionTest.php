@@ -85,17 +85,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(SubmissionMode::INDIVIDUAL, $assessmentTestSession->getCurrentSubmissionMode());
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    
-	    // all outcome variables should have their default value set.
-	    // all response variables should be set to NULL.
-	    foreach ($doc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef') as $itemRef) {
-	        $score = $assessmentTestSession[$itemRef->getIdentifier() . '.SCORE'];
-	        $this->assertInternalType('float', $score);
-	        $this->assertEquals(0.0, $score);
-	        
-	        $response = $assessmentTestSession[$itemRef->getIdentifier() . '.RESPONSE'];
-	        $this->assertSame(null, $response);
-	    }
-	    
 	    // test-level outcome variables should be initialized
 	    // with their default values.
 	    $this->assertInternalType('float', $assessmentTestSession['SCORE']);
@@ -112,13 +101,21 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
 	    $assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
 	    $assessmentTestSession->beginTestSession();
-	    // check Q01.1, Q01.2, Q01.3 item session initialization.
+	    // check Q01.1, Q01.2, Q01.3 item sessions are not all initialized.
 	    for ($i = 1; $i <= 3; $i++) {
-	        $score = $assessmentTestSession["Q01.${i}.SCORE"];
-	        $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-	        $this->assertInternalType('float', $score);
-	        $this->assertEquals(0.0, $score);
-	        $this->assertSame(null, $response);
+	        if ($i === 1) {
+	            $score = $assessmentTestSession["Q01.${i}.SCORE"];
+	            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+	            $this->assertInternalType('float', $score);
+	            $this->assertEquals(0.0, $score);
+	            $this->assertSame(null, $response);
+	        }
+	        else {
+	            $score = $assessmentTestSession["Q01.${i}.SCORE"];
+	            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+	            $this->assertSame(null, $score);
+	            $this->assertSame(null, $response);
+	        }
 	    }
 	}
 	
@@ -168,30 +165,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $assessmentTestSession['Q04.SCORE'] = 1.0;
 	        // Because no such item, outofbounds.
 	        $this->assertTrue(false);
-	    }
-	    catch (OutOfBoundsException $e) {
-	        $this->assertTrue(true);
-	    }
-	}
-	
-	public function testSetVariableValuesAfterInstantiationTwo() {
-	    $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
-	
-	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-	    $assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
-	    $assessmentTestSession->beginTestSession();
-	     
-	    // Change the value of Q01.2.SCORE.
-	    $this->assertEquals(0.0, $assessmentTestSession['Q01.2.SCORE']);
-	    $assessmentTestSession['Q01.2.SCORE'] = 1.0;
-	    $this->assertEquals(1.0, $assessmentTestSession['Q01.2.SCORE']);
-	    
-	    // There is only 3 occurences of Q01. Try to go out of bounds.
-	    try {
-	        $assessmentTestSession['Q01.4.SCORE'] = 1.0;
-	        // An OutOfBoundsException must be raised!
-	        $this->assertTrue(false);  
 	    }
 	    catch (OutOfBoundsException $e) {
 	        $this->assertTrue(true);
@@ -603,7 +576,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
 	    $this->assertEquals('Q02', $jumps[1]->getAssessmentItemRef()->getIdentifier('Q02'));
 	    $this->assertEquals(1, $jumps[1]->getPosition());
-	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
 	    $this->assertEquals('Q03', $jumps[2]->getAssessmentItemRef()->getIdentifier('Q03'));
 	    $this->assertEquals(2, $jumps[2]->getPosition());
 	    $this->assertEquals('Q04', $jumps[3]->getAssessmentItemRef()->getIdentifier('Q04'));
@@ -632,7 +604,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $jumps[0]->getOccurence());
 	    $this->assertEquals('Q07', $jumps[1]->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(7, $jumps[1]->getPosition());
-	    $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $jumps[1]->getItemSession()->getState());
 	    $this->assertEquals(1, $jumps[1]->getOccurence());
 	    $this->assertEquals('Q07', $jumps[2]->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(8, $jumps[2]->getPosition());
@@ -721,14 +692,14 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertInternalType('float', $session['Q02.SCORE']);
 	    $this->assertInternalType('float', $session['Q03.SCORE']);
 	    $this->assertInternalType('float', $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
-	    $this->assertSame(null, $session['Q05.SCORE']); // Was never selected.
-	    $this->assertSame(null, $session['Q06.mySc0r3']); // Was never selected.
-	    $this->assertSame(null, $session['Q07.1.SCORE']); // Was never selected.
+	    $this->assertSame(0.0, $session['Q05.SCORE']);
+	    $this->assertSame(0.0, $session['Q06.mySc0r3']);
+	    $this->assertSame(0.0, $session['Q07.1.SCORE']);
 	    $this->assertInternalType('float', $session['Q07.2.SCORE']);
 	    $this->assertInternalType('float', $session['Q07.3.SCORE']);
 	    
 	    $this->assertEquals(5, $session['NPRESENTED']);
-	    $this->assertEquals(6, $session['NSELECTED']);
+	    $this->assertEquals(9, $session['NSELECTED']);
 	}
 	
 	public function testJumpsSimultaneous() {
@@ -829,25 +800,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $this->assertEquals(9, $session['NSELECTED']);
 	    $this->assertEquals(9, $session['NPRESENTED']);
-	}
-	
-	public function testMoveBackLinear() {
-	    $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-	
-	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-	    $session = AssessmentTestSession::instantiate($factory);
-	
-	    $session->beginTestSession();
-	    $this->assertEquals(NavigationMode::LINEAR, $session->getCurrentNavigationMode());
-	     
-	    try {
-	        $session->moveBack();
-	        $this->assertTrue(false);
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::NAVIGATION_MODE_VIOLATION, $e->getCode());
-	    }
 	}
 	
 	public function testMoveNextAndBackNonLinearIndividual() {
