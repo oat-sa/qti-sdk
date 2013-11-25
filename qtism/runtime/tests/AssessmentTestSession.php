@@ -1036,11 +1036,6 @@ class AssessmentTestSession extends State {
 	        // Store the responses for a later processing at the end of the test part.
 	        $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
 	        $this->addPendingResponses($pendingResponses);
-	        
-	        if ($this->getRoute()->isLastOfTestPart() === true) {
-	            $this->defferedResponseProcessing();
-	            $this->outcomeProcessing();
-	        }
 	    }
 	    else {
 	        $this->outcomeProcessing();
@@ -1154,13 +1149,6 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    
 	    try {
-	        $currentTestPart = $this->getCurrentTestPart();
-	        
-	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS && $route->isInTestPart($position, $currentTestPart) === false) {
-	            $msg = "Cannot jump to position '${position}' because the current submission mode is SIMULTANEOUS and the jump target is outside of the current testPart.";
-	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
-	        }
-	        
 	        $oldPosition = $route->getPosition();
 	        $this->getRoute()->setPosition($position);
 	        

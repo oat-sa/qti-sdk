@@ -769,15 +769,6 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    catch (AssessmentItemSessionException $e) {
 	        $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
 	    }
-	     
-	    // Move to Q07.2. An error must be raised because the current test part is not finished and we are in SIMULTANEOUS MODE.
-	    try {
-	        $session->jumpTo(7);
-	        $this->assertTrue(false, "The submission mode is SIMULTANEOUS but not all the testPart's items are responded. The deffered response processing cannot take place.");
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::FORBIDDEN_JUMP, $e->getCode());
-	    }
 	    
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
