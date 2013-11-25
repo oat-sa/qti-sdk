@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\processing;
 
-use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\php\PhpDocument;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\rules\RuleEngine;
 use qtism\data\processing\ResponseProcessing;
@@ -57,12 +57,12 @@ class ResponseProcessingEngine extends AbstractEngine {
 		parent::__construct($responseProcessing, $context);
 		
 		$templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR; 
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.xml');
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response.xml');
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response_point.xml');
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.xml');
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.xml');
-		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response_point', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'map_response_point.xml');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.php');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response.php');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response_point.php');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
+		$this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response_point', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'map_response_point.php');
 	}
 	
 	/**
@@ -181,9 +181,9 @@ class ResponseProcessingEngine extends AbstractEngine {
 			
 			// Open the file and retrieve the rules.
 			$this->trace("loading response processing template '${finalTemplateFile}'");
-			$xml = new XmlDocument();
-			$xml->load($finalTemplateFile);
-			$rules = $xml->getDocumentComponent()->getResponseRules();
+			$php = new PhpDocument();
+			$php->load($finalTemplateFile);
+			$rules = $php->getDocumentComponent()->getResponseRules();
 			$this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
 		}
 		
