@@ -116,4 +116,26 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $this->assertEquals(1.0, $testSession['Q03.SCORE']);
         $this->assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
     }
+    
+    public function testBranchingSingleSectionNonLinear1() {
+        // This test only aims at testing if branch rules
+        // are correctly ignored when the navigation mode is non linear.
+        $doc = new XmlCompactDocument('1.0');
+        $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml');
+        
+        // Q01 - We answer correct. In linear mode we should go to Q03.
+        // However, in non linear mode branch rules are ignored and we go then
+        // to Q02.
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+        $factory->setAutoForward(false);
+        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession->beginTestSession();
+        
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+    }
 }
