@@ -173,15 +173,15 @@ class ChoiceInteraction extends BlockInteraction {
     /**
      * Set the maximum number of choices that the candidate is allowed to select.
      * 
-     * @param integer $maxChoices A strictly positive (> 0) integer.
-     * @throws InvalidArgumentException If $maxChoices is not a strictly positive integer.
+     * @param integer $maxChoices A positive (>= 0) integer.
+     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
-        if (is_int($maxChoices) === true && $maxChoices > 0) {
+        if (is_int($maxChoices) === true && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
         }
         else {
-            $msg = "The 'maxChoices' argument must be a strictly positive (> 0) integer, '" . gettype($maxChoices) . "' given.";
+            $msg = "The 'maxChoices' argument must be a positive (>= 0) integer, '" . gettype($maxChoices) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

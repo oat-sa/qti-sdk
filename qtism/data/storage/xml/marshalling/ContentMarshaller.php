@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\RubricBlock;
@@ -136,11 +137,17 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof SimpleChoice) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof ChoiceInteraction) {
+            return $component->getSimpleChoices();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
         if (in_array($element->nodeName, self::$simpleComposites) === true) {
             return self::getChildElements($element, true);
+        }
+        else if ($element->nodeName === 'choiceInteraction') {
+            return self::getChildElementsByTagName($element, 'simpleChoice');
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));

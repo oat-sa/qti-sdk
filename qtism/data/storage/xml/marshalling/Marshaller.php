@@ -222,7 +222,8 @@ abstract class Marshaller {
 	 * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
 	 * 
 	 * @param DOMElement $element A DOMElement object.
-	 * @return array An array of DOMElement objects.
+	 * @param boolean $withText Wether text nodes must be returned or not.
+	 * @return array An array of DOMNode objects.
 	 */
 	public static function getChildElements($element, $withText = false) {
 		$children = $element->childNodes;
@@ -244,9 +245,10 @@ abstract class Marshaller {
 	 * 
 	 * @param DOMElement $element A DOMElement object.
 	 * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
+	 * @param boolean $exclude Wether the $tagName parameter must be considered as a blacklist.
 	 * @return array An array of DOMElement objects.
 	 */
-	public static function getChildElementsByTagName($element, $tagName) {
+	public static function getChildElementsByTagName($element, $tagName, $exclude = false) {
 		if (!is_array($tagName)) {
 			$tagName = array($tagName);
 		}
@@ -255,8 +257,8 @@ abstract class Marshaller {
 		$returnValue = array();
 		
 		foreach ($rawElts as $elt) {
-			
-			if (in_array(Utils::getLocalNodeName($elt->nodeName), $tagName)) {
+		    
+			if (in_array(Utils::getLocalNodeName($elt->nodeName), $tagName) === !$exclude) {
 				$returnValue[] = $elt;
 			}
 		}

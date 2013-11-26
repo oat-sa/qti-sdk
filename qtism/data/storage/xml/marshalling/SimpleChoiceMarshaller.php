@@ -88,7 +88,7 @@ class SimpleChoiceMarshaller extends ContentMarshaller {
         }
         
         if ($component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
+            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
         
         foreach ($elements as $e) {
