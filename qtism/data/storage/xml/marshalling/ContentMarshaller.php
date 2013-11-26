@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\SimpleChoice;
+
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;
@@ -72,7 +74,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
-                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div');
+                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'simpleChoice');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -130,6 +132,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof Blockquote) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof SimpleChoice) {
             return $component->getContent()->getArrayCopy();
         }
     }

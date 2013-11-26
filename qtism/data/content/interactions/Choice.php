@@ -211,6 +211,15 @@ abstract class Choice extends BodyElement implements QtiIdentifiable {
 	}
 	
 	/**
+	 * Whether a value is defined for the templateIdentifier attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTemplateIdentifier() {
+	    return $this->getTemplateIdentifier() !== '';
+	}
+	
+	/**
 	 * Set the visibility of the choice.
 	 * 
 	 * @param integer $showHide A value from the ShowHide enumeration.
