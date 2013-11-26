@@ -111,7 +111,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable {
 	public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($id, $class, $lang, $label);
 		$this->setIdentifier($identifier);
-		$this->setFixed($false);
+		$this->setFixed(false);
 		$this->setTemplateIdentifier('');
 		$this->setShowHide(ShowHide::SHOW);
 		$this->setObservers(new SplObjectStorage());

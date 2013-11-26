@@ -25,7 +25,6 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\SimpleChoice;
-
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;

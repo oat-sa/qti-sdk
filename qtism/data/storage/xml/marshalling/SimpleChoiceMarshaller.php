@@ -91,6 +91,10 @@ class SimpleChoiceMarshaller extends ContentMarshaller {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
         }
         
+        foreach ($elements as $e) {
+            $element->appendChild($e);
+        }
+        
         return $element;
     }
     
