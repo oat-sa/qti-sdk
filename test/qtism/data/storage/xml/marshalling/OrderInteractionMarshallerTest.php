@@ -11,7 +11,7 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
-class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
+class OrderInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 		
