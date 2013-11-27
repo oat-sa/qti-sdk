@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\SimpleAssociableChoice;
+
 use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\ChoiceInteraction;
@@ -77,7 +79,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'prompt');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -138,6 +140,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof SimpleChoice) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof SimpleAssociableChoice) {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof ChoiceInteraction) {
