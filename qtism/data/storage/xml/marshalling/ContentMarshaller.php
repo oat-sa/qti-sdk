@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
@@ -64,7 +65,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock',
-                                      'printedVariable', 'stylesheet', 'choiceInteraction', 'orderInteraction',
+                                      'printedVariable', 'stylesheet', 'orderInteraction',
                                       'associateInteraction', 'matchInteraction', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
@@ -74,7 +75,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
-                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'simpleChoice');
+                                             'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
+                                             'simpleChoice', 'prompt');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -138,7 +140,10 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof ChoiceInteraction) {
-            return $component->getSimpleChoices();
+            return $component->getSimpleChoices()->getArrayCopy();
+        }
+        else if ($component instanceof Prompt) {
+            return $component->getContent()->getArrayCopy();
         }
     }
     

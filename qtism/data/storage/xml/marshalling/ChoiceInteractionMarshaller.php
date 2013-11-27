@@ -41,48 +41,56 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
     
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
             
-            $fqClass = $this->lookupClass($element);
-            $component = new $fqClass(new SimpleChoiceCollection($children->getArrayCopy()));
-            
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
-                $component->setShuffle($shuffle);
+            if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+                
+                $fqClass = $this->lookupClass($element);
+                $component = new $fqClass($responseIdentifier, new SimpleChoiceCollection($children->getArrayCopy()));
+                
+                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                    $component->setShuffle($shuffle);
+                }
+                
+                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                    $component->setMaxChoices($maxChoices);
+                }
+                
+                if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                    $component->setMinChoices($minChoices);
+                }
+                
+                if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
+                    $component->setOrientation(Orientation::getConstantByName($orientation));
+                }
+                
+                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                if (count($promptElts) > 0) {
+                    $promptElt = $promptElts[0];
+                    $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+                    $component->setPrompt($prompt);
+                }
+                
+                self::fillBodyElement($component, $element);
+                
+                return $component;
             }
-            
-            if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                $component->setMaxChoices($maxChoices);
+            else {
+                $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'choiceInteraction' element.";
+                throw new UnmarshallingException($msg, $element);
             }
-            
-            if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                $component->setMinChoices($minChoices);
-            }
-            
-            if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
-                $component->setOrientation(Orientation::getConstantByName($orientation));
-            }
-            
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
-            if (count($promptElts) > 0) {
-                $promptElt = $promptElts[0];
-                $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                $component->setPrompt($prompt);
-            }
-            
-            self::fillBodyElement($component, $element);
-            
-            return $component;
     }
     
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
+        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
         
-        if ($component->mustShuffle() === false) {
-            self::setDOMElementAttribute($element, 'shuffle', false);
+        if ($component->mustShuffle() !== false) {
+            self::setDOMElementAttribute($element, 'shuffle', true);
         }
         
         if ($component->getMaxChoices() !== 1) {

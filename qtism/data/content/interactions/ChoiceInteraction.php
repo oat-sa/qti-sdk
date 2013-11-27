@@ -110,7 +110,7 @@ class ChoiceInteraction extends BlockInteraction {
      * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, SimpleChoiceCollection $simpleChoices, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($responseIdentifier, $simpleChoices, $id, $class, $lang, $label);
+        parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setSimpleChoices($simpleChoices);
         $this->setMaxChoices(1);
         $this->setMinChoices(0);
