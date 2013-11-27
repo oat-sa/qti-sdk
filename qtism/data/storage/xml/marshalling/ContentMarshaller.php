@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\AssociateInteraction;
+
 use qtism\data\content\interactions\SimpleAssociableChoice;
 
 use qtism\data\content\interactions\OrderInteraction;
@@ -68,8 +70,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock',
-                                      'printedVariable', 'stylesheet',
-                                      'associateInteraction', 'matchInteraction', 'gapMatchInteraction',
+                                      'printedVariable', 'stylesheet', 'matchInteraction', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
                                       'graphicOrderInteraction', 'graphicAssociateInteraction', 'graphicGapMatchInteraction',
@@ -151,6 +152,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof OrderInteraction) {
             return $component->getSimpleChoices()->getArrayCopy();
         }
+        else if ($component instanceof AssociateInteraction) {
+            return $component->getSimpleAssociableChoices()->getArrayCopy();
+        }
         else if ($component instanceof Prompt) {
             return $component->getContent()->getArrayCopy();
         }
@@ -165,6 +169,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'orderInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');
+        }
+        else if ($element->nodeName === 'associateInteraction') {
+            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
