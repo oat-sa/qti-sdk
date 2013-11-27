@@ -25,32 +25,28 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * Img renderer.
+ * Prompt renderer. This renderer will transform
+ * the prompt into a 'div' element with an
+ * additional 'qti-prompt' CSS class. 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ImgRenderer extends BodyElementRenderer {
+class PromptRenderer extends BodyElementRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        parent::appendAttributes($fragment, $component);
-        $fragment->firstChild->setAttribute('src', $component->getSrc());
-        $fragment->firstChild->setAttribute('alt', $component->getAlt());
-        
-        if ($component->hasLongdesc() === true) {
-            $fragment->firstChild->setAttribute('longdesc', $component->getLongdesc());
-        }
-        
-        if ($component->hasHeight() === true) {
-            $fragment->firstChild->setAttribute('height', $component->getHeight());
-        }
-        
-        if ($component->hasWidth() === true) {
-            $fragment->firstChild->setAttribute('width', $component->getWidth());
-        }
+    /**
+     * Create a new PromptRenderer.
+     * 
+     * @param AbstractRenderingContext $renderingContext
+     */
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
+        $this->transform('div');
+        $this->additionalClass('qti-prompt');
     }
 }

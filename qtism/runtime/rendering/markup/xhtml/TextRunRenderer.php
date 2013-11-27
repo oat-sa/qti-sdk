@@ -51,7 +51,7 @@ class TextRunRenderer extends AbstractXhtmlRenderer {
         $fragment->appendChild($this->getRenderingContext()->getDocument()->createTextNode($component->getContent()));
     }
     
-    public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         return;
     }
 }

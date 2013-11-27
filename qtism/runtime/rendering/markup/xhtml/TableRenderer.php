@@ -36,7 +36,7 @@ use \DOMDocumentFragment;
  */
 class TableRenderer extends BodyElementRenderer {
     
-    public function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
         
         if ($component->hasSummary() === true) {
