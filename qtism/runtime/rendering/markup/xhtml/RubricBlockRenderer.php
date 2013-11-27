@@ -36,7 +36,11 @@ use \DOMDocumentFragment;
  * 
  * Moreover, if the view information will be added ass CSS additional classes.
  * For instance, if qti:rubricBlock->view = 'proctor candidate', the resulting
- * element will be '<rubricBlock
+ * element will be '<div class="qti-rubricBlock qti-view-candidate qti-view-proctor>...</div>".
+ * 
+ * More over, the following data-x attributes will be set:
+ * 
+ * * data-view = qti:rubricBlock->view
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
