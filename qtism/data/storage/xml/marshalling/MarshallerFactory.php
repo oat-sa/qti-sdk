@@ -144,6 +144,7 @@ class MarshallerFactory {
 		$this->addMappingEntry('ol', 'qtism\\data\\storage\\xml\\marshalling\\ListMarshaller');
 		$this->addMappingEntry('dd', 'qtism\\data\\storage\\xml\\marshalling\\DlElementMarshaller');
 		$this->addMappingEntry('dt', 'qtism\\data\\storage\\xml\\marshalling\\DlElementMarshaller');
+		$this->addMappingEntry('orderInteraction', 'qtism\\data\\storage\\xml\\marshalling\\ChoiceInteractionMarshaller');
 	}
 	
 	/**

@@ -233,11 +233,7 @@ class OrderInteraction extends BlockInteraction {
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices > 0 || $maxChoices === -1) {
             
-            if ($this->hasMinChoices() === true && $maxChoices > $this->getMinChoices()) {
-                $msg = "The 'maxChoices' argument cannot exceed the 'minChoices' attribute value.";
-                throw new InvalidArgumentException($msg);
-            }
-            else if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
+            if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
                 $msg = "The 'maxChoices' argument cannot exceed the number of available choices.";
                 throw new InvalidArgumentException($msg);
             }

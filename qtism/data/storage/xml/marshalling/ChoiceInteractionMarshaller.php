@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\OrderInteraction;
+
+use qtism\data\content\interactions\ChoiceInteraction;
+
 use qtism\data\content\interactions\Orientation;
 use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\QtiComponentCollection;
@@ -32,7 +36,7 @@ use \DOMElement;
 use \InvalidArgumentException;
 
 /**
- * The Marshaller implementation for ChoiceInteraction elements of the content model.
+ * The Marshaller implementation for ChoiceInteraction/OrderInteraction elements of the content model.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -74,7 +78,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
                 return $component;
             }
             else {
-                $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'choiceInteraction' element.";
+                $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->nodeName . " element.";
                 throw new UnmarshallingException($msg, $element);
             }
     }
@@ -93,11 +97,11 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
             self::setDOMElementAttribute($element, 'shuffle', true);
         }
         
-        if ($component->getMaxChoices() !== 1) {
+        if (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
         
-        if ($component->getMinChoices() !== 0) {
+        if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
         

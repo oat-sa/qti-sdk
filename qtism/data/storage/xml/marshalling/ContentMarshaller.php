@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\OrderInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
@@ -65,7 +66,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock',
-                                      'printedVariable', 'stylesheet', 'orderInteraction',
+                                      'printedVariable', 'stylesheet',
                                       'associateInteraction', 'matchInteraction', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
@@ -142,6 +143,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof ChoiceInteraction) {
             return $component->getSimpleChoices()->getArrayCopy();
         }
+        else if ($component instanceof OrderInteraction) {
+            return $component->getSimpleChoices()->getArrayCopy();
+        }
         else if ($component instanceof Prompt) {
             return $component->getContent()->getArrayCopy();
         }
@@ -152,6 +156,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return self::getChildElements($element, true);
         }
         else if ($element->nodeName === 'choiceInteraction') {
+            return self::getChildElementsByTagName($element, 'simpleChoice');
+        }
+        else if ($element->nodeName === 'orderInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');
         }
         else if ($element->nodeName === 'tr') {
