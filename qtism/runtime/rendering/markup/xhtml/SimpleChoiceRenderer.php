@@ -62,9 +62,8 @@ class SimpleChoiceRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
-        $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');
-        
         parent::appendAttributes($fragment, $component);
+        $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');
         
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');

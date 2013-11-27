@@ -63,13 +63,16 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
         $doc = $this->getRenderingContext()->getDocument();
         $fragment = $doc->createDocumentFragment();
         
-        $this->appendElement($fragment, $component);
-        $this->appendChildren($fragment, $component);
-        $this->appendAttributes($fragment, $component);
-        
+        $this->renderingImplementation($fragment, $component);
         $this->getRenderingContext()->storeRendering($fragment);
         
         return $fragment;
+    }
+    
+    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
+        $this->appendElement($fragment, $component);
+        $this->appendChildren($fragment, $component);
+        $this->appendAttributes($fragment, $component);
     }
     
     /**

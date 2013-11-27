@@ -55,6 +55,8 @@ class RubricBlockRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
+        parent::appendAttributes($fragment, $component);
+        
         $dataView = array();
         
         if ($component->getViews()->contains(View::AUTHOR)) {
@@ -81,8 +83,6 @@ class RubricBlockRenderer extends BodyElementRenderer {
             $this->additionalClass('qti-view-tutor');
             $dataView[] = 'tutor';
         }
-        
-        parent::appendAttributes($fragment, $component);
         
         $fragment->firstChild->setAttribute('data-view', implode("\x20", $dataView));
     }

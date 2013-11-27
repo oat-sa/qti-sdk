@@ -55,6 +55,17 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
         parent::__construct($renderingContext);
     }
     
+    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::renderingImplementation($fragment, $component);
+        
+        if ($this->hasAdditionalClasses() === true) {
+            $classes = implode("\x20", $this->getAdditionalClasses());
+            $currentClasses = $fragment->firstChild->getAttribute('class');
+            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
+        }
+    }
+    
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         if ($component->hasId() === true) {
@@ -67,13 +78,6 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
         
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('lang', $component->getLang());
-        }
-        
-        if ($this->hasAdditionalClasses() === true) {
-            $classes = implode("\x20", $this->getAdditionalClasses());
-            $currentClasses = $fragment->firstChild->getAttribute('class');
-            $glue = ($currentClasses !== '') ? "\x20" : "";
-            $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
     }
     
