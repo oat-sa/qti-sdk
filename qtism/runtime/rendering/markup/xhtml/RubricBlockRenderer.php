@@ -25,14 +25,18 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\View;
 use qtism\runtime\rendering\AbstractRenderingContext;
-
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
  * RubricBlock renderer. Rendered components will be transformed as 
  * 'div' elements with a 'qti-rubricBlock' additional CSS class.
+ * 
+ * Moreover, if the view information will be added ass CSS additional classes.
+ * For instance, if qti:rubricBlock->view = 'proctor candidate', the resulting
+ * element will be '<rubricBlock
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -43,5 +47,39 @@ class RubricBlockRenderer extends BodyElementRenderer {
         parent::__construct($renderingContext);
         $this->transform('div');
         $this->additionalClass('qti-rubricBlock');
+    }
+    
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+        
+        $dataView = array();
+        
+        if ($component->getViews()->contains(View::AUTHOR)) {
+            $this->additionalClass('qti-view-author');
+            $dataView[] = 'author';
+        }
+        else if ($component->getViews()->contains(View::CANDIDATE)) {
+            $this->additionalClass('qti-view-candidate');
+            $dataView[] = 'candidate';
+        }
+        else if ($component->getViews()->contains(View::PROCTOR)) {
+            $this->additionalClass('qti-view-proctor');
+            $dataView[] = 'proctor';
+        }
+        else if ($component->getViews()->contains(View::SCORER)) {
+            $this->additionalClass('qti-view-scorer');
+            $dataView[] = 'scorer';
+        }
+        else if ($component->getViews()->contains(View::TEST_CONSTRUCTOR)) {
+            $this->additionClass('qti-view-testConstructor');
+            $dataView[] = 'testConstructor';
+        }
+        else if ($component->getViews()->contains(View::TUTOR)) {
+            $this->additionalClass('qti-view-tutor');
+            $dataView[] = 'tutor';
+        }
+        
+        parent::appendAttributes($fragment, $component);
+        
+        $fragment->firstChild->setAttribute('data-view', implode("\x20", $dataView));
     }
 }
