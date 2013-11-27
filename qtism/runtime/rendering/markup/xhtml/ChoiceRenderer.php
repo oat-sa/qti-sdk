@@ -31,8 +31,8 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SimpleChoice renderer. This renderer will transform the prompt into a 'div' element with an
- * additional 'qti-simpleChoice' CSS class.
+ * Choice renderer, the base class of all renderers that render subclasses of
+ * qti:choice. This renderer will transform the prompt into a 'div' element.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -49,11 +49,29 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceRenderer extends ChoiceRenderer {
+abstract class ChoiceRenderer extends BodyElementRenderer {
+    
+    /**
+     * Create a new SimpleChoiceRenderer.
+     * 
+     * @param AbstractRenderingContext $renderingContext
+     */
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
+        $this->transform('div');
+    }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-simpleChoice');
+        
+        $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
+        $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
+        
+        if ($component->hasTemplateIdentifier() === true) {
+            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');
+            $fragment->firstChild->setAttribute('data-templateIdentifier', $component->getTemplateIdentifier());
+            $fragment->firstChild->setAttribute('data-showHide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
+        }
     }
 }
