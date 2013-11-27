@@ -121,6 +121,7 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('table', new TableRenderer());
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
         $this->registerRenderer('choiceInteraction', new ChoiceInteractionRenderer());
+        $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
     }
 
