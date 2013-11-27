@@ -34,7 +34,8 @@ use \DOMDocumentFragment;
  * SimpleChoice renderer. This renderer will transform the prompt into a 'div' element with an
  * additional 'qti-simpleChoice' CSS class.
  * 
- * Depending on the value of the qti:choice->showHide attribute, an addition CSS class with
+ * Depending on the value of the qti:choice->showHide attribute and only if 
+ * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
  * a value of 'qti-show' or 'qti-hide' will be set.
  * 
  * Moreover, the following data will be set to the data set of the element
@@ -42,7 +43,8 @@ use \DOMDocumentFragment;
  * 
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
- * * data-showHide = qti:choice->showHide
+ * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
+ * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -57,16 +59,21 @@ class SimpleChoiceRenderer extends BodyElementRenderer {
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
         $this->transform('div');
-        $this->additionalClass('qti-simpleChoice');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');
+        
+        $this->additionalClass('qti-simpleChoice');
         
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-showHide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
+        
+        if ($component->hasTemplateIdentifier() === true) {
+            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');
+            $fragment->firstChild->setAttribute('data-templateIdentifier', $component->getTemplateIdentifier());
+            $fragment->firstChild->setAttribute('data-showHide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
+        }
     }
 }

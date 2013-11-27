@@ -56,6 +56,9 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
     }
     
     protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
+        // Reset additional classes at each rendering.
+        $this->setAdditionalClasses(array());
+        
         parent::renderingImplementation($fragment, $component);
         
         if ($this->hasAdditionalClasses() === true) {

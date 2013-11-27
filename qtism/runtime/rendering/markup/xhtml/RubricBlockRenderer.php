@@ -50,12 +50,12 @@ class RubricBlockRenderer extends BodyElementRenderer {
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
         $this->transform('div');
-        $this->additionalClass('qti-rubricBlock');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
+        $this->additionalClass('qti-rubricBlock');
         
         $dataView = array();
         

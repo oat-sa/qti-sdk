@@ -30,27 +30,26 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ItemBody renderer. This renderer will transform
- * the itemBody into a 'div' element with an
- * additional 'qti-itemBody' CSS class. 
+ * Base class for all Renderers that will render subclasses
+ * of qti:interaction.
+ * 
+ * This rendering implementation will add the following data-X attributes:
+ * 
+ * * data-responseIdentifier = qti:interaction->responseIdentifier
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemBodyRenderer extends BodyElementRenderer {
+abstract class InteractionRenderer extends BodyElementRenderer {
     
-    /**
-     * Create a new ItemBodyRenderer.
-     * 
-     * @param AbstractRenderingContext $renderingContext
-     */
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
         $this->transform('div');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+        
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-itemBody');
+        $fragment->firstChild->setAttribute('data-responseIdentifier', $component->getResponseIdentifier());
     }
 }

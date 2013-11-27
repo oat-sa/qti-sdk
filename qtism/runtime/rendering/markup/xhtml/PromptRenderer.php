@@ -47,6 +47,9 @@ class PromptRenderer extends BodyElementRenderer {
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
         $this->transform('div');
+    }
+    
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         $this->additionalClass('qti-prompt');
     }
 }

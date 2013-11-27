@@ -25,32 +25,40 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\interactions\Orientation;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ItemBody renderer. This renderer will transform
- * the itemBody into a 'div' element with an
- * additional 'qti-itemBody' CSS class. 
+ * ChoiceInteraction renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-choiceInteraction' additional CSS class.
+ * 
+ * The following data-X attributes will be rendered:
+ * 
+ * * data-shuffle = qti:choiceInteraction->shuffle
+ * * data-maxChoices = qti:choiceInteraction->maxChoices
+ * * data-minChoices = qti:choiceInteraction->minChoices
+ * * data-orientation = qti:choiceInteraction->orientation
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemBodyRenderer extends BodyElementRenderer {
+class ChoiceInteractionRenderer extends BodyElementRenderer {
     
-    /**
-     * Create a new ItemBodyRenderer.
-     * 
-     * @param AbstractRenderingContext $renderingContext
-     */
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
         $this->transform('div');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+        
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-itemBody');
+        $this->additionalClass('qti-choiceInteraction');
+        
+        $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
     }
 }
