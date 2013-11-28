@@ -119,6 +119,13 @@ class QtiComponentIterator implements Iterator {
 	private $classes;
 	
 	/**
+	 * The number of occurences in the trail.
+	 * 
+	 * @var integer
+	 */
+	private $trailCount = 0;
+	
+	/**
 	 * Create a new QtiComponentIterator object.
 	 * 
 	 * @param QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
@@ -202,15 +209,12 @@ class QtiComponentIterator implements Iterator {
 	protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components) {
 		
 		$trailEntry = array();
-		
-		$trail = &$this->getTrail();
 		$components = array_reverse($components->getArrayCopy());
 		
 		foreach ($components as $c) {
-			array_push($trail, array($source, $c));
+			array_push($this->trail, array($source, $c));
+			$this->trailCount++;
 		}
-		
-		$this->setTrail($trail);
 	}
 	
 	/**
@@ -219,11 +223,8 @@ class QtiComponentIterator implements Iterator {
 	 * @return array 
 	 */
 	protected function popFromTrail() {
-		$trail = &$this->getTrail();
-		$entry = array_pop($trail);
-		$this->setTrail($trail);
-		
-		return $entry;
+	    $this->trailCount--;
+		return array_pop($this->trail);
 	}
 	
 	/**
@@ -242,6 +243,7 @@ class QtiComponentIterator implements Iterator {
 	 */
 	protected function setTrail(array &$trail) {
 		$this->trail = $trail;
+		$this->trailCount = count($trail);
 	}
 	
 	/**
@@ -270,13 +272,11 @@ class QtiComponentIterator implements Iterator {
 	 * @param QtiComponent $component A QTIComponent object.
 	 */
 	protected function markTraversed(QtiComponent $component) {
-		$traversed = &$this->getTraversed();
-		array_push($traversed, $component);
+		array_push($this->traversed, $component);
 	}
 	
 	protected function isTraversed(QtiComponent $component) {
-		$traversed = &$this->getTraversed();
-		return in_array($component, $traversed, true);
+		return in_array($component, $this->traversed, true);
 	}
 	
 	/**
@@ -365,9 +365,9 @@ class QtiComponentIterator implements Iterator {
 	 */
 	public function next() {
 		
-		if (count($this->trail) > 0) {
+		if ($this->trailCount > 0) {
 			
-			while(count($this->trail) > 0) {
+			while($this->trailCount > 0) {
 				$trailEntry = $this->popFromTrail();
 				$component = $trailEntry[1];
 				$source = $trailEntry[0];

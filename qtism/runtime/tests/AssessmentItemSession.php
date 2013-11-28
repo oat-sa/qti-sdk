@@ -262,16 +262,9 @@ class AssessmentItemSession extends State {
 	 * Set the state of the current AssessmentItemSession.
 	 * 
 	 * @param integer $state A value from the AssessmentItemSessionState enumeration.
-	 * @throws InvalidArgumentException If $state is not a value from the AssessmentItemSessionState enumeration.
 	 */
 	public function setState($state) {
-		if (in_array($state, AssessmentItemSessionState::asArray())) {
-			$this->state = $state;
-		}
-		else {
-			$msg = "The state argument must be a value from the AssessmentItemSessionState enumeration.";
-			throw new InvalidArgumentException($msg);
-		}
+		$this->state = $state;
 	}
 	
 	/**
@@ -374,16 +367,9 @@ class AssessmentItemSession extends State {
 	 * Set the navigation mode in use during the item session.
 	 * 
 	 * @param integer $navigationMode A value from the NavigationMode enumeration.
-	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
 	public function setNavigationMode($navigationMode) {
-	    if (in_array($navigationMode, NavigationMode::asArray()) === true) {
-	        $this->navigationMode = $navigationMode;
-	    }
-	    else {
-	        $msg = "The navigationMode argument must be a value from the NavigationMode enumeration, '${navigationMode}' given.";
-	        throw new InvalidArgumentException($msg);
-	    }
+	    $this->navigationMode = $navigationMode;
 	}
 	
 	/**
@@ -399,16 +385,9 @@ class AssessmentItemSession extends State {
 	 * Set the submission mode in use during the item session.
 	 * 
 	 * @param integer $submissionMode A value from the SubmissionMode enumeration.
-	 * @throws InvalidArgumentException If $submissionMode is not a valud from the SubmissionMode enumeration.
 	 */
 	public function setSubmissionMode($submissionMode) {
-	    if (in_array($submissionMode, SubmissionMode::asArray()) === true) {
-	        $this->submissionMode = $submissionMode;
-	    }
-	    else {
-	        $msg = "The submissionMode argument must be a value from the SubmissionMode enumeration, '${submissionMode}' given.";
-	        throw new InvalidArgumentException($msg);
-	    }
+        $this->submissionMode = $submissionMode;
 	}
 	
 	/**
@@ -469,13 +448,7 @@ class AssessmentItemSession extends State {
 	 * @throws InvalidArgumentException If $attempting is not a boolean value.
 	 */
 	public function setAttempting($attempting) {
-	    if (gettype($attempting) === 'boolean') {
-	        $this->attempting = $attempting;
-	    }
-	    else {
-	        $msg = "The 'attempting' argument must be a boolean value '" . gettype($attempting) . "' given.";
-	        throw new InvalidArgumentException($msg);
-	    }
+        $this->attempting = $attempting;
 	}
 	
 	/**
