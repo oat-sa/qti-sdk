@@ -25,7 +25,6 @@
 namespace qtism\common\storage;
 
 use \InvalidArgumentException;
-use \OutOfBoundsException;
 
 /**
  * The BinaryStream class represents a binary stream based on a binary 
@@ -57,6 +56,8 @@ class BinaryStream implements IStream {
      */
     private $position = 0;
     
+    private $length = 0;
+    
     /**
      * Create a new BinaryStream object.
      * 
@@ -65,6 +66,7 @@ class BinaryStream implements IStream {
      */
     public function __construct($binary = '') {
         $this->setBinary($binary);
+        $this->setLength(strlen($binary));
     }
     
     /**
@@ -110,18 +112,34 @@ class BinaryStream implements IStream {
     }
     
     /**
+     * Set the length of the binary data.
+     * 
+     * @param integer $length
+     */
+    protected function setLength($length) {
+        $this->length = $length;
+    }
+    
+    /**
+     * Get the length of the binary data.
+     * 
+     * @return integer
+     */
+    public function getLength() {
+        return $this->length;
+    }
+    
+    protected function incrementLength($i) {
+        $this->length += $i;
+    }
+    
+    /**
      * Increment the current position by $i.
      * 
      * @param integer $i The increment to be applied on the current position in the stream.
-     * @throws OutOfBoundsException If the new position falls outside the bounds of the stream.
      */
     protected function incrementPosition($i) {
         $incPos = $this->getPosition() + $i;
-        if ($incPos > $this->getLength()) {
-            $msg = "Incremented position '${incPos}' is outside the bounds of the stream.";
-            throw new OutOfBoundsException($msg);
-        }
-        
         $this->setPosition($incPos);
     }
     
@@ -183,6 +201,7 @@ class BinaryStream implements IStream {
         }
         
         $this->incrementPosition($length);
+        
         return substr($binary, $position, $length);
     }
     
@@ -218,6 +237,7 @@ class BinaryStream implements IStream {
         
         $dataLen = strlen($data);
         $this->incrementPosition($dataLen);
+        $this->incrementLength($dataLen);
         return $dataLen;
     }
     
@@ -266,15 +286,6 @@ class BinaryStream implements IStream {
      */
     protected function setOpen($open) {
         $this->open = $open;
-    }
-    
-    /**
-     * Get the length of the binary data composing the binary stream.
-     * 
-     * @return integer The length of the binary data composing the binary stream.
-     */
-    public function getLength() {
-        return strlen($this->getBinary());
     }
     
     public function flush() {
