@@ -24,8 +24,6 @@
  */
 namespace qtism\common\storage;
 
-use \InvalidArgumentException;
-
 /**
  * The BinaryStream class represents a binary stream based on a binary 
  * string.
@@ -62,7 +60,6 @@ class BinaryStream implements IStream {
      * Create a new BinaryStream object.
      * 
      * @param string $binary A binary string.
-     * @throws InvalidArgumentException If $binary is not a string value.
      */
     public function __construct($binary = '') {
         $this->setBinary($binary);
@@ -73,14 +70,8 @@ class BinaryStream implements IStream {
      * Set the binary string that is composing the data stream.
      * 
      * @param string $binary A binary string.
-     * @throws InvalidArgumentException If $binary is not a string.
      */
     protected function setBinary($binary) {
-        if (gettype($binary) !== 'string') {
-            $msg = "The 'binary' argument must be a string, '" . gettype($binary) . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
-        
         $this->binary = $binary;
     }
     
@@ -139,8 +130,7 @@ class BinaryStream implements IStream {
      * @param integer $i The increment to be applied on the current position in the stream.
      */
     protected function incrementPosition($i) {
-        $incPos = $this->getPosition() + $i;
-        $this->setPosition($incPos);
+        $this->position += $i;
     }
     
     /**
@@ -183,48 +173,46 @@ class BinaryStream implements IStream {
             return '';
         }
         
-        $position = $this->getPosition();
+        $position = $this->position;
         $finalPosition = $position + $length;
-        $binary = $this->getBinary();
         
-        if ($finalPosition > $this->getLength()) {
+        if ($finalPosition > $this->length) {
             $msg = "Cannot read outside the bounds of the BinaryStream.";
             throw new BinaryStreamException($msg, $this, BinaryStreamException::READ);
         }
         
         $this->incrementPosition($length);
         
-        return substr($binary, $position, $length);
+        $returnValue = '';
+        
+        
+        while ($position < $finalPosition) {
+            $returnValue .= $this->binary[$position];
+            $position++;
+        }
+        
+        return $returnValue;
     }
     
     /**
      * Write some $data in the stream.
      * 
-     * @throws BinaryStreamException If the BinaryStream is not open.
      */
     public function write($data) {
         
-        if ($this->isOpen() === false) {
-            $msg = "Cannot call write() on a closed stream.";
-            throw new BinaryStreamException($msg, $this, BinaryStreamException::NOT_OPEN);
-        }
-        
-        $position = $this->getPosition();
-        $binary = $this->getBinary();
-        
-        if ($this->getLength() - 1 === $position) {
+        if ($this->getLength() - 1 === $this->position) {
             // simply append.
-            $this->setBinary($binary . $data);
+            $this->binary .= $data;
         }
-        else if ($position === 0) {
+        else if ($this->position === 0) {
             // simply prepend.
-            $this->setBinary($data . $binary);
+            $this->binary = ($data . $this->binary);
         }
         else {
             // we are in the middle of the string.
-            $part1 = substr($binary, 0, $position);
-            $part2 = substr($binary, $position);
-            $this->setBinary($part1 . $data . $part2);
+            $part1 = substr($this->binary, 0, $this->position);
+            $part2 = substr($this->binary, $this->position);
+            $this->binary = ($part1 . $data . $part2);
         }
         
         $dataLen = strlen($data);
