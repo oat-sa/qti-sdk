@@ -272,7 +272,6 @@ class QtiComponentIterator implements Iterator {
 	protected function markTraversed(QtiComponent $component) {
 		$traversed = &$this->getTraversed();
 		array_push($traversed, $component);
-		$this->setTraversed($traversed);
 	}
 	
 	protected function isTraversed(QtiComponent $component) {
@@ -366,22 +365,20 @@ class QtiComponentIterator implements Iterator {
 	 */
 	public function next() {
 		
-		if (count($this->getTrail()) > 0) {
-		    
-		    $classes = &$this->getClasses();
+		if (count($this->trail) > 0) {
 			
-			while(count($this->getTrail()) > 0) {
+			while(count($this->trail) > 0) {
 				$trailEntry = $this->popFromTrail();
 				$component = $trailEntry[1];
 				$source = $trailEntry[0];
 				
 				if ($this->isTraversed($component) === false) {
-					$this->setCurrentComponent($component);
-					$this->setCurrentContainer($source);
-					$this->pushOnTrail($component, $this->getCurrentComponent()->getComponents());
-					$this->markTraversed($this->getCurrentComponent());
+					$this->currentComponent = $component;
+					$this->currentContainer = $source;
+					$this->pushOnTrail($component, $this->currentComponent->getComponents());
+					$this->markTraversed($this->currentComponent);
 					
-					if (empty($classes) === true || in_array($component->getQTIClassName(), $classes) === true) {
+					if (empty($this->classes) === true || in_array($component->getQTIClassName(), $this->classes) === true) {
 					    // If all classes are seeked or the current component has a class name
 					    // that must be seeked, stop the iteration.
 					    return;
@@ -389,12 +386,12 @@ class QtiComponentIterator implements Iterator {
 				}
 			}
 			
-			$this->setValid(false);
-			$this->setCurrentContainer(null);
+			$this->isValid = false;
+			$this->currentContainer = null;
 		}
 		else {
-			$this->setValid(false);
-			$this->setCurrentContainer(null);
+			$this->isValid = false;
+			$this->currentContainer = null;
 		}
 	}
 	
