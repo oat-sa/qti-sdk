@@ -60,17 +60,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::TINYINT, $e->getCode());
         }
-        
-        $stream = $this->getEmptyStream();
-        try {
-            $reader = new BinaryStreamAccess($stream);
-            $stream->close();
-            $reader->readTinyInt();
-            $this->assertTrue(false);
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
-        }
     }
     
     public function testWriteTinyInt() {
@@ -113,16 +102,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::DATETIME, $e->getCode());
-        }
-        
-        try {
-            $stream->rewind();
-            $stream->close();
-            $date = $access->readDateTime();
-            $this->assertFalse(true);
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
     }
     
@@ -231,18 +210,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::INT, $e->getCode());
         }
-        
-        // close the stream and read.
-        try {
-            $stream = $this->getEmptyStream();
-            $reader = new BinaryStreamAccess($stream);
-            $stream->close();
-            $int = $reader->readInteger();
-            $this->assertTrue(false);
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
-        }
     }
     
     public function testWriteInt() {
@@ -297,16 +264,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::BOOLEAN, $e->getCode());
         }
-        
-        try {
-            $stream = $this->getEmptyStream();
-            $reader = new BinaryStreamAccess($stream);
-            $stream->close();
-            $bool = $reader->readBoolean();
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
-        }
     }
     
     public function testWriteBool() {
@@ -349,16 +306,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::STRING, $e->getCode());
-        }
-        
-        try {
-            $stream = $this->getEmptyStream();
-            $reader = new BinaryStreamAccess($stream);
-            $stream->close();
-            $string = $reader->readString();
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
     }
     
@@ -406,16 +353,6 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         }
         catch (BinaryStreamAccessException $e) {
             $this->assertEquals(BinaryStreamAccessException::FLOAT, $e->getCode());
-        }
-        
-        try {
-            $stream = $this->getEmptyStream();
-            $reader = new BinaryStreamAccess($stream);
-            $stream->close();
-            $float = $reader->readFloat();
-        }
-        catch (BinaryStreamAccessException $e) {
-            $this->assertEquals(BinaryStreamAccessException::NOT_OPEN, $e->getCode());
         }
     }
     

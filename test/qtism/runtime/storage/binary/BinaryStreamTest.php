@@ -54,19 +54,6 @@ class BinaryStreamTest extends QtiSmTestCase {
         }
     }
     
-    public function testReadOnClosedStream() {
-        $stream = $this->getBasicStream();
-    
-        try {
-            $stream->read(1);
-            // An exception must be thrown.
-            $this->assertTrue(false);
-        }
-        catch (BinaryStreamException $e) {
-            $this->assertEquals(BinaryStreamException::NOT_OPEN, $e->getCode());
-        }
-    }
-    
     public function testWriteOnClosedStream() {
         $stream = $this->getBasicStream();
         
@@ -85,19 +72,6 @@ class BinaryStreamTest extends QtiSmTestCase {
         
         try {
             $stream->rewind();
-            // An exception must be thrown.
-            $this->assertTrue(false);
-        }
-        catch (BinaryStreamException $e) {
-            $this->assertEquals(BinaryStreamException::NOT_OPEN, $e->getCode());
-        }
-    }
-    
-    public function testEofOnClosedStream() {
-        $stream = $this->getBasicStream();
-        
-        try {
-            $eof = $stream->eof();
             // An exception must be thrown.
             $this->assertTrue(false);
         }
