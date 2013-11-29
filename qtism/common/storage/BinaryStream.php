@@ -200,7 +200,7 @@ class BinaryStream implements IStream {
      */
     public function write($data) {
         
-        if ($this->getLength() - 1 === $this->position) {
+        if ($this->length - 1 === $this->position) {
             // simply append.
             $this->binary .= $data;
         }
