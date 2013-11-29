@@ -1794,12 +1794,11 @@ class AssessmentTestSession extends State {
 	public function checkTimeLimits() {
 	    
 	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null && $timeLimits->hasMaxTime() === true) {
-	        $currentTestPart = $this->getCurrentTestPart();
-	        $currentDuration = $this[$currentTestPart->getIdentifier() . '.duration'];
+	        $currentDuration = $this[$this->getCurrentTestPart()->getIdentifier() . '.duration'];
 	        $referenceDuration = $timeLimits->getMaxTime();
 	        
 	        if ($currentDuration->getSeconds(true) > $referenceDuration->getSeconds(true)) {
-	            $msg = "Maximum duration of TestPart '" . $currentTestPart->getIdentifier() . "' exceeded.";
+	            $msg = "Maximum duration of TestPart '" . $this->getCurrentTestPart()->getIdentifier() . "' exceeded.";
 	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW);
 	        }
 	    }

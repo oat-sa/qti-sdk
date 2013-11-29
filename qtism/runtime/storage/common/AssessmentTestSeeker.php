@@ -139,15 +139,14 @@ class AssessmentTestSeeker {
      * @return integer The position in the AssessmentTest tree the component was found.
      */
     protected function addToComponentStore(QtiComponent $component) {
-        $store = &$this->getComponentStore();
         $class = $component->getQtiClassName();
         
-        if (isset($store[$class]) === false) {
-            $store[$class] = array();
+        if (isset($this->componentsStore[$class]) === false) {
+            $this->componentsStore[$class] = array();
         }
         
         $position = $this->getClassCount($class);
-        $store[$class][$position] = $component;
+        $this->componentsStore[$class][$position] = $component;
         $this->incrementClassCount($component);
         
         return $position;
@@ -269,28 +268,26 @@ class AssessmentTestSeeker {
      * @param QtiComponent $component A QtiComponent object.
      */
     protected function incrementClassCount(QtiComponent $component) {
-        $classCounter = &$this->getClassCounter();
         $class = $component->getQtiClassName();
         
-        if (isset($classCounter[$class]) === false) {
-            $classCounter[$class] = 0;
+        if (isset($this->classCounter[$class]) === false) {
+            $this->classCounter[$class] = 0;
         }
         
-        $classCounter[$class] += 1;
+        $this->classCounter[$class] += 1;
     }
     
     /**
      * Get the number of explored components for a given QTI $class name.
      * 
-     * @param $class A QTI class name.
-     * @return ninteger The number of explored components that belong to the $class.
+     * @param string $class A QTI class name.
+     * @return integer The number of explored components that belong to the $class.
      */
     protected function getClassCount($class) {
         $count = 0;
-        $classCounter = &$this->getClassCounter();
         
-        if (isset($classCounter[$class]) === true) {
-            $count = $classCounter[$class];
+        if (isset($this->classCounter[$class]) === true) {
+            $count = $this->classCounter[$class];
         }
         
         return $count;
