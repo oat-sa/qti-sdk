@@ -143,7 +143,7 @@ class State extends AbstractCollection {
 	}
 	
 	public function offsetGet($offset) {
-		if (gettype($offset) === 'string' && empty($offset) === false) {
+		if (is_string($offset) === true && $offset !== '') {
 			$data = &$this->getDataPlaceHolder();
 			if (isset($data[$offset])) {
 				return $data[$offset]->getValue();

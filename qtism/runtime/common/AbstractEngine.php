@@ -134,6 +134,6 @@ abstract class AbstractEngine implements Processable {
 	 */
 	protected function trace($message) {
 		$item = new StackTraceItem($this->getComponent(), $message);
-		$this->getStackTrace()->push($item);
+		$this->stackTrace->push($item);
 	}
 }

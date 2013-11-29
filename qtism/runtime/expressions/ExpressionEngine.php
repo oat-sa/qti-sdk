@@ -176,17 +176,15 @@ class ExpressionEngine extends AbstractEngine {
 	 */
 	protected function pushTrail($expression) {
 		
-		$trail = &$this->getTrail();
-		
 		if ($expression instanceof Expression) {
-			array_push($trail, $expression);
+			array_push($this->trail, $expression);
 		}
 		else {
 			// Add the collection in reverse order.
 			$i = count($expression);
 			while ($i >= 1) {
 				$i--;
-				array_push($trail, $expression[$i]);
+				array_push($this->trail, $expression[$i]);
 			}	
 		}
 	}
@@ -197,8 +195,7 @@ class ExpressionEngine extends AbstractEngine {
 	 * @return Expression $expression The Expression object at the top of the trail stack.
 	 */
 	protected function popTrail() {
-		$trail = &$this->getTrail();
-		return array_pop($trail);
+		return array_pop($this->trail);
 	}
 	
 	/**
@@ -243,8 +240,7 @@ class ExpressionEngine extends AbstractEngine {
 	 * @param Expression $expression An explored Expression object.
 	 */
 	protected function mark(Expression $expression) {
-		$marker = &$this->getMarker();
-		array_push($marker, $expression);
+		array_push($this->marker, $expression);
 	}
 	
 	/**
@@ -254,8 +250,7 @@ class ExpressionEngine extends AbstractEngine {
 	 * @return boolean Whether $expression is marked as explored.
 	 */
 	protected function isMarked(Expression $expression) {
-		$marker = &$this->getMarker();
-		return in_array($expression, $marker, true);
+		return in_array($expression, $this->marker, true);
 	}
 	
 	/**
@@ -268,10 +263,8 @@ class ExpressionEngine extends AbstractEngine {
 		$expression = $this->getComponent();
 		
 		// Reset trail and marker arrays.
-		$trail = array();
-		$this->setTrail($trail);
-		$marker = array();
-		$this->setMarker($marker);
+		$this->trail = array();
+		$this->marker = array();
 		
 		$this->pushTrail($expression);
 		
@@ -287,10 +280,9 @@ class ExpressionEngine extends AbstractEngine {
 			}
 			else if ($this->isMarked($expression)) {
 				// Operator, second pass. Process it.
-				$factory = $this->getOperatorProcessorFactory();
 				$popCount = count($expression->getExpressions());
-				$operands = $this->getOperands()->pop($popCount);
-				$processor = $factory->createProcessor($expression, $operands);
+				$operands = $this->operands->pop($popCount);
+				$processor = $this->operatorProcessorFactory->createProcessor($expression, $operands);
 				$processor->setState($this->getContext());
 				$result = $processor->process();
 				
@@ -300,17 +292,16 @@ class ExpressionEngine extends AbstractEngine {
 				$this->traceOperator($processor, $result);
 				
 				if ($expression !== $this->getComponent()) {
-					$this->getOperands()->push($result);
+					$this->operands->push($result);
 				}
 			}
 			else {
 				// Simple expression, process it.
-				$factory = $this->getExpressionProcessorFactory();
-				$processor = $factory->createProcessor($expression);
+				$processor = $this->expressionProcessorFactory->createProcessor($expression);
 				$processor->setState($this->getContext());
 				
 				$result = $processor->process();
-				$this->getOperands()->push($result);
+				$this->operands->push($result);
 				
 				// trace the processing of the expression.
 				$qtiName = $expression->getQtiClassName();

@@ -234,7 +234,7 @@ class RouteItem {
      * @param BranchRule $branchRule A BranchRule object to be added.
      */
     public function addBranchRule(BranchRule $branchRule) {
-        $this->getBranchRules()->attach($branchRule);
+        $this->branchRules->attach($branchRule);
     }
     
     /**
@@ -272,7 +272,7 @@ class RouteItem {
      * @param PreCondition $preCondition A PreCondition object to be added.
      */
     public function addPreCondition(PreCondition $preCondition) {
-        $this->getPreConditions()->attach($preCondition);
+        $this->preConditions->attach($preCondition);
     }
     
     /**

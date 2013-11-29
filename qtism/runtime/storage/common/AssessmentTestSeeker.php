@@ -162,11 +162,10 @@ class AssessmentTestSeeker {
      */
     protected function getComponentFromComponentStore($class, $position) {
         
-        $componentStore = &$this->getComponentStore();
         $component = false;
         
-        if (isset($componentStore[$class]) === true && isset($componentStore[$class][$position]) === true) {
-            $component = $componentStore[$class][$position];
+        if (isset($this->componentsStore[$class]) === true && isset($this->componentsStore[$class][$position]) === true) {
+            $component = $this->componentsStore[$class][$position];
         }
         
         return $component;
@@ -180,12 +179,11 @@ class AssessmentTestSeeker {
      */
     protected function getPositionFromComponentStore(QtiComponent $component) {
         
-        $componentStore = &$this->getComponentStore();
         $position = false;
         $class = $component->getQtiClassName();
         
-        if (isset($componentStore[$class]) === true) {
-            if (($search = array_search($component, $componentStore[$class], true)) !== false) {
+        if (isset($this->componentsStore[$class]) === true) {
+            if (($search = array_search($component, $this->componentsStore[$class], true)) !== false) {
                 $position = $search;
             }
         }
@@ -211,13 +209,11 @@ class AssessmentTestSeeker {
         
         // Not already explored.
         // Continue to iterate until its found.
-        $iterator = $this->getIterator();
-        
-        while ($iterator->valid() === true) {
-            $component = $iterator->current();
+        while ($this->iterator->valid() === true) {
+            $component = $this->iterator->current();
             $newPosition = $this->addToComponentStore($component);
             
-            $iterator->next();
+            $this->iterator->next();
             
             if ($class === $component->getQtiClassName() && $newPosition === $position) {
                 return $component;
@@ -243,13 +239,11 @@ class AssessmentTestSeeker {
         }
         
         // We have to find it!
-        $iterator = $this->getIterator();
-        
-        while ($iterator->valid() === true) {
-            $current = $iterator->current();
+        while ($this->iterator->valid() === true) {
+            $current = $this->iterator->current();
             $newPosition = $this->addToComponentStore($current);
             
-            $iterator->next();
+            $this->iterator->next();
             
             if ($current === $component) {
                 return $newPosition;
