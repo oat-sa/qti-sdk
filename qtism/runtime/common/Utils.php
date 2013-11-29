@@ -89,52 +89,57 @@ class Utils {
 		}
 		
 		switch ($baseType) {
+		    case BaseType::IDENTIFIER:
+		        /*
+		         * Developer's note:
+		         * Using is_string instead of a full validation of the identifier
+		         * is a significant performance boost we definitely need.
+		         */
+		        return is_string($value);
+		    break;
+		    
+		    case BaseType::FLOAT:
+		        return is_double($value);
+		    break;
+		    
+		    case BaseType::INTEGER:
+		        return is_int($value);
+		    break;
+		    
+		    case BaseType::STRING:
+		        return is_string($value);
+		    break;
+		    
+		    case BaseType::DURATION:
+		        return $value instanceof Duration;
+		    break;
+		    
 			case BaseType::BOOLEAN:
 				return is_bool($value);
+			break;
+			
+			case BaseType::PAIR:
+			    return $value instanceof Pair;
 			break;
 					
 			case BaseType::DIRECTED_PAIR:
 				return $value instanceof DirectedPair;
 			break;
-					
-			case BaseType::DURATION:
-				return $value instanceof Duration;
+			
+			case BaseType::INT_OR_IDENTIFIER:
+			    return Format::isIdentifier($value) || is_int($value);
 			break;
+			
+			case BaseType::POINT:
+			    return $value instanceof Point;
+		    break;
 					
+		    case BaseType::URI:
+		        return Format::isUri($value);
+		    break;
+		    
 			case BaseType::FILE:
 				return Format::isFile($value);
-			break;
-					
-			case BaseType::FLOAT:
-				return is_float($value) || is_double($value);
-			break;
-					
-			case BaseType::IDENTIFIER:
-				return Format::isIdentifier($value);
-			break;
-					
-			case BaseType::INT_OR_IDENTIFIER:
-				return Format::isIdentifier($value) || is_int($value);
-			break;
-					
-			case BaseType::INTEGER:
-				return is_int($value);
-			break;
-					
-			case BaseType::PAIR:
-				return $value instanceof Pair;
-			break;
-					
-			case BaseType::POINT:
-				return $value instanceof Point;
-			break;
-					
-			case BaseType::STRING:
-				return gettype($value) === 'string';
-			break;
-					
-			case BaseType::URI:
-				return Format::isUri($value);
 			break;
 			
 			default:

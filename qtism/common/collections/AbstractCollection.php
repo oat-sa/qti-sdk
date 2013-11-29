@@ -51,14 +51,12 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 */
 	public function __construct(array $array = array()) {
 		
-		$dataPlaceHolder = &$this->getDataPlaceHolder();
-		
 		foreach ($array as $a) {
 			$this->checkType($a);
-			$dataPlaceHolder[] = $a;
+			array_push($this->dataPlaceHolder, $a);
 		}
 		
-		reset($dataPlaceHolder);
+		reset($this->dataPlaceHolder);
 	}
 	
 	/**
