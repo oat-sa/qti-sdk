@@ -506,7 +506,6 @@ class Route implements Iterator {
      * @param Route $route A Route object.
      */
     public function appendRoute(Route $route) {
-        $routeItems = &$this->getRouteItems();
         
         foreach ($route as $routeItem) {
             
@@ -532,56 +531,46 @@ class Route implements Iterator {
      * @param RouteItem $routeItem
      */
     protected function registerAssessmentItemRef(RouteItem $routeItem) {
-        $routeItems = &$this->getRouteItems();
-        array_push($routeItems, $routeItem);
+        array_push($this->routeItems, $routeItem);
         
         // For more convenience ;)
         $assessmentItemRef = $routeItem->getAssessmentItemRef();
         
         // Count the number of occurences for the assessmentItemRef.
-        $occurenceMap = $this->getAssessmentItemRefOccurenceMap();
-        if (isset($occurenceMap[$assessmentItemRef]) === false) {
-            $occurenceMap[$assessmentItemRef] = 0;
+        if (isset($this->assessmentItemRefOccurenceCount[$assessmentItemRef]) === false) {
+            $this->assessmentItemRefOccurenceCount[$assessmentItemRef] = 0;
         }
         
-        $occurenceMap[$assessmentItemRef] += 1;
-        $routeItem->setOccurence($occurenceMap[$assessmentItemRef] - 1);
+        $this->assessmentItemRefOccurenceCount[$assessmentItemRef] += 1;
+        $routeItem->setOccurence($this->assessmentItemRefOccurenceCount[$assessmentItemRef] - 1);
         
         // Reference the assessmentItemRef object of the RouteItem
         // for a later use.
-        $this->getAssessmentItemRefs()->attach($assessmentItemRef);
+        $this->assessmentItemRefs->attach($assessmentItemRef);
         
         // Reference the assessmentItemRef object of the RouteItem
         // by category for a later use.
-        $categoryMap = $this->getAssessmentItemRefCategoryMap();
         foreach ($assessmentItemRef->getCategories() as $category) {
-            if (isset($categoryMap[$category]) === false) {
-                $categoryMap[$category] = new AssessmentItemRefCollection();
+            if (isset($this->assessmentItemRefCategoryMap[$category]) === false) {
+                $this->assessmentItemRefCategoryMap[$category] = new AssessmentItemRefCollection();
             }
-            $categoryMap[$category][] = $assessmentItemRef;
+            $this->assessmentItemRefCategoryMap[$category][] = $assessmentItemRef;
             
-            $categories = $this->getCategories();
-            if ($categories->contains($category) === false) {
-                $categories[] = $category;
+            if ($this->categories->contains($category) === false) {
+                $this->categories[] = $category;
             }
-        }
-        
-        $this->setAssessmentItemRefCategoryMap($categoryMap);
+        }    
         
         // Reference the AssessmentItemRef object of the RouteItem
         // by section for a later use.
-        $sectionMap = $this->getAssessmentItemRefSectionMap();
         $assessmentSectionIdentifier = $routeItem->getAssessmentSection()->getIdentifier();
-        if (isset($sectionMap[$assessmentSectionIdentifier]) === false) {
-            $sectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
+        if (isset($this->assessmentItemRefSectionMap[$assessmentSectionIdentifier]) === false) {
+            $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
         }
-        $sectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
-        
-        $this->setAssessmentItemRefSectionMap($sectionMap);
+        $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
         
         // Reference the AssessmentItemRef by routeItem.
-        $assessmentItemRefMap = $this->getAssessmentItemRefMap();
-        $assessmentItemRefMap[$assessmentItemRef] = $routeItem;
+        $this->assessmentItemRefMap[$assessmentItemRef] = $routeItem;
     }
     
     /**
@@ -592,27 +581,24 @@ class Route implements Iterator {
      */
     protected function registerTestPart(RouteItem $routeItem) {
         // Register the RouteItem in the testPartMap.
-        $testPartMap = $this->getTestPartMap();
         $testPart = $routeItem->getTestPart();
         
-        if (isset($testPartMap[$testPart]) === false) {
-            $testPartMap[$testPart] = array();
+        if (isset($this->testPartMap[$testPart]) === false) {
+            $this->testPartMap[$testPart] = array();
         }
         
-        $target = $testPartMap[$testPart];
+        $target = $this->testPartMap[$testPart];
         $target[] = $routeItem;
-        $testPartMap[$testPart] = $target;
+        $this->testPartMap[$testPart] = $target;
         
         // Register the RouteItem in the testPartIdentifierMap.
-        $testPartIdentifierMap = $this->getTestPartIdentifierMap();
         $id = $testPart->getIdentifier();
         
-        if (isset($testPartIdentifierMap[$id]) === false) {
-            $testPartIdentifierMap[$id] = array();
+        if (isset($this->testPartIdentifierMap[$id]) === false) {
+            $this->testPartIdentifierMap[$id] = array();
         }
         
-        $testPartIdentifierMap[$id][] = $routeItem;
-        $this->setTestPartIdentifierMap($testPartIdentifierMap);
+        $this->testPartIdentifierMap[$id][] = $routeItem;
     }
     
     /**
@@ -622,30 +608,26 @@ class Route implements Iterator {
      * @param RouteItem $routeItem A RouteItem object.
      */
     protected function registerAssessmentSection(RouteItem $routeItem) {
-        $assessmentSectionMap = $this->getAssessmentSectionMap();
         
         foreach ($routeItem->getAssessmentSections() as $assessmentSection) {
             
-            if (isset($assessmentSectionMap[$assessmentSection]) === false) {
-                $assessmentSectionMap[$assessmentSection] = array();
+            if (isset($this->assessmentSectionMap[$assessmentSection]) === false) {
+                $this->assessmentSectionMap[$assessmentSection] = array();
             }
             
-            $target = $assessmentSectionMap[$assessmentSection];
+            $target = $this->assessmentSectionMap[$assessmentSection];
             $target[] = $routeItem;
-            $assessmentSectionMap[$assessmentSection] = $target;
+            $this->assessmentSectionMap[$assessmentSection] = $target;
             
             // Register the RouteItem in the assessmentSectionIdentifierMap.
-            $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
             $id = $assessmentSection->getIdentifier();
             
-            if (isset($assessmentSectionIdentifierMap) === false) {
+            if (isset($this->assessmentSectionIdentifierMap[$id]) === false) {
                 $assessmentSectionIdentifierMap[$id] = array();
             }
             
-            $assessmentSectionIdentifierMap[$id][] = $routeItem;
+            $this->assessmentSectionIdentifierMap[$id][] = $routeItem;
         }
-        
-        $this->setAssessmentSectionIdentifierMap($assessmentSectionIdentifierMap);
     }
     
     /**
