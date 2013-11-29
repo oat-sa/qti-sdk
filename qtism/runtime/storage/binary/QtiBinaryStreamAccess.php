@@ -87,8 +87,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 return;
             }
             
-            $isScalar = $this->readBoolean();
-            $count = ($isScalar === true) ? 1 : $this->readShort();
+            $count = ($this->readBoolean() === true) ? 1 : $this->readShort();
             
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
@@ -174,7 +173,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     $this->writeBoolean(true);
             
                     // content
-                    call_user_func(array($this, $toCall), $value);
+                    $this->$toCall($value);
                 }
                 else {
                     // is-scalar
@@ -187,7 +186,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     foreach ($value as $v) {
                         if (is_null($v) === false) {
                             $this->writeBoolean(false);
-                            call_user_func(array($this, $toCall), $v);
+                            $this->$toCall($v);
                         }
                         else {
                             $this->writeBoolean(true);

@@ -83,7 +83,7 @@ abstract class Variable {
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
+	 * @throws InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
 	 */
 	public function __construct($identifier, $cardinality, $baseType = -1, $value = null) {
 		$this->setIdentifier($identifier);
@@ -94,7 +94,7 @@ abstract class Variable {
 		$this->initialize();
 		
 		// If provided, set the value of the variable.
-		if (is_null($value) === false) {
+		if ($value !== null) {
 			$this->setValue($value);
 		}
 	}
@@ -107,20 +107,20 @@ abstract class Variable {
 	 *
 	 */
 	public function initialize() {
-		if ($this->getCardinality() === Cardinality::MULTIPLE) {
-			$value = new MultipleContainer($this->getBaseType());
+		if ($this->cardinality === Cardinality::MULTIPLE) {
+			$value = new MultipleContainer($this->baseType);
 		}
-		else if ($this->getCardinality() === Cardinality::ORDERED) {
-			$value = new OrderedContainer($this->getBaseType());
+		else if ($this->cardinality === Cardinality::ORDERED) {
+			$value = new OrderedContainer($this->baseType);
 		}
-		else if ($this->getCardinality() === Cardinality::RECORD) {
+		else if ($this->cardinality === Cardinality::RECORD) {
 			$value = new RecordContainer();
 		}
 		else {
 			$value = null;
 		}
 		
-		$this->setValue($value);
+		$this->value = $value;
 	}
 	
 	/**
@@ -136,16 +136,9 @@ abstract class Variable {
 	 * Get the identifier of the Variable.
 	 * 
 	 * @param string $identifier An identifier.
-	 * @throws InvalidArgumentException If $identifier is not a string.
 	 */
 	public function setIdentifier($identifier) {
-		if (gettype($identifier) === 'string') {
-			$this->identifier = $identifier;
-		}
-		else {
-			$msg = "The identifier argument must be a string, " . gettype($identifier) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
+	    $this->identifier = $identifier;
 	}
 	
 	/**
@@ -161,16 +154,9 @@ abstract class Variable {
 	 * Set the cardinality of the Variable.
 	 * 
 	 * @param integer $cardinality A value from the Cardinality enumeration.
-	 * @throws InvalidArgumentException If $cardinality is not a value from the Cardinality enumeration.
 	 */
 	public function setCardinality($cardinality) {
-		if (in_array($cardinality, Cardinality::asArray())) {
-			$this->cardinality = $cardinality;
-		}
-		else {
-			$msg = "The cardinality of a variable must be a value from the Cardinality enumeration, '" . $cardinality . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
+		$this->cardinality = $cardinality;
 	}
 	
 	/**
@@ -186,20 +172,15 @@ abstract class Variable {
 	 * Set the baseType of the Variable.
 	 * 
 	 * @param integer $baseType A value from the Cardinality enumeration or -1 if there is no baseType in a Cardinality::RECORD context.
-	 * @throws InvalidArgumentException If $baseType is not a value from the Cardinality enumeration or if -1 is passed but Cardinality::RECORD is not set.
+	 * @throws InvalidArgumentException If -1 is passed but Cardinality::RECORD is not set.
 	 */
 	public function setBaseType($baseType) {
-		if ($baseType === -1 || in_array($baseType, BaseType::asArray())) {
-			if ($baseType === -1 && !$this->isRecord()) {
-				$msg = "You are forced to specify a baseType if cardinality is not RECORD.";
-				throw new InvalidArgumentException($msg);
-			}
-			$this->baseType = $baseType;
-		}
-		else {
-			$msg = "The baseType of a variable must be a value from the BaseType enumeration, '" . $baseType . "' given.";
+		if ($baseType === -1 && $this->isRecord() === false) {
+			$msg = "You are forced to specify a baseType if cardinality is not RECORD.";
 			throw new InvalidArgumentException($msg);
 		}
+		
+		$this->baseType = $baseType;
 	}
 	
 	/**
@@ -219,7 +200,7 @@ abstract class Variable {
 	 */
 	public function setValue($value) {
 		
-		if ($this->isSingle() && Utils::isBaseTypeCompliant($this->getBaseType(), $value)) {
+		if ($this->isSingle() && Utils::isBaseTypeCompliant($this->baseType, $value)) {
 			$this->value = $value;
 			return;
 		}
@@ -228,10 +209,10 @@ abstract class Variable {
 		    return;
 		}
 		else if (($this->isMultiple() || $this->isRecord()) && $value instanceof Container) {
-			if ($value->getCardinality() === $this->getCardinality()) {
+			if ($value->getCardinality() === $this->cardinality) {
 				
 				if ($value instanceof RecordContainer || 
-					$value->getBaseType() === $this->getBaseType()) {
+					$value->getBaseType() === $this->baseType) {
 					// This is a simple|Record container with no baseType restriction
 					// or a Multiple|Record|Ordered container with a compliant
 					// baseType.
@@ -241,19 +222,19 @@ abstract class Variable {
 				else {
 					$msg = "The baseType of the given container ('" . BaseType::getNameByConstant($value->getBaseType()) . "') ";
 					$msg.= "is not compliant with ";
-					$msg.= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
+					$msg.= "the baseType of the variable ('" . BaseType::getNameByConstant($this->baseType) . "').";
 					throw new InvalidArgumentException($msg);
 				}
 			}
 			else {
 				$msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
 				$msg.= "is not compliant with ";
-				$msg.= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
+				$msg.= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->cardinality) . "').";
 				throw new InvalidArgumentException($msg);
 			}
 		}
 	    
-		Utils::throwBaseTypeTypingError($this->getBaseType(), $value);
+		Utils::throwBaseTypeTypingError($this->baseType, $value);
 	}
 	
 	/**
@@ -396,7 +377,7 @@ abstract class Variable {
 	 * @return boolean
 	 */
 	public function isSingle() {
-		return $this->getCardinality() === Cardinality::SINGLE;
+		return $this->cardinality === Cardinality::SINGLE;
 	}
 	
 	/**
@@ -407,7 +388,7 @@ abstract class Variable {
 	 * @return boolean
 	 */
 	public function isMultiple() {
-		return $this->getCardinality() === Cardinality::MULTIPLE || $this->getCardinality() === Cardinality::ORDERED;
+		return $this->cardinality === Cardinality::MULTIPLE || $this->cardinality === Cardinality::ORDERED;
 	}
 	
 	/**
@@ -418,7 +399,7 @@ abstract class Variable {
 	 * @return boolean
 	 */
 	public function isOrdered() {
-		return $this->getCardinality() === Cardinality::ORDERED;
+		return $this->cardinality === Cardinality::ORDERED;
 	}
 	
 	/**
@@ -429,7 +410,7 @@ abstract class Variable {
 	 * @return boolean
 	 */
 	public function isRecord() {
-		return $this->getCardinality() === Cardinality::RECORD;
+		return $this->cardinality === Cardinality::RECORD;
 	}
 	
 	/**
@@ -441,8 +422,7 @@ abstract class Variable {
 	 * @return boolean
 	 */
 	public function isNumeric() {
-		$baseType = $this->getBaseType();
-		return ($this->IsNull()) ? false : ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT);
+		return ($this->IsNull()) ? false : ($this->baseType === BaseType::INTEGER || $this->baseType === BaseType::FLOAT);
 	}
 	
 	/**

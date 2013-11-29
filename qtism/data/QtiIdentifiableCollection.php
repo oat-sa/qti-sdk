@@ -110,7 +110,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	public function offsetSet($offset, $value) {
 		$this->checkType($value);
 		
-		if (is_null($offset) === false) {
+		if ($offset !== null) {
 			$msg = "No specfic offset can be set in a QtiIdentifiableCollection. ";
 			$msg.= "The offset is always infered from the 'identifier' attribute of ";
 			$msg.= "the given QtiIdentifier object. Given offset is '${offset}'";
@@ -118,8 +118,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 			throw new OutOfRangeException($msg);
 		}
 		
-		$data = &$this->getDataPlaceHolder();
-		$data[$value->getIdentifier()] = $value;
+		$this->dataPlaceHolder[$value->getIdentifier()] = $value;
 		
 		// Listen to events thrown by this $value.
 		$value->attach($this);

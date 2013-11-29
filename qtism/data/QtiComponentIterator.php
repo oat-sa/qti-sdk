@@ -208,10 +208,7 @@ class QtiComponentIterator implements Iterator {
 	 */
 	protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components) {
 		
-		$trailEntry = array();
-		$components = array_reverse($components->getArrayCopy());
-		
-		foreach ($components as $c) {
+		foreach (array_reverse($components->getArrayCopy()) as $c) {
 			array_push($this->trail, array($source, $c));
 			$this->trailCount++;
 		}

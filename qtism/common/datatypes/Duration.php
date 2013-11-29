@@ -69,14 +69,14 @@ class Duration implements Comparable, QtiDatatype {
 	 * @throws InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
 	 */
 	public function __construct($intervalSpec) {
-		if (gettype($intervalSpec) === 'string' && empty($intervalSpec) === false) {
+		if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
 			try {
 				$d1 = new DateTime();
 				$d2 = new DateTime();
 				$d2->add(new DateInterval($intervalSpec));
 				$interval = $d2->diff($d1);
 				$interval->invert = ($interval->invert === 1) ? 0 : 1;
-				$this->setInterval($interval);
+				$this->interval = $interval;
 			}
 			catch (Exception $e) {
 				$msg = "The specified interval specification cannot be processed as an ISO8601 duration.";
