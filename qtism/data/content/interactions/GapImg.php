@@ -103,6 +103,15 @@ class GapImg extends GapChoice {
     }
     
     /**
+     * Whether a value is defined for the 'objectLabel' attribute.
+     * 
+     * @return boolean
+     */
+    public function hasObjectLabel() {
+        return $this->getObjectLabel() !== '';
+    }
+    
+    /**
      * Set the Object representing the GapImg's image.
      * 
      * @param Object $object An Object object.

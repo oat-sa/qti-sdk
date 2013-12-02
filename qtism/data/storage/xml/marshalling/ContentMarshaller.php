@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\GapMatchInteraction;
+
 use qtism\data\content\interactions\GapImg;
 
 use qtism\data\content\interactions\GapText;
@@ -74,12 +76,11 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock', 'gap',
-                                      'printedVariable', 'stylesheet', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
                                       'graphicOrderInteraction', 'graphicAssociateInteraction', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
-                                      'drawingInteraction', 'uploadInteraction', 'customInteraction');
+                                      'drawingInteraction', 'uploadInteraction', 'customInteraction', 'printedVariable');
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
@@ -168,6 +169,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof AssociateInteraction) {
             return $component->getSimpleAssociableChoices()->getArrayCopy();
         }
+        else if ($component instanceof GapMatchInteraction) {
+            return $component->getContent()->getArrayCopy();
+        }
         else if ($component instanceof MatchInteraction) {
             return $component->getSimpleMatchSets()->getArrayCopy();
         }
@@ -191,6 +195,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'matchInteraction') {
             return self::getChildElementsByTagName($element, 'simpleMatchSet');
+        }
+        else if ($element->nodeName === 'gapMatchInteraction') {
+            return self::getChildElementsByTagName($element, array('gapText', 'gapImg'), true);
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));

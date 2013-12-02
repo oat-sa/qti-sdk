@@ -61,7 +61,6 @@ class GapChoiceMarshaller extends ContentMarshaller {
                     $component = new $fqClass($identifier, $matchMax);
                 }
                 
-                
                 if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
@@ -87,7 +86,7 @@ class GapChoiceMarshaller extends ContentMarshaller {
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                 }
-                
+               
                 self::fillBodyElement($component, $element);
                 return $component;
             }
@@ -126,6 +125,10 @@ class GapChoiceMarshaller extends ContentMarshaller {
         
         if ($component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+        }
+        
+        if ($element->nodeName === 'gapImg' && $component->hasObjectLabel() === true) {
+            self::setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
         }
         
         foreach ($elements as $e) {

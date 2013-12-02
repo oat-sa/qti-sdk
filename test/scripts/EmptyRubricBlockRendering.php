@@ -10,7 +10,6 @@ $doc->load('../samples/rendering/empty_rubricblock.xml');
 
 $renderer = new XhtmlRenderingEngine();
 $rendering = $renderer->render($doc->getDocumentComponent());
-var_dump($rendering);
 $rendering->formatOutput = true;
 
 echo $rendering->saveHTML();
