@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\GapImg;
+
+use qtism\data\content\interactions\GapText;
+
 use qtism\data\content\interactions\MatchInteraction;
 use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\interactions\AssociateInteraction;
@@ -80,7 +84,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -149,6 +153,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof SimpleMatchSet) {
             return $component->getSimpleAssociableChoices()->getArrayCopy();
         }
+        else if ($component instanceof GapText) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof GapImg) {
+            return array($component->getObject());
+        }
         else if ($component instanceof ChoiceInteraction) {
             return $component->getSimpleChoices()->getArrayCopy();
         }
@@ -199,6 +209,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'simpleMatchSet') {
             return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
+        }
+        else if ($element->nodeName === 'gapImg') {
+            return self::getChildElementsByTagName($element, 'object');
         }
     }
     
