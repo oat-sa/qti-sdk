@@ -25,41 +25,40 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\content\interactions\Orientation;
+use qtism\data\ShowHide;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ChoiceInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-choiceInteraction' additional CSS class.
+ * SimpleAssociableChoice renderer. This renderer will transform the prompt into a 'div' element with an
+ * additional 'qti-simpleAssociableChoice' CSS class.
  * 
- * The following data-X attributes will be rendered:
+ * Depending on the value of the qti:choice->showHide attribute and only if 
+ * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
+ * a value of 'qti-show' or 'qti-hide' will be set.
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-shuffle = qti:choiceInteraction->shuffle
- * * data-maxChoices = qti:choiceInteraction->maxChoices
- * * data-minChoices = qti:choiceInteraction->minChoices
- * * data-orientation = qti:choiceInteraction->orientation
+ * Moreover, the following data will be set to the data set of the element
+ * with the help of the data-X attributes:
+ * 
+ * * data-identifier = qti:choice->identifier
+ * * data-fixed = qti:choice->fixed
+ * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
+ * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * * data-matchMax = qti:choice->matchMax
+ * * data-matchMin = qti:choice->matchMin
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ChoiceInteractionRenderer extends InteractionRenderer {
-    
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
-        $this->transform('div');
-    }
+class SimpleAssociableChoiceRenderer extends ChoiceRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-choiceInteraction');
+        $this->additionalClass('qti-simpleAssociableChoice');
         
-        $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
-        $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
+        $fragment->firstChild->setAttribute('matchMax', $component->getMatchMax());
+        $fragment->firstChild->setAttribute('matchMin', $component->getMatchMin());
     }
 }

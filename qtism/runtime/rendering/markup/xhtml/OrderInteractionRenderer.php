@@ -44,7 +44,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OrderInteractionRenderer extends BodyElementRenderer {
+class OrderInteractionRenderer extends InteractionRenderer {
     
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);

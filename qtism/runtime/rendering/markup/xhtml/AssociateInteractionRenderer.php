@@ -25,27 +25,25 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\content\interactions\Orientation;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ChoiceInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-choiceInteraction' additional CSS class.
+ * AssociateInteraction renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-associateInteraction' additional CSS class.
  * 
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-shuffle = qti:choiceInteraction->shuffle
- * * data-maxChoices = qti:choiceInteraction->maxChoices
- * * data-minChoices = qti:choiceInteraction->minChoices
- * * data-orientation = qti:choiceInteraction->orientation
+ * * data-shuffle = qti:associateInteraction->shuffle
+ * * data-maxAssociations = qti:associateInteraction->maxAssociations
+ * * data-minAssociations = qti:associateInteraction->minAssociations
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ChoiceInteractionRenderer extends InteractionRenderer {
+class AssociateInteractionRenderer extends InteractionRenderer {
     
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
@@ -55,11 +53,10 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-choiceInteraction');
+        $this->additionalClass('qti-associateInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
-        $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
+        $fragment->firstChild->setAttribute('data-maxAssociations', $component->getMaxAssociations());
+        $fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
     }
 }

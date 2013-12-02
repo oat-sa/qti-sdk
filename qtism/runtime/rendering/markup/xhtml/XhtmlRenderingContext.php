@@ -122,7 +122,9 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
         $this->registerRenderer('choiceInteraction', new ChoiceInteractionRenderer());
         $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
+        $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
+        $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
     }
 
     /**
