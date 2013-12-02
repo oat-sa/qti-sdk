@@ -39,4 +39,13 @@ class GapTextMarshallerTest extends QtiSmTestCase {
 	    $this->assertFalse($gapText->hasTemplateIdentifier());
 	    $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 	}
+	
+	public function testUnmarshallInvalid() {
+	    $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
+	    $element = $element = $this->createDOMElement('
+	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
+	    ');
+	    
+	    $element = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	}
 }

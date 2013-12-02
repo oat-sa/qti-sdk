@@ -47,7 +47,20 @@ class GapChoiceMarshaller extends ContentMarshaller {
             if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                 
                 $fqClass = $this->lookupClass($element);
-                $component = new $fqClass($identifier, $matchMax);
+                
+                if ($element->nodeName === 'gapImg') {
+                    if (count($children) === 1) {
+                        $component = new $fqClass($identifier, $matchMax, $children[0]);
+                    }
+                    else {
+                        $msg = "A 'gapImg' element must contain a single 'object' element, " . count($children) . " given.";
+                        throw new UnmarshallingException($msg, $element);
+                    }
+                }
+                else {
+                    $component = new $fqClass($identifier, $matchMax);
+                }
+                
                 
                 if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
@@ -66,21 +79,16 @@ class GapChoiceMarshaller extends ContentMarshaller {
                 }
                 
                 if ($element->nodeName === 'gapText') {
-                    $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
-                }
-                else {
-                    // $element->nodeName === 'gapImg'.
-                    if (count($children) === 1) {
-                        $component->setObject($children[0]);
+                    try {
+                        $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
                     }
-                    else {
-                        $msg = "A 'gapImg' element only contains a single 'object' element.";
-                        throw new UnmarshallingException($msg, $element);
+                    catch (InvalidArgumentException $e) {
+                        $msg = "Invalid content in 'gapText' element.";
+                        throw new UnmarshallingException($msg, $element, $e);
                     }
                 }
                 
                 self::fillBodyElement($component, $element);
-                
                 return $component;
             }
             else {

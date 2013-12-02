@@ -146,7 +146,7 @@ class MarshallerFactory {
 		$this->addMappingEntry('dt', 'qtism\\data\\storage\\xml\\marshalling\\DlElementMarshaller');
 		$this->addMappingEntry('orderInteraction', 'qtism\\data\\storage\\xml\\marshalling\\ChoiceInteractionMarshaller');
 		$this->addMappingEntry('gapText', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
-		$this->addMappingEntry('gapImg', 'qtism\\data\\storage\\xml\\marshalling\\GapImgMarshaller');
+		$this->addMappingEntry('gapImg', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
 	}
 	
 	/**
