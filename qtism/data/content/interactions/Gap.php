@@ -52,15 +52,16 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	 * Create a new Gap object.
 	 * 
 	 * @param string $identifier The identifier of the gap.
+	 * @param boolean $required Whether or not the Gap is required to be filled to form a valid response.
 	 * @param string $id The identifier of the bodyElement.
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
 	 * @throws InvalidArgumentException If one of the constructor's argument is invalid.
 	 */
-	public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
+	public function __construct($identifier, $required = false, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
-		$this->setRequired(false);
+		$this->setRequired($required);
 	}
 	
 	/**

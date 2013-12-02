@@ -69,7 +69,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     protected $lookupClasses;
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
-                                      'thead', 'tfoot', 'rubricBlock',
+                                      'thead', 'tfoot', 'rubricBlock', 'gap',
                                       'printedVariable', 'stylesheet', 'gapMatchInteraction',
                                       'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
