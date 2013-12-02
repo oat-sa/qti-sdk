@@ -55,6 +55,7 @@ class OrderInteractionRenderer extends InteractionRenderer {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-orderInteraction');
+        $this->additionalClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         

@@ -123,8 +123,10 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('choiceInteraction', new ChoiceInteractionRenderer());
         $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
         $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
+        $this->registerRenderer('matchInteraction', new MatchInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
+        $this->registerRenderer('simpleMatchSet', new SimpleMatchSetRenderer());
     }
 
     /**

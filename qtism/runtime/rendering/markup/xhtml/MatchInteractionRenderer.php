@@ -30,13 +30,20 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SimpleMatchSet renderer. Will render the element with an additional
- * CSS class 'qti-simpleMatchSet'.
+ * MatchInteraction renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-matchInteraction' additional CSS class.
+ * 
+ * The following data-X attributes will be rendered:
+ * 
+ * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-shuffle = qti:associateInteraction->shuffle
+ * * data-maxAssociations = qti:associateInteraction->maxAssociations
+ * * data-minAssociations = qti:associateInteraction->minAssociations
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleMatchSetRenderer extends AbstractXhtmlRenderer {
+class MatchInteractionRenderer extends InteractionRenderer {
     
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
@@ -44,7 +51,12 @@ class SimpleMatchSetRenderer extends AbstractXhtmlRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $this->additionalClass('qti-simpleMatchSet');
-        return;
+        
+        parent::appendAttributes($fragment, $component);
+        $this->additionalClass('qti-matchInteraction');
+        
+        $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('data-maxAssociations', $component->getMaxAssociations());
+        $fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
     }
 }

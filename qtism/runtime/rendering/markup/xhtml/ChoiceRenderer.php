@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\interactions\Orientation;
 use qtism\data\ShowHide;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
@@ -49,7 +50,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class ChoiceRenderer extends BodyElementRenderer {
+abstract class ChoiceRenderer extends InteractionRenderer {
     
     /**
      * Create a new SimpleChoiceRenderer.
@@ -67,6 +68,8 @@ abstract class ChoiceRenderer extends BodyElementRenderer {
         
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
+        
+        $this->additionalClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
         
         if ($component->hasTemplateIdentifier() === true) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');

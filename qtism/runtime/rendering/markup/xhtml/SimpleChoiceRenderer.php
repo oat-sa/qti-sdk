@@ -49,7 +49,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceRenderer extends ChoiceRenderer {
+class SimpleChoiceRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         

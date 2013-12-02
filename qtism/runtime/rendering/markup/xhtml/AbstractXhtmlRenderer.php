@@ -78,8 +78,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
     }
     
     protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
-        // Reset additional classes at each rendering.
-        $this->setAdditionalClasses(array());
+        
         
         $this->appendElement($fragment, $component);
         $this->appendChildren($fragment, $component);
@@ -91,6 +90,9 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
             $glue = ($currentClasses !== '') ? "\x20" : "";
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
+        
+        // Reset additional classes for next rendering.
+        $this->setAdditionalClasses(array());
     }
     
     /**
