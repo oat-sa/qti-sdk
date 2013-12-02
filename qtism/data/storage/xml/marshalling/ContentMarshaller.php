@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\SimpleMatchSet;
+
 use qtism\data\content\interactions\AssociateInteraction;
 
 use qtism\data\content\interactions\SimpleAssociableChoice;
@@ -146,6 +148,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof SimpleAssociableChoice) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof SimpleMatchSet) {
+            return $component->getSimpleAssociableChoices()->getArrayCopy();
+        }
         else if ($component instanceof ChoiceInteraction) {
             return $component->getSimpleChoices()->getArrayCopy();
         }
@@ -187,6 +192,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'blockquote') {
             return self::getChildElements($element);
+        }
+        else if ($element->nodeName === 'simpleMatchSet') {
+            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
         }
     }
     
