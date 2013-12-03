@@ -25,31 +25,22 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
-
-/**
- * The QTI XHTML Rendering Engine.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
- */
-class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRenderingConfig {
+interface XhtmlRenderingConfig {
     
-    protected function createRenderingContext() {
-        return new XhtmlRenderingContext();
-    }
+    /**
+     * Set whether or not choices in shufflable interactions
+     * e.g. ChoiceInteraction, MatchInteraction must be
+     * shuffled at rendering time.
+     *
+     * @param boolean $shuffle
+     */
+    public function setShuffle($shuffle);
     
-    protected function createFinalRendering() {
-        $dom = $this->getRenderingContext()->getDocument();
-        $dom->appendChild($this->getLastRendering());
-        return $dom;
-    }
-    
-    public function setShuffle($shuffle) {
-        $this->getRenderingContext()->setShuffle($shuffle);
-    }
-    
-    public function mustShuffle() {
-        return $this->getRenderingContext()->mustShuffle();
-    }
+    /**
+     * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
+     * MatchInteraction must be shuffled at rendering time.
+     *
+     * @return boolean
+     */
+    public function mustShuffle();
 }

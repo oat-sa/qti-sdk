@@ -34,7 +34,7 @@ use \DOMDocument;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class XhtmlRenderingContext extends AbstractRenderingContext {
+class XhtmlRenderingContext extends AbstractRenderingContext implements XhtmlRenderingConfig {
     
     /**
      * The document to be generated during the rendering.
@@ -42,6 +42,14 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
      * @var DOMDocument
      */
     private $document;
+    
+    /**
+     * Wether choices in shufflable interactions
+     * must be shuffled.
+     * 
+     * @var boolean
+     */
+    private $shuffle = false;
     
     /**
      * Create a new XhtmlRenderingContext object.
@@ -152,6 +160,14 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         return $this->document;
     }
     
+    public function setShuffle($shuffle) {
+        $this->shuffle = $shuffle;
+    }
+    
+    public function mustShuffle() {
+        return $this->shuffle;
+    }
+
     public function reset() {
         parent::reset();
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
