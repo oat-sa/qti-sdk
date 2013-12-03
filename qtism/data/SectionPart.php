@@ -31,7 +31,16 @@ use \InvalidArgumentException;
 use \SplObserver;
 use \SplObjectStorage;
 
-class SectionPart extends QtiComponent implements QtiIdentifiable {
+/**
+ * From IMS QTI:
+ * 
+ * Sections group together individual item references and/or sub-sections. 
+ * A number of common parameters are shared by both types of child element.
+ * 
+ * @author <jerome.bogaerts@taotesting.com>
+ *
+ */
+class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	
 	/**
 	 * A collection of SplObservers.

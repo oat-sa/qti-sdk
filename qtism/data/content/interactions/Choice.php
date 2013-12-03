@@ -23,6 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\data\Shufflable;
 use qtism\data\content\BodyElement;
 use qtism\data\QtiIdentifiable;
 use qtism\data\ShowHide;
@@ -38,7 +39,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Choice extends BodyElement implements QtiIdentifiable {
+abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable {
 	
 	/**
 	 * A collection of SplObservers.
