@@ -12,4 +12,4 @@ $renderer = new XhtmlRenderingEngine();
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
-echo $rendering->saveHTML();
+echo $rendering->saveXML();

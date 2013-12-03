@@ -8,6 +8,7 @@
 		<gapText identifier="Sp" matchMax="1">spring</gapText>
 		<gapText identifier="Su" matchMax="1">summer</gapText>
 		<gapText identifier="A" matchMax="1">autumn</gapText>
+		<gapImg identifier="Img" matchMax="1" objectLabel="Not a season..."><object data="./not-a-season.png" type="image/png"/></gapImg>
 		<blockquote>
 			<p>
 				Now is the

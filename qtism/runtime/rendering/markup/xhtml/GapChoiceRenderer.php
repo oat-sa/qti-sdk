@@ -57,7 +57,7 @@ abstract class GapChoiceRenderer extends ChoiceRenderer {
 
         parent::appendAttributes($fragment, $component);
         
-        $fragment->firstChild->setAttribute('matchMax', $component->getMatchMax());
-        $fragment->firstChild->setAttribute('matchmin', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-matchMax', $component->getMatchMax());
+        $fragment->firstChild->setAttribute('data-matchmin', $component->getMatchMin());
     }
 }

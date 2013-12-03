@@ -57,7 +57,7 @@ class GapImgRenderer extends GapChoiceRenderer {
 
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-gapText');
+        $this->additionalClass('qti-gapImg');
         
         if ($component->hasObjectLabel() === true) {
             $fragment->firstChild->setAttribute('title', $component->getObjectLabel());
