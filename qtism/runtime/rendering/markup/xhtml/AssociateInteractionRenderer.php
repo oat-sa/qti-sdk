@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\ShufflableCollection;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -59,4 +60,12 @@ class AssociateInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-maxAssociations', $component->getMaxAssociations());
         $fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
     }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        if ($this->getRenderingContext()->mustShuffle() === true) {
+            Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleAssociableChoices()->getArrayCopy()));
+        }
+    } 
 }

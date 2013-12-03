@@ -25,6 +25,8 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\ShufflableCollection;
+
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -58,5 +60,23 @@ class MatchInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-maxAssociations', $component->getMaxAssociations());
         $fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
+    }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        // Retrieve the two rendered simpleMatchSets and shuffle if needed.
+        if ($this->getRenderingContext()->mustShuffle() === true) {
+            
+            $currentSet = 0;
+            for ($i = 0; $i < $fragment->firstChild->childNodes->length; $i++) {
+                $n = $fragment->firstChild->childNodes->item($i);
+                if (Utils::hasClass($n, 'qti-simpleMatchSet') === true) {
+                    $sets = $component->getSimpleMatchSets();
+                    Utils::shuffle($n, new ShufflableCollection($sets[$currentSet]->getSimpleAssociableChoices()->getArrayCopy()));
+                    $currentSet++;
+                }
+            }
+        }
     }
 }

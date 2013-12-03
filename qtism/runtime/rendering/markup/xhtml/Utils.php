@@ -4,6 +4,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\ShufflableCollection;
 use \DOMNode;
+use \DOMElement;
 use \RuntimeException;
 
 /**
@@ -41,8 +42,7 @@ class Utils {
             while ($i < $node->childNodes->length) {
                 $n = $node->childNodes->item($i);
                 $i++;
-                
-                if ($n->nodeType === XML_ELEMENT_NODE && $n->nodeName === $s->getQtiClassName()) {
+                if ($n->nodeType === XML_ELEMENT_NODE && self::hasClass($n, 'qti-' . $s->getQtiClassName()) === true) {
                     $elements[] = $n;
                     break;
                 }
@@ -78,5 +78,32 @@ class Utils {
                 unset($placeholder2);
             }
         }
+    }
+    
+    /**
+     * Whether or not a given $node has the given CSS $class(es).
+     * 
+     * @param DOMNode $node
+     * @param string|array $class A class or an array of CSS classes.
+     * @return boolean
+     */
+    static public function hasClass(DOMNode $node, $class) {
+        if (is_array($class) === false) {
+            $class = array($class);
+        }
+        
+        if (!$node instanceof DOMElement) {
+            return false;
+        }
+        
+        $attr = explode("\x20", $node->getAttribute('class'));
+        
+        foreach ($class as $c) {
+            if (in_array($c, $attr) === false) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

@@ -18,19 +18,22 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $node = $dom->createElement('fakenode');
         $dom->appendChild($node);
         
-        $choice = $dom->createElement('simpleChoice');
+        $choice = $dom->createElement('div');
         $choice->setAttribute('fixed', 'false');
         $choice->setAttribute('id', 'choice1');
+        $choice->setAttribute('class', 'qti-simpleChoice');
         $node->appendChild($choice);
         
-        $choice = $dom->createElement('simpleChoice');
+        $choice = $dom->createElement('div');
         $choice->setAttribute('fixed', 'true');
         $choice->setAttribute('id', 'choice2');
+        $choice->setAttribute('class', 'qti-simpleChoice qti-hide');
         $node->appendChild($choice);
         
-        $choice = $dom->createElement('simpleChoice');
+        $choice = $dom->createElement('div');
         $choice->setAttribute('fixed', 'false');
         $choice->setAttribute('id', 'choice3');
+        $choice->setAttribute('class', 'qti-simpleChoice');
         $node->appendChild($choice);
         
         // In memory model creation ...
@@ -54,9 +57,9 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         Utils::shuffle($node, $shufflables);
         
         // Let's check if 'choice2' is still in place...
-        $this->assertEquals('choice2', $node->getElementsByTagName('simpleChoice')->item(1)->getAttribute('id'));
-        $node0Id = $node->getElementsByTagName('simpleChoice')->item(0)->getAttribute('id');
-        $node1Id = $node->getElementsByTagName('simpleChoice')->item(2)->getAttribute('id');
+        $this->assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
+        $node0Id = $node->getElementsByTagName('div')->item(0)->getAttribute('id');
+        $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
         $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
     

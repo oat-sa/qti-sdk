@@ -25,6 +25,8 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\ShufflableCollection;
+
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -54,5 +56,13 @@ class GapMatchInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-gapMatchInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
+    }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        if ($this->getRenderingContext()->mustShuffle() === true) {
+            Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getGapChoices()->getArrayCopy()));
+        }
     }
 }
