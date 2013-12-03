@@ -33,7 +33,7 @@ use \DOMDocumentFragment;
 
 /**
  * Choice renderer, the base class of all renderers that render subclasses of
- * qti:choice. This renderer will transform the prompt into a 'div' element.
+ * qti:choice. This renderer will transform the choice into a 'div' element.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -50,7 +50,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class ChoiceRenderer extends InteractionRenderer {
+abstract class ChoiceRenderer extends BodyElementRenderer {
     
     /**
      * Create a new SimpleChoiceRenderer.
@@ -68,8 +68,6 @@ abstract class ChoiceRenderer extends InteractionRenderer {
         
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
-        
-        $this->additionalClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
         
         if ($component->hasTemplateIdentifier() === true) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-show' : 'qti-hide');

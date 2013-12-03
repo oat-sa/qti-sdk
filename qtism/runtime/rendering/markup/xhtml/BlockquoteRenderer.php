@@ -25,35 +25,22 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\ShowHide;
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SimpleChoice renderer. This renderer will transform the prompt into a 'div' element with an
- * additional 'qti-simpleChoice' CSS class.
- * 
- * Depending on the value of the qti:choice->showHide attribute and only if 
- * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
- * a value of 'qti-show' or 'qti-hide' will be set.
- * 
- * Moreover, the following data will be set to the data set of the element
- * with the help of the data-X attributes:
- * 
- * * data-identifier = qti:choice->identifier
- * * data-fixed = qti:choice->fixed
- * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
- * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * Blockquote renderer.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceRenderer extends ChoiceRenderer {
+class BlockquoteRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
-        
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-simpleChoice');
+        
+        if ($component->hasCite() === true) {
+            $fragment->firstChild->setAttribute('cite', $component->getCite());
+        }
     }
 }

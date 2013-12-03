@@ -25,35 +25,34 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\ShowHide;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SimpleChoice renderer. This renderer will transform the prompt into a 'div' element with an
- * additional 'qti-simpleChoice' CSS class.
+ * GapMatchInteraction renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-gapMatchInteraction' additional CSS class.
  * 
- * Depending on the value of the qti:choice->showHide attribute and only if 
- * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
- * a value of 'qti-show' or 'qti-hide' will be set.
+ * The following data-X attributes will be rendered:
  * 
- * Moreover, the following data will be set to the data set of the element
- * with the help of the data-X attributes:
- * 
- * * data-identifier = qti:choice->identifier
- * * data-fixed = qti:choice->fixed
- * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
- * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-shuffle = qti:gapMatchInteraction->shuffle
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceRenderer extends ChoiceRenderer {
+class GapMatchInteractionRenderer extends InteractionRenderer {
+    
+    public function __construct(AbstractRenderingContext $renderingContext = null) {
+        parent::__construct($renderingContext);
+        $this->transform('div');
+    }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-simpleChoice');
+        $this->additionalClass('qti-gapMatchInteraction');
+        
+        $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
     }
 }

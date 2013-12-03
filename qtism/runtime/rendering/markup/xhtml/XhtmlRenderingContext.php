@@ -111,6 +111,7 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         // Other bindings...
         $this->registerRenderer('textRun', new TextRunRenderer());
         $this->registerRenderer('a', new ARenderer());
+        $this->registerRenderer('blockquote', new BlockquoteRenderer());
         $this->registerRenderer('img', new ImgRenderer());
         $this->registerRenderer('object', new ObjectRenderer());
         $this->registerRenderer('param', new ParamRenderer());
@@ -124,9 +125,13 @@ class XhtmlRenderingContext extends AbstractRenderingContext {
         $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
         $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
         $this->registerRenderer('matchInteraction', new MatchInteractionRenderer());
+        $this->registerRenderer('gapMatchInteraction', new GapMatchInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
         $this->registerRenderer('simpleMatchSet', new SimpleMatchSetRenderer());
+        $this->registerRenderer('gapText', new GapTextRenderer());
+        $this->registerRenderer('gapImg', new GapImgRenderer());
+        $this->registerRenderer('gap', new GapRenderer());
     }
 
     /**

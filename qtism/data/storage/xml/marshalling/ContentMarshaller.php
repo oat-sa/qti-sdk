@@ -197,7 +197,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return self::getChildElementsByTagName($element, 'simpleMatchSet');
         }
         else if ($element->nodeName === 'gapMatchInteraction') {
-            return self::getChildElementsByTagName($element, array('gapText', 'gapImg'), true);
+            return self::getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
