@@ -23,6 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
@@ -213,7 +214,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier) {
-        if (Format::isIdentifier($identifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
+        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
             $this->stringIdentifier = $stringIdentifier;
         }
         else {
@@ -410,15 +411,6 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getMinStrings() {
         return $this->minStrings;
-    }
-    
-    /**
-     * Whether a value for the minStrings attribute is defined.
-     * 
-     * @return boolean
-     */
-    public function hasMinStrings() {
-        return $this->getMinStrings() !== '';
     }
     
     /**

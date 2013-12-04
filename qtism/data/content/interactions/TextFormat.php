@@ -82,7 +82,7 @@ class TextFormat implements Enumeration {
                 return self::PLAIN;
             break;
             
-            case 'preFormatted':
+            case 'preformatted':
                 return self::PRE_FORMATTED;
             break;
             
