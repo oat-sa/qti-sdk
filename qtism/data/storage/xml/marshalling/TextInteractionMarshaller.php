@@ -87,6 +87,10 @@ class TextInteractionMarshaller extends Marshaller {
             if ($component->getFormat() !== TextFormat::PLAIN) {
                 self::setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
             }
+            
+            if ($component->hasPrompt() === true) {
+                $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
+            }
         }
         
         self::fillElement($element, $component);
@@ -150,8 +154,12 @@ class TextInteractionMarshaller extends Marshaller {
                 if (($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
                     $component->setFormat(TextFormat::getConstantByName($format));
                 }
+                
+                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                if (count($promptElts) > 0) {
+                    $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
+                }
             }
-            
              
             self::fillBodyElement($component, $element);
 		    return $component;

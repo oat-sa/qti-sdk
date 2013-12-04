@@ -25,14 +25,20 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\interactions\TextFormat;
+
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * TextEntryInteraction renderer. Will render components
- * as 'input' elements with type 'text' and an additional class
- * of 'qti-textEntryInteraction'.
+ * ExtendedTextInteraction renderer. Will render components
+ * as 'div' elements with type 'text' and an additional class
+ * of 'qti-extendedTextInteraction'.
+ * 
+ * The generated 'div' element will be composed of:
+ * * A 'div' element with the additional 'qti-prompt' CSS class if a prompt is present in the interaction.
+ * * A 'textarea' element representing the text input.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -42,20 +48,44 @@ use \DOMDocumentFragment;
  * * data-expectedLength = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
  * * data-patternMask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
  * * data-placeholderText = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
+ * * data-maxStrings = qti:extendedTextInteraction->maxStrings (only if set in QTI-XML counter-part).
+ * * data-minStrings = qti:extendedTextInteraction->minStrings.
+ * * data-expectedLines = qti:extendedTextInteraction->expectedLines (only if set in QTI-XML counter-part).
+ * * data-format = qti:extendedTextInteraction->format.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextEntryInteractionRenderer extends StringInteractionRenderer {
+class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
     
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
-        $this->transform('input');
+        $this->transform('div');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-textEntryInteraction');
-        $fragment->firstChild->setAttribute('type', 'text');
+        $this->additionalClass('qti-extendedTextInteraction');
+        
+        $fragment->firstChild->setAttribute('data-minStrings', $component->getMinStrings());
+        $fragment->firstChild->setAttribute('data-format', TextFormat::getNameByConstant($component->getFormat()));
+        
+        if ($component->hasMaxStrings() === true) {
+            $fragment->firstChild->setAttribute('data-maxStrings', $component->getMaxStrings());
+        }
+        
+        if ($component->hasExpectedLines() === true) {
+            $fragment->firstChild->setAttribute('data-expectedLines', $component->getExpectedLines());
+        }
+    }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        // Append a textarea...
+        $textarea = $fragment->ownerDocument->createElement('textarea');
+        // Makes the textarea non self-closing...
+        $textarea->appendChild($fragment->ownerDocument->createTextNode(''));
+        $fragment->firstChild->appendChild($textarea);
     }
 }
