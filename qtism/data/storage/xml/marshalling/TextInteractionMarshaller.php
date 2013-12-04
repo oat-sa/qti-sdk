@@ -24,28 +24,30 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\TextFormat;
+use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtism\data\content\interactions\TextEntryInteraction;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 use \DOMElement;
 
 /**
- * Marshalling/Unmarshalling implementation for TextEntryInteraction.
+ * Marshalling/Unmarshalling implementation for TextEntryInteraction/ExtendedTextInteraction.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextEntryInteractionMarshaller extends Marshaller {
+class TextInteractionMarshaller extends Marshaller {
 	
 	/**
-	 * Marshall a TextEntryInteraction object into a DOMElement object.
+	 * Marshall a TextEntryInteraction/ExtendedTextInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TextEntryInteraction object.
+	 * @param QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
 	 * @return DOMElement The according DOMElement object.
 	 * @throws MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
-        $element = self::getDOMCradle()->createElement('textEntryInteraction');
+        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
@@ -69,15 +71,33 @@ class TextEntryInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
         }
         
+        if ($element->nodeName === 'extendedTextInteraction') {
+            if ($component->hasMaxStrings() === true) {
+                self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
+            }
+            
+            if ($component->getMinStrings() !== 0) {
+                self::setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
+            }
+            
+            if ($component->hasExpectedLines() === true) {
+                self::setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
+            }
+            
+            if ($component->getFormat() !== TextFormat::PLAIN) {
+                self::setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
+            }
+        }
+        
         self::fillElement($element, $component);
         return $element;
 	}
 	
 	/**
-	 * Unmarshall a DOMElement object corresponding to a textEntryInteraction element.
+	 * Unmarshall a DOMElement object corresponding to a textEntryInteraction/extendedTextInteraction element.
 	 * 
 	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TextEntryInteraction object.
+	 * @return QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
 	 * @throws UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
@@ -85,10 +105,11 @@ class TextEntryInteractionMarshaller extends Marshaller {
 	    if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
             try {
-                $component = new TextEntryInteraction($responseIdentifier);
+                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->nodeName);
+                $component = new $class($responseIdentifier);
             }
             catch (InvalidArgumentException $e) {
-                $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the 'textEntryInteraction' element is not a valid identifier.";
+                $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->nodeName . "' element is not a valid identifier.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
             
@@ -112,16 +133,36 @@ class TextEntryInteractionMarshaller extends Marshaller {
                 $component->setPlaceholderText($placeholderText);
             }
             
+            if ($element->nodeName === 'extendedTextInteraction') {
+                
+                if (($maxStrings = self::getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
+                    $component->setMaxStrings($maxStrings);
+                }
+                
+                if (($minStrings = self::getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
+                    $component->setMinStrings($minStrings);
+                }
+                
+                if (($expectedLines = self::getDOMElementAttributeAs($element, 'expectedLines', 'integer')) !== null) {
+                    $component->setExpectedLines($expectedLines);
+                }
+                
+                if (($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
+                    $component->setFormat(TextFormat::getConstantByName($format));
+                }
+            }
+            
+             
             self::fillBodyElement($component, $element);
 		    return $component;
         }
         else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'textEntryInteraction' element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->nodeName . "' element.";
             throw new UnmarshallingException($msg, $element);
         }
 	}
 	
 	public function getExpectedQtiClassName() {
-		return 'textEntryInteraction';
+		return '';
 	}
 }
