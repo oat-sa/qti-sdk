@@ -35,7 +35,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineInteraction extends Interaction implements Flow, Inline {
+abstract class InlineInteraction extends Interaction implements Flow, Inline {
     
     /**
      * The base URI of the InlineInteraction.

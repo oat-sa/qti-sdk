@@ -83,7 +83,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoiceInteraction', 'inlineChoice');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -202,6 +202,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'gapMatchInteraction') {
             return self::getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
+        }
+        else if ($element->nodeName === 'inlineChoiceInteraction') {
+            return self::getChildElementsByTagName($element, 'inlineChoice');
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
