@@ -163,7 +163,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier) {
-        if (Format::isIdentifier($identifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
+        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
             $this->stringIdentifier = $stringIdentifier;
         }
         else {
