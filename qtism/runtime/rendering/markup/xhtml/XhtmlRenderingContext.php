@@ -134,8 +134,10 @@ class XhtmlRenderingContext extends AbstractRenderingContext implements XhtmlRen
         $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
         $this->registerRenderer('matchInteraction', new MatchInteractionRenderer());
         $this->registerRenderer('gapMatchInteraction', new GapMatchInteractionRenderer());
+        $this->registerRenderer('inlineChoiceInteraction', new InlineChoiceInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
+        $this->registerRenderer('inlineChoice', new InlineChoiceRenderer());
         $this->registerRenderer('simpleMatchSet', new SimpleMatchSetRenderer());
         $this->registerRenderer('gapText', new GapTextRenderer());
         $this->registerRenderer('gapImg', new GapImgRenderer());

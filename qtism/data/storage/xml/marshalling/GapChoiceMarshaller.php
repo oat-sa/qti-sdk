@@ -86,6 +86,11 @@ class GapChoiceMarshaller extends ContentMarshaller {
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                 }
+                else {
+                    if (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                        $component->setObjectLabel($objectLabel);
+                    }
+                }
                
                 self::fillBodyElement($component, $element);
                 return $component;

@@ -25,17 +25,13 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\data\content\interactions\Orientation;
-use qtism\data\ShowHide;
 use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * Choice renderer, the base class of all renderers that render subclasses of
- * qti:choice. This renderer will transform the choice into a 'div' element, by default.
- * Sub-classes may override this default transformation by calling the transform() method
- * accordingly.
+ * InlineChoice renderer. This renderer will transform the prompt into a 'option' element with an
+ * additional 'qti-inlineChoice' CSS class.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -52,29 +48,20 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class ChoiceRenderer extends BodyElementRenderer {
+class InlineChoiceRenderer extends ChoiceRenderer {
     
-    /**
-     * Create a new SimpleChoiceRenderer.
-     * 
-     * @param AbstractRenderingContext $renderingContext
-     */
     public function __construct(AbstractRenderingContext $renderingContext = null) {
         parent::__construct($renderingContext);
-        $this->transform('div');
+        // override 'div' transformation with a 'option' transformation.
+        $this->transform('option');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
         
-        $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
-        $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('value', $component->getIdentifier());
         
-        if ($component->hasTemplateIdentifier() === true) {
-            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
-            $fragment->firstChild->setAttribute('data-templateIdentifier', $component->getTemplateIdentifier());
-            $fragment->firstChild->setAttribute('data-showHide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
-        }
+        $this->additionalClass('qti-inlineChoice');
     }
 }
