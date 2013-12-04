@@ -24,12 +24,11 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\InlineChoice;
+use qtism\data\content\interactions\InlineChoiceInteraction;
 use qtism\data\content\interactions\GapMatchInteraction;
-
 use qtism\data\content\interactions\GapImg;
-
 use qtism\data\content\interactions\GapText;
-
 use qtism\data\content\interactions\MatchInteraction;
 use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\interactions\AssociateInteraction;
@@ -75,8 +74,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     protected $lookupClasses;
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
-                                      'thead', 'tfoot', 'rubricBlock', 'gap',
-                                      'inlineChoiceInteraction', 'textEntryInteraction', 'extendedTextInteraction',
+                                      'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
                                       'hottextInteraction', 'hotspotInteraction', 'selectPointInteraction',
                                       'graphicOrderInteraction', 'graphicAssociateInteraction', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
@@ -85,7 +83,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoiceInteraction', 'inlineChoice');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -170,6 +168,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getSimpleAssociableChoices()->getArrayCopy();
         }
         else if ($component instanceof GapMatchInteraction) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof InlineChoiceInteraction) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof InlineChoice) {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof MatchInteraction) {
