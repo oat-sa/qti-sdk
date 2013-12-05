@@ -177,11 +177,6 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
         }
     }
     
-    /**
-     * Ignore the given QTI $classes while rendering.
-     * 
-     * @param string|array $classes A QTI class or an array of QTI classes.
-     */
     public function ignoreQtiClasses($classes) {
         $this->getRenderingContext()->ignoreQtiClasses($classes);
     }

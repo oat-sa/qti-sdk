@@ -23,32 +23,15 @@
  *
  */
 
-namespace qtism\runtime\rendering\markup\xhtml;
+namespace qtism\runtime\rendering;
 
-use qtism\runtime\rendering\RenderingConfig;
-
-/**
- * The interface describing how to configure an XHTML rendering.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
- */
-interface XhtmlRenderingConfig extends RenderingConfig {
+interface RenderingConfig {
     
     /**
-     * Set whether or not choices in shufflable interactions
-     * e.g. ChoiceInteraction, MatchInteraction must be
-     * shuffled at rendering time.
+     * Ignore the QTI elements with class name $classes while rendering.
      *
-     * @param boolean $shuffle
+     * @param string|array $classes A QTI class or an array of QTI classes.
      */
-    public function setShuffle($shuffle);
+    public function ignoreQtiClasses($classes);
     
-    /**
-     * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
-     * MatchInteraction must be shuffled at rendering time.
-     *
-     * @return boolean
-     */
-    public function mustShuffle();
 }

@@ -109,10 +109,6 @@ abstract class AbstractRenderingContext {
         return $this->ignoreClasses;
     }
     
-    /**
-     * 
-     * @param array|string $classes
-     */
     public function ignoreQtiClasses($classes) {
         if (is_string($classes) === true) {
             $classes = array($classes);
