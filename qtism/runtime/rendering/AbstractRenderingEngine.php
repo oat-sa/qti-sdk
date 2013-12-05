@@ -131,7 +131,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         $this->setLastRendering(null);
         
         // Put the root $component on the stack.
-        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === false) {
+        if ($this->mustIgnoreComponent($component) === false) {
             $this->getExploration()->push($component);
         }
         
@@ -150,10 +150,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
                 $this->getExploration()->push($this->getExploredComponent());
                 
                 foreach ($this->getNextExploration() as $toExplore) {
-                    // Maybe the component must be ignored while rendering?
-                    $ignoreComponent = (in_array($toExplore->getQtiClassName(), $this->getIgnoreClasses()));
-                    
-                    if ($ignoreComponent === false) {
+                    // Maybe the component must be ignored?
+                    if ($this->mustIgnoreComponent($toExplore) === false) {
                         $this->getExploration()->push($toExplore);
                     }
                 }
@@ -244,5 +242,31 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         $renderer = $this->getRenderingContext()->getRenderer($this->getExploredComponent());
         $rendering = $renderer->render($this->getExploredComponent());
         $this->setLastRendering($rendering);
+    }
+    
+    /**
+     * Whether a component must be ignored or not while rendering. The following cases
+     * makes a component to be ignored:
+     * 
+     * * The ChoiceHideShow policy is set to CONTEXT_AWARE and the variable referenced by the Choice's templateIdentifier attribute does not match the expected value.
+     * * The FeedbackHideShow policy is set to CONTEXT_AWARE and the variable referenced by the FeedbackElement's identifier attribute does not match the expected value.
+     * * The class of the Component is in the list of QTI classes to be ignored.
+     * 
+     * @param QtiComponent $component A Component you want to know if it has to be ignored or not.
+     * @return boolean
+     */
+    protected function mustIgnoreComponent(QtiComponent $component) {
+        
+        $ignore = false;
+        
+        // In the list of QTI class names to be ignored?
+        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
+            $ignore = true;
+        }
+        
+        // @todo CONTEXT_AWARE + Choice + to be hidden?
+        
+        // @todo CONTEXT_AWARE + Feedback + to be hidden?
+        return $ignore;
     }
 }
