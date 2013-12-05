@@ -25,15 +25,13 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\RenderingConfig;
-
 /**
  * The interface describing how to configure an XHTML rendering.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface XhtmlRenderingConfig extends RenderingConfig {
+interface XhtmlRenderingConfig {
     
     /**
      * Set whether or not choices in shufflable interactions

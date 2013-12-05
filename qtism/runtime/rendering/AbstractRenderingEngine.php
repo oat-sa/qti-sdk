@@ -29,7 +29,7 @@ use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
 
-abstract class AbstractRenderingEngine extends AbstractRenderer {
+abstract class AbstractRenderingEngine extends AbstractRenderer implements RenderingConfig {
 
     /**
      * 
@@ -131,7 +131,9 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
         $this->setLastRendering(null);
         
         // Put the root $component on the stack.
-        $this->getExploration()->push($component);
+        if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === false) {
+            $this->getExploration()->push($component);
+        }
         
         while (count($this->getExploration()) > 0) {
             $this->setExploredComponent($this->getExploration()->pop());
@@ -148,7 +150,12 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
                 $this->getExploration()->push($this->getExploredComponent());
                 
                 foreach ($this->getNextExploration() as $toExplore) {
-                    $this->getExploration()->push($toExplore);
+                    // Maybe the component must be ignored while rendering?
+                    $ignoreComponent = (in_array($toExplore->getQtiClassName(), $this->getIgnoreClasses()));
+                    
+                    if ($ignoreComponent === false) {
+                        $this->getExploration()->push($toExplore);
+                    }
                 }
             }
             else if ($final === false && $explored === true) {
@@ -157,10 +164,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering.
-                    
-                    $finalRendering = $this->createFinalRendering();
-                    $this->getRenderingContext()->reset();
-                    return $finalRendering;
+                    break;
                 }
             }
             else {
@@ -169,16 +173,22 @@ abstract class AbstractRenderingEngine extends AbstractRenderer {
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering (leaf node is actually a lone root).
-                    $finalRendering = $this->createFinalRendering();
-                    $this->getRenderingContext()->reset();
-                    return $finalRendering;
+                    break;
                 }
             }
         }
+        
+        $finalRendering = $this->createFinalRendering();
+        $this->getRenderingContext()->reset();
+        return $finalRendering;
     }
     
     public function ignoreQtiClasses($classes) {
         $this->getRenderingContext()->ignoreQtiClasses($classes);
+    }
+    
+    public function getIgnoreClasses() {
+        return $this->getRenderingContext()->getIgnoreClasses();
     }
     
     /**

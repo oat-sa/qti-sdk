@@ -41,7 +41,10 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRende
     
     protected function createFinalRendering() {
         $dom = $this->getRenderingContext()->getDocument();
-        $dom->appendChild($this->getLastRendering());
+        if (($last = $this->getLastRendering()) !== null) {
+            $dom->appendChild($last);
+        }
+        
         return $dom;
     }
     

@@ -1,7 +1,6 @@
 <?php
 
 use qtism\data\content\InlineCollection;
-
 use qtism\runtime\rendering\markup\xhtml\TextRunRenderer;
 use qtism\data\content\TextRun;
 use qtism\runtime\rendering\markup\xhtml\BodyElementRenderer;
@@ -40,7 +39,7 @@ class BodyElementRendererTest extends QtiSmTestCase {
 	    $textRunRenderer = new TextRunRenderer();
 	    $textRunRenderer->setRenderingContext($ctx);
 	    $renderedTextRun = $textRunRenderer->render($textRun);
-	    $ctx->storeRendering($renderedTextRun);
+	    $ctx->storeRendering($textRun, $renderedTextRun);
 	    
 	    $abbr->setContent(new InlineCollection(array($textRun)));
 	    

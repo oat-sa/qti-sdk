@@ -72,8 +72,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
         $fragment = $doc->createDocumentFragment();
         
         $this->renderingImplementation($fragment, $component);
-        $this->getRenderingContext()->storeRendering($fragment);
-        
+        $this->getRenderingContext()->storeRendering($component, $fragment);
         return $fragment;
     }
     

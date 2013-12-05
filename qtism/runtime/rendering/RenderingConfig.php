@@ -25,7 +25,27 @@
 
 namespace qtism\runtime\rendering;
 
+/**
+ * Declares how to configure a basic Rendering Engine.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 interface RenderingConfig {
+    
+    /**
+     * Static rendering mode.
+     * 
+     * @var integer
+     */
+    const CONTEXT_STATIC = 0;
+    
+    /**
+     * Context-aware rendering.
+     * 
+     * @var integer
+     */
+    const CONTEXT_AWARE = 1;
     
     /**
      * Ignore the QTI elements with class name $classes while rendering.
@@ -34,4 +54,11 @@ interface RenderingConfig {
      */
     public function ignoreQtiClasses($classes);
     
+    /**
+     * Get the array containing the QTI class names to be
+     * ignored while rendering.
+     * 
+     * @return array An array of QTI Classes.
+     */
+    public function getIgnoreClasses();
 }

@@ -36,7 +36,7 @@ use \SplStack;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderingContext {
+abstract class AbstractRenderingContext implements RenderingConfig {
     
     /**
      * The stack where rendered components in other
@@ -99,13 +99,7 @@ abstract class AbstractRenderingContext {
         $this->ignoreClasses = $ignoreClasses;
     }
     
-    /**
-     * Get the array of containing the QTI class names to be
-     * ignored for rendering.
-     * 
-     * @return array
-     */
-    protected function getIgnoreClasses() {
+    public function getIgnoreClasses() {
         return $this->ignoreClasses;
     }
     
@@ -178,10 +172,11 @@ abstract class AbstractRenderingContext {
      * Store a rendered component as a rendering for a later use
      * by AbstractRenderer objects.
      * 
+     * @param QtiComponent $component The $component from which the rendering was made.
      * @param mixed $rendering A component rendered in another format.
      */
-    public function storeRendering($rendering) {
-        $this->getRenderingStack()->push($rendering);
+    public function storeRendering(QtiComponent $component, $rendering) {
+        $this->getRenderingStack()->push(array($component, $rendering));
     }
     
     /**
@@ -194,11 +189,19 @@ abstract class AbstractRenderingContext {
         
         $returnValue = array();
         
-        foreach ($component->getComponents() as $c) {
-            $rendering = $this->getRenderingStack()->pop();
+        if (count($this->getRenderingStack()) > 0) {
             
-            if (in_array($c->getQtiClassName(), $this->getIgnoreClasses()) === false) {
-                $returnValue[] = $rendering;
+            foreach ($component->getComponents() as $c) {
+                list($renderedComponent, $rendering) = $this->getRenderingStack()->pop();
+                
+                if ($c === $renderedComponent) {
+                    $returnValue[] = $rendering;
+                }
+                else {
+                    // repush...
+                    $this->storeRendering($renderedComponent, $rendering);
+                }
+                
             }
         }
         
