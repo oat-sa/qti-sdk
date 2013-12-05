@@ -286,7 +286,7 @@ class Format {
 	 * @return boolean
 	 */
 	public static function isFile($string) {
-		// @todo implement File baseType as a complex type.
+		// @todo implement File baseType as a complex type. See QTI-PCI spec for redemption.
 		return gettype($string) === 'string';
 	}
 	

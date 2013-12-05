@@ -25,6 +25,8 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\runtime\common\State;
+use qtism\data\ViewCollection;
 use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
@@ -267,6 +269,48 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         // @todo CONTEXT_AWARE + Choice + to be hidden?
         
         // @todo CONTEXT_AWARE + Feedback + to be hidden?
+        
+        // @todo CONTEXT_AWARE + RubricBlock + to be hidden?
         return $ignore;
+    }
+    
+    public function setChoiceShowHidePolicy($policy) {
+        $this->getRenderingContext()->setChoiceShowHidePolicy($policy);
+    }
+    
+    public function getChoiceShowHidePolicy() {
+        return $this->getRenderingContext()->getChoiceShowHidePolicy();
+    }
+    
+    public function setFeedbackShowHidePolicy($policy) {
+        $this->getRenderingContext()->setFeedbackShowHidePolicy($policy);
+    }
+    
+    public function getFeedbackShowHidePolicy() {
+        return $this->getRenderingContext()->getFeedbackShowHidePolicy();
+    }
+    
+    public function setViewPolicy($policy) {
+        $this->getRenderingContext()->setViewPolicy($policy);
+    }
+    
+    public function getViewPolicy() {
+        return $this->getRenderingContext()->getViewPolicy();
+    }
+    
+    public function setViews(ViewCollection $views) {
+        $this->getRenderingContext()->setViews($views);
+    }
+    
+    public function getViews() {
+        return $this->getRenderingContext()->getViews();
+    }
+    
+    public function setState(State $state) {
+        $this->getRenderingContext()->setState($state);
+    }
+    
+    public function getState() {
+        return $this->getRenderingContext()->getState();
     }
 }

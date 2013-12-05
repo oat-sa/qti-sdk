@@ -45,7 +45,7 @@ class Reflection {
      * @param unknown_type $args
      * @return mixed An instance of $class
      * @throws ReflectionException
-     * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517
+     * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
     public static function newInstance(ReflectionClass $class, $args = array()) {
         if (empty($args) === true) {

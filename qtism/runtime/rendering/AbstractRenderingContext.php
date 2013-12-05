@@ -25,6 +25,9 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\runtime\common\State;
+use qtism\data\View;
+use qtism\data\ViewCollection;
 use qtism\data\QtiComponent;
 use \SplStack;
 
@@ -33,7 +36,19 @@ use \SplStack;
  * a hierarchy of QtiComponents are rendered by a set of
  * AbstractRenderer objects.
  * 
+ * All Rendering Policies are by default set to RenderingConfig::CONTEXT_STATIC.
+ * See the RenderingConfig interface for more information.
+ * 
+ * The contextual QTI Views for the CONTEXT_AWARE rendering mode are by default
+ * all the values containes in the View enumeration.
+ * 
+ * The State used for the CONTEXT_AWARE is by default an empty State object.
+ * See the State class for more information about states management in QtiSm.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @see RenderingConfig
+ * @see qtism\data\View For information about the QTI Views.
+ * @see qtism\runtime\common\State For information about State management.
  *
  */
 abstract class AbstractRenderingContext implements RenderingConfig {
@@ -63,12 +78,52 @@ abstract class AbstractRenderingContext implements RenderingConfig {
     private $ignoreClasses = array();
     
     /**
+     * The Choice rendering policy.
+     * 
+     * @var integer
+     * @see RenderingConfig For information about rendering policies.
+     */
+    private $choiceShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The Feedback rendering policy.
+     * 
+     * @var integer
+     * @see RenderingConfig For information about rendering policies
+     */
+    private $feedbackShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The View rendering policy.
+     * 
+     * @var integer
+     * @see RenderingConfig For information about rendering policies
+     */
+    private $viewPolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The QTI views to be used while rendering in CONTEXT_AWARE mode. 
+     * 
+     * @var ViewCollection
+     */
+    private $views;
+    
+    /**
+     * The State object used in CONTEXT_AWARE rendering mode.
+     * 
+     * @var State
+     */
+    private $state;
+    
+    /**
      * Create a new AbstractRenderingContext object.
      * 
      */
     public function __construct() {
         $this->setRenderers(array());
         $this->setRenderingStack(new SplStack());
+        $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
+        $this->setState(new State());
     }
     
     /**
@@ -215,5 +270,45 @@ abstract class AbstractRenderingContext implements RenderingConfig {
      */
     public function reset() {
         $this->setRenderingStack(new SplStack());
+    }
+    
+    public function setChoiceShowHidePolicy($policy) {
+        $this->choiceShowHidePolicy = $policy;
+    }
+    
+    public function getChoiceShowHidePolicy() {
+        return $this->choiceShowHidePolicy;
+    }
+    
+    public function setFeedbackShowHidePolicy($policy) {
+        $this->feedbackShowHidePolicy = $policy;
+    }
+    
+    public function getFeedbackShowHidePolicy() {
+        return $this->feedbackShowHidePolicy;
+    }
+    
+    public function setViewPolicy($policy) {
+        $this->viewPolicy = $policy;
+    }
+    
+    public function getViewPolicy() {
+        return $this->viewPolicy;
+    }
+    
+    public function setViews(ViewCollection $views) {
+        $this->views = $views;
+    }
+    
+    public function getViews() {
+        return $this->views;
+    }
+    
+    public function setState(State $state) {
+        $this->state = $state;
+    }
+    
+    public function getState() {
+        return $this->state;
     }
 }
