@@ -131,4 +131,8 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
     public function getIdentifier() {
         return $this->identifier;
     }
+    
+    public function getQtiClassName() {
+        return 'feedbackBlock';
+    }
 }

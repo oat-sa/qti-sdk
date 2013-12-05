@@ -91,7 +91,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
     }
     
     public function setOutcomeIdentifier($outcomeIdentifier) {
-        if (Format::isIdentifier($string, false) === true) {
+        if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         }
         else {
@@ -130,5 +130,9 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
     
     public function getIdentifier() {
         return $this->identifier;
+    }
+    
+    public function getQtiClassName() {
+        return 'feedbackInline';
     }
 }
