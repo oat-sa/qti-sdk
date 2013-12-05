@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\FeedbackBlock;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\interactions\InlineChoiceInteraction;
 use qtism\data\content\interactions\GapMatchInteraction;
@@ -182,6 +183,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof Prompt) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof FeedbackBlock) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -226,6 +230,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'gapImg') {
             return self::getChildElementsByTagName($element, 'object');
+        }
+        else if ($element->nodeName === 'feedbackBlock') {
+            return self::getChildElements($element);
         }
     }
     

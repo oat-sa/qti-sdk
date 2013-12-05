@@ -149,6 +149,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('gapImg', 'qtism\\data\\storage\\xml\\marshalling\\GapChoiceMarshaller');
 		$this->addMappingEntry('textEntryInteraction', 'qtism\\data\\storage\\xml\\marshalling\\TextInteractionMarshaller');
 		$this->addMappingEntry('extendedTextInteraction', 'qtism\\data\\storage\\xml\\marshalling\\TextInteractionMarshaller');
+		$this->addMappingEntry('feedbackInline', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
+		$this->addMappingEntry('feedbackBlock', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
 	}
 	
 	/**
