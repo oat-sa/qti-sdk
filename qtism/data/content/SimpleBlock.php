@@ -55,7 +55,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      */
-    public function __construct($id, $class, $lang, $label) {
+    public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new BlockCollection());
     }
