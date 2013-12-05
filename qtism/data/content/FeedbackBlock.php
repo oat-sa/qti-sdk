@@ -91,7 +91,7 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
     }
     
     public function setOutcomeIdentifier($outcomeIdentifier) {
-        if (Format::isIdentifier($string, false) === true) {
+        if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         }
         else {
