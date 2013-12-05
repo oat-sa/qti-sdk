@@ -129,6 +129,8 @@ class XhtmlRenderingContext extends AbstractRenderingContext implements XhtmlRen
         $this->registerRenderer('prompt', new PromptRenderer());
         $this->registerRenderer('table', new TableRenderer());
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
+        $this->registerRenderer('feedbackInline', new FeedbackInlineRenderer());
+        $this->registerRenderer('feedbackBlock', new FeedbackBlockRenderer());
         $this->registerRenderer('choiceInteraction', new ChoiceInteractionRenderer());
         $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
         $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
