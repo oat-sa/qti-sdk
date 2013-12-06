@@ -44,6 +44,7 @@ class PositionObjectStage extends QtiComponent implements Block {
      * allow the candidate to place their objects.
      * 
      * @var Object
+     * @qtism-bean-property
      */
     private $object;
     
@@ -58,6 +59,7 @@ class PositionObjectStage extends QtiComponent implements Block {
      * Set the image to be used as a stage.
      * 
      * @param Object $object An Object object.
+     * @qtism-bean-property
      */
     public function setObject(Object $object) {
         $this->object = $object;
@@ -67,6 +69,7 @@ class PositionObjectStage extends QtiComponent implements Block {
      * Get the image to be used as a stage.
      * 
      * @return Object An Object object.
+     * @qtism-bean-property
      */
     public function getObject() {
         return $this->object;

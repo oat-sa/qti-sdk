@@ -39,6 +39,7 @@ class SimpleMatchSet extends QtiComponent {
      * An ordered set of choices for the set.
      * 
      * @var SimpleAssociableChoiceCollection
+     * @qtism-bean-property
      */
     private $simpleAssociableChoices;
     

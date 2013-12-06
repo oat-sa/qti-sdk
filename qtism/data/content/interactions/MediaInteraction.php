@@ -48,6 +48,7 @@ class MediaInteraction extends BlockInteraction {
      * the control of the candidate (false).
      * 
      * @var boolean
+     * @qtism-bean-property
      */
     private $autostart;
     
@@ -61,6 +62,7 @@ class MediaInteraction extends BlockInteraction {
      * times constitutes an invalid response.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $minPlays = 0;
     
@@ -72,6 +74,7 @@ class MediaInteraction extends BlockInteraction {
      * maxPlay times. A value of 0 (the default) indicates that there is no limit.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $maxPlays = 0;
     
@@ -82,6 +85,7 @@ class MediaInteraction extends BlockInteraction {
      * once the media object has started to play it should play continuously (subject to maxPlays).
      * 
      * @var boolean
+     * @qtism-bean-property
      */
     private $loop = false;
     
@@ -91,6 +95,7 @@ class MediaInteraction extends BlockInteraction {
      * The media object itself.
      * 
      * @var Object
+     * @qtism-bean-property
      */
     private $object;
     

@@ -41,6 +41,7 @@ class Prompt extends BodyElement {
      * A prompt must not contain any nested interactions.
      * 
      * @var InlineStaticCollection
+     * @qtism-bean-property
      */
     private $content;
     
