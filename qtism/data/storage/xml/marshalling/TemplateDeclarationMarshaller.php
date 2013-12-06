@@ -50,7 +50,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller {
 		    self::setDOMElementAttribute($element, 'paramVariable', true);
 		}
 		
-		if ($componet->getMathVariable() === true) {
+		if ($component->getMathVariable() === true) {
 		    self::setDOMElementAttribute($element, 'mathVariable', true);
 		}
 		

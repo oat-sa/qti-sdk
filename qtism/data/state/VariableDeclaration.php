@@ -122,6 +122,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 		$this->setIdentifier($identifier);
 		$this->setBaseType($baseType);
 		$this->setCardinality($cardinality);
+		$this->setDefaultValue($defaultValue);
 	}
 	
 	/**

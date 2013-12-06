@@ -23,6 +23,7 @@
 
 namespace qtism\data\state;
 
+use qtism\common\enums\Cardinality;
 use \InvalidArgumentException;
 
 /**
@@ -121,5 +122,9 @@ class TemplateDeclaration extends VariableDeclaration {
      */
     public function getMathVariable() {
         return $this->mathVariable;
+    }
+    
+    public function getQtiClassName() {
+        return 'templateDeclaration';
     }
 }

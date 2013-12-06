@@ -26,8 +26,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
 use qtism\data\state\ResponseDeclaration;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
 use \DOMElement;
 use \InvalidArgumentException;
 
@@ -40,7 +38,7 @@ use \InvalidArgumentException;
 class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller {
 	
 	/**
-	 * Marshall an ResponseDeclaration object into a DOMElement object.
+	 * Marshall a ResponseDeclaration object into a DOMElement object.
 	 * 
 	 * @param QtiComponent $component A ResponseDeclaration object.
 	 * @return DOMElement The according DOMElement object.
