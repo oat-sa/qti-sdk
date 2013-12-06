@@ -46,9 +46,9 @@ abstract class FeedbackElementRenderer extends BodyElementRenderer {
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
         
-        $fragment->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
-        $fragment->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
-        $fragment->setAttribute('data-identifier', $component->getIdentifier());
+        $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
+        $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         
         $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
     }
