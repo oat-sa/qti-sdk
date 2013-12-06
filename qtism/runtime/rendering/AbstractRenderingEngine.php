@@ -25,6 +25,9 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\ShowHide;
+
+use qtism\data\content\FeedbackElement;
 use qtism\runtime\common\State;
 use qtism\data\ViewCollection;
 use qtism\data\QtiComponent;
@@ -259,19 +262,27 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
      */
     protected function mustIgnoreComponent(QtiComponent $component) {
         
-        $ignore = false;
-        
         // In the list of QTI class names to be ignored?
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
-            $ignore = true;
+            return true;
+        }
+        else if ($component instanceof FeedbackElement) {
+            
+            $outcomeIdentifier = $component->getOutcomeIdentifier();
+            $identifier = $component->getIdentifier();
+            $showHide = $component->getShowHide();
+            $state = $this->getState();
+            
+            $matches = ($val = $state[$outcomeIdentifier]) !== null && $val === $identifier;
+            return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
+        }
+        else {
+            return false;
         }
         
         // @todo CONTEXT_AWARE + Choice + to be hidden?
         
-        // @todo CONTEXT_AWARE + Feedback + to be hidden?
-        
         // @todo CONTEXT_AWARE + RubricBlock + to be hidden?
-        return $ignore;
     }
     
     public function setChoiceShowHidePolicy($policy) {
