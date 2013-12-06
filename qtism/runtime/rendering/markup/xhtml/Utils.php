@@ -20,7 +20,6 @@ class Utils {
      * 
      * @param DOMNode $node The DOM Node where corresponding $shufflables must be shuffled.
      * @param ShufflableCollection $shufflables A collection of Shufflable objects.
-     * @throws RuntimeException If not all given Shufflable objects can be found into the child elements of $node.
      */
     static public function shuffle(DOMNode $node, ShufflableCollection $shufflables) {
         $shufflableIndexes = array();
@@ -31,29 +30,23 @@ class Utils {
         //
         // 2. Store the related DOMElements into a
         // more suitable way ($elements). 
-        $i = 0;
+        
         foreach ($shufflables as $k => $s) {
-            // 1...
-            if ($s->isFixed() === false) {
-                $shufflableIndexes[] = $k;
-            }
-            
-            // 2...
+            $i = 0;
+
             while ($i < $node->childNodes->length) {
                 $n = $node->childNodes->item($i);
                 $i++;
-                if ($n->nodeType === XML_ELEMENT_NODE && self::hasClass($n, 'qti-' . $s->getQtiClassName()) === true) {
+                if ($n->nodeType === XML_ELEMENT_NODE && self::hasClass($n, 'qti-' . $s->getQtiClassName()) === true && !in_array($n, $elements, true)) {
                     $elements[] = $n;
+                    
+                    if ($s->isFixed() === false) {
+                        $shufflableIndexes[] = $k;
+                    }
+                    
                     break;
                 }
             }
-        }
-        
-        // A little bit of consistency check...
-        if (count($shufflables) !== count($elements)) {
-            
-            $msg = "Could not found all related DOM elements (" . count($elements) . ") into the given Shufflable objects (" . count($shufflables) . ").";
-            throw new RuntimeException($msg);
         }
 
         // Swap two elements together N times where N is the number of shufflable components.

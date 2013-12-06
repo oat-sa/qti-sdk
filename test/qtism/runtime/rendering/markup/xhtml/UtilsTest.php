@@ -62,33 +62,4 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
         $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
-    
-    public function testShuffleInconsistentInput() {
-        $this->setExpectedException('\\RuntimeException');
-        
-        // 1 DOMElement VS 2 simpleChoices = Inconsistent.
-        
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $node = $dom->createElement('fakenode');
-        $dom->appendChild($node);
-        
-        $choice = $dom->createElement('simpleChoice');
-        $choice->setAttribute('fixed', 'false');
-        $choice->setAttribute('id', 'choice1');
-        $node->appendChild($choice);
-        
-        $shufflables = new ShufflableCollection();
-        
-        $choice = new SimpleChoice('choice1');
-        $choice->setFixed(false);
-        $choice->setId('choice1');
-        $shufflables[] = $choice;
-        
-        $choice = new SimpleChoice('choice2');
-        $choice->setFixed(true);
-        $choice->setId('choice2');
-        $shufflables[] = $choice;
-        
-        Utils::shuffle($node, $shufflables);
-    }
 }

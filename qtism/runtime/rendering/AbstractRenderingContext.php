@@ -243,10 +243,10 @@ abstract class AbstractRenderingContext implements RenderingConfig {
     public function getChildrenRenderings(QtiComponent $component) {
         
         $returnValue = array();
-        
-        if (count($this->getRenderingStack()) > 0) {
             
-            foreach ($component->getComponents() as $c) {
+        foreach ($component->getComponents() as $c) {
+            
+            if (count($this->getRenderingStack()) > 0) {
                 list($renderedComponent, $rendering) = $this->getRenderingStack()->pop();
                 
                 if ($c === $renderedComponent) {
@@ -256,7 +256,6 @@ abstract class AbstractRenderingContext implements RenderingConfig {
                     // repush...
                     $this->storeRendering($renderedComponent, $rendering);
                 }
-                
             }
         }
         

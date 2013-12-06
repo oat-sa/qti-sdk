@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\content\interactions\Choice;
 use qtism\data\content\RubricBlock;
 use qtism\data\ShowHide;
 use qtism\data\content\FeedbackElement;
@@ -34,15 +35,23 @@ use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
 
+/**
+ * The base class to be used by any rendering engines.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 abstract class AbstractRenderingEngine extends AbstractRenderer implements RenderingConfig {
 
     /**
+     * An array used to 'tag' explored Component object.
      * 
      * @var array
      */
     private $explorationMarker;
     
     /**
+     * The stack of Component object that still have to be explored.
      * 
      * @var SplStack
      */
@@ -56,16 +65,22 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     private $exploredComponent = null;
     
     /**
+     * The last rendering.
      * 
      * @var mixed
      */
     private $lastRendering = null;
     
+    /**
+     * Create a new AbstractRenderingObject.
+     * 
+     */
     public function __construct() {
         parent::__construct($this->createRenderingContext());
     }
     
     /**
+     * Get the Stack of Component objects that to be still explored.
      * 
      * @return SplStack
      */
@@ -74,6 +89,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Set the Stack of Component objects that have to be still explored.
      * 
      * @param SplStack $exploration
      */
@@ -82,6 +98,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Set the array used to 'tag' components in order to know
+     * whether or not they are already explored.
      * 
      * @return array
      */
@@ -90,6 +108,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Set the array used to 'tag' components in order to know whether
+     * or not they are already explored.
      * 
      * @param array $explorationMarker
      */
@@ -98,6 +118,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Get the currently explored component.
      * 
      * @return QtiComponent
      */
@@ -106,6 +127,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Set the currently explored Component object.
      * 
      * @param QtiComponent $component
      */
@@ -114,6 +136,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Set the last rendering.
      * 
      * @param mixed $rendering
      */
@@ -122,6 +145,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Get the last rendering.
      * 
      * @return mixed
      */
@@ -195,6 +219,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Whether or not the currently explored Component object
+     * is a final leaf of the tree structured explored hierarchy.
      * 
      * @return boolean
      */
@@ -203,14 +229,17 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Get the children components of the currently explored component
+     * for future exploration.
      * 
-     * @return QtiComponentCollection
+     * @return QtiComponentCollection The children Component object of the currently explored Component object.
      */
     protected function getNextExploration() {
         return $this->getExploredComponent()->getComponents();
     }
     
     /**
+     * Wether or not the currently explored component has been already explored.
      * 
      * @return boolean
      */
@@ -229,19 +258,23 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
+     * Create an appropriate rendering context (factory method).
      * 
      * @return AbstractRenderingContext
+     * @see http://en.wikipedia.org/wiki/Factory_method_pattern Factory Method pattern.
      */
     abstract protected function createRenderingContext();
     
     /**
+     * Create the final rendering as it must be rendered by the final
+     * implementation.
      * 
      * @return mixed
      */
     abstract protected function createFinalRendering();
     
     /**
-     * 
+     * Process the current node.
      */
     protected function processNode() {
         $renderer = $this->getRenderingContext()->getRenderer($this->getExploredComponent());
@@ -250,7 +283,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
-     * Whether a component must be ignored or not while rendering. The following cases
+     * Whether or not a component must be ignored or not while rendering. The following cases
      * makes a component to be ignored:
      * 
      * * The ChoiceHideShow policy is set to CONTEXT_AWARE and the variable referenced by the Choice's templateIdentifier attribute does not match the expected value.
@@ -266,17 +299,13 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
             return true;
         }
-        // Context Aware + FeedbackElement
-        else if ($this->getFeedbackShowHidePolicy() === RenderingConfig::CONTEXT_AWARE && $component instanceof FeedbackElement) {
-            
-            $outcomeIdentifier = $component->getOutcomeIdentifier();
-            $identifier = $component->getIdentifier();
+        // Context Aware + FeedbackElement OR Context Aware + Choice
+        else if (($component instanceof FeedbackElement && $this->getFeedbackShowHidePolicy() === RenderingConfig::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === RenderingConfig::CONTEXT_AWARE)) {
+            $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
-            $state = $this->getState();
-            
-            $matches = ($val = $state[$outcomeIdentifier]) !== null && $val === $identifier;
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
         }
+        // Context Aware + RubricBlock
         else if ($this->getViewPolicy() === RenderingConfig::CONTEXT_AWARE && $component instanceof RubricBlock) {
             $renderingViews = $this->getViews();
             $rubricViews = $component->getViews();
@@ -294,10 +323,22 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         else {
             return false;
         }
+    }
+    
+    /**
+     * Whether or not the 'outcomeIdentifier'/'templateIdentifier' set on a templateElement/feedbackElement/choice
+     * matches its 'identifier' attribute.
+     * 
+     * @param QtiComponent $component A TemplateElement or FeedbackElement or Choice element.
+     * @return boolean
+     */
+    protected function identifierMatches(QtiComponent $component) {
+        $variableIdentifier = ($component instanceof FeedbackElement) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
+        $identifier = $component->getIdentifier();
+        $showHide = $component->getShowHide();
+        $state = $this->getState();
         
-        // @todo CONTEXT_AWARE + Choice + to be hidden?
-        
-        // @todo CONTEXT_AWARE + RubricBlock + to be hidden?
+        return (($val = $state[$variableIdentifier]) !== null && $val === $identifier);
     }
     
     public function setChoiceShowHidePolicy($policy) {
