@@ -151,6 +151,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('extendedTextInteraction', 'qtism\\data\\storage\\xml\\marshalling\\TextInteractionMarshaller');
 		$this->addMappingEntry('feedbackInline', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
 		$this->addMappingEntry('feedbackBlock', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
+		$this->addMappingEntry('templateInline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
+		$this->addMappingEntry('templateBlock', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
 	}
 	
 	/**

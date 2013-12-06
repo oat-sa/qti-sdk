@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\TemplateInline;
+
+use qtism\data\content\TemplateBlock;
+
 use qtism\data\content\FeedbackBlock;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\interactions\InlineChoiceInteraction;
@@ -81,7 +85,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'customInteraction', 'printedVariable');
     
-    private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'i',
+    private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice');
@@ -186,6 +190,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof FeedbackBlock) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof TemplateBlock) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof TemplateInline) {
+            return $component->getContent()->getArrayCopy();
+        }
     }
     
     protected function getChildrenElements(DOMElement $element) {
@@ -232,6 +242,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return self::getChildElementsByTagName($element, 'object');
         }
         else if ($element->nodeName === 'feedbackBlock') {
+            return self::getChildElements($element);
+        }
+        else if ($element->nodeName === 'templateBlock') {
             return self::getChildElements($element);
         }
     }

@@ -24,8 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\BlockCollection;
-use qtism\data\content\InlineCollection;
+use qtism\data\content\BlockStaticCollection;
+use qtism\data\content\InlineStaticCollection;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
@@ -33,22 +33,22 @@ use \DOMElement;
 use \InvalidArgumentException;
 
 /**
- * The Marshaller implementation for FeedbackInline/FeedbackBlock elements of the content model.
+ * The Marshaller implementation for TemplateInline/TemplateBlock elements of the content model.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FeedbackElementMarshaller extends ContentMarshaller {
+class TemplateElementMarshaller extends ContentMarshaller {
     
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
         $fqClass = $this->lookupClass($element);
         
-        if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+        if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
 
             if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
                 
-                $component = new $fqClass($outcomeIdentifier, $identifier);
+                $component = new $fqClass($templateIdentifier, $identifier);
                 
                 if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     
@@ -61,7 +61,7 @@ class FeedbackElementMarshaller extends ContentMarshaller {
                     }
                     
                     try {
-                        $content = ($element->nodeName === 'feedbackInline') ? new InlineCollection($children->getArrayCopy()) : new BlockCollection($children->getArrayCopy());
+                        $content = ($element->nodeName === 'templateInline') ? new InlineStaticCollection($children->getArrayCopy()) : new BlockStaticCollection($children->getArrayCopy());
                         $component->setContent($content);
                     }
                     catch (InvalidArgumentException $e) {
@@ -80,7 +80,7 @@ class FeedbackElementMarshaller extends ContentMarshaller {
             }
         }
         else {
-            $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element '" . $element->nodeName . "'.";
+            $msg = "The mandatory 'templateIdentifier' attribute is missing from element '" . $element->nodeName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
         
@@ -91,7 +91,7 @@ class FeedbackElementMarshaller extends ContentMarshaller {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         

@@ -33,7 +33,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateInline extends TemplateElement {
+class TemplateInline extends TemplateElement implements InlineStatic {
     
     /**
      * The content of the TemplateInline.
@@ -46,17 +46,17 @@ class TemplateInline extends TemplateElement {
     /**
      * Create a new TemplateInline object.
      * 
-     * @param string $identifier The identifier of the templateInline.
      * @param string $templateIdentifier The identifier of the associated template variable.
+     * @param string $identifier The identifier of the templateInline.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any of the argument is invalid.
      */
-    public function __construct($identifier, $templateIdentifier, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($identifier, $templateIdentifier, $id, $class, $lang, $label);
-        $this->setContent(new BlockStaticCollection());
+    public function __construct($templateIdentifier, $identifier, $id = '', $class = '', $lang = '', $label = '') {
+        parent::__construct($templateIdentifier, $identifier, $id, $class, $lang, $label);
+        $this->setContent(new InlineStaticCollection());
     }
     
     /**

@@ -36,15 +36,7 @@ use \SplObserver;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class TemplateElement extends BodyElement implements QtiIdentifiable, FlowStatic {
-    
-    /**
-     * The base URI of the TemplateElement
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+abstract class TemplateElement extends BodyElement {
     
     /**
      * From IMS QTI:
@@ -75,24 +67,17 @@ abstract class TemplateElement extends BodyElement implements QtiIdentifiable, F
     private $identifier;
     
     /**
-     * The observers of this QTIIdentifiable object.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers;
-    
-    /**
      * Create a new TemplateElement object.
      * 
-     * @param string $identifier The identifier of the templateElement.
      * @param string $templateIdentifier The identifier of the associated template variable.
+     * @param string $identifier The identifier of the templateElement.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($identifier, $templateIdentifier, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($templateIdentifier, $identifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setIdentifier($identifier);
         $this->setTemplateIdentifier($templateIdentifier);
@@ -184,75 +169,5 @@ abstract class TemplateElement extends BodyElement implements QtiIdentifiable, F
     
     public function getIdentifier() {
         return $this->identifier;
-    }
-    
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers() {
-        return $this->observers;
-    }
-    
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers) {
-        $this->observers = $observers;
-    }
-    
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer) {
-        $this->getObservers()->attach($observer);
-    }
-    
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer) {
-        $this->getObservers()->detach($observer);
-    }
-    
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify() {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
-    }
-    
-    /**
-     * Set the base URI of the TemplateElement.
-     *
-     * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '') {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        }
-        else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-    
-    /**
-     * Get the base URI of the TemplateElement.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase() {
-        return $this->xmlBase;
     }
 }
