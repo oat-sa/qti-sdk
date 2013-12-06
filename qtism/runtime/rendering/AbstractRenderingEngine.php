@@ -26,7 +26,6 @@
 namespace qtism\runtime\rendering;
 
 use qtism\data\ShowHide;
-
 use qtism\data\content\FeedbackElement;
 use qtism\runtime\common\State;
 use qtism\data\ViewCollection;
@@ -266,7 +265,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
             return true;
         }
-        else if ($component instanceof FeedbackElement) {
+        // Context Aware + FeedbackElement
+        else if ($this->getFeedbackShowHidePolicy() === RenderingConfig::CONTEXT_AWARE && $component instanceof FeedbackElement) {
             
             $outcomeIdentifier = $component->getOutcomeIdentifier();
             $identifier = $component->getIdentifier();
