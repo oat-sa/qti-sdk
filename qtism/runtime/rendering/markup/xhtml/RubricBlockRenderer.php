@@ -63,23 +63,28 @@ class RubricBlockRenderer extends BodyElementRenderer {
             $this->additionalClass('qti-view-author');
             $dataView[] = 'author';
         }
-        else if ($component->getViews()->contains(View::CANDIDATE)) {
+        
+        if ($component->getViews()->contains(View::CANDIDATE)) {
             $this->additionalClass('qti-view-candidate');
             $dataView[] = 'candidate';
         }
-        else if ($component->getViews()->contains(View::PROCTOR)) {
+        
+        if ($component->getViews()->contains(View::PROCTOR)) {
             $this->additionalClass('qti-view-proctor');
             $dataView[] = 'proctor';
         }
-        else if ($component->getViews()->contains(View::SCORER)) {
+        
+        if ($component->getViews()->contains(View::SCORER)) {
             $this->additionalClass('qti-view-scorer');
             $dataView[] = 'scorer';
         }
-        else if ($component->getViews()->contains(View::TEST_CONSTRUCTOR)) {
+        
+        if ($component->getViews()->contains(View::TEST_CONSTRUCTOR)) {
             $this->additionClass('qti-view-testConstructor');
             $dataView[] = 'testConstructor';
         }
-        else if ($component->getViews()->contains(View::TUTOR)) {
+        
+        if ($component->getViews()->contains(View::TUTOR)) {
             $this->additionalClass('qti-view-tutor');
             $dataView[] = 'tutor';
         }

@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\content\RubricBlock;
 use qtism\data\ShowHide;
 use qtism\data\content\FeedbackElement;
 use qtism\runtime\common\State;
@@ -275,6 +276,20 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
             
             $matches = ($val = $state[$outcomeIdentifier]) !== null && $val === $identifier;
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
+        }
+        else if ($this->getViewPolicy() === RenderingConfig::CONTEXT_AWARE && $component instanceof RubricBlock) {
+            $renderingViews = $this->getViews();
+            $rubricViews = $component->getViews();
+            
+            // If one of the rendering views matches a single view
+            // in the rubricBlock's view, render!
+            foreach ($renderingViews as $v) {
+                if ($rubricViews->contains($v) === true) {
+                    return false;
+                }
+            }
+            
+            return true;
         }
         else {
             return false;
