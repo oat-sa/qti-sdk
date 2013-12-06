@@ -46,11 +46,11 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller {
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
 		
-		if ($component->getParamVariable() === true) {
+		if ($component->isParamVariable() === true) {
 		    self::setDOMElementAttribute($element, 'paramVariable', true);
 		}
 		
-		if ($component->getMathVariable() === true) {
+		if ($component->isMathVariable() === true) {
 		    self::setDOMElementAttribute($element, 'mathVariable', true);
 		}
 		

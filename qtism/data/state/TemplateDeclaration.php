@@ -93,7 +93,7 @@ class TemplateDeclaration extends VariableDeclaration {
      * 
      * @return boolean
      */
-    public function getParamVariable() {
+    public function isParamVariable() {
         return $this->paramVariable;
     }
     
@@ -120,7 +120,7 @@ class TemplateDeclaration extends VariableDeclaration {
      * 
      * @return boolean
      */
-    public function getMathVariable() {
+    public function isMathVariable() {
         return $this->mathVariable;
     }
     

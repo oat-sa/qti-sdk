@@ -79,7 +79,7 @@ class OutcomeVariable extends Variable {
 	
 	/**
 	 * Create a new OutcomeVariable object. If the cardinality is multiple, ordered or record,
-	 * the appropriate container will be instantiated as the $value argument.
+	 * the appropriate container will be instantiated internally as the $value argument.
 	 * 
 	 * @param string $identifier An identifier for the variable.
 	 * @param integer $cardinality A value from the Cardinality enumeration.
