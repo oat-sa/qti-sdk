@@ -49,4 +49,13 @@ class ObjectRenderer extends BodyElementRenderer {
             $fragment->firstChild->setAttribute('height', $component->getHeight());
         }
     }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        // For browser compatibility, we do not want self-closing object elements.
+        if ($fragment->firstChild->childNodes->length === 0) {
+            $fragment->firstChild->appendChild($fragment->ownerDocument->createTextNode(''));
+        }
+    }
 }
