@@ -77,6 +77,11 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
      */
     public function __construct() {
         parent::__construct($this->createRenderingContext());
+        $this->ignoreQtiClasses('responseDeclaration');
+        $this->ignoreQtiClasses('outcomeDeclaration');
+        $this->ignoreQtiClasses('templateDeclaration');
+        $this->ignoreQtiClasses('responseProcessing');
+        $this->ignoreQtiClasses('responseProcessing');
     }
     
     /**
