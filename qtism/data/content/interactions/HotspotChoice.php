@@ -23,6 +23,8 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\Coords;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
@@ -65,29 +67,39 @@ class HotspotChoice extends Choice implements Hotspot {
      * @var string
      * @qtism-bean-property
      */
-    private $hotspotLabel;
+    private $hotspotLabel = '';
     
     /**
      * Create a new HotspotChoice object.
      * 
      * @param string $identifier The identifier of the choice.
+     * @param integer $shape A value from the Shape enumeration
+     * @param Coords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($identifier, $id, $class, $lang, label);
+    public function __construct($identifier, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
+        parent::__construct($identifier, $id, $class, $lang, $label);
+        $this->setShape($shape);
+        $this->setCoords($coords);
     }
     
     /**
      * Set the shape of the associableHotspot.
      *
-     * @param Shape $shape A Shape object.
+     * @param integer $shape A value from the Shape enumeration.
      */
-    public function setShape(Shape $shape) {
-        $this->shape = $shape;
+    public function setShape($shape) {
+        if (in_array($shape, Shape::asArray()) === true) {
+            $this->shape = $shape;
+        }
+        else {
+            $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
     }
     
     /**
@@ -140,6 +152,15 @@ class HotspotChoice extends Choice implements Hotspot {
      */
     public function getHotspotLabel() {
         return $this->hotspotLabel;
+    }
+    
+    /**
+     * Whether or not a value is defined for the hotspotLabel attribute.
+     * 
+     * @return boolean
+     */
+    public function hasHotspotLabel() {
+        return $this->getHotspotLabel() !== '';
     }
     
     /**

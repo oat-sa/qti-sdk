@@ -153,6 +153,8 @@ class MarshallerFactory {
 		$this->addMappingEntry('feedbackBlock', 'qtism\\data\\storage\\xml\\marshalling\\FeedbackElementMarshaller');
 		$this->addMappingEntry('templateInline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
 		$this->addMappingEntry('templateBlock', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
+		$this->addMappingEntry('hotspotChoice', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
+		$this->addMappingEntry('associableHotspot', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
 	}
 	
 	/**

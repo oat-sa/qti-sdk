@@ -25,7 +25,6 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\HottextInteraction;
-
 use qtism\data\content\interactions\Hottext;
 use qtism\data\content\TemplateInline;
 use qtism\data\content\TemplateBlock;
@@ -81,7 +80,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
-                                      'hotspotInteraction', 'selectPointInteraction',
+                                      'hotspotInteraction', 'selectPointInteraction', 'associableHotspot', 'hotspotChoice',
                                       'graphicOrderInteraction', 'graphicAssociateInteraction', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'customInteraction', 'printedVariable');

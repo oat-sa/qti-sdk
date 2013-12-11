@@ -23,7 +23,6 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Coords;
 use \InvalidArgumentException;
 
@@ -41,14 +40,15 @@ interface Hotspot {
 	/**
 	 * Set the shape of the hotspot.
 	 * 
-	 * @param Shape $shape A Shape object.
+	 * @param integer $shape A value from the Shape enumeration.
+	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
-	public function setShape(Shape $shape);
+	public function setShape($shape);
 	
 	/**
 	 * Get the shape of the hotspot.
 	 * 
-	 * @return Shape A Shape object.
+	 * @return integer A Shape object.
 	 */
 	public function getShape();
 	
