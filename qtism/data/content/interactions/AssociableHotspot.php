@@ -91,14 +91,14 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * @var string
 	 * @qtism-bean-property
 	 */
-	private $hotspotLabel;
+	private $hotspotLabel = '';
 	
 	/**
 	 * Create a new AssociableHotspot object.
 	 * 
 	 * @param string $identifier The identifier of the associableHotspot.
 	 * @param integer $matchMax The matchMax attribute.
-	 * @param Shape $shape The shape of the associableHotspot.
+	 * @param integer $shape A value of the Shape enumeration.
 	 * @param Coords $coords The coords of the associableHotspot.
 	 * @param string $id The id of the bodyElement.
 	 * @param string $class The class of the bodyElement.
@@ -106,13 +106,11 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * @param string $label The label of the bodyElement.
 	 * @throws InvalidArgument If one of the constructor's argument is invalid.
 	 */
-	public function __construct($identifier, $matchMax, Shape $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
+	public function __construct($identifier, $matchMax, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
 		$this->setMatchMax($matchMax);
-		$this->setMatchMin(0);
 		$this->setShape($shape);
 		$this->setCoords($coords);
-		$this->setHotspotLabel('');
 	}
 	
 	/**
@@ -168,10 +166,16 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	/**
 	 * Set the shape of the associableHotspot.
 	 * 
-	 * @param Shape $shape A Shape object.
+	 * @param integer $shape A value from the Shape enumeration.
 	 */
-	public function setShape(Shape $shape) {
-		$this->shape = $shape;
+	public function setShape($shape) {
+	    if (in_array($shape, Shape::asArray()) === true) {
+	        $this->shape = $shape;
+	    }
+		else {
+		    $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";
+		    throw new InvalidArgumentException($msg);
+		}
 	}
 	
 	/**
@@ -224,6 +228,10 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 */
 	public function getHotspotLabel() {
 		return $this->hotspotLabel;
+	}
+	
+	public function hasHotspotLabel() {
+	    return $this->getHotspotLabel() !== '';
 	}
 	
 	public function getComponents() {

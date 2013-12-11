@@ -80,4 +80,12 @@ interface Hotspot {
 	 * @return A string with a maximum of 256 characters.
 	 */
 	public function getHotspotLabel();
+	
+	/**
+	 * Whether or not a value is defined for the hotspotLabel
+	 * attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasHotspotLabel();
 }
