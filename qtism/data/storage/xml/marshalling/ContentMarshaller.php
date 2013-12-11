@@ -24,10 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\Hottext;
 use qtism\data\content\TemplateInline;
-
 use qtism\data\content\TemplateBlock;
-
 use qtism\data\content\FeedbackBlock;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\interactions\InlineChoiceInteraction;
@@ -88,7 +87,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -194,6 +193,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getContent()->getArrayCopy();
         }
         else if ($component instanceof TemplateInline) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof Hottext) {
             return $component->getContent()->getArrayCopy();
         }
     }
