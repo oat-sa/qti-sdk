@@ -132,7 +132,7 @@ class HottextInteraction extends BlockInteraction {
      * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
     public function setMinChoices($minChoices) {
-        if (is_int($minChoices) && $minChoices > 0) {
+        if (is_int($minChoices) && $minChoices >= 0) {
             
             if ($this->getMaxChoices() > 0 && $minChoices <= $this->getMaxChoices()) {
                 $this->minChoices = $minChoices;
@@ -143,9 +143,18 @@ class HottextInteraction extends BlockInteraction {
             }
         }
         else {
-            $msg = "The 'minChoices' argument must be a positive (> 0) integer value, '" . gettype($minChoices) . "' given.";
+            $msg = "The 'minChoices' argument must be a positive (>= 0) integer value, '" . gettype($minChoices) . "' given.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * Get the minimum number of choices that the candidate is required to select to form a valid response.
+     * 
+     * @return integer A positive (>= 0) integer.
+     */
+    public function getMinChoices() {
+        return $this->minChoices;
     }
     
     /**

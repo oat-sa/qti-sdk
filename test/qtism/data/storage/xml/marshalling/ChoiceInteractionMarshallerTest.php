@@ -1,11 +1,8 @@
 <?php
 
 use qtism\data\content\InlineStaticCollection;
-
 use qtism\data\content\interactions\Prompt;
-
 use qtism\data\content\interactions\Orientation;
-
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\FlowStaticCollection;

@@ -24,32 +24,39 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\interactions\OrderInteraction;
-use qtism\data\content\interactions\ChoiceInteraction;
-use qtism\data\content\interactions\Orientation;
-use qtism\data\content\interactions\SimpleChoiceCollection;
+use qtism\data\content\BlockStaticCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
 use \InvalidArgumentException;
 
 /**
- * The Marshaller implementation for ChoiceInteraction/OrderInteraction elements of the content model.
+ * The Marshaller implementation for HottextInteraction elements of the content model.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ChoiceInteractionMarshaller extends ContentMarshaller {
+class HottextInteractionMarshaller extends ContentMarshaller {
     
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
             
             if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
                 
                 $fqClass = $this->lookupClass($element);
-                $component = new $fqClass($responseIdentifier, new SimpleChoiceCollection($children->getArrayCopy()));
+                try {
+                    $content = new BlockStaticCollection($children->getArrayCopy());
+                }
+                catch (InvalidArgumentException $e) {
+                    $msg = "The content of the 'hottextInteraction' element is invalid.";
+                    throw new UnmarshallingException($msg, $element, $e);
+                }
                 
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
-                    $component->setShuffle($shuffle);
+                try {
+                    $component = new $fqClass($responseIdentifier, $content);
+                }
+                catch (InvalidArgumentException $e) {
+                    $msg = "The value '${responseIdentifier}' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.";
+                    throw new UnmarshallingException($msg, $element, $e);
                 }
                 
                 if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
@@ -58,10 +65,6 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
                 
                 if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
-                }
-                
-                if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
-                    $component->setOrientation(Orientation::getConstantByName($orientation));
                 }
                 
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
@@ -91,20 +94,12 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
         
-        if ($component->mustShuffle() !== false) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
-        }
-        
-        if (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
+        if ($component->getMaxChoices() !== 1) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
         
-        if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
+        if ($component->getMinChoices() !== 0) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
-        }
-        
-        if ($component->getOrientation() !== Orientation::VERTICAL) {
-            self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
         }
         
         foreach ($elements as $e) {
