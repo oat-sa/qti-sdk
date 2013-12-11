@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\HotspotInteraction;
+
 use qtism\data\content\interactions\HottextInteraction;
 use qtism\data\content\interactions\Hottext;
 use qtism\data\content\TemplateInline;
@@ -80,7 +82,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
-                                      'hotspotInteraction', 'selectPointInteraction', 'associableHotspot', 'hotspotChoice',
+                                      'selectPointInteraction', 'associableHotspot', 'hotspotChoice',
                                       'graphicOrderInteraction', 'graphicAssociateInteraction', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'customInteraction', 'printedVariable');
@@ -178,6 +180,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof InlineChoiceInteraction) {
             return $component->getContent()->getArrayCopy();
         }
+        else if ($component instanceof HotspotInteraction) {
+            return $component->getHotspotChoices()->getArrayCopy();
+        }
         else if ($component instanceof InlineChoice) {
             return $component->getContent()->getArrayCopy();
         }
@@ -228,6 +233,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'hottextInteraction') {
             return self::getChildElementsByTagName($element, 'prompt', true);
+        }
+        else if ($element->nodeName === 'hotspotInteraction') {
+            return self::getChildElementsByTagName($element, 'hotspotChoice');
         }
         else if ($element->nodeName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));

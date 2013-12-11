@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\Object;
+use qtism\data\content\xhtml\Object;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
@@ -99,7 +99,6 @@ class HotspotInteraction extends GraphicInteraction {
     public function __construct($responseIdentifier, Object $object, $maxChoices, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setMaxChoices($maxChoices);
-        $this->setMinChoices(0);
         $this->setHotspotChoices($hotspotChoices);
     }
     
