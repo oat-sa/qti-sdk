@@ -140,6 +140,7 @@ class XhtmlRenderingContext extends AbstractRenderingContext implements XhtmlRen
         $this->registerRenderer('textEntryInteraction', new TextEntryInteractionRenderer());
         $this->registerRenderer('extendedTextInteraction', new ExtendedTextInteractionRenderer());
         $this->registerRenderer('hottextInteraction', new HottextInteractionRenderer());
+        $this->registerRenderer('hotspotInteraction', new HotspotInteractionRenderer());
         $this->registerRenderer('simpleChoice', new SimpleChoiceRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
         $this->registerRenderer('inlineChoice', new InlineChoiceRenderer());
@@ -148,6 +149,7 @@ class XhtmlRenderingContext extends AbstractRenderingContext implements XhtmlRen
         $this->registerRenderer('gapText', new GapTextRenderer());
         $this->registerRenderer('gapImg', new GapImgRenderer());
         $this->registerRenderer('gap', new GapRenderer());
+        $this->registerRenderer('hotspotChoice', new HotspotChoiceRenderer());
     }
 
     /**
