@@ -23,8 +23,8 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\data\content\xhtml\Object;
 use qtism\data\QtiComponentCollection;
-
 use \InvalidArgumentException;
 
 /**
