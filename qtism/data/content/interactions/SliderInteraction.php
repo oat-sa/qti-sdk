@@ -231,6 +231,15 @@ class SliderInteraction extends BlockInteraction {
     }
     
     /**
+     * Whether or not a value is defined for the step attribute.
+     * 
+     * @return boolean
+     */
+    public function hasStep() {
+        return $this->getStep() > 0;
+    }
+    
+    /**
      * Set whether or not each step on the slider has to be labelled.
      * 
      * @param boolean $stepLabel
@@ -251,7 +260,7 @@ class SliderInteraction extends BlockInteraction {
      * 
      * @return boolean
      */
-    public function hasStepLabel() {
+    public function mustStepLabel() {
         return $this->stepLabel;
     }
     

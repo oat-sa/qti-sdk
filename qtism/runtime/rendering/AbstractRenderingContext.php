@@ -175,7 +175,7 @@ abstract class AbstractRenderingContext implements RenderingConfig {
      * @param string $qtiClassName A QTI class name.
      * @param AbstractRenderer $renderer An AbstractRenderer object.
      */
-    protected function registerRenderer($qtiClassName, AbstractRenderer $renderer) {
+    public function registerRenderer($qtiClassName, AbstractRenderer $renderer) {
         $renderer->setRenderingContext($this);
         $renderers = $this->getRenderers();
         $renderers[$qtiClassName] = $renderer;
