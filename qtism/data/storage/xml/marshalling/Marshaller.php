@@ -98,6 +98,9 @@ abstract class Marshaller {
 					if ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName())) {
 						return $this->marshall($component);
 					}
+					else {
+					    throw new RuntimeException('Unexpected QTI class name.');
+					}
 				}
 				else {
 					$element = $args[0];

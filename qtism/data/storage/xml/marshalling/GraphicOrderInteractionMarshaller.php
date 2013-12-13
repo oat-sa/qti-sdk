@@ -51,7 +51,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller {
                     $choices = new HotspotChoiceCollection($children->getArrayCopy());
                 }
                 catch (InvalidArgumentException $e) {
-                    $msg = "An 'graphicOrderInteraction' element can only contain 'hotspotChoice' choices.";
+                    $msg = "A 'graphicOrderInteraction' element can only contain 'hotspotChoice' choices.";
                     throw new UnmarshallingException($msg, $element, $e); 
                 }
                 
@@ -77,6 +77,10 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller {
                     
                     self::fillBodyElement($component, $element);
                     return $component;
+                }
+                else {
+                    $msg = "A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given.";
+                    throw new UnmarshallingException($msg, $element);
                 }
             }
             else {

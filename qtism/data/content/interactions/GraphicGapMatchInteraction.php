@@ -24,7 +24,6 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-
 use \InvalidArgumentException;
 
 /**

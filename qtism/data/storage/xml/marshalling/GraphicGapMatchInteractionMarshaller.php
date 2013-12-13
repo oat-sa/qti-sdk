@@ -24,21 +24,29 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\interactions\HotspotChoiceCollection;
-use qtism\data\QtiComponentCollection;
+use qtism\data\content\interactions\GraphicGapMatchInteraction;
+use qtism\data\content\interactions\GapImgCollection;
+use qtism\data\content\interactions\AssociableHotspotCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
 use \InvalidArgumentException;
 
 /**
- * The Marshaller implementation for HotspotInteraction elements of the content model.
+ * The Marshaller implementation for GraphicGapMatchInteraction elements of the content model.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HotspotInteractionMarshaller extends ContentMarshaller {
+class GraphicGapMatchInteractionMarshaller extends Marshaller {
     
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
+    /**
+	 * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
+	 * 
+	 * @param DOMElement $element A DOMElement object.
+	 * @return QtiComponent A GraphicGapMatchInteraction object.
+	 * @throws UnmarshallingException
+	 */
+	protected function unmarshall(DOMElement $element) {
             
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
@@ -47,24 +55,27 @@ class HotspotInteractionMarshaller extends ContentMarshaller {
                 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                $associableHotspotElts = self::getChildElementsByTagName($element, 'associableHotspot');
                 
-                    try {
-                        $choices = new HotspotChoiceCollection($children->getArrayCopy());
-                    }
-                    catch (InvalidArgumentException $e) {
-                        $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
-                        throw new UnmarshallingException($msg, $element, $e); 
+                if (count($associableHotspotElts) > 0) {
+                    
+                    $associableHotspots = new AssociableHotspotCollection();
+                    
+                    foreach ($associableHotspotElts as $associableHotspotElt) {
+                        $associableHotspots[] = $this->getMarshallerFactory()->createMarshaller($associableHotspotElt)->unmarshall($associableHotspotElt);
                     }
                     
-                    if (count($choices) > 0) {
+                    $gapImgElts = self::getChildElementsByTagName($element, 'gapImg');
+                    
+                    if (count($gapImgElts) > 0) {
                         
-                        $fqClass = $this->lookupClass($element);
-                        $component = new $fqClass($responseIdentifier, $object, $maxChoices, $choices);
+                        $gapImgs = new GapImgCollection();
                         
-                        if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                            $component->setMinChoices($minChoices);
+                        foreach ($gapImgElts as $gapImgElt) {
+                            $gapImgs[] = $this->getMarshallerFactory()->createMarshaller($gapImgElt)->unmarshall($gapImgElt);
                         }
+                        
+                        $component = new GraphicGapMatchInteraction($responseIdentifier, $object, $gapImgs, $associableHotspots);
                         
                         $promptElts = self::getChildElementsByTagName($element, 'prompt');
                         if (count($promptElts) > 0) {
@@ -77,33 +88,40 @@ class HotspotInteractionMarshaller extends ContentMarshaller {
                         return $component;
                     }
                     else {
-                        $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
+                        $msg = "A 'graphicGapMatchInteraction' element must contain at least one 'gapImg' element, none given.";
                         throw new UnmarshallingException($msg, $element);
                     }
+                    
+                    
                 }
                 else {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element.";
+                    $msg = "A 'graphiGapMatchInteraction' element must contain at least one 'associableHotspot' element, none given.";
                     throw new UnmarshallingException($msg, $element);
                 }
-                
             }
             else {
-                $msg = "A 'hotspotInteraction' element must contain exactly one 'object' element, none given.";
+                $msg = "A 'graphicGapMatchInteraction' element must contain exactly one 'object' element, none given.";
                 throw new UnmarshallingException($msg, $element);
             }
         }
         else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->nodeName . "' element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'graphicGapMatchInteraction' element.";
             throw new UnmarshallingException($msg, $element);
         }
     }
     
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
+    /**
+	 * Marshall an GraphicGapMatchInteraction object into a DOMElement object.
+	 * 
+	 * @param QtiComponent $component A GraphicGapMatchInteraction object.
+	 * @return DOMElement The according DOMElement object.
+	 * @throws MarshallingException
+	 */
+	protected function marshall(QtiComponent $component) {
         
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = self::getDOMCradle()->createElement('graphicGapMatchInteraction');
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -111,18 +129,18 @@ class HotspotInteractionMarshaller extends ContentMarshaller {
         
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
         
-        if ($component->getMinChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+        foreach ($component->getGapImgs() as $gapImg) {
+            $element->appendChild($this->getMarshallerFactory()->createMarshaller($gapImg)->marshall($gapImg));
         }
         
-        foreach ($elements as $e) {
-            $element->appendChild($e);
+        foreach ($component->getAssociableHotspots() as $associableHotspot) {
+            $element->appendChild($this->getMarshallerFactory()->createMarshaller($associableHotspot)->marshall($associableHotspot));
         }
         
         return $element;
     }
     
-    protected function setLookupClasses() {
-        $this->lookupClasses = array("qtism\\data\\content\\interactions");
-    }
+    public function getExpectedQtiClassName() {
+		return 'graphicGapMatchInteraction';
+	}
 }
