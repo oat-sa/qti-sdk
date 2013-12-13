@@ -24,10 +24,11 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\Comparable;
 use qtism\common\collections\IntegerCollection;
 use \InvalidArgumentException;
 
-class Coords extends IntegerCollection implements QtiDatatype {
+class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 	
 	private $shape;
 	
@@ -153,5 +154,9 @@ class Coords extends IntegerCollection implements QtiDatatype {
 	 */
 	public function __toString() {
 		return implode(",", $this->getDataPlaceHolder());
+	}
+	
+	public function equals($obj) {
+	    return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
 	}
 }

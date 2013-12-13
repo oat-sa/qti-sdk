@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\interactions\GraphicAssociateInteraction;
+
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotInteraction;
 use qtism\data\content\interactions\HottextInteraction;
@@ -82,8 +84,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     
     private static $finals = array('textRun', 'br', 'param', 'hr', 'col', 'img', 'math', 'table', 'colgroup', 'tbody',
                                       'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
-                                      'selectPointInteraction', 'associableHotspot', 'hotspotChoice',
-                                      'graphicAssociateInteraction', 'graphicGapMatchInteraction',
+                                      'selectPointInteraction', 'associableHotspot', 'hotspotChoice', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'customInteraction', 'printedVariable');
     
@@ -183,6 +184,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($component instanceof HotspotInteraction) {
             return $component->getHotspotChoices()->getArrayCopy();
         }
+        else if ($component instanceof GraphicAssociateInteraction) {
+            return $component->getAssociableHotspots()->getArrayCopy();
+        }
         else if ($component instanceof InlineChoice) {
             return $component->getContent()->getArrayCopy();
         }
@@ -239,6 +243,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->nodeName === 'hotspotInteraction') {
             return self::getChildElementsByTagName($element, 'hotspotChoice');
+        }
+        else if ($element->nodeName === 'graphicAssociateInteraction') {
+            return self::getChildElementsByTagName($element, 'associableHotspot');
         }
         else if ($element->nodeName === 'graphicOrderInteraction') {
             return self::getChildElementsByTagName($element, 'hotspotChoice');
