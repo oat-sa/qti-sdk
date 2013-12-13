@@ -34,6 +34,9 @@ use \DOMDocumentFragment;
  * SliderInteraction renderer. Rendered components will be transformed as 
  * 'div' elements with a 'qti-sliderInteraction' additional CSS class.
  * 
+ * An additional 'qti-horizontal' or 'qti-vertical' CSS class is also
+ * added depending on the value of qti:sliderInteraction->orientation.
+ * 
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
@@ -58,6 +61,7 @@ class SliderInteractionRenderer extends InteractionRenderer {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-sliderInteraction');
+        $this->additionalClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
         
         $fragment->firstChild->setAttribute('data-lowerBound', $component->getLowerBound());
         $fragment->firstChild->setAttribute('data-upperBound', $component->getUpperBound());
