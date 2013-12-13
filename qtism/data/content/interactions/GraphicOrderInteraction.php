@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\Object;
+use qtism\data\content\xhtml\Object;
 use \InvalidArgumentException;
 
 /**
@@ -106,8 +106,6 @@ class GraphicOrderInteraction extends GraphicInteraction {
     public function __construct($responseIdentifier, Object $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);    
         $this->setHotspotChoices($hotspotChoices);
-        $this->setMaxChoices(-1);
-        $this->setMinChoices(-1);
     }
     
     /**
@@ -169,6 +167,15 @@ class GraphicOrderInteraction extends GraphicInteraction {
     }
     
     /**
+     * Whether or not a value is defined for the minChoices attribute.
+     * 
+     * @return boolean
+     */
+    public function hasMinChoices() {
+        return $this->getMinChoices() > -1;
+    }
+    
+    /**
      * Set the maximum number of choices that the candidate must select and order to form a valid response. A negative
      * value indicates that no maxChoice is indicated.
      * 
@@ -199,6 +206,15 @@ class GraphicOrderInteraction extends GraphicInteraction {
      */
     public function getMaxChoices() {
         return $this->maxChoices;
+    }
+    
+    /**
+     * Whether or not a value is defined for the maxChoice attribute.
+     * 
+     * @return boolean
+     */
+    public function hasMaxChoices() {
+        return $this->getMaxChoices() > -1;
     }
     
     public function getComponents() {
