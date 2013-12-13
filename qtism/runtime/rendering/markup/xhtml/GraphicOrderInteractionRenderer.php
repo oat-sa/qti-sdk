@@ -29,26 +29,31 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * HotspotInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-hotspotInteraction' additional CSS class.
+ * GraphicOrderInteraction renderer. Rendered components will be transformed as 
+ * 'div' elements with a 'qti-graphicOrderInteraction' additional CSS class.
  * 
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-maxChoices = qti:hotspotInteraction->maxChoices
- * * data-minChoices = qti:hotspotInteraction->minChoices
+ * * data-maxChoices = qti:graphicOrderInteraction->maxChoices
+ * * data-minChoices = qti:graphicOrderInteraction->minChoices
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HotspotInteractionRenderer extends GraphicInteractionRenderer {
+class GraphicOrderInteractionRenderer extends GraphicInteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-hotspotInteraction');
+        $this->additionalClass('qti-graphicOrderInteraction');
         
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        if ($component->hasMaxChoices() === true) {
+            $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
+        }
+        
+        if ($component->hasMinChoices() === true) {
+            $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        }
     }
 }

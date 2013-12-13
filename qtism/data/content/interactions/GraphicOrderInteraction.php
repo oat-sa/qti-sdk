@@ -218,7 +218,7 @@ class GraphicOrderInteraction extends GraphicInteraction {
     }
     
     public function getComponents() {
-        return new QtiComponentCollection(array(array_merge(array($this->getObject()), $this->getHotspotChoices()->getArrayCopy())));
+        return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getHotspotChoices()->getArrayCopy()));
     }
     
     public function getQtiClassName() {
