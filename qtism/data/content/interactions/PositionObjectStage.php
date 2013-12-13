@@ -25,7 +25,7 @@ namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\Object;
+use qtism\data\content\xhtml\Object;
 use qtism\data\content\Block;
 use \InvalidArgumentException;
 
@@ -76,6 +76,17 @@ class PositionObjectStage extends QtiComponent implements Block {
     }
     
     /**
+     * Create a new PositionObjectStage object.
+     * 
+     * @param Object $object The image to be used as a stage.
+     * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
+     */
+    public function __construct(Object $object, PositionObjectInteractionCollection $positionObjectInteractions) {
+        $this->setObject($object);
+        $this->setPositionObjectInteractions($positionObjectInteractions);    
+    }
+    
+    /**
      * Set the positionObjectInteractions composing the positionObjectStage.
      * 
      * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
@@ -101,7 +112,7 @@ class PositionObjectStage extends QtiComponent implements Block {
     }
     
     public function getComponents() {
-        return new QtiComponentCollection(array_merge($this->getObject(), $this->getPositionObjectInteractions()->getArrayCopy()));
+        return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getPositionObjectInteractions()->getArrayCopy()));
     }
     
     public function getQtiClassName() {

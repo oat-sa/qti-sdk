@@ -24,8 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
-
-use qtism\data\content\Object;
+use qtism\data\content\xhtml\Object;
 use qtism\common\datatypes\Point;
 use \InvalidArgumentException;
 
@@ -103,7 +102,6 @@ class PositionObjectInteraction extends Interaction {
      * Create a new PositionObjectInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param integer $maxChoices The maximum number of positions (on the stage) that the image can be placed.
      * @param Object $object An image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -111,12 +109,9 @@ class PositionObjectInteraction extends Interaction {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, $maxChoices, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
-        $this->setMaxChoices($maxChoices);
-        $this->setMinChoices(-1);
         $this->setObject($object);
-        $this->setCenterPoint(null);
     }
     
     /**
@@ -181,7 +176,7 @@ class PositionObjectInteraction extends Interaction {
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices) {
-        if (is_int($minChoices) && $minChoices !== 0) {
+        if (is_int($minChoices) && $minChoices > 0) {
             
             if ($minChoices > $this->getMaxChoices()) {
                 $msg = "The 'minChoices' argument must be less than or equal to the limits imposed by 'maxChoices'.";
@@ -204,6 +199,10 @@ class PositionObjectInteraction extends Interaction {
      */
     public function getMinChoices() {
         return $this->minChoices;
+    }
+    
+    public function hasMinChoices() {
+        return $this->getMinChoices() > 0;
     }
     
     /**
