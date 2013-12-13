@@ -24,9 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-
+use qtism\data\content\interactions\PositionObjectInteractionCollection;
 use qtism\data\content\interactions\PositionObjectStage;
-
 use qtism\data\QtiComponent;
 use \DOMElement;
 
@@ -47,7 +46,13 @@ class PositionObjectStageMarshaller extends Marshaller {
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('positionObjectStage');
-        self::fillElement($element, $component);
+        $object = $component->getObject();
+        $element->appendChild($this->getMarshallerFactory()->createMarshaller($object)->marshall($object));
+        
+        foreach ($component->getPositionObjectInteractions() as $interaction) {
+            $element->appendChild($this->getMarshallerFactory()->createMarshaller($interaction)->marshall($interaction));
+        }
+        
         return $element;
 	}
 	
@@ -60,9 +65,31 @@ class PositionObjectStageMarshaller extends Marshaller {
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
-		$component = new PositionObjectStage($object, $positionObjectInteractions);
-		self::fillBodyElement($component, $element);
-		return $component;
+	    $objectElts = self::getChildElementsByTagName($element, 'object');
+	    if (count($objectElts) > 0) {
+	        
+	        $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+	        
+	        $positionObjectInteractionElts = self::getChildElementsByTagName($element, 'positionObjectInteraction');
+	        if (count($positionObjectInteractionElts) > 0) {
+	            
+	            $positionObjectInteractions = new PositionObjectInteractionCollection();
+	            
+	            foreach ($positionObjectInteractionElts as $interactionElt) {
+	                $positionObjectInteractions[] = $this->getMarshallerFactory()->createMarshaller($interactionElt)->unmarshall($interactionElt);
+	            }
+	            
+	            return new PositionObjectStage($object, $positionObjectInteractions);
+	        }
+	        else {
+	            $msg = "A 'positionObjectStage' element must contain at least one 'positionObjectInteraction' element, none given.";
+	            throw new UnmarshallingException($msg, $element);
+	        }
+	    }
+	    else {
+	        $msg = "A 'positionObjectStage' element must contain exactly one 'object' element, none given.";
+	        throw new UnmarshallingException($msg, $element);
+	    }
 	}
 	
 	public function getExpectedQtiClassName() {
