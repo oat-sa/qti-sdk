@@ -30,7 +30,8 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * HotspotChoice renderer. This renderer will transform the choice into a 'div' element.
+ * AssociableHotspot renderer. This renderer will transform the choice into a 'div' element
+ * with an additional 'qti-associableHotspot' CSS class.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -46,14 +47,16 @@ use \DOMDocumentFragment;
  * * data-shape = qti:hotspot->shape
  * * data-coords = qti:hotspot->coords
  * * data-hotspotLabel = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
+ * * data-matchmax = qti:associableHotspot->matchMax
+ * * data-matchMin = qti:associableHotspot->matchMine
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HotspotChoiceRenderer extends HotspotRenderer {
+class AssociableHotspotRenderer extends HotspotRenderer {
     
     /**
-     * Create a new HotspotChoiceRenderer.
+     * Create a new AssociableHotspotRenderer.
      * 
      * @param AbstractRenderingContext $renderingContext
      */
@@ -64,6 +67,9 @@ class HotspotChoiceRenderer extends HotspotRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-hotspotChoice');
+        $this->additionalClass('qti-associableHotspot');
+        
+        $fragment->firstChild->setAttribute('data-matchMin', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-matchMax', $component->getMatchMax());
     }
 }
