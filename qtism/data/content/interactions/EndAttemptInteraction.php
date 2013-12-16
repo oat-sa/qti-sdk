@@ -73,7 +73,7 @@ class EndAttemptInteraction extends InlineInteraction {
      * @throws InvalidArgumentException If any of the argument is invalid.
      */
     public function __construct($responseIdentifier, $title, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '');
+        parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setTitle($title);
     }
     
