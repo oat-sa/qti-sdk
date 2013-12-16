@@ -111,7 +111,7 @@ class MediaInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      */
     public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '');
+        parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
         $this->setObject($object);
     }
