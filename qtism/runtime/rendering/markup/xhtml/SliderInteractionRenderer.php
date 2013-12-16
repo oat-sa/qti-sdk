@@ -37,6 +37,10 @@ use \DOMDocumentFragment;
  * An additional 'qti-horizontal' or 'qti-vertical' CSS class is also
  * added depending on the value of qti:sliderInteraction->orientation.
  * 
+ * A decorative <div> element with addictionnal CSS class 'qti-slider' is appended
+ * to the element representing the 'qti-sliderInteraction', in order to represent and place
+ * the widget element to be replaced by a slider implementation at runtime.
+ * 
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
@@ -72,5 +76,14 @@ class SliderInteractionRenderer extends InteractionRenderer {
         if ($component->hasStep() === true) {
             $fragment->firstChild->setAttribute('data-step', $component->getStep());
         }
+    }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+        parent::appendChildren($fragment, $component);
+        
+        // Insert an element representing the slider 'widget' itself.
+        $sliderElt = $fragment->firstChild->ownerDocument->createElement('div');
+        $sliderElt->setAttribute('class', 'qti-slider');
+        $fragment->firstChild->appendChild($sliderElt);
     }
 }
