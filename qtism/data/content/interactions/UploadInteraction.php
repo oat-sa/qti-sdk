@@ -61,7 +61,6 @@ class UploadInteraction extends BlockInteraction {
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
-        $this->setType('');
     }
     
     /**
@@ -87,6 +86,16 @@ class UploadInteraction extends BlockInteraction {
      */
     public function getType() {
         return $this->type;
+    }
+    
+    /**
+     * Whether or not a value is defined for the 'type'
+     * attribute.
+     * 
+     * @return boolean
+     */
+    public function hasType() {
+        return $this->getType() !== '';
     }
     
     public function getComponents() {
