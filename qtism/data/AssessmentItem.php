@@ -53,6 +53,28 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	private $identifier;
 	
 	/**
+	 * From IMS QTI:
+	 * 
+	 * The title of an assessmentItem is intended to enable the item to be selected
+	 * in situations where the full text of the itemBody is not available, for example
+	 * when a candidate is browsing a set of items to determine the order in which to
+	 * attempt them. Therefore, delivery engines may reveal the title to candidates at
+	 * any time but are not required to do so.
+	 * 
+	 * @var string
+	 * @qtism-bean-property
+	 */
+	private $title;
+	
+	/**
+	 * The label of the item.
+	 * 
+	 * @var string
+	 * @qtism-bean-property
+	 */
+	private $label = '';
+	
+	/**
 	 * The language used in the Item.
 	 * 
 	 * @var string
@@ -77,6 +99,31 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * @qtism-bean
 	 */
 	private $timeDependent;
+	
+	/**
+	 * From IMS QTI:
+	 * 
+	 * The tool name attribute allows the tool creating the item to identify 
+	 * itself. Other processing systems may use this information to interpret 
+	 * the content of application specific data, such as labels on the elements 
+	 * of the item's itemBody.
+	 * 
+	 * @var string
+	 * @qtism-bean-property
+	 */
+	private $toolName = '';
+	
+	/**
+	 * From IMS QTI:
+	 * 
+	 * The tool name attribute allows the tool creating the item to identify itself.
+	 * Other processing systems may use this information to interpret the content of 
+	 * application specific data, such as labels on the elements of the item's itemBody.
+	 * 
+	 * @var string
+	 * @qtism-bean-property
+	 */
+	private $toolVersion = '';
 	
 	/**
 	 * The response declarations.
@@ -113,14 +160,16 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Create a new AssessmentItem object.
 	 * 
 	 * @param string $identifier A QTI Identifier.
+	 * @param string $title The title of the item.
 	 * @param boolean $timeDependent Whether the item is time dependent.
 	 * @param string $lang The language (code) of the item.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $timeDependent is not a boolean value, or if $lang is not a string value. 
+	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value. 
 	 */
-	public function __construct($identifier, $timeDependent, $lang = '') {
+	public function __construct($identifier, $title, $timeDependent, $lang = '') {
 		$this->setObservers(new SplObjectStorage());
 		
 		$this->setIdentifier($identifier);
+		$this->setTitle($title);
 		$this->setTimeDependent($timeDependent);
 		$this->setLang($lang);
 		$this->setResponseDeclarations(new ResponseDeclarationCollection());
@@ -155,6 +204,31 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	}
 	
 	/**
+	 * Set the title of the item.
+	 * 
+	 * @param string $title A title.
+	 * @throws InvalidArgumentException If $title is not a string value.
+	 */
+	public function setTitle($title) {
+	    if (is_string($title) === true) {
+	        $this->title = $title;
+	    }
+	    else {
+	        $msg = "The title argument must be a string, '" . gettype($title) . "' given.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the title of the item.
+	 * 
+	 * @return string A title.
+	 */
+	public function getTitle() {
+	    return $this->title;
+	}
+	
+	/**
 	 * Set the language code.
 	 * 
 	 * @param string $lang A language code.
@@ -168,6 +242,40 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 			$msg = "The lang argument must be a string, '" . gettype($lang) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
+	}
+	
+	/**
+	 * Set the label of the item.
+	 * 
+	 * @param string $label A string with at most 256 characters.
+	 * @throws InvalidArgumentException If $label is not a string with at most 256 characters.
+	 */
+	public function setLabel($label) {
+	    if (Format::isString256($label) === true) {
+	        $this->label = $label;
+	    }
+	    else {
+	        $msg = "The label argument must be a string with at most 256 characters.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Whether or not a value is defined for the label attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasLabel() {
+	    return $this->getLabel() !== '';
+	}
+	
+	/**
+	 * Get the label of the item.
+	 * 
+	 * @return string A string with at most 256 characters.
+	 */
+	public function getLabel() {
+	    return $this->label;
 	}
 	
 	/**
@@ -237,6 +345,74 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 */
 	public function isTimeDependent() {
 		return $this->timeDependent;
+	}
+	
+	/**
+	 * Set the name of the tool with which the item was created.
+	 * 
+	 * @param string $toolName A tool name with at most 256 characters.
+	 * @throws InvalidArgumentException If $toolName is not a string value with at most 256 characters.
+	 */
+	public function setToolName($toolName) {
+	    if (Format::isString256($toolName) === true) {
+	        $this->toolName = $toolName;
+	    }
+	    else {
+	        $msg = "The toolName argument must be a string with at most 256 characters.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the name of the tool with which the item was created.
+	 * 
+	 * @return string
+	 */
+	public function getToolName() {
+	    return $this->toolName;
+	}
+	
+	/**
+	 * Whether or not a value is defined for the toolName attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasToolName() {
+	    return $this->getToolName() !== '';
+	}
+	
+	/**
+	 * Set the version of the tool with which the item was created.
+	 * 
+	 * @param string $toolVersion A tool version with at most 256 characters.
+	 * @throws InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
+	 */
+	public function setToolVersion($toolVersion) {
+	    if (Format::isString256($toolVersion) === true) {
+	        $this->toolVersion = $toolVersion;
+	    }
+	    else {
+	        $msg = "The toolVersion argument must be a string with at most 256 characters.";
+	        throw new InvalidArgumentException($msg);
+	    }
+	}
+	
+	/**
+	 * Get the version of the tool with which the item was created.
+	 * 
+	 * @return string A tool version with at most 256 characters.
+	 */
+	public function getToolVersion() {
+	    return $this->toolVersion;
+	}
+	
+	/**
+	 * Whether or not a value is defined for the toolVersion attribute.
+	 * 
+	 * @return boolean
+	 */
+	public function hasToolVersion() {
+	    return $this->getToolVersion() !== '';
 	}
 	
 	/**

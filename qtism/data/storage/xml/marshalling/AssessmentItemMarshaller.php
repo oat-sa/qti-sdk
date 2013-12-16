@@ -48,11 +48,24 @@ class AssessmentItemMarshaller extends Marshaller {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
 		self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+		self::setDOMElementAttribute($element, 'title', $component->getTitle());
 		self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
 		self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
 		
 		if ($component->hasLang() === true) {
 			self::setDOMElementAttribute($element, 'lang', $component->getLang());
+		}
+		
+		if ($component->hasLabel() === true) {
+		    self::setDOMElementAttribute($element, 'label', $component->getLabel());
+		}
+		
+		if ($component->hasToolName() === true) {
+		    self::setDOMElementAttribute($element, 'toolName', $component->getToolName());
+		}
+		
+		if ($component->hasToolVersion() === true) {
+		    self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
 		}
 		
 		foreach ($component->getResponseDeclarations() as $responseDeclaration) {
@@ -90,57 +103,76 @@ class AssessmentItemMarshaller extends Marshaller {
 			
 			if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
 				
-				if (empty($assessmentItem)) {
-					$object = new AssessmentItem($identifier, $timeDependent);
-				}
-				else {
-					$object = $assessmentItem;
-					$object->setIdentifier($identifier);
-					$object->setTimeDependent($timeDependent);
-				}
-				
-				
-				if (($lang = static::getDOMElementAttributeAs($element, 'lang')) !== null) {
-					$object->setLang($lang);
-				}
-				
-				if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
-					$object->setAdaptive($adaptive);
-				}
-				
-				$responseDeclarationElts = static::getChildElementsByTagName($element, 'responseDeclaration');
-				if (!empty($responseDeclarationElts)) {
-					
-					$responseDeclarations = new ResponseDeclarationCollection();
-					
-					foreach ($responseDeclarationElts as $responseDeclarationElt) {
-						$marshaller = $this->getMarshallerFactory()->createMarshaller($responseDeclarationElt);
-						$responseDeclarations[] = $marshaller->unmarshall($responseDeclarationElt);
-					}
-
-					$object->setResponseDeclarations($responseDeclarations);
-				}
-				
-				$outcomeDeclarationElts = static::getChildElementsByTagName($element, 'outcomeDeclaration');
-				if (!empty($outcomeDeclarationElts)) {
-					
-					$outcomeDeclarations = new OutcomeDeclarationCollection();
-					
-					foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
-						$marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclarationElt);
-						$outcomeDeclarations[] = $marshaller->unmarshall($outcomeDeclarationElt);
-					}
-					
-					$object->setOutcomeDeclarations($outcomeDeclarations);
-				}
-				
-				$responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');
-				if (!empty($responseProcessingElts)) {
-					$marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
-					$object->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
-				}
-				
-				return $object;
+			    if (($title= static::getDOMElementAttributeAs($element, 'title')) !== null) {
+			        
+			        if (empty($assessmentItem)) {
+			            $object = new AssessmentItem($identifier, $title, $timeDependent);
+			        }
+			        else {
+			            $object = $assessmentItem;
+			            $object->setIdentifier($identifier);
+			            $object->setTimeDependent($timeDependent);
+			        }
+			        
+			        
+			        if (($lang = static::getDOMElementAttributeAs($element, 'lang')) !== null) {
+			            $object->setLang($lang);
+			        }
+			        
+			        if (($label = static::getDOMElementAttributeAs($element, 'label')) !== null) {
+			            $object->setLabel($label);
+			        }
+			        
+			        if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+			            $object->setAdaptive($adaptive);
+			        }
+			        
+			        if (($toolName = static::getDOMElementAttributeAs($element, 'toolName')) !== null) {
+			            $object->setToolName($toolName);
+			        }
+			        
+			        if (($toolVersion = static::getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
+			            $object->setToolVersion($toolVersion);
+			        }
+			        
+			        $responseDeclarationElts = static::getChildElementsByTagName($element, 'responseDeclaration');
+			        if (!empty($responseDeclarationElts)) {
+			            	
+			            $responseDeclarations = new ResponseDeclarationCollection();
+			            	
+			            foreach ($responseDeclarationElts as $responseDeclarationElt) {
+			                $marshaller = $this->getMarshallerFactory()->createMarshaller($responseDeclarationElt);
+			                $responseDeclarations[] = $marshaller->unmarshall($responseDeclarationElt);
+			            }
+			        
+			            $object->setResponseDeclarations($responseDeclarations);
+			        }
+			        
+			        $outcomeDeclarationElts = static::getChildElementsByTagName($element, 'outcomeDeclaration');
+			        if (!empty($outcomeDeclarationElts)) {
+			            	
+			            $outcomeDeclarations = new OutcomeDeclarationCollection();
+			            	
+			            foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
+			                $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclarationElt);
+			                $outcomeDeclarations[] = $marshaller->unmarshall($outcomeDeclarationElt);
+			            }
+			            	
+			            $object->setOutcomeDeclarations($outcomeDeclarations);
+			        }
+			        
+			        $responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');
+			        if (!empty($responseProcessingElts)) {
+			            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
+			            $object->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
+			        }
+			        
+			        return $object;
+			    }
+			    else {
+			        $msg = "The mandatory attribute 'title' is missing from element '" . $element->nodeName . "'.";
+			        throw new UnmarshallingException($msg, $element);    
+			    }
 			}
 			else {
 				$msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->nodeName . "'.";
