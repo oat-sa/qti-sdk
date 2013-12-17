@@ -24,6 +24,7 @@
 
 namespace qtism\data;
 
+use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\processing\ResponseProcessing;
@@ -142,6 +143,13 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	private $outcomeDeclarations;
 	
 	/**
+	 * The template declarations.
+	 * 
+	 * @var TemplateDeclarationCollection
+	 */
+	private $templateDeclarations;
+	
+	/**
 	 * The responseProcessing.
 	 * 
 	 * @var ResponseProcessing
@@ -174,6 +182,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 		$this->setLang($lang);
 		$this->setResponseDeclarations(new ResponseDeclarationCollection());
 		$this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
+		$this->setTemplateDeclarations(new TemplateDeclarationCollection());
 	}
 	
 	/**
@@ -449,6 +458,24 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
+	}
+	
+	/**
+	 * Set the template declarations.
+	 * 
+	 * @param TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+	 */
+	public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations) {
+	    $this->templateDeclarations = $templateDeclarations;
+	}
+	
+	/**
+	 * Get the template declarations.
+	 * 
+	 * @return TemplateDeclarationCollection A collection of TemplateDeclaration objects.
+	 */
+	public function getTemplateDeclarations() {
+	    return $this->templateDeclarations;
 	}
 	
 	/**

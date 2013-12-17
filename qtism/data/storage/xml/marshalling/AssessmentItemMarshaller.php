@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\QtiComponent;
 use qtism\data\AssessmentItem;
 use \DOMElement;
@@ -76,6 +77,11 @@ class AssessmentItemMarshaller extends Marshaller {
 		foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclaration);
 			$element->appendChild($marshaller->marshall($outcomeDeclaration));
+		}
+		
+		foreach ($component->getTemplateDeclarations() as $templateDeclaration) {
+		    $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclaration);
+		    $element->appendChild($marshaller->marshall($templateDeclaration));
 		}
 		
 		if ($component->hasResponseProcessing() === true) {
@@ -159,6 +165,19 @@ class AssessmentItemMarshaller extends Marshaller {
 			            }
 			            	
 			            $object->setOutcomeDeclarations($outcomeDeclarations);
+			        }
+			        
+			        $templateDeclarationElts = static::getChildElementsByTagName($element, 'templateDeclaration');
+			        if (!empty($templateDeclarationElts)) {
+			            
+			            $templateDeclarations = new TemplateDeclarationCollection();
+			            
+			            foreach ($templateDeclarationElts as $templateDeclarationElt) {
+			                $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclarationElt);
+			                $templateDeclarations[] = $marshaller->unmarshall($templateDeclarationElt);
+			            }
+			            
+			            $object->setTemplateDeclarations($templateDeclarations);
 			        }
 			        
 			        $responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');

@@ -1,5 +1,9 @@
 <?php
 
+use qtism\common\enums\BaseType;
+
+use qtism\common\enums\Cardinality;
+
 use qtism\data\storage\xml\XmlDocument;
 
 use qtism\data\View;
@@ -55,6 +59,57 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		$doc->load($file);
 		
 		$this->assertEquals('2.0', $doc->getVersion());
+	}
+	
+	public function testLoadTemplate($uri = '') {
+	    $file = (empty($uri) === true) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
+	    
+	    $doc = new XmlDocument();
+	    $doc->load($file, true);
+	    
+	    $item = $doc->getDocumentComponent();
+	    
+	    // Look for all template declarations.
+	    $templateDeclarations = $item->getTemplateDeclarations();
+	    $this->assertEquals(4, count($templateDeclarations));
+	    
+	    $this->assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
+	    $this->assertEquals(BaseType::STRING, $templateDeclarations['PEOPLE']->getBaseType());
+	    $this->assertFalse($templateDeclarations['PEOPLE']->isMathVariable());
+	    $this->assertFalse($templateDeclarations['PEOPLE']->isParamVariable());
+	    
+	    $this->assertEquals('A', $templateDeclarations['A']->getIdentifier());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['A']->getCardinality());
+	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations['A']->getBaseType());
+	    $this->assertFalse($templateDeclarations['A']->isMathVariable());
+	    $this->assertFalse($templateDeclarations['A']->isParamVariable());
+	    
+	    $this->assertEquals('B', $templateDeclarations['B']->getIdentifier());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['B']->getCardinality());
+	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations['B']->getBaseType());
+	    $this->assertFalse($templateDeclarations['B']->isMathVariable());
+	    $this->assertFalse($templateDeclarations['B']->isParamVariable());
+	    
+	    $this->assertEquals('MIN', $templateDeclarations['MIN']->getIdentifier());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['MIN']->getCardinality());
+	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations['MIN']->getBaseType());
+	    $this->assertFalse($templateDeclarations['MIN']->isMathVariable());
+	    $this->assertFalse($templateDeclarations['MIN']->isParamVariable());
+	}
+	
+	public function testWriteTemplate() {
+	    $doc = new XmlDocument();
+	    $doc->load(self::samplesDir() . 'ims/items/2_1/template.xml');
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    unset($doc);
+	    
+	    $this->testLoadTemplate($file);
+	    
+	    unlink($file);
+	    $this->assertFalse(file_exists($file));
 	}
 	
 	public function validFileProvider() {
