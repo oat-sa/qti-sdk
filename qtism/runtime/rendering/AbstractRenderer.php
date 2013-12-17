@@ -38,48 +38,16 @@ use \InvalidArgumentException;
  */
 abstract class AbstractRenderer implements Renderable {
     
-    /**
-     * The rendering context used by the implementation. This attribute
-     * must be set up by dependency injection by the appropriate rendering
-     * engine.
-     * 
-     * @var AbstractRenderingContext
-     */
-    private $renderingContext;
+    private $renderingEngine;
     
-    /**
-     * Create a new AbstractRenderer object.
-     * 
-     * @param AbstractRenderingContext $renderingContext A rendering context to use when outside of a suitable rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        $this->setRenderingContext($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        $this->setRenderingEngine($renderingEngine);
+    }
+    public function setRenderingEngine(AbstractRenderingEngine $renderingEngine = null) {
+        $this->renderingEngine = $renderingEngine;
     }
     
-    /**
-     * Set the rendering context for this renderer.
-     * 
-     * @param AbstractRenderingContext $renderingContext
-     */
-    public function setRenderingContext(AbstractRenderingContext $renderingContext = null) {
-        $this->renderingContext = $renderingContext;
-    }
-    
-    /**
-     * Get the rendering context for this renderer.
-     * 
-     * @return AbstractRenderingContext
-     */
-    public function getRenderingContext() {
-        return $this->renderingContext;
-    }
-    
-    /**
-     * Whether a rendering context reference is held by the renderer.
-     * 
-     * @return boolean
-     */
-    public function hasRenderingContext() {
-        return $this->getRenderingContext() !== null;
+    public function getRenderingEngine() {
+        return $this->renderingEngine;
     }
 }

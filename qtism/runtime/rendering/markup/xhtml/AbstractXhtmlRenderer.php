@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
@@ -54,13 +54,8 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      */
     private $additionalClasses = array();
     
-    /**
-     * Create a new XhtmlAbstractRenderer object.
-     *
-     * @param AbstractRenderingContext An optional rendering context to be used e.g. when outside of a rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
     }
     
     /**
@@ -68,16 +63,15 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * in the current rendering context.
      */
     public function render(QtiComponent $component) {
-        $doc = $this->getRenderingContext()->getDocument();
+        $doc = $this->getRenderingEngine()->getDocument();
         $fragment = $doc->createDocumentFragment();
         
         $this->renderingImplementation($fragment, $component);
-        $this->getRenderingContext()->storeRendering($component, $fragment);
+        $this->getRenderingEngine()->storeRendering($component, $fragment);
         return $fragment;
     }
     
     protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
-        
         
         $this->appendElement($fragment, $component);
         $this->appendChildren($fragment, $component);
@@ -103,7 +97,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
         $tagName = ($this->hasReplacementTagName() === true) ? $this->getReplacementTagName() : $component->getQtiClassName();
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement($tagName));
+        $fragment->appendChild($this->getRenderingEngine()->getDocument()->createElement($tagName));
     }
     
     /**
@@ -114,7 +108,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
         $element = $fragment->firstChild;
-        foreach ($this->getRenderingContext()->getChildrenRenderings($component) as $childrenRendering) {
+        foreach ($this->getRenderingEngine()->getChildrenRenderings($component) as $childrenRendering) {
             $element->appendChild($childrenRendering->firstChild);
         }
     }

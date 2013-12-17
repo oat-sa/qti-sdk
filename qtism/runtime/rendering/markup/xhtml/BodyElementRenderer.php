@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer;
@@ -38,13 +39,8 @@ use \DOMDocumentFragment;
  */
 class BodyElementRenderer extends AbstractXhtmlRenderer {
     
-    /**
-     * Create a new BodyElementRenderer object.
-     *
-     * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {

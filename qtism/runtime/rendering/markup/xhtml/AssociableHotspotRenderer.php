@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -55,13 +55,8 @@ use \DOMDocumentFragment;
  */
 class AssociableHotspotRenderer extends HotspotRenderer {
     
-    /**
-     * Create a new AssociableHotspotRenderer.
-     * 
-     * @param AbstractRenderingContext $renderingContext
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->transform('div');
     }
     

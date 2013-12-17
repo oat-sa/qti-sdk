@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -125,8 +125,8 @@ class MediaInteractionRenderer extends InteractionRenderer {
         return $this->imageTypes;
     }
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->setVideoTypes(array('video/mp4', 'video/webm', 'video/ogg'));
         $this->setAudioTypes(array('audio/mpeg', 'audio/ogg', 'audio/wav'));
         $this->setImageTypes(array('image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/x-bmp'));

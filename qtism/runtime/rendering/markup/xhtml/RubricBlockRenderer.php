@@ -26,7 +26,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\View;
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -47,8 +47,8 @@ use \DOMDocumentFragment;
  */
 class RubricBlockRenderer extends BodyElementRenderer {
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->transform('div');
     }
     

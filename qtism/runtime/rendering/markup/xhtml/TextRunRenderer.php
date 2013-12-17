@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
@@ -38,17 +38,12 @@ use \DOMDocumentFragment;
  */
 class TextRunRenderer extends AbstractXhtmlRenderer {
     
-    /**
-     * Create a new TextRunRenderer object.
-     *
-     * @param AbstractRenderingContext $renderingContext An optional rendering context to use e.g. when outside of a rendering engine.
-     */
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        $this->setRenderingContext($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
     }
     
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createTextNode($component->getContent()));
+        $fragment->appendChild($this->getRenderingEngine()->getDocument()->createTextNode($component->getContent()));
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {

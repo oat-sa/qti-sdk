@@ -26,8 +26,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\ShufflableCollection;
-
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -47,8 +46,8 @@ use \DOMDocumentFragment;
  */
 class MatchInteractionRenderer extends InteractionRenderer {
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->transform('div');
     }
     
@@ -66,7 +65,7 @@ class MatchInteractionRenderer extends InteractionRenderer {
         parent::appendChildren($fragment, $component);
         
         // Retrieve the two rendered simpleMatchSets and shuffle if needed.
-        if ($this->getRenderingContext()->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->mustShuffle() === true) {
             
             $currentSet = 0;
             for ($i = 0; $i < $fragment->firstChild->childNodes->length; $i++) {

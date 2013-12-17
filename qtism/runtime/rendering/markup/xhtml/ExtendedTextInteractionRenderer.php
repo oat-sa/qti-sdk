@@ -26,8 +26,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\interactions\TextFormat;
-
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -58,8 +57,8 @@ use \DOMDocumentFragment;
  */
 class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->transform('div');
     }
     

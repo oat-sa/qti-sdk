@@ -31,6 +31,7 @@ use qtism\data\ShowHide;
 use qtism\data\content\FeedbackElement;
 use qtism\runtime\common\State;
 use qtism\data\ViewCollection;
+use qtism\data\View;
 use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
@@ -41,7 +42,7 @@ use \DOMDocument;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderingEngine extends AbstractRenderer implements RenderingConfig {
+abstract class AbstractRenderingEngine implements RenderingConfig {
 
     /**
      * An array used to 'tag' explored Component object.
@@ -72,11 +73,77 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     private $lastRendering = null;
     
     /**
+     * The stack where rendered components in other
+     * constitution are stored for a later use.
+     *
+     * @var SplStack
+     */
+    private $renderingStack;
+    
+    /**
+     * An associative array where keys are QTI class names
+     * and values are AbstractRenderer objects.
+     *
+     * @var array
+     */
+    private $renderers;
+    
+    /**
+     * An array containing the QTI classes to be ignored
+     * for rendering.
+     *
+     * @var array
+     */
+    private $ignoreClasses = array();
+    
+    /**
+     * The Choice rendering policy.
+     *
+     * @var integer
+     * @see RenderingConfig For information about rendering policies.
+    */
+    private $choiceShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The Feedback rendering policy.
+     *
+     * @var integer
+     * @see RenderingConfig For information about rendering policies
+     */
+    private $feedbackShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The View rendering policy.
+     *
+     * @var integer
+     * @see RenderingConfig For information about rendering policies
+     */
+    private $viewPolicy = RenderingConfig::CONTEXT_STATIC;
+    
+    /**
+     * The QTI views to be used while rendering in CONTEXT_AWARE mode.
+     *
+     * @var ViewCollection
+     */
+    private $views;
+    
+    /**
+     * The State object used in CONTEXT_AWARE rendering mode.
+     *
+     * @var State
+     */
+    private $state;
+    
+    /**
      * Create a new AbstractRenderingObject.
      * 
      */
     public function __construct() {
-        parent::__construct($this->createRenderingContext());
+        $this->setRenderers(array());
+        $this->setRenderingStack(new SplStack());
+        $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
+        $this->setState(new State());
+        
         $this->ignoreQtiClasses('responseDeclaration');
         $this->ignoreQtiClasses('outcomeDeclaration');
         $this->ignoreQtiClasses('templateDeclaration');
@@ -211,16 +278,8 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         }
         
         $finalRendering = $this->createFinalRendering();
-        $this->getRenderingContext()->reset();
+        $this->reset();
         return $finalRendering;
-    }
-    
-    public function ignoreQtiClasses($classes) {
-        $this->getRenderingContext()->ignoreQtiClasses($classes);
-    }
-    
-    public function getIgnoreClasses() {
-        return $this->getRenderingContext()->getIgnoreClasses();
     }
     
     /**
@@ -263,14 +322,6 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
     }
     
     /**
-     * Create an appropriate rendering context (factory method).
-     * 
-     * @return AbstractRenderingContext
-     * @see http://en.wikipedia.org/wiki/Factory_method_pattern Factory Method pattern.
-     */
-    abstract protected function createRenderingContext();
-    
-    /**
      * Create the final rendering as it must be rendered by the final
      * implementation.
      * 
@@ -282,7 +333,7 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
      * Process the current node.
      */
     protected function processNode() {
-        $renderer = $this->getRenderingContext()->getRenderer($this->getExploredComponent());
+        $renderer = $this->getRenderer($this->getExploredComponent());
         $rendering = $renderer->render($this->getExploredComponent());
         $this->setLastRendering($rendering);
     }
@@ -346,43 +397,188 @@ abstract class AbstractRenderingEngine extends AbstractRenderer implements Rende
         return (($val = $state[$variableIdentifier]) !== null && $val === $identifier);
     }
     
+    /**
+     * Set the renderers array.
+     * 
+     * @param array $renderers
+     */
+    protected function setRenderers(array $renderers) {
+        $this->renderers = $renderers;
+    }
+    
+    /**
+     * Get the renderers array.
+     * 
+     * @return array
+     */
+    protected function getRenderers() {
+        return $this->renderers;
+    }
+    
+    /**
+     * Set the array containing the QTI class names
+     * to be ignored for rendering.
+     * 
+     * @param array $ignoreClasses
+     */
+    protected function setIgnoreClasses(array $ignoreClasses) {
+        $this->ignoreClasses = $ignoreClasses;
+    }
+    
+    public function getIgnoreClasses() {
+        return $this->ignoreClasses;
+    }
+    
+    public function ignoreQtiClasses($classes) {
+        if (is_string($classes) === true) {
+            $classes = array($classes);
+        }
+        
+        $ignoreClasses = $this->getIgnoreClasses();
+        $ignoreClasses = array_unique(array_merge($ignoreClasses, $classes));
+        
+        $this->setIgnoreClasses($ignoreClasses);
+    }
+    
+    /**
+     * Register a $renderer object to a given $qtiClassName.
+     * 
+     * @param string $qtiClassName A QTI class name.
+     * @param AbstractRenderer $renderer An AbstractRenderer object.
+     */
+    public function registerRenderer($qtiClassName, AbstractRenderer $renderer) {
+        $renderer->setRenderingEngine($this);
+        $renderers = $this->getRenderers();
+        $renderers[$qtiClassName] = $renderer;
+        $this->setRenderers($renderers);
+    }
+    
+    /**
+     * Get the AbstractRenderer implementation which is appropriate to render the given
+     * QtiComponent $component.
+     * 
+     * @param QtiComponent $component A QtiComponent object you want to get the appropriate AbstractRenderer implementation.
+     * @throws RenderingException If no implementation of AbstractRenderer is registered for $component.
+     * @return AbstractRenderer The AbstractRenderer implementation to render $component.
+     */
+    public function getRenderer(QtiComponent $component) {
+        $renderers = $this->getRenderers();
+        $className = $component->getQtiClassName();
+        
+        if (isset($renderers[$className]) === true) {
+            return $renderers[$className];
+        }
+        else {
+            $msg = "No AbstractRenderer implementation registered for QTI class name '${className}'.";
+            throw new RenderingException($msg, RenderingException::NO_RENDERER);
+        }
+    }
+    
+    /**
+     * Get the stack of rendered components stored for a later use
+     * by AbstractRenderer objects.
+     * 
+     * @return SplStack
+     */
+    protected function getRenderingStack() {
+        return $this->renderingStack;
+    }
+    
+    /**
+     * Set the stack of rendered components stored
+     * for a later use by AbstractRenderer objects.
+     * 
+     * @param SplStack $renderingStack
+     */
+    protected function setRenderingStack(SplStack $renderingStack) {
+        $this->renderingStack = $renderingStack;
+    }
+    
+    /**
+     * Store a rendered component as a rendering for a later use
+     * by AbstractRenderer objects.
+     * 
+     * @param QtiComponent $component The $component from which the rendering was made.
+     * @param mixed $rendering A component rendered in another format.
+     */
+    public function storeRendering(QtiComponent $component, $rendering) {
+        $this->getRenderingStack()->push(array($component, $rendering));
+    }
+    
+    /**
+     * Get the renderings related to the children of $component.
+     * 
+     * @param QtiComponent $component A QtiComponent object to be rendered.
+     * @return array
+     */
+    public function getChildrenRenderings(QtiComponent $component) {
+        
+        $returnValue = array();
+            
+        foreach ($component->getComponents() as $c) {
+            
+            if (count($this->getRenderingStack()) > 0) {
+                list($renderedComponent, $rendering) = $this->getRenderingStack()->pop();
+                
+                if ($c === $renderedComponent) {
+                    $returnValue[] = $rendering;
+                }
+                else {
+                    // repush...
+                    $this->storeRendering($renderedComponent, $rendering);
+                }
+            }
+        }
+        
+        return $returnValue;
+    }
+    
+    /**
+     * Reset the context to its initial state, in order
+     * to be ready for reuse.
+     * 
+     */
+    public function reset() {
+        $this->setRenderingStack(new SplStack());
+    }
+    
     public function setChoiceShowHidePolicy($policy) {
-        $this->getRenderingContext()->setChoiceShowHidePolicy($policy);
+        $this->choiceShowHidePolicy = $policy;
     }
     
     public function getChoiceShowHidePolicy() {
-        return $this->getRenderingContext()->getChoiceShowHidePolicy();
+        return $this->choiceShowHidePolicy;
     }
     
     public function setFeedbackShowHidePolicy($policy) {
-        $this->getRenderingContext()->setFeedbackShowHidePolicy($policy);
+        $this->feedbackShowHidePolicy = $policy;
     }
     
     public function getFeedbackShowHidePolicy() {
-        return $this->getRenderingContext()->getFeedbackShowHidePolicy();
+        return $this->feedbackShowHidePolicy;
     }
     
     public function setViewPolicy($policy) {
-        $this->getRenderingContext()->setViewPolicy($policy);
+        $this->viewPolicy = $policy;
     }
     
     public function getViewPolicy() {
-        return $this->getRenderingContext()->getViewPolicy();
+        return $this->viewPolicy;
     }
     
     public function setViews(ViewCollection $views) {
-        $this->getRenderingContext()->setViews($views);
+        $this->views = $views;
     }
     
     public function getViews() {
-        return $this->getRenderingContext()->getViews();
+        return $this->views;
     }
     
     public function setState(State $state) {
-        $this->getRenderingContext()->setState($state);
+        $this->state = $state;
     }
     
     public function getState() {
-        return $this->getRenderingContext()->getState();
+        return $this->state;
     }
 }

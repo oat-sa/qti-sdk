@@ -37,7 +37,7 @@ use \DOMDocumentFragment;
 class StylesheetRenderer extends AbstractXhtmlRenderer {
     
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingContext()->getDocument()->createElement('stylesheet'));
+        $fragment->appendChild($this->getRenderingEngine()->getDocument()->createElement('stylesheet'));
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {

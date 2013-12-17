@@ -27,7 +27,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\ShufflableCollection;
 use qtism\data\content\interactions\Orientation;
-use qtism\runtime\rendering\AbstractRenderingContext;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -48,8 +48,8 @@ use \DOMDocumentFragment;
  */
 class ChoiceInteractionRenderer extends InteractionRenderer {
     
-    public function __construct(AbstractRenderingContext $renderingContext = null) {
-        parent::__construct($renderingContext);
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
         $this->transform('div');
     }
     
@@ -67,7 +67,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
         parent::appendChildren($fragment, $component);
         
-        if ($this->getRenderingContext()->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
     }
