@@ -60,6 +60,10 @@ class BlockquoteMarshaller extends ContentMarshaller {
             self::setDOMElementAttribute($element, 'cite', $component->getCite());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         self::fillBodyElement($component, $element);
         
         return $component;
@@ -71,6 +75,10 @@ class BlockquoteMarshaller extends ContentMarshaller {
         
         if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
             $component->setCite($cite);
+        }
+        
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
         }
         
         foreach ($elements as $e) {

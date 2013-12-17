@@ -50,6 +50,10 @@ class EndAttemptInteractionMarshaller extends Marshaller {
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'title', $component->getTitle());
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         return $element;
 	}
 	
@@ -66,6 +70,10 @@ class EndAttemptInteractionMarshaller extends Marshaller {
             
 	        if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
 	            $component = new EndAttemptInteraction($responseIdentifier, $title);
+	            
+	            if (($xmlBase = self::getXmlBase($element)) !== false) {
+	                $component->setXmlBase($xmlBase);
+	            }
 	            
 	            self::fillBodyElement($component, $element);
 	            return $component;

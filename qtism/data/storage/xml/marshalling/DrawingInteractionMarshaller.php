@@ -49,6 +49,10 @@ class DrawingInteractionMarshaller extends Marshaller {
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
@@ -81,6 +85,10 @@ class DrawingInteractionMarshaller extends Marshaller {
                     $promptElt = $promptElts[0];
                     $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                     $component->setPrompt($prompt);
+                }
+                
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
                 }
                 
                 self::fillBodyElement($component, $element);

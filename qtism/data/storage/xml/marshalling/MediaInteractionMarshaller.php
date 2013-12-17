@@ -68,6 +68,10 @@ class MediaInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'loop', true);
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         return $element;
 	}
 	
@@ -108,6 +112,10 @@ class MediaInteractionMarshaller extends Marshaller {
 	                
 	                if (($loop = self::getDOMElementAttributeAs($element, 'loop', 'boolean')) !== null) {
 	                    $component->setLoop($loop);
+	                }
+	                
+	                if (($xmlBase = self::getXmlBase($element)) !== false) {
+	                    $component->setXmlBase($xmlBase);
 	                }
 	                
 	                self::fillBodyElement($component, $element);

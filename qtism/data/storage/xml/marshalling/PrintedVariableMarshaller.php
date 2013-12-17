@@ -65,6 +65,10 @@ class PrintedVariableMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'field', $component->getField());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         self::fillElement($element, $component);
         return $element;
 	}
@@ -107,6 +111,10 @@ class PrintedVariableMarshaller extends Marshaller {
 		    
 		    if (($mappingIndicator = self::getDOMElementAttributeAs($element, 'mappingIndicator'))) {
 		        $component->setMappingIndicator($mappingIndicator);
+		    }
+		    
+		    if (($xmlBase = self::getXmlBase($element)) !== false) {
+		        $component->setXmlBase($xmlBase);
 		    }
 		    
 		    self::fillBodyElement($component, $element);

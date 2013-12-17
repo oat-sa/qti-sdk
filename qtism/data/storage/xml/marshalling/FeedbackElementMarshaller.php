@@ -70,6 +70,10 @@ class FeedbackElementMarshaller extends ContentMarshaller {
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                     
+                    if (($xmlBase = self::getXmlBase($element)) !== false) {
+                        $component->setXmlBase($xmlBase);
+                    }
+                    
                     self::fillBodyElement($component, $element);
                     return $component;
                 }
@@ -94,6 +98,10 @@ class FeedbackElementMarshaller extends ContentMarshaller {
         self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
         
         foreach ($elements as $e) {
             $element->appendChild($e);

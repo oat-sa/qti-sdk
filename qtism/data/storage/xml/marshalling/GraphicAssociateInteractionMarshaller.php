@@ -68,6 +68,10 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller {
                         $component->setMaxAssociations($maxAssociations);
                     }
                     
+                    if (($xmlBase = self::getXmlBase($element)) !== false) {
+                        $component->setXmlBase($xmlBase);
+                    }
+                    
                     $promptElts = self::getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
@@ -111,6 +115,10 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller {
         
         if ($component->getMaxAssociations() !== 1) {
             self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

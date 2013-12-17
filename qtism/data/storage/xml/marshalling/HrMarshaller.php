@@ -46,6 +46,11 @@ class HrMarshaller extends Marshaller {
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('hr');
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         self::fillElement($element, $component);
         return $element;
 	}
@@ -59,6 +64,11 @@ class HrMarshaller extends Marshaller {
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$component = new Hr();
+		
+		if (($xmlBase = self::getXmlBase($element)) !== false) {
+		    $component->setXmlBase($xmlBase);
+		}
+		
 		self::fillBodyElement($component, $element);
 		return $component;
 	}

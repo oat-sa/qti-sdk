@@ -69,6 +69,10 @@ class SliderInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'reverse', true);
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
@@ -120,6 +124,10 @@ class SliderInteractionMarshaller extends Marshaller {
 	                
 	                if (($reverse = self::getDOMElementAttributeAs($element, 'reverse', 'boolean')) !== null) {
 	                    $component->setReverse($reverse);
+	                }
+	                
+	                if (($xmlBase = self::getXmlBase($element)) !== false) {
+	                    $component->setXmlBase($xmlBase);
 	                }
 	                
 	                self::fillBodyElement($component, $element);

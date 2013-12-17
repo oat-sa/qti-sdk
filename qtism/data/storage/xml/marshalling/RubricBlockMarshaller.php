@@ -66,6 +66,10 @@ class RubricBlockMarshaller extends Marshaller {
 			static::setDOMElementAttribute($element, 'use', $component->getUse());
 		}
 		
+		if ($component->hasXmlBase() === true) {
+		    static::setXmlBase($element, $component->getXmlBase());
+		}
+		
 		foreach ($component->getStylesheets() as $stylesheet) {
 			$stylesheetMarshaller = $this->getMarshallerFactory()->createMarshaller($stylesheet);
 			$element->appendChild($stylesheetMarshaller->marshall($stylesheet));
@@ -105,6 +109,10 @@ class RubricBlockMarshaller extends Marshaller {
 			
 			if (($value = static::getDOMElementAttributeAs($element, 'use', 'string')) !== null) {
 				$object->setUse($value);
+			}
+			
+			if (($xmlBase = static::getXmlBase($element)) !== false) {
+			    $component->setXmlBase($xmlBase);
 			}
 			
 			$stylesheets = new StylesheetCollection();

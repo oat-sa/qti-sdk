@@ -67,6 +67,10 @@ class HottextInteractionMarshaller extends ContentMarshaller {
                     $component->setMinChoices($minChoices);
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
@@ -100,6 +104,10 @@ class HottextInteractionMarshaller extends ContentMarshaller {
         
         if ($component->getMinChoices() !== 0) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+        }
+        
+        if ($component->hasXmlBase() !== false) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

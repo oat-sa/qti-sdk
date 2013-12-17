@@ -94,7 +94,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic {
     }
     
     /**
-     * Set the base URI of the SimpleBlock.
+     * Set the base URI of the TemplateBlock.
      *
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.

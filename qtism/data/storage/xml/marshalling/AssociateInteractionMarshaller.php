@@ -57,6 +57,10 @@ class AssociateInteractionMarshaller extends ContentMarshaller {
                     $component->setMinAssociations($maxAssociations);
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
@@ -94,6 +98,10 @@ class AssociateInteractionMarshaller extends ContentMarshaller {
         
         if ($component->getMinAssociations() !== 0) {
             self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

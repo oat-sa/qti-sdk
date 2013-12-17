@@ -58,6 +58,10 @@ class HottextMarshaller extends ContentMarshaller {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
             
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
+            }
+            
             $component->setContent(new InlineStaticCollection($children->getArrayCopy()));
             self::fillBodyElement($component, $element);
             
@@ -89,6 +93,10 @@ class HottextMarshaller extends ContentMarshaller {
         
         if ($component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

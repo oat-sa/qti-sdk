@@ -64,6 +64,10 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
                     $component->setOrientation(Orientation::getConstantByName($orientation));
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
@@ -105,6 +109,10 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
         
         if ($component->getOrientation() !== Orientation::VERTICAL) {
             self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

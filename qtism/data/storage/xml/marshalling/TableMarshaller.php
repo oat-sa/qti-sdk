@@ -54,6 +54,10 @@ class TableMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'summary', $component->getSummary());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         if ($component->hasCaption() === true) {
             $caption = $component->getCaption();
             $marshaller = $this->getMarshallerFactory()->createMarshaller($caption);
@@ -121,6 +125,10 @@ class TableMarshaller extends Marshaller {
 	        
 	        if (($summary = self::getDOMElementAttributeAs($element, 'summary')) !== null) {
 	            $component->setSummary($summary);
+	        }
+	        
+	        if (($xmlBase = self::getXmlBase($element)) !== false) {
+	            $component->setXmlBase($xmlBase);
 	        }
 	        
 	        $captionElts = self::getChildElementsByTagName($element, 'caption');

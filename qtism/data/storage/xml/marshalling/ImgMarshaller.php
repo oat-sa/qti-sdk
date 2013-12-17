@@ -62,6 +62,10 @@ class ImgMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->setXmlBase());
+        }
+        
         self::fillElement($element, $component);
         
         return $element;
@@ -92,6 +96,10 @@ class ImgMarshaller extends Marshaller {
 	            
 	            if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
 	                $component->setWidth($width);
+	            }
+	            
+	            if (($xmlBase = self::getXmlBase($element)) !== false) {
+	                $component->setXmlBase($xmlBase);
 	            }
 	            
 	            self::fillBodyElement($component, $element);

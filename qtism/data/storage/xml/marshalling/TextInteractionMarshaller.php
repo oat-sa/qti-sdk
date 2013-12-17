@@ -71,6 +71,10 @@ class TextInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->setXmlBase());
+        }
+        
         if ($element->nodeName === 'extendedTextInteraction') {
             if ($component->hasMaxStrings() === true) {
                 self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
@@ -135,6 +139,10 @@ class TextInteractionMarshaller extends Marshaller {
             
             if (($placeholderText = self::getDOMElementAttributeAs($element, 'placeholderText')) !== null) {
                 $component->setPlaceholderText($placeholderText);
+            }
+            
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
             }
             
             if ($element->nodeName === 'extendedTextInteraction') {

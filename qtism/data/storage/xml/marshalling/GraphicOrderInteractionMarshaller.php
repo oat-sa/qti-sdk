@@ -68,6 +68,10 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller {
                         $component->setMaxChoices($maxChoices);
                     }
                     
+                    if (($xmlBase = self::getXmlBase($element)) !== false) {
+                        $component->setXmlBase($xmlBase);
+                    }
+                    
                     $promptElts = self::getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
@@ -112,6 +116,10 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller {
         
         if ($component->hasMaxChoices()) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

@@ -60,6 +60,10 @@ class SelectPointInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         return $element;
 	}
 	
@@ -85,6 +89,10 @@ class SelectPointInteractionMarshaller extends Marshaller {
                     
                     if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                         $component->setMinChoices($minChoices);
+                    }
+                    
+                    if (($xmlBase = self::getXmlBase($element)) !== false) {
+                        $component->setXmlBase($xmlBase);
                     }
                     
                     $promptElts = self::getChildElementsByTagName($element, 'prompt');

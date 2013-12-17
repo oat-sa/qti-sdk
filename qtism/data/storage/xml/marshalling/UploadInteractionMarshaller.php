@@ -54,6 +54,10 @@ class UploadInteractionMarshaller extends Marshaller {
             self::setDOMElementAttribute($element, 'accept', $component->getType());
         }
         
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
+        
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
@@ -83,6 +87,10 @@ class UploadInteractionMarshaller extends Marshaller {
             
             if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
                 $component->setType($type);
+            }
+            
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
             }
             
             self::fillBodyElement($component, $element);

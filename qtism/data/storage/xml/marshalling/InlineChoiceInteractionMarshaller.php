@@ -66,6 +66,10 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller {
                     $component->setRequired($required);
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 self::fillBodyElement($component, $element);
                 return $component;
             }
@@ -87,6 +91,10 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller {
         
         if ($component->isRequired() !== false) {
             self::setDOMElementAttribute($element, 'required', true);
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

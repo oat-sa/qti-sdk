@@ -55,6 +55,10 @@ class ObjectMarshaller extends ContentMarshaller {
                     $component->setHeight($height);
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 self::fillBodyElement($component, $element);
                 
                 return $component;
@@ -82,6 +86,10 @@ class ObjectMarshaller extends ContentMarshaller {
         
         if ($component->hasHeight() === true) {
             self::setDOMElementAttribute($element, 'height', $component->getHeight());
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         foreach ($elements as $e) {

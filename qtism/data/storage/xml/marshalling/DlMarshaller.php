@@ -43,6 +43,10 @@ class DlMarshaller extends ContentMarshaller {
         $component = new $fqClass();
         $component->setContent(new DlElementCollection($children->getArrayCopy()));
         
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+        
         self::fillBodyElement($component, $element);
         return $component;
     }
@@ -50,6 +54,10 @@ class DlMarshaller extends ContentMarshaller {
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
         
         foreach ($elements as $elt) {
             $element->appendChild($elt);

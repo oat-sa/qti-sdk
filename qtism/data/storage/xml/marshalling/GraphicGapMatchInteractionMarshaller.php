@@ -84,6 +84,10 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller {
                             $component->setPrompt($prompt);
                         }
                         
+                        if (($xmlBase = self::getXmlBase($element)) !== false) {
+                            $component->setXmlBase($xmlBase);
+                        }
+                        
                         self::fillBodyElement($component, $element);
                         return $component;
                     }
@@ -125,6 +129,10 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller {
         
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));

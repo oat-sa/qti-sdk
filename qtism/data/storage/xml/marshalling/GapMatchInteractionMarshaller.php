@@ -63,6 +63,10 @@ class GapMatchInteractionMarshaller extends ContentMarshaller {
                     $component->setShuffle($shuffle);
                 }
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 self::fillBodyElement($component, $element);
                 return $component;
             }
@@ -87,6 +91,10 @@ class GapMatchInteractionMarshaller extends ContentMarshaller {
         
         if ($component->mustShuffle() === true) {
             self::setDOMElementAttribute($element, 'shuffle', true);
+        }
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         if ($component->hasPrompt() === true) {

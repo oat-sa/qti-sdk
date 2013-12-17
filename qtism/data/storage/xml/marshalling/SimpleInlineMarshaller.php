@@ -49,6 +49,10 @@ class SimpleInlineMarshaller extends ContentMarshaller {
             if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
                 
+                if (($xmlBase = self::getXmlBase($element)) !== false) {
+                    $component->setXmlBase($xmlBase);
+                }
+                
                 if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
                     $component->setType($type);
                 }
@@ -85,6 +89,10 @@ class SimpleInlineMarshaller extends ContentMarshaller {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
         
         if ($element->nodeName === 'a') {
             $element->setAttribute('href', $component->getHref());

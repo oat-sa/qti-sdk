@@ -44,12 +44,20 @@ class AtomicBlockMarshaller extends ContentMarshaller {
         $component->setContent(new InlineCollection($children->getArrayCopy()));
         self::fillBodyElement($component, $element);
         
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+        
         return $component;
     }
     
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        
+        if ($component->hasXmlBase() === true) {
+            self::setXmlBase($element, $component->getXmlBase());
+        }
         
         foreach ($elements as $e) {
             $element->appendChild($e);
