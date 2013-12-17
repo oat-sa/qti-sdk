@@ -287,6 +287,18 @@ abstract class Marshaller {
 	}
 	
 	/**
+	 * Set the value of the xml:base attribute of a given $element. If a value is already
+	 * defined for the xml:base attribute of the $element, the current value will be
+	 * overriden by $xmlBase.
+	 * 
+	 * @param DOMElement $element The $element you want to set a value for xml:base.
+	 * @param string $xmlBase The value to be set to the xml:base attribute of $element.
+	 */
+	public static function setXmlBase(DOMElement $element, $xmlBase) {
+	    $element->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $xmlBase);
+	}
+	
+	/**
 	 * Fill $bodyElement with the following bodyElement:
 	 *
 	 * * id

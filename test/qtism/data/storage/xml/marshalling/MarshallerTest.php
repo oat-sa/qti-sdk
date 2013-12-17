@@ -104,4 +104,26 @@ class MarshallerTest extends QtiSmTestCase {
 	    $this->assertFalse(Marshaller::getXmlBase($bar));
 	    $this->assertFalse(Marshaller::getXmlBase($baz));
 	}
+	
+	/**
+	 * @depends testGetXmlBase
+	 */
+	public function testSetXmlBase() {
+	    $dom = new DOMDocument('1.0');
+	    $dom->loadXML('<foo><bar>2000</bar><baz>fucked up beyond all recognition</baz></foo>');
+	    
+	    $foo = $dom->getElementsByTagName('foo')->item(0);
+	    $bar = $dom->getElementsByTagName('bar')->item(0);
+	    $baz = $dom->getElementsByTagName('baz')->item(0);
+	    
+	    $this->assertFalse(Marshaller::getXmlBase($foo));
+	    $this->assertFalse(Marshaller::getXmlBase($bar));
+	    $this->assertFalse(Marshaller::getXmlBase($baz));
+	    
+	    Marshaller::setXmlBase($bar, 'http://my-new-base.com');
+	    
+	    $this->assertFalse(Marshaller::getXmlBase($foo));
+	    $this->assertEquals('http://my-new-base.com', Marshaller::getXmlBase($bar));
+	    $this->assertFalse(Marshaller::getXmlBase($baz));
+	}
 }
