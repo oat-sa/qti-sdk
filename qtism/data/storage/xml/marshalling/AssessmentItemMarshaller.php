@@ -84,6 +84,12 @@ class AssessmentItemMarshaller extends Marshaller {
 		    $element->appendChild($marshaller->marshall($templateDeclaration));
 		}
 		
+		if ($component->hasItemBody() === true) {
+		    $itemBody = $component->getItemBody();
+		    $marshaller = $this->getMarshallerFactory()->createMarshaller($itemBody);
+		    $element->appendChild($marshaller->marshall($itemBody));
+		}
+		
 		if ($component->hasResponseProcessing() === true) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getResponseProcessing());
 			$element->appendChild($marshaller->marshall($component->getResponseProcessing()));
@@ -178,6 +184,12 @@ class AssessmentItemMarshaller extends Marshaller {
 			            }
 			            
 			            $object->setTemplateDeclarations($templateDeclarations);
+			        }
+			        
+			        $itemBodyElts = static::getChildElementsByTagName($element, 'itemBody');
+			        if (count($itemBodyElts) > 0) {
+			            $marshaller = $this->getMarshallerFactory()->createMarshaller($itemBodyElts[0]);
+			            $object->setItemBody($marshaller->unmarshall($itemBodyElts[0]));    
 			        }
 			        
 			        $responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');

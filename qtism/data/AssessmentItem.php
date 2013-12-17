@@ -24,6 +24,7 @@
 
 namespace qtism\data;
 
+use qtism\data\content\ItemBody;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -149,6 +150,14 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * @qtism-bean-property
 	 */
 	private $templateDeclarations;
+	
+	/**
+	 * The content body of the item.
+	 * 
+	 * @var ItemBody
+	 * @qtism-bean-property
+	 */
+	private $itemBody = null;
 	
 	/**
 	 * The responseProcessing.
@@ -477,6 +486,33 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 */
 	public function getTemplateDeclarations() {
 	    return $this->templateDeclarations;
+	}
+	
+	/**
+	 * Set the ItemBody object representing the content body of the item.
+	 * 
+	 * @param ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
+	 */
+	public function setItemBody(ItemBody $itemBody = null) {
+	    $this->itemBody = $itemBody;
+	}
+	
+	/**
+	 * Get the ItemBody object representing the content body of the item.
+	 * 
+	 * @return ItemBody An ItemBody object or the NULL value if the item has no content.
+	 */
+	public function getItemBody() {
+	    return $this->itemBody;
+	}
+	
+	/**
+	 * Whether or not the object has an ItemBody object representing its content.
+	 * 
+	 * @return boolean
+	 */
+	public function hasItemBody() {
+	    return $this->getItemBody() !== null;
 	}
 	
 	/**

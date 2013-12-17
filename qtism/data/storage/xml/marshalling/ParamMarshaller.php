@@ -67,34 +67,30 @@ class ParamMarshaller extends Marshaller {
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
-	    if (($name = self::getDOMElementAttributeAs($element, 'name')) !== null) {
+	    if (($name = self::getDOMElementAttributeAs($element, 'name')) === null) {
+	        // XSD use="required" but can be empty.
+	        $name = '';
+	    }
 	        
-	        if (($value = self::getDOMElementAttributeAs($element, 'value')) !== null) {
+        if (($value = self::getDOMElementAttributeAs($element, 'value')) === null) {
+            // XSD use="required" but can be empty.
+            $value = '';
+        }
 	            
-	            if (($valueType = self::getDOMElementAttributeAs($element, 'valueType')) !== null) {
-	                
-	                $component = new Param($name, $value, ParamType::getConstantByName($valueType));
-	                
-	                if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
-	                    $component->setType($type);    
-	                }
-	                
-	                return $component;
-	            }
-	            else {
-	                $msg = "The mandatory attribute 'valueType' is missing from the 'param' element.";
-	                throw new UnmarshallingException($msg, $element);
-	            }
-	        }
-	        else {
-	            $msg = "The mandatory attribute 'value' is missing from the 'param' element.";
-	            throw new UnmarshallingException($msg, $element);
-	        }
-	    }
-	    else {
-	        $msg = "The mandatory attribute 'name' is missing from the 'param' element.";
-	        throw new UnmarshallingException($msg, $element);
-	    }
+        if (($valueType = self::getDOMElementAttributeAs($element, 'valueType')) !== null) {
+            
+            $component = new Param($name, $value, ParamType::getConstantByName($valueType));
+            
+            if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+                $component->setType($type);    
+            }
+            
+            return $component;
+        }
+        else {
+            $msg = "The mandatory attribute 'valueType' is missing from the 'param' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
 	}
 	
 	public function getExpectedQtiClassName() {

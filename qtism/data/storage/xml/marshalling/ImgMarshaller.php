@@ -82,33 +82,32 @@ class ImgMarshaller extends Marshaller {
 		
 	    if (($src = self::getDOMElementAttributeAs($element, 'src')) !== null) {
 	        
-	        if (($alt = self::getDOMElementAttributeAs($element, 'alt')) !== null) {
-
-	            $component = new Img($src, $alt);
-	            
-	            if (($longdesc = self::getDOMElementAttributeAs($element, 'longdesc')) !== null) {
-	                $component->setLongdesc($longdesc);
-	            }
-	            
-	            if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
-	                $component->setHeight($height);
-	            }
-	            
-	            if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
-	                $component->setWidth($width);
-	            }
-	            
-	            if (($xmlBase = self::getXmlBase($element)) !== false) {
-	                $component->setXmlBase($xmlBase);
-	            }
-	            
-	            self::fillBodyElement($component, $element);
-	            return $component;
+	        if (($alt = self::getDOMElementAttributeAs($element, 'alt')) === null) {
+	            // The XSD does not force the 'alt' attribute to be non-empty,
+	            // thus we consider the 'alt' attribute value as an empty string ('').
+                $alt = '';
 	        }
-	        else {
-	            $msg = "The 'mandatory' attribute 'alt' is missing from element 'img'.";
-	            throw new UnmarshallingException($msg, $element);
+	        
+	        $component = new Img($src, $alt);
+	         
+	        if (($longdesc = self::getDOMElementAttributeAs($element, 'longdesc')) !== null) {
+	            $component->setLongdesc($longdesc);
 	        }
+	         
+	        if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
+	            $component->setHeight($height);
+	        }
+	         
+	        if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
+	            $component->setWidth($width);
+	        }
+	         
+	        if (($xmlBase = self::getXmlBase($element)) !== false) {
+	            $component->setXmlBase($xmlBase);
+	        }
+	         
+	        self::fillBodyElement($component, $element);
+	        return $component;
 	    }
 	    else {
 	        $msg = "The 'mandatory' attribute 'src' is missing from element 'img'.";

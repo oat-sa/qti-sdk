@@ -81,15 +81,15 @@ class EndAttemptInteraction extends InlineInteraction {
      * Set the title that will be displayed to the candidate as a prompt
      * for ending the attempt.
      * 
-     * @param string $title A non-empty string.
-     * @throws InvalidArgumentException If $title is not a string or is empty.
+     * @param string $title A string.
+     * @throws InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title) {
         if (is_string($title) === true && empty($title) === false) {
             $this->title = $title;
         }
         else {
-            $msg = "The 'title' argument must be a non-empty string, '" . gettype($title) . "' given.";
+            $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

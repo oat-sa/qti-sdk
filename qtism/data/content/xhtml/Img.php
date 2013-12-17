@@ -125,15 +125,15 @@ class Img extends AtomicInline {
     /**
      * Set the alt attribute.
      * 
-     * @param string $alt A non-empty string.
-     * @throws InvalidArgumentException If $alt is not a non-empty string.
+     * @param string $alt A string
+     * @throws InvalidArgumentException If $alt is not a string.
      */
     public function setAlt($alt) {
-        if (is_string($alt) && empty($alt) === false) {
+        if (is_string($alt)) {
             $this->alt = $alt;
         }
         else {
-            $msg = "The 'alt' argument must be a non-empty string, '" . gettype($alt) . "' given.";
+            $msg = "The 'alt' argument must be a string, '" . gettype($alt) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

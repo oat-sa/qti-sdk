@@ -68,20 +68,20 @@ class EndAttemptInteractionMarshaller extends Marshaller {
 	    
 	    if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
-	        if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
-	            $component = new EndAttemptInteraction($responseIdentifier, $title);
-	            
-	            if (($xmlBase = self::getXmlBase($element)) !== false) {
-	                $component->setXmlBase($xmlBase);
-	            }
-	            
-	            self::fillBodyElement($component, $element);
-	            return $component;
+	        if (($title = self::getDOMElementAttributeAs($element, 'title')) === null) {
+	            // The XSD does not restrict to an empty string, we then consider
+	            // the title as an empty string ('').
+	            $title = '';    
 	        }
-	        else {
-	            $msg = "The mandatory 'title' attribute is missing from the 'endAttemptInteraction' element.";
-	            throw new UnmarshallingException($msg, $element);
+	        
+	        $component = new EndAttemptInteraction($responseIdentifier, $title);
+	         
+	        if (($xmlBase = self::getXmlBase($element)) !== false) {
+	            $component->setXmlBase($xmlBase);
 	        }
+	         
+	        self::fillBodyElement($component, $element);
+	        return $component;
         }
         else {
             $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'endAttemptInteraction' element.";
