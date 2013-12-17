@@ -56,7 +56,7 @@ class InlineChoiceRenderer extends ChoiceRenderer {
         $this->transform('option');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         

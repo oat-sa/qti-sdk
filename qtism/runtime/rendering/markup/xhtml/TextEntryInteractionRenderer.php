@@ -53,7 +53,7 @@ class TextEntryInteractionRenderer extends StringInteractionRenderer {
         $this->transform('input');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-textEntryInteraction');
         $fragment->firstChild->setAttribute('type', 'text');

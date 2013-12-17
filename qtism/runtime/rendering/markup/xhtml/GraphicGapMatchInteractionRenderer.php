@@ -41,7 +41,7 @@ use \DOMDocumentFragment;
  */
 class GraphicGapMatchInteractionRenderer extends GraphicInteractionRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-graphicGapMatchInteraction');
     }

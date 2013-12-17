@@ -62,20 +62,20 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      */
-    public function render(QtiComponent $component) {
+    public function render(QtiComponent $component, $base = '') {
         $doc = $this->getRenderingEngine()->getDocument();
         $fragment = $doc->createDocumentFragment();
         
-        $this->renderingImplementation($fragment, $component);
+        $this->renderingImplementation($fragment, $component, $base);
         $this->getRenderingEngine()->storeRendering($component, $fragment);
         return $fragment;
     }
     
-    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        $this->appendElement($fragment, $component);
-        $this->appendChildren($fragment, $component);
-        $this->appendAttributes($fragment, $component);
+        $this->appendElement($fragment, $component, $base);
+        $this->appendChildren($fragment, $component, $base);
+        $this->appendAttributes($fragment, $component, $base);
         
         if ($this->hasAdditionalClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalClasses());
@@ -95,7 +95,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $tagName = ($this->hasReplacementTagName() === true) ? $this->getReplacementTagName() : $component->getQtiClassName();
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createElement($tagName));
     }
@@ -106,7 +106,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $element = $fragment->firstChild;
         foreach ($this->getRenderingEngine()->getChildrenRenderings($component) as $childrenRendering) {
             $element->appendChild($childrenRendering->firstChild);
@@ -119,7 +119,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      */
-    abstract protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component);
+    abstract protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '');
     
     /**
      * Set the replacement tag name.

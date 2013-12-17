@@ -39,7 +39,7 @@ use \DOMDocumentFragment;
  */
 abstract class HotspotRenderer extends ChoiceRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         
         $fragment->firstChild->setAttribute('data-shape', Shape::getNameByConstant($component->getShape()));

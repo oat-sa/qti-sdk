@@ -42,11 +42,11 @@ class TextRunRenderer extends AbstractXhtmlRenderer {
         parent::__construct($renderingEngine);
     }
     
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createTextNode($component->getContent()));
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         return;
     }
 }

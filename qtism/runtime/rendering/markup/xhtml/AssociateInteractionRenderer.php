@@ -51,7 +51,7 @@ class AssociateInteractionRenderer extends InteractionRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-associateInteraction');
@@ -61,7 +61,7 @@ class AssociateInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {

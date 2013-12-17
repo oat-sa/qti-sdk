@@ -61,7 +61,7 @@ class SliderInteractionRenderer extends InteractionRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-sliderInteraction');
@@ -78,7 +78,7 @@ class SliderInteractionRenderer extends InteractionRenderer {
         }
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         // Insert an element representing the slider 'widget' itself.

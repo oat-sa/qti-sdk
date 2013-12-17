@@ -53,7 +53,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-choiceInteraction');
@@ -64,7 +64,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {

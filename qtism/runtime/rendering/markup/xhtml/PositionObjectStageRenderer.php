@@ -43,7 +43,7 @@ class PositionObjectStageRenderer extends AbstractXhtmlRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $this->additionalClass('qti-positionObjectStage');
     }
 }

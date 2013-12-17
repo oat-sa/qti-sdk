@@ -50,7 +50,7 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer {
         $this->transform('select');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-inlineChoiceInteraction');
@@ -59,7 +59,7 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {

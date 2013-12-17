@@ -44,7 +44,7 @@ use \DOMDocumentFragment;
  */
 abstract class FeedbackElementRenderer extends BodyElementRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         
         $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());

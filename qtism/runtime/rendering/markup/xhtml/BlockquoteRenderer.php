@@ -36,7 +36,7 @@ use \DOMDocumentFragment;
  */
 class BlockquoteRenderer extends BodyElementRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         
         if ($component->hasCite() === true) {

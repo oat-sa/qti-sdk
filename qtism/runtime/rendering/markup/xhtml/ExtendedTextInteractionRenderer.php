@@ -62,7 +62,7 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-extendedTextInteraction');
         
@@ -78,7 +78,7 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
         }
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         // Append a textarea...

@@ -51,7 +51,7 @@ class UploadInteractionRenderer extends InteractionRenderer {
         $this->transform('div');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-uploadInteraction');
         
@@ -60,7 +60,7 @@ class UploadInteractionRenderer extends InteractionRenderer {
         }
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         $inputFileElt = $fragment->ownerDocument->createElement('input');

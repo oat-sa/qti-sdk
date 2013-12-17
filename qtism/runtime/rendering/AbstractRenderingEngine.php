@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\content\Flow;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\RubricBlock;
 use qtism\data\ShowHide;
@@ -79,6 +80,13 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * @var SplStack
      */
     private $renderingStack;
+    
+    /**
+     * The stack containing the value of xml:base for hierarchical components.
+     * 
+     * @var SplStack
+     */
+    private $xmlBaseStack;
     
     /**
      * An associative array where keys are QTI class names
@@ -141,6 +149,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     public function __construct() {
         $this->setRenderers(array());
         $this->setRenderingStack(new SplStack());
+        $this->setXmlBaseStack(new SplStack());
         $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
         $this->setState(new State());
         
@@ -250,6 +259,13 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
                 $this->markAsExplored($this->getExploredComponent());
                 $this->getExploration()->push($this->getExploredComponent());
                 
+                if ($this->getExploredComponent() instanceof Flow) {
+                    $this->getXmlBaseStack()->push($this->getExploredComponent()->getXmlBase());
+                }
+                else {
+                    $this->getXmlBaseStack()->push(false);
+                }
+                
                 foreach ($this->getNextExploration() as $toExplore) {
                     // Maybe the component must be ignored?
                     if ($this->mustIgnoreComponent($toExplore) === false) {
@@ -259,7 +275,9 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             }
             else if ($final === false && $explored === true) {
                 // Hierarchical node: 2nd pass.
-                $this->processNode();
+                $xmlBase = $this->getXmlBaseStack()->pop();
+                
+                $this->processNode(($xmlBase === false) ? '' : $xmlBase);
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering.
@@ -268,7 +286,9 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             }
             else {
                 // Leaf node.
-                $this->processNode();
+                $c = $this->getExploredComponent();
+                $base = ($c instanceof Flow && $c->hasXmlBase()) ? $c->getXmlBase() : '';
+                $this->processNode($base);
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering (leaf node is actually a lone root).
@@ -331,10 +351,12 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     
     /**
      * Process the current node.
+     * 
+     * @param string $base the value of xml:base for the node to be processed.
      */
-    protected function processNode() {
+    protected function processNode($base = '') {
         $renderer = $this->getRenderer($this->getExploredComponent());
-        $rendering = $renderer->render($this->getExploredComponent());
+        $rendering = $renderer->render($this->getExploredComponent(), $base);
         $this->setLastRendering($rendering);
     }
     
@@ -495,6 +517,24 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     }
     
     /**
+     * Set the stack of xml:base values of explored hierarchical components.
+     * 
+     * @param SplStack $xmlBaseStack
+     */
+    protected function setXmlBaseStack(SplStack $xmlBaseStack) {
+        $this->xmlBaseStack = $xmlBaseStack;
+    }
+    
+    /**
+     * Get the stack of xml:base values of explored hierarchical components.
+     * 
+     * @return SplStack
+     */
+    protected function getXmlBaseStack() {
+        return $this->xmlBaseStack;
+    }
+    
+    /**
      * Store a rendered component as a rendering for a later use
      * by AbstractRenderer objects.
      * 
@@ -540,6 +580,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      */
     public function reset() {
         $this->setRenderingStack(new SplStack());
+        $this->setXmlBaseStack(new SplStack());
     }
     
     public function setChoiceShowHidePolicy($policy) {

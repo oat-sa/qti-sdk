@@ -52,13 +52,13 @@ class EndAttemptInteractionRenderer extends InteractionRenderer {
         $this->transform('span');
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-endAttemptInteraction');
         $fragment->firstChild->setAttribute('data-title', $component->getTitle());
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         $submitElt = $fragment->ownerDocument->createElement('input');

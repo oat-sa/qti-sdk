@@ -45,7 +45,7 @@ use \DOMDocumentFragment;
  */
 abstract class StringInteractionRenderer extends InteractionRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {  
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {  
         parent::appendAttributes($fragment, $component);
         
         $fragment->firstChild->setAttribute('data-base', $component->getBase());

@@ -44,7 +44,7 @@ use \DOMDocumentFragment;
  */
 class SelectPointInteractionRenderer extends GraphicInteractionRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-selectPointInteraction');

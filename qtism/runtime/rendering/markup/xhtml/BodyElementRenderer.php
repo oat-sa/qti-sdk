@@ -43,7 +43,7 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
         parent::__construct($renderingEngine);
     }
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         if ($component->hasId() === true) {
             $fragment->firstChild->setAttribute('id', $component->getId());

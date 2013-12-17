@@ -36,7 +36,7 @@ use \DOMDocumentFragment;
  */
 class ARenderer extends BodyElementRenderer {
     
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
         $fragment->firstChild->setAttribute('href', $component->getHref());
         
