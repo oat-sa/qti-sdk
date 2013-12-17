@@ -118,6 +118,10 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic {
         return $this->xmlBase;
     }
     
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
+    
     public function getQtiClassName() {
         return 'ul';
     }

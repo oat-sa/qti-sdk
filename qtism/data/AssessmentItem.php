@@ -146,6 +146,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * The template declarations.
 	 * 
 	 * @var TemplateDeclarationCollection
+	 * @qtism-bean-property
 	 */
 	private $templateDeclarations;
 	

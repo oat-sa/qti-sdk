@@ -120,7 +120,11 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
      * @return string An empty string or a URI.
      */
     public function getXmlBase() {
-        return $this->base;
+        return $this->xmlBase;
+    }
+    
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
     }
     
     public function getComponents() {

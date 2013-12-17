@@ -111,4 +111,8 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     public function getXmlBase() {
         return $this->xmlBase;
     }
+    
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
 }

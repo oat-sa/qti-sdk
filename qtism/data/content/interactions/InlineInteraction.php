@@ -83,4 +83,8 @@ abstract class InlineInteraction extends Interaction implements Flow, Inline {
     public function getXmlBase() {
         return $this->xmlBase;
     }
+    
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
 }

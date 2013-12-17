@@ -117,4 +117,8 @@ class TemplateBlock extends TemplateElement implements FlowStatic {
     public function getXmlBase() {
         return $this->xmlBase;
     }
+    
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
 }

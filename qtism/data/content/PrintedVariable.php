@@ -461,6 +461,10 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
         return $this->xmlBase;
     }
     
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
+    
     public function getComponents() {
         return new QtiComponentCollection();
     }

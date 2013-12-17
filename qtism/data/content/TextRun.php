@@ -107,6 +107,10 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
         return $this->xmlBase;
     }
     
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
+    
     /**
      * 
      * @return QtiComponentCollection

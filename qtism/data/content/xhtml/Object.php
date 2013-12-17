@@ -255,6 +255,10 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	    return $this->xmlBase;
 	}
 	
+	public function hasXmlBase() {
+	    return $this->getXmlBase() !== '';
+	}
+	
 	/**
 	 * Get the components composing the Object.
 	 * 

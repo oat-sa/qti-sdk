@@ -121,4 +121,8 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     public function getXmlBase() {
         return $this->xmlBase;
     }
+    
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
 }

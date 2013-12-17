@@ -106,6 +106,10 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
         return $this->xmlBase;
     }
     
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
+    }
+    
     /**
      * Set the components composing the hottext.
      * 
