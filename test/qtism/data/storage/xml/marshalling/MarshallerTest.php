@@ -91,4 +91,17 @@ class MarshallerTest extends QtiSmTestCase {
 		
 		$this->assertEquals(0, count(Marshaller::getChildElementsByTagName($element, 'child')));
 	}
+	
+	public function testGetXmlBase() {
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<foo xml:base="http://forge.qtism.com"><bar>2000</bar><baz base="http://nowhere.com">fucked up beyond all recognition</baz></foo>');
+	    
+	    $foo = $dom->getElementsByTagName('foo')->item(0);
+	    $bar = $dom->getElementsByTagName('bar')->item(0);
+	    $baz = $dom->getElementsByTagName('baz')->item(0);
+	    
+	    $this->assertEquals('http://forge.qtism.com', Marshaller::getXmlBase($foo));
+	    $this->assertFalse(Marshaller::getXmlBase($bar));
+	    $this->assertFalse(Marshaller::getXmlBase($baz));
+	}
 }

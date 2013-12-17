@@ -270,6 +270,23 @@ abstract class Marshaller {
 	}
 	
 	/**
+	 * Get the string value of the xml:base attribute of a given $element. The method
+	 * will return false if no xml:base attribute is defined for the $element or its value
+	 * is empty.
+	 * 
+	 * @param DOMElement $element A DOMElement object you want to get the xml:base attribute value.
+	 * @return false|string The value of the xml:base attribute or false if it could not be retrieved.
+	 */
+	public static function getXmlBase(DOMElement $element) {
+	    
+	    $returnValue = false;
+	    if (($xmlBase = $element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'base')) !== '') {
+	        $returnValue = $xmlBase;
+	    }
+	    return $returnValue;
+	}
+	
+	/**
 	 * Fill $bodyElement with the following bodyElement:
 	 *
 	 * * id
