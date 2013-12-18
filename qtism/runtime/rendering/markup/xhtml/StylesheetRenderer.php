@@ -43,6 +43,7 @@ class StylesheetRenderer extends AbstractXhtmlRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+        parent::appendAttributes($fragment, $component);
         $fragment->firstChild->setAttribute('rel', 'stylesheet');
         $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
         

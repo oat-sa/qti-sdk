@@ -44,6 +44,7 @@ class SimpleMatchSetRenderer extends AbstractXhtmlRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+        parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-simpleMatchSet');
         return;
     }

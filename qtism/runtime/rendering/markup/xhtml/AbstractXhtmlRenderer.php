@@ -123,7 +123,9 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param DOMDocumentFragment $fragment
      * @param QtiComponent $component
      */
-    abstract protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '');
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+        $this->handleXmlBase($component, $fragment->firstChild);
+    }
     
     /**
      * Set the replacement tag name.

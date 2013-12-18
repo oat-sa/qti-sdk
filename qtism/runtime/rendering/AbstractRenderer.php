@@ -25,8 +25,11 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\content\Flow;
 use qtism\common\utils\Url;
 use qtism\data\QtiComponent;
+use \DOMNode;
+use \DOMElement;
 use \InvalidArgumentException;
 use \ReflectionObject;
 
@@ -84,6 +87,16 @@ abstract class AbstractRenderer implements Renderable {
             default:
                 return $url;
             break;
+        }
+    }
+    
+    protected function handleXmlBase(QtiComponent $component, DOMNode $node) {
+        if ($node instanceof DOMElement && 
+            $this->getRenderingEngine()->getXmlBasePolicy() === AbstractRenderingEngine::XMLBASE_KEEP &&
+            $component instanceof Flow &&
+            $component->hasXmlBase()) {
+            
+            $node->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $component->getXmlBase());
         }
     }
 }
