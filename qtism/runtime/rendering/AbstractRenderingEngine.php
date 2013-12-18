@@ -149,9 +149,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * 
      */
     public function __construct() {
-        $this->setXmlBaseStack(new SplStack());
-        $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
-        $this->setState(new State());
+        $this->reset();
         
         $this->ignoreQtiClasses('responseDeclaration');
         $this->ignoreQtiClasses('outcomeDeclaration');
@@ -236,9 +234,6 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     
     public function render(QtiComponent $component) {
         
-        // Reset the engine to its initial state.
-        $this->reset();
-        
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
             $this->getExploration()->push($component);
@@ -288,7 +283,10 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
         }
         
         $finalRendering = $this->createFinalRendering();
+        
+        // Reset the engine to its initial state.
         $this->reset();
+        
         return $finalRendering;
     }
     
@@ -575,6 +573,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
         $this->setLastRendering(null);
         $this->setRenderingStack(new SplStack());
         $this->setXmlBaseStack(new SplStack());
+        $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
     }
     
     /**

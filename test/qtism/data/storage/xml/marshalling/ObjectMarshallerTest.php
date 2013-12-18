@@ -13,8 +13,8 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshallSimple() {
 	    $object = $this->createComponentFromXml('
 	        <object id="flash-movie" data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash">
-	            <param name="movie" value="movie.swf" valueType="REF"/>
-	            <param name="quality" value="high" valueType="DATA"/>
+	            <param name="movie" value="movie.swf" valuetype="REF"/>
+	            <param name="quality" value="high" valuetype="DATA"/>
 	        </object>                
 	    ');
 	    
@@ -49,6 +49,6 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    
-	    $this->assertEquals('<object data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash" id="flash-movie"><param name="movie" value="movie.swf" valueType="REF"/><param name="quality" value="high" valueType="DATA"/></object>', $dom->saveXml($element));
+	    $this->assertEquals('<object data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash" id="flash-movie"><param name="movie" value="movie.swf" valuetype="REF"/><param name="quality" value="high" valuetype="DATA"/></object>', $dom->saveXml($element));
 	}
 }
