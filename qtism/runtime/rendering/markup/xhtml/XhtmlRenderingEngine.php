@@ -34,7 +34,7 @@ use \DOMDocument;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRenderingConfig {
+class XhtmlRenderingEngine extends AbstractRenderingEngine {
     
     /**
      * The document to be generated during the rendering.
@@ -185,10 +185,23 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRende
         return $this->document;
     }
     
+    /**
+     * Set whether or not choices in shufflable interactions
+     * e.g. ChoiceInteraction, MatchInteraction must be
+     * shuffled at rendering time.
+     *
+     * @param boolean $shuffle
+     */
     public function setShuffle($shuffle) {
         $this->shuffle = $shuffle;
     }
     
+    /**
+     * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
+     * MatchInteraction must be shuffled at rendering time.
+     *
+     * @return boolean
+     */
     public function mustShuffle() {
         return $this->shuffle;
     }

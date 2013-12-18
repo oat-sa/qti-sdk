@@ -44,8 +44,22 @@ use \DOMDocument;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderingEngine implements RenderingConfig {
+abstract class AbstractRenderingEngine {
 
+    /**
+     * Static rendering mode.
+     *
+     * @var integer
+     */
+    const CONTEXT_STATIC = 0;
+    
+    /**
+     * Context-aware rendering.
+     *
+     * @var integer
+     */
+    const CONTEXT_AWARE = 1;
+    
     /**
      * An array used to 'tag' explored Component object.
      * 
@@ -112,7 +126,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * @var integer
      * @see RenderingConfig For information about rendering policies.
     */
-    private $choiceShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    private $choiceShowHidePolicy = AbstractRenderingEngine::CONTEXT_STATIC;
     
     /**
      * The Feedback rendering policy.
@@ -120,7 +134,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * @var integer
      * @see RenderingConfig For information about rendering policies
      */
-    private $feedbackShowHidePolicy = RenderingConfig::CONTEXT_STATIC;
+    private $feedbackShowHidePolicy = AbstractRenderingEngine::CONTEXT_STATIC;
     
     /**
      * The View rendering policy.
@@ -128,7 +142,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * @var integer
      * @see RenderingConfig For information about rendering policies
      */
-    private $viewPolicy = RenderingConfig::CONTEXT_STATIC;
+    private $viewPolicy = AbstractRenderingEngine::CONTEXT_STATIC;
     
     /**
      * The QTI views to be used while rendering in CONTEXT_AWARE mode.
@@ -366,13 +380,13 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             return true;
         }
         // Context Aware + FeedbackElement OR Context Aware + Choice
-        else if (($component instanceof FeedbackElement && $this->getFeedbackShowHidePolicy() === RenderingConfig::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === RenderingConfig::CONTEXT_AWARE)) {
+        else if (($component instanceof FeedbackElement && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE)) {
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
         }
         // Context Aware + RubricBlock
-        else if ($this->getViewPolicy() === RenderingConfig::CONTEXT_AWARE && $component instanceof RubricBlock) {
+        else if ($this->getViewPolicy() === AbstractRenderingEngine::CONTEXT_AWARE && $component instanceof RubricBlock) {
             $renderingViews = $this->getViews();
             $rubricViews = $component->getViews();
             
@@ -617,42 +631,112 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
         return $resolvedBase;
     }
     
+    /**
+     * Set the policy ruling the way qti:choice components are managed while rendering.
+     *
+     * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:choice is described in QTI-XML. The component will never be discarded from rendering.
+     * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
+     *
+     * @param integer $policy AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
+     */
     public function setChoiceShowHidePolicy($policy) {
         $this->choiceShowHidePolicy = $policy;
     }
     
+    /**
+     * Get the policy ruling the way qti:hoice components are managed while rendering.
+     *
+     * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:choice is described in QTI-XML. The component will never be discarded from rendering.
+     * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from rendering depending on the value of the variable referenced by the choice:templateIdentifier attribute and the value of the choice:showHide attribute.
+     *
+     * @return integer AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
+     */
     public function getChoiceShowHidePolicy() {
         return $this->choiceShowHidePolicy;
     }
     
+    /**
+     * Set the policy ruling the way qti:feedbackElement are managed while rendering.
+     *
+     * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
+     * * In CONTEXT_AWARE moden, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
+     *
+     * @param integer $policy AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     */
     public function setFeedbackShowHidePolicy($policy) {
         $this->feedbackShowHidePolicy = $policy;
     }
     
+    /**
+     * Get the policy ruling the way qti:feedbackElement are managed while rendering.
+     *
+     * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
+     * * In CONTEXT_AWARE moden, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
+     *
+     * @return integer AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     */
     public function getFeedbackShowHidePolicy() {
         return $this->feedbackShowHidePolicy;
     }
     
+    /**
+     * Set the policy ruling the way QTI components with a qti:view attribute are managed during the rendering phase.
+     *
+     * * In CONTEXT_STATIC mode, the qti-view-candidate|qti-view-auhor|qti-view-proctor|qti-view-tutor|qti-view-tutor|qti-view-testConstructor|qti-view-scorer CSS class will be simply added to the rendered elements.
+     * * In CONTEXT_STATIC mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     *
+     * @param integer $policy AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     */
     public function setViewPolicy($policy) {
         $this->viewPolicy = $policy;
     }
     
+    /**
+     * Set the policy ruling the way QTI components with a qti:view attribute are managed during the rendering phase.
+     *
+     * * In CONTEXT_STATIC mode, the qti-view-candidate|qti-view-auhor|qti-view-proctor|qti-view-tutor|qti-view-tutor|qti-view-testConstructor|qti-view-scorer CSS class will be simply added to the rendered elements depending on the value of the "view" attribute in the QTI-XML definition.
+     * * In CONTEXT_STATIC mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     *
+     * @return integer AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     */
     public function getViewPolicy() {
         return $this->viewPolicy;
     }
     
+    /**
+     * Set the contextual qti:view(s) to be used in CONTEXT_AWARE mode.
+     *
+     * @param ViewCollection $views A collection of values from the View enumeration.
+     */
     public function setViews(ViewCollection $views) {
         $this->views = $views;
     }
     
+    /**
+     * Get the contextual qti:view to be used in CONTEXT_AWARE mode.
+     *
+     * @return ViewCollection A collection of values from the View enumeration.
+     */
     public function getViews() {
         return $this->views;
     }
     
+    /**
+     * Set the State to be used as the context used in CONTEXT_AWARE mode.
+     *
+     * @param State $state A State object.
+     */
     public function setState(State $state) {
         $this->state = $state;
     }
     
+    /**
+     * Get the State used in CONTEXT_AWARE mode.
+     *
+     * @return State A State object.
+     */
     public function getState() {
         return $this->state;
     }
