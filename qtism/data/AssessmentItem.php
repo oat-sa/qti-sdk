@@ -24,6 +24,7 @@
 
 namespace qtism\data;
 
+use qtism\data\content\StylesheetCollection;
 use qtism\data\content\ItemBody;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
@@ -152,6 +153,14 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	private $templateDeclarations;
 	
 	/**
+	 * The stylesheets of the item.
+	 * 
+	 * @var StylesheetCollection
+	 * @qtism-bean-property
+	 */
+	private $stylesheets;
+	
+	/**
 	 * The content body of the item.
 	 * 
 	 * @var ItemBody
@@ -193,6 +202,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 		$this->setResponseDeclarations(new ResponseDeclarationCollection());
 		$this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
 		$this->setTemplateDeclarations(new TemplateDeclarationCollection());
+		$this->setStylesheets(new StylesheetCollection());
 	}
 	
 	/**
@@ -486,6 +496,24 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 */
 	public function getTemplateDeclarations() {
 	    return $this->templateDeclarations;
+	}
+	
+	/**
+	 * Set the stylesheets.
+	 * 
+	 * @param StylesheetCollection $stylesheets A collection of Stylesheet objects.
+	 */
+	public function setStylesheets(StylesheetCollection $stylesheets) {
+	    $this->stylesheets = $stylesheets;
+	}
+	
+	/**
+	 * Get the stylesheets.
+	 * 
+	 * @return StylesheetCollection A collection of Stylesheet objects.
+	 */
+	public function getStylesheets() {
+	    return $this->stylesheets;
 	}
 	
 	/**

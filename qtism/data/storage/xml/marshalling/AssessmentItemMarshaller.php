@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\StylesheetCollection;
+
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
@@ -82,6 +84,11 @@ class AssessmentItemMarshaller extends Marshaller {
 		foreach ($component->getTemplateDeclarations() as $templateDeclaration) {
 		    $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclaration);
 		    $element->appendChild($marshaller->marshall($templateDeclaration));
+		}
+		
+		foreach ($component->getStylesheets() as $stylesheet) {
+		    $marshaller = $this->getMarshallerFactory()->createMarshaller($stylesheet);
+		    $element->appendChild($marshaller->marshall($stylesheet));
 		}
 		
 		if ($component->hasItemBody() === true) {
@@ -184,6 +191,18 @@ class AssessmentItemMarshaller extends Marshaller {
 			            }
 			            
 			            $object->setTemplateDeclarations($templateDeclarations);
+			        }
+			        
+			        $stylesheetElts = static::getChildElementsByTagName($element, 'stylesheet');
+			        if (!empty($stylesheetElts)) {
+			            $stylesheets = new StylesheetCollection();
+			            
+			            foreach ($stylesheetElts as $stylesheetElt) {
+			                $marshaller = $this->getMarshallerFactory()->createMarshaller($stylesheetElt);
+			                $stylesheets[] = $marshaller->unmarshall($stylesheetElt);
+			            }
+			            
+			            $object->setStylesheets($stylesheets);
 			        }
 			        
 			        $itemBodyElts = static::getChildElementsByTagName($element, 'itemBody');
