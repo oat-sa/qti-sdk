@@ -40,7 +40,7 @@ class QRenderer extends BodyElementRenderer {
         parent::appendAttributes($fragment, $component);
         
         if ($component->hasCite() === true) {
-            $fragment->firstChild->setAttribute('cite', $component->getCite());
+            $fragment->firstChild->setAttribute('cite', $this->transformUri($component->getCite(), $base));
         }
     }
 }

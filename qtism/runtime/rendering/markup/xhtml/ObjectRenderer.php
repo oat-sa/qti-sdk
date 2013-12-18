@@ -38,7 +38,7 @@ class ObjectRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
-        $fragment->firstChild->setAttribute('data', $component->getData());
+        $fragment->firstChild->setAttribute('data', $this->transformUri($component->getData(), $base));
         $fragment->firstChild->setAttribute('type', $component->getType());
         
         if ($component->hasWidth() === true) {

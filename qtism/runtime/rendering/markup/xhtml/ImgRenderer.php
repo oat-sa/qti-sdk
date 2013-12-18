@@ -38,11 +38,11 @@ class ImgRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
-        $fragment->firstChild->setAttribute('src', $component->getSrc());
+        $fragment->firstChild->setAttribute('src', $this->transformUri($component->getSrc(), $base));
         $fragment->firstChild->setAttribute('alt', $component->getAlt());
         
         if ($component->hasLongdesc() === true) {
-            $fragment->firstChild->setAttribute('longdesc', $component->getLongdesc());
+            $fragment->firstChild->setAttribute('longdesc', $this->transformUri($component->getLongdesc(), $base));
         }
         
         if ($component->hasHeight() === true) {

@@ -1,5 +1,7 @@
 <?php
 
+use qtism\runtime\rendering\AbstractRenderingEngine;
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
@@ -12,4 +14,4 @@ $renderer = new XhtmlRenderingEngine();
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
-echo $rendering->saveHTML();
+echo $rendering->saveXML();

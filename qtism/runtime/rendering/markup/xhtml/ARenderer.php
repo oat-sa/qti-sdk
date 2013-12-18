@@ -38,7 +38,7 @@ class ARenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
-        $fragment->firstChild->setAttribute('href', $component->getHref());
+        $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
         
         if ($component->hasType() === true) {
             $fragment->firstChild->setAttribute('type', $component->getType());

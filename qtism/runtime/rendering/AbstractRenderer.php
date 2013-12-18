@@ -25,8 +25,10 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\common\utils\Url;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
+use \ReflectionObject;
 
 /**
  * Interface to implement to pretend to be a class able
@@ -49,5 +51,39 @@ abstract class AbstractRenderer implements Renderable {
     
     public function getRenderingEngine() {
         return $this->renderingEngine;
+    }
+    
+    /**
+     * Transform a URL depending on a given $baseUrl and how the 
+     * rendering engine is considering them.
+     * 
+     * @param string $url A given URL (Uniform Resource Locator).
+     * @param string $baseUrl a baseUrl (xml:base).
+     * @return string A transformed URL.
+     */
+    protected function transformUri($url, $baseUrl) {
+        // Only relative URIs must be transformed while
+        // taking xml:base into account.
+        if (Url::isRelative($url) === false) {
+            return $url;
+        }
+        
+        $xmlBasePolicy = $this->getRenderingEngine()->getXmlBasePolicy();
+        
+        switch ($xmlBasePolicy) {
+            
+            case AbstractRenderingEngine::XMLBASE_PROCESS:
+                if (empty($baseUrl) === false) {
+                    return Url::rtrim($baseUrl) . '/' . Url::ltrim($url);
+                }
+                else {
+                    return $url;
+                }
+            break;
+            
+            default:
+                return $url;
+            break;
+        }
     }
 }

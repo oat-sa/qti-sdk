@@ -25,42 +25,46 @@
 namespace qtism\common\utils;
 
 /**
- * A utility class focusing on URIs (Uniform Resource Identifier).
+ * A utility class focusing on URLs (Uniform Resource Locator).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Uri {
+class Url {
     
     /**
-     * Remove leading and trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URI
-     * or $uriComponent.
+     * Remove leading and trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
+     * or $urlComponent.
      * 
-     * @return The trimmed URI or URI component.
+     * @return The trimmed URL or URL component.
      */
-    static public function trim($uriComponent) {
+    static public function trim($urlComponent) {
         // Trim is UTF-8 safe if the second argument does not
         // contain multi-byte chars.
-        return trim($uriComponent, "/\t\n\r\0\x0B");
+        return trim($urlComponent, "/\t\n\r\0\x0B");
     }
     
     /**
-     * Remove leading slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URI
-     * or $uriComponent.
+     * Remove leading slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
+     * or $urlComponent.
      *
-     * @return The trimmed URI or URI component.
+     * @return The trimmed URL or URL component.
      */
-    static public function ltrim($uriComponent) {
-        return ltrim($uriComponent, "/\t\n\r\0\x0B");
+    static public function ltrim($urlComponent) {
+        return ltrim($urlComponent, "/\t\n\r\0\x0B");
     }
     
     /**
-     * Remove trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URI
-     * or $uriComponent.
+     * Remove trailing slashes (/) and whitespaces (\t, \n, \r, \0, \x0B)  from a given URL
+     * or $urlComponent.
      *
-     * @return The trimmed URI or URI component.
+     * @return The trimmed URL or URL component.
      */
-    static public function rtrim($uriComponent) {
-        return rtrim($uriComponent, "/\t\n\r\0\x0B");
+    static public function rtrim($urlComponent) {
+        return rtrim($urlComponent, "/\t\n\r\0\x0B");
+    }
+    
+    static public function isRelative($url) {
+        return (preg_match("/^[a-z][a-z0-9+\-\.]+:(\/\/){0,1}|^\//i", $url) === 0) ? true : false;
     }
 }

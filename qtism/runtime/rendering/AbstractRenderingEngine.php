@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
-use qtism\common\utils\Uri;
+use qtism\common\utils\Url;
 use qtism\data\content\Flow;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\RubricBlock;
@@ -44,7 +44,7 @@ use \DOMDocument;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderingEngine {
+abstract class AbstractRenderingEngine implements Renderable {
 
     /**
      * Static rendering mode.
@@ -76,7 +76,7 @@ abstract class AbstractRenderingEngine {
     const XMLBASE_KEEP = 3;
     
     /**
-     * Process all URI resolutions by taking
+     * Process all URL resolutions by taking
      * xml:base into account. xml:base values
      * will not be kept into the final rendering.
      * 
@@ -277,7 +277,7 @@ abstract class AbstractRenderingEngine {
         return $this->lastRendering;
     }
     
-    public function render(QtiComponent $component) {
+    public function render(QtiComponent $component, $base = '') {
         
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
@@ -631,9 +631,9 @@ abstract class AbstractRenderingEngine {
     }
     
     /**
-     * Resolve what is the base URI to be used for the currently explored component.
+     * Resolve what is the base URL to be used for the currently explored component.
      * 
-     * @return string A URI or the empty string ('') if no base URI could be resolved.
+     * @return string A URL or the empty string ('') if no base URL could be resolved.
      */
     protected function resolveXmlBase() {
         $stack = $this->getXmlBaseStack();
@@ -648,7 +648,7 @@ abstract class AbstractRenderingEngine {
                     $resolvedBase = $currentBase;
                 }
                 else {
-                    $resolvedBase = Uri::rtrim($currentBase) . '/' . Uri::ltrim($resolvedBase);
+                    $resolvedBase = Url::rtrim($currentBase) . '/' . Url::ltrim($resolvedBase);
                 }
             }
             

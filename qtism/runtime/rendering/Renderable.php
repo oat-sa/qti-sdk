@@ -33,7 +33,7 @@ interface Renderable {
      * Render a QtiComponent object into another constitution.
      *
      * @param QtiComponent $component
-     * @param string $base
+     * @param string $base The URI considered as the baseURI for rendering.
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException If something goes wrong while rendering the component.
      */

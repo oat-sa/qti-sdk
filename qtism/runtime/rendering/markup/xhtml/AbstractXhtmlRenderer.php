@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
@@ -61,6 +62,9 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
     /**
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
+     * 
+     * @return DOMDocumentFragment
+     * @throws RenderingException
      */
     public function render(QtiComponent $component, $base = '') {
         $doc = $this->getRenderingEngine()->getDocument();

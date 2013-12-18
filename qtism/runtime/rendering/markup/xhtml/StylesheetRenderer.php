@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -36,13 +37,14 @@ use \DOMDocumentFragment;
  */
 class StylesheetRenderer extends AbstractXhtmlRenderer {
     
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component) {
-        $fragment->appendChild($this->getRenderingEngine()->getDocument()->createElement('stylesheet'));
+    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+        parent::__construct($renderingEngine);
+        $this->transform('link');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $fragment->firstChild->setAttribute('rel', 'stylesheet');
-        $fragment->firstChild->setAttribute('href', $component->getHref());
+        $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
         
         if ($component->hasMedia() === true) {
             $fragment->firstChild->setAttribute('media', $component->getMedia());

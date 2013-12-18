@@ -24,6 +24,7 @@
 
 namespace qtism\data\content;
 
+use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
