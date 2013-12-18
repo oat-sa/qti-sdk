@@ -41,7 +41,7 @@ class ParamRenderer extends AbstractXhtmlRenderer {
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $fragment->firstChild->setAttribute('name', $component->getName());
         $fragment->firstChild->setAttribute('value', $component->getValue());
-        $fragment->firstChild->setAttribute('valueType', ParamType::getNameByConstant($component->getValueType()));
+        $fragment->firstChild->setAttribute('valuetype', ParamType::getNameByConstant($component->getValueType()));
         
         if ($component->hasType() === true) {
             $fragment->firstChild->setAttribute('type', $component->hasType());

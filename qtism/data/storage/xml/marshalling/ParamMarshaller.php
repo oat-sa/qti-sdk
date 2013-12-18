@@ -49,7 +49,7 @@ class ParamMarshaller extends Marshaller {
         $element = self::getDOMCradle()->createElement('param');
         self::setDOMElementAttribute($element, 'name', $component->getName());
         self::setDOMElementAttribute($element, 'value', $component->getValue());
-        self::setDOMElementAttribute($element, 'valueType', ParamType::getNameByConstant($component->getValueType()));
+        self::setDOMElementAttribute($element, 'valuetype', ParamType::getNameByConstant($component->getValueType()));
         
         if ($component->hasType() === true) {
             self::setDOMElementAttribute($element, 'type', $component->getType());
@@ -77,7 +77,7 @@ class ParamMarshaller extends Marshaller {
             $value = '';
         }
 	            
-        if (($valueType = self::getDOMElementAttributeAs($element, 'valueType')) !== null) {
+        if (($valueType = self::getDOMElementAttributeAs($element, 'valuetype')) !== null) {
             
             $component = new Param($name, $value, ParamType::getConstantByName($valueType));
             

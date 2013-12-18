@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\common\utils\Uri;
 use qtism\data\content\Flow;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\RubricBlock;
@@ -80,6 +81,14 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * @var SplStack
      */
     private $renderingStack;
+    
+    /**
+     * The stack where encountered xml:base values
+     * will be stored.
+     * 
+     * @var SplStack
+     */
+    private $xmlBaseStack;
     
     /**
      * An associative array where keys are QTI class names
@@ -140,8 +149,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
      * 
      */
     public function __construct() {
-        $this->setRenderers(array());
-        $this->setRenderingStack(new SplStack());
+        $this->setXmlBaseStack(new SplStack());
         $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
         $this->setState(new State());
         
@@ -228,9 +236,8 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     
     public function render(QtiComponent $component) {
         
-        $this->setExploration(new SplStack());
-        $this->setExplorationMarker(array());
-        $this->setLastRendering(null);
+        // Reset the engine to its initial state.
+        $this->reset();
         
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
@@ -248,6 +255,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             
             if ($final === false && $explored === false) {
                 // Hierarchical node: 1st pass.
+                $this->registerXmlBase();
                 $this->markAsExplored($this->getExploredComponent());
                 $this->getExploration()->push($this->getExploredComponent());
                 
@@ -260,7 +268,7 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             }
             else if ($final === false && $explored === true) {
                 // Hierarchical node: 2nd pass.
-                $this->processNode();
+                $this->processNode($this->resolveXmlBase());
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering.
@@ -269,7 +277,8 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
             }
             else {
                 // Leaf node.
-                $this->processNode();
+                $this->registerXmlBase();
+                $this->processNode($this->resolveXmlBase());
                 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering (leaf node is actually a lone root).
@@ -498,6 +507,26 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     }
     
     /**
+     * Set the stack where encountered xml:base values will
+     * be stored.
+     * 
+     * @param SplStack $xmlBaseStack
+     */
+    protected function setXmlBaseStack(SplStack $xmlBaseStack) {
+        $this->xmlBaseStack = $xmlBaseStack;
+    }
+    
+    /**
+     * Get the stack where encountered xml:base values will be
+     * stored.
+     * 
+     * @return SplStack
+     */
+    protected function getXmlBaseStack() {
+        return $this->xmlBaseStack;
+    }
+    
+    /**
      * Store a rendered component as a rendering for a later use
      * by AbstractRenderer objects.
      * 
@@ -537,12 +566,56 @@ abstract class AbstractRenderingEngine implements RenderingConfig {
     }
     
     /**
-     * Reset the context to its initial state, in order
-     * to be ready for reuse.
-     * 
+     * Reset the engine to its initial state, in order
+     * to be ready for reuse i.e. render a new component.
      */
     public function reset() {
+        $this->setExploration(new SplStack());
+        $this->setExplorationMarker(array());
+        $this->setLastRendering(null);
         $this->setRenderingStack(new SplStack());
+        $this->setXmlBaseStack(new SplStack());
+    }
+    
+    /**
+     * Register the value of xml:base of the currently explored component
+     * into the xmlBaseStack.
+     */
+    protected function registerXmlBase() {
+        $c = $this->getExploredComponent();
+        $this->getXmlBaseStack()->push(($c instanceof Flow) ? $c->getXmlBase() : '');
+    }
+    
+    /**
+     * Resolve what is the base URI to be used for the currently explored component.
+     * 
+     * @return string A URI or the empty string ('') if no base URI could be resolved.
+     */
+    protected function resolveXmlBase() {
+        $stack = $this->getXmlBaseStack();
+        $stack->rewind();
+        
+        $resolvedBase = '';
+        
+        while ($stack->valid() === true) {
+            
+            if (($currentBase = $stack->current()) !== '') {
+                if ($resolvedBase === '') {
+                    $resolvedBase = $currentBase;
+                }
+                else {
+                    $resolvedBase = Uri::rtrim($currentBase) . '/' . Uri::ltrim($resolvedBase);
+                }
+            }
+            
+            $stack->next();
+        }
+        
+        if ($stack->count() > 0) {
+            $stack->pop();
+        }
+        
+        return $resolvedBase;
     }
     
     public function setChoiceShowHidePolicy($policy) {

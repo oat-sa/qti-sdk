@@ -53,7 +53,6 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRende
     
     public function __construct() {
         parent::__construct();
-        $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
     
         // The following QTI classes can be rendered
         // with the BodyElementRenderer.
@@ -197,5 +196,6 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine implements XhtmlRende
     public function reset() {
         parent::reset();
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
+        $this->setShuffle(false);
     }
 }
