@@ -176,6 +176,13 @@ abstract class AbstractRenderingEngine implements Renderable {
     private $xmlBasePolicy = AbstractRenderingEngine::XMLBASE_IGNORE;
     
     /**
+     * The URL to be used in place of the root component's xml:base value.
+     * 
+     * @var string
+     */
+    private $rootBase = '';
+    
+    /**
      * The QTI views to be used while rendering in CONTEXT_AWARE mode.
      *
      * @var ViewCollection
@@ -284,6 +291,10 @@ abstract class AbstractRenderingEngine implements Renderable {
             $this->getExploration()->push($component);
         }
         
+        // Number of Flow components which where
+        // already met during the descending phase.
+        $flowComponentEncountered = 0;
+        
         while (count($this->getExploration()) > 0) {
             $this->setExploredComponent($this->getExploration()->pop());
             
@@ -294,8 +305,15 @@ abstract class AbstractRenderingEngine implements Renderable {
             $explored = $this->isExplored();
             
             if ($final === false && $explored === false) {
-                // Hierarchical node: 1st pass.
-                $this->registerXmlBase();
+                $isFlow = false;
+                
+                // Hierarchical node: 1st pass (descending phase).
+                if ($this->getExploredComponent() instanceof Flow) {
+                    $isFlow = true;
+                    $flowComponentEncountered++;
+                }
+                
+                $this->registerXmlBase(($flowComponentEncountered === 1 && $isFlow) ? ($this->hasRootBase() ? $this->getRootBase() : '') : '');
                 $this->markAsExplored($this->getExploredComponent());
                 $this->getExploration()->push($this->getExploredComponent());
                 
@@ -610,7 +628,8 @@ abstract class AbstractRenderingEngine implements Renderable {
     
     /**
      * Reset the engine to its initial state, in order
-     * to be ready for reuse i.e. render a new component.
+     * to be ready for reuse i.e. render a new component. However,
+     * configuration such as policies are kept intact.
      */
     public function reset() {
         $this->setExploration(new SplStack());
@@ -618,16 +637,17 @@ abstract class AbstractRenderingEngine implements Renderable {
         $this->setLastRendering(null);
         $this->setRenderingStack(new SplStack());
         $this->setXmlBaseStack(new SplStack());
-        $this->setViews(new ViewCollection(array(View::AUTHOR, View::CANDIDATE, View::PROCTOR, View::SCORER, View::TEST_CONSTRUCTOR, View::TUTOR)));
     }
     
     /**
      * Register the value of xml:base of the currently explored component
      * into the xmlBaseStack.
+     * 
+     * @param string $substitution If set, the registered xml:base value will be the value of the argument instead of the currently explored component's xml:base value.
      */
-    protected function registerXmlBase() {
+    protected function registerXmlBase($substitution = '') {
         $c = $this->getExploredComponent();
-        $this->getXmlBaseStack()->push(($c instanceof Flow) ? $c->getXmlBase() : '');
+        $this->getXmlBaseStack()->push(($c instanceof Flow) ? (empty($substitution) ? $c->getXmlBase() : $substitution) : '');
     }
     
     /**
@@ -752,6 +772,30 @@ abstract class AbstractRenderingEngine implements Renderable {
     
     public function getXmlBasePolicy() {
         return $this->xmlBasePolicy;
+    }
+    
+    /**
+     * Set the URL (Uniform Resource Locator) to use in place of the value
+     * of the root component's xml:base value.
+     * 
+     * @param string $rootBase A URL.
+     */
+    public function setRootBase($rootBase) {
+        $this->rootBase = $rootBase;
+    }
+    
+    public function getRootBase() {
+        return $this->rootBase;
+    }
+    
+    /**
+     * Whether or not a URL is defined in place of the value of the root
+     * component's xml:base value.
+     * 
+     * @return boolean
+     */
+    protected function hasRootBase() {
+        return $this->getRootBase() !== '';
     }
     
     /**

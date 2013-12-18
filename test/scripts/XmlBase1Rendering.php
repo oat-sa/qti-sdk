@@ -28,6 +28,10 @@ if (empty($argv[1]) === false) {
     }
 }
 
+if (empty($argv[2]) === false) {
+    $renderer->setRootBase(strval($argv[2]));
+}
+
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
