@@ -61,6 +61,30 @@ abstract class AbstractRenderingEngine {
     const CONTEXT_AWARE = 1;
     
     /**
+     * Ignore xml:base constraints.
+     * 
+     * @var integer
+     */
+    const XMLBASE_IGNORE = 2;
+    
+    /**
+     * Keep xml:base in final rendering,
+     * but do not process them.
+     * 
+     * @var integer
+     */
+    const XMLBASE_KEEP = 3;
+    
+    /**
+     * Process all URI resolutions by taking
+     * xml:base into account. xml:base values
+     * will not be kept into the final rendering.
+     * 
+     * @var integer
+     */
+    const XMLBASE_PROCESS = 4;
+    
+    /**
      * An array used to 'tag' explored Component object.
      * 
      * @var array
@@ -143,6 +167,13 @@ abstract class AbstractRenderingEngine {
      * @see RenderingConfig For information about rendering policies
      */
     private $viewPolicy = AbstractRenderingEngine::CONTEXT_STATIC;
+    
+    /**
+     * The policy to adopt to deal with xml:base values.
+     * 
+     * @var integer
+     */
+    private $xmlBasePolicy = AbstractRenderingEngine::XMLBASE_IGNORE;
     
     /**
      * The QTI views to be used while rendering in CONTEXT_AWARE mode.
@@ -703,6 +734,24 @@ abstract class AbstractRenderingEngine {
      */
     public function getViewPolicy() {
         return $this->viewPolicy;
+    }
+    
+    /**
+     * Set the policy to adopt while rendering regarding xml:base.
+     * 
+     * * AbstractRenderingEngine::XMLBASE_IGNORE: Ignore xml:base constraints. The URIs in the final rendering will be the same as in the QTI model.
+     * * AbstractRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
+     * * AbstractRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
+     * 
+     * @param integer $xmlBasePolicy
+     * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
+     */
+    public function setXmlBasePolicy($xmlBasePolicy) {
+        $this->xmlBasePolicy = $xmlBasePolicy;
+    }
+    
+    public function getXmlBasePolicy() {
+        return $this->xmlBasePolicy;
     }
     
     /**
