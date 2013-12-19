@@ -136,6 +136,15 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule {
 		$this->outcomeElse = $outcomeElse;
 	}
 	
+	/**
+	 * Whether or not an OutcomeElse object is defined for the outcome condition.
+	 * 
+	 * @return boolean
+	 */
+	public function hasOutcomeElse() {
+	    return $this->getOutcomeElse() !== null;
+	}
+	
 	public function getQtiClassName() {
 		return 'outcomeCondition';
 	}

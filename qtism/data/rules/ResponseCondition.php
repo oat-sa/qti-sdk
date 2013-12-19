@@ -136,6 +136,15 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 		$this->responseElse = $responseElse;
 	}
 	
+	/**
+	 * Whether or not a ResponseElse object is defined for the response condition.
+	 * 
+	 * @return boolean
+	 */
+	public function hasResponseElse() {
+	    return $this->getResponseElse() !== null;
+	}
+	
 	public function getQtiClassName() {
 		return 'responseCondition';
 	}
