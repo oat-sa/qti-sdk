@@ -25,21 +25,21 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
-use qtism\data\rules\SetDefaultValue;
+use qtism\data\rules\SetTemplateValue;
 use \DOMElement;
 
 /**
- * Marshalling/Unmarshalling implementation for setDefaultValue.
+ * Marshalling/Unmarshalling implementation for setTemplateValue.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SetDefaultValueMarshaller extends Marshaller {
+class SetTemplateValueMarshaller extends Marshaller {
 	
 	/**
-	 * Marshall a SetDefaultValue object into a DOMElement object.
+	 * Marshall a SetTemplateValue object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A SetDefaultValue object.
+	 * @param QtiComponent $component A SetTemplateValue object.
 	 * @return DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
@@ -53,10 +53,10 @@ class SetDefaultValueMarshaller extends Marshaller {
 	}
 	
 	/**
-	 * Unmarshall a DOMElement object corresponding to a QTI setDefaultValue element.
+	 * Unmarshall a DOMElement object corresponding to a QTI setTemplateValue element.
 	 * 
 	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A SetDefaultValue object.
+	 * @return QtiComponent A SetTemplateValue object.
 	 * @throws UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
@@ -66,21 +66,21 @@ class SetDefaultValueMarshaller extends Marshaller {
 				
 			if ($expressionElt !== false) {
 				$marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-				$object = new SetDefaultValue($identifier, $marshaller->unmarshall($expressionElt));
+				$object = new SetTemplateValue($identifier, $marshaller->unmarshall($expressionElt));
 				return $object;
 			}
 			else {
-				$msg = "The mandatory child element 'expression' is missing from element 'setDefaultValue'.";
+				$msg = "The mandatory child element 'expression' is missing from element 'setTemplateValue'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'identifier' is missing from element 'setDefaultValue'.";
+			$msg = "The mandatory attribute 'identifier' is missing from element 'setTemplateValue'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}
 	
 	public function getExpectedQtiClassName() {
-		return 'setDefaultValue';
+		return 'setTemplateValue';
 	}
 }
