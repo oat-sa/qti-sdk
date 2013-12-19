@@ -41,6 +41,15 @@ class TemplateElse extends QtiComponent {
     private $templateRules;
     
     /**
+     * Create a new TemplateElse object.
+     * 
+     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     */
+    public function __construct(TemplateRuleCollection $templateRules) {
+        $this->setTemplateRules($templateRules);
+    }
+    
+    /**
      * Set the TemplateRule objects to be evaluated.
      * 
      * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.

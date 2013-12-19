@@ -106,6 +106,9 @@ class MarshallerFactory {
 		$this->addMappingEntry('responseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 		$this->addMappingEntry('responseElseIf', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
 		$this->addMappingEntry('responseElse', 'qtism\\data\\storage\\xml\\marshalling\\ResponseControlMarshaller');
+		$this->addMappingEntry('templateIf', 'qtism\\data\\storage\\xml\\marshalling\\TemplateControlMarshaller');
+		$this->addMappingEntry('templateElseIf', 'qtism\\data\\storage\\xml\\marshalling\\TemplateControlMarshaller');
+		$this->addMappingEntry('templateElse', 'qtism\\data\\storage\\xml\\marshalling\\TemplateControlMarshaller');
 		$this->addMappingEntry('em', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 		$this->addMappingEntry('strong', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
 		$this->addMappingEntry('abbr', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
