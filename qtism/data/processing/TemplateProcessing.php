@@ -49,6 +49,16 @@ class TemplateProcessing extends QtiComponent {
     private $templateRules;
     
     /**
+     * Create a new TemplateProcessing object.
+     * 
+     * @param TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
+     * @throws InvalidArgumentException If $templateRules is an empty collection.
+     */
+    public function __construct(TemplateRuleCollection $templateRules) {
+        $this->setTemplateRules($templateRules);
+    }
+    
+    /**
      * Set the collection of TemplateRule objects composing
      * the template processing.
      * 
