@@ -45,6 +45,7 @@ class TemplateProcessing extends QtiComponent {
      * the template processing.
      * 
      * @var TemplateRuleCollection
+     * @qtism-bean-property
      */
     private $templateRules;
     
