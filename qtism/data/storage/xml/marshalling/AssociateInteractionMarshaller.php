@@ -54,7 +54,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller {
                 }
                 
                 if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
-                    $component->setMinAssociations($maxAssociations);
+                    $component->setMinAssociations($minAssociations);
                 }
                 
                 if (($xmlBase = self::getXmlBase($element)) !== false) {

@@ -67,5 +67,28 @@ class AssociateInteractionRenderer extends InteractionRenderer {
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleAssociableChoices()->getArrayCopy()));
         }
+        
+        // The number of possible associations to display is maxAssociations if the attribute is present and different from 0, otherwise:
+        // 
+        // * minAssociations, if different from 0 is used to determine the possible associations to display. Otherwise,
+        // * a single possible association is displayed. Actions to undertake when this first association is done by the candidate depends on the implementation.
+        $nbAssoc = (($assoc = $component->getMaxAssociations()) > 0) ? $assoc : ((($assoc = $component->getMinAssociations()) > 0) ? $assoc : 1);
+        
+        for ($i = 0; $i < $nbAssoc; $i++) {
+            $associationElt = $fragment->ownerDocument->createElement('div');
+            $associationElt->setAttribute('class', 'qti-association');
+            
+            // A container for the first selected option...
+            $firstElt = $fragment->ownerDocument->createElement('span');
+            $firstElt->setAttribute('class', 'qti-association-first');
+            $associationElt->appendChild($firstElt);
+            
+            // And a second container for the second selected option.
+            $secondElt = $fragment->ownerDocument->createElement('span');
+            $secondElt->setAttribute('class', 'qti-association-second');
+            $associationElt->appendChild($secondElt);
+            
+            $fragment->firstChild->appendChild($associationElt);
+        }
     } 
 }
