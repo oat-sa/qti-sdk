@@ -32,7 +32,7 @@ use InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TestFeedbackCollection extends QtiIdentifiableCollection {
+class TestFeedbackCollection extends QtiCollection {
 
 	/**
 	 * Check if $value is a TestFeedbackn object.

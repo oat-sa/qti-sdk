@@ -55,7 +55,7 @@ class ModalFeedback extends QtiComponent {
      * @var integer
      * @qtism-bean-property
      */
-    private $showHide;
+    private $showHide = ShowHide::SHOW;
     
     /**
      * From IMS QTI:
@@ -99,9 +99,17 @@ class ModalFeedback extends QtiComponent {
      */
     private $content;
     
-    public function __construct($outcomeIdentifier, $showHide, $identifier, FlowStaticCollection $content = null, $title = '') {
+    /**
+     * Create a new ModalFeedback object.
+     * 
+     * @param string $outcomeIdentifier The identifier of the outcome variable controlling the visibilty of the modal feedback.
+     * @param string $identifier The identifier to be used in conjunction with the showHide attribute.
+     * @param FlowStaticCollection $content The content of the modal feedback.
+     * @param string $title The title of the modal feedback.
+     * @throws InvalidArgumentException If any of the arguments is invalid.
+     */
+    public function __construct($outcomeIdentifier, $identifier, FlowStaticCollection $content = null, $title = '') {
         $this->setOutcomeIdentifier($outcomeIdentifier);
-        $this->setShowHide($showHide);
         $this->setIdentifier($identifier);
         $this->setContent((is_null($content) === true) ? new FlowStaticCollection() : $content);
         $this->setTitle($title);
@@ -156,7 +164,7 @@ class ModalFeedback extends QtiComponent {
      * @return integer A value from the ShowHide enumeration.
      */
     public function getShowHide() {
-        return $this->showHide = $showHide;
+        return $this->showHide;
     }
     
     /**

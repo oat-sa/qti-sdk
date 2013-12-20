@@ -24,8 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
-
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotInteraction;
 use qtism\data\content\interactions\HottextInteraction;
@@ -91,7 +91,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback');
     
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
@@ -213,6 +213,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($component instanceof GraphicOrderInteraction) {
             return $component->getHotspotChoices()->getArrayCopy();
+        }
+        else if ($component instanceof ModalFeedback) {
+            return $component->getContent()->getArrayCopy();
         }
     }
     
