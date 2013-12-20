@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\data\content\ModalFeedback;
 use qtism\common\utils\Url;
 use qtism\data\content\Flow;
 use qtism\data\content\interactions\Choice;
@@ -423,7 +424,7 @@ abstract class AbstractRenderingEngine implements Renderable {
             return true;
         }
         // Context Aware + FeedbackElement OR Context Aware + Choice
-        else if (($component instanceof FeedbackElement && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE)) {
+        else if ((($component instanceof FeedbackElement || $component instanceof ModalFeedback) && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE)) {
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
@@ -456,7 +457,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * @return boolean
      */
     protected function identifierMatches(QtiComponent $component) {
-        $variableIdentifier = ($component instanceof FeedbackElement) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
+        $variableIdentifier = ($component instanceof FeedbackElement || $component instanceof ModalFeedback) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
         $identifier = $component->getIdentifier();
         $showHide = $component->getShowHide();
         $state = $this->getState();

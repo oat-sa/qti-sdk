@@ -1,9 +1,7 @@
 <?php
 
-use qtism\runtime\rendering\RenderingConfig;
-
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\View;
-
 use qtism\data\ViewCollection;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
@@ -28,7 +26,7 @@ if (isset($argv[1])) {
         $view = new ViewCollection(array(View::getConstantByName(trim($argv[1]))));
     }
     
-    $renderer->setViewPolicy(RenderingConfig::CONTEXT_AWARE);
+    $renderer->setViewPolicy(AbstractRenderingEngine::CONTEXT_AWARE);
     $renderer->setViews($view);
 }
 

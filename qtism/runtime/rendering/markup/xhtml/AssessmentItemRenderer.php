@@ -27,24 +27,26 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
-use qtism\data\ShowHide;
 use \DOMDocumentFragment;
 
 /**
- * The renderer for ModalFeedback elements. Rendered elements
- * will get a 'qti-modalFeedback' additional CSS class and will be
+ * The renderer for AssessmentItem elements. Rendered elements
+ * will get a 'qti-assessmentItem' additional CSS class and will be
  * transformed as 'div' elements.
  * 
  * It also takes care of producing the following x-data attributes.
  * 
- * * data-outcomeIdentifier = qti:modalFeedback->outcomeIdentifier
- * * data-showHide = qti:modalFeedback->showHide
- * * data-identifier = qti:modalFeedback->identifier
+ * * data-identifier = qti:assessmentItem->identifier
+ * * data-title = qti:assessmentItem->title
+ * * data-label = qti:assessmentItem->label (Only if present in QTI-XML)
+ * * data-lang = qti:assessmentItem->lang (Only if present in QTI-XML)
+ * * data-adaptive = qti:assessmentItem->adaptive
+ * * data-timeDependent = qti:assessmentItem->timeDependent
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
+class AssessmentItemRenderer extends AbstractXhtmlRenderer {
     
     public function __construct(AbstractRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
@@ -53,14 +55,20 @@ class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
-        $this->additionalClass('qti-modalFeedback');
+        $this->additionalClass('qti-assessmentItem');
         
-        $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
-        $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
+        $fragment->firstChild->setAttribute('data-title', $component->getTitle());
         
-        if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_STATIC) {
-            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
+        if ($component->hasLabel() === true) {
+            $fragment->firstChild->setAttribute('data-label', $component->getLabel());
         }
+        
+        if ($component->hasLang() === true) {
+            $fragment->firstChild->setAttribute('data-lang', $component->getLang());
+        }
+        
+        $fragment->firstChild->setAttribute('data-adaptive', ($component->isAdaptive() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('data-timeDependent', ($component->isTimeDependent() === true) ? 'true' : 'false');
     }
 }

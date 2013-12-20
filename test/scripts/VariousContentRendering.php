@@ -1,7 +1,5 @@
 <?php
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
-
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 

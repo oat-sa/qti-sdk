@@ -1,36 +1,30 @@
 <?php
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\runtime\common\State;
-use qtism\common\enums\BaseType;
-use qtism\common\enums\Cardinality;
-use qtism\runtime\common\OutcomeVariable;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/itembodywithfeedback_1.xml');
+$doc->load('../samples/rendering/itemfeedback_1.xml');
 
-$outcome1 = new OutcomeVariable('outcome1', Cardinality::SINGLE, BaseType::IDENTIFIER, '');
-$outcome2 = new OutcomeVariable('outcome2', Cardinality::SINGLE, BaseType::IDENTIFIER, '');
-
+$outcome1 = new OutcomeVariable('FEEDBACK', Cardinality::SINGLE, BaseType::IDENTIFIER, '');
 $renderer = new XhtmlRenderingEngine();
 
 if (isset($argv[1]) && $argv[1] === 'CONTEXT_AWARE') {
     $renderer->setFeedbackShowHidePolicy(AbstractRenderingEngine::CONTEXT_AWARE);
-    
+
     if (isset($argv[2])) {
         $outcome1->setValue($argv[2]);
     }
-    
-    if (isset($argv[3])) {
-        $outcome2->setValue($argv[3]);
-    }
 }
 
-$renderer->setState(new State(array($outcome1, $outcome2)));
+$renderer->setState(new State(array($outcome1)));
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 

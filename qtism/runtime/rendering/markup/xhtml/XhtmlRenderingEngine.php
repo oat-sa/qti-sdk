@@ -167,6 +167,7 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
         $this->registerRenderer('hotspotChoice', new HotspotChoiceRenderer());
         $this->registerRenderer('associableHotspot', new AssociableHotspotRenderer());
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
+        $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
     }
     
     protected function createFinalRendering() {

@@ -1,7 +1,7 @@
 <?php
 
 use qtism\runtime\common\State;
-use qtism\runtime\rendering\RenderingConfig;
+use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
@@ -31,7 +31,7 @@ if ((isset($argv[1]) && $shuffle === true && isset($argv[2])) || (isset($argv[1]
         $templateVariable->setValue($argv[1]);
     }
     
-    $renderer->setChoiceShowHidePolicy(RenderingConfig::CONTEXT_AWARE);
+    $renderer->setChoiceShowHidePolicy(AbstractRenderingEngine::CONTEXT_AWARE);
     $state = new State(array($templateVariable));
     $renderer->setState($state);
 }

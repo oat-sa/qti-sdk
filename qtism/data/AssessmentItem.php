@@ -649,7 +649,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 		    $comp[] = $this->getResponseProcessing();
 		}
 		
-		$comp = array_merge($comp, $this->getStylesheets());
+		$comp = array_merge($comp, $this->getStylesheets()->getArrayCopy());
 		
 		if ($this->hasItemBody() === true) {
 		    $comp[] = $this->getItemBody();
@@ -658,6 +658,8 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 		if ($this->hasResponseProcessing() === true) {
 			$comp[] = $this->getResponseProcessing();
 		}
+		
+		$comp = array_merge($comp, $this->getModalFeedbacks()->getArrayCopy());
 		
 		return new QtiComponentCollection($comp);
 	}
