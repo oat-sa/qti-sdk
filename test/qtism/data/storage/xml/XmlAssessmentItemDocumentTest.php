@@ -116,8 +116,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		return array(
 			array(self::decorateUri('associate.xml')),
 			array(self::decorateUri('choice_fixed.xml')),
-			// @todo C10 is invalid identifier? Double check!
+			// @todo C10 is invalid identifier? Double check! (Actually it seems the example is fucked up... we'll see).
 			//array(self::decorateUri('choice_multiple_chocolade.xml')),
+		    array(self::decorateUri('modalFeedback.xml')),
 			array(self::decorateUri('choice_multiple.xml')),
 			array(self::decorateUri('choice.xml')),
 			array(self::decorateUri('extended_text_rubric.xml')),

@@ -202,12 +202,6 @@ abstract class AbstractRenderingEngine implements Renderable {
      */
     public function __construct() {
         $this->reset();
-        
-        $this->ignoreQtiClasses('responseDeclaration');
-        $this->ignoreQtiClasses('outcomeDeclaration');
-        $this->ignoreQtiClasses('templateDeclaration');
-        $this->ignoreQtiClasses('responseProcessing');
-        $this->ignoreQtiClasses('responseProcessing');
     }
     
     /**

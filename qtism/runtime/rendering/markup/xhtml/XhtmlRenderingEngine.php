@@ -53,6 +53,16 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
     
     public function __construct() {
         parent::__construct();
+        
+        // QTI Components the rendering engine will
+        // not take into account.
+        $ignoreClasses = array('responseDeclaration',
+                                'outcomeDeclaration',
+                                'templateDeclaration',
+                                'templateProcessing',
+                                'responseProcessing');
+        
+        $this->ignoreQtiClasses($ignoreClasses);
     
         // The following QTI classes can be rendered
         // with the BodyElementRenderer.
@@ -126,6 +136,7 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
         $this->registerRenderer('feedbackInline', new FeedbackInlineRenderer());
         $this->registerRenderer('feedbackBlock', new FeedbackBlockRenderer());
+        $this->registerRenderer('modalFeedback', new ModalFeedbackRenderer());
         $this->registerRenderer('choiceInteraction', new ChoiceInteractionRenderer());
         $this->registerRenderer('orderInteraction', new OrderInteractionRenderer());
         $this->registerRenderer('associateInteraction', new AssociateInteractionRenderer());
