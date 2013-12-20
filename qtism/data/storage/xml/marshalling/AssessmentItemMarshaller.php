@@ -24,8 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\StylesheetCollection;
+use qtism\data\content\ModalFeedbackCollection;
 
+use qtism\data\content\StylesheetCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
@@ -105,6 +106,11 @@ class AssessmentItemMarshaller extends Marshaller {
 		if ($component->hasResponseProcessing() === true) {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($component->getResponseProcessing());
 			$element->appendChild($marshaller->marshall($component->getResponseProcessing()));
+		}
+		
+		foreach ($component->getModalFeedbacks() as $modalFeedback) {
+		    $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedback);
+		    $element->appendChild($marshaller->marshall($modalFeedback));
 		}
 		
 		return $element;
@@ -226,6 +232,18 @@ class AssessmentItemMarshaller extends Marshaller {
 			        if (!empty($responseProcessingElts)) {
 			            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
 			            $object->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
+			        }
+			        
+			        $modalFeedbackElts = static::getChildElementsByTagName($element, 'modalFeedback');
+			        if (!empty($modalFeedbackElts)) {
+			            $modalFeedbacks = new ModalFeedbackCollection();
+			            
+			            foreach ($modalFeedbackElts as $modalFeedbackElt) {
+			                $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackElt);
+			                $modalFeedbacks[] = $marshaller->unmarshall($modalFeedbackElt);
+			            }
+			            
+			            $object->setModalFeedbacks($modalFeedbacks);
 			        }
 			        
 			        return $object;

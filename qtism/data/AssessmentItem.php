@@ -24,6 +24,7 @@
 
 namespace qtism\data;
 
+use qtism\data\content\ModalFeedbackCollection;
 use qtism\data\processing\TemplateProcessing;
 use qtism\data\content\StylesheetCollection;
 use qtism\data\content\ItemBody;
@@ -186,6 +187,13 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	private $responseProcessing = null;
 	
 	/**
+	 * The modalFeedbacks.
+	 * 
+	 * @var ModalFeedbackCollection
+	 */
+	private $modalFeedbacks;
+	
+	/**
 	 * The observers of this object.
 	 * 
 	 * @var SplObjectStorage
@@ -212,6 +220,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 		$this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
 		$this->setTemplateDeclarations(new TemplateDeclarationCollection());
 		$this->setStylesheets(new StylesheetCollection());
+		$this->setModalFeedbacks(new ModalFeedbackCollection());
 	}
 	
 	/**
@@ -607,6 +616,24 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 */
 	public function hasResponseProcessing() {
 		return $this->getResponseProcessing() !== null;
+	}
+	
+	/**
+	 * Set the associated ModalFeedback objects.
+	 * 
+	 * @param ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
+	 */
+	public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks) {
+	    $this->modalFeedbacks = $modalFeedbacks;
+	}
+	
+	/**
+	 * Get the associated ModalFeedback objects.
+	 * 
+	 * @return ModalFeedbackCollection A collection of ModalFeedback objects.
+	 */
+	public function getModalFeedbacks() {
+	    return $this->modalFeedbacks;
 	}
 	
 	public function getQtiClassName() {
