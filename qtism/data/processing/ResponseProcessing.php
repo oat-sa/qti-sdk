@@ -21,7 +21,6 @@
  * @package 
  */
 
-
 namespace qtism\data\processing;
 
 use qtism\data\QtiComponentCollection;
