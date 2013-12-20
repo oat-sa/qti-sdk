@@ -24,6 +24,7 @@
 
 namespace qtism\data;
 
+use qtism\data\processing\TemplateProcessing;
 use qtism\data\content\StylesheetCollection;
 use qtism\data\content\ItemBody;
 use qtism\data\state\TemplateDeclarationCollection;
@@ -167,6 +168,14 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * @qtism-bean-property
 	 */
 	private $itemBody = null;
+	
+	/**
+	 * The templateProcessing.
+	 * 
+	 * @var TemplateProcessing
+	 * @qtism-bean-property
+	 */
+	private $templateProcessing = null;
 	
 	/**
 	 * The responseProcessing.
@@ -499,6 +508,36 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	}
 	
 	/**
+	 * Set the TemplateProcessing object composing this item. Give the null value
+	 * to $templateProcessing to express that there is not TemplateProcessing object
+	 * bound to the item.
+	 * 
+	 * @param TemplateProcessing $templateProcessing A TemplateProcessing object or null.
+	 */
+	public function setTemplateProcessing(TemplateProcessing $templateProcessing = null) {
+	    $this->templateProcessing = $templateProcessing;
+	}
+	
+	/**
+	 * Get the TemplateProcessing object composing the item. If no TemplateProcessing
+	 * object is bound to the item, the null value is returned.
+	 * 
+	 * @return TemplateProcessing A TemplateProcessing object or null.
+	 */
+	public function getTemplateProcessing() {
+	    return $this->templateProcessing;
+	}
+	
+	/**
+	 * Whether or not a TemplateProcessing object is bound to the item.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTemplateProcessing() {
+	    return $this->getTemplateProcessing() !== null;
+	}
+	
+	/**
 	 * Set the stylesheets.
 	 * 
 	 * @param StylesheetCollection $stylesheets A collection of Stylesheet objects.
@@ -575,8 +614,19 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	}
 	
 	public function getComponents() {
-		$comp = array_merge($this->getOutcomeDeclarations()->getArrayCopy(),
-							$this->getResponseDeclarations()->getArrayCopy());
+		$comp = array_merge($this->getResponseDeclarations()->getArrayCopy(),
+		                    $this->getOutcomeDeclarations()->getArrayCopy(),
+		                    $this->getTemplateDeclarations()->getArrayCopy());
+		
+		if ($this->hasTemplateProcessing() === true) {
+		    $comp[] = $this->getResponseProcessing();
+		}
+		
+		$comp = array_merge($comp, $this->getStylesheets());
+		
+		if ($this->hasItemBody() === true) {
+		    $comp[] = $this->getItemBody();
+		} 
 		
 		if ($this->hasResponseProcessing() === true) {
 			$comp[] = $this->getResponseProcessing();
