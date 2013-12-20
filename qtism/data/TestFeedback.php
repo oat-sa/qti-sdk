@@ -26,8 +26,6 @@ namespace qtism\data;
 
 use \InvalidArgumentException;
 use qtism\common\utils\Format;
-use \SplObserver;
-use \SplObjectStorage;
 
 /**
  * The TestFeedback class.
@@ -35,7 +33,7 @@ use \SplObjectStorage;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TestFeedback extends QtiComponent implements QtiIdentifiable {
+class TestFeedback extends QtiComponent {
 	
 	/**
 	 * From IMS QTI:
@@ -111,13 +109,6 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	private $content;
 	
 	/**
-	 * The observers of this object.
-	 * 
-	 * @var SplObjectStorage
-	 */
-	private $observers;
-	
-	/**
 	 * Create a new instance of TestFeedback.
 	 * 
 	 * Values of attributes 'showHide' and 'access' are respectively ShowHide::SHOW and
@@ -129,9 +120,7 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	 * @param string $title The title of the feedback. An empty string means that no title is specified.
 	 * @throws InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
 	 */
-	public function __construct($identifier, $outcomeIdentifier, $content, $title = '') {
-		$this->setObservers(new SplObjectStorage());
-		
+	public function __construct($identifier, $outcomeIdentifier, $content, $title = '') {		
 		$this->setIdentifier($identifier);
 		$this->setOutcomeIdentifier($outcomeIdentifier);
 		$this->setContent($content);
@@ -303,50 +292,5 @@ class TestFeedback extends QtiComponent implements QtiIdentifiable {
 	
 	public function getComponents() {
 		return new QtiComponentCollection();
-	}
-	
-	/**
-	 * Get the observers of the object.
-	 *
-	 * @return SplObjectStorage An SplObjectStorage object.
-	 */
-	protected function getObservers() {
-		return $this->observers;
-	}
-	
-	/**
-	 * Set the observers of the object.
-	 *
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
-	 */
-	protected function setObservers(SplObjectStorage $observers) {
-		$this->observers = $observers;
-	}
-	
-	/**
-	 * SplSubject::attach implementation.
-	 *
-	 * @param SplObserver An SplObserver object.
-	 */
-	public function attach(SplObserver $observer) {
-		$this->getObservers()->attach($observer);
-	}
-	
-	/**
-	 * SplSubject::detach implementation.
-	 *
-	 * @param SplObserver $observer An SplObserver object.
-	 */
-	public function detach(SplObserver $observer) {
-		$this->getObservers()->detach($observer);
-	}
-	
-	/**
-	 * SplSubject::notify implementation.
-	 */
-	public function notify() {
-		foreach ($this->getObservers() as $observer) {
-			$observer->update($this);
-		}
 	}
 }
