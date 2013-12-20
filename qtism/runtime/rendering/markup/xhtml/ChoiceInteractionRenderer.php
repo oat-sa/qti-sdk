@@ -70,5 +70,34 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
+        
+        // Get back the 'qti-simpleChoice' elements.
+        $elts = $fragment->firstChild->childNodes;
+        $choices = array();
+        
+        for ($i = 0; $i < $elts->length; $i++) {
+            if ($elts->item($i)->nodeType === XML_ELEMENT_NODE) {
+                $classes = $elts->item($i)->getAttribute('class');
+                if (mb_strpos($classes, 'qti-simpleChoice', 0, 'UTF-8') !== false) {
+                    $choices[] = $elts->item($i);
+                }
+            }
+            
+        }
+        
+        if ($component->getMaxChoices() === 0 || $component->getMaxChoices() > 1) {
+            foreach ($choices as $c) {
+                $checkbox = $fragment->ownerDocument->createElement('input');
+                $checkbox->setAttribute('type', 'checkbox');
+                $c->insertBefore($checkbox, $c->firstChild);
+            }
+        }
+        else {
+            foreach ($choices as $c) {
+                $radio = $fragment->ownerDocument->createElement('input');
+                $radio->setAttribute('type', 'radio');
+                $c->insertBefore($radio, $c->firstChild);
+            }
+        }
     }
 }
