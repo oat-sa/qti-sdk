@@ -225,9 +225,7 @@ class TestFeedback extends QtiComponent {
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
-			
 			$this->identifier = $identifier;
-			$this->notify();
 		}
 		else {
 			$msg = "'${identifier}' is not a valid QTI Identifier.";
