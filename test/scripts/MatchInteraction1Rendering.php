@@ -16,4 +16,4 @@ if (isset($argv[1]) && $argv[1] === 'shuffle') {
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
-echo $rendering->saveHTML();
+echo $rendering->saveXML();

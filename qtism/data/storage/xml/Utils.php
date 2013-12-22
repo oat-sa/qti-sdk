@@ -25,6 +25,7 @@
 namespace qtism\data\storage\xml;
 
 use \DOMDocument;
+use \DOMElement;
 
 /**
  * A class providing XML utility methods.
@@ -98,5 +99,33 @@ class Utils {
 				break;
 			}
 		}
+	}
+	
+	/**
+	 * Change the name of $element into $name.
+	 * 
+	 * @param DOMElement $element A DOMElement object you want to change the name.
+	 * @param string $name The new name of $element.
+	 */
+	public static function changeElementName(DOMElement $element, $name) {
+		$newElement = $element->ownerDocument->createElement($name);
+		
+	    foreach ($element->childNodes as $child){
+	        $child = $element->ownerDocument->importNode($child, true);
+	        $newElement->appendChild($child);
+	    }
+	    
+	    foreach ($element->attributes as $attrName => $attrNode) {
+	    	if ($attrNode->namespaceURI === null) {
+	    		$newElement->setAttribute($attrName, $attrNode->value);
+	    	}
+	    	else {
+	    		$newElement->setAttributeNS($attrNode-> $namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
+	    	}
+	        
+	    }
+	    
+	    $newElement->ownerDocument->replaceChild($newElement, $element);
+	    return $newElement;
 	}
 }

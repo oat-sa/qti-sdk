@@ -57,7 +57,7 @@ class GapMatchInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
     }
     
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component) {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {

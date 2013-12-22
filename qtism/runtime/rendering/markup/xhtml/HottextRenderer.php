@@ -59,4 +59,13 @@ class HottextRenderer extends ChoiceRenderer {
         parent::appendAttributes($fragment, $component);
         $this->additionalClass('qti-hottext');
     }
+    
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    	parent::appendChildren($fragment, $component);
+    	
+    	$inputElt = $fragment->ownerDocument->createElement('input');
+    	$inputElt->setAttribute('type', 'radio');
+    	
+    	$fragment->firstChild->insertBefore($inputElt, $fragment->firstChild->firstChild);
+    }
 }
