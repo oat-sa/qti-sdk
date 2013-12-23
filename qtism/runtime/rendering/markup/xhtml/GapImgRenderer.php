@@ -56,7 +56,7 @@ use \DOMDocumentFragment;
 class GapImgRenderer extends GapChoiceRenderer {
 
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapImg');
         
         if ($component->hasObjectLabel() === true) {

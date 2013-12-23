@@ -31,7 +31,7 @@ use \DOMDocumentFragment;
 
 /**
  * MediaInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-mediaInteraction' additional CSS class.
+ * 'div' elements with the 'qti-blockInteraction' and 'qti-mediaInteraction' additional CSS classes.
  * 
  * * If the object type describes a video media, a <video> tag will be appended to the rendering.
  * * If the object type describes an audio media, an <audio> tag will be appended to the rendering.
@@ -134,8 +134,8 @@ class MediaInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-mediaInteraction');
         
         $fragment->firstChild->setAttribute('data-autostart', ($component->mustAutostart() === true) ? 'true' : 'false');
@@ -145,7 +145,7 @@ class MediaInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         $width = null;
         $height = null;

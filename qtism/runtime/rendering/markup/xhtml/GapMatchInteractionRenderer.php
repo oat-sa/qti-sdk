@@ -32,7 +32,7 @@ use \DOMDocumentFragment;
 
 /**
  * GapMatchInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-gapMatchInteraction' additional CSS class.
+ * 'div' elements with the 'qti-blockInteraction' and 'qti-gapMatchInteraction' additional CSS classes.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -51,14 +51,15 @@ class GapMatchInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-gapMatchInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getGapChoices()->getArrayCopy()));

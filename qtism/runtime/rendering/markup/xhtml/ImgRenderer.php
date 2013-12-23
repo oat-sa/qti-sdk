@@ -37,7 +37,7 @@ use \DOMDocumentFragment;
 class ImgRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('src', $this->transformUri($component->getSrc(), $base));
         $fragment->firstChild->setAttribute('alt', $component->getAlt());
         

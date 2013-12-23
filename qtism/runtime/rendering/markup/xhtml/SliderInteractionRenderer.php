@@ -32,7 +32,7 @@ use \DOMDocumentFragment;
 
 /**
  * SliderInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-sliderInteraction' additional CSS class.
+ * 'div' elements with the 'qti-sliderInteraction' and 'qti-blockInteraction' additional CSS classes.
  * 
  * An additional 'qti-horizontal' or 'qti-vertical' CSS class is also
  * added depending on the value of qti:sliderInteraction->orientation.
@@ -63,7 +63,8 @@ class SliderInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-sliderInteraction');
         $this->additionalClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
         
@@ -79,7 +80,7 @@ class SliderInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         // Insert an element representing the slider 'widget' itself.
         $sliderElt = $fragment->firstChild->ownerDocument->createElement('div');

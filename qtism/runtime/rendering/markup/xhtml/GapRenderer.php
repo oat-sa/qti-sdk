@@ -57,7 +57,7 @@ class GapRenderer extends ChoiceRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gap');
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');
     }

@@ -37,7 +37,7 @@ use \DOMDocumentFragment;
 class ObjectRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('data', $this->transformUri($component->getData(), $base));
         $fragment->firstChild->setAttribute('type', $component->getType());
         
@@ -51,7 +51,7 @@ class ObjectRenderer extends BodyElementRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         // For browser compatibility, we do not want self-closing object elements.
         if ($fragment->firstChild->childNodes->length === 0) {

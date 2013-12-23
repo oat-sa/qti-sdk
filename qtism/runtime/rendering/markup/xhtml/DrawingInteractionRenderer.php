@@ -31,7 +31,7 @@ use \DOMDocumentFragment;
 
 /**
  * DrawingInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-drawingInteraction' additional CSS class.
+ * 'div' elements with the 'qti-blockInteraction' and 'qti-drawingInteraction' additional CSS class.
  * 
  * * The <object> element representing the background image of the drawing canvas is transformed into an <img> tag.
  * * A <canvas> element representing the place the candidate can draw is appended to the drawing interaction container.
@@ -59,12 +59,13 @@ class DrawingInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-drawingInteraction');
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         $width = null;
         $height = null;

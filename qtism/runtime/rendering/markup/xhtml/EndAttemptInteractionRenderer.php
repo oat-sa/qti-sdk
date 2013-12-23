@@ -31,7 +31,7 @@ use \DOMDocumentFragment;
 
 /**
  * EndAttemptInteraction renderer. Rendered components will be transformed as 
- * 'span' elements with a 'qti-endAttemptInteraction' additional CSS class.
+ * 'span' elements with the 'qti-inlineInteraction' and 'qti-endAttemptInteraction' additional CSS class.
  * 
  * An <input type="submit"> element is appended to the rendered element to depict
  * the input to be pressed by the candidate to end the attempt. The attribute 'value' of
@@ -53,13 +53,14 @@ class EndAttemptInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-inlineInteraction');
         $this->additionalClass('qti-endAttemptInteraction');
         $fragment->firstChild->setAttribute('data-title', $component->getTitle());
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         $submitElt = $fragment->ownerDocument->createElement('input');
         $submitElt->setAttribute('type', 'submit');

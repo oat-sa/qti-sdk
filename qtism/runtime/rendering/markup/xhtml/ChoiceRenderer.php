@@ -35,7 +35,7 @@ use \DOMDocumentFragment;
  * Choice renderer, the base class of all renderers that render subclasses of
  * qti:choice. This renderer will transform the choice into a 'div' element, by default.
  * Sub-classes may override this default transformation by calling the transform() method
- * accordingly.
+ * accordingly. It also add a 'qti-choice' additional CSS class to rendered elements.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -61,8 +61,8 @@ abstract class ChoiceRenderer extends BodyElementRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-choice');
         
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');

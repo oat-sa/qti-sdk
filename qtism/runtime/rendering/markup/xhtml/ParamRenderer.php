@@ -39,6 +39,7 @@ use \DOMDocumentFragment;
 class ParamRenderer extends AbstractXhtmlRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+        parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('name', $component->getName());
         $fragment->firstChild->setAttribute('value', $component->getValue());
         $fragment->firstChild->setAttribute('valuetype', ParamType::getNameByConstant($component->getValueType()));

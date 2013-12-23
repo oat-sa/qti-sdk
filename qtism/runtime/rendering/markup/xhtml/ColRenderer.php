@@ -37,7 +37,7 @@ use \DOMDocumentFragment;
 class ColRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         
         $fragment->firstChild->setAttribute('span', $component->getSpan());
     }

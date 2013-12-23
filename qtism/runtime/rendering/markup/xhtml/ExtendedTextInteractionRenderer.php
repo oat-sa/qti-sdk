@@ -32,8 +32,8 @@ use \DOMDocumentFragment;
 
 /**
  * ExtendedTextInteraction renderer. Will render components
- * as 'div' elements with type 'text' and an additional class
- * of 'qti-extendedTextInteraction'.
+ * as 'div' elements with type 'text' and the additional classes
+ * of 'qti-extendedTextInteraction' and 'qti-blockInteraction'.
  * 
  * The generated 'div' element will be composed of:
  * * A 'div' element with the additional 'qti-prompt' CSS class if a prompt is present in the interaction.
@@ -63,7 +63,8 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-extendedTextInteraction');
         
         $fragment->firstChild->setAttribute('data-minStrings', $component->getMinStrings());
@@ -79,7 +80,7 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         // Append a textarea...
         $textarea = $fragment->ownerDocument->createElement('textarea');

@@ -29,7 +29,8 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * StringInteraction renderer.
+ * StringInteraction renderer. Rendered elements will be applied
+ * the 'qti-stringInteraction' additional CSS class.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -46,7 +47,8 @@ use \DOMDocumentFragment;
 abstract class StringInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {  
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-stringInteraction');
         
         $fragment->firstChild->setAttribute('data-base', $component->getBase());
         

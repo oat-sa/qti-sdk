@@ -30,7 +30,8 @@ use \DOMDocumentFragment;
 
 /**
  * HottextInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-hottextInteraction' additional CSS class.
+ * 'div' elements with the 'qti-hottextInteraction' and 'qti-blockInteraction'
+ * additional CSS classes.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -44,7 +45,8 @@ use \DOMDocumentFragment;
 class HottextInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-hottextInteraction');
         
         $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());

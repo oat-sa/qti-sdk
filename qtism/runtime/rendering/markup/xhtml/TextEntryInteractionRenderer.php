@@ -31,8 +31,8 @@ use \DOMDocumentFragment;
 
 /**
  * TextEntryInteraction renderer. Will render components
- * as 'input' elements with type 'text' and an additional class
- * of 'qti-textEntryInteraction'.
+ * as 'input' elements with type 'text' and an additional classes
+ * of 'qti-textEntryInteraction' and 'qti-inlineInteraction'.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -54,7 +54,8 @@ class TextEntryInteractionRenderer extends StringInteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-inlineInteraction');
         $this->additionalClass('qti-textEntryInteraction');
         $fragment->firstChild->setAttribute('type', 'text');
     }

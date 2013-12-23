@@ -32,7 +32,8 @@ use \DOMDocumentFragment;
 
 /**
  * InlineChoiceInteraction renderer. Rendered components will be transformed as 
- * 'select' elements with a 'qti-inlineChoiceInteraction' additional CSS class.
+ * 'select' elements with 'qti-inlineChoiceInteraction' and 'qti-inlineInteraction' additional 
+ * CSS classes.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -51,8 +52,8 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-inlineInteraction');
         $this->additionalClass('qti-inlineChoiceInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
@@ -60,7 +61,7 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getContent()->getArrayCopy()));

@@ -32,7 +32,8 @@ use \DOMDocumentFragment;
 /**
  * GapChoice renderer, the base class of all renderers that render subclasses of
  * qti:gapChoice (in other words qti:gapText and qti:gapImg). This renderer will 
- * transform the gapChoice into a 'div' element.
+ * transform the gapChoice into a 'div' element. Rendered elements will also receive
+ * the additional 'qti-gapChoice' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -54,8 +55,8 @@ use \DOMDocumentFragment;
 abstract class GapChoiceRenderer extends ChoiceRenderer {
 
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-gapChoice');
         
         $fragment->firstChild->setAttribute('data-matchMax', $component->getMatchMax());
         $fragment->firstChild->setAttribute('data-matchmin', $component->getMatchMin());

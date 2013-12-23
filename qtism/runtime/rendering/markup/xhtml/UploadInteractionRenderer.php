@@ -31,7 +31,7 @@ use \DOMDocumentFragment;
 
 /**
  * UploadInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-uploadInteraction' additional CSS class.
+ * 'div' elements with the 'qti-uploadInteraction' and 'qti-blockInteraction' additional CSS classes.
  * 
  * * An additional <input type="file"> element is appended to the interaction container. The accept attribute will be set with the qti:uploadInteraction->type attribute value if specified.
  * * An addition <input type="submit"> element is appended to the interaction container.
@@ -53,6 +53,7 @@ class UploadInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-uploadInteraction');
         
         if ($component->hasType() === true) {

@@ -31,7 +31,7 @@ use \DOMDocumentFragment;
 
 /**
  * AssociableHotspot renderer. This renderer will transform the choice into a 'div' element
- * with an additional 'qti-associableHotspot' CSS class.
+ * with additional 'qti-associableHotspot' and 'qti-associableChoice' CSS classes.
  * 
  * Depending on the value of the qti:choice->showHide attribute and only if 
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
@@ -61,8 +61,9 @@ class AssociableHotspotRenderer extends HotspotRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-associableHotspot');
+        $this->additionalClass('qti-associableChoice');
         
         $fragment->firstChild->setAttribute('data-matchMin', $component->getMatchMin());
         $fragment->firstChild->setAttribute('data-matchMax', $component->getMatchMax());

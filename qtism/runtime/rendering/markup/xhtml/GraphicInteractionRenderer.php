@@ -31,7 +31,8 @@ use \DOMDocumentFragment;
 
 /**
  * ChoiceInteraction renderer. The base class for all concrete
- * GraphicInteraction renderers.
+ * GraphicInteraction renderers. The rendered elements
+ * will be applied a 'qti-graphicInteraction' additional CSS class.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -41,5 +42,10 @@ abstract class GraphicInteractionRenderer extends InteractionRenderer {
     public function __construct(AbstractRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
+    }
+    
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-graphicInteraction');
     }
 }

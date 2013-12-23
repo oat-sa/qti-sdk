@@ -31,7 +31,8 @@ use \DOMDocumentFragment;
 
 /**
  * Base class for all Renderers that will render subclasses
- * of qti:interaction.
+ * of qti:interaction. It also adds a 'qti-interaction' additional
+ * CSS class to rendered elements.
  * 
  * This rendering implementation will add the following data-X attributes:
  * 
@@ -45,11 +46,12 @@ abstract class InteractionRenderer extends BodyElementRenderer {
     public function __construct(AbstractRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
+        $this->additionalClass('qti-interaction');
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('data-responseIdentifier', $component->getResponseIdentifier());
     }
 }

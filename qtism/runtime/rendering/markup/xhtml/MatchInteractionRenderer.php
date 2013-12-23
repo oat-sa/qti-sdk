@@ -34,7 +34,8 @@ use \DOMDocumentFragment;
 
 /**
  * MatchInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-matchInteraction' additional CSS class.
+ * 'div' elements with the 'qti-blockInteraction' and 'qti-matchInteraction'
+ * additional CSS class.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -55,7 +56,8 @@ class MatchInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-matchInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
@@ -64,7 +66,7 @@ class MatchInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         // Retrieve the two rendered simpleMatchSets and shuffle if needed.
         $currentSet = 0;

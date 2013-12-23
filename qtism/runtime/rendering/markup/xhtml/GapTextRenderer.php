@@ -53,7 +53,7 @@ use \DOMDocumentFragment;
 class GapTextRenderer extends GapChoiceRenderer {
 
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapText');
     }
 }

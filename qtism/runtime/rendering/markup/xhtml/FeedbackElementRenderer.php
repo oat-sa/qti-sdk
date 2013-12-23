@@ -31,7 +31,8 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * The base class for FeedbackElement renderers.
+ * The base class for FeedbackElement renderers. Rendered
+ * elements will get the 'qti-feedbackElement' additional CSS class.
  * 
  * It takes care of producing the following x-data attributes.
  * 
@@ -45,7 +46,8 @@ use \DOMDocumentFragment;
 abstract class FeedbackElementRenderer extends BodyElementRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-feedbackElement');
         
         $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
         $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));

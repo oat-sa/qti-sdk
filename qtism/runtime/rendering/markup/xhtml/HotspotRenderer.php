@@ -32,7 +32,7 @@ use \DOMDocumentFragment;
 
 /**
  * Hotspot renderer, the base class of all renderers that render subclasses of
- * qti:hotspot.
+ * qti:hotspot. It adds to rendered element an additional 'qti-hotspot' CSS class.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -40,7 +40,8 @@ use \DOMDocumentFragment;
 abstract class HotspotRenderer extends ChoiceRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-hotspot');
         
         $fragment->firstChild->setAttribute('data-shape', Shape::getNameByConstant($component->getShape()));
         $fragment->firstChild->setAttribute('data-coords', $component->getCoords()->__toString());

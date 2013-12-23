@@ -52,7 +52,7 @@ class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-modalFeedback');
         
         $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());

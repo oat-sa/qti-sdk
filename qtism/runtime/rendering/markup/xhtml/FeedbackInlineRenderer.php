@@ -51,7 +51,7 @@ class FeedbackInlineRenderer extends FeedbackElementRenderer {
     }
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-feedbackInline');
     }
 }

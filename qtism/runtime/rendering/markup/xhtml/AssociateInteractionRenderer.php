@@ -32,7 +32,7 @@ use \DOMDocumentFragment;
 
 /**
  * AssociateInteraction renderer. Rendered components will be transformed as 
- * 'div' elements with a 'qti-associateInteraction' additional CSS class.
+ * 'div' elements with 'qti-blockInteraction' and 'qti-associateInteraction' additional CSS class.
  * 
  * The following data-X attributes will be rendered:
  * 
@@ -53,7 +53,8 @@ class AssociateInteractionRenderer extends InteractionRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
-        parent::appendAttributes($fragment, $component);
+        parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-associateInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
@@ -62,7 +63,7 @@ class AssociateInteractionRenderer extends InteractionRenderer {
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        parent::appendChildren($fragment, $component);
+        parent::appendChildren($fragment, $component, $base);
         
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleAssociableChoices()->getArrayCopy()));
