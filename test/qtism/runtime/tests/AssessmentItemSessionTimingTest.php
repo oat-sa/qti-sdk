@@ -1,8 +1,7 @@
 <?php
+
 use qtism\common\enums\BaseType;
-
 use qtism\common\enums\Cardinality;
-
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
 use qtism\common\datatypes\Duration;

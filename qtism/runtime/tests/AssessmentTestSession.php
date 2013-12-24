@@ -1022,7 +1022,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Skip the current item.
 	 * 
-	 * @throws AssessmentItemSessionException If the current item cannot be skipped or if timings are not respected.
+	 * @throws AssessmentItemSessionException If the current item cannot be skipped.
 	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
 	 * @qtism-test-event
 	 */
@@ -1033,48 +1033,31 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    try {
-	        $this->checkTimeLimits();
-	         
-	        $item = $this->getCurrentAssessmentItemRef();
-	        $occurence = $this->getCurrentAssessmentItemRefOccurence();
-	        $session = $this->getItemSession($item, $occurence);
-	        $session->skip();
-	         
-	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-	            // Store the responses for a later processing at the end of the test part.
-	            $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
-	            $this->addPendingResponses($pendingResponses);
-	        }
-	        else {
-	            $this->outcomeProcessing();
-	        }
-	         
-	        if ($this->mustAutoForward() === true) {
-	            // Go automatically to the next step in the route.
-	            $this->moveNext();
-	        }
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
-	        }
-	        
-	        throw $e;
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
-	        throw $e;
-	    }
+        $item = $this->getCurrentAssessmentItemRef();
+        $occurence = $this->getCurrentAssessmentItemRefOccurence();
+        $session = $this->getItemSession($item, $occurence);
+        $session->skip();
+         
+        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+            // Store the responses for a later processing at the end of the test part.
+            $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
+            $this->addPendingResponses($pendingResponses);
+        }
+        else {
+            $this->outcomeProcessing();
+        }
+         
+        if ($this->mustAutoForward() === true) {
+            // Go automatically to the next step in the route.
+            $this->moveNext();
+        }
 	}
 	
 	/**
 	 * Begin an attempt for the current item in the route.
 	 * 
-	 * @throws AssessmentTestSessionException If the time limits are already exceeded or if there are no more attempts allowed.
+	 * @throws AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed.
+	 * @throws AssessmentItemSessionException If something goes wrong while beginning the attempt e.g. time limits at the item level are already exceeded.
 	 * @qtism-test-event
 	 */
 	public function beginAttempt() {
@@ -1083,22 +1066,24 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    try {
+	    // Are the time limits in force (at the test level) respected?
+	    try{
 	        $this->checkTimeLimits();
 	         
+	        // Time limits are OK! Let's try to begin the attempt.
 	        $routeItem = $this->getCurrentRouteItem();
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	        $session->beginAttempt();
 	    }
 	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
+	        if ($this->isTimingAssessmentTestSessionException($e) === true && $this->mustAutoForward() === true) {
 	            $this->handleTimingAssessmentTestSessionException($e);
 	        }
 	        
 	        throw $e;
 	    }
 	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
+	        if ($this->isTimingAssessmentItemSessionException($e) === true && $this->mustAutoForward() === true) {
 	            $this->handleTimingAssessmentItemSessionException($e);
 	        }
 	        
@@ -1112,11 +1097,12 @@ class AssessmentTestSession extends State {
 	 * the end of the session if the responded item is the last one.
 	 * 
 	 * @param State $responses The responses for the curent item in the sequence.
+	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
 	 * @throws AssessmentTestSessionException
 	 * @throws AssessmentItemSessionException
 	 * @qtism-test-event
 	 */
-	public function endAttempt(State $responses) {
+	public function endAttempt(State $responses, $allowLateSubmission = false) {
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
@@ -1128,54 +1114,58 @@ class AssessmentTestSession extends State {
 	    $session = $this->getItemSession($currentItem, $currentOccurence);
 	    $session->updateDuration();
 	    
-	    try {
-	        $this->checkTimeLimits();
-	        
-	        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-	             
-	            // Store the responses for a later processing.
-	            $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
-	            $session->endAttempt($responses, false);
+	    // -- Are time limits in force respected?
+	    if ($allowLateSubmission === false) {
+	        try {
+	            $this->checkTimeLimits(true);
 	        }
-	        else {
-	            $session->endAttempt($responses);
-	            // Update the lastly updated item occurence.
-	            $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-	             
-	            // Outcome processing.
-	            $this->outcomeProcessing();
+	        catch (AssessmentTestSessionException $e) {
+	            if ($this->mustAutoForward() === true) {
+	                $this->handleTimingAssessmentTestSessionException($e);
+	            }
 	            
-	            // Item Results submission.
-	            try {
-	                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
-	            }
-	            catch (AssessmentTestSessionException $e) {
-	                $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
-	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
-	            }
-	        }
-	         
-	        if ($this->mustAutoForward() === true) {
-	            // Go automatically to the next step in the route.
-	            $this->moveNext();
+	            throw $e;
 	        }
 	    }
-	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
-	        }
-	        
-	        // Rethrow the error.
-	        throw $e;
-	    }
-	    
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
-	        // Rethrow the error.
-	        throw $e;
+
+	    // -- Time limits in force respected, try to end the item attempt.    try {
+        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+        
+            // Store the responses for a later processing.
+            $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
+            $session->endAttempt($responses, false, $allowLateSubmission);
+        }
+        else {
+            try {
+                $session->endAttempt($responses, true, $allowLateSubmission);
+            }
+            catch (AssessmentItemSessionException $e) {
+                if ($this->isTimingAssessmentItemSessionException($e) === true && $this->mustAutoForward() === true) {
+                    $this->handleTimingAssessmentItemSessionException($e);
+                }
+                
+                throw $e;
+            }
+            
+            // Update the lastly updated item occurence.
+            $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+        
+            // Outcome processing.
+            $this->outcomeProcessing();
+             
+            // Item Results submission.
+            try {
+                $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
+            }
+            catch (AssessmentTestSessionException $e) {
+                $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
+            }
+        }
+        
+        if ($this->mustAutoForward() === true) {
+            // Go automatically to the next step in the route.
+            $this->moveNext();
 	    }
 	}
 	
@@ -1183,10 +1173,12 @@ class AssessmentTestSession extends State {
 	 * Perform a 'jump' to a given position in the Route sequence. The current navigation
 	 * mode must be LINEAR to be able to jump.
 	 * 
-	 * @throws AssessmentTestSessionException If $position is out of the Route bounds. The error code will be FORBIDDEN_JUMP.
+	 * @param integer $position The position in the route the jump has to be made.
+	 * @param boolean @allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+	 * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
 	 * @qtism-test-event
 	 */
-	public function jumpTo($position) {
+	public function jumpTo($position, $allowTimeout = false) {
 	    
 	    // Can we jump?
 	    if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
@@ -1200,28 +1192,19 @@ class AssessmentTestSession extends State {
             $route->setPosition($position);
             $this->selectEligibleItems();
             
-            // Check the time limits after the jump is really performed.
-            $this->checkTimeLimits();
+            // Check the time limits after the jump is trully performed.
+            if ($allowTimeout === false) {
+                $this->checkTimeLimits(false, true);
+            }
 	    }
 	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
-	        }
-	        
-	        $route->setPosition($oldPosition);
-	        throw $e;
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
+	        // Rollback to previous position.
 	        $route->setPosition($oldPosition);
 	        throw $e;
 	    }
 	    catch (OutOfBoundsException $e) {
 	        $msg = "Position '${position}' is out of the Route bounds.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
 	    }
 	}
 	
@@ -1300,22 +1283,32 @@ class AssessmentTestSession extends State {
 	/**
 	 * Ask the test session to move to next RouteItem in the Route sequence.
 	 * 
-	 * @throws AssessmentTestSessionException If the test session is not running or an error occurs during the transition.
+	 * @param boolean $allowTimout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. timeLimits of the next route item not respected).
 	 * @qtism-test-event
 	 */
-	public function moveNext() {
+	public function moveNext($allowTimeout = false) {
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
 	    try {
-	        $this->checkTimeLimits();
+	        $oldPosition = $this->getRoute()->getPosition();
 	        $this->nextRouteItem();
+	        
+	        if ($allowTimeout === false && $this->isRunning()) {
+	            // Do not consider min times, consider the item timing constraints.
+	            $this->checkTimeLimits(false, true);
+	        }
 	    }
 	    catch (AssessmentTestSessionException $e) {
 	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
 	            $this->handleTimingAssessmentTestSessionException($e);
+	        }
+	        
+	        if ($this->mustAutoForward() === false) {
+	            $this->getRoute()->setPosition($oldPosition);
 	        }
 	        
 	        throw $e;
@@ -1323,6 +1316,10 @@ class AssessmentTestSession extends State {
 	    catch (AssessmentItemSessionException $e) {
 	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
 	            $this->handleTimingAssessmentItemSessionException($e);
+	        }
+	        
+	        if ($this->mustAutoForward() === false) {
+	            $this->getRoute()->setPosition($oldPosition);
 	        }
 	        
 	        throw $e;
@@ -1332,22 +1329,32 @@ class AssessmentTestSession extends State {
 	/**
 	 * Ask the test session to move to the previous RouteItem in the Route sequence.
 	 * 
-	 * @throws AssessmentTestSessionException If the test session is not running or an error occurs during the transition.
+	 * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
+	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. timeLimits of the previous RouteItem not respected).
 	 * @qtism-test-event
 	 */
-	public function moveBack() {
+	public function moveBack($allowTimeout = false) {
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
 	    try {
-	        $this->checkTimeLimits();
+	        $oldPosition = $this->getRoute()->getPosition();
 	        $this->previousRouteItem();
+	        
+	        if ($allowTimeout === false) {
+	            // Do not consider min times, consider the item timing constraints.
+	            $this->checkTimeLimits(false, true);
+	        }
 	    }
 	    catch (AssessmentTestSessionException $e) {
 	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
 	            $this->handleTimingAssessmentTestSessionException($e);
+	        }
+	        
+	        if ($this->mustAutoForward() === true) {
+	            $this->getRoute()->setPosition($oldPosition);
 	        }
 	         
 	        throw $e;
@@ -1355,6 +1362,10 @@ class AssessmentTestSession extends State {
 	    catch (AssessmentItemSessionException $e) {
 	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
 	            $this->handleTimingAssessmentItemSessionException($e);
+	        }
+	        
+	        if ($this->mustAutoForward() === true) {
+	            $this->getRoute()->setPosition($oldPosition);
 	        }
 	        
 	        throw $e;
@@ -1859,34 +1870,63 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Checks if the timeLimits in force are respected. If this is not the case, an AssessmentTestSessionException
-	 * will be raised with the appropriate error code.
+	 * Checks if the timeLimits in force, at the testPart/assessmentSection level, are respected.
+	 * If this is not the case, an AssessmentTestSessionException will be raised with the appropriate error code.
 	 * 
-	 * @throws AssessmentTestSessionException If any time limit in force is not respected.
+	 * In case of error, the error code shipped with the AssessmentTestSessionException might be:
+	 * 
+	 * * AssessmentTestSession::TEST_PART_DURATION_OVERFLOW
+	 * * AssessmentTestSession::TEST_PART_DURATION_UNDERFLOW
+	 * * AssessmentTestSession::ASSESSMENT_SECTION_DURATION_OVERFLOW
+	 * * AssessmentTestSession::ASSESSMENT_SECTION_DURATION_UNDERFLOW
+	 * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_OVERFLOW
+	 * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_UNDERFLOW
+	 * 
+	 * @throws $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
+	 * @throws AssessmentTestSessionException If any time limit in force is not respected. Default value is false.
 	 * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
 	 */
-	public function checkTimeLimits() {
+	public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false) {
 	    
-	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null) {
+	    if (($timeLimits = $this->getRoute()->current()->getTestPart()->getTimeLimits()) !== null) {
 	        
 	        $currentDuration = $this[$this->getCurrentTestPart()->getIdentifier() . '.duration'];
-	        $referenceDuration = $timeLimits->getMaxTime();
 	        
-	        if ($timeLimits->hasMaxTime() === true && $currentDuration->getSeconds(true) > $referenceDuration->getSeconds(true)) {
+	        if (($maxTime = $timeLimits->getMaxTime()) !== null && $currentDuration->getSeconds(true) > $maxTime->getSeconds(true)) {
 	            $msg = "Maximum duration of TestPart '" . $this->getCurrentTestPart()->getIdentifier() . "' exceeded.";
 	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW);
 	        }
 	        
-	        if ($timeLimits->hasMinTime() === true && $currentDuration->getSeconds(true) < $referenceDuration->getSeconds(true)) {
-	            $msg = "Minimum duration of TestPart '" . $this->getCurrentTestPart()->getIdentifier() . "' exceeded.";
+	        if ($includeMinTime === true && ($minTime = $timeLimits->getMinTime()) !== null && $currentDuration->getSeconds(true) < $minTime->getSeconds(true)) {
+	            $msg = "Minimum duration of TestPart '" . $this->getCurrentTestPart()->getIdentifier() . "' not reached.";
 	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW);
 	        }
-	        
 	        
 	        // From IMS QTI:
 	        //
 	        // Minimum times are applicable to assessmentSections and assessmentItems 
 	        // only when linear navigation mode is in effect.
+	    }
+	    
+	    if (($timeLimits = $this->getRoute()->current()->getAssessmentItemRef()->getTimeLimits()) !== null) {
+	        
+	        // Do we have to check at the item level?
+	        if ($includeAssessmentItem === true) {
+	            
+	            $itemSession = $this->getCurrentAssessmentItemSession();
+	            $itemSession->updateDuration();
+	            $currentDuration = $itemSession['duration'];
+	             
+	            if (($maxTime = $timeLimits->getMaxTime()) !== null && $currentDuration->getSeconds(true) > $maxTime->getSeconds(true)) {
+	                $msg = "Maximum duration of AssessmentItem '" . $this->getCurrentAssessmentItemRef()->getIdentifier() . "' exceeded.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW);
+	            }
+	             
+	            if (($includeMinTime === true) && ($minTime = $timeLimits->getMinTime()) !== null && $currentDuration->getSeconds(true) < $minTime->getSeconds(true)) {
+	                $msg = "Minimum duration of AssessmentItem '" . $this->getCurrentAssessmentItemRef()->getIdentifier() . "' not reached.";
+	                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW);
+	            }
+	        }
 	    }
 	}
 	

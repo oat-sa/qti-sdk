@@ -129,6 +129,20 @@ class AssessmentTestSessionException extends Exception {
     const ASSESSMENT_SECTION_DURATION_UNDERFLOW = 11;
     
     /**
+     * Error code to use when the maximum duration of an assessmentItem is reached.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_ITEM_DURATION_OVERFLOW = 12;
+    
+    /**
+     * Error code to use when the minimum duration of an assessmentItem is not reached.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_ITEM_DURATION_UNDERFLOW = 13;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.
