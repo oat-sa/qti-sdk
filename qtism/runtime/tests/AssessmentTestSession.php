@@ -1863,6 +1863,7 @@ class AssessmentTestSession extends State {
 	 * will be raised with the appropriate error code.
 	 * 
 	 * @throws AssessmentTestSessionException If any time limit in force is not respected.
+	 * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
 	 */
 	public function checkTimeLimits() {
 	    
@@ -1880,14 +1881,19 @@ class AssessmentTestSession extends State {
 	            $msg = "Minimum duration of TestPart '" . $this->getCurrentTestPart()->getIdentifier() . "' exceeded.";
 	            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW);
 	        }
+	        
+	        
+	        // From IMS QTI:
+	        //
+	        // Minimum times are applicable to assessmentSections and assessmentItems 
+	        // only when linear navigation mode is in effect.
 	    }
 	}
 	
 	/**
 	 * Get the current AssessmentItemSession object.
 	 * 
-	 * @throws AssessmentTestSessionException If the test session is not running.
-	 * @return AssessmentItemSession The current AssessmentItemSession object.
+	 * @return AssessmentItemSession|false The current AssessmentItemSession object or false if no assessmentItemSession is running.
 	 */
 	public function getCurrentAssessmentItemSession() {
 	    

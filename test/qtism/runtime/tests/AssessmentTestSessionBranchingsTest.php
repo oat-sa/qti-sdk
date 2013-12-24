@@ -1,7 +1,6 @@
 <?php
 
 use qtism\runtime\tests\AssessmentTestSessionState;
-
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;

@@ -1,8 +1,7 @@
 <?php
+require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
+
 use qtism\data\storage\xml\XmlDocument;
-
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
-
 use qtism\data\SubmissionMode;
 use qtism\common\datatypes\Duration;
 use qtism\data\TimeLimits;
@@ -16,7 +15,7 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
-class AssessmentItemSessionTest extends QtiSmTestCase {
+class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
 	
     public function testInstantiation() {
         
@@ -151,157 +150,6 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         $this->assertTrue(isset($outcomes['SCORE']));
     }
     
-    public function testEvolutionBasicTimeLimitsUnderflowOverflow() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        
-        // Give more than one attempt.
-        $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setMaxAttempts(2);
-        $itemSession->setItemSessionControl($itemSessionControl);
-        
-        // No late submission allowed.
-        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
-        $itemSession->setTimeLimits($timeLimits);
-        $itemSession->beginItemSession();
-        
-        // End the attempt before minTime of 1 second.
-        $this->assertEquals(2, $itemSession->getRemainingAttempts());
-        $itemSession->beginAttempt();
-        $this->assertEquals(1, $itemSession->getRemainingAttempts());
-        
-        try {
-            $itemSession->endAttempt();
-            // An exception MUST be thrown.
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::DURATION_UNDERFLOW, $e->getCode());
-        }
-        
-        // Check that numAttempts is taken into account &
-        // that the session is correctly suspended, waiting for
-        // the next attempt.
-        $this->assertEquals(1, $itemSession['numAttempts']);
-        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSession->getState());
-        
-        // Try again by waiting too much to respect max time.
-        $itemSession->beginAttempt();
-        $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        sleep(3);
-        
-        try {
-            $itemSession->endAttempt();
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-        }
-        
-        $this->assertEquals(2, $itemSession['numAttempts']);
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-        $this->assertInternalType('float', $itemSession['SCORE']);
-        $this->assertEquals(0.0, $itemSession['SCORE']);
-    }
-    
-    public function testAllowLateSubmissionNonAdaptive() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        
-        $timeLimits = new TimeLimits(null, new Duration('PT1S'), true);
-        $itemSession->setTimeLimits($timeLimits);
-        
-        $itemSession->beginItemSession();
-        
-        $itemSession->beginAttempt();
-        $itemSession['RESPONSE'] = 'ChoiceB';
-        sleep(2);
-        
-        // No exception because late submission is allowed.
-        $itemSession->endAttempt();
-        $this->assertEquals(1.0, $itemSession['SCORE']);
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-    }
-    
-    public function testAcceptableLatency() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $itemSession->setAcceptableLatency(new Duration('PT1S'));
-        
-        $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setMaxAttempts(3);
-        $itemSession->setItemSessionControl($itemSessionControl);
-        
-        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
-        $itemSession->setTimeLimits($timeLimits);
-        
-        $itemSession->beginItemSession();
-        
-        // Sleep 3 second to respect minTime and stay in the acceptable latency time.
-        $itemSession->beginAttempt();
-        sleep(3);
-        $itemSession->endAttempt();
-        
-        // Sleep 1 more second to achieve the attempt outside the time frame.
-        $itemSession->beginAttempt();
-        sleep(1);
-        
-        try {
-            $itemSession->endAttempt();
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-            $this->assertEquals('PT4S', $itemSession['duration']->__toString());
-            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-            $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        }
-    }
-    
-   
-    public function testEvolutionBasicMultipleAttempts() {
-        
-        $count = 5;
-        $attempts = array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD', 'ChoiceE');
-        $expected = array(0.0, 1.0, 0.0, 0.0, 0.0);
-        
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setMaxAttempts($count);
-        $itemSession->setItemSessionControl($itemSessionControl);
-        $itemSession->beginItemSession();
-        
-        for ($i = 0; $i < $count; $i++) {
-            // Here, manual set up of responses.
-            $this->assertTrue($itemSession->isAttemptable());
-            $itemSession->beginAttempt();
-            
-            // simulate some time... 1 second to answer the item.
-            sleep(1);
-            
-            $itemSession['RESPONSE'] = $attempts[$i];
-            $itemSession->endAttempt();
-            $this->assertInternalType('float', $itemSession['SCORE']);
-            $this->assertEquals($expected[$i], $itemSession['SCORE']);
-            $this->assertEquals($i + 1, $itemSession['numAttempts']);
-            
-            // 1 more second before the next attempt.
-            // we are here in suspended mode so it will not be
-            // added to the duration.
-            sleep(1);
-        }
-        
-        // The total duration shold have taken 5 seconds, the rest of the time was in SUSPENDED state.
-        $this->assertEquals(5, $itemSession['duration']->getSeconds(true));
-        
-        // one more and we get an expection... :)
-        try {
-            $this->assertFalse($itemSession->isAttemptable());
-            $itemSession->beginAttempt();
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
-        }
-    }
-    
     public function testEvolutionAdaptiveItem() {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
@@ -342,71 +190,6 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
-    }
-    
-    public function testDurationBrutalSessionClosing() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $itemSession->beginItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
-        
-        $this->assertTrue($itemSession->isAttemptable());
-        $itemSession->beginAttempt();
-        sleep(1);
-        
-        // End session while attempting (brutal x))
-        $itemSession->endItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
-    }
-    
-    public function testRemainingTimeOne() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $this->assertFalse($itemSession->getRemainingTime());
-        $timeLimits = new TimeLimits();
-        $timeLimits->setMaxTime(new Duration('PT3S'));
-        $itemSession->setTimeLimits($timeLimits);
-        $itemSession->beginItemSession();
-        $this->assertEquals(1, $itemSession->getRemainingAttempts());
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
-        
-        $itemSession->beginAttempt();
-        sleep(2);
-        $itemSession->updateDuration();
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT1S')));
-        sleep(1);
-        $itemSession->updateDuration();
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
-        sleep(1);
-        $itemSession->updateDuration();
-        // It is still 0...
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
-        
-        try {
-            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
-            // Must be rejected, no more time remaining!!!
-            $this->assertFalse(true);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-            $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
-        }
-    }
-    
-    public function testRemainingTimeTwo() {
-    	// by default, there is no max time limit.
-    	$itemSession = self::instantiateBasicAdaptiveAssessmentItem();
-    	$this->assertFalse($itemSession->getRemainingTime());
-    	
-    	$itemSession->beginItemSession();
-    	$itemSession->beginAttempt();
-    	$this->assertFalse($itemSession->getRemainingTime());
-    	$itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
-    	$this->assertEquals('incomplete', $itemSession['completionStatus']);
-    	
-    	$this->assertFalse($itemSession->getRemainingTime());
-    	$itemSession->beginAttempt();
-    	$itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
-    	$this->assertEquals('completed', $itemSession['completionStatus']);
-    	$this->assertFalse($itemSession->getRemainingTime());
     }
     
     public function testValidateResponsesInForce() {
@@ -559,99 +342,5 @@ class AssessmentItemSessionTest extends QtiSmTestCase {
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
-    }
-    
-    private static function createExtendedAssessmentItemRefFromXml($xmlString) {
-        $marshaller = new ExtendedAssessmentItemRefMarshaller();
-        $element = self::createDOMElement($xmlString);
-        return $marshaller->unmarshall($element);
-    }
-    
-    /**
-     * Instantiate a basic item session for a non-adaptive, non-timeDependent item with two variables:
-     * 
-     * * RESPONSE (single, identifier, correctResponse = 'ChoiceB')
-     * * SCORE (single, float, defaultValue = 0.0)
-     * 
-     * The responseProcessing for item of the session is the template 'match_correct'.
-     * 
-     * @return AssessmentItemSession
-     */
-    private static function instantiateBasicAssessmentItemSession() {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
-            <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
-                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-					<correctResponse>
-						<value>ChoiceB</value>
-					</correctResponse>
-				</responseDeclaration>
-                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-					<defaultValue>
-						<value>0.0</value>
-					</defaultValue>
-				</outcomeDeclaration>
-                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-            </assessmentItemRef>
-        ');
-        
-        return new AssessmentItemSession($itemRef);
-    }
-    
-    /**
-     * Instantiate a basic item session for an adaptive, non-timeDependent item with two variables:
-     * 
-     * * RESPONSE (single, identifier, correctResponse = 'ChoiceB'
-     * * SCORE (single, float, defaultValue = 0.0)
-     * 
-     * The responseProcessing sets:
-     * 
-     * * SCORE to 0, completionStatus to 'incomplete', if the response is not 'ChoiceB'.
-     * * SCORE to 1, completionStatus to 'complete', if the response is 'ChoiceB'.
-     * 
-     * @return \qtism\runtime\tests\AssessmentItemSession
-     */
-    private static function instantiateBasicAdaptiveAssessmentItem() {
-        $itemRef = self::createExtendedAssessmentItemRefFromXml('
-            <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
-                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-					<correctResponse>
-						<value>ChoiceB</value>
-					</correctResponse>
-				</responseDeclaration>
-                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-					<defaultValue>
-						<value>0.0</value>
-					</defaultValue>
-				</outcomeDeclaration>
-                
-                <!-- The candidate is allowed to attempt the item until he provides the correct answer -->
-                <responseProcessing>
-                    <responseCondition>
-                        <responseIf>
-                            <match>
-                                <variable identifier="RESPONSE"/>
-                                <baseValue baseType="identifier">ChoiceB</baseValue>
-                            </match>
-                            <setOutcomeValue identifier="SCORE">
-                                <baseValue baseType="float">1</baseValue>
-                            </setOutcomeValue>
-                            <setOutcomeValue identifier="completionStatus">
-                                <baseValue baseType="identifier">completed</baseValue>
-                            </setOutcomeValue>
-                        </responseIf>
-                        <responseElse>
-                            <setOutcomeValue identifier="SCORE">
-                                <baseValue baseType="float">0</baseValue>
-                            </setOutcomeValue>
-                            <setOutcomeValue identifier="completionStatus">
-                                <baseValue baseType="identifier">incomplete</baseValue>
-                            </setOutcomeValue>
-                        </responseElse>
-                    </responseCondition>
-                </responseProcessing>
-            </assessmentItemRef>
-        ');
-        
-        return new AssessmentItemSession($itemRef);
     }
 }

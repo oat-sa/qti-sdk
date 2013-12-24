@@ -588,9 +588,10 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
+	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
 	 * @throws AssessmentItemSessionException
 	 */
-	public function endAttempt(State $responses = null, $responseProcessing = true) {
+	public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false) {
 	    
 	    // End of attempt, go in SUSPEND state.
 	    $this->suspend();
@@ -623,7 +624,7 @@ class AssessmentItemSession extends State {
 	                
 	                $maxTimeExceeded = true;
 	                
-	                if ($this->timeLimits->doesAllowLateSubmission() === false) {
+	                if ($this->timeLimits->doesAllowLateSubmission() === false && $allowLateSubmission === false) {
 	                    // Set the current completionStatus to 'incomplete'.
 	                    $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;
 	                    $this->endItemSession();
