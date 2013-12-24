@@ -139,7 +139,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * to a next target item which is timed out.
      * 
      */
-    public function testMoveNextTargetTimeout($allowTimeout = false) {
+    public function testJumpToTargetTimeout($allowTimeout = false) {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/move_next_target_timeout.xml');
         $session->beginTestSession();
         $this->assertTrue($session->mustAutoForward());

@@ -745,7 +745,7 @@ class AssessmentTestSession extends State {
 	 * Begins the test session. Calling this method will make the state
 	 * change into AssessmentTestSessionState::INTERACTING.
 	 * 
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function beginTestSession() {
 	    // Initialize item sessions.
@@ -1024,7 +1024,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @throws AssessmentItemSessionException If the current item cannot be skipped.
 	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function skip() {
 	    
@@ -1058,7 +1058,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @throws AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed.
 	 * @throws AssessmentItemSessionException If something goes wrong while beginning the attempt e.g. time limits at the item level are already exceeded.
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function beginAttempt() {
 	    if ($this->isRunning() === false) {
@@ -1100,7 +1100,7 @@ class AssessmentTestSession extends State {
 	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
 	 * @throws AssessmentTestSessionException
 	 * @throws AssessmentItemSessionException
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function endAttempt(State $responses, $allowLateSubmission = false) {
 	    if ($this->isRunning() === false) {
@@ -1174,9 +1174,9 @@ class AssessmentTestSession extends State {
 	 * mode must be LINEAR to be able to jump.
 	 * 
 	 * @param integer $position The position in the route the jump has to be made.
-	 * @param boolean @allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
+	 * @param boolean $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
 	 * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function jumpTo($position, $allowTimeout = false) {
 	    
@@ -1283,9 +1283,16 @@ class AssessmentTestSession extends State {
 	/**
 	 * Ask the test session to move to next RouteItem in the Route sequence.
 	 * 
-	 * @param boolean $allowTimout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
-	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. timeLimits of the next route item not respected).
-	 * @qtism-test-event
+	 * If $allowTimeout is set to true, the very next RouteItem in the Route sequence will bet set
+	 * as the current RouteItem, whether or not it is timed out or not.
+	 * 
+	 * On the other hand, if $allowTimeout is set to false, the next RouteItem in the Route sequence
+	 * which is not timed out will be set as the current RouteItem. If there is no more following RouteItems
+	 * that are not timed out in the Route sequence, the test session ends gracefully.
+	 * 
+	 * @param boolean $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
+	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
+	 * @qtism-test-interaction
 	 */
 	public function moveNext($allowTimeout = false) {
 	    if ($this->isRunning() === false) {
@@ -1293,45 +1300,44 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    try {
-	        $oldPosition = $this->getRoute()->getPosition();
+	    $this->nextRouteItem();
+	    while ($this->isRunning() === true) {
+	        
+	        if ($allowTimeout === false) {
+	            try {
+	                // Do not check min times, include item timings.
+	                $this->checkTimeLimits(false, true);
+	            }
+	            catch (AssessmentTestSessionException $e) {
+	                continue;
+	            }
+	            
+	            return;
+	        }
+	        else {
+	            return;
+	        }
+	        
 	        $this->nextRouteItem();
-	        
-	        if ($allowTimeout === false && $this->isRunning()) {
-	            // Do not consider min times, consider the item timing constraints.
-	            $this->checkTimeLimits(false, true);
-	        }
 	    }
-	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
-	        }
-	        
-	        if ($this->mustAutoForward() === false) {
-	            $this->getRoute()->setPosition($oldPosition);
-	        }
-	        
-	        throw $e;
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
-	        if ($this->mustAutoForward() === false) {
-	            $this->getRoute()->setPosition($oldPosition);
-	        }
-	        
-	        throw $e;
-	    }
+	    
+	    // end of test...
 	}
 	
 	/**
 	 * Ask the test session to move to the previous RouteItem in the Route sequence.
 	 * 
+	 * If $allowTimeout is set to true, the previous RouteItem in the Route sequence will bet set
+	 * as the current RouteItem, whether or not it is timed out or not.
+	 * 
+	 * On the other hand, if $allowTimeout is set to false, the previous RouteItem in the Route sequence
+	 * which is not timed out will be set as the current RouteItem. If there is no more previous RouteItems
+	 * that are not timed out in the Route sequence, the current RouteItem remains the same and an
+	 * AssessmentTestSessionException with the appropriate timing error code is thrown.
+	 * 
 	 * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
-	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. timeLimits of the previous RouteItem not respected).
-	 * @qtism-test-event
+	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
+	 * @qtism-test-interaction
 	 */
 	public function moveBack($allowTimeout = false) {
 	    if ($this->isRunning() === false) {
@@ -1339,36 +1345,41 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    try {
-	        $oldPosition = $this->getRoute()->getPosition();
+	    $route = $this->getRoute();
+	    $oldPosition = $route->getPosition();
+	    $this->previousRouteItem();
+	    
+	    while ($route->isFirst() === false) {
 	        $this->previousRouteItem();
 	        
-	        if ($allowTimeout === false) {
-	            // Do not consider min times, consider the item timing constraints.
+	        if ($allowTimeout = false) {
+	            try {
+	                // Do not check min times, include item timings.
+	                $this->checkTimeLimits(false, true);
+	            }
+	            catch (AssessmentTestSessionException $e) {
+	                continue;
+	            }
+	            
+	            return;
+	        }
+	        else {
+	            return;
+	        }
+	    }
+	    
+	    // If we are here, it means we got moved back to the very first RouteItem.
+	    // Maybe we are not allowed to be here because of the hypothetic timeout
+	    // of the first RouteItem of the test...
+	    if ($allowTimeout === false) {
+	        try {
 	            $this->checkTimeLimits(false, true);
 	        }
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
+	        catch (AssessmentTestSessionException $e) {
+	            $route->setPosition($oldPosition);
+	            $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
+	            throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
 	        }
-	        
-	        if ($this->mustAutoForward() === true) {
-	            $this->getRoute()->setPosition($oldPosition);
-	        }
-	         
-	        throw $e;
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
-	        if ($this->mustAutoForward() === true) {
-	            $this->getRoute()->setPosition($oldPosition);
-	        }
-	        
-	        throw $e;
 	    }
 	}
 	
@@ -1547,7 +1558,7 @@ class AssessmentTestSession extends State {
 	 * End the test session.
 	 * 
 	 * @throws AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
-	 * @qtism-test-event
+	 * @qtism-test-interaction
 	 */
 	public function endTestSession() {
 	    
@@ -2189,7 +2200,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when a testPart timeLimit's maxtime is reached.
 	 * 
-	 * @qtism-test-aspect
+	 * @qtism-test-event
 	 */
 	public function onTestPartDurationOverflow() {
 	    $this->moveNextTestPart();
@@ -2199,7 +2210,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when a testPart timeLimit's minTime is not respected.
 	 * 
-	 * @qtism-test-aspect
+	 * @qtism-test-event
 	 */
 	public function onTestPartDurationUnderflow() {
 	    return;
@@ -2208,7 +2219,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when an assessmentSection timeLimit's maxTime is reached.
 	 * 
-	 * @qtism-test-aspect
+	 * @qtism-test-event
 	 */
 	public function onAssessmentSectionDurationOverflow() {
 	    
@@ -2217,7 +2228,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when an assessmentSection timeLimit's minTime is not respected.
 	 * 
-	 * @qtism-test-aspect
+	 * @qtism-test-event
 	 */
 	public function onAssessmentSectionDurationUnderflow() {
 	    return;
@@ -2226,7 +2237,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when an assessmentItem timeLimit's maxTime is reached.
 	 * 
-	 * @qtism-test-aspect
+	 * @qtism-test-event
 	 */
 	public function onAssessmentItemDurationOverflow() {
 	    $this->nextRouteItem();
@@ -2235,6 +2246,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Logic to apply when an assessmentItem timeLimit's minTime is not respected.
 	 * 
+	 * @qtism-test-event
 	 */
 	public function onAssessmentItemDurationUnderflow() {
 	    return;
