@@ -229,4 +229,19 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('completed', $itemSession['completionStatus']);
         $this->assertFalse($itemSession->getRemainingTime());
     }
+    
+    public function testForceLateSubmission() {
+        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $timeLimits = new TimeLimits(null, new Duration('PT1S'));
+        
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        // reach max time...
+        sleep(2);
+        
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))), true, true);
+        $this->assertInternalType('float', $itemSession['SCORE']);
+        $this->assertEquals(1, $itemSession['SCORE']);
+    }
 }
