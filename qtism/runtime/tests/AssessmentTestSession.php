@@ -1790,26 +1790,31 @@ class AssessmentTestSession extends State {
 	 * Get the time constraints running for the current testPart or/and current assessmentSection
 	 * or/and assessmentItem.
 	 * 
-	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration.
+	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
 	 * @return TimeConstraintCollection A collection of TimeConstraint objects.
 	 */
-	public function getTimeConstraints($places) {
+	public function getTimeConstraints($places = null) {
+	    	    
+	    if ($places === null) {
+	        $places = (AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_SECTION | AssessmentTestPlace::ASSESSMENT_ITEM);
+	    }
+	    
 	    $route = $this->getRoute();
 	    $constraints = new TimeConstraintCollection();
 	    
-	    if ($places | AssessmentTestPlace::TEST_PART) {
+	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
 	        $involvedRouteItems = $route->getRouteItemsByTestPart($source);
 	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
 	    }
 	    
-	    if ($places | AssessmentTestPlace::ASSESSMENT_SECTION) {
+	    if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
 	        $source = $this->getCurrentAssessmentSection();
 	        $involvedRouteItems = $route->getRouteItemsByAssessmentSection($source);
 	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
 	    }
 	    
-	    if ($places | AssessmentTestPlace::ASSESSMENT_ITEM) {
+	    if ($places & AssessmentTestPlace::ASSESSMENT_ITEM) {
 	        $source = $this->getCurrentRouteItem();
 	        $duration = $this->computeRouteItemsDuration(new RouteItemCollection(array($source)));
 	        $constraints[] = new TimeConstraint($source->getAssessmentItemRef(), $duration);

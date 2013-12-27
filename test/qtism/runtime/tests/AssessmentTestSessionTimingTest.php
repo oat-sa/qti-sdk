@@ -1,7 +1,6 @@
 <?php
 
 use qtism\runtime\tests\AssessmentTestPlace;
-
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\State;
@@ -170,5 +169,55 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $this->assertTrue($session->isRunning());
             $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
         }
+    }
+    
+    public function testTimeConstraintsOne() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/remaining_time_1.xml');
+        $session->setAutoForward(false);
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        $timeConstraints = $session->getTimeConstraints();
+        $this->assertEquals(3, count($timeConstraints));
+        $this->assertFalse($timeConstraints[0]->getMaximumRemainingTime());
+        $this->assertFalse($timeConstraints[0]->getMinimumRemainingTime());
+        $this->assertFalse($timeConstraints[0]->maxTimeInForce());
+        $this->assertFalse($timeConstraints[0]->minTimeInForce());
+        $this->assertFalse($timeConstraints[1]->getMaximumRemainingTime());
+        $this->assertFalse($timeConstraints[1]->getMinimumRemainingTime());
+        $this->assertFalse($timeConstraints[1]->maxTimeInForce());
+        $this->assertFalse($timeConstraints[1]->minTimeInForce());
+        $this->assertEquals('PT1S', $timeConstraints[2]->getMinimumRemainingTime()->__toString());
+        $this->assertEquals('PT3S', $timeConstraints[2]->getMaximumRemainingTime()->__toString());
+        $this->assertTrue($timeConstraints[2]->maxTimeInForce());
+        $this->assertTrue($timeConstraints[2]->minTimeInForce());
+        
+        sleep(2);
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::ASSESSMENT_ITEM);
+        $this->assertEquals(1, count($timeConstraints));
+        $this->assertEquals('PT0S', $timeConstraints[0]->getMinimumRemainingTime()->__toString());
+        $this->assertEquals('PT1S', $timeConstraints[0]->getMaximumRemainingTime()->__toString());
+        $this->assertTrue($timeConstraints[0]->minTimeInForce());
+        $this->assertTrue($timeConstraints[0]->maxTimeInForce());
+        $session->moveNext();
+        
+        $session->beginAttempt();
+        sleep(3);
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+        $timeConstraints = $session->getTimeConstraints();
+        $this->assertFalse($timeConstraints[2]->getMinimumRemainingTime());
+        $this->assertEquals('PT0S', $timeConstraints[2]->getMaximumRemainingTime()->__toString());
+        $this->assertFalse($timeConstraints[2]->minTimeInForce());
+        $this->assertTrue($timeConstraints[2]->maxTimeInForce());
+        
+        $session->moveNext();
+        $session->beginAttempt();
+        $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::ASSESSMENT_ITEM);
+        $this->assertFalse($timeConstraints[0]->getMinimumRemainingTime());
+        $this->assertFalse($timeConstraints[0]->getMaximumRemainingTime());
+        $this->assertTrue($timeConstraints[0]->allowLateSubmission());
+        $this->assertFalse($timeConstraints[0]->minTimeInForce());
+        $this->assertFalse($timeConstraints[0]->maxTimeInForce());
     }
 }
