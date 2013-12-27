@@ -1787,6 +1787,38 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
+	 * Get the time constraints running for the current testPart or/and current assessmentSection
+	 * or/and assessmentItem.
+	 * 
+	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration.
+	 * @return TimeConstraintCollection A collection of TimeConstraint objects.
+	 */
+	public function getTimeConstraints($places) {
+	    $route = $this->getRoute();
+	    $constraints = new TimeConstraintCollection();
+	    
+	    if ($places | AssessmentTestPlace::TEST_PART) {
+	        $source = $this->getCurrentTestPart();
+	        $involvedRouteItems = $route->getRouteItemsByTestPart($source);
+	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
+	    }
+	    
+	    if ($places | AssessmentTestPlace::ASSESSMENT_SECTION) {
+	        $source = $this->getCurrentAssessmentSection();
+	        $involvedRouteItems = $route->getRouteItemsByAssessmentSection($source);
+	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
+	    }
+	    
+	    if ($places | AssessmentTestPlace::ASSESSMENT_ITEM) {
+	        $source = $this->getCurrentRouteItem();
+	        $duration = $this->computeRouteItemsDuration(new RouteItemCollection(array($source)));
+	        $constraints[] = new TimeConstraint($source->getAssessmentItemRef(), $duration);
+	    }
+	    
+	    return $constraints;
+	}
+	
+	/**
 	 * Get the duration of a given TestPart by specifying its identifier.
 	 * 
 	 * @param string $identifier The identifier of the TestPart you want to know the duration.
@@ -1858,26 +1890,6 @@ class AssessmentTestSession extends State {
 	    else {
 	        return null;
 	    }
-	}
-	
-	/**
-	 * Get the time remaining on the current test part. If no timeLimits is in force
-	 * for the current TestPart, null is returned.
-	 * 
-	 * @return null|Duration
-	 */
-	public function getRemainingTimeTestPart() {
-	    
-	    $remainingTime = null;
-	    
-	    if (($timeLimits = $this->getTimeLimitsTestPart()) !== null) {
-	        if ($timeLimits->hasMaxTime() === true) {
-	            $remainingTime = clone $timeLimits->getMaxTime();
-	            $remainingTime->sub($this[$this->getCurrentTestPart()->getIdentifier() . '.duration']);
-	        }
-	    }
-	    
-	    return $remainingTime;
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 <?php
 
+use qtism\runtime\tests\AssessmentTestPlace;
+
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\State;
@@ -55,19 +57,21 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         sleep(2);
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
-        $this->assertTrue($session->getRemainingTimeTestPart()->equals(new Duration('PT3S')));
+        $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT3S')));
          
         // Q02.
         $session->beginAttempt();
         sleep(2);
         $session->updateDuration();
-        $this->assertTrue($session->getRemainingTimeTestPart()->equals(new Duration('PT1S')));
+        $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT1S')));
         $session->skip();
          
         // Q03.
         $session->beginAttempt();
         sleep(2);
-         
+        
         try {
             // P01.duration = 6 > maxTime -> exception !
             $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('H', 'O'))))));
@@ -80,7 +84,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         // We should have automatically be moved to the next test part.
         $this->assertEquals('P02', $session->getCurrentTestPart()->getIdentifier());
         $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
-        $this->assertTrue($session->getRemainingTimeTestPart()->equals(new Duration('PT1S')));
+        $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT1S')));
          
         // Q04.
         $session->beginAttempt();

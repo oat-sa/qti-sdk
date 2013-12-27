@@ -348,4 +348,8 @@ class Duration implements Comparable, QtiDatatype {
 		$interval->invert = ($interval->invert === 1) ? 0 : 1;
 		$this->setInterval($interval);
 	}
+	
+	public function isNegative() {
+	    return $this->interval === 1;
+	}
 }
