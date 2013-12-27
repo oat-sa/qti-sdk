@@ -1,6 +1,6 @@
 <?php
+use qtism\data\NavigationMode;
 use qtism\data\TimeLimits;
-
 use qtism\common\datatypes\Duration;
 use qtism\runtime\tests\TimeConstraint;
 use qtism\data\AssessmentItemRef;
@@ -79,5 +79,29 @@ class TimeConstraintTest extends QtiSmTestCase {
         
         $timeLimits->setMaxTime(new Duration('PT50S'));
         $this->assertEquals('PT30S', $timeConstraint->getMaximumRemainingTime()->__toString());
+    }
+    
+    public function testNonLinearNavigationMode() {
+        $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
+        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'), false);
+        $assessmentItemRef->setTimeLimits($timeLimits);
+        $timeConstraint = new TimeConstraint($assessmentItemRef, new Duration('PT1S'), NavigationMode::NONLINEAR);
+        
+        // Minimum times are applicable to assessmentSections and assessmentItems only when linear navigation
+        // mode is in effect.
+        $this->assertFalse($timeConstraint->minTimeInForce());
+        $this->assertFalse($timeConstraint->getMinimumRemainingTime());
+    }
+    
+    public function testLinearNavigationMode() {
+        $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
+        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'), false);
+        $assessmentItemRef->setTimeLimits($timeLimits);
+        $timeConstraint = new TimeConstraint($assessmentItemRef, new Duration('PT1S'), NavigationMode::LINEAR);
+        
+        // Minimum times are applicable to assessmentSections and assessmentItems only when linear navigation
+        // mode is in effect, this is the case!
+        $this->assertTrue($timeConstraint->minTimeInForce());
+        $this->assertEquals('PT0S', $timeConstraint->getMinimumRemainingTime()->__toString());
     }
 }

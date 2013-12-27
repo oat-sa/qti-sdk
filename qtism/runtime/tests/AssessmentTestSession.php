@@ -1801,23 +1801,24 @@ class AssessmentTestSession extends State {
 	    
 	    $route = $this->getRoute();
 	    $constraints = new TimeConstraintCollection();
+	    $navigationMode = $this->getCurrentNavigationMode();
 	    
 	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
 	        $involvedRouteItems = $route->getRouteItemsByTestPart($source);
-	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
+	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems), $navigationMode);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
 	        $source = $this->getCurrentAssessmentSection();
 	        $involvedRouteItems = $route->getRouteItemsByAssessmentSection($source);
-	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems));
+	        $constraints[] = new TimeConstraint($source, $this->computeRouteItemsDuration($involvedRouteItems), $navigationMode);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_ITEM) {
 	        $source = $this->getCurrentRouteItem();
 	        $duration = $this->computeRouteItemsDuration(new RouteItemCollection(array($source)));
-	        $constraints[] = new TimeConstraint($source->getAssessmentItemRef(), $duration);
+	        $constraints[] = new TimeConstraint($source->getAssessmentItemRef(), $duration, $navigationMode);
 	    }
 	    
 	    return $constraints;

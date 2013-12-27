@@ -25,7 +25,10 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\SectionPart;
+
 use qtism\common\datatypes\Duration;
+use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
 
 /**
@@ -53,14 +56,26 @@ class TimeConstraint {
     private $duration;
     
     /**
+     * The navigation mode to be taken into account into the time constraint.
+     * Indeed, minimum times are applicable to assessmentSections and assessmentItems
+     * only if linear navigation mode is in effect.
+     * 
+     * @var integer
+     * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 QTI timeLimits
+     */
+    private $navigationMode;
+    
+    /**
      * Create a new TimeConstraint object.
      * 
      * @param QtiComponent $source The TestPart or SectionPart the constraint applies on.
      * @param Duration $duration The already spent duration by the candidate on $source.
+     * @param NavigationMode $navigationMode The current navigation mode.
      */
-    public function __construct(QtiComponent $source, Duration $duration) {
+    public function __construct(QtiComponent $source, Duration $duration, $navigationMode = NavigationMode::LINEAR) {
         $this->setSource($source);
         $this->setDuration($duration);
+        $this->setNavigationMode($navigationMode);
     }
     
     /**
@@ -102,6 +117,24 @@ class TimeConstraint {
     }
     
     /**
+     * Set the current navigation mode.
+     * 
+     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     */
+    protected function setNavigationMode($navigationMode) {
+        $this->navigationMode = $navigationMode;
+    }
+    
+    /**
+     * Get the current navigation mode.
+     * 
+     * @return integer A value from the NavigationMode enumeration.
+     */
+    public function getNavigationMode() {
+        return $this->navigationMode;
+    }
+    
+    /**
      * Get the time remaining to be spent by the candidate on the source of the time
      * constraint. Please note that this method will never return negative durations.
      * 
@@ -126,8 +159,8 @@ class TimeConstraint {
      * @return Duration|boolean A duration object or false if there is no minTime constraint running for the source of the time constraint.
      */
     public function getMinimumRemainingTime() {
-        if (($timeLimits = $this->getSource()->getTimeLimits()) !== null && ($minTime = $timeLimits->getMinTime()) !== null) {
-            $remaining = clone $minTime;
+        if ($this->minTimeInForce() === true) {
+            $remaining = clone $this->getSource()->getTimeLimits()->getMinTime();
             $remaining->sub($this->getDuration());
             return ($remaining->isNegative() === true) ? new Duration('PT0S') : $remaining;
         }
@@ -150,10 +183,20 @@ class TimeConstraint {
      * Whether or not a minTime constraint is in force for the timeLimits (if existing) bound to the source of 
      * the time constraint.
      * 
+     * Please note that minTimes are applicable to assessmentSection and assessmentItems only when linear navigation
+     * mode is in effect. In the case of an assessmentSection or assessmentItem as the source of the time constraint, with
+     * a nonlinear navigation mode, the minTime attribute is not considered to be in force.
+     * 
+     * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 QTI timeLimits
      * @return boolean
      */
     public function minTimeInForce() {
-        return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
+        if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
+            return false;
+        }
+        else {
+            return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMinTime() === true;
+        }
     }
     
     /**
