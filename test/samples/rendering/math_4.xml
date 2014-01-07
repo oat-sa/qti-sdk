@@ -10,9 +10,9 @@
 	<div>
 		<p>
 			In the quadratic formula, the expression underneath the square root sign is called the <em>discriminant</em>
-			of the quadratic equation, and is often represented using an upper case <m:math><m:mi>D</m:mi></m:math> or <m:math><m:mi>&#x394;</m:mi></m:math>.
+			of the quadratic equation, and is often represented using an upper case <m:math display="inline"><m:mi>D</m:mi></m:math> or <m:math><m:mi>&#x394;</m:mi></m:math>.
 		</p>
-		<m:math>
+		<m:math display="block">
 			<m:mrow>
 				<m:mi>&#x394;</m:mi>
 				<m:mo>=</m:mo>
