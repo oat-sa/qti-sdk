@@ -81,6 +81,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
         $this->appendChildren($fragment, $component, $base);
         $this->appendAttributes($fragment, $component, $base);
         
+        
         if ($this->hasAdditionalClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');
@@ -111,9 +112,8 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * @param QtiComponent $component
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        $element = $fragment->firstChild;
         foreach ($this->getRenderingEngine()->getChildrenRenderings($component) as $childrenRendering) {
-            $element->appendChild($childrenRendering->firstChild);
+            $fragment->firstChild->appendChild($childrenRendering);
         }
     }
     

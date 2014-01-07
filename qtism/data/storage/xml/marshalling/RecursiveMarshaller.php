@@ -267,7 +267,6 @@ abstract class RecursiveMarshaller extends Marshaller {
 				// Hierarchical node, first pass.
 				$this->mark($node);
 				$this->pushTrail($node); // repush for a second pass.
-				
 				$children = array_reverse($this->getChildrenElements($node)); // further exploration.
 				
 				foreach ($children as $c) {

@@ -137,6 +137,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 			array(self::decorateUri('slider.xml')),
 			array(self::decorateUri('text_entry.xml')),
 		    array(self::decorateUri('template.xml')),
+		    array(self::decorateUri('math.xml')),
 			array(self::decorateUri('associate.xml', '2.0')),
 			array(self::decorateUri('adaptive.xml', '2.0')),
 			array(self::decorateUri('choice_multiple.xml', '2.0')),

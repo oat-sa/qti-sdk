@@ -168,6 +168,10 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
         $this->registerRenderer('associableHotspot', new AssociableHotspotRenderer());
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
+        
+        // External QTI Components.
+        $externalRenderer = new ExternalQtiComponentRenderer();
+        $this->registerRenderer('math', $externalRenderer);
     }
     
     protected function createFinalRendering() {

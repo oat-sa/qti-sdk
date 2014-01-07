@@ -99,16 +99,17 @@ abstract class Marshaller {
 						return $this->marshall($component);
 					}
 					else {
-					    throw new RuntimeException('Unexpected QTI class name.');
+					    throw new RuntimeException("No marshaller implementation found while marshalling component with class name '" . $component->getQtiClassName());
 					}
 				}
 				else {
 					$element = $args[0];
-					if ($this->getExpectedQtiClassName() === '' || ($element->nodeName == $this->getExpectedQtiClassName())) {
+					if ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName())) {
 						return call_user_func_array(array($this, 'unmarshall'), $args);
 					}
 					else {
-						throw new RuntimeException("Unexpected nodeName/className '" . $element->nodeName . "'/'" . $this->getExpectedQtiClassName() . "'.");
+					    $nodeName = (($prefix = $element->prefix) === null) ? $element->localName : "${prefix}:" . $element->localName;
+						throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
 					}
 				}
 			}

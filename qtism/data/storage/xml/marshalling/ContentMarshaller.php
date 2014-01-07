@@ -86,7 +86,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                       'thead', 'tfoot', 'rubricBlock', 'gap', 'textEntryInteraction', 'extendedTextInteraction',
                                       'selectPointInteraction', 'associableHotspot', 'hotspotChoice', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
-                                      'drawingInteraction', 'uploadInteraction', 'endAttemptInteraction', 'customInteraction', 'printedVariable');
+                                      'drawingInteraction', 'uploadInteraction', 'endAttemptInteraction', 'customInteraction', 
+                                      'printedVariable', 'math');
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
@@ -94,7 +95,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback');
     
     protected function isElementFinal(DOMNode $element) {
-        return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->nodeName, self::$finals));
+        return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->localName, self::$finals));
     }
     
     protected function isComponentFinal(QtiComponent $component) { 
@@ -220,7 +221,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     }
     
     protected function getChildrenElements(DOMElement $element) {
-        if (in_array($element->nodeName, self::$simpleComposites) === true) {
+        if (in_array($element->localName, self::$simpleComposites) === true) {
             return self::getChildElements($element, true);
         }
         else if ($element->nodeName === 'choiceInteraction') {

@@ -39,4 +39,4 @@ if ((isset($argv[1]) && $shuffle === true && isset($argv[2])) || (isset($argv[1]
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
-echo $rendering->saveHTML();
+echo $rendering->saveXML();
