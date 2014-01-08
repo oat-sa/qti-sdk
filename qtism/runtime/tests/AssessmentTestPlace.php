@@ -57,10 +57,18 @@ class AssessmentTestPlace implements Enumeration {
      */
     const ASSESSMENT_ITEM = 4;
     
+    /**
+     * Represents the concept of AssessmentTest (in an AssessmentTest).
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_TEST = 8;
+    
     static public function asArray() {
         return array('TEST_PART' => self::TEST_PART,
                        'ASSESSMENT_SECTION' => self::ASSESSMENT_SECTION,
-                       'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM);
+                       'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM,
+                       'ASSESSMENT_TEST' => self::ASSESSMENT_TEST);
     }
     
     static public function getConstantByName($name) {
@@ -75,6 +83,10 @@ class AssessmentTestPlace implements Enumeration {
             
             case 'assessmentitem':
                 return self::ASSESSMENT_ITEM;
+            break;
+            
+            case 'assessmenttest':
+                return self::ASSESSMENT_TEST;
             break;
             
             default:
@@ -95,6 +107,10 @@ class AssessmentTestPlace implements Enumeration {
             
             case self::ASSESSMENT_ITEM:
                 return 'assessmentItem';
+            break;
+            
+            case self::ASSESSMENT_TEST:
+                return 'assessmentTest';
             break;
             
             default:

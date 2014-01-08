@@ -1796,12 +1796,17 @@ class AssessmentTestSession extends State {
 	public function getTimeConstraints($places = null) {
 	    	    
 	    if ($places === null) {
-	        $places = (AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_SECTION | AssessmentTestPlace::ASSESSMENT_ITEM);
+	        // Get the constraints from all places in the Assessment Test.
+	        $places = (AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_SECTION | AssessmentTestPlace::ASSESSMENT_ITEM);
 	    }
 	    
 	    $route = $this->getRoute();
 	    $constraints = new TimeConstraintCollection();
 	    $navigationMode = $this->getCurrentNavigationMode();
+	    
+	    if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
+	        $constraints[] = new TimeConstraint($this->getAssessmentTest(), $this->computeRouteItemsDuration($route->getAllRouteItems()), $navigationMode);
+	    }
 	    
 	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
@@ -1876,26 +1881,6 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    return $duration;
-	}
-	
-	/**
-	 * Get the current time limits in force for the current TestPart.
-	 * 
-	 * @throws AssessmentTestSessionException If the AssessmentTestSession is not running.
-	 * @return null|TimeLimits A TimeLimits object or null if no TimeLimits is in force for the current TestPart.
-	 */
-	public function getTimeLimitsTestPart() {
-	    if ($this->isRunning() === false) {
-	        $msg = "The TimeLimts for the current TestPart cannot be determined if the state of the AssessmentTestSession is INITIAL or CLOSED.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-	    }
-	    
-	    if (($timeLimits = $this->getCurrentTestPart()->getTimeLimits()) !== null) {
-	        return $timeLimits;
-	    }
-	    else {
-	        return null;
-	    }
 	}
 	
 	/**
