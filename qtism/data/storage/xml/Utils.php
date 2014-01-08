@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml;
 
 use \DOMDocument;
 use \DOMElement;
+use \SplStack;
 
 /**
  * A class providing XML utility methods.
@@ -127,5 +128,58 @@ class Utils {
 	    
 	    $newElement->ownerDocument->replaceChild($newElement, $element);
 	    return $newElement;
+	}
+	
+	/**
+	 * Anonimize a given DOMElement. By 'anonimize', we mean remove
+	 * all namespace membership of an element and its child nodes.
+	 * 
+	 * For instance, <m:math display="inline"><m:mi>x</m:mi></m:math> becomes
+	 * <math display="inline"><mi>x</mi></math>.
+	 * 
+	 * @param DOMElement $element The DOMElement to be anonimized.
+	 * @return DOMElement The anonimized DOMElement copy of $element.
+	 */
+	public static function anonimizeElement(DOMElement $element) {
+	    
+	    $stack = new SplStack();
+	    $traversed = array();
+	    $children = array();
+	    
+	    $stack->push($element);
+	    
+	    while ($stack->count() > 0) {
+	        $node = $stack->pop();
+	        
+	        if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === false) {
+	            array_push($traversed, $node);
+	            $stack->push($node);
+	            
+	            for ($i = 0; $i < $node->childNodes->length; $i++) {
+	                $stack->push($node->childNodes->item($i));
+	            }
+	        }
+	        else if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === true) {
+	            // Build hierarchical node copy from the current node. All the attributes
+	            // of $node must be copied into $newNode.
+	            $newNode = $node->ownerDocument->createElement($node->localName);
+	            
+	            // Copy all attributes.
+	            foreach ($node->attributes as $attr) {
+	                $newNode->setAttribute($attr->localName, $attr->value);
+	            }
+	            
+	            for ($i = 0; $i < $node->childNodes->length; $i++) {
+	                $newNode->appendChild(array_pop($children));
+	            }
+	            
+	            array_push($children, $newNode);
+	        }
+	        else {
+	            array_push($children, $node->cloneNode());
+	        }
+	    }
+	    
+	    return $children[0];
 	}
 }

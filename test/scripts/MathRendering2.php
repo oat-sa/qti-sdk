@@ -12,4 +12,6 @@ $renderer = new XhtmlRenderingEngine();
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 
-echo $rendering->saveXML();
+$dom = new DOMDocument('1.0', 'UTF-8');
+$dom->loadXML($rendering->saveXML());
+echo $dom->saveXML();

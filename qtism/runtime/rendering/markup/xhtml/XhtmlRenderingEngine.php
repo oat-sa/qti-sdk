@@ -170,8 +170,7 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
         
         // External QTI Components.
-        $externalRenderer = new ExternalQtiComponentRenderer();
-        $this->registerRenderer('math', $externalRenderer);
+        $this->registerRenderer('math', new MathRenderer());
     }
     
     protected function createFinalRendering() {
