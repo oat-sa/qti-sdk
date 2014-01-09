@@ -46,6 +46,7 @@ class StylesheetRenderer extends AbstractXhtmlRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('rel', 'stylesheet');
         $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
+        $fragment->firstChild->setAttribute('type', $component->getType());
         
         if ($component->hasMedia() === true) {
             $fragment->firstChild->setAttribute('media', $component->getMedia());

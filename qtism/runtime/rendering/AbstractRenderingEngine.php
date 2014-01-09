@@ -303,6 +303,8 @@ abstract class AbstractRenderingEngine implements Renderable {
     }
     
     public function render(QtiComponent $component, $base = '') {
+        // Reset the engine to its initial state.
+        $this->reset();
         
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
@@ -364,9 +366,6 @@ abstract class AbstractRenderingEngine implements Renderable {
         }
         
         $finalRendering = $this->createFinalRendering();
-        
-        // Reset the engine to its initial state.
-        $this->reset();
         
         return $finalRendering;
     }

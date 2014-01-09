@@ -72,12 +72,20 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
         $doc = $renderingEngine->getDocument();
         $fragment = $doc->createDocumentFragment();
         
+        // Apply rendering...
         $this->renderingImplementation($fragment, $component, $base);
         
-        
+        // Specific case for stylesheet elements...
         if ($component instanceof Stylesheet && $renderingEngine->getStylesheetPolicy() === AbstractRenderingEngine::STYLESHEET_SEPARATE) {
             // Stylesheet must be rendered separately.
-            $renderingEngine->getStylesheets()->appendChild($fragment);
+            $stylesheets = $renderingEngine->getStylesheets();
+            
+            if ($stylesheets->childNodes->length === 0) {
+                $stylesheets->appendChild($fragment);
+            }
+            else {
+                $stylesheets->insertBefore($fragment, $stylesheets->firstChild);
+            }
         }
         else {
             // Stylesheet must be rendered at the same place.
