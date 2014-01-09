@@ -86,6 +86,22 @@ abstract class AbstractRenderingEngine implements Renderable {
     const XMLBASE_PROCESS = 4;
     
     /**
+     * Stylesheet components are rendered at the same place
+     * they appear in the content model to be rendered.
+     * 
+     * @var integer
+     */
+    const STYLESHEET_INLINE = 5;
+    
+    /**
+     * Stylesheet components are rendered separately and pushed into
+     * a specific place.
+     * 
+     * @var integer
+     */
+    const STYLESHEET_SEPARATE = 6;
+    
+    /**
      * An array used to 'tag' explored Component object.
      * 
      * @var array
@@ -175,6 +191,13 @@ abstract class AbstractRenderingEngine implements Renderable {
      * @var integer
      */
     private $xmlBasePolicy = AbstractRenderingEngine::XMLBASE_IGNORE;
+    
+    /**
+     * The policy to adopt while dealing with QTI stylesheet components.
+     * 
+     * @var integer
+     */
+    private $stylesheetPolicy = AbstractRenderingEngine::STYLESHEET_INLINE;
     
     /**
      * The URL to be used in place of the root component's xml:base value.
@@ -758,15 +781,49 @@ abstract class AbstractRenderingEngine implements Renderable {
      * * AbstractRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
      * * AbstractRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
      * 
-     * @param integer $xmlBasePolicy
+     * @param integer $xmlBasePolicy AbstractRenderingEngine::XMLBASE_IGNORE, AbstractRenderingEngine::XMLBASE_KEEP or AbstractRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
     public function setXmlBasePolicy($xmlBasePolicy) {
         $this->xmlBasePolicy = $xmlBasePolicy;
     }
     
+    /**
+     * Get the policy to adopt while rendering regarding xml:base.
+     * 
+     * * AbstractRenderingEngine::XMLBASE_IGNORE: Ignore xml:base constraints. The URIs in the final rendering will be the same as in the QTI model.
+     * * AbstractRenderingEngine::XMLBASE_KEEP: Keep xml:base values into the rendering. The URIs in the final rendering will remain the same as in the QTI model.
+     * * AbstractRenderingEngine::XMLBASE_PROCESS: Process URIs by taking xml:base values into account. URIs in the final rendering will reflect the constraints set by xml:base values.
+     * 
+     * @return integer AbstractRenderingEngine::XMLBASE_IGNORE, AbstractRenderingEngine::XMLBASE_KEEP or AbstractRenderingEngine::XMLBASE_PROCESS.
+     * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
+     */
     public function getXmlBasePolicy() {
         return $this->xmlBasePolicy;
+    }
+    
+    /**
+     * Set the policy to adopt while rendering QTI stylesheet components.
+     * 
+     * * AbstractRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
+     * * AbstractRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
+     * 
+     * @param integer $stylesheetPolicy AbstractRenderingEngine::STYLESHEET_INLINE or AbstractRenderingEngine::STYLESHEET_SEPARATE.
+     */
+    public function setStylesheetPolicy($stylesheetPolicy) {
+        $this->stylesheetPolicy = $stylesheetPolicy;
+    }
+    
+    /**
+     * Get the policy to adopt while rendering QTI stylesheet components.
+     * 
+     * * AbstractRenderingEngine::STYLESHEET_INLINE: Stylesheet components are rendered at the same place they appear in the content model to be rendered.
+     * * AbstractRenderingEngine::STYLESHEET_SEPARATE: Stylesheet components are rendered separately from the rest of the model, and pushed into a specific place.
+     * 
+     * @return integer AbstractRenderingEngine::STYLESHEET_INLINE or AbstractRenderingEngine::STYLESHEET_SEPARATE.
+     */
+    public function getStylesheetPolicy() {
+        return $this->stylesheetPolicy;
     }
     
     /**

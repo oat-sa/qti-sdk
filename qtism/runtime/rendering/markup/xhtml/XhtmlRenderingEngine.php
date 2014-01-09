@@ -27,6 +27,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\AbstractRenderingEngine;
 use \DOMDocument;
+use \DOMDocumentFragment;
 
 /**
  * The QTI XHTML Rendering Engine.
@@ -42,6 +43,15 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
      * @var DOMDocument
      */
     private $document;
+    
+    /**
+     * The DOM fragment to be generated during rendering. If the current
+     * stylesheet policy is SEPARATE, rendered stylesheet components will be
+     * pushed into it.
+     * 
+     * @var DOMDocumentFragment
+     */
+    private $stylesheets;
     
     /**
      * Wether choices in shufflable interactions
@@ -201,6 +211,35 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
     }
     
     /**
+     * Set the DOMDocumentFragment object to be used to collect
+     * rendered QTI stylesheet components when the stylesheet policy
+     * is SEPARATE.
+     * 
+     * @param DOMDocumentFragment $stylesheets A DOMDocumentFragment object.
+     */
+    protected function setStylesheets(DOMDocumentFragment $stylesheets) {
+        $this->stylesheets = $stylesheets;
+    }
+    
+    /**
+     * Get the DOMDocumentFragment object to be used to collect
+     * rendered QTI stylesheet components when the stylesheet policy is
+     * SEPARATE.
+     * 
+     * The rendered components will be set in the order they appear during
+     * the rendering phase.
+     * 
+     * The owner of the DOMDocumentFragment object is the one you get by calling
+     * the XhtmlRenderingEngine::getDocument() method.
+     * 
+     * @return DOMDocumentFragment A DOMDocumentFragment object.
+     * @see XhtmlRenderingEngine::getDocument() The method to get the owner document of the DOMDocument fragment.
+     */
+    public function getStylesheets() {
+        return $this->stylesheets;
+    }
+    
+    /**
      * Set whether or not choices in shufflable interactions
      * e.g. ChoiceInteraction, MatchInteraction must be
      * shuffled at rendering time.
@@ -224,6 +263,7 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
     public function reset() {
         parent::reset();
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
+        $this->setStylesheets($this->getDocument()->createDocumentFragment());
         $this->setShuffle(false);
     }
 }

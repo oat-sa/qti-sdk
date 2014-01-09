@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\Stylesheet;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\AbstractRenderingEngine;
 use qtism\data\QtiComponent;
@@ -63,15 +64,26 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      * 
-     * @return DOMDocumentFragment
-     * @throws RenderingException
+     * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
+     * @throws RenderingException If an error occurs while rendering $component.
      */
     public function render(QtiComponent $component, $base = '') {
-        $doc = $this->getRenderingEngine()->getDocument();
+        $renderingEngine = $this->getRenderingEngine();
+        $doc = $renderingEngine->getDocument();
         $fragment = $doc->createDocumentFragment();
         
         $this->renderingImplementation($fragment, $component, $base);
-        $this->getRenderingEngine()->storeRendering($component, $fragment);
+        
+        
+        if ($component instanceof Stylesheet && $renderingEngine->getStylesheetPolicy() === AbstractRenderingEngine::STYLESHEET_SEPARATE) {
+            // Stylesheet must be rendered separately.
+            $renderingEngine->getStylesheets()->appendChild($fragment);
+        }
+        else {
+            // Stylesheet must be rendered at the same place.
+            $renderingEngine->storeRendering($component, $fragment);
+        }
+        
         return $fragment;
     }
     
