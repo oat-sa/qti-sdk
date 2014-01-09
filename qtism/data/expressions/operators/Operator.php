@@ -25,7 +25,6 @@
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
-
 use qtism\data\QtiComponentCollection;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\ExpressionCollection;
@@ -80,8 +79,8 @@ abstract class Operator extends Expression {
 	 * Create a new instance of Operator.
 	 * 
 	 * @param ExpressionCollection $expressions The sub-expressions that form the operator.
-	 * @param integer $minOperands The minimum operands count.
-	 * @param integer $maxOperands The maximum operands count.
+	 * @param integer $minOperands The minimum operands count (0 equals no min).
+	 * @param integer $maxOperands The maximum operands count (-1 equals no max).
 	 * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
 	 * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
 	 * @throws InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.

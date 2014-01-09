@@ -27,15 +27,14 @@ use \DOMDocument;
 use \RuntimeException;
 
 /**
- * Represents a gateway to a component from an external (non-QTI) namespace.
+ * Represents a gateway to a component from an external (non-QTI) particular namespace.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class ExternalQtiComponent extends QtiComponent {
+class ExternalQtiComponent extends QtiComponent implements IExternal {
     
     /**
-     * 
      * @var string
      * @qtism-bean-property
      */
@@ -79,7 +78,7 @@ abstract class ExternalQtiComponent extends QtiComponent {
                 throw new RuntimeException($msg);
             }
             
-            if ($xml->documentElement->namespaceURI !== $this->getTargetNamespace()) {
+            if (($targetNamespace = $this->getTargetNamespace()) !== '' && $xml->documentElement->namespaceURI !== $this->getTargetNamespace()) {
                 $msg = "The XML content' " . $this->getXmlString() . "' of the '" . $this->getQtiClassName() . "' external component is not referenced into target namespace '" . $this->getTargetNamespace() . "'.";
                 throw new RuntimeException($msg);
             }
@@ -105,7 +104,7 @@ abstract class ExternalQtiComponent extends QtiComponent {
      * 
      * @return string
      */
-    protected function getXmlString() {
+    public function getXmlString() {
         return $this->xmlString;
     }
     
@@ -114,21 +113,34 @@ abstract class ExternalQtiComponent extends QtiComponent {
      * 
      * @param string $xmlString
      */
-    protected function setXmlString($xmlString) {
+    public function setXmlString($xmlString) {
         $this->xmlString = $xmlString;
+        
+        // Force DOM rebuild.
+        $this->xml = null;
+    }
+    
+    public function hasTargetNamespace() {
+        return $this->getTargetNamespace() !== '';
     }
     
     public function getTargetNamespace() {
         return $this->targetNamespace;
     }
     
-    protected function setTargetNamespace($targetNamespace) {
+    public function setTargetNamespace($targetNamespace) {
         $this->targetNamespace = $targetNamespace;
     }
     
-    protected abstract function buildTargetNamespace();
+    protected function buildTargetNamespace() {
+        return '';
+    }
     
     public function getComponents() {
         return new QtiComponentCollection();
+    }
+    
+    public function getQtiClassName() {
+        return 'external';
     }
 }
