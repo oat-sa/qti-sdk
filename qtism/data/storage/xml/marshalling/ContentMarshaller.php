@@ -281,6 +281,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         else if ($element->nodeName === 'templateBlock') {
             return self::getChildElements($element);
         }
+        else {
+            return array();
+        }
     }
     
     public function getExpectedQtiClassName() {

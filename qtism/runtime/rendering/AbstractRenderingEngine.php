@@ -421,10 +421,13 @@ abstract class AbstractRenderingEngine implements Renderable {
      * Process the current node.
      * 
      * @param string $base the value of xml:base for the node to be processed.
+     * @throws RenderingException If an error occurs while processing the node.
      */
     protected function processNode($base = '') {
-        $renderer = $this->getRenderer($this->getExploredComponent());
-        $rendering = $renderer->render($this->getExploredComponent(), $base);
+        $component = $this->getExploredComponent();
+        $renderer = $this->getRenderer($component);
+        $rendering = $renderer->render($component, $base);
+        
         $this->setLastRendering($rendering);
     }
     

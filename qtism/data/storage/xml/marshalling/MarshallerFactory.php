@@ -31,6 +31,7 @@ use \DOMElement;
 use \InvalidArgumentException;
 use \RuntimeException;
 use \ReflectionClass;
+use \ReflectionException;
 
 /**
  * The MarshallerFactory aims at giving the client code the ability to
@@ -239,14 +240,21 @@ class MarshallerFactory {
 		}
 		
 		if (isset($qtiClassName)) {
-			// Look for a mapping entry.
-			if ($this->hasMappingEntry($qtiClassName)) {
-				$class = new ReflectionClass($this->getMappingEntry($qtiClassName));
-			}
-			else {
-				// Look for default.
-				$className = 'qtism\\data\\storage\\xml\\marshalling\\' . ucfirst($qtiClassName) . 'Marshaller';
-				$class = new ReflectionClass($className);
+		    
+		    try {
+		        // Look for a mapping entry.
+		        if ($this->hasMappingEntry($qtiClassName)) {
+		            $class = new ReflectionClass($this->getMappingEntry($qtiClassName));
+		        }
+		        else {
+		            // Look for default.
+		            $className = 'qtism\\data\\storage\\xml\\marshalling\\' . ucfirst($qtiClassName) . 'Marshaller';
+		            $class = new ReflectionClass($className);
+		        }
+		    }
+			catch (ReflectionException $e) {
+			    $msg = "No marshaller implementation could be found for component '${qtiClassName}'.";
+			    throw new RuntimeException($msg, 0, $e);
 			}
 			
 		

@@ -145,6 +145,10 @@ class XmlDocument extends QtiDocument {
 					$msg = "An error occured while processing QTI-XML at line ${line}.";
 					throw new XmlStorageException($msg, $e);
 				}
+				catch (RuntimeException $e) {
+				    $msg = "Unmarshallable element '" . $element->nodeName . "' in QTI-XML.";
+				    throw new XmlStorageException($msg, $e);
+				}
 			}
 			else {
 				$libXmlErrors = libxml_get_errors();

@@ -55,6 +55,13 @@ class RenderingException extends Exception {
     const NO_RENDERER = 1;
     
     /**
+     * Error code to use for exception only occuring/detectable at runtime.
+     * 
+     * @var integer
+     */
+    const RUNTIME = 2;
+    
+    /**
      * Create a new RenderingException object.
      * 
      * @param string $message A message describing the error.
