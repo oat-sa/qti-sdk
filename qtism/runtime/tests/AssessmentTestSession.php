@@ -474,8 +474,12 @@ class AssessmentTestSession extends State {
 	 * * Outcome variables in the global scope of the AssessmentTestSession,
 	 * * Outcome and Response variables in TestPart/AssessmentSection scopes.
 	 * 
+	 * Please note that if the requested variable is a duration, the durationUpdate() method
+	 * will be called to return an accurate result.
+	 * 
 	 * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
 	 * @throws OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
+	 * @qtism-test-duration-update
 	 */
 	public function offsetGet($offset) {
 		
@@ -1803,6 +1807,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
 	 * @return TimeConstraintCollection A collection of TimeConstraint objects.
+	 * @qtism-test-duration-update
 	 */
 	public function getTimeConstraints($places = null) {
 	    	    
@@ -1846,6 +1851,7 @@ class AssessmentTestSession extends State {
 	 * @param string $identifier The identifier of the TestPart you want to know the duration.
 	 * @throws OutOfBoundsException If $identifier does not reference any TestPart in the AssessmentTestSession.
 	 * @return Duration A Duration object.
+	 * @qtism-test-duration-update
 	 */
 	protected function getTestPartDuration($identifier) {
 	    try {
@@ -1865,6 +1871,7 @@ class AssessmentTestSession extends State {
 	 * @param string $identifier The identifier of the AssessmentSection you want to know the duration.
 	 * @throws OutOfBoundsException If $identifier does not reference any AssessmentSection in the AssessmentTestSession.
 	 * @return Duration A Duration object.
+	 * @qtism-test-duration-update
 	 */
 	protected function getAssessmentSectionDuration($identifier) {
 	    try {
@@ -1878,6 +1885,8 @@ class AssessmentTestSession extends State {
 	}
 	
 	protected function computeRouteItemsDuration(RouteItemCollection $routeItems) {
+	    $this->updateDuration();
+	    
 	    $duration = new Duration('PT0S');
 	    $itemSessionStore = $this->getAssessmentItemSessionStore();
 	     

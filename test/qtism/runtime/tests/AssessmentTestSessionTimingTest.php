@@ -1,5 +1,7 @@
 <?php
 
+use qtism\data\storage\xml\XmlDocument;
+
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\common\datatypes\Point;
@@ -235,5 +237,27 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertTrue($timeConstraints[0]->allowLateSubmission());
         $this->assertFalse($timeConstraints[0]->minTimeInForce());
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
+    }
+    
+    public function testDurationBetweenItems() {
+        /*
+         * This test aims at testing that the duration
+         * of the whole test is not incremented while a
+         * candidate is between 2 items, and then, not
+         * interacting.
+         */
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/between_items.xml');
+        $session->setAutoForward(false);
+        $session->beginTestSession();
+        
+        // In this situation, the duration increases.
+        $session->beginAttempt();
+        sleep(1);
+        $this->assertEquals(1, $session['S01.duration']->getSeconds(true));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        
+        // We are now between Q01 and Q02, the duration must not increase.
+        sleep(1);
+        $this->assertEquals(1, $session['S01.duration']->getSeconds(true));
     }
 }
