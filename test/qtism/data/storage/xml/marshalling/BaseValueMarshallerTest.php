@@ -37,4 +37,13 @@ class BaseValueMarshallerTest extends QtiSmTestCase {
 		$this->assertInternalType('float', $component->getValue());
 		$this->assertEquals($component->getValue(), 27.11);
 	}
+	
+	public function testUnmarshallCDATA() {
+	    $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
+	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    
+	    $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $component);
+	    $this->assertEquals($component->getBaseType(), BaseType::STRING);
+	    $this->assertEquals('A string...', $component->getValue());
+	}
 }

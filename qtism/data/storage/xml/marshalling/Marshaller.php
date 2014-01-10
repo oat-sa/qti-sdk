@@ -234,7 +234,7 @@ abstract class Marshaller {
 		$returnValue = array();
 		
 		for ($i = 0; $i < $children->length; $i++) {
-			if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && $children->item($i)->nodeType === XML_TEXT_NODE)) {
+			if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
 				$returnValue[] = $children->item($i);
 			}
 		}
