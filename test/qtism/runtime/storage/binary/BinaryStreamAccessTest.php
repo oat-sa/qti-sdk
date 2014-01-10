@@ -87,7 +87,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadDateTime() {
-        $date = new DateTime('2013:09:04 09:37:09');
+        $date = new DateTime('2013:09:04 09:37:09', new DateTimeZone('Europe/Luxembourg'));
         $stream = new BinaryStream(pack('l', $date->getTimestamp()));
         $stream->open();
         $access = new BinaryStreamAccess($stream);
@@ -109,7 +109,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
         
-        $access->writeDateTime(new DateTime('2013:09:04 09:37:09'));
+        $access->writeDateTime(new DateTime('2013:09:04 09:37:09', new DateTimeZone('Europe/Luxembourg')));
         $stream->rewind();
         
         $date = $access->readDateTime();
