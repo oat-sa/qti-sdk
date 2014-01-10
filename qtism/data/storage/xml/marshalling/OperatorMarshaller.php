@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\expressions\operators\CustomOperator;
 use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -103,18 +104,37 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		// Some exceptions applies on instanciation e.g. the And operator is named
 		// AndOperator because of PHP reserved words restriction.
 		
-		if ($element->nodeName == 'and') {
+		if ($element->localName === 'and') {
 			$className = 'qtism\\data\\expressions\\operators\\AndOperator';
 		}
-		else if ($element->nodeName == 'or') {
+		else if ($element->localName === 'or') {
 			$className = 'qtism\\data\\expressions\\operators\\OrOperator';
 		}
 		else {
-			$className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->nodeName);
+			$className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
 		}
 		
 		$class = new ReflectionClass($className);
-		return Reflection::newInstance($class, array($children));
+		$params = array($children);
+		
+		if ($element->localName === 'customOperator') {
+		    // Retrieve XML content as a string. 
+		    $params[] = $element->ownerDocument->saveXML($element);
+		    $component = Reflection::newInstance($class, $params);
+		    
+		    if (($class = self::getDOMElementAttributeAs($element, 'class')) !== null) {
+		        $component->setClass($class);
+		    }
+		    
+		    if (($definition = self::getDOMElementAttributeAs($element, 'definition')) !== null) {
+		        $component->setDefinition($definition);
+		    }
+		    
+		    return $component;
+		}
+		else {
+		    return Reflection::newInstance($class, $params);
+		}
 	}
 	
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
@@ -124,11 +144,39 @@ class OperatorMarshaller extends RecursiveMarshaller {
 			$element->appendChild($elt);
 		}
 		
+		if ($component instanceof CustomOperator) {
+		    if ($component->hasClass() === true) {
+		        self::setDOMElementAttribute($element, 'class', $component->getClass());
+		    }
+		    
+		    if ($component->hasDefinition() === true) {
+		        self::setDOMElementAttribute($element, 'definition', $component->getDefinition());
+		    }
+		    
+		    // Now, we have to extract the LAX content of the custom operator and put it into
+		    // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
+		    $xml = $component->getXml();
+		    if ($xml->ownerDocument !== null) {
+		        $operatorElt = $xml->ownerDocument->cloneNode();
+		        $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, self::$operators);
+		        foreach ($qtiOperatorElts as $qtiOperatorElt) {
+		            $operatorElt->removeChild($qtiOperatorElt);
+		        }
+		        
+		        for ($i = 0; $i < $operatorElt->childNodes; $i++) {
+		            $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i));
+		            $element->appendChild($node);
+		        }
+		    }
+		    
+		    
+		}
+		
 		return $element;
 	}
 	
 	protected function isElementFinal(DOMNode $element) {
-		return !in_array($element->nodeName, static::getOperators());
+		return !in_array($element->localName, static::getOperators());
 	}
 	
 	protected function isComponentFinal(QtiComponent $component) {

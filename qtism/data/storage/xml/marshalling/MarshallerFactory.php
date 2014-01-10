@@ -101,6 +101,7 @@ class MarshallerFactory {
 		$this->addMappingEntry('truncate', 'qtism\\data\\storage\\xml\\marshalling\\OperatorMarshaller');
 		$this->addMappingEntry('round', 'qtism\\data\\storage\\xml\\marshalling\\OperatorMarshaller');
 		$this->addMappingEntry('integerToFloat', 'qtism\\data\\storage\\xml\\marshalling\\OperatorMarshaller');
+		$this->addMappingEntry('customOperator', 'qtism\\data\\storage\\xml\\marshalling\\OperatorMarshaller');
 		$this->addMappingEntry('outcomeIf', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');
 		$this->addMappingEntry('outcomeElseIf', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');
 		$this->addMappingEntry('outcomeElse', 'qtism\\data\\storage\\xml\\marshalling\\OutcomeControlMarshaller');

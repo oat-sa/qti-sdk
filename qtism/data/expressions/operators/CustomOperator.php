@@ -63,10 +63,10 @@ class CustomOperator extends Operator implements IExternal {
     /**
      * @var ExternalQtiComponent
      */
-    private $externalComponent;
+    private $externalComponent = null;
     
     public function __construct(ExpressionCollection $expressions, $xmlString) {
-        parent::__construct($expressions, 0, -1, OperatorCardinality::ANY, OperatorBaseType::ANY);
+        parent::__construct($expressions, 0, -1, array(OperatorCardinality::ANY), array(OperatorBaseType::ANY));
         $this->setXmlString($xmlString);
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
@@ -97,6 +97,15 @@ class CustomOperator extends Operator implements IExternal {
     }
     
     /**
+     * Whether or not a value is defined for the class attribute.
+     * 
+     * @return boolean
+     */
+    public function hasClass() {
+        return $this->getClass() !== '';
+    }
+    
+    /**
      * Set the URI that identifies the definition of the custom operator
      * in the global namespace. An empty value means there is no value set for the definition attribute.
      * 
@@ -124,6 +133,15 @@ class CustomOperator extends Operator implements IExternal {
     }
     
     /**
+     * Whether or not a value is defined for the definition attribute.
+     * 
+     * @return boolean
+     */
+    public function hasDefinition() {
+        return $this->getDefinition() !== '';
+    }
+    
+    /**
      * Get the XML content of the custom operator itself and its content.
      * 
      * @return DOMDocument A DOMDocument object representing the custom operator itself.
@@ -135,7 +153,10 @@ class CustomOperator extends Operator implements IExternal {
     
     public function setXmlString($xmlString) {
         $this->xmlString = $xmlString;
-        $this->getExternalComponent()->setXmlString($xmlString);
+        
+        if ($this->externalComponent !== null) {
+            $this->getExternalComponent()->setXmlString($xmlString);
+        }
     }
     
     /**
@@ -154,5 +175,9 @@ class CustomOperator extends Operator implements IExternal {
      */
     private function getExternalComponent() {
         return $this->externalComponent;
+    }
+    
+    public function getQtiClassName() {
+        return 'customOperator';
     }
 }

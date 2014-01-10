@@ -33,7 +33,7 @@ class EqualMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('equal', $element->nodeName);
 		$this->assertEquals('exact', $element->getAttribute('toleranceMode'));
 		$this->assertEquals('false', $element->getAttribute('includeLowerBound'));
-		$this->assertEquals('true', $element->getAttribute('includeUpperBound'));
+		$this->assertEquals('', $element->getAttribute('includeUpperBound'));
 		$this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 	}
 	

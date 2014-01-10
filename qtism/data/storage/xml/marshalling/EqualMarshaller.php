@@ -56,9 +56,14 @@ class EqualMarshaller extends OperatorMarshaller {
 			self::setDOMElementAttribute($element, 'tolerance', implode("\x20", $tolerance));
 		}
 		
-		self::setDOMElementAttribute($element, 'includeLowerBound', $component->doesIncludeLowerBound());
-		self::setDOMElementAttribute($element, 'includeUpperBound', $component->doesIncludeUpperBound());
+		if ($component->doesIncludeLowerBound() === false) {
+		    self::setDOMElementAttribute($element, 'includeLowerBound', false);
+		}
 		
+		if ($component->doesIncludeUpperBound() === false) {
+		    self::setDOMElementAttribute($element, 'includeUpperBound', false);
+		}
+
 		foreach ($elements as $elt) {
 			$element->appendChild($elt);
 		}
