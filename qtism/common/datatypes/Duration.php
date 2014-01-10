@@ -26,6 +26,7 @@ namespace qtism\common\datatypes;
 
 use qtism\common\Comparable;
 use \DateInterval;
+use \DateTimeZone;
 use \DateTime;
 use \Exception;
 use \InvalidArgumentException;
@@ -41,6 +42,14 @@ use \InvalidArgumentException;
  */
 class Duration implements Comparable, QtiDatatype {
 	
+    /**
+     * Internally, the Duration class always
+     * uses the UTC reference time zone.
+     * 
+     * @var string
+     */
+    const TIMEZONE = 'UTC';
+    
 	private $interval;
 	
 	/**
@@ -71,8 +80,9 @@ class Duration implements Comparable, QtiDatatype {
 	public function __construct($intervalSpec) {
 		if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
 			try {
-				$d1 = new DateTime();
-				$d2 = new DateTime();
+			    $tz = new DateTimeZone(self::TIMEZONE);
+				$d1 = new DateTime('now', $tz);
+				$d2 = new DateTime('now', $tz);
 				$d2->add(new DateInterval($intervalSpec));
 				$interval = $d2->diff($d1);
 				$interval->invert = ($interval->invert === 1) ? 0 : 1;
@@ -297,8 +307,9 @@ class Duration implements Comparable, QtiDatatype {
 	 */
 	public function add($duration) {
 		$refStrDate = '@0';
-		$d1 = new DateTime($refStrDate, new \DateTimeZone('Europe/Luxembourg'));
-		$d2 = new DateTime($refStrDate, new \DateTimeZone('Europe/Luxembourg'));
+		$tz = new DateTimeZone(self::TIMEZONE);
+		$d1 = new DateTime($refStrDate, $tz);
+		$d2 = new DateTime($refStrDate, $tz);
 		
 		if ($duration instanceof Duration) {
 		    $toAdd = $duration;
@@ -328,8 +339,9 @@ class Duration implements Comparable, QtiDatatype {
 	    }
 	    else {
 	        $refStrDate = '@0';
-	        $d1 = new DateTime($refStrDate);
-	        $d2 = new DateTime($refStrDate);
+	        $tz = new DateTimeZone(self::TIMEZONE);
+	        $d1 = new DateTime($refStrDate, $tz);
+	        $d2 = new DateTime($refStrDate, $tz);
 	        
 	        $d1->add(new DateInterval($this->__toString()));
 	        $d2->add(new DateInterval($duration->__toString()));
@@ -341,8 +353,9 @@ class Duration implements Comparable, QtiDatatype {
 	
 	public function __clone() {
 		// ... :'( ... https://bugs.php.net/bug.php?id=50559
-		$d1 = new DateTime();
-		$d2 = new DateTime();
+		$tz = new DateTimeZone(self::TIMEZONE);
+		$d1 = new DateTime('now', $tz);
+		$d2 = new DateTime('now', $tz);
 		$d2->add(new DateInterval($this->__toString()));
 		$interval = $d2->diff($d1);
 		$interval->invert = ($interval->invert === 1) ? 0 : 1;
