@@ -487,16 +487,24 @@ class AssessmentTestSession extends State {
 			$v = new VariableIdentifier($offset);
 			
 			if ($v->hasPrefix() === false) {
+			    
 				// Simple variable name.
 				// -> This means the requested variable is in the global test scope.
-			    $data = &$this->getDataPlaceHolder();
-			    
-				$varName = $v->getVariableName();
-				if (isset($data[$varName]) === false) {
-					return null;
-				}
 				
-				return $data[$offset]->getValue();
+				if ($v->getVariableName() === 'duration') {
+				    // Duration of the whole assessmentTest requested.
+				    return $this->getAssessmentTestDuration();
+				}
+				else {
+				    $data = &$this->getDataPlaceHolder();
+				     
+				    $varName = $v->getVariableName();
+				    if (isset($data[$varName]) === false) {
+				        return null;
+				    }
+				    
+				    return $data[$offset]->getValue();
+				}
 			}
 			else {
 				
@@ -531,6 +539,12 @@ class AssessmentTestSession extends State {
 				    
 				    try {
 				        $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
+				        
+				        // If duration, update!
+				        if ($v->getVariableName() === 'duration') {
+				            $session->updateDuration();
+				        }
+				        
 				        return $session[$v->getVariableName()];
 				    }
 				    catch (OutOfBoundsException $e) {
@@ -1882,6 +1896,16 @@ class AssessmentTestSession extends State {
 	        $msg = "No AssessmentSection with identifier '${identifier}' referenced in the AssessmentTestSession.";
 	        throw new OutOfBoundsException($msg, 0, $e);
 	    }
+	}
+	
+	/**
+	 * Get the duration of the current AssessmentTest.
+	 * 
+	 * @return Duration A Duration object.
+	 * @qtism-test-duration-update
+	 */
+	protected function getAssessmentTestDuration() {
+	    return $this->computeRouteItemsDuration($this->getRoute()->getAllRouteItems());
 	}
 	
 	protected function computeRouteItemsDuration(RouteItemCollection $routeItems) {

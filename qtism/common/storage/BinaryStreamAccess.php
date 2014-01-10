@@ -269,7 +269,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     public function readDateTime() {
         try {
             $timeStamp = current(unpack('l', $this->getStream()->read(4)));
-            $date = new DateTime();
+            $date = new DateTime('now', new \DateTimeZone('UTC'));
             return $date->setTimestamp($timeStamp);
         }
         catch (StreamException $e) {

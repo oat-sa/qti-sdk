@@ -23,19 +23,19 @@ class RoundToProcessorTest extends QtiSmTestCase {
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 		$this->assertInternalType('float', $result);
-		$this->assertEquals(1240000, $result);
+		$this->assertEquals(round(1240000), round($result));
 		
 		$operands[0] = 12.1257;
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInternalType('float', $result);
-		$this->assertEquals(12.1, $result);
+		$this->assertEquals(round(12.1, 1), round($result, 1));
 		
 		$operands[0] = 0.0681;
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInternalType('float', $result);
-		$this->assertEquals(0.0681, $result);
+		$this->assertEquals(round(0.0681, 4), round($result, 4));
 		
 		$operands[0] = 5;
 		$processor->setOperands($operands);
@@ -53,7 +53,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInternalType('float', $result);
-		$this->assertEquals(-12.1, $result);
+		$this->assertEquals(round(-12.1, 1), round($result, 1));
 	}
 	
 	public function testDecimalPlaces() {

@@ -253,11 +253,17 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         // In this situation, the duration increases.
         $session->beginAttempt();
         sleep(1);
+        $this->assertEquals(1, $session['Q01.duration']->getSeconds(true));
         $this->assertEquals(1, $session['S01.duration']->getSeconds(true));
+        $this->assertEquals(1, $session['TP01.duration']->getSeconds(true));
+        $this->assertEquals(1, $session['duration']->getSeconds(true));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
         
         // We are now between Q01 and Q02, the duration must not increase.
         sleep(1);
+        $this->assertEquals(1, $session['Q01.duration']->getSeconds(true));
         $this->assertEquals(1, $session['S01.duration']->getSeconds(true));
+        $this->assertEquals(1, $session['TP01.duration']->getSeconds(true));
+        $this->assertEquals(1, $session['duration']->getSeconds(true));
     }
 }

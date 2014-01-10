@@ -41,6 +41,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\State;
 use \DateTime;
+use \DateTimeZone;
 use \InvalidArgumentException;
 
 /**
@@ -785,9 +786,12 @@ class AssessmentItemSession extends State {
 	    // If the current state is INTERACTING update duration built-in variable.
 	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
 	        $timeRef = $this->getTimeReference();
-	        $now = new DateTime();
-	        $this['duration']->add($timeRef->diff($now));
-	        $this->setTimeReference(new DateTime('now', new \DateTimeZone('UTC')));
+	        $now = new DateTime('now', new DateTimeZone('UTC'));
+	        
+	        $data = &$this->getDataPlaceHolder();
+	        $data['duration']->getValue()->add($timeRef->diff($now));
+	        
+	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
 	    }
 	}
 	
