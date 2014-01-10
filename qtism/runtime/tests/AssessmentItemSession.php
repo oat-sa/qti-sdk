@@ -787,7 +787,7 @@ class AssessmentItemSession extends State {
 	        $timeRef = $this->getTimeReference();
 	        $now = new DateTime();
 	        $this['duration']->add($timeRef->diff($now));
-	        $this->setTimeReference(new DateTime());
+	        $this->setTimeReference(new DateTime('now', new \DateTimeZone('UTC')));
 	    }
 	}
 	
