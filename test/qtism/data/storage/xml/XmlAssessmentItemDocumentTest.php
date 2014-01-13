@@ -114,11 +114,17 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function validFileProvider() {
 		return array(
+		    array(self::decorateUri('adaptive.xml')),
+		    array(self::decorateUri('adaptive_template.xml')),
+		    array(self::decorateUri('mc_stat2.xml')),
+		    array(self::decorateUri('mc_calc3.xml')),
+		    array(self::decorateUri('mc_calc5.xml')),
 			array(self::decorateUri('associate.xml')),
 			array(self::decorateUri('choice_fixed.xml')),
 			// @todo C10 is invalid identifier? Double check! (Actually it seems the example is fucked up... we'll see).
 			//array(self::decorateUri('choice_multiple_chocolade.xml')),
 		    array(self::decorateUri('modalFeedback.xml')),
+		    array(self::decorateUri('feedbackInline.xml')),
 			array(self::decorateUri('choice_multiple.xml')),
 			array(self::decorateUri('choice.xml')),
 			array(self::decorateUri('extended_text_rubric.xml')),
@@ -138,6 +144,13 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 			array(self::decorateUri('text_entry.xml')),
 		    array(self::decorateUri('template.xml')),
 		    array(self::decorateUri('math.xml')),
+		    array(self::decorateUri('feedbackblock_solution_random.xml')),
+		    array(self::decorateUri('feedbackblock_adaptive.xml')),
+		    array(self::decorateUri('orkney1.xml')),
+		    array(self::decorateUri('orkney2.xml')),
+		    array(self::decorateUri('nested_object.xml')),
+		    array(self::decorateUri('likert.xml')),
+		    //array(self::decorateUri('feedbackblock_templateblock.xml')),
 			array(self::decorateUri('associate.xml', '2.0')),
 		    array(self::decorateUri('associate_lang.xml', '2.0')),
 			array(self::decorateUri('adaptive.xml', '2.0')),

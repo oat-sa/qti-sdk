@@ -33,7 +33,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateBlock extends TemplateElement implements FlowStatic {
+class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic {
     
     /**
      * The base URI.
