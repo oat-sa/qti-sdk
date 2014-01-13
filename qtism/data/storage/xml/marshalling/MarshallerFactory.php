@@ -237,7 +237,7 @@ class MarshallerFactory {
 			$qtiClassName = $object->getQtiClassName();
 		}
 		else if ($object instanceof DOMElement) {
-			$qtiClassName = Utils::getLocalNodeName($object->nodeName);
+			$qtiClassName = $object->localName;
 		}
 		
 		if (isset($qtiClassName)) {

@@ -37,26 +37,6 @@ use \SplStack;
 class Utils {
 	
 	/**
-	 * Get the local name of a given $nodeName.
-	 *
-	 * ex1: 'testPart' -> 'testPart'
-	 * ex2: 'qti:testPart' -> 'testPart'
-	 *
-	 * @param string $nodeName A node name, prefixed or not.
-	 * @return string The local name of $nodeName.
-	 */
-	public static function getLocalNodeName($nodeName) {
-		$start = stripos($nodeName, ':');
-		// look for an equivalent local name.
-		if ($start !== false) {
-			return substr($nodeName, $start + 1);
-		}
-		else {
-			return $nodeName;
-		}
-	}
-	
-	/**
 	 * Get the XML schema to use for a given QTI version.
 	 *
 	 * @return string A filename pointing at an XML Schema file.

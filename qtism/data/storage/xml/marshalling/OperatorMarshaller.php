@@ -43,52 +43,74 @@ use \ReflectionClass;
  */
 class OperatorMarshaller extends RecursiveMarshaller {
 	
-	private static $operators = array('roundTo',
-			'statsOperator',
-			'max',
-			'min',
-			'mathOperator',
-			'gcd',
-			'lcm',
-			'repeat',
-			'multiple',
-			'ordered',
-			'containerSize',
-			'isNull',
-			'index',
-			'fieldValue',
-			'random',
-			'member',
-			'delete',
-			'contains',
-			'substring',
-			'not',
-			'and',
-			'or',
-			'anyN',
-			'match',
-			'stringMatch',
-			'patternMatch',
-			'equal',
-			'equalRounded',
-			'inside',
-			'lt',
-			'gt',
-			'lte',
-			'gte',
-			'durationLT',
-			'durationGTE',
-			'sum',
-			'product',
-			'subtract',
-			'divide',
-			'power',
-			'integerDivide',
-			'integerModulus',
-			'truncate',
-			'round',
-			'integerToFloat',
-			'customOperator');
+	private static $operators = array(
+	    'roundTo',
+		'statsOperator',
+		'max',
+		'min',
+		'mathOperator',
+		'gcd',
+		'lcm',
+		'repeat',
+		'multiple',
+		'ordered',
+		'containerSize',
+		'isNull',
+		'index',
+		'fieldValue',
+		'random',
+		'member',
+		'delete',
+		'contains',
+		'substring',
+		'not',
+		'and',
+		'or',
+		'anyN',
+		'match',
+		'stringMatch',
+		'patternMatch',
+		'equal',
+		'equalRounded',
+		'inside',
+		'lt',
+		'gt',
+		'lte',
+		'gte',
+		'durationLT',
+		'durationGTE',
+		'sum',
+		'product',
+		'subtract',
+		'divide',
+		'power',
+		'integerDivide',
+		'integerModulus',
+		'truncate',
+		'round',
+		'integerToFloat',
+		'customOperator');
+	
+	private static $expressions = array(
+	    'baseValue',
+	    'variable',
+	    'default',
+	    'correct',
+	    'mapResponse',
+	    'mapResponsePoint',
+	    'mathConstant',
+	    'null',
+	    'randomInteger',
+	    'randomFloat',
+	    'testVariables',
+	    'outcomeMaximum',
+	    'outcomeMinimum',
+	    'numberCorrect',
+	    'numberIncorrect',
+	    'numberResponded',
+	    'numberPresented',
+	    'numberSelected'
+	);
 	
 	/**
 	 * Get the list of operator QTI class names.
@@ -97,6 +119,15 @@ class OperatorMarshaller extends RecursiveMarshaller {
 	 */
 	public static function getOperators() {
 		return self::$operators;
+	}
+	
+	/**
+	 * Get the list of expression QTI class names.
+	 * 
+	 * @return array An array of string.
+	 */
+	public static function getExpressions() {
+	    return self::$expressions;
 	}
 	
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
@@ -156,14 +187,15 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		    // Now, we have to extract the LAX content of the custom operator and put it into
 		    // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
 		    $xml = $component->getXml();
-            $operatorElt = $xml->documentElement->cloneNode();
-            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, self::$operators);
+            $operatorElt = $xml->documentElement->cloneNode(true);
+            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
+
             foreach ($qtiOperatorElts as $qtiOperatorElt) {
                 $operatorElt->removeChild($qtiOperatorElt);
             }
             
             for ($i = 0; $i < $operatorElt->childNodes->length; $i++) {
-                $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i));
+                $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i), true);
                 $element->appendChild($node);
             }
             
@@ -193,7 +225,7 @@ class OperatorMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function getChildrenElements(DOMElement $element) {
-		return self::getChildElements($element);
+		return self::getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
 	}
 	
 	protected function getChildrenComponents(QtiComponent $component) {

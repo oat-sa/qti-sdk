@@ -261,8 +261,7 @@ abstract class Marshaller {
 		$returnValue = array();
 		
 		foreach ($rawElts as $elt) {
-		    
-			if (in_array(Utils::getLocalNodeName($elt->nodeName), $tagName) === !$exclude) {
+			if (in_array($elt->localName, $tagName) === !$exclude) {
 				$returnValue[] = $elt;
 			}
 		}

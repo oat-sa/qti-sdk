@@ -176,7 +176,7 @@ class PositionObjectInteraction extends Interaction {
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices) {
-        if (is_int($minChoices) && $minChoices > 0) {
+        if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
             
             if ($minChoices > $this->getMaxChoices()) {
                 $msg = "The 'minChoices' argument must be less than or equal to the limits imposed by 'maxChoices'.";

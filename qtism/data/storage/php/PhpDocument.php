@@ -23,6 +23,8 @@
 
 namespace qtism\data\storage\php;
 
+use qtism\common\datatypes\Coords;
+
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
@@ -87,7 +89,7 @@ class PhpDocument extends QtiDocument {
             $ctx->setFormatOutput(true);
             
             while (count($stack) > 0) {
-            
+               
                 $component = $stack->pop();
                 $isMarked = in_array($component, $marker, true);
             
@@ -108,7 +110,8 @@ class PhpDocument extends QtiDocument {
                         $stack->push(call_user_func(array($component, $getter->getName())));
                     }
                 }
-                else if ($isMarked === false && ($component instanceof AbstractCollection)) {
+                // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
+                else if ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof Coords)) {
                     // AbstractCollection node, 1st pass.
                     // Mark as explored.
                     array_push($marker, $component);
@@ -132,6 +135,11 @@ class PhpDocument extends QtiDocument {
                     
                     $marshaller->marshall();
                 }
+                else if ($component instanceof QtiDatatype) {
+                    // Leaf node QtiDataType.
+                    $marshaller = new PhpQtiDatatypeMarshaller($ctx, $component);
+                    $marshaller->marshall();
+                }
                 else if ($isMarked === true && $component instanceof AbstractCollection) {
                     // AbstractCollection, 2nd pass.
                     $marshaller = new PhpCollectionMarshaller($ctx, $component);
@@ -145,11 +153,6 @@ class PhpDocument extends QtiDocument {
                 else if (is_array($component) === true) {
                     // Leaf node array.
                     $marshaller = new PhpArrayMarshaller($ctx, $component);
-                    $marshaller->marshall();
-                }
-                else if ($component instanceof QtiDatatype) {
-                    // Leaf node QtiDataType.
-                    $marshaller = new PhpQtiDatatypeMarshaller($ctx, $component);
                     $marshaller->marshall();
                 }
                 else {

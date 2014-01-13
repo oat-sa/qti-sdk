@@ -66,23 +66,47 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase {
     }
     
     public function testReadFullLax($url = '') {
-//         $doc = new XmlDocument();
-//         $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_3.xml') : $url;
-//         $doc->load($url, true);
-//         $customOperator = $doc->getDocumentComponent();
+        $doc = new XmlDocument();
+        $url = (empty($url) === true) ? (self::samplesDir() . 'custom/operators/custom_operator_3.xml') : $url;
+        $doc->load($url, true);
+        $customOperator = $doc->getDocumentComponent();
         
-//         $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
-//         $this->assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
-//         $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
+        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $customOperator);
+        $this->assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
+        $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
         
-//         $xml = $customOperator->getXml();
-//         $this->assertEquals('false', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'debug'));
-//         $this->assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
+        $xml = $customOperator->getXml();
+        $this->assertEquals('false', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'debug'));
+        $this->assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
         
-//         $expressions = $customOperator->getExpressions();
-//         $this->assertEquals(1, count($expressions));
-//         $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
-//         $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
-//         $this->assertEquals('Param1Data', $expressions[0]->getValue());
+        $expressions = $customOperator->getExpressions();
+        $this->assertEquals(1, count($expressions));
+        $this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $expressions[0]);
+        $this->assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
+        $this->assertEquals('Param1Data', $expressions[0]->getValue());
+        
+        // Now check the LAX content.
+        $laxNodes = $xml->getElementsByTagNameNS('http://qtism.taotesting.com', 'config');
+        $this->assertEquals(1, $laxNodes->length);
+        $this->assertEquals('qtism', $laxNodes->item(0)->prefix);
+        
+        $logNodes = $laxNodes->item(0)->getElementsByTagNameNS('http://qtism.taotesting.com', 'log');
+        $this->assertEquals(1, $logNodes->length);
+        $this->assertEquals('true', $logNodes->item(0)->nodeValue);
+        
+        $repoNodes = $laxNodes->item(0)->getElementsByTagNameNS('http://qtism.taotesting.com', 'repository');
+        $this->assertEquals(1, $repoNodes->length);
+        $this->assertEquals('./repo', $repoNodes->item(0)->nodeValue);
+    }
+    
+    public function testWriteFullLax($url = '') {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/operators/custom_operator_3.xml');
+        
+        $file = tempnam('/tmp', 'qsm');
+        $doc->save($file);
+        
+        $this->testReadFullLax($file);
+        unlink($file);
     }
 }

@@ -44,6 +44,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
      * this outcome variable during responseProcessing.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $outcomeIdentifier;
     
@@ -58,6 +59,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
      * the value of the identifier attribute.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
     
@@ -68,6 +70,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
      * with the showHide attribute.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $identifier;
     

@@ -44,6 +44,7 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
      * this outcome variable during responseProcessing.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $outcomeIdentifier;
     
@@ -58,6 +59,7 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
      * the value of the identifier attribute.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $showHide = ShowHide::SHOW;
     
@@ -68,6 +70,7 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
      * with the showHide attribute.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $identifier;
     

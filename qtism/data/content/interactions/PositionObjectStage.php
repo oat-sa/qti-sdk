@@ -52,6 +52,7 @@ class PositionObjectStage extends QtiComponent implements Block {
      * The positionObjectInteractions composing the positionObjectStage.
      * 
      * @var PositionObjectInteractionCollection
+     * @qtism-bean-property
      */
     private $positionObjectInteractions;
     
