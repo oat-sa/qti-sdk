@@ -156,20 +156,29 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		    // Now, we have to extract the LAX content of the custom operator and put it into
 		    // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
 		    $xml = $component->getXml();
-		    if ($xml->ownerDocument !== null) {
-		        $operatorElt = $xml->ownerDocument->cloneNode();
-		        $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, self::$operators);
-		        foreach ($qtiOperatorElts as $qtiOperatorElt) {
-		            $operatorElt->removeChild($qtiOperatorElt);
-		        }
-		        
-		        for ($i = 0; $i < $operatorElt->childNodes; $i++) {
-		            $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i));
-		            $element->appendChild($node);
-		        }
-		    }
-		    
-		    
+            $operatorElt = $xml->documentElement->cloneNode();
+            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, self::$operators);
+            foreach ($qtiOperatorElts as $qtiOperatorElt) {
+                $operatorElt->removeChild($qtiOperatorElt);
+            }
+            
+            for ($i = 0; $i < $operatorElt->childNodes->length; $i++) {
+                $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i));
+                $element->appendChild($node);
+            }
+            
+            for ($i = 0; $i < $operatorElt->attributes->length; $i++) {
+                $attr = $operatorElt->attributes->item($i);
+                if ($attr->localName !== 'class' && $attr->localName !== 'definition' && $attr->localName !== 'schemaLocation') {
+                    
+                    if (empty($attr->namespaceURI) === false) {
+                        $element->setAttributeNS($attr->namespaceURI, $attr->prefix . ':' . $attr->localName, $attr->value);
+                    }
+                    else {
+                        $element->setAttribute($attr->value);
+                    }
+                }
+            }
 		}
 		
 		return $element;

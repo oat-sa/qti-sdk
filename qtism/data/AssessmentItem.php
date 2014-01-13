@@ -101,7 +101,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Wether the item is time dependent or not.
 	 * 
 	 * @var boolean
-	 * @qtism-bean
+	 * @qtism-bean-property
 	 */
 	private $timeDependent;
 	

@@ -159,6 +159,10 @@ class CustomOperator extends Operator implements IExternal {
         }
     }
     
+    public function getXmlString() {
+        return $this->xmlString;
+    }
+    
     /**
      * Set the encapsulated external component.
      * 
