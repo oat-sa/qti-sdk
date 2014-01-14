@@ -61,7 +61,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExter
      * 
      * @var ExternalQtiComponent
      */
-    private $externalComponent;
+    private $externalComponent = null;
     
     /**
      * Create a new InfoControl object.
@@ -85,6 +85,10 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExter
      */
     public function setXmlString($xmlString) {
         $this->xmlString = $xmlString;
+        
+        if ($this->externalComponent !== null) {
+            $this->getExternalComponent()->setXmlString($xmlString);
+        }
     }
     
     /**

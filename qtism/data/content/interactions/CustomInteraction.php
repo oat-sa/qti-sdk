@@ -88,7 +88,9 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     
     public function setXmlString($xmlString) {
         $this->xmlString = $xmlString;
-        $this->getExternalComponent()->setXmlString($xmlString);
+        if ($this->externalComponent !== null) {
+            $this->getExternalComponent()->setXmlString($xmlString);
+        }
     }
     
     /**
