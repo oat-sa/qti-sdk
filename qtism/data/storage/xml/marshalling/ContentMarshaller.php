@@ -24,6 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\InfoControl;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
 use qtism\data\content\interactions\GraphicOrderInteraction;
@@ -90,7 +91,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                       'printedVariable', 'math');
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
-                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
+                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div',
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback');
     
@@ -216,6 +217,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             return $component->getHotspotChoices()->getArrayCopy();
         }
         else if ($component instanceof ModalFeedback) {
+            return $component->getContent()->getArrayCopy();
+        }
+        else if ($component instanceof InfoControl) {
             return $component->getContent()->getArrayCopy();
         }
     }

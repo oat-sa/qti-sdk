@@ -40,7 +40,7 @@ use qtism\data\ExternalQtiComponent;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExternal {
+class InfoControl extends BodyElement implements BlockStatic, FlowStatic {
     
     /**
      * The base URI of the InfoControl.
@@ -51,81 +51,43 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExter
     private $xmlBase = '';
     
     /**
+     * The content of the InfoControl.
      * 
-     * @var string
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
-    private $xmlString;
-    
-    /**
-     * 
-     * @var ExternalQtiComponent
-     */
-    private $externalComponent = null;
+    private $content;
     
     /**
      * Create a new InfoControl object.
      * 
-     * @param string $xmlString The XML content representing the infoControl.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws \InvalidArgumentException If any of the above argument is invalid.
+     * @throws \InvalidArgumentException If any of the above arguments is invalid.
      */
-    public function __construct($xmlString, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setXmlString($xmlString);
-        $this->setExternalComponent(new ExternalQtiComponent($xmlString));
+        $this->setContent(new FlowStaticCollection());
     }
     
     /**
+     * Set the content of the InfoControl.
      * 
-     * @param string $xmlString
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setXmlString($xmlString) {
-        $this->xmlString = $xmlString;
-        
-        if ($this->externalComponent !== null) {
-            $this->getExternalComponent()->setXmlString($xmlString);
-        }
+    public function setContent(FlowStaticCollection $content) {
+        $this->content = $content;
     }
     
     /**
+     * Get the content of the InfoControl.
      * 
-     * @return string
+     * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getXmlString() {
-        return $this->xmlString;
-    }
-    
-    /**
-     * Set the encapsulated ExternalQtiComponent object.
-     * 
-     * @param ExternalQtiComponent $externalComponent
-     */
-    private function setExternalComponent(ExternalQtiComponent $externalComponent) {
-        $this->externalComponent = $externalComponent;
-    }
-    
-    /**
-     * Get the encapsulated ExternalQtiComponent object.
-     * 
-     * @return ExternalQtiComponent
-     */
-    private function getExternalComponent() {
-        return $this->externalComponent;
-    }
-    
-    /**
-     * Get the DOMDocument object corresponding to the XML content of the
-     * infoControl.
-     * 
-     * @return DOMDocument
-     * @throws \RuntimeException If the XML content is invalid.
-     */
-    public function getXml() {
-        return $this->getExternalComponent()->getXml();
+    public function getContent() {
+        return $this->content;
     }
     
     /**
@@ -162,6 +124,6 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExter
     }
     
     public function getComponents() {
-        return new QtiComponentCollection();
+        return new QtiComponentCollection($this->getContent()->getArrayCopy());
     }
 }
