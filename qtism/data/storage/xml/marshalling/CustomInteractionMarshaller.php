@@ -44,8 +44,8 @@ class CustomInteractionMarshaller extends Marshaller {
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement('customInteraction');
-		self::fillElement($element, $$component);
-		self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier);
+		self::fillElement($element, $component);
+		self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 		
 		if ($component->hasXmlBase() === true) {
 		    self::setXmlBase($element, $component->getXmlBase());

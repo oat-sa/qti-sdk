@@ -20,22 +20,22 @@
 	<itemBody>
 		<customInteraction responseIdentifier="RESPONSE" id="graph1">
 			<pci:portableCustomInteraction customInteractionTypeIdentifier="IW30MX6U48JF9120GJS">
-			<pci:templateVariableMapping templateIdentifier="X" configurationProperty="areaX" />
-			<pci:templateVariableMapping templateIdentifier="Y" configurationProperty="areaY" />
-			<pci:instance>
-       			<xhtml:script type="text/javascript" src="js/graph.js"></xhtml:script>
-				<xhtml:script type="text/javascript"><![CDATA[
-					qtiCustomInteractionContext.setConfiguration(
-						'graph1',
-						{
-							"div":"graph1_box","setup":{boundingbox: [-3,3,3,-3]},
-							"draw":function(graph){
-							var p1 = graph.create('point',[-1,-1]);
-						}
-					);
-       			]]></xhtml:script>
-				<xhtml:div id="graph1_box" class="graph" style="width:500px; height:500px;"></xhtml:div>
-			</pci:instance>
+				<pci:templateVariableMapping templateIdentifier="X" configurationProperty="areaX" />
+				<pci:templateVariableMapping templateIdentifier="Y" configurationProperty="areaY" />
+				<pci:instance>
+	       			<xhtml:script type="text/javascript" src="js/graph.js"></xhtml:script>
+					<xhtml:script type="text/javascript"><![CDATA[
+						qtiCustomInteractionContext.setConfiguration(
+							'graph1',
+							{
+								"div":"graph1_box","setup":{boundingbox: [-3,3,3,-3]},
+								"draw":function(graph){
+								var p1 = graph.create('point',[-1,-1]);
+							}
+						);
+	       			]]></xhtml:script>
+					<xhtml:div id="graph1_box" class="graph" style="width:500px; height:500px;"></xhtml:div>
+				</pci:instance>
 			</pci:portableCustomInteraction>
 		</customInteraction>
 	</itemBody>

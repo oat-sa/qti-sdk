@@ -112,9 +112,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    $this->assertFalse(file_exists($file));
 	}
 	
-	public function testLoadPCIItem() {
+	public function testLoadPCIItem($url = '') {
 	    $doc = new XmlDocument();
-	    $doc->load(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', true);
+	    $doc->load((empty($url) === true) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
 	    $item = $doc->getDocumentComponent();
 	    
 	    $this->assertInstanceOf('qtism\\data\\AssessmentItem', $item);
@@ -123,12 +123,14 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    $this->assertFalse($item->isAdaptive());
 	    $this->assertFalse($item->isTimeDependent());
 	    
+	    // responseDeclaration
 	    $responseDeclarations = $item->getComponentsByClassName('responseDeclaration');
 	    $this->assertEquals(1, count($responseDeclarations));
 	    $this->assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
 	    $this->assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
 	    $this->assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
 	    
+	    // templateDeclarations
 	    $templateDeclarations = $item->getComponentsByClassName('templateDeclaration');
 	    $this->assertEquals(2, count($templateDeclarations));
 	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
@@ -138,6 +140,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
 	    $this->assertEquals('Y', $templateDeclarations[1]->getIdentifier());
 	    
+	    // customInteraction
 	    $customInteractions = $item->getComponentsByClassName('customInteraction');
 	    $this->assertEquals(1, count($customInteractions));
 	    
@@ -145,8 +148,56 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
 	    $this->assertEquals('graph1', $customInteraction->getId());
 	    
+	    // xml content
 	    $customInteractionElt = $customInteraction->getXml()->documentElement;
 	    $this->assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
+	    $this->assertEquals('graph1', $customInteractionElt->getAttribute('id'));
+	    
+	   
+	    $pci = 'http://www.imsglobal.org/xsd/portableCustomInteraction';
+	    // -- pci:portableCustomInteraction
+	    $portableCustomInteractionElts = $customInteractionElt->getElementsByTagNameNS($pci, 'portableCustomInteraction');
+	    $this->assertEquals(1, $portableCustomInteractionElts->length);
+	    $this->assertEquals('IW30MX6U48JF9120GJS', $portableCustomInteractionElts->item(0)->getAttribute('customInteractionTypeIdentifier'));
+	    
+	    // --pci:templateVariableMapping
+	    $templateVariableMappingElts = $customInteractionElt->getElementsByTagNameNS($pci, 'templateVariableMapping');
+	    $this->assertEquals(2, $templateVariableMappingElts->length);
+	    $this->assertEquals('X', $templateVariableMappingElts->item(0)->getAttribute('templateIdentifier'));
+	    $this->assertEquals('areaX', $templateVariableMappingElts->item(0)->getAttribute('configurationProperty'));
+	    $this->assertEquals('Y', $templateVariableMappingElts->item(1)->getAttribute('templateIdentifier'));
+	    $this->assertEquals('areaY', $templateVariableMappingElts->item(1)->getAttribute('configurationProperty'));
+	    
+	    // --pci:instance
+	    $instanceElts = $customInteractionElt->getElementsByTagNameNS($pci, 'instance');
+	    $this->assertEquals(1, $instanceElts->length);
+	    
+	    // --xhtml:script
+	    $xhtml = 'http://www.w3.org/1999/xhtml';
+	    $scriptElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'script');
+	    $this->assertEquals(2, $scriptElts->length);
+	    $this->assertEquals('text/javascript', $scriptElts->item(0)->getAttribute('type'));
+	    $this->assertEquals('js/graph.js', $scriptElts->item(0)->getAttribute('src'));
+	    $this->assertEquals('text/javascript', $scriptElts->item(1)->getAttribute('type'));
+	    $this->assertEquals(7, mb_strpos($scriptElts->item(1)->nodeValue, 'qtiCustomInteractionContext.setConfiguration(', 0, 'UTF-8'));
+	    
+	    // --xhtml:div
+	    $divElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'div');
+	    $this->assertEquals(1, $divElts->length);
+	    $this->assertEquals('graph1_box', $divElts->item(0)->getAttribute('id'));
+	    $this->assertEquals('graph', $divElts->item(0)->getAttribute('class'));
+	    $this->assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
+	}
+	
+	public function testWritePCIItem() {
+	    $doc = new XmlDocument();
+	    $doc->load(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml');
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    $this->testLoadPCIItem($file);
+	    unlink($file);
 	}
 	
 	public function validFileProvider() {
