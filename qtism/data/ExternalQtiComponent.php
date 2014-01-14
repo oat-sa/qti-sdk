@@ -65,7 +65,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal {
      * Returns the XML representation of the external component as
      * a DOMDocument object.
      * 
-     * @return DOMDocument|false A DOMDocument object representing the content of the external component.
+     * @return DOMDocument A DOMDocument object representing the content of the external component.
      * @throws RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
      */
     public function getXml() {
@@ -120,10 +120,21 @@ class ExternalQtiComponent extends QtiComponent implements IExternal {
         $this->xml = null;
     }
     
+    /**
+     * Whether or not a target namespace is defined.
+     * 
+     * @return boolean
+     */
     public function hasTargetNamespace() {
         return $this->getTargetNamespace() !== '';
     }
     
+    /**
+     * Get the namespace URI the XML content must belong to. Returns
+     * an empty string is no particular namespace is defined.
+     * 
+     * @return string
+     */
     public function getTargetNamespace() {
         return $this->targetNamespace;
     }

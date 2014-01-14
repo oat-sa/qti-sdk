@@ -112,6 +112,43 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    $this->assertFalse(file_exists($file));
 	}
 	
+	public function testLoadPCIItem() {
+	    $doc = new XmlDocument();
+	    $doc->load(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', true);
+	    $item = $doc->getDocumentComponent();
+	    
+	    $this->assertInstanceOf('qtism\\data\\AssessmentItem', $item);
+	    $this->assertEquals('SimpleExample', $item->getIdentifier());
+	    $this->assertEquals('Example', $item->getTitle());
+	    $this->assertFalse($item->isAdaptive());
+	    $this->assertFalse($item->isTimeDependent());
+	    
+	    $responseDeclarations = $item->getComponentsByClassName('responseDeclaration');
+	    $this->assertEquals(1, count($responseDeclarations));
+	    $this->assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
+	    $this->assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
+	    $this->assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
+	    
+	    $templateDeclarations = $item->getComponentsByClassName('templateDeclaration');
+	    $this->assertEquals(2, count($templateDeclarations));
+	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
+	    $this->assertEquals('X', $templateDeclarations[0]->getIdentifier());
+	    $this->assertEquals(BaseType::INTEGER, $templateDeclarations[1]->getBaseType());
+	    $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
+	    $this->assertEquals('Y', $templateDeclarations[1]->getIdentifier());
+	    
+	    $customInteractions = $item->getComponentsByClassName('customInteraction');
+	    $this->assertEquals(1, count($customInteractions));
+	    
+	    $customInteraction = $customInteractions[0];
+	    $this->assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
+	    $this->assertEquals('graph1', $customInteraction->getId());
+	    
+	    $customInteractionElt = $customInteraction->getXml()->documentElement;
+	    $this->assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
+	}
+	
 	public function validFileProvider() {
 		return array(
 		    array(self::decorateUri('adaptive.xml')),

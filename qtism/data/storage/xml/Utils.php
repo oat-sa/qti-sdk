@@ -162,4 +162,43 @@ class Utils {
 	    
 	    return $children[0];
 	}
+	
+	/**
+	 * Import all the child nodes of DOMElement $from to DOMElement $into.
+	 * 
+	 * @param DOMElement $from The source DOMElement.
+	 * @param DOMElement $into The target DOMElement.
+	 * @param boolean $deep Whether or not to import the whole node hierarchy.
+	 */
+	public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true) {
+	    
+	    for ($i = 0; $i < $from->childNodes->length; $i++) {
+	        $node = $into->ownerDocument->importNode($from->childNodes->item($i), $deep);
+	        $into->appendChild($node);
+	    }
+	}
+	
+	/**
+	 * Import (gracefully i.e. by respecting namespaces) the attributes of DOMElement $from to
+	 * DOMElement $into.
+	 * 
+	 * @param DOMElement $from The source DOMElement.
+	 * @param DOMElement $into The target DOMElement.
+	 */
+	public static function importAttributes(DOMElement $from, DOMElement $into) {
+	    
+	    for ($i = 0; $i < $from->attributes->length; $i++) {
+	        $attr = $from->attributes->item($i);
+	        
+	        if ($attr->localName !== 'schemaLocation') {
+	    
+	            if (empty($attr->namespaceURI) === false) {
+	                $into->setAttributeNS($attr->namespaceURI, $attr->prefix . ':' . $attr->localName, $attr->value);
+	            }
+	            else {
+	                $into->setAttribute($attr->localName, $attr->value);
+	            }
+	        }
+	    }
+	}
 }

@@ -171,7 +171,8 @@ class PhpDocumentTest extends QtiSmTestCase {
                         array(self::samplesDir() . 'custom/operators/custom_operator_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
                         array(self::samplesDir() . 'custom/operators/custom_operator_2.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
                         array(self::samplesDir() . 'custom/operators/custom_operator_3.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
-                        array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator')
+                        array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
+                        array(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', 'qtism\\data\\AssessmentItem')
         );
     }
 }

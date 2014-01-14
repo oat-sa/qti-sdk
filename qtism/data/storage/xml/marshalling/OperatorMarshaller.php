@@ -24,6 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\storage\xml\Utils;
+
 use qtism\data\expressions\operators\CustomOperator;
 use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
@@ -150,7 +152,10 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		
 		if ($element->localName === 'customOperator') {
 		    // Retrieve XML content as a string. 
-		    $params[] = $element->ownerDocument->saveXML($element);
+		    $frag = $element->ownerDocument->createDocumentFragment();
+		    $element = $element->cloneNode(true);
+		    $frag->appendChild($element);
+		    $params[] = $frag->ownerDocument->saveXML($frag);
 		    $component = Reflection::newInstance($class, $params);
 		    
 		    if (($class = self::getDOMElementAttributeAs($element, 'class')) !== null) {
@@ -194,23 +199,8 @@ class OperatorMarshaller extends RecursiveMarshaller {
                 $operatorElt->removeChild($qtiOperatorElt);
             }
             
-            for ($i = 0; $i < $operatorElt->childNodes->length; $i++) {
-                $node = $element->ownerDocument->importNode($operatorElt->childNodes->item($i), true);
-                $element->appendChild($node);
-            }
-            
-            for ($i = 0; $i < $operatorElt->attributes->length; $i++) {
-                $attr = $operatorElt->attributes->item($i);
-                if ($attr->localName !== 'class' && $attr->localName !== 'definition' && $attr->localName !== 'schemaLocation') {
-                    
-                    if (empty($attr->namespaceURI) === false) {
-                        $element->setAttributeNS($attr->namespaceURI, $attr->prefix . ':' . $attr->localName, $attr->value);
-                    }
-                    else {
-                        $element->setAttribute($attr->value);
-                    }
-                }
-            }
+            Utils::importChildNodes($operatorElt, $element);
+            Utils::importAttributes($operatorElt, $element);
 		}
 		
 		return $element;
