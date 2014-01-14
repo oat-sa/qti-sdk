@@ -21,27 +21,29 @@
  * @package
  */
 
-namespace qtism\data\content\interactions;
+namespace qtism\data\content;
 
 use qtism\data\QtiComponentCollection;
-use qtism\data\content\Flow;
-use qtism\data\content\Block;
-use qtism\data\ExternalQtiComponent;
 use qtism\data\IExternal;
+use qtism\data\ExternalQtiComponent;
 
 /**
  * From IMS QTI:
  * 
- * The custom interaction provides an opportunity for extensibility of this 
- * specification to include support for interactions not currently documented.
+ * The infoControl element is a means to provide the candidate with extra information about 
+ * the item when s/he chooses to trigger the control. The extra information can be a hint, 
+ * but could also be additional tools such as a ruler or a (javaScript) calculator.
+ * 
+ * Unlike endAttemptInteraction, triggering infoControl has no consequence for response processing.
+ * That means that its triggering won't be recorded, nor the candidate penalised for triggering it.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CustomInteraction extends Interaction implements IExternal, Block, Flow {
+class InfoControl extends BodyElement implements BlockStatic, FlowStatic, IExternal {
     
     /**
-     * The base URI of the CustomInteraction.
+     * The base URI of the InfoControl.
      *
      * @var string
      * @qtism-bean-property
@@ -49,7 +51,6 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     private $xmlBase = '';
     
     /**
-     * The xml string content of the custom interaction.
      * 
      * @var string
      * @qtism-bean-property
@@ -60,50 +61,43 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
      * 
      * @var ExternalQtiComponent
      */
-    private $externalComponent = null;
+    private $externalComponent;
     
     /**
-     * Create a new CustomInteraction object.
+     * Create a new InfoControl object.
      * 
-     * @param string $responseIdentifier The identifier of the Response Variable bound to the interaction.
-     * @param string $xmlString The xml data representing the whole customInteraction component and its content.
+     * @param string $xmlString The XML content representing the infoControl.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the above argument is invalid.
      */
-    public function __construct($responseIdentifier, $xmlString, $id = '', $class = '', $lang = '', $label = '') {
-        parent::__construct($responseIdentifier, $id, $class, $lang, $label);
+    public function __construct($xmlString, $id = '', $class = '', $lang = '', $label = '') {
+        parent::__construct($id, $class, $lang, $label);
         $this->setXmlString($xmlString);
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
     
-    public function getQtiClassName() {
-        return 'customInteraction';
+    /**
+     * 
+     * @param string $xmlString
+     */
+    public function setXmlString($xmlString) {
+        $this->xmlString = $xmlString;
     }
     
+    /**
+     * 
+     * @return string
+     */
     public function getXmlString() {
         return $this->xmlString;
     }
     
-    public function setXmlString($xmlString) {
-        $this->xmlString = $xmlString;
-        $this->getExternalComponent()->setXmlString($xmlString);
-    }
-    
     /**
-     * Get the XML content of the custom interaction itself and its content.
-     *
-     * @return DOMDocument A DOMDocument object representing the custom interaction.
-     * @throws RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
-     */
-    public function getXml() {
-        return $this->getExternalComponent()->getXml();
-    }
-    
-    /**
-     * Set the encapsulated external component.
-     *
+     * Set the encapsulated ExternalQtiComponent object.
+     * 
      * @param ExternalQtiComponent $externalComponent
      */
     private function setExternalComponent(ExternalQtiComponent $externalComponent) {
@@ -111,8 +105,8 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     }
     
     /**
-     * Get the encapsulated external component.
-     *
+     * Get the encapsulated ExternalQtiComponent object.
+     * 
      * @return ExternalQtiComponent
      */
     private function getExternalComponent() {
@@ -120,7 +114,18 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     }
     
     /**
-     * Set the base URI of the CustomInteraction.
+     * Get the DOMDocument object corresponding to the XML content of the
+     * infoControl.
+     * 
+     * @return DOMDocument
+     * @throws \RuntimeException If the XML content is invalid.
+     */
+    public function getXml() {
+        return $this->getExternalComponent()->getXml();
+    }
+    
+    /**
+     * Set the base URI of the InfoControl.
      *
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
@@ -136,7 +141,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     }
     
     /**
-     * Get the base URI of the CustomInteraction.
+     * Get the base URI of the InfoControl.
      *
      * @return string An empty string or a URI.
      */
@@ -144,13 +149,12 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
         return $this->xmlBase;
     }
     
-    /**
-     * Whether or not a base URI is defined for the CustomInteraction.
-     * 
-     * @return boolean
-     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
+    }
+    
+    public function getQtiClassName() {
+        return 'infoControl';
     }
     
     public function getComponents() {
