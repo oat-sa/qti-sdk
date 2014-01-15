@@ -2068,7 +2068,6 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot retrieve the current item session.";
 	        throw new UnexpectedValueException($msg);
 	    }
-	    
 	}
 	
 	/**
@@ -2092,6 +2091,126 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot retrieve the current item session.";
 	        throw new UnexpectedValueException($msg);
 	    }
+	}
+	
+	/**
+	 * Get the number of responded items.
+	 * 
+	 * @param string $identifier An optional assessmentSection identifier.
+	 * @return integer
+	 */
+	public function numberResponded($identifier = '') {
+	    $numberResponded = 0;
+
+        foreach ($this->getItemSubset($identifier) as $itemRef) {
+            $itemSessions = $this->getAssessmentItemSessions($itemRef->getIdentifier());
+            
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isResponded() === true) {
+                        $numberResponded++;
+                    }
+                }
+            } 
+        }
+	    
+	    return $numberResponded;
+	}
+	
+	/**
+	 * Get the number of correctly answered items.
+	 *
+	 * @param string $identifier An optional assessmentSection identifier.
+	 * @return integer
+	 */
+	public function numberCorrect($identifier = '') {
+	    $numberCorrect = 0;
+	    
+	    foreach ($this->getItemSubset($identifier) as $itemRef) {
+	        $itemSessions = $this->getAssessmentItemSessions($itemRef->getIdentifier());
+	        
+	        if ($itemSessions !== false) {
+	            foreach ($itemSessions as $itemSession) {
+	                if ($itemSession->isCorrect() === true) {
+	                    $numberCorrect++;
+	                }
+	            }
+	        }
+	    }
+	    
+	    return $numberCorrect;
+	}
+	
+	/**
+	 * Get the number of incorrectly answered items.
+	 *
+	 * @param string $identifier An optional assessmentSection identifier.
+	 * @return integer
+	 */
+	public function numberIncorrect($identifier = '') {
+	    $numberIncorrect = 0;
+	     
+	    foreach ($this->getItemSubset($identifier) as $itemRef) {
+	        $itemSessions = $this->getAssessmentItemSessions($itemRef->getIdentifier());
+	         
+	        if ($itemSessions !== false) {
+	            foreach ($itemSessions as $itemSession) {
+	                if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
+	                    $numberIncorrect++;
+	                }
+	            }
+	        }
+	    }
+	     
+	    return $numberIncorrect;
+	}
+	
+	/**
+	 * Get the number of presented items.
+	 *
+	 * @param string $identifier An optional assessmentSection identifier.
+	 * @return integer
+	 */
+	public function numberPresented($identifier = '') {
+	    $numberPresented = 0;
+	
+	    foreach ($this->getItemSubset($identifier) as $itemRef) {
+	        $itemSessions = $this->getAssessmentItemSessions($itemRef->getIdentifier());
+	
+	        if ($itemSessions !== false) {
+	            foreach ($itemSessions as $itemSession) {
+	                if ($itemSession->isPresented() === true) {
+	                    $numberPresented++;
+	                }
+	            }
+	        }
+	    }
+	
+	    return $numberPresented;
+	}
+	
+	/**
+	 * Get the number of selected items.
+	 *
+	 * @param string $identifier An optional assessmentSection identifier.
+	 * @return integer
+	 */
+	public function numberSelected($identifier = '') {
+	    $numberSelected = 0;
+	
+	    foreach ($this->getItemSubset($identifier) as $itemRef) {
+	        $itemSessions = $this->getAssessmentItemSessions($itemRef->getIdentifier());
+	
+	        if ($itemSessions !== false) {
+	            foreach ($itemSessions as $itemSession) {
+	                if ($itemSession->isSelected() === true) {
+	                    $numberSelected++;
+	                }
+	            }
+	        }
+	    }
+	
+	    return $numberSelected;
 	}
 	
 	/**

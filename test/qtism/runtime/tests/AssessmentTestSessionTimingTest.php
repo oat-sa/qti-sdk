@@ -27,7 +27,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         // Try to get a duration on a non-begun test session.
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
-         
+
+        // Try the same on a running test session.
         $session->beginTestSession();
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));

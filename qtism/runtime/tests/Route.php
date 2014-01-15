@@ -563,11 +563,13 @@ class Route implements Iterator {
         
         // Reference the AssessmentItemRef object of the RouteItem
         // by section for a later use.
-        $assessmentSectionIdentifier = $routeItem->getAssessmentSection()->getIdentifier();
-        if (isset($this->assessmentItemRefSectionMap[$assessmentSectionIdentifier]) === false) {
-            $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
+        foreach ($routeItem->getAssessmentSections() as $s) {
+            $assessmentSectionIdentifier = $s->getIdentifier();
+            if (isset($this->assessmentItemRefSectionMap[$assessmentSectionIdentifier]) === false) {
+                $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier] = new AssessmentItemRefCollection();
+            }
+            $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
         }
-        $this->assessmentItemRefSectionMap[$assessmentSectionIdentifier][] = $assessmentItemRef;
         
         // Reference the AssessmentItemRef by routeItem.
         $this->assessmentItemRefMap[$assessmentItemRef] = $routeItem;

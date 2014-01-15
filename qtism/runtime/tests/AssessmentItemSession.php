@@ -1009,6 +1009,15 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Whether or not the item has been attempted at least one.
+	 * 
+	 * @return boolean
+	 */
+	public function isAttempted() {
+	    return $this['numAttempts'] > 0;
+	}
+	
+	/**
 	 * Get a cloned $duration with the acceptable latency of the item
 	 * session added.
 	 * 

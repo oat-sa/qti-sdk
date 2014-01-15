@@ -136,7 +136,7 @@ class AssessmentItemSessionStore {
         }
         else {
             $itemId = $assessmentItemRef->getIdentifier();
-            $msg = "No AssessmentItemSession objects bound to '${itemId}.${occurence}'.";
+            $msg = "No AssessmentItemSession objects bound to '${itemId}'.";
             throw new OutOfBoundsException($msg);
         }
     }

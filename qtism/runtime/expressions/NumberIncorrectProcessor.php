@@ -69,7 +69,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor {
 	        $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 	        
 	        foreach ($itemSessions as $itemSession) {
-	            if ($itemSession->isCorrect() === false) {
+	            if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
 	                $numberIncorrect++;
 	            }
 	        }
