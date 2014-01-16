@@ -4,22 +4,14 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\tests\AssessmentTestSession;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
-use qtism\data\storage\xml\XmlCompactDocument;
 
-require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
+require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.php');
 
-class AssessmentTestSessionPreConditionsTest extends QtiSmTestCase {
+class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase {
 	
     public function testInstantiationSample1() {
         
-        $doc = new XmlCompactDocument('1.0');
-        $doc->load(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
-        
-        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
-        
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $route = $testSession->getRoute();
         
         // Q01 - No precondtions.
@@ -49,11 +41,8 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmTestCase {
     }
     
     public function testSingleSectionLinear1() {
-        $doc = new XmlCompactDocument('1.0');
-        $doc->load(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
-        
-        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $testSession->beginTestSession();
         
         // Q01 - Answer incorrect to be redirected by successive false evaluated preconditions.
@@ -67,5 +56,57 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmTestCase {
         $this->assertSame(null, $testSession['Q02.SCORE']);
         $this->assertSame(null, $testSession['Q03.SCORE']);
         $this->assertSame(null, $testSession['Q04.SCORE']);
+    }
+    
+    public function testKillerTestEpicFail() {
+        
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
+        $testSession->beginTestSession();
+        
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'BadChoice'))));
+        
+        // Incorrect answer = end of test.
+        $this->assertFalse($testSession->isRunning());
+        $this->assertEquals(0.0, $testSession['Q01.SCORE']);
+        $this->assertInternalType('float', $testSession['Q01.SCORE']);
+        
+        // Other items could not be instantiated.
+        $this->assertSame(null, $testSession['Q02.SCORE']);
+        $this->assertSame(null, $testSession['Q03.SCORE']);
+        $this->assertSame(null, $testSession['Q04.SCORE']);
+        $this->assertSame(null, $testSession['Q05.SCORE']);
+    }
+    
+    public function testKillerTestEpicWin() {
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
+        $testSession->beginTestSession();
+        
+        $this->assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        
+        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $this->assertEquals(1.0, $testSession['Q02.SCORE']);
+        
+        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $this->assertEquals(1.0, $testSession['Q03.SCORE']);
+        
+        $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $this->assertEquals(1.0, $testSession['Q04.SCORE']);
+        
+        $this->assertEquals('Q05', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $this->assertEquals(1.0, $testSession['Q05.SCORE']);
+        
+        $this->assertFalse($testSession->isRunning());
     }
 }
