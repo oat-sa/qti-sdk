@@ -269,7 +269,7 @@ class Utils {
 			return false;
 		}
 		
-		$pattern = '/^[a-z][a-z0-9_\-]*(?:(?:\.[1-9][0-9]*){0,1}\.[a-z][a-z0-9_\-]*){0,1}$/iu';
+		$pattern = '/^[a-z][a-z0-9_\-]*(?:(?:\.[1-9][0-9]*){0,1}(?:\.[a-z][a-z0-9_\-]*){0,1}){0,1}$/iu';
 		return preg_match($pattern, $string) === 1;
 	}
 }

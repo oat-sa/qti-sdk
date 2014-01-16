@@ -71,7 +71,6 @@ class VariableIdentifierTest extends QtiSmTestCase {
 			array('_Q01'),
 			array(''),
 			array(1337),
-			array('Q01.1'),
 			array('Q01.A.SCORE'),
 			array('Qxx.12.'),
 			array('Q-2.'),

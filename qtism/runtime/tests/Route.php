@@ -1057,17 +1057,11 @@ class Route implements Iterator {
         try {
             $identifier = new VariableIdentifier($identifier);
             
-            if ($identifier->hasPrefix() === true) {
-                $identifier = $identifier->__toString();
-                $msg = "Identifiers given for branching cannot contain a prefix, '${identifier}' given.";
-                throw new OutOfRangeException($msg);
-            }
-            
-            $id = $identifier->getVariableName();
-            $occurence = ($identifier->hasSequenceNumber() === true) ? $identifier->getSequenceNumber() : 0;
+            $id = ($identifier->hasPrefix() === false) ? $identifier->getVariableName() : $identifier->getPrefix();
+            $occurence = ($identifier->hasPrefix() === false) ? 0 : intval($identifier->getVariableName() - 1);
         }
         catch (InvalidArgumentException $e) {
-            $msg = "The given identifier '${identifier}' is invalid branching target.";
+            $msg = "The given identifier '${identifier}' is an invalid branching target.";
             throw new OutOfRangeException($msg);
         }
         

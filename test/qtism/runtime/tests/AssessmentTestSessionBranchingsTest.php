@@ -137,4 +137,39 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
+    
+    /**
+     * @dataProvider branchingMultipleOccurencesProvider
+     */
+    public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence) {
+        // This test aims at testing the possibility to jump
+        // on a particular item ref occurence.
+        $doc = new XmlCompactDocument('1.0');
+        $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
+        
+        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession->beginTestSession();
+        
+        $testSession->beginAttempt();
+        
+        if (empty($response) === true) {
+            $testSession->skip();
+        }
+        else {
+            $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, $response))));
+        }
+        
+        $this->assertEquals($expectedTarget, $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertEquals($occurence, $testSession->getCurrentAssessmentItemRefOccurence());
+    }
+    
+    public function branchingMultipleOccurencesProvider() {
+        return array(
+            array('goto21', 'Q02', 0),
+            array('goto22', 'Q02', 1),
+            array('goto23', 'Q02', 2),
+            array(null, 'Q02', 3)              
+        );
+    }
 }

@@ -95,7 +95,7 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 			array('_Q01', false),
 			array('', false),
 			array(1337, false),
-			array('Q01.1', false),
+			array('Q01.1', true),
 			array('Q01.1.SCORE', true),
 			array('Q01.999.SCORE', true),
 			array('Q01.A.SCORE', false),

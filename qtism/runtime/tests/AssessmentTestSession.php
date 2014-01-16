@@ -1613,7 +1613,7 @@ class AssessmentTestSession extends State {
 	        
 	        if ($v->hasPrefix() === true || $v->hasSequenceNumber() === true) {
 	            $msg = "'${identifier}' is not a valid item reference identifier.";
-	            throw new InvalidArgumentException($msg, 0, $e);
+	            throw new InvalidArgumentException($msg, 0);
 	        }
 	        
 	        $itemRefs = $this->getAssessmentItemRefs();
