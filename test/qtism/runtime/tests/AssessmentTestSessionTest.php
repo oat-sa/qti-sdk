@@ -571,18 +571,18 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->beginTestSession();
 	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(6, count($jumps));
-	    $this->assertEquals('Q01', $jumps[0]->getAssessmentItemRef()->getIdentifier('Q01'));
+	    $this->assertEquals('Q01', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier('Q01'));
 	    $this->assertEquals(0, $jumps[0]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
-	    $this->assertEquals('Q02', $jumps[1]->getAssessmentItemRef()->getIdentifier('Q02'));
+	    $this->assertEquals('Q02', $jumps[1]->getTarget()->getAssessmentItemRef()->getIdentifier('Q02'));
 	    $this->assertEquals(1, $jumps[1]->getPosition());
-	    $this->assertEquals('Q03', $jumps[2]->getAssessmentItemRef()->getIdentifier('Q03'));
+	    $this->assertEquals('Q03', $jumps[2]->getTarget()->getAssessmentItemRef()->getIdentifier('Q03'));
 	    $this->assertEquals(2, $jumps[2]->getPosition());
-	    $this->assertEquals('Q04', $jumps[3]->getAssessmentItemRef()->getIdentifier('Q04'));
+	    $this->assertEquals('Q04', $jumps[3]->getTarget()->getAssessmentItemRef()->getIdentifier('Q04'));
 	    $this->assertEquals(3, $jumps[3]->getPosition());
-	    $this->assertEquals('Q05', $jumps[4]->getAssessmentItemRef()->getIdentifier('Q05'));
+	    $this->assertEquals('Q05', $jumps[4]->getTarget()->getAssessmentItemRef()->getIdentifier('Q05'));
 	    $this->assertEquals(4, $jumps[4]->getPosition());
-	    $this->assertEquals('Q06', $jumps[5]->getAssessmentItemRef()->getIdentifier('Q06'));
+	    $this->assertEquals('Q06', $jumps[5]->getTarget()->getAssessmentItemRef()->getIdentifier('Q06'));
 	    $this->assertEquals(5, $jumps[5]->getPosition());
 	    
 	    // The session has begun, the candidate is able to jump anywhere in testPart 'P01'.
@@ -598,16 +598,16 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $jumps = $session->getPossibleJumps(false);
 	    $this->assertEquals(3, count($jumps));
-	    $this->assertEquals('Q07', $jumps[0]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals('Q07', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(6, $jumps[0]->getPosition());
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
-	    $this->assertEquals(0, $jumps[0]->getOccurence());
-	    $this->assertEquals('Q07', $jumps[1]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(0, $jumps[0]->getTarget()->getOccurence());
+	    $this->assertEquals('Q07', $jumps[1]->getTarget()->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(7, $jumps[1]->getPosition());
-	    $this->assertEquals(1, $jumps[1]->getOccurence());
-	    $this->assertEquals('Q07', $jumps[2]->getAssessmentItemRef()->getIdentifier());
+	    $this->assertEquals(1, $jumps[1]->getTarget()->getOccurence());
+	    $this->assertEquals('Q07', $jumps[2]->getTarget()->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(8, $jumps[2]->getPosition());
-	    $this->assertEquals(2, $jumps[2]->getOccurence());
+	    $this->assertEquals(2, $jumps[2]->getTarget()->getOccurence());
 	    
 	    for ($i = 0; $i < 3; $i++) {
 	        $session->beginAttempt();

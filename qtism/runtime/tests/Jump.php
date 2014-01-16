@@ -24,14 +24,12 @@
  */
 namespace qtism\runtime\tests;
 
-use qtism\data\AssessmentItemRef;
-use qtism\runtime\tests\AssessmentItemSessionState;
 use \InvalidArgumentException;
 
 /**
  * The Jump class represents the a possible location in an AssessmentTestSession
  * a candidate can "jump" to. Indeed, when the NONLINEAR navigation mode is in force,
- * the candidate has the ability to "jump" to any RouteItem that belongs to the current TestPart.
+ * the candidate has the ability to "jump" to a given RouteItem
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -49,16 +47,9 @@ class Jump {
     /**
      * The AssessmentItemRef the candidate can jump to.
      * 
-     * @var AssessmentItemRef
+     * @var RouteItem
      */
-    private $assessmentItemRef;
-    
-    /**
-     * The occurence number of the AssessmentItemRef the candidate can jump to.
-     * 
-     * @var integer
-     */
-    private $occurence;
+    private $target;
     
     /**
      * The AssessmentItemSession related to the $assessmentItemRef.$occurence
@@ -72,15 +63,13 @@ class Jump {
      * Create a new Jump object.
      * 
      * @param integer $position The position in the assessment test session's route the jump leads to.
-     * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef the candidate can jump to.
-     * @param integer $occurence The occurence number of the $assessmentItemRef the candidate can jump to.
-     * @param AssessmentItemSession $itemSession The AssessmentItemSession related to $assessmentItemRef.$occurence.
+     * @param RouteItem $target The RouteItem to go when following the jump.
+     * @param AssessmentItemSession $itemSession The AssessmentItemSession related to the RouteItem.
      * @throws InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
-    public function __construct($position, AssessmentItemRef $assessmentItemRef, $occurence, AssessmentItemSession $itemSession) {
+    public function __construct($position, RouteItem $target, AssessmentItemSession $itemSession) {
         $this->setPosition($position);
-        $this->setAssessmentItemRef($assessmentItemRef);
-        $this->setOccurence($occurence);
+        $this->setTarget($target);
         $this->setItemSession($itemSession);
     }
     
@@ -105,47 +94,21 @@ class Jump {
     }
     
     /**
-     * Set the AssessmentItemRef the candidate can jump to.
+     * Set the RouteItem the candidate can jump to.
      * 
-     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param RouteItem $routeItem A RouteItem object.
      */
-    protected function setAssessmentItemRef(AssessmentItemRef $assessmentItemRef) {
-        $this->assessmentItemRef = $assessmentItemRef;
+    protected function setTarget(RouteItem $target) {
+        $this->target = $target;
     }
     
     /**
-     * Get the AssessmentItemRef the candidate can jump to.
+     * Get the RouteItem the candidate can jump to.
      * 
-     * @return AssessmentItemRef An AssessmentItemRef object.
+     * @return RouteItem A RouteItem object.
      */
-    public function getAssessmentItemRef() {
-        return $this->assessmentItemRef;
-    }
-    
-    /**
-     * Set the occurence number of the AssessmentItemRef the candidate can jump to.
-     * 
-     * @param integer $occurence An occurence number.
-     * @throws InvalidArgumentException If $occurence is not an integer value.
-     */
-    protected function setOccurence($occurence) {
-        $type = gettype($occurence);
-        if ($type === 'integer') {
-            $this->occurence = $occurence;
-        }
-        else {
-            $msg = "The 'occurence' argument must be an integer, '${type}' given.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-    
-    /**
-     * Get the occurence number of the AssessmentItemRef the candidate can jump to.
-     * 
-     * @return integer An occurence number.
-     */
-    public function getOccurence() {
-        return $this->occurence;
+    public function getTarget() {
+        return $this->target;
     }
     
     /**

@@ -1775,7 +1775,7 @@ class AssessmentTestSession extends State {
 	            // get the session related to this route item.
 	            $store = $this->getAssessmentItemSessionStore();
 	            $itemSession = $store->getAssessmentItemSession($itemRef, $occurence);
-	            $jumps[] = new Jump($offset, $itemRef, $occurence, $itemSession);
+	            $jumps[] = new Jump($offset, $routeItem, $itemSession);
 	            $offset++;
 	        }
 	        
