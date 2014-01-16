@@ -1753,10 +1753,10 @@ class AssessmentTestSession extends State {
 	 * 
 	 * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
 	 * 
-	 * @param boolean $anywhere Whether the candidate is allowed to jump to any item of the current test or only in the current test part.
+	 * @param integer $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
 	 * @return JumpCollection A collection of Jump objects.
 	 */
-	public function getPossibleJumps($anywhere = true) {
+	public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '') {
 	    $jumps = new JumpCollection();
 	    
 	    if ($this->isRunning() === false || $this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
@@ -1764,7 +1764,26 @@ class AssessmentTestSession extends State {
 	        return $jumps;
 	    }
 	    else {
-	        $jumpables = ($anywhere === true) ? $this->getRoute()->getAllRouteItems() : $this->getRoute()->getCurrentTestPartRouteItems();
+	        $route = $this->getRoute();
+	        
+	        switch ($place) {
+	            case AssessmentTestPlace::ASSESSMENT_TEST:
+	                $jumpables = $route->getAllRouteItems();
+	            break;
+	            
+	            case AssessmentTestPlace::TEST_PART:
+	                $jumpables = $route->getRouteItemsByTestPart((empty($identifier) === true) ? $this->getCurrentTestPart() : $identifier);
+	            break;
+	            
+	            case AssessmentTestPlace::ASSESSMENT_SECTION:
+	                $jumpables = $route->getRouteItemsByAssessmentSection((empty($identifier) === true) ? $this->getCurrentAssessmentSection() : $identifier);
+	            break;
+	            
+	            case AssessmentTestPlace::ASSESSMENT_ITEM:
+	                $jumpables = $this->getRouteItemsByAssessmentItemRef((empty($identifier) === true) ? $this->getCurrentAssessmentItemRef() : $identifier);
+	            break;
+	        }
+	        
 	        $offset = $this->getRoute()->getRouteItemPosition($jumpables[0]);
 	        
 	        // Scan the route for "jumpable" items.

@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\runtime\common\VariableIdentifier;
+
 use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
 use qtism\data\AssessmentItemRefCollection;
@@ -572,7 +574,10 @@ class Route implements Iterator {
         }
         
         // Reference the AssessmentItemRef by routeItem.
-        $this->assessmentItemRefMap[$assessmentItemRef] = $routeItem;
+        if (isset($this->assessmentItemRefMap[$assessmentItemRef]) === false) {
+            $this->assessmentItemRefMap[$assessmentItemRef] = new RouteItemCollection();
+        }
+        $this->assessmentItemRefMap[$assessmentItemRef][] = $routeItem;
     }
     
     /**
@@ -994,6 +999,43 @@ class Route implements Iterator {
     }
     
     /**
+     * Get the RouteItem object involved in a given AssessmentItemRef.
+     * 
+     * @param string|AssessmentItemRef $assessmentItemRef An AssessmentItemRef object or an identifier.
+     * @throws OutOfBoundsException If $assessmentItemRef is not referenced in the Route.
+     * @throws OutOfRangeException If $assessmentItemRef is not a string nor an AssessmentItemRef object.
+     * @return RouteItemCollection A collection of RouteItem objects involved in $assessmentItemRef.
+     */ 
+    public function getRouteItemsByAssessmentItemRef($assessmentItemRef) {
+        
+        if (gettype($assessmentItemRef) === 'string') {
+            
+            if (($ref = $this->assessmentItemRefs[$assessmentItemRef]) !== null) {
+                return $this->assessmentItemRefMap[$ref];
+            }
+            else {
+                $msg = "No AssessmentItemRef with identifier '${assessmentItemRef}' found in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+            
+        }
+        else if ($assessmentItemRef instanceof AssessmentItemRef) {
+            
+            if (isset($this->assessmentItemRefMap[$assessmentItemRef]) === true) {
+                return $this->assessmentItemRefMap[$assessmentItemRef];
+            }
+            else {
+                $msg = "No AssessmentItemRef with 'identifier' ${assessmentItemRef}' found in the Route.";
+                throw new OutOfBoundsException($msg);
+            }
+        }
+        else {
+            $msg = "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.";
+            throw new OutOfRangeException($msg);
+        }
+    }
+    
+    /**
      * Get all the RouteItem objects composing the Route.
      * 
      * @return RouteItemCollection A collection of RouteItem objects.
@@ -1008,17 +1050,35 @@ class Route implements Iterator {
      * 
      * @param string $identifier A QTI Identifier to be the target of the branching.
      * @throws OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route.
+     * @throws OutOfRangeException If $identifier is not a valid branching identifier.
      */
     public function branch($identifier) {
         
+        try {
+            $identifier = new VariableIdentifier($identifier);
+            
+            if ($identifier->hasPrefix() === true) {
+                $identifier = $identifier->__toString();
+                $msg = "Identifiers given for branching cannot contain a prefix, '${identifier}' given.";
+                throw new OutOfRangeException($msg);
+            }
+            
+            $id = $identifier->getVariableName();
+            $occurence = ($identifier->hasSequenceNumber() === true) ? $identifier->getSequenceNumber() : 0;
+        }
+        catch (InvalidArgumentException $e) {
+            $msg = "The given identifier '${identifier}' is invalid branching target.";
+            throw new OutOfRangeException($msg);
+        }
+        
         // Check for an assessmentItemRef.
         $assessmentItemRefs = $this->getAssessmentItemRefs();
-        if (isset($assessmentItemRefs[$identifier]) === true) {
+        if (isset($assessmentItemRefs[$id]) === true) {
             
             $assessmentItemRefMap = $this->getAssessmentItemRefMap();
-            $targetRouteItem = $assessmentItemRefMap[$assessmentItemRefs[$identifier]];
+            $targetRouteItems = $assessmentItemRefMap[$assessmentItemRefs[$id]];
             
-            if ($targetRouteItem->getTestPart() !== $this->current()->getTestPart()) {
+            if ($targetRouteItems[$occurence]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
@@ -1026,7 +1086,7 @@ class Route implements Iterator {
                 throw new OutOfBoundsException($msg);
             }
             
-            $this->setPosition($this->getRouteItemPosition($targetRouteItem));
+            $this->setPosition($this->getRouteItemPosition($targetRouteItems[$occurence]));
             return;
         }
         

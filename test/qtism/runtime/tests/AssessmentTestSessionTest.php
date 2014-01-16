@@ -1,4 +1,6 @@
 <?php
+use qtism\runtime\tests\AssessmentTestPlace;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\runtime\tests\AssessmentItemSessionException;
@@ -569,7 +571,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
 	    
 	    $session->beginTestSession();
-	    $jumps = $session->getPossibleJumps(false);
+	    $jumps = $session->getPossibleJumps(AssessmentTestPlace::TEST_PART);
 	    $this->assertEquals(6, count($jumps));
 	    $this->assertEquals('Q01', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier('Q01'));
 	    $this->assertEquals(0, $jumps[0]->getPosition());
@@ -596,7 +598,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
 	    
-	    $jumps = $session->getPossibleJumps(false);
+	    $jumps = $session->getPossibleJumps(AssessmentTestPlace::TEST_PART);
 	    $this->assertEquals(3, count($jumps));
 	    $this->assertEquals('Q07', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(6, $jumps[0]->getPosition());

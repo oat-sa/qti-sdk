@@ -59,7 +59,32 @@ class RouteTest extends QtiSmRouteTestCase {
         // Is Q3 in TP1?
         $this->assertTrue($route->isInTestPart(2, $testPart));
         
-        // What are the RouteItems objects involded in part 'TP1'?
+        // What are the RouteItem objects involved in each AssessmentItemRef ?
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q1']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q1', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q2']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q2', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q3']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q3', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q4']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q4', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS2['Q5']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q5', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS2['Q6']);
+        $this->assertEquals(1, count($involved));
+        $this->assertEquals('Q6', $involved[0]->getAssessmentItemRef()->getIdentifier());
+        
+        // What are the RouteItem objects involded in part 'TP1'?
         $tp1RouteItems = $route->getRouteItemsByTestPart($testPart);
         $this->assertEquals(6, count($tp1RouteItems));
         $tp1RouteItems = $route->getRouteItemsByTestPart('TP1');
