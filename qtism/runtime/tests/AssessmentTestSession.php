@@ -1989,8 +1989,8 @@ class AssessmentTestSession extends State {
 	        $includeMaxTime = $constraint->maxTimeInForce();
 	        $spentTime = $constraint->getDuration();
 	        
-	        $minTimeRespected = !($includeMinTime === true && $constraint->getMinimumRemainingTime()->getSeconds() > 0);
-	        $maxTimeRespected = !($includeMaxTime === true && $constraint->getMaximumRemainingTime()->getSeconds() === 0);
+	        $minTimeRespected = !($includeMinTime === true && $constraint->getMinimumRemainingTime()->getSeconds(true) > 0);
+	        $maxTimeRespected = !($includeMaxTime === true && $constraint->getMaximumRemainingTime()->getSeconds(true) === 0);
 	        
 	        if ($minTimeRespected === false || $maxTimeRespected === false) {
 	            
