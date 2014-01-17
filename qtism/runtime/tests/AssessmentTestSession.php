@@ -1334,21 +1334,25 @@ class AssessmentTestSession extends State {
 	            try {
 	                // Do not check min times, include item timings.
 	                $this->checkTimeLimits(false, true);
+	                
+	                // No exception thrown, we found a non timed-out item to be
+	                // presented to the candidate.
+	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
-	                continue;
+	                // The item is timed out, let's try the next route item.
+	                $this->nextRouteItem();
 	            }
-	            
-	            return;
 	        }
 	        else {
+	            // $allowTimeout === true, only 1 iteration
+	            // is necessary, the following item is presented
+	            // whatever happens.
 	            return;
 	        }
-	        
-	        $this->nextRouteItem();
 	    }
 	    
-	    // end of test...
+	    // If the execution comes here, this is the end of the test...
 	}
 	
 	/**
@@ -1425,7 +1429,7 @@ class AssessmentTestSession extends State {
 	    
 	    // If the submitted responses are the one of the last
 	    // item of the test part, apply deffered response processing.
-	    if ($this->getRoute()->isLastOfTestPart() === true) {
+	    if ($this->getRoute()->isLastOfTestPart() === true && $this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
 
             // The testPart is complete so deffered response processing must take place.
             $this->defferedResponseProcessing();
@@ -2383,92 +2387,13 @@ class AssessmentTestSession extends State {
 	
 	protected function handleTimingAssessmentTestSessionException(AssessmentTestSessionException $e) {
 	    if ($this->mustAutoForward() === true) {
-	        switch ($e->getCode()) {
-	            case AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW:
-	                $this->onTestPartDurationOverflow();
-	                break;
-	                 
-	            case AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW:
-	                $this->onTestPartDurationUnderflow();
-	                break;
-	                 
-	            case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW:
-	                $this->onAssessmentSectionDurationOverflow();
-	                break;
-	                 
-	            case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW:
-	                $this->onAssessmentSectionDurationUnderflow();
-	                break;
-	        }
+	        $this->moveNext(false);
 	    }
 	}
 	
 	protected function handleTimingAssessmentItemSessionException(AssessmentItemSessionException $e) {
 	    if ($this->mustAutoForward() === true) {
-	        switch ($e->getCode()) {
-	            case AssessmentItemSessionException::DURATION_OVERFLOW:
-	                $this->onAssessmentItemDurationOverflow();
-	                break;
-	                 
-	            case AssessmentItemSessionException::DURATION_UNDERFLOW:
-	                $this->onAssessmentItemDurationUnderflow();
-	                break;
-	        }
+	        $this->moveNext(false);
 	    }
-	}
-	
-	/**
-	 * Logic to apply when a testPart timeLimit's maxtime is reached.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onTestPartDurationOverflow() {
-	    $this->moveNextTestPart();
-	    $this->setPendingResponseStore(new PendingResponseStore());
-	}
-	
-	/**
-	 * Logic to apply when a testPart timeLimit's minTime is not respected.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onTestPartDurationUnderflow() {
-	    return;
-	}
-	
-	/**
-	 * Logic to apply when an assessmentSection timeLimit's maxTime is reached.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onAssessmentSectionDurationOverflow() {
-	    
-	}
-	
-	/**
-	 * Logic to apply when an assessmentSection timeLimit's minTime is not respected.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onAssessmentSectionDurationUnderflow() {
-	    return;
-	}
-	
-	/**
-	 * Logic to apply when an assessmentItem timeLimit's maxTime is reached.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onAssessmentItemDurationOverflow() {
-	    $this->nextRouteItem();
-	}
-	
-	/**
-	 * Logic to apply when an assessmentItem timeLimit's minTime is not respected.
-	 * 
-	 * @qtism-test-event
-	 */
-	public function onAssessmentItemDurationUnderflow() {
-	    return;
 	}
 }
