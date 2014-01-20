@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 

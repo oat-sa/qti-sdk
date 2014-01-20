@@ -1,6 +1,6 @@
 <?php
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -19,7 +19,7 @@ $outcome2 = new OutcomeVariable('outcome2', Cardinality::SINGLE, BaseType::IDENT
 $renderer = new XhtmlRenderingEngine();
 
 if (isset($argv[1]) && $argv[1] === 'CONTEXT_AWARE') {
-    $renderer->setFeedbackShowHidePolicy(AbstractRenderingEngine::CONTEXT_AWARE);
+    $renderer->setFeedbackShowHidePolicy(AbstractMarkupRenderingEngine::CONTEXT_AWARE);
     
     if (isset($argv[2])) {
         $outcome1->setValue($argv[2]);

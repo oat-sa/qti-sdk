@@ -28,7 +28,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\ShufflableCollection;
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 

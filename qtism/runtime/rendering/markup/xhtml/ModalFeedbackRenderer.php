@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\data\ShowHide;
 use \DOMDocumentFragment;
@@ -59,7 +59,7 @@ class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
         $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         
-        if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_STATIC) {
+        if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_STATIC) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
         }
     }

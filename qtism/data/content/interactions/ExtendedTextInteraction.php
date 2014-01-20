@@ -475,7 +475,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     }
     
     public function getComponents() {
-        return parent::getComponents()->getArrayCopy();
+        return parent::getComponents();
     }
     
     public function getQtiClassName() {

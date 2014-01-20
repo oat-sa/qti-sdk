@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\rendering;
 
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\content\Flow;
 use qtism\common\utils\Url;
 use qtism\data\QtiComponent;
@@ -45,10 +46,10 @@ abstract class AbstractRenderer implements Renderable {
     
     private $renderingEngine;
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         $this->setRenderingEngine($renderingEngine);
     }
-    public function setRenderingEngine(AbstractRenderingEngine $renderingEngine = null) {
+    public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null) {
         $this->renderingEngine = $renderingEngine;
     }
     
@@ -75,7 +76,7 @@ abstract class AbstractRenderer implements Renderable {
         
         switch ($xmlBasePolicy) {
             
-            case AbstractRenderingEngine::XMLBASE_PROCESS:
+            case AbstractMarkupRenderingEngine::XMLBASE_PROCESS:
                 if (empty($baseUrl) === false) {
                     return Url::rtrim($baseUrl) . '/' . Url::ltrim($url);
                 }
@@ -92,7 +93,7 @@ abstract class AbstractRenderer implements Renderable {
     
     protected function handleXmlBase(QtiComponent $component, DOMNode $node) {
         if ($node instanceof DOMElement && 
-            $this->getRenderingEngine()->getXmlBasePolicy() === AbstractRenderingEngine::XMLBASE_KEEP &&
+            $this->getRenderingEngine()->getXmlBasePolicy() === AbstractMarkupRenderingEngine::XMLBASE_KEEP &&
             $component instanceof Flow &&
             $component->hasXmlBase()) {
             

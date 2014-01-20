@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use \DOMDocument;
 use \DOMDocumentFragment;
 
@@ -35,31 +35,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class XhtmlRenderingEngine extends AbstractRenderingEngine {
-    
-    /**
-     * The document to be generated during the rendering.
-     *
-     * @var DOMDocument
-     */
-    private $document;
-    
-    /**
-     * The DOM fragment to be generated during rendering. If the current
-     * stylesheet policy is SEPARATE, rendered stylesheet components will be
-     * pushed into it.
-     * 
-     * @var DOMDocumentFragment
-     */
-    private $stylesheets;
-    
-    /**
-     * Wether choices in shufflable interactions
-     * must be shuffled.
-     *
-     * @var boolean
-     */
-    private $shuffle = false;
+class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
     
     public function __construct() {
         parent::__construct();
@@ -181,89 +157,5 @@ class XhtmlRenderingEngine extends AbstractRenderingEngine {
         
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());
-    }
-    
-    protected function createFinalRendering() {
-        $dom = $this->getDocument();
-        if (($last = $this->getLastRendering()) !== null) {
-            $dom->appendChild($last);
-        }
-        
-        return $dom;
-    }
-    
-    /**
-     * Set the document to be used for rendering.
-     *
-     * @param DOMDocument $document
-     */
-    public function setDocument(DOMDocument $document) {
-        $this->document = $document;
-    }
-    
-    /**
-     * Get the document currently used for rendering.
-     *
-     * @return DOMDocument
-     */
-    public function getDocument() {
-        return $this->document;
-    }
-    
-    /**
-     * Set the DOMDocumentFragment object to be used to collect
-     * rendered QTI stylesheet components when the stylesheet policy
-     * is SEPARATE.
-     * 
-     * @param DOMDocumentFragment $stylesheets A DOMDocumentFragment object.
-     */
-    protected function setStylesheets(DOMDocumentFragment $stylesheets) {
-        $this->stylesheets = $stylesheets;
-    }
-    
-    /**
-     * Get the DOMDocumentFragment object to be used to collect
-     * rendered QTI stylesheet components when the stylesheet policy is
-     * SEPARATE.
-     * 
-     * The rendered components will be set in the order they appear during
-     * the rendering phase.
-     * 
-     * The owner of the DOMDocumentFragment object is the one you get by calling
-     * the XhtmlRenderingEngine::getDocument() method.
-     * 
-     * @return DOMDocumentFragment A DOMDocumentFragment object.
-     * @see XhtmlRenderingEngine::getDocument() The method to get the owner document of the DOMDocument fragment.
-     */
-    public function getStylesheets() {
-        return $this->stylesheets;
-    }
-    
-    /**
-     * Set whether or not choices in shufflable interactions
-     * e.g. ChoiceInteraction, MatchInteraction must be
-     * shuffled at rendering time.
-     *
-     * @param boolean $shuffle
-     */
-    public function setShuffle($shuffle) {
-        $this->shuffle = $shuffle;
-    }
-    
-    /**
-     * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
-     * MatchInteraction must be shuffled at rendering time.
-     *
-     * @return boolean
-     */
-    public function mustShuffle() {
-        return $this->shuffle;
-    }
-    
-    public function reset() {
-        parent::reset();
-        $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
-        $this->setStylesheets($this->getDocument()->createDocumentFragment());
-        $this->setShuffle(false);
     }
 }

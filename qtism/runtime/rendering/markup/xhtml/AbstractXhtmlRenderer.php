@@ -27,7 +27,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\Stylesheet;
 use qtism\runtime\rendering\RenderingException;
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\AbstractRenderer;
 use \DOMDocumentFragment;
@@ -76,7 +76,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
         $this->renderingImplementation($fragment, $component, $base);
         
         // Specific case for stylesheet elements...
-        if ($component instanceof Stylesheet && $renderingEngine->getStylesheetPolicy() === AbstractRenderingEngine::STYLESHEET_SEPARATE) {
+        if ($component instanceof Stylesheet && $renderingEngine->getStylesheetPolicy() === AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE) {
             // Stylesheet must be rendered separately.
             $stylesheets = $renderingEngine->getStylesheets();
             

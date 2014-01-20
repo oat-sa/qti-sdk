@@ -1,6 +1,6 @@
 <?php
 
-use qtism\runtime\rendering\AbstractRenderingEngine;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
@@ -14,15 +14,15 @@ $renderer = new XhtmlRenderingEngine();
 if (empty($argv[1]) === false) {
     switch (strtolower($argv[1])) {
         case 'ignore':
-            $renderer->setXmlBasePolicy(AbstractRenderingEngine::XMLBASE_IGNORE);
+            $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_IGNORE);
             break;
 
         case 'keep':
-            $renderer->setXmlBasePolicy(AbstractRenderingEngine::XMLBASE_KEEP);
+            $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_KEEP);
             break;
 
         case 'process':
-            $renderer->setXmlBasePolicy(AbstractRenderingEngine::XMLBASE_PROCESS);
+            $renderer->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_PROCESS);
             break;
     }
 }
