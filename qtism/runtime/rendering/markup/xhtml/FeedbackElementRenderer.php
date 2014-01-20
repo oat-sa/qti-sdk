@@ -25,7 +25,6 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\RenderingConfig;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -53,7 +52,7 @@ abstract class FeedbackElementRenderer extends BodyElementRenderer {
         $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         
-        if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_STATIC) {
+        if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === XhtmlRenderingEngine::CONTEXT_STATIC) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
         }
     }
