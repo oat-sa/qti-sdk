@@ -220,6 +220,14 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
     private $stateName = 'qtismState';
     
     /**
+     * The variable name to be used as the QTI views available when
+     * views policy is set to TEMPLATE_ORIENTED.
+     * 
+     * @var string
+     */
+    private $viewsName = 'qtismViews';
+    
+    /**
      * The URL to be used in place of the root component's xml:base value.
      * 
      * @var string
@@ -479,8 +487,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         $renderer = $this->getRenderer($component);
         $rendering = $renderer->render($component, $base);
         
-        if ($this->mustTemplateComponent($component) === true) {
-            $this->templateComponent($component, $rendering);
+        if ($this->mustTemplateFeedbackComponent($component) === true) {
+            $this->templateFeedbackComponent($component, $rendering);
+        }
+        
+        if ($this->mustTemplateRubricBlockComponent($component) === true) {
+            $this->templateRubricBlockComponent($component, $rendering);
         }
         
         $this->setLastRendering($rendering);
@@ -761,8 +773,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
     }
     
     /**
-     * Whether or not a given component must be templated or not. A component
-     * is considered to be templatable if 
+     * Whether or not a given component (expected to be a feedback) must be templated or not. A component
+     * is considered to be templatable if:
      * 
      * * it is an instance of FeedbackElement or ModalFeedback
      * * the current policy for feedback elements is TEMPLATE_ORIENTED
@@ -770,8 +782,22 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * @param QtiComponent
      * @return boolean
      */
-    protected function mustTemplateComponent(QtiComponent $component) {
+    protected function mustTemplateFeedbackComponent(QtiComponent $component) {
         return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
+    }
+    
+    /**
+     * Whether or not a given component (expected to be a rubricBlock) must be templated or not. A component
+     * is considered to be templatable if:
+     * 
+     * * it is an instance of RubricBlock
+     * * the current policy for views is TEMPLATE_ORIENTED
+     * 
+     * @param QtiComponent $component
+     * @return boolean
+     */
+    protected function mustTemplateRubricBlockComponent(QtiComponent $component) {
+        return (self::isRubricBlock($component) && $this->getViewPolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
     }
     
     /**
@@ -786,13 +812,24 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
     }
     
     /**
+     * Whether or not a given component is an instance of
+     * RubricBlock.
+     * 
+     * @param QtiComponent $component A QtiComponent object.
+     * @return boolean
+     */
+    static protected function isRubricBlock(QtiComponent $component) {
+        return ($component instanceof RubricBlock);
+    }
+    
+    /**
      * Contains the logic of templating a QTI feedback (feedbackElement, modalFeedback).
      * 
      * @param QtiComponent $component The QtiComponent being rendered.
      * @param DOMDocumentFragment $rendering The rendering corresponding to $component.
      * @throws RenderingException If $component is not an instance of FeedbackElement nor ModalFeedback.
      */
-    protected function templateComponent(QtiComponent $component, DOMDocumentFragment $rendering) {
+    protected function templateFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering) {
         if (self::isFeedback($component) === false) {
             $msg = "Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.";
             throw new RenderingException($msg, RenderingException::RUNTIME);
@@ -803,6 +840,38 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         $identifier = $component->getIdentifier();
         
         $ifStmt = " qtism-if (${variable} ${operator} '${identifier}'): ";
+        $endifStmt = " qtism-endif ";
+        
+        $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
+        $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
+        
+        $rendering->insertBefore($ifStmtCmt, $rendering->firstChild);
+        $rendering->appendChild($endifStmtCmt);
+    }
+    
+    /**
+     * Contains the logic of templating a QTI rubricBlock (RubricBlock).
+     * 
+     * @param QtiComponent $component The QtiComponent being rendered.
+     * @param DOMDocumentFragment $rendering The rendering corresponding to $component.
+     * @throws RenderingException If $component is not an instance of RubricBlock.
+     */
+    protected function templateRubricBlockComponent(QtiComponent $component, DOMDocumentFragment $rendering) {
+        if (self::isRubricBlock($component) === false) {
+            $msg = "Cannot template a component which is not an instance of RubricBlock.";
+            throw new RenderingException($msg, RenderingException::RUNTIME);
+        }
+        
+        $viewsName = '$' . $this->getViewsName();
+        $views = $component->getViews();
+        $conds = array();
+        
+        foreach ($component->getViews() as $v) {
+            $conds[] = "in_array(${v}, ${viewsName})";
+        }
+        
+        $conds = (count($views) > 1) ? implode(' || ', $conds) : $conds[0];
+        $ifStmt = " qtism-if (${conds}): ";
         $endifStmt = " qtism-endif ";
         
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
@@ -868,6 +937,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      *
      * * In CONTEXT_STATIC mode, the qti-view-candidate|qti-view-auhor|qti-view-proctor|qti-view-tutor|qti-view-tutor|qti-view-testConstructor|qti-view-scorer CSS class will be simply added to the rendered elements.
      * * In CONTEXT_STATIC mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
      * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
@@ -973,10 +1043,30 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * Get the variable name to be used as the QTI AssessmentTest/AssessmentItem
      * State when the feedback policy is set to TEMPLATE_ORIENTED.
      * 
-     * @return string
+     * @return string A variable name (without the leading dollar sign('$')).
      */
     public function getStateName() {
         return $this->stateName;
+    }
+    
+    /**
+     * Set the variable name to be used as the QTI views in use
+     * when the views policy is TEMPLATE_ORIENTED.
+     * 
+     * @param string $viewsName A variable name (without the leading dollar sign ('$')).
+     */
+    public function setViewsName($viewsName) {
+        $this->viewsName = $viewsName;
+    }
+    
+    /**
+     * Get the variable name to be used as the QTI views in use
+     * when the views policy is TEMPLATE_ORIENTED.
+     * 
+     * @return string A variable name (without the leading dollar sign ('$')).
+     */
+    public function getViewsName() {
+        return $this->viewsName;
     }
     
     /**
