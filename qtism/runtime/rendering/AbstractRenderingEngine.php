@@ -38,6 +38,7 @@ use qtism\data\View;
 use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
+use \DOMDocumentFragment;
 
 /**
  * The base class to be used by any rendering engines.
@@ -62,11 +63,18 @@ abstract class AbstractRenderingEngine implements Renderable {
     const CONTEXT_AWARE = 1;
     
     /**
+     * Template oriented rendering.
+     * 
+     * @var integer
+     */
+    const TEMPLATE_ORIENTED = 2;
+    
+    /**
      * Ignore xml:base constraints.
      * 
      * @var integer
      */
-    const XMLBASE_IGNORE = 2;
+    const XMLBASE_IGNORE = 3;
     
     /**
      * Keep xml:base in final rendering,
@@ -74,7 +82,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * 
      * @var integer
      */
-    const XMLBASE_KEEP = 3;
+    const XMLBASE_KEEP = 4;
     
     /**
      * Process all URL resolutions by taking
@@ -83,7 +91,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * 
      * @var integer
      */
-    const XMLBASE_PROCESS = 4;
+    const XMLBASE_PROCESS = 5;
     
     /**
      * Stylesheet components are rendered at the same place
@@ -91,7 +99,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * 
      * @var integer
      */
-    const STYLESHEET_INLINE = 5;
+    const STYLESHEET_INLINE = 6;
     
     /**
      * Stylesheet components are rendered separately and pushed into
@@ -99,7 +107,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * 
      * @var integer
      */
-    const STYLESHEET_SEPARATE = 6;
+    const STYLESHEET_SEPARATE = 7;
     
     /**
      * An array used to 'tag' explored Component object.
@@ -198,6 +206,14 @@ abstract class AbstractRenderingEngine implements Renderable {
      * @var integer
      */
     private $stylesheetPolicy = AbstractRenderingEngine::STYLESHEET_INLINE;
+    
+    /**
+     * The variable name to be used as the QTI AssessmentTest/AssessmentItem
+     * State when the feedback policy is set to TEMPLATE_ORIENTED.
+     * 
+     * @var string
+     */
+    private $stateName = 'qtismState';
     
     /**
      * The URL to be used in place of the root component's xml:base value.
@@ -418,7 +434,7 @@ abstract class AbstractRenderingEngine implements Renderable {
     abstract protected function createFinalRendering();
     
     /**
-     * Process the current node.
+     * Process the current node (Ascending phase).
      * 
      * @param string $base the value of xml:base for the node to be processed.
      * @throws RenderingException If an error occurs while processing the node.
@@ -427,6 +443,10 @@ abstract class AbstractRenderingEngine implements Renderable {
         $component = $this->getExploredComponent();
         $renderer = $this->getRenderer($component);
         $rendering = $renderer->render($component, $base);
+        
+        if ($this->mustTemplateComponent($component) === true) {
+            $this->templateComponent($component, $rendering);
+        }
         
         $this->setLastRendering($rendering);
     }
@@ -449,7 +469,7 @@ abstract class AbstractRenderingEngine implements Renderable {
             return true;
         }
         // Context Aware + FeedbackElement OR Context Aware + Choice
-        else if ((($component instanceof FeedbackElement || $component instanceof ModalFeedback) && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE)) {
+        else if ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractRenderingEngine::CONTEXT_AWARE)) {
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
             return ($showHide === ShowHide::SHOW) ? !$matches : $matches;
@@ -703,6 +723,58 @@ abstract class AbstractRenderingEngine implements Renderable {
     }
     
     /**
+     * Whether or not a given component must be templated or not. A component
+     * is considered to be templatable if 
+     * 
+     * * it is an instance of FeedbackElement or ModalFeedback
+     * * the current policy for feedback elements is TEMPLATE_ORIENTED
+     * 
+     * @param QtiComponent
+     * @return boolean
+     */
+    protected function mustTemplateComponent(QtiComponent $component) {
+        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractRenderingEngine::TEMPLATE_ORIENTED);
+    }
+    
+    /**
+     * Whether or not a given component is an instance of 
+     * FeedbackElement or ModalFeedback.
+     * 
+     * @param QtiComponent $component A QtiComponent object.
+     * @return boolean
+     */
+    static protected function isFeedback(QtiComponent $component) {
+        return ($component instanceof FeedbackElement || $component instanceof ModalFeedback);
+    }
+    
+    /**
+     * Contains the logic of templating a QTI feedback (feedbackElement, modalFeedback).
+     * 
+     * @param QtiComponent $component The QtiComponent being rendered.
+     * @param DOMDocumentFragment $rendering The rendering corresponding to $component.
+     * @throws RenderingException If $component is not an instance of FeedbackElement nor ModalFeedback.
+     */
+    protected function templateComponent(QtiComponent $component, DOMDocumentFragment $rendering) {
+        if (self::isFeedback($component) === false) {
+            $msg = "Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.";
+            throw new RenderingException($msg, RenderingException::RUNTIME);
+        }
+        
+        $operator = ($component->getShowHide() === ShowHide::SHOW) ? '==' : '!=';
+        $variable = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']"; 
+        $identifier = $component->getIdentifier();
+        
+        $ifStmt = " qtism-if (${variable} ${operator} '${identifier}'): ";
+        $endifStmt = " qtism-endif ";
+        
+        $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
+        $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
+        
+        $rendering->insertBefore($ifStmtCmt, $rendering->firstChild);
+        $rendering->appendChild($endifStmtCmt);
+    }
+    
+    /**
      * Set the policy ruling the way qti:choice components are managed while rendering.
      *
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:choice is described in QTI-XML. The component will never be discarded from rendering.
@@ -732,9 +804,10 @@ abstract class AbstractRenderingEngine implements Renderable {
      * Set the policy ruling the way qti:feedbackElement are managed while rendering.
      *
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
-     * * In CONTEXT_AWARE moden, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
+     * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
+     * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
-     * @param integer $policy AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
+     * @param integer $policy AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE or AbstractRenderingEngine::TEMPLATE_ORIENTED.
      */
     public function setFeedbackShowHidePolicy($policy) {
         $this->feedbackShowHidePolicy = $policy;
@@ -744,7 +817,7 @@ abstract class AbstractRenderingEngine implements Renderable {
      * Get the policy ruling the way qti:feedbackElement are managed while rendering.
      *
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
-     * * In CONTEXT_AWARE moden, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
+     * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      *
      * @return integer AbstractRenderingEngine::CONTEXT_STATIC or AbstractRenderingEngine::CONTEXT_AWARE.
      */
@@ -838,8 +911,34 @@ abstract class AbstractRenderingEngine implements Renderable {
         $this->rootBase = $rootBase;
     }
     
+    /**
+     * Get the URL (Uniform Resource Locator) to use in place of the value
+     * of the root component's xml:base value.
+     * 
+     * @return string A URL.
+     */
     public function getRootBase() {
         return $this->rootBase;
+    }
+    
+    /**
+     * Set the variable name to be used as the QTI AssessmentTest/AssessmentItem
+     * State when the feedback policy is set to TEMPLATE_ORIENTED.
+     * 
+     * @param string $stateName A variable name (without the leading dollar sign ('$')).
+     */
+    public function setStateName($stateName) {
+        $this->stateName = $stateName;
+    }
+    
+    /**
+     * Get the variable name to be used as the QTI AssessmentTest/AssessmentItem
+     * State when the feedback policy is set to TEMPLATE_ORIENTED.
+     * 
+     * @return string
+     */
+    public function getStateName() {
+        return $this->stateName;
     }
     
     /**
