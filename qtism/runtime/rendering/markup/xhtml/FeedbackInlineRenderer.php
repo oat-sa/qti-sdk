@@ -45,7 +45,7 @@ use \DOMDocumentFragment;
  */
 class FeedbackInlineRenderer extends FeedbackElementRenderer {
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }

@@ -23,9 +23,9 @@
  *
  */
 
-namespace qtism\runtime\rendering;
+namespace qtism\runtime\rendering\markup;
 
-use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
+use qtism\runtime\rendering\Renderable;
 use qtism\data\content\Flow;
 use qtism\common\utils\Url;
 use qtism\data\QtiComponent;
@@ -42,7 +42,7 @@ use \ReflectionObject;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractRenderer implements Renderable {
+abstract class AbstractMarkupRenderer implements Renderable {
     
     private $renderingEngine;
     

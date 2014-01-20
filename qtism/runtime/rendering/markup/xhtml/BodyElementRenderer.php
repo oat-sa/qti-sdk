@@ -27,7 +27,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\AbstractRenderer;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer;
 use \DOMDocumentFragment;
 
@@ -39,7 +39,7 @@ use \DOMDocumentFragment;
  */
 class BodyElementRenderer extends AbstractXhtmlRenderer {
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
     }
     

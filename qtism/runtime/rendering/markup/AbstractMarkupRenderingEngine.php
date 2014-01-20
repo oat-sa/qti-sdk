@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup;
 
-use qtism\runtime\rendering\AbstractRenderer;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
@@ -594,7 +594,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * @param string $qtiClassName A QTI class name.
      * @param AbstractRenderer $renderer An AbstractRenderer object.
      */
-    public function registerRenderer($qtiClassName, AbstractRenderer $renderer) {
+    public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer) {
         $renderer->setRenderingEngine($this);
         $renderers = $this->getRenderers();
         $renderers[$qtiClassName] = $renderer;

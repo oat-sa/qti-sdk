@@ -125,7 +125,7 @@ class MediaInteractionRenderer extends InteractionRenderer {
         return $this->imageTypes;
     }
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->setVideoTypes(array('video/mp4', 'video/webm', 'video/ogg'));
         $this->setAudioTypes(array('audio/mpeg', 'audio/ogg', 'audio/wav'));

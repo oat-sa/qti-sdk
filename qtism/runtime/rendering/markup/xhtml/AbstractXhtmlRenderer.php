@@ -29,7 +29,7 @@ use qtism\data\content\Stylesheet;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\AbstractRenderer;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use \DOMDocumentFragment;
 
 /**
@@ -38,7 +38,7 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractXhtmlRenderer extends AbstractRenderer {
+abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
     
     /**
      * A tag name to be used instead of the 
@@ -56,7 +56,7 @@ abstract class AbstractXhtmlRenderer extends AbstractRenderer {
      */
     private $additionalClasses = array();
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
     }
     

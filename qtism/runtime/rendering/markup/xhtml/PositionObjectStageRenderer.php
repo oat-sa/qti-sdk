@@ -38,7 +38,7 @@ use \DOMDocumentFragment;
  */
 class PositionObjectStageRenderer extends AbstractXhtmlRenderer {
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }

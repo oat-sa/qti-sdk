@@ -50,7 +50,7 @@ use \DOMDocumentFragment;
  */
 class InlineChoiceRenderer extends ChoiceRenderer {
     
-    public function __construct(AbstractRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         // override 'div' transformation with a 'option' transformation.
         $this->transform('option');
