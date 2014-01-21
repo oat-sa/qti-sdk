@@ -157,6 +157,30 @@ class AssessmentTestSessionException extends Exception {
     const ASSESSMENT_TEST_DURATION_UNDERFLOW = 15;
     
     /**
+     * Error code to use when the maximum number of attempts on the current assessment item
+     * is reached.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW = 16;
+    
+    /**
+     * Error code to use when an invalid response is submitted for the current
+     * assessment item while itemSessionControl->validateResponse is in force.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_ITEM_INVALID_RESPONSE = 17;
+    
+    /**
+     * Error code to use when trying to skip the current item while
+     * it is not allowed to skip it.
+     * 
+     * @var integer
+     */
+    const ASSESSMENT_ITEM_SKIPPING_FORBIDDEN = 18;
+    
+    /**
      * Create a nex AssessmentTestSessionException.
      * 
      * @param string $message A human-readable message describing the error.

@@ -52,6 +52,7 @@ use \OutOfRangeException;
 use \OutOfBoundsException;
 use \LogicException;
 use \UnexpectedValueException;
+use \Exception;
 
 /**
  * The AssessmentTestSession class represents a candidate session
@@ -1012,7 +1013,6 @@ class AssessmentTestSession extends State {
 	/**
 	 * Skip the current item.
 	 * 
-	 * @throws AssessmentItemSessionException If the current item cannot be skipped.
 	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
 	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
@@ -1027,23 +1027,29 @@ class AssessmentTestSession extends State {
         $item = $this->getCurrentAssessmentItemRef();
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
         $session = $this->getItemSession($item, $occurence);
-        $session->skip();
-         
-        if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-            // Store the responses for a later processing at the end of the test part.
-            $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
-            $this->addPendingResponses($pendingResponses);
+        
+        try {
+            // Might throw an AssessmentItemSessionException.
+            $session->skip();
+             
+            if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+                // Store the responses for a later processing at the end of the test part.
+                $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
+                $this->addPendingResponses($pendingResponses);
+            }
+            else {
+                $this->outcomeProcessing();
+            }
         }
-        else {
-            $this->outcomeProcessing();
+        catch (Exception $e) {
+            throw $this->transformException($e);
         }
 	}
 	
 	/**
 	 * Begin an attempt for the current item in the route.
 	 * 
-	 * @throws AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed.
-	 * @throws AssessmentItemSessionException If something goes wrong while beginning the attempt e.g. time limits at the item level are already exceeded.
+	 * @throws AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed or time limits are not respected.
 	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
@@ -1059,7 +1065,13 @@ class AssessmentTestSession extends State {
         // Time limits are OK! Let's try to begin the attempt.
         $routeItem = $this->getCurrentRouteItem();
         $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-        $session->beginAttempt();
+        
+        try {
+            $session->beginAttempt();
+        }
+        catch (Exception $e) {
+            throw $this->transformException($e);
+        }
 	}
 	
 	/**
@@ -1091,15 +1103,26 @@ class AssessmentTestSession extends State {
 	        $this->checkTimeLimits(true);
 	    }
 
-	    // -- Time limits in force respected, try to end the item attempt.    try {
+	    // -- Time limits in force respected, try to end the item attempt.
         if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
         
             // Store the responses for a later processing.
             $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
-            $session->endAttempt($responses, false, $allowLateSubmission);
+            
+            try {
+                $session->endAttempt($responses, false, $allowLateSubmission);
+            }
+            catch (Exception $e) {
+                throw $this->transformException($e);
+            }
         }
         else {
-            $session->endAttempt($responses, true, $allowLateSubmission);
+            try {
+                $session->endAttempt($responses, true, $allowLateSubmission);
+            }
+            catch (Exception $e) {
+                throw $this->transformException($e);
+            }
             
             // Update the lastly updated item occurence.
             $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
@@ -2161,6 +2184,85 @@ class AssessmentTestSession extends State {
 	    }
 	
 	    return $numberSelected;
+	}
+	
+	/**
+	 * Transforms any exception to a suitable AssessmentTestSessionException object.
+	 * 
+	 * This method takes car to return matching AssessmentTestSessionException objects
+	 * when $e are AssessmentItemSessionException objects.
+	 * 
+	 * In case of other Exception types, an AssessmentTestSession object
+	 * with code UNKNOWN is returned.
+	 * 
+	 * @param Exception $e
+	 * @return AssessmentTestSessionException
+	 */
+	protected function transformException(Exception $e) {
+	    
+	    if ($e instanceof AssessmentItemSessionException) {
+	        switch ($e->getCode()) {
+	            case AssessmentItemSessionException::UNKNOWN:
+	                $msg = "An unknown error occured at the AssessmentItemSession level.";
+	                $code = AssessmentTestSessionException::UNKNOWN;
+	            break;
+	                 
+	            case AssessmentItemSessionException::DURATION_OVERFLOW:
+	                $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+	                $msg = "Maximum duration of Item Session '${sessionIdentifier}' is reached.";
+	                $code = AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW;
+	            break;
+	                 
+    	        case AssessmentItemSessionException::DURATION_UNDERFLOW:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "Minimum duration of Item Session '${sessionIdentifier}' not reached.";
+    	            $code = AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW;
+    	        break;
+    	        
+    	        case AssessmentItemSessionException::ATTEMPTS_OVERFLOW:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "Maximum number of attempts of Item Session '${sessionIdentifier}' reached.";
+    	            $code = AssessmentTestSessionException::ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW;
+    	        break;
+    	        
+    	        case AssessmentItemSessionException::RUNTIME_ERROR:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "A runtime error occured at the AssessmentItemSession level.";
+    	            $code = AssessmentTestSessionException::UNKNOWN;
+    	        break;
+    	        
+    	        case AssessmentItemSessionException::INVALID_RESPONSE:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "An invalid response was given for Item Session '${sessionIdentifier}' while 'itemSessionControl->validateResponses' is in force.";
+    	            $code = AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE;
+    	        break;
+    	        
+    	        case AssessmentItemSessionException::SKIPPING_FORBIDDEN:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "The Item Session '${sessionIdentifier}' is not allowed to be skipped.";
+    	            $code = AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN;
+    	        break;
+    	        
+    	        case AssessmentItemSessionException::STATE_VIOLATION:
+    	            $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
+    	            $msg = "The Item Session '${sessionIdentifier}' entered an invalid state.";
+    	            $code = AssessmentTestSessionException::STATE_VIOLATION;
+    	        break;
+	        }
+	        
+	        return new AssessmentTestSessionException($msg, $code, $e);
+	    }
+	    else {
+	        // Generic exception...
+	        $msg = "An unexpected error occured at the level of the Test Session.";
+	        return new AssessmentTestSessionException($msg, AssessmentTestSessionException::UNKNOWN, $e);
+	    }
+	}
+	
+	protected function buildCurrentItemSessionIdentifier() {
+	    $itemIdentifier = $this->getCurrentAssessmentItemRef()->getIdentifier();
+	    $itemOccurence = $this->getCurrentAssessmentItemRefOccurence();
+	    return "${itemIdentifier}.${itemOccurence}";
 	}
 	
 	/**

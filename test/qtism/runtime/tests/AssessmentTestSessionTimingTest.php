@@ -142,9 +142,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
                 $this->testForceLateSubmission(false);
             }
         }
-        catch (AssessmentItemSessionException $e) {
+        catch (AssessmentTestSessionException $e) {
             $this->assertFalse($forceLateSubmission, '$forceLateSubmission is true but the attempt should have been correctly ended.');
-            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
+            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW, $e->getCode());
         }
     }
     

@@ -125,7 +125,7 @@ class AssessmentItemSessionException extends Exception {
 	 * 
 	 * @param AssessmentItemSession $source An AssessmentItemSession object.
 	 */
-	protected function setSource(AssessmentItemSession $source) {
+	public function setSource(AssessmentItemSession $source) {
 	    $this->source = $source;
 	}
 	
@@ -134,7 +134,7 @@ class AssessmentItemSessionException extends Exception {
 	 * 
 	 * @return AssessmentItemSession An AssessmentItemSession object.
 	 */
-	protected function geSource() {
+	public function getSource() {
 	    return $this->source;
 	}
 }
