@@ -120,7 +120,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @var boolean
 	 */
-	private $autoForward;
+	private $autoForward = true;
 	
 	/**
 	 * The acceptable latencty time for the AssessmentTestSession.
@@ -143,7 +143,6 @@ class AssessmentTestSession extends State {
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		$this->setPendingResponseStore(new PendingResponseStore());
-		$this->setAutoForward(true);
 		$this->setAcceptableLatency(new Duration('PT0S'));
 		
 		// Take the outcomeDeclaration objects of the global scope.
@@ -1382,18 +1381,19 @@ class AssessmentTestSession extends State {
 	    $this->previousRouteItem();
 	    
 	    while ($route->isFirst() === false) {
-	        $this->previousRouteItem();
 	        
 	        if ($allowTimeout = false) {
 	            try {
 	                // Do not check min times, include item timings.
 	                $this->checkTimeLimits(false, true);
+	                
+	                // No exception thrown, return.
+	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
-	                continue;
+	                // The item is timed out, let's try the previous route item.
+	                $this->previousRouteItem();
 	            }
-	            
-	            return;
 	        }
 	        else {
 	            return;

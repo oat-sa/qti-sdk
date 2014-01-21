@@ -354,7 +354,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         return $this->lastRendering;
     }
     
-    public function render(QtiComponent $component, $base = '') {
+    public function render($component, $base = '') {
         // Reset the engine to its initial state.
         $this->reset();
         

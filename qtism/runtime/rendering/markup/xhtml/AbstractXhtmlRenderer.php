@@ -67,7 +67,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
      * @throws RenderingException If an error occurs while rendering $component.
      */
-    public function render(QtiComponent $component, $base = '') {
+    public function render($component, $base = '') {
         $renderingEngine = $this->getRenderingEngine();
         $doc = $renderingEngine->getDocument();
         $fragment = $doc->createDocumentFragment();
