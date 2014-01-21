@@ -51,7 +51,6 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $factory->setAutoForward(false);
         $testSession = AssessmentTestSession::instantiate($factory);
         $testSession->beginTestSession();
         
@@ -59,6 +58,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $testSession->beginAttempt();
         $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
         $testSession->endAttempt($responses);
+        
         // Correct? Then we should go to Q03.
         $this->assertEquals(1.0, $testSession['Q01.SCORE']);
         $testSession->moveNext();
@@ -91,7 +91,6 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $factory->setAutoForward(false);
         $testSession = AssessmentTestSession::instantiate($factory);
         $testSession->beginTestSession();
         
@@ -126,7 +125,6 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         // However, in non linear mode branch rules are ignored and we go then
         // to Q02.
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $factory->setAutoForward(false);
         $testSession = AssessmentTestSession::instantiate($factory);
         $testSession->beginTestSession();
         
@@ -155,9 +153,11 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         if (empty($response) === true) {
             $testSession->skip();
+            $testSession->moveNext();
         }
         else {
             $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, $response))));
+            $testSession->moveNext();
         }
         
         $this->assertEquals($expectedTarget, $testSession->getCurrentAssessmentItemRef()->getIdentifier());

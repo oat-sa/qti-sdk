@@ -168,8 +168,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             }
             
             // Deal with test session configuration.
-            // -- AutoForward
-            $access->writeBoolean($assessmentTestSession->mustAutoForward());
+            // -- AutoForward (not in use anymore, fake it).
+            $access->writeBoolean(false);
             
             // Persist the test-level global scope.
             foreach ($assessmentTestSession->getKeys() as $outcomeIdentifier) {
@@ -242,8 +242,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
 
             // Deal with test session configuration.
-            // -- AutoForward
-            $assessmentTestSession->setAutoForward($access->readBoolean());
+            // -- AutoForward (not in use anymore, consume it anyway).
+            $access->readBoolean();
             
             // Build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {

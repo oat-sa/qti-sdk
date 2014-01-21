@@ -151,6 +151,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $result = $variableProcessor->process();
 	    $this->assertInternalType('float', $result);
 	    $this->assertEquals(1.0, $result);
+	    $session->moveNext();
 	    
 	    // Q01.2
 	    $session->beginAttempt();

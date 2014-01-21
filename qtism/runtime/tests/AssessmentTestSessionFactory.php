@@ -47,7 +47,6 @@ class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory 
         
         $session = new AssessmentTestSession($this->getAssessmentTest(), $this->getRoute());
         $session->setAcceptableLatency($this->getAcceptableLatency());
-        $session->setAutoForward($this->mustAutoForward());
         return $session;
     }
     

@@ -74,6 +74,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // -- Correct answer to Q01.
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
         $this->assertEquals(1, $session->numberCorrect('S01'));
@@ -108,6 +109,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // -- Incorrect answer to Q02.
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
         $this->assertEquals(1, $session->numberCorrect('S01'));
@@ -142,6 +144,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // -- Skip Q03.
         $session->beginAttempt();
         $session->skip();
+        $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
         $this->assertEquals(1, $session->numberCorrect('S01'));
@@ -176,6 +179,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // -- Incorrect answer to Q04.1
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceZ'))));
+        $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
         $this->assertEquals(1, $session->numberCorrect('S01'));
@@ -210,6 +214,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // -- Correct answer to Q04.2
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD'))));
+        $session->moveNext();
         
         $this->assertEquals(2, $session->numberCorrect());
         $this->assertEquals(2, $session->numberCorrect('S01'));
@@ -244,6 +249,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // Skip Q04.3
         $session->beginAttempt();
         $session->skip();
+        $session->moveNext();
         
         $this->assertEquals(2, $session->numberCorrect());
         $this->assertEquals(2, $session->numberCorrect('S01'));
@@ -278,6 +284,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         // Correct answer to Q05.
         $session->beginAttempt();
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceE'))));
+        $session->moveNext();
         
         $this->assertEquals(3, $session->numberCorrect());
         $this->assertEquals(2, $session->numberCorrect('S01'));

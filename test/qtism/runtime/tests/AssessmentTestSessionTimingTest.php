@@ -39,6 +39,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
+        $session->moveNext();
          
         // Q02.
         $session->beginAttempt();
@@ -46,6 +47,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->skip();
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT2S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT2S')));
+        $session->moveNext();
          
         // Try to get a duration that does not exist.
         $this->assertSame(null, $session['P02.duration']);
@@ -59,6 +61,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         sleep(2);
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $session->moveNext();
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
         $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT3S')));
          
@@ -69,6 +72,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
         $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT1S')));
         $session->skip();
+        $session->moveNext();
          
         // Q03.
         $session->beginAttempt();
@@ -81,6 +85,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
         catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW, $e->getCode());
+            $session->moveNext();
         }
          
         // We should have automatically be moved to the next test part.
@@ -99,6 +104,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
         catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW, $e->getCode());
+            $session->moveNext();
         }
          
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
@@ -124,6 +130,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         try {
             $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, 'ChoiceA'))), $forceLateSubmission);
+            $session->moveNext();
             
             $this->assertTrue($forceLateSubmission, '$forceLateSubmission is false but the attempt dit not raised an exception.');
             $this->assertEquals(1.0, $session['Q01.SCORE']);
@@ -149,7 +156,6 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
     public function testJumpToTargetTimeout($allowTimeout = false) {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/move_next_target_timeout.xml');
         $session->beginTestSession();
-        $this->assertTrue($session->mustAutoForward());
         $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
         
         // Jump to the target item (the 2nd and last one) to outreach timings.
@@ -176,7 +182,6 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
     
     public function testTimeConstraintsOne() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/remaining_time_1.xml');
-        $session->setAutoForward(false);
         $session->beginTestSession();
         
         $session->beginAttempt();
@@ -248,7 +253,6 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
          * interacting.
          */
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/between_items.xml');
-        $session->setAutoForward(false);
         $session->beginTestSession();
         
         // In this situation, the duration increases.

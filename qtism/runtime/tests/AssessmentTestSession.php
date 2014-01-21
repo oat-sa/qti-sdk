@@ -324,34 +324,6 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Set whether the test session must move automatically
-	 * to the next RouteItem when ending an attempt.
-	 * 
-	 * @param boolean $autoForward
-	 * @throws InvalidArgumentException If $autoForward is not a boolean.
-	 */
-	public function setAutoForward($autoForward) {
-	    $type = gettype($autoForward);
-	    if ($type === 'boolean') {
-	        $this->autoForward = $autoForward;
-	    }
-	    else {
-	        $msg = "The 'autoForward' argument must be a boolean, '${type}' given.";
-	        throw new InvalidArgumentException($msg);
-	    }
-	}
-	
-	/**
-	 * Know whether the test session must move automatically to
-	 * the next RouteItem when ending an attempt.
-	 * 
-	 * @return boolean
-	 */
-	public function mustAutoForward() {
-	    return $this->autoForward;
-	}
-	
-	/**
 	 * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
 	 * where 'Q01' is the item the requested weight belongs to, and 'weight1' is the
 	 * actual identifier of the weight.
@@ -1065,12 +1037,6 @@ class AssessmentTestSession extends State {
         else {
             $this->outcomeProcessing();
         }
-         
-        if ($this->mustAutoForward() === true) {
-            // Go automatically to the next step in the route.
-            // update duration will be performed by movenext.
-            $this->moveNext();
-        }
 	}
 	
 	/**
@@ -1088,28 +1054,12 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    // Are the time limits in force (at the test level) respected?
-	    try{
-	        $this->checkTimeLimits();
-	         
-	        // Time limits are OK! Let's try to begin the attempt.
-	        $routeItem = $this->getCurrentRouteItem();
-	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
-	        $session->beginAttempt();
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        if ($this->isTimingAssessmentTestSessionException($e) === true && $this->mustAutoForward() === true) {
-	            $this->handleTimingAssessmentTestSessionException($e);
-	        }
-	        
-	        throw $e;
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        if ($this->isTimingAssessmentItemSessionException($e) === true && $this->mustAutoForward() === true) {
-	            $this->handleTimingAssessmentItemSessionException($e);
-	        }
-	        
-	        throw $e;
-	    }
+        $this->checkTimeLimits();
+         
+        // Time limits are OK! Let's try to begin the attempt.
+        $routeItem = $this->getCurrentRouteItem();
+        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+        $session->beginAttempt();
 	}
 	
 	/**
@@ -1138,16 +1088,7 @@ class AssessmentTestSession extends State {
 	    
 	    // -- Are time limits in force respected?
 	    if ($allowLateSubmission === false) {
-	        try {
-	            $this->checkTimeLimits(true);
-	        }
-	        catch (AssessmentTestSessionException $e) {
-	            if ($this->mustAutoForward() === true) {
-	                $this->handleTimingAssessmentTestSessionException($e);
-	            }
-	            
-	            throw $e;
-	        }
+	        $this->checkTimeLimits(true);
 	    }
 
 	    // -- Time limits in force respected, try to end the item attempt.    try {
@@ -1158,16 +1099,7 @@ class AssessmentTestSession extends State {
             $session->endAttempt($responses, false, $allowLateSubmission);
         }
         else {
-            try {
-                $session->endAttempt($responses, true, $allowLateSubmission);
-            }
-            catch (AssessmentItemSessionException $e) {
-                if ($this->isTimingAssessmentItemSessionException($e) === true && $this->mustAutoForward() === true) {
-                    $this->handleTimingAssessmentItemSessionException($e);
-                }
-                
-                throw $e;
-            }
+            $session->endAttempt($responses, true, $allowLateSubmission);
             
             // Update the lastly updated item occurence.
             $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
@@ -1184,11 +1116,6 @@ class AssessmentTestSession extends State {
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
         }
-        
-        if ($this->mustAutoForward() === true) {
-            // Go automatically to the next step in the route.
-            $this->moveNext();
-	    }
 	}
 	
 	/**
@@ -2323,77 +2250,5 @@ class AssessmentTestSession extends State {
 	    $factory->setRoute($route);
 	    
 	    return $factory->createAssessmentTestSession();
-	}
-	
-	/**
-	 * Whether or not a given AssessmentTestSessionException exception is related to a timing error.
-	 * The following AssessmentTestSessionException's error codes will be considered related to
-	 * timing:
-	 * 
-	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW.
-	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW.
-	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW.
-	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW.
-	 * * AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW.
-	 * * AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW.
-	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW.
-	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW.
-	 * 
-	 * @param AssessmentTestSessionException $e An AssessmentTestSessionException object.
-	 * @return boolean
-	 */
-	protected function isTimingAssessmentTestSessionException(AssessmentTestSessionException $e) {
-	    switch ($e->getCode()) {
-	        case AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW:
-	        case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW:
-	        case AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW:
-	        case AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW:
-	        case AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW:
-	        case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW:
-	        case AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW:
-	        case AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW:
-	            return true;
-	        break;
-	        
-	        default:
-	            return false;
-	        break;
-	    }
-	}
-	
-	/**
-	 * Whether or not a given AssessmentItemSessionException exception is related to a timing error.
-	 * The following AssessmentItem SessionException's error codes will be considered related to
-	 * timing:
-	 * 
-	 * * AssessmentItemSessionException::DURATION_OVERFLOW
-	 * * AssessmentItemSessionException::DURATION_UNDERFLOW
-	 *
-	 * @param AssessmentItemSessionException $e An AssessmentItemSessionException object.
-	 * @return boolean
-	 */
-	protected function isTimingAssessmentItemSessionException(AssessmentItemSessionException $e) {
-	    switch ($e->getCode()) {
-	        case AssessmentItemSessionException::DURATION_OVERFLOW:
-	        case AssessmentItemSessionException::DURATION_UNDERFLOW:
-	            return true;
-	        break;
-	        
-	        default:
-	            return false;
-	        break;
-	    }
-	}
-	
-	protected function handleTimingAssessmentTestSessionException(AssessmentTestSessionException $e) {
-	    if ($this->mustAutoForward() === true) {
-	        $this->moveNext(false);
-	    }
-	}
-	
-	protected function handleTimingAssessmentItemSessionException(AssessmentItemSessionException $e) {
-	    if ($this->mustAutoForward() === true) {
-	        $this->moveNext(false);
-	    }
 	}
 }

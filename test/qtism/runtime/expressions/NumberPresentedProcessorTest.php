@@ -32,6 +32,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase {
 		    
 		    $this->assertEquals($expectedResults[$i], $result);
 		    $session->skip();
+		    $session->moveNext();
 		}
 	}
 	

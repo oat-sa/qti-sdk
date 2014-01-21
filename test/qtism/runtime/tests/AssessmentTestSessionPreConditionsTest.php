@@ -48,6 +48,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         // Q01 - Answer incorrect to be redirected by successive false evaluated preconditions.
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+        $testSession->moveNext();
         
         // Because of the autoforward, the test is finished.
         $this->assertFalse($testSession->isRunning());
@@ -65,6 +66,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'BadChoice'))));
+        $testSession->moveNext();
         
         // Incorrect answer = end of test.
         $this->assertFalse($testSession->isRunning());
@@ -85,26 +87,31 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this->assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q01.SCORE']);
         
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q02.SCORE']);
         
         $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q03.SCORE']);
         
         $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q04.SCORE']);
         
         $this->assertEquals('Q05', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'GoodChoice'))));
+        $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q05.SCORE']);
         
         $this->assertFalse($testSession->isRunning());
