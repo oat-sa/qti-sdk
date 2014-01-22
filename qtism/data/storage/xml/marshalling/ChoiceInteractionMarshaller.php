@@ -57,7 +57,24 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
                 }
                 
                 if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                    $component->setMinChoices($minChoices);
+                    if ($element->localName === 'orderInteraction') {
+                        /*
+                         * Lots of QTI implementations output minChoices = 0 while
+                         * dealing with orderInteraction unmarshalling. However, regarding
+                         * the IMS QTI Specification, it is invalid.
+                         * 
+                         * "If specified, minChoices must be 1 or greater but must not exceed the 
+                         * number of choices available."
+                         * 
+                         * See http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10283
+                         */
+                        if ($minChoices !== 0) {
+                            $component->setMinChoices($minChoices);
+                        }
+                    }
+                    else {
+                        $component->setMinChoices($minChoices);
+                    }
                 }
                 
                 if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
