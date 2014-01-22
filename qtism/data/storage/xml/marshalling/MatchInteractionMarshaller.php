@@ -61,7 +61,7 @@ class MatchInteractionMarshaller extends ContentMarshaller {
                 }
                 
                 if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
-                    $component->setMinChoices($minAssociations);
+                    $component->setMinAssociations($minAssociations);
                 }
                 
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
