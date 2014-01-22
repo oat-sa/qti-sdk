@@ -341,8 +341,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @return boolean
      */
     public function hasIndex() {
-        $index = $this->getIndex();
-        return !(is_int($index) && $index < 0);
+        return is_string($this->index) || $this->index >= 0;
     }
     
     /**
