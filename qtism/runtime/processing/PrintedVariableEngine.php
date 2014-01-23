@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\processing;
 
+use qtism\data\QtiComponent;
+use qtism\common\utils\Format;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\common\enums\BaseType;
@@ -110,14 +112,14 @@ class PrintedVariableEngine extends AbstractEngine {
         $state = $this->getContext();
         
         if (isset($state[$identifier]) === false) {
-            return null;
+            return '';
         }
         
         $variable = $state->getVariable($identifier);
         $value = $variable->getValue();
         
         if ($value === null || $value === '' || ($value instanceof Container && $value->isNull() === true)) {
-            return null;
+            return '';
         }
         
         if ($variable->getCardinality() === Cardinality::SINGLE) {
@@ -243,20 +245,7 @@ class PrintedVariableEngine extends AbstractEngine {
                 return sprintf($format, $value);
             }
             else if ($baseType === BaseType::FLOAT && $printedVariable->mustPowerForm() === true) {
-                // @todo use unicode superscript one, two, ...
-                // http://www.fileformat.info/info/unicode/char/b9/index.htm (1)
-                // http://www.fileformat.info/info/unicode/char/00b2/index.htm (2)
-                // http://www.fileformat.info/info/unicode/char/00b3/index.htm (3)
-                // http://www.fileformat.info/info/unicode/char/2074/index.htm (4)
-                // http://www.fileformat.info/info/unicode/char/2075/index.htm (5)
-                // http://www.fileformat.info/info/unicode/char/2076/index.htm (6)
-                // http://www.fileformat.info/info/unicode/char/2077/index.htm (7)
-                // http://www.fileformat.info/info/unicode/char/2078/index.htm (8)
-                // http://www.fileformat.info/info/unicode/char/2079/index.htm (9)
-                // http://www.fileformat.info/info/unicode/char/207b/index.htm (-)
-                
-                // Use this technique to use the \u1000 notation!
-                return str_replace('e', ' x 10^', $subject);
+                return Format::scale10($value, 'x');
             }
             else if ($baseType === BaseType::FLOAT) {
                 return sprintf('%e', $value);

@@ -82,6 +82,31 @@ class FormatTest extends QtiSmTestCase {
 	    $this->assertFalse(Format::isString256($string));
 	}
 	
+	/**
+	 * @dataProvider scale10Provider
+	 */
+	public function testScale10($float, $expected, $x = 'x', $precision = false) {
+	    $this->assertEquals($expected, Format::scale10($float, $x, $precision));
+	}
+	
+	public function scale10Provider() {
+	    return array(
+	        // No precision, no X
+	        array(2, '2.000000 x 10⁰'),
+	        array(25, '2.500000 x 10¹'),
+	        array(-53000, '-5.300000 x 10⁴'),
+	        array(6720000000, '6.720000 x 10⁹'),
+	        array(672000000000, '6.720000 x 10¹¹'),
+	        array(0.2, '2.000000 x 10⁻¹'),
+	        array(0.00000000751, '7.510000 x 10⁻⁹'),
+	                    
+	        // Precision + X
+	        array(2, '2.000 X 10⁰', 'X', 3),
+	        array(25, '2 X 10¹', 'X', 0),
+	        array(-53000, '-5.3 e 10⁴', 'e', 1),
+	    );
+	}
+	
 	public function validIdentifierFormatProvider() {
 		return array(
 			array('_good'),

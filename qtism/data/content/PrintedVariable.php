@@ -379,7 +379,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @throws InvalidArgumentException If $field is not a string with at most 256 characters.
      */
     public function setField($field) {
-        if (empty($field) === false && Format::isString256($field) === true) {
+        if (Format::isString256($field) === true) {
             $this->field = $field;
         }
         else {

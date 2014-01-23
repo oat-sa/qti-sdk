@@ -343,4 +343,77 @@ class Format {
 	    $pattern = "/^(?:[^\s]+?(?:\x20){0,1})+$/";
 	    return preg_match($pattern, $string) === 1;
 	}
+	
+	/**
+	 * Get a float variable into a Standard Form / Scientific notation e.g. 6.72 x 10⁴.
+	 * 
+	 * * If no $precision is given, 6 significant numbers will be displayed after the decimal separator.
+	 * * If no $x is given, the 'x' character will be used as the 'times' operator.
+	 * 
+	 * @param float $float
+	 * @param string $x The character to be used as the 'times' operator.
+	 * @param false|integer $precision The number of requested significant numbers after the decimal separator.
+	 * @return string
+	 */
+	public static function scale10($float, $x = 'x', $precision = false) {
+
+	    // 1. Transform in 'E' notation.
+	    $mask = ($precision === false) ? '%e' : "%.${precision}e";
+	    $strFloat = sprintf($mask, $float);
+	    
+	    // 2. Transform the 'E' notation into 'x 10^n' notation.
+	    $parts = explode('e', $strFloat);
+	    $mantissa = $parts[1];
+	    $newMantissa = '';
+	    
+	    for ($i = 0; $i < strlen($mantissa); $i++) {
+	        switch ($mantissa[$i]) {
+	            case '0':
+	                $newMantissa .= json_decode('"\u2070"');
+	            break;
+	            
+	            case '1':
+	                $newMantissa .= json_decode('"\u00b9"');
+	            break;
+	            
+	            case '2':
+	                $newMantissa .= json_decode('"\u00b2"');
+	            break;
+	            
+	            case '3':
+	                $newMantissa .= json_decode('"\u00b3"');
+	            break;
+	            
+	            case '4':
+	                $newMantissa .= json_decode('"\u2074"');
+	            break;
+	            
+	            case '5':
+	                $newMantissa .= json_decode('"\u2075"');
+	            break;
+	            
+	            case '6':
+	                $newMantissa .= json_decode('"\u2076"');
+	            break;
+	            
+	            case '7':
+	                $newMantissa .= json_decode('"\u2077"');
+	            break;
+	            
+	            case '8':
+	                $newMantissa .= json_decode('"\u2078"');
+	            break;
+	            
+	            case '9':
+	                $newMantissa .= json_decode('"\u2079"');
+	            break;
+	            
+	            case '-':
+	                $newMantissa .= json_decode('"\u207b"');
+	            break;
+	        }
+	    }
+	    
+	    return $parts[0] . " ${x} 10" . $newMantissa;
+	}
 }
