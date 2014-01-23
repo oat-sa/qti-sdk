@@ -1,4 +1,12 @@
 <?php
+use qtism\runtime\common\MultipleContainer;
+
+use qtism\common\datatypes\DirectedPair;
+
+use qtism\common\datatypes\Pair;
+
+use qtism\common\datatypes\Duration;
+
 use qtism\runtime\common\TemplateVariable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -41,6 +49,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
     
     public function printedVariableProvider() {
         $state = new State();
+        
+        $state->setVariable(new OutcomeVariable('nullValue', Cardinality::SINGLE, BaseType::BOOLEAN, null));
+        
         $state->setVariable(new OutcomeVariable('nonEmptyString', Cardinality::SINGLE, BaseType::STRING, 'Non Empty String'));
         $state->setVariable(new OutcomeVariable('emptyString', Cardinality::SINGLE, BaseType::STRING, ''));
         $state->setVariable(new TemplateVariable('positiveInteger', Cardinality::SINGLE, BaseType::INTEGER, 25));
@@ -56,8 +67,25 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new TemplateVariable('positiveIntOrIdentifier', Cardinality::SINGLE, BaseType::INTEGER, 25));
         $state->setVariable(new TemplateVariable('zeroIntOrIdentifier', Cardinality::SINGLE, BaseType::INTEGER, 0));
         $state->setVariable(new TemplateVariable('negativeIntOrIdentifier', Cardinality::SINGLE, BaseType::INTEGER, -25));
+        $state->setVariable(new OutcomeVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT3M26S')));
+        $state->setVariable(new OutcomeVariable('pair', Cardinality::SINGLE, BaseType::PAIR, new Pair('A', 'B')));
+        $state->setVariable(new OutcomeVariable('directedPair', Cardinality::SINGLE, BaseType::DIRECTED_PAIR, new DirectedPair('B', 'C')));
+        $state->setVariable(new OutcomeVariable('identifier', Cardinality::SINGLE, BaseType::IDENTIFIER, 'woot'));
+        
+        $state->setVariable(new TemplateVariable('multipleInteger', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(10, 20, -1))));
+        $state->setVariable(new OutcomeVariable('multipleFloat', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(10.0, 20.0, -1.0))));
+        $state->setVariable(new OutcomeVariable('multipleString', Cardinality::MULTIPLE, BaseType::STRING, new MultipleContainer(BaseType::STRING, array('Ta', 'Daaa', 'h', ''))));
+        $state->setVariable(new OutcomeVariable('multipleBoolean', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(true, false, true, true))));
+        $state->setVariable(new OutcomeVariable('multipleURI', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.rdfabout.com'))));
+        $state->setVariable(new OutcomeVariable('multipleIdentifier', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('9thing', 'woot-woot'))));
+        $state->setVariable(new TemplateVariable('multipleDuration', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT0S'), new Duration('PT3M')))));
+        $state->setVariable(new OutcomeVariable('multiplePair', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
+        $state->setVariable(new OutcomeVariable('multipleDirectedPair', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F')))));
         
         return array(
+            array('', 'nonExistingVariable', $state),
+            array('', 'nullValue', $state),            
+                        
             array('Non Empty String', 'nonEmptyString', $state),
             array('', 'emptyString', $state),
             array('25', 'positiveInteger', $state),
@@ -72,6 +100,19 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
             array('25', 'positiveIntOrIdentifier', $state),
             array('0', 'zeroIntOrIdentifier', $state),
             array('-25', 'negativeIntOrIdentifier', $state),
+            array('206', 'duration', $state),
+            array('A B', 'pair', $state),
+            array('B C', 'directedPair', $state),
+            array('woot', 'identifier', $state),
+                        
+            array('10;20;-1', 'multipleInteger', $state),
+            array('1.000000e+1;2.000000e+1;-1.000000e+0', 'multipleFloat', $state),
+            array('Ta;Daaa;h;', 'multipleString', $state),
+            array('true;false;true;true', 'multipleBoolean', $state),
+            array('http://www.taotesting.com;http://www.rdfabout.com', 'multipleURI', $state),
+            array('9thing;woot-woot', 'multipleIdentifier', $state),
+            array('0;180', 'multipleDuration', $state),
+            array('A B;C D;E F', 'multiplePair', $state)
         );
     }
 }

@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\processing;
 
+use qtism\runtime\common\Variable;
 use qtism\data\QtiComponent;
 use qtism\common\utils\Format;
 use qtism\runtime\common\RecordContainer;
@@ -149,12 +150,12 @@ class PrintedVariableEngine extends AbstractEngine {
             }
             else {
                 // Display all values.
-                $this->processOrderedMultiple($variable);
+                return $this->processOrderedMultiple($variable);
             }
         }
         else if ($variable->getCardinality() === Cardinality::MULTIPLE) {
             // Display all values.
-            $this->processOrderedMultiple($variable);
+            return $this->processOrderedMultiple($variable);
         }
         else {
             // This is a record.
@@ -175,10 +176,10 @@ class PrintedVariableEngine extends AbstractEngine {
      * Processes all values of an ordered/multiple container and merge
      * them into a single string.
      * 
-     * @param qtism\runtime\common\OrderedContainer|qtism\runtime\common\MultipleContainer $variable The ordered/multiple container to process.
+     * @param Variable $variable The ordered/multiple container Variable to process.
      * @return string All the values delimited by printedVariable->delimiter.
      */
-    private function processOrderedMultiple(Container $variable) {
+    private function processOrderedMultiple(Variable $variable) {
         $processedValues = array();
         $baseType = $variable->getBaseType();
         
