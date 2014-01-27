@@ -103,6 +103,9 @@ class PrintedVariableEngine extends AbstractEngine {
      * Processes the encapsulated PrintedVariable object into a formatted
      * string, depending on the PrintedVariable object and the current context.
      * 
+     * * If the value to format is an OrderedContainer, and no 'index' attribue value is given, the whole container is displayed.
+     * * If no specific precision is given for a float display, the precision will be by default 6.
+     * 
      * @return TextRun A processed PrintedVariable as a TextRun object or the NULL value if the variable's value is NULL.
      * @throws PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
