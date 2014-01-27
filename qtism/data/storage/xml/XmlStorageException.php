@@ -44,7 +44,7 @@ class XmlStorageException extends StorageException {
 	private $errors = null;
 	
 	/**
-	 * 
+	 * Create a new XmlStorageException object.
 	 * 
 	 * @param string $message A human-readable message describing the exception.
 	 * @param Exception $previous An optional previous exception which is the cause of this one.
