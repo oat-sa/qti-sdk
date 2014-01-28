@@ -1,4 +1,5 @@
 <?php
+use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\DirectedPair;
@@ -49,6 +50,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         
         $state->setVariable(new OutcomeVariable('nullValue', Cardinality::SINGLE, BaseType::BOOLEAN, null));
         
+        // Scalar values.
         $state->setVariable(new OutcomeVariable('nonEmptyString', Cardinality::SINGLE, BaseType::STRING, 'Non Empty String'));
         $state->setVariable(new OutcomeVariable('emptyString', Cardinality::SINGLE, BaseType::STRING, ''));
         $state->setVariable(new TemplateVariable('positiveInteger', Cardinality::SINGLE, BaseType::INTEGER, 25));
@@ -70,6 +72,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new OutcomeVariable('directedPair', Cardinality::SINGLE, BaseType::DIRECTED_PAIR, new DirectedPair('B', 'C')));
         $state->setVariable(new OutcomeVariable('identifier', Cardinality::SINGLE, BaseType::IDENTIFIER, 'woot'));
         
+        // -- Multiple containers.
+        $state->setVariable(new TemplateVariable('multipleIntegerSingle', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(10))));
         $state->setVariable(new TemplateVariable('multipleInteger', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(10, 20, -1))));
         $state->setVariable(new OutcomeVariable('multipleFloat', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(10.0, 20.0, -1.0))));
         $state->setVariable(new OutcomeVariable('multipleString', Cardinality::MULTIPLE, BaseType::STRING, new MultipleContainer(BaseType::STRING, array('Ta', 'Daaa', 'h', ''))));
@@ -80,18 +84,22 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new OutcomeVariable('multiplePair', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
         $state->setVariable(new OutcomeVariable('multipleDirectedPair', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F')))));
         $state->setVariable(new OutcomeVariable('multipleIntOrIdentifier', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('woot', 25, 0, -25))));
+        $state->setVariable(new OutcomeVariable('multipleEmpty', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER)));
+        $state->setVariable(new TemplateVariable('multipleContainsNull', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(-10, null, null))));
         
         // -- Ordered containers, no value for the 'index' attribute.
-        $state->setVariable(new TemplateVariable('orderedInteger', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(10, 20, -1))));
-        $state->setVariable(new OutcomeVariable('orderedFloat', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(10.0, 20.0, -1.0))));
-        $state->setVariable(new OutcomeVariable('orderedString', Cardinality::MULTIPLE, BaseType::STRING, new MultipleContainer(BaseType::STRING, array('Ta', 'Daaa', 'h', ''))));
-        $state->setVariable(new OutcomeVariable('orderedBoolean', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(true, false, true, true))));
-        $state->setVariable(new OutcomeVariable('orderedURI', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.rdfabout.com'))));
-        $state->setVariable(new OutcomeVariable('orderedIdentifier', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array('9thing', 'woot-woot'))));
-        $state->setVariable(new TemplateVariable('orderedDuration', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT0S'), new Duration('PT3M')))));
-        $state->setVariable(new OutcomeVariable('orderedPair', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
-        $state->setVariable(new OutcomeVariable('orderedDirectedPair', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F')))));
-        $state->setVariable(new OutcomeVariable('orderedIntOrIdentifier', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('woot', 25, 0, -25))));
+        $state->setVariable(new TemplateVariable('orderedInteger', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(10, 20, -1))));
+        $state->setVariable(new OutcomeVariable('orderedFloat', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(10.0, 20.0, -1.0))));
+        $state->setVariable(new OutcomeVariable('orderedString', Cardinality::ORDERED, BaseType::STRING, new OrderedContainer(BaseType::STRING, array('Ta', 'Daaa', 'h', ''))));
+        $state->setVariable(new OutcomeVariable('orderedBoolean', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(true, false, true, true))));
+        $state->setVariable(new OutcomeVariable('orderedURI', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.rdfabout.com'))));
+        $state->setVariable(new OutcomeVariable('orderedIdentifier', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array('9thing', 'woot-woot'))));
+        $state->setVariable(new TemplateVariable('orderedDuration', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('PT0S'), new Duration('PT3M')))));
+        $state->setVariable(new OutcomeVariable('orderedPair', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
+        $state->setVariable(new OutcomeVariable('orderedDirectedPair', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F')))));
+        $state->setVariable(new OutcomeVariable('orderedIntOrIdentifier', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array('woot', 25, 0, -25))));
+        $state->setVariable(new TemplateVariable('orderedEmpty', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER)));
+        $state->setVariable(new TemplateVariable('orderedContainsNull', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(null, null, 10))));
         
         // -- Ordered containers, value for the 'index' attribute set.
         $state->setVariable(new TemplateVariable('orderedIndexedInteger', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(10, 20, -1))));
@@ -108,6 +116,23 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new OutcomeVariable('orderedIndexedPair', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
         $state->setVariable(new OutcomeVariable('orderedIndexedDirectedPair', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F')))));
         $state->setVariable(new OutcomeVariable('orderedIndexedIntOrIdentifier', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array('woot', 25, 0, -25))));
+        
+        // -- Record containers.
+        $state->setVariable(new OutcomeVariable('recordSingle', Cardinality::RECORD, -1, new RecordContainer(array('a' => 25.3))));
+        $state->setVariable(new OutcomeVariable('recordMultiple', Cardinality::RECORD, -1, new RecordContainer(array('a' => -3, 'b' => 3.3, 'c' => true, 'd' => false, 'e' => 'string', 'f' => 'http://www.rdfabout.com', 'g' => new Duration('PT3M'), 'h' => new Pair('A', 'B'), 'i' => new DirectedPair('C', 'D')))));
+        $state->setVariable(new TemplateVariable('recordEmpty', Cardinality::RECORD, -1, new RecordContainer()));
+        $state->setVariable(new OutcomeVariable('recordContainsNull', Cardinality::RECORD, -1, new RecordContainer(array('a' => -3, 'b' => null, 'c' => true))));
+        
+        // -- Power form.
+        $state->setVariable(new OutcomeVariable('powerFormScalarPositiveInteger', Cardinality::SINGLE, BaseType::INTEGER, 250));
+        $state->setVariable(new OutcomeVariable('powerFormScalarZeroInteger', Cardinality::SINGLE, BaseType::INTEGER, 0));
+        $state->setVariable(new OutcomeVariable('powerFormScalarNegativeInteger', Cardinality::SINGLE, BaseType::INTEGER, -23));
+        $state->setVariable(new OutcomeVariable('powerFormScalarPositiveFloat', Cardinality::SINGLE, BaseType::FLOAT, 250.35));
+        $state->setVariable(new OutcomeVariable('powerFormScalarZeroFloat', Cardinality::SINGLE, BaseType::FLOAT, 0.0));
+        $state->setVariable(new OutcomeVariable('powerFormScalarNegativeFloat', Cardinality::SINGLE, BaseType::FLOAT, -23.0));
+        
+        // -- IMS NumberFormatting. See http://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html#section10017
+        $state->setVariable(new OutcomeVariable('integerMinus987', Cardinality::SINGLE, BaseType::INTEGER, -987));
         
         return array(
             array('', 'nonExistingVariable', $state),
@@ -132,7 +157,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
             array('A B', 'pair', $state),
             array('B C', 'directedPair', $state),
             array('woot', 'identifier', $state),
-                        
+
+            array('10', 'multipleIntegerSingle', $state),
             array('10;20;-1', 'multipleInteger', $state),
             array('1.000000e+1;2.000000e+1;-1.000000e+0', 'multipleFloat', $state),
             array('Ta;Daaa;h;', 'multipleString', $state),
@@ -142,16 +168,19 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
             array('0;180', 'multipleDuration', $state),
             array('A B;C D;E F', 'multiplePair', $state),
             array('woot;25;0;-25', 'multipleIntOrIdentifier', $state),
+            array('', 'multipleEmpty', $state),
+            array('-10;null;null', 'multipleContainsNull', $state),
                         
-            array('10;20;-1', 'multipleInteger', $state),
-            array('1.000000e+1;2.000000e+1;-1.000000e+0', 'multipleFloat', $state),
-            array('Ta;Daaa;h;', 'multipleString', $state),
-            array('true;false;true;true', 'multipleBoolean', $state),
-            array('http://www.taotesting.com;http://www.rdfabout.com', 'multipleURI', $state),
-            array('9thing;woot-woot', 'multipleIdentifier', $state),
-            array('0;180', 'multipleDuration', $state),
-            array('A B;C D;E F', 'multiplePair', $state),
-            array('woot;25;0;-25', 'multipleIntOrIdentifier', $state),
+            array('10;20;-1', 'orderedInteger', $state),
+            array('1.000000e+1;2.000000e+1;-1.000000e+0', 'orderedFloat', $state),
+            array('Ta;Daaa;h;', 'orderedString', $state),
+            array('true;false;true;true', 'orderedBoolean', $state),
+            array('http://www.taotesting.com;http://www.rdfabout.com', 'orderedURI', $state),
+            array('9thing;woot-woot', 'orderedIdentifier', $state),
+            array('0;180', 'orderedDuration', $state),
+            array('A B;C D;E F', 'orderedPair', $state),
+            array('woot;25;0;-25', 'orderedIntOrIdentifier', $state),
+            array('null;null;10', 'orderedContainsNull', $state),
                         
             array('10', 'orderedIndexedInteger', $state, '', false, 10, 0),
             array('20', 'orderedIndexedInteger', $state, '', false, 10, 1),
@@ -193,6 +222,35 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
             array('25', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 1),
             array('0', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 2),
             array('-25', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 3),
+
+            // -- Power form (only in force with float values.
+            array('250', 'powerFormScalarPositiveInteger', $state, '', true),
+            array('0', 'powerFormScalarZeroInteger', $state, '', true),
+            array('-23', 'powerFormScalarNegativeInteger', $state, '', true),
+            array('2.503500 x 10²', 'powerFormScalarPositiveFloat', $state, '', true),
+            array('0.000000 x 10⁰', 'powerFormScalarZeroFloat', $state, '', true),
+            array('-2.300000 x 10¹', 'powerFormScalarNegativeFloat', $state, '', true),
+                        
+            // -- Record containers.
+            array('a=2.530000e+1', 'recordSingle', $state),
+            array('a=-3;b=3.300000e+0;c=true;d=false;e=string;f=http://www.rdfabout.com;g=180;h=A B;i=C D', 'recordMultiple', $state),
+            array('', 'recordEmpty', $state),
+            array('a=-3;b=null;c=true', 'recordContainsNull', $state),
+                        
+            // -- Funny format tests.
+            array('bla', 'positiveInteger', $state, 'bla'),
+            array(' yeah', 'positiveInteger', $state, '%-P yeah'),
+            
+            // -- Real tests with format.
+            array('25', 'positiveInteger', $state, '%s'),
+            array('Integer as string:25', 'positiveInteger', $state, 'Integer as string:%s'),
+            array('Preceding with zeros: 0000000025', 'positiveInteger', $state, 'Preceding with zeros: %010d'),
+            array('Preceding with zeros (signed): +000000025', 'positiveInteger', $state, 'Preceding with zeros (signed): %+010i'),
+            array('Preceding with blanks:         25', 'positiveInteger', $state, 'Preceding with blanks: %10d'),
+            array('31', 'positiveInteger', $state, '%#o'),
+            array('31', 'positiveFloat', $state, '%+o'),
+                        
+            array('-987', 'integerMinus987', $state, '%i'),
         );
     }
 }

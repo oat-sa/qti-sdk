@@ -170,7 +170,7 @@ class PrintedVariableEngine extends AbstractEngine {
             }
             else {
                 // Display all values.
-                $this->processRecord($variable);
+                return $this->processRecord($variable);
             }
         }
     }
@@ -200,16 +200,16 @@ class PrintedVariableEngine extends AbstractEngine {
      * @param RecordContainer $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
-    private function processRecord(RecordContainer $variable) {
+    private function processRecord(Variable $variable) {
         $processedValues = array();
         $baseType = $variable->getBaseType();
-        $mappingIndicator = $this->getComponent->getMappingIndicator();
+        $mappingIndicator = $this->getComponent()->getMappingIndicator();
         
         foreach ($variable->getValue() as $k => $v) {
-            $processedValues[] = "${k}=${mappingIndicator}" . $this->processValue(Utils::inferBaseType($v), $v);
+            $processedValues[] = "${k}${mappingIndicator}" . $this->processValue(Utils::inferBaseType($v), $v);
         }
         
-        return implode($this->getComponent->getDelimiter(), $processedValues);
+        return implode($this->getComponent()->getDelimiter(), $processedValues);
     }
     
     /**
@@ -224,7 +224,7 @@ class PrintedVariableEngine extends AbstractEngine {
         $printedVariable = $this->getComponent();
         
         if ($value === null) {
-            return 'NULL';
+            return 'null';
         }
         
         if ($baseType === BaseType::INT_OR_IDENTIFIER) {
@@ -246,7 +246,8 @@ class PrintedVariableEngine extends AbstractEngine {
             $format = $printedVariable->getFormat();
             
             if (empty($format) === false) {
-                return sprintf($format, $value);
+               $format = Format::printfFormatIsoToPhp($format);
+               return sprintf($format, $value);
             }
             else if ($baseType === BaseType::FLOAT && $printedVariable->mustPowerForm() === true) {
                 return Format::scale10($value, 'x');
