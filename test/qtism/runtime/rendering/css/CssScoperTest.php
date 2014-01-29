@@ -17,6 +17,8 @@ class CssScoperTest extends QtiSmTestCase {
         $expected = file_get_contents($outputFile);
         $actual = $cssScoper->render($inputFile, $id);
         $this->assertEquals($expected, $actual);
+        
+        //var_dump($actual);
     }
     
     public function testOutputProvider() {
@@ -27,6 +29,10 @@ class CssScoperTest extends QtiSmTestCase {
             array(self::samplesDir() . 'rendering/css/css_input4.css', self::samplesDir() . 'rendering/css/css_output4.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input5.css', self::samplesDir() . 'rendering/css/css_output5.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input6.css', self::samplesDir() . 'rendering/css/css_output6.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input7.css', self::samplesDir() . 'rendering/css/css_output7.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input8.css', self::samplesDir() . 'rendering/css/css_output8.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input9.css', self::samplesDir() . 'rendering/css/css_output9.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input10.css', self::samplesDir() . 'rendering/css/css_output10.css', 'myId'),
         );
     }
 }

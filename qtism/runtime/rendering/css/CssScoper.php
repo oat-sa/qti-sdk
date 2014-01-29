@@ -47,6 +47,8 @@ class CssScoper implements Renderable {
 	
 	const IN_CLASSCOMMENT = 7;
 	
+	const IN_ATRULEBODY = 8;
+	
 	const CHAR_AT = "@";
 	
 	const CHAR_DOUBLEQUOTE = '"';
@@ -93,6 +95,13 @@ class CssScoper implements Renderable {
 	 * @var BinaryStream
 	 */
 	private $stream;
+	
+	/**
+	 * The previously read char.
+	 * 
+	 * @var string
+	 */
+	private $previousChar = false;
 	
 	/**
 	 * The previously read significant char.
@@ -178,6 +187,10 @@ class CssScoper implements Renderable {
             		case self::IN_CLASSCOMMENT:
             			$this->inClassCommentState();
             		break;
+            		
+            		case self::IN_ATRULEBODY:
+            		    $this->inAtRuleBodyState();    
+            		break;
             	}
             	
             	$this->afterCharReading($char);
@@ -201,6 +214,8 @@ class CssScoper implements Renderable {
     	$this->setId($id);
     	$this->setBuffer(array());
     	$this->setOutput('');
+    	$this->setPreviousChar(false);
+    	$this->setPreviousSignificantChar(false);
     	
     	if (($data = @file_get_contents($file)) !== false) {
     		$stream = new BinaryStream($data);
@@ -271,6 +286,9 @@ class CssScoper implements Renderable {
     }
     
     protected function afterCharReading($char) {
+        
+        $this->setPreviousChar($char);
+        
     	if (self::isWhiteSpace($char) === false) {
     		$this->setPreviousSignificantChar($char);	
     	}
@@ -292,6 +310,14 @@ class CssScoper implements Renderable {
      */
     protected function setPreviousSignificantChar($char) {
     	$this->previousSignificantChar = $char;
+    }
+    
+    protected function getPreviousChar() {
+        return $this->previousChar;
+    }
+    
+    protected function setPreviousChar($char) {
+        $this->previousChar = $char;
     }
     
     /**
@@ -317,16 +343,17 @@ class CssScoper implements Renderable {
     	
     	if ($char === self::CHAR_AT) {
     		$this->setState(self::IN_ATRULE);
+    		$this->bufferize($char);
     		$this->output($char);
     	}
-    	else if ($char === self::CHAR_STAR && $this->getPreviousSignificantChar() === self::CHAR_SLASH) {
+    	else if ($char === self::CHAR_STAR && $this->getPreviousChar() === self::CHAR_SLASH) {
     		$this->setState(self::IN_MAINCOMMENT);
     		$this->output($char);
     	}
     	else if ($char === self::CHAR_SLASH) {
     	    $this->output($char);
     	}
-    	else if (self::isWhiteSpace($char) === false) {
+    	else if (self::isWhiteSpace($char) === false && $char !== self::CHAR_CLOSINGBRACE) {
     	    $this->bufferize($char);
     		$this->setState(self::IN_SELECTOR);
     	}
@@ -343,6 +370,19 @@ class CssScoper implements Renderable {
     	}
     	else if ($char === self::CHAR_TERMINATOR) {
     		$this->setState(self::RUNNING);
+    		$this->cleanBuffer();
+    	}
+    	else if ($char === self::CHAR_OPENINGBRACE && strpos(implode('', $this->getBuffer()), '@media') !== false) {
+    	    $this->setState(self::RUNNING);
+    	    $this->cleanBuffer();
+    	}
+    	else if ($char === self::CHAR_OPENINGBRACE) {
+    	    $this->setState(self::IN_ATRULEBODY);
+    	    $this->cleanBuffer();
+    	    $this->bufferize($char);
+    	}
+    	else {
+    	    $this->bufferize($char);
     	}
     	
     	$this->output($char);
@@ -365,14 +405,36 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    protected function inAtRuleBodyState() {
+        $char = $this->getCurrentChar();
+        
+        if ($char === self::CHAR_CLOSINGBRACE) {
+            $buffer = implode('', $this->getBuffer());
+            $openingCount = substr_count($buffer, self::CHAR_OPENINGBRACE);
+            $closingCount = substr_count($buffer, self::CHAR_CLOSINGBRACE) + 1;
+            
+            if ($openingCount === $closingCount) {
+                $this->cleanBuffer();
+                $this->setState(self::RUNNING);
+            }
+            else {
+                $this->bufferize($char);
+            }
+        }
+        else {
+            $this->bufferize($char);
+        }
+        
+        $this->output($char);
+    }
+    
     protected function inSelectorState() {
     	$char = $this->getCurrentChar();
     	
     	if ($char === self::CHAR_OPENINGBRACE) {
-    	    $buffer = $this->getBuffer();
-    	    $this->output('#' . $this->getId() . ' ' . implode('', $buffer) . '{');
+    	    $this->updateSelector();
     	    $this->cleanBuffer();
-    		$this->setState(self::IN_CLASSBODY);
+    	    $this->setState(self::IN_CLASSBODY);
     	}
     	else {
     	    $this->bufferize($char);
@@ -388,7 +450,7 @@ class CssScoper implements Renderable {
     	else if ($char === self::CHAR_CLOSINGBRACE) {
     		$this->setState(self::RUNNING);
     	}
-    	else if ($char === self::CHAR_STAR && $this->getPreviousSignificantChar() === self::CHAR_SLASH) {
+    	else if ($char === self::CHAR_STAR && $this->getPreviousChar() === self::CHAR_SLASH) {
     		$this->setState(self::IN_CLASSCOMMENT);
     	}
     	
@@ -398,7 +460,7 @@ class CssScoper implements Renderable {
     protected function inMainCommentState() {
     	$char = $this->getCurrentChar();
     	
-    	if ($char === self::CHAR_SLASH && $this->getPreviousSignificantChar() === self::CHAR_STAR) {
+    	if ($char === self::CHAR_SLASH && $this->getPreviousChar() === self::CHAR_STAR) {
     		$this->setState(self::RUNNING);
     	}
     	
@@ -408,7 +470,7 @@ class CssScoper implements Renderable {
     protected function inClassCommentState() {
         $char = $this->getCurrentChar();
         
-    	if ($char === self::CHAR_SLASH && $this->getPreviousSignificantChar() === self::CHAR_STAR) {
+    	if ($char === self::CHAR_SLASH && $this->getPreviousChar() === self::CHAR_STAR) {
     		$this->setState(self::IN_CLASSBODY);
     	}
     	
@@ -476,5 +538,25 @@ class CssScoper implements Renderable {
     	}
     	
     	return $count % 2 !== 0;
+    }
+    
+    protected function updateSelector() {
+        $buffer = implode('', $this->getBuffer());
+        
+        if (strpos($buffer, ',') === false) {
+            $this->output('#' . $this->getId() . ' ' . $buffer . '{');
+        }
+        else {
+            $classes = explode(',', $buffer);
+            $newClasses = array();
+            
+            foreach ($classes as $c) {
+                $newC =  '#' . $this->getId() . ' ' . trim($c);
+                $newC = str_replace(trim($c), $newC, $c);
+                $newClasses[] = $newC;
+            }
+            
+            $this->output(implode(',', $newClasses) . '{');
+        }
     }
 }
