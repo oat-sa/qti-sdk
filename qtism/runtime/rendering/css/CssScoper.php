@@ -132,6 +132,13 @@ class CssScoper implements Renderable {
 	private $output = '';
 	
 	/**
+	 * The previous state.
+	 * 
+	 * @var integer
+	 */
+	private $previousState = false;
+	
+	/**
      * Rescope the content of a given CSS file.
      *
      * @param string $file The path to the file that has to be rescoped.
@@ -372,7 +379,7 @@ class CssScoper implements Renderable {
     		$this->setState(self::RUNNING);
     		$this->cleanBuffer();
     	}
-    	else if ($char === self::CHAR_OPENINGBRACE && (($buffer = implode('', $this->getBuffer())) && (strpos($buffer, '@media') !== false))) {
+    	else if ($char === self::CHAR_OPENINGBRACE && (($buffer = implode('', $this->getBuffer())) && (strpos($buffer, '@media') !== false || strpos($buffer, '@supports') !== false))) {
     	    $this->setState(self::RUNNING);
     	    $this->cleanBuffer();
     	}
