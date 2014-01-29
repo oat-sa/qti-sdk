@@ -372,7 +372,7 @@ class CssScoper implements Renderable {
     		$this->setState(self::RUNNING);
     		$this->cleanBuffer();
     	}
-    	else if ($char === self::CHAR_OPENINGBRACE && strpos(implode('', $this->getBuffer()), '@media') !== false) {
+    	else if ($char === self::CHAR_OPENINGBRACE && (($buffer = implode('', $this->getBuffer())) && (strpos($buffer, '@media') !== false))) {
     	    $this->setState(self::RUNNING);
     	    $this->cleanBuffer();
     	}
