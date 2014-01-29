@@ -1038,6 +1038,7 @@ class AssessmentTestSession extends State {
                 $this->addPendingResponses($pendingResponses);
             }
             else {
+                $this->submitItemResults($session, $occurence);
                 $this->outcomeProcessing();
             }
         }
