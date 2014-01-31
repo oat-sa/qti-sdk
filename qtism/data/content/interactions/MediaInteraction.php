@@ -148,7 +148,7 @@ class MediaInteraction extends BlockInteraction {
      * @throws InvalidArgumentException If $minPlays is not a positive integer.
      */
     public function setMinPlays($minPlays) {
-        if (is_int($minPlays) === true && $minPlays > 0) {
+        if (is_int($minPlays) === true && $minPlays >= 0) {
             $this->minPlays = $minPlays;
         }
         else {
@@ -182,7 +182,7 @@ class MediaInteraction extends BlockInteraction {
      * @throws InvalidArgumentException If $maxPlays is not a positive integer.
      */
     public function setMaxPlays($maxPlays) {
-        if (is_int($maxPlays) && $maxPlays > 0) {
+        if (is_int($maxPlays) && $maxPlays >= 0) {
             $this->maxPlays = $maxPlays;
         }
         else {
