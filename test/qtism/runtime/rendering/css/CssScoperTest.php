@@ -37,6 +37,7 @@ class CssScoperTest extends QtiSmTestCase {
             array(self::samplesDir() . 'rendering/css/css_input13.css', self::samplesDir() . 'rendering/css/css_output13.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input14.css', self::samplesDir() . 'rendering/css/css_output14.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input15.css', self::samplesDir() . 'rendering/css/css_output15.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input16.css', self::samplesDir() . 'rendering/css/css_output16.css', 'myId'),
         );
     }
 }

@@ -551,18 +551,33 @@ class CssScoper implements Renderable {
         $buffer = implode('', $this->getBuffer());
         
         if (strpos($buffer, ',') === false) {
-            $this->output('#' . $this->getId() . ' ' . $buffer . '{');
+            
+            // Do not rescope if already scoped!
+            if (strpos($buffer, '#' . $this->getId()) === false) {
+                $this->output('#' . $this->getId() . ' ' . $buffer . '{');
+            }
+            else {
+                $this->output($buffer . '{');
+            }
         }
         else {
             $classes = explode(',', $buffer);
             $newClasses = array();
-            
+        
             foreach ($classes as $c) {
-                $newC =  '#' . $this->getId() . ' ' . trim($c);
-                $newC = str_replace(trim($c), $newC, $c);
+                
+                // Same as aboce, do not rescope if already scoped...
+                if (strpos($c, '#' . $this->getId()) === false) {
+                    $newC =  '#' . $this->getId() . ' ' . trim($c);
+                    $newC = str_replace(trim($c), $newC, $c);
+                }
+                else {
+                    $newC = $c;
+                }
+                
                 $newClasses[] = $newC;
             }
-            
+        
             $this->output(implode(',', $newClasses) . '{');
         }
     }
