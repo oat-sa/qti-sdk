@@ -80,6 +80,7 @@ class RubricBlockMarshaller extends Marshaller {
 		    $element->appendChild($marshaller->marshall($block));
 		}
 		
+		self::fillElement($element, $component);
 		return $element;
 	}
 	
