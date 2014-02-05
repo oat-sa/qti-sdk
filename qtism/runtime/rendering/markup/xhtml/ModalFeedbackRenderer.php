@@ -37,8 +37,8 @@ use \DOMDocumentFragment;
  * 
  * It also takes care of producing the following x-data attributes.
  * 
- * * data-outcomeIdentifier = qti:modalFeedback->outcomeIdentifier
- * * data-showHide = qti:modalFeedback->showHide
+ * * data-outcome-identifier = qti:modalFeedback->outcomeIdentifier
+ * * data-show-hide = qti:modalFeedback->showHide
  * * data-identifier = qti:modalFeedback->identifier
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -55,8 +55,8 @@ class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-modalFeedback');
         
-        $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
-        $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $fragment->firstChild->setAttribute('data-outcome-identifier', $component->getOutcomeIdentifier());
+        $fragment->firstChild->setAttribute('data-show-hide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         
         if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_STATIC) {

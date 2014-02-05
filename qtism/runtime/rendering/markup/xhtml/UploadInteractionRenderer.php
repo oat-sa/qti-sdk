@@ -38,7 +38,7 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-type = qti:uploadInteraction->type (Only if present in QTI description)
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>

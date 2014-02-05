@@ -43,11 +43,11 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-lowerBound = qti:sliderInteraction->lowerBound
- * * data-upperBound = qti:sliderInteraction->upperBound
+ * * data-response-identifier = qti:interaction->responseIdentifier
+ * * data-lower-bound = qti:sliderInteraction->lowerBound
+ * * data-upper-bound = qti:sliderInteraction->upperBound
  * * data-step = qti:sliderInteraction->step (Only if a value is present in QTI-XML)
- * * data-stepLabel = qti:sliderInteraction->stepLabel
+ * * data-step-label = qti:sliderInteraction->stepLabel
  * * data-orientation = qti:sliderInteraction->orientation 
  * * data-reverse = qti:sliderInteraction->reverse
  * 
@@ -68,9 +68,9 @@ class SliderInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-sliderInteraction');
         $this->additionalClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
         
-        $fragment->firstChild->setAttribute('data-lowerBound', $component->getLowerBound());
-        $fragment->firstChild->setAttribute('data-upperBound', $component->getUpperBound());
-        $fragment->firstChild->setAttribute('data-stepLabel', ($component->mustStepLabel() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('data-lower-bound', $component->getLowerBound());
+        $fragment->firstChild->setAttribute('data-upper-bound', $component->getUpperBound());
+        $fragment->firstChild->setAttribute('data-step-label', ($component->mustStepLabel() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
         $fragment->firstChild->setAttribute('data-reverse', ($component->mustReverse() === true) ? 'true' : 'false');
         

@@ -43,10 +43,10 @@ use \DOMDocumentFragment;
  * 
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
- * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
- * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
- * * data-matchMax = qti:choice->matchMax
- * * data-matchMin = qti:choice->matchMin
+ * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
+ * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * * data-match-max = qti:choice->matchMax
+ * * data-match-min = qti:choice->matchMin
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -58,7 +58,7 @@ class SimpleAssociableChoiceRenderer extends ChoiceRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-simpleAssociableChoice');
         
-        $fragment->firstChild->setAttribute('matchMax', $component->getMatchMax());
-        $fragment->firstChild->setAttribute('matchMin', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('match-max', $component->getMatchMax());
+        $fragment->firstChild->setAttribute('match-min', $component->getMatchMin());
     }
 }

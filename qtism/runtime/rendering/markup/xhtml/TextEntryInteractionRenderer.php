@@ -36,12 +36,12 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-base = qti:stringInteraction->base
- * * data-stringIdentifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
- * * data-expectedLength = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
- * * data-patternMask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
- * * data-placeholderText = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
+ * * data-string-identifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
+ * * data-expected-length = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
+ * * data-pattern-mask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
+ * * data-placeholder-text = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *

@@ -46,8 +46,8 @@ use \DOMDocumentFragment;
  * 
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
- * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
- * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
+ * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -69,8 +69,8 @@ abstract class ChoiceRenderer extends BodyElementRenderer {
         
         if ($component->hasTemplateIdentifier() === true) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
-            $fragment->firstChild->setAttribute('data-templateIdentifier', $component->getTemplateIdentifier());
-            $fragment->firstChild->setAttribute('data-showHide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
+            $fragment->firstChild->setAttribute('data-template-identifier', $component->getTemplateIdentifier());
+            $fragment->firstChild->setAttribute('data-show-hide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
         }
     }
 }

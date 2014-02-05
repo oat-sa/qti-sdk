@@ -37,7 +37,7 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:inlineChoiceInteraction->shuffle
  * * data-required = qti:inlineChoiceInteraction->required
  * 

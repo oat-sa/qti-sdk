@@ -41,7 +41,7 @@ use \DOMDocumentFragment;
  * * data-label = qti:assessmentItem->label (Only if present in QTI-XML)
  * * data-lang = qti:assessmentItem->lang (Only if present in QTI-XML)
  * * data-adaptive = qti:assessmentItem->adaptive
- * * data-timeDependent = qti:assessmentItem->timeDependent
+ * * data-time-dependent = qti:assessmentItem->timeDependent
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -69,6 +69,6 @@ class AssessmentItemRenderer extends AbstractXhtmlRenderer {
         }
         
         $fragment->firstChild->setAttribute('data-adaptive', ($component->isAdaptive() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-timeDependent', ($component->isTimeDependent() === true) ? 'true' : 'false');
+        $fragment->firstChild->setAttribute('data-time-dependent', ($component->isTimeDependent() === true) ? 'true' : 'false');
     }
 }

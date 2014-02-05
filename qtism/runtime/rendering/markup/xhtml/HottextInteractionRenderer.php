@@ -49,7 +49,7 @@ class HottextInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-hottextInteraction');
         
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }
 }

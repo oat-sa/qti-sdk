@@ -41,8 +41,8 @@ use \DOMDocumentFragment;
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:associateInteraction->shuffle
- * * data-maxAssociations = qti:associateInteraction->maxAssociations
- * * data-minAssociations = qti:associateInteraction->minAssociations
+ * * data-max-associations = qti:associateInteraction->maxAssociations
+ * * data-min-associations = qti:associateInteraction->minAssociations
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -61,8 +61,8 @@ class MatchInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-matchInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-maxAssociations', $component->getMaxAssociations());
-    	$fragment->firstChild->setAttribute('data-minAssociations', $component->getMinAssociations());
+        $fragment->firstChild->setAttribute('data-max-associations', $component->getMaxAssociations());
+    	$fragment->firstChild->setAttribute('data-min-associations', $component->getMinAssociations());
     }
     
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {

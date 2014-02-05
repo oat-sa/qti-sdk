@@ -41,15 +41,15 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-base = qti:stringInteraction->base
- * * data-stringIdentifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
+ * * data-string-identifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
  * * data-expectedLength = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
- * * data-patternMask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
- * * data-placeholderText = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
- * * data-maxStrings = qti:extendedTextInteraction->maxStrings (only if set in QTI-XML counter-part).
- * * data-minStrings = qti:extendedTextInteraction->minStrings.
- * * data-expectedLines = qti:extendedTextInteraction->expectedLines (only if set in QTI-XML counter-part).
+ * * data-pattern-mask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
+ * * data-placeholder-text = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
+ * * data-max-strings = qti:extendedTextInteraction->maxStrings (only if set in QTI-XML counter-part).
+ * * data-min-strings = qti:extendedTextInteraction->minStrings.
+ * * data-expected-lines = qti:extendedTextInteraction->expectedLines (only if set in QTI-XML counter-part).
  * * data-format = qti:extendedTextInteraction->format.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -67,15 +67,15 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer {
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-extendedTextInteraction');
         
-        $fragment->firstChild->setAttribute('data-minStrings', $component->getMinStrings());
+        $fragment->firstChild->setAttribute('data-min-strings', $component->getMinStrings());
         $fragment->firstChild->setAttribute('data-format', TextFormat::getNameByConstant($component->getFormat()));
         
         if ($component->hasMaxStrings() === true) {
-            $fragment->firstChild->setAttribute('data-maxStrings', $component->getMaxStrings());
+            $fragment->firstChild->setAttribute('data-max-strings', $component->getMaxStrings());
         }
         
         if ($component->hasExpectedLines() === true) {
-            $fragment->firstChild->setAttribute('data-expectedLines', $component->getExpectedLines());
+            $fragment->firstChild->setAttribute('data-expected-lines', $component->getExpectedLines());
         }
     }
     

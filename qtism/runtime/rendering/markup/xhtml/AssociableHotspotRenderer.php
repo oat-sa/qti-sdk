@@ -43,12 +43,12 @@ use \DOMDocumentFragment;
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
  * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
- * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
+ * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * * data-shape = qti:hotspot->shape
  * * data-coords = qti:hotspot->coords
- * * data-hotspotLabel = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
- * * data-matchmax = qti:associableHotspot->matchMax
- * * data-matchMin = qti:associableHotspot->matchMine
+ * * data-hotspot-label = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
+ * * data-match-max = qti:associableHotspot->matchMax
+ * * data-match-min = qti:associableHotspot->matchMin
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -65,7 +65,7 @@ class AssociableHotspotRenderer extends HotspotRenderer {
         $this->additionalClass('qti-associableHotspot');
         $this->additionalClass('qti-associableChoice');
         
-        $fragment->firstChild->setAttribute('data-matchMin', $component->getMatchMin());
-        $fragment->firstChild->setAttribute('data-matchMax', $component->getMatchMax());
+        $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
     }
 }

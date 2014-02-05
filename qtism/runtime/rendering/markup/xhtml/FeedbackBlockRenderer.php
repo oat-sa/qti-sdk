@@ -36,8 +36,8 @@ use \DOMDocumentFragment;
  * 
  * It also takes care of producing the following x-data attributes.
  * 
- * * data-outcomeIdentifier = qti:feedbackElement->outcomeIdentifier
- * * data-showHide = qti:feedbackElement->showHide
+ * * data-outcome-identifier = qti:feedbackElement->outcomeIdentifier
+ * * data-show-hide = qti:feedbackElement->showHide
  * * data-identifier = qti:feedbackElement->identifier
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>

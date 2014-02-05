@@ -35,8 +35,8 @@ use \DOMDocumentFragment;
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-maxChoices = qti:hotspotInteraction->maxChoices
- * * data-minChoices = qti:hotspotInteraction->minChoices
+ * * data-max-choices = qti:hotspotInteraction->maxChoices
+ * * data-min-choices = qti:hotspotInteraction->minChoices
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -48,7 +48,7 @@ class HotspotInteractionRenderer extends GraphicInteractionRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-hotspotInteraction');
         
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }
 }

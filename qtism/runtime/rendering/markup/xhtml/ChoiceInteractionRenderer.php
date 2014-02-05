@@ -39,8 +39,8 @@ use \DOMDocumentFragment;
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:choiceInteraction->shuffle
- * * data-maxChoices = qti:choiceInteraction->maxChoices
- * * data-minChoices = qti:choiceInteraction->minChoices
+ * * data-max-choices = qti:choiceInteraction->maxChoices
+ * * data-min-choices = qti:choiceInteraction->minChoices
  * * data-orientation = qti:choiceInteraction->orientation
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -60,8 +60,8 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-choiceInteraction');
         
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
     }
     

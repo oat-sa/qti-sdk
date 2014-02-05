@@ -34,12 +34,12 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-base = qti:stringInteraction->base
- * * data-stringIdentifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
- * * data-expectedLength = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
- * * data-patternMask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
- * * data-placeholderText = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
+ * * data-string-identifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
+ * * data-expected-length = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
+ * * data-pattern-mask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
+ * * data-placeholder-text = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -53,19 +53,19 @@ abstract class StringInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-base', $component->getBase());
         
         if ($component->hasStringIdentifier() === true) {
-            $fragment->firstChild->setAttribute('data-stringIdentifier', $component->getStringIdentifier());
+            $fragment->firstChild->setAttribute('data-string-identifier', $component->getStringIdentifier());
         }
         
         if ($component->hasExpectedLength() === true) {
-            $fragment->firstChild->setAttribute('data-expectedLength', $component->getExpectedLength());
+            $fragment->firstChild->setAttribute('data-expected-length', $component->getExpectedLength());
         }
         
         if ($component->hasPatternMask() === true) {
-            $fragment->firstChild->setAttribute('data-patternMask', $component->getPatternMask());
+            $fragment->firstChild->setAttribute('data-pattern-mask', $component->getPatternMask());
         }
         
         if ($component->hasPlaceholderText() === true) {
-            $fragment->firstChild->setAttribute('data-placeholderText', $component->getPlaceholderText());
+            $fragment->firstChild->setAttribute('data-placeholder-text', $component->getPlaceholderText());
         }
     }
 }

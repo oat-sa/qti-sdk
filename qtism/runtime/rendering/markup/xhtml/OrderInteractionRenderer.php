@@ -38,8 +38,8 @@ use \DOMDocumentFragment;
  * The following data-X attributes will be rendered:
  * 
  * * data-shuffle = qti:orderInteraction->shuffle
- * * data-maxChoices = qti:orderInteraction->maxChoices (only if specified in QTI-XML representation)
- * * data-minChoices = qti:orderInteraction->minChoices (only if specified in QTI-XML representation)
+ * * data-max-choices = qti:orderInteraction->maxChoices (only if specified in QTI-XML representation)
+ * * data-min-choices = qti:orderInteraction->minChoices (only if specified in QTI-XML representation)
  * * data-orientation = qti:orderInteraction->orientation
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -61,10 +61,10 @@ class OrderInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         
         if ($component->hasMaxChoices() === true) {
-            $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
+            $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         }
         else {
-            $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+            $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
         
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');

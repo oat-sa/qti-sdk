@@ -39,10 +39,10 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-autostart = qti:mediaInteraction->autostart
- * * data-minPlays = qti:mediaInteraction->minPlays
- * * data-maxPlays = qti:mediaInteraction->maxPlays
+ * * data-min-plays = qti:mediaInteraction->minPlays
+ * * data-max-plays = qti:mediaInteraction->maxPlays
  * * data-loop = qti:mediaInteraction->loop
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -139,8 +139,8 @@ class MediaInteractionRenderer extends InteractionRenderer {
         $this->additionalClass('qti-mediaInteraction');
         
         $fragment->firstChild->setAttribute('data-autostart', ($component->mustAutostart() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-minPlays', $component->getMinPlays());
-        $fragment->firstChild->setAttribute('data-maxPlays', $component->getMaxPlays());
+        $fragment->firstChild->setAttribute('data-min-plays', $component->getMinPlays());
+        $fragment->firstChild->setAttribute('data-max-plays', $component->getMaxPlays());
         $fragment->firstChild->setAttribute('data-loop', ($component->mustLoop() === true) ? 'true' : 'false');
     }
     

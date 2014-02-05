@@ -35,8 +35,8 @@ use \DOMDocumentFragment;
  * 
  * It takes care of producing the following x-data attributes.
  * 
- * * data-outcomeIdentifier = qti:feedbackElement->outcomeIdentifier
- * * data-showHide = qti:feedbackElement->showHide
+ * * data-outcome-identifier = qti:feedbackElement->outcomeIdentifier
+ * * data-show-hide = qti:feedbackElement->showHide
  * * data-identifier = qti:feedbackElement->identifier
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -48,8 +48,8 @@ abstract class FeedbackElementRenderer extends BodyElementRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-feedbackElement');
         
-        $fragment->firstChild->setAttribute('data-outcomeIdentifier', $component->getOutcomeIdentifier());
-        $fragment->firstChild->setAttribute('data-showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $fragment->firstChild->setAttribute('data-outcome-identifier', $component->getOutcomeIdentifier());
+        $fragment->firstChild->setAttribute('data-show-hide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         
         if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === XhtmlRenderingEngine::CONTEXT_STATIC) {

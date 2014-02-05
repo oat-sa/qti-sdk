@@ -34,9 +34,9 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-maxChoices = qti:graphicOrderInteraction->maxChoices
- * * data-minChoices = qti:graphicOrderInteraction->minChoices
+ * * data-response-identifier = qti:interaction->responseIdentifier
+ * * data-max-choices = qti:graphicOrderInteraction->maxChoices
+ * * data-min-choices = qti:graphicOrderInteraction->minChoices
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -49,11 +49,11 @@ class GraphicOrderInteractionRenderer extends GraphicInteractionRenderer {
         $this->additionalClass('qti-graphicOrderInteraction');
         
         if ($component->hasMaxChoices() === true) {
-            $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
+            $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         }
         
         if ($component->hasMinChoices() === true) {
-            $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+            $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
     }
 }

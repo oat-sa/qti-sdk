@@ -36,7 +36,7 @@ use \DOMDocumentFragment;
  * 
  * This rendering implementation will add the following data-X attributes:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
+ * * data-response-identifier = qti:interaction->responseIdentifier
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -52,6 +52,6 @@ abstract class InteractionRenderer extends BodyElementRenderer {
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component, $base);
-        $fragment->firstChild->setAttribute('data-responseIdentifier', $component->getResponseIdentifier());
+        $fragment->firstChild->setAttribute('data-response-identifier', $component->getResponseIdentifier());
     }
 }

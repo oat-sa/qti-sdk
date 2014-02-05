@@ -36,9 +36,9 @@ use \DOMDocumentFragment;
  * The following data-X attributes will be rendered:
  * 
  * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-maxChoices = qti:positionObjectInteraction->maxChoices
- * * data-minChoices = qti:positionObjectInteraction->minChoices (Rendered only if a value is present for the attribute)
- * * data-centerPoint = qti:positionObjectInteraction->centerPoint (Rendered only if a value is present for the attribute) 
+ * * data-max-choices = qti:positionObjectInteraction->maxChoices
+ * * data-min-choices = qti:positionObjectInteraction->minChoices (Rendered only if a value is present for the attribute)
+ * * data-center-point = qti:positionObjectInteraction->centerPoint (Rendered only if a value is present for the attribute) 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -55,14 +55,14 @@ class PositionObjectInteractionRenderer extends InteractionRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-positionObjectInteraction');
         
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         
         if ($component->hasMinChoices() === true) {
-            $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+            $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
         
         if ($component->hasCenterPoint() === true) {
-            $fragment->firstChild->setAttribute('data-centerPoint', $component->getCenterPoint()->getX() . " " . $component->getCenterPoint()->getY());
+            $fragment->firstChild->setAttribute('data-center-point', $component->getCenterPoint()->getX() . " " . $component->getCenterPoint()->getY());
         }
     }
 }

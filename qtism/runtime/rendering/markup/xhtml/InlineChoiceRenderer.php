@@ -42,7 +42,7 @@ use \DOMDocumentFragment;
  * 
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
- * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
+ * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
  * * data-showHide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>

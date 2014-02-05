@@ -47,7 +47,7 @@ abstract class HotspotRenderer extends ChoiceRenderer {
         $fragment->firstChild->setAttribute('data-coords', $component->getCoords()->__toString());
         
         if ($component->hasHotspotLabel() === true) {
-            $fragment->firstChild->setAttribute('data-hotspotLabel', $component->getHotspotLabel());
+            $fragment->firstChild->setAttribute('data-hotspot-label', $component->getHotspotLabel());
         }
     }
 }

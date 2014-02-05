@@ -35,9 +35,9 @@ use \DOMDocumentFragment;
  * 
  * The following data-X attributes will be rendered:
  * 
- * * data-responseIdentifier = qti:interaction->responseIdentifier
- * * data-maxChoices = qti:selectPointInteraction->maxChoices
- * * data-minChoices = qti:selectPointInteraction->minChoices
+ * * data-response-identifier = qti:interaction->responseIdentifier
+ * * data-max-choices = qti:selectPointInteraction->maxChoices
+ * * data-min-choices = qti:selectPointInteraction->minChoices
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -49,7 +49,7 @@ class SelectPointInteractionRenderer extends GraphicInteractionRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-selectPointInteraction');
         
-        $fragment->firstChild->setAttribute('data-maxChoices', $component->getMaxChoices());
-        $fragment->firstChild->setAttribute('data-minChoices', $component->getMinChoices());
+        $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
+        $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }
 }
