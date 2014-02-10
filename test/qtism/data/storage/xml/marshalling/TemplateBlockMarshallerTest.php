@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\ShowHide;
-
 use qtism\data\content\TextRun;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\text\Div;
@@ -17,7 +17,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase {
 	    $templateBlock = new TemplateBlock('tpl1', 'block1');
 	    $div = new Div();
 	    $div->setContent(new FlowCollection(array(new TextRun('Templatable...'))));
-	    $templateBlock->setContent(new BlockStaticCollection(array($div)));
+	    $templateBlock->setContent(new FlowStaticCollection(array($div)));
 	    
 	    $element = $this->getMarshallerFactory()->createMarshaller($templateBlock)->marshall($templateBlock);
 	    

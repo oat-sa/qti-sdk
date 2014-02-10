@@ -290,7 +290,12 @@ abstract class RecursiveMarshaller extends Marshaller {
 					$component = $marshaller->unmarshallChildrenKnown($node, $componentCollection, $rootComponent);
 				}
 				else {
-					$component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
+				    if ($marshaller instanceof RecursiveMarshaller) {
+				        $component = $marshaller->unmarshallChildrenKnown($node, $componentCollection);
+				    }
+			        else {
+			            $component = $marshaller->unmarshall($node);
+			        }
 				}
 				
 				$this->pushProcessed($component);

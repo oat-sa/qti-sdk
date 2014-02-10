@@ -24,6 +24,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\data\content\FlowStaticCollection;
+
+use qtism\data\content\FlowStatic;
+
 use qtism\data\content\Block;
 use qtism\data\content\Stylesheet;
 use qtism\data\content\BlockCollection;
@@ -33,6 +37,7 @@ use qtism\data\content\RubricBlock;
 use qtism\data\ViewCollection;
 use qtism\data\View;
 use \DOMElement;
+use \DOMText;
 
 /**
  * Marshalling/Unmarshalling implementation for rubrickBlock.
@@ -117,16 +122,21 @@ class RubricBlockMarshaller extends Marshaller {
 			}
 			
 			$stylesheets = new StylesheetCollection();
-			$content = new BlockCollection();
+			$content = new FlowStaticCollection();
 			
-			foreach (self::getChildElements($element) as $elt) {
+			foreach (self::getChildElements($element, true) as $elt) {
+			    
+			    if ($elt instanceof DOMText) {
+			        $elt = self::getDOMCradle()->createElement('textRun', $elt->wholeText);
+			    }
+			    
 			    $marshaller = $this->getMarshallerFactory()->createMarshaller($elt);
 			    $cpt = $marshaller->unmarshall($elt);
 			    
 			    if ($cpt instanceof Stylesheet) {
 			        $stylesheets[] = $cpt;
 			    }
-			    else if ($cpt instanceof Block) {
+			    else if ($cpt instanceof FlowStatic && !in_array($cpt->getQtiClassName(), array('hottext', 'feedbackBlock', 'feedbackInline', 'rubricBlock', 'infoControl'))) {
 			        $content[] = $cpt;
 			    }
 			    else {

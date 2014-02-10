@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\content\StylesheetCollection;
-use qtism\data\content\BlockCollection;
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\View;
 use qtism\data\ViewCollection;
 use qtism\data\content\RubricBlock;
@@ -19,9 +19,9 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshall() {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor">
-                <stylesheet href="./stylesheet.css" type="text/css" media="screen"/>
                 <h3>Be carefull kiddo !</h3>
                 <p>Read the instructions twice.</p>
+                <stylesheet href="./stylesheet.css" type="text/css" media="screen"/>
             </rubricBlock>
         ');
         
@@ -30,9 +30,9 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(2, count($rubricBlock->getViews()));
         
         $rubricBlockContent = $rubricBlock->getContent();
-        $this->assertEquals(2, count($rubricBlockContent));
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H3', $rubricBlockContent[0]);
-        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $rubricBlockContent[1]);
+        $this->assertEquals(6, count($rubricBlockContent));
+        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H3', $rubricBlockContent[1]);
+        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $rubricBlockContent[3]);
         
         $stylesheets = $rubricBlock->getStylesheets();
         $this->assertEquals(1, count($stylesheets));
@@ -55,7 +55,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
 	    
 	    $rubricBlock = new RubricBlock(new ViewCollection(array(View::CANDIDATE, View::TUTOR)));
 	    $rubricBlock->setClass('warning');
-	    $rubricBlock->setContent(new BlockCollection(array($h3, $p)));
+	    $rubricBlock->setContent(new FlowStaticCollection((array($h3, $p))));
 	    $rubricBlock->setStylesheets(new StylesheetCollection(array($stylesheet)));
 	    
 	    $element = $this->getMarshallerFactory()->createMarshaller($rubricBlock)->marshall($rubricBlock);

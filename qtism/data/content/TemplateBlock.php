@@ -46,7 +46,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic {
     /**
      * The content of the TemplateBlock.
      * 
-     * @var BlockStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -64,22 +64,22 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic {
      */
     public function __construct($identifier, $templateIdentifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $templateIdentifier, $id, $class, $lang, $label);
-        $this->setContent(new BlockStaticCollection());
+        $this->setContent(new FlowStaticCollection());
     }
     
     /**
      * Set the content of the templateBlock.
      * 
-     * @param BlockStaticCollection $content A collection of BlockStatic objects.
+     * @param FlowStaticCollection $content A collection of BlockStatic objects.
      */
-    public function setContent(BlockStaticCollection $content) {
+    public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
     }
     
     /**
      * Get the content of the templateBlock.
      * 
-     * @return BlockStaticCollection A collection of BlockStatic objects.
+     * @return FlowStaticCollection A collection of BlockStatic objects.
      */
     public function getContent() {
         return $this->content;

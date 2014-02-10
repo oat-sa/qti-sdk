@@ -1,11 +1,10 @@
 <?php
 
+use qtism\data\content\FlowCollection;
 use qtism\data\ShowHide;
 use qtism\data\content\FeedbackBlock;
 use qtism\data\content\TextRun;
-use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\BlockCollection;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -15,7 +14,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase {
 	    
 	    $div = new Div();
 	    $div->setContent(new FlowCollection(array(new TextRun("This is text..."))));
-	    $content = new BlockCollection();
+	    $content = new FlowCollection();
 	    $content[] = $div;
 	    $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);
 	    $feedback->setContent($content);

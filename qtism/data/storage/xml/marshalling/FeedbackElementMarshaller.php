@@ -24,7 +24,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\BlockCollection;
+use qtism\data\content\Flow;
+use qtism\data\content\FlowCollection;
 use qtism\data\content\InlineCollection;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponentCollection;
@@ -60,15 +61,24 @@ class FeedbackElementMarshaller extends ContentMarshaller {
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                     
-                    try {
-                        $content = ($element->nodeName === 'feedbackInline') ? new InlineCollection($children->getArrayCopy()) : new BlockCollection($children->getArrayCopy());
-                        $component->setContent($content);
+                    $inline = $element->nodeName === 'feedbackInline';
+                    $content = ($inline === true) ? new InlineCollection() : new FlowCollection();
+                    $blockExclusion = array('hottext', 'rubricBlock', 'endAttemptInteraction', 'inlineChoiceInteraction', 'textEntryInteraction');
+                    foreach ($children as $child) {
+                        $qtiClassName = $child->getQtiClassName();
+                        if ($inline === false && !$child instanceof Flow) {
+                            $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
+                            throw new UnmarshallingException($msg, $element);
+                        }
+                        if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion) === true) {
+                            $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
+                            throw new UnmarshallingException($msg, $element);
+                        }
+                        
+                        $content[] = $child;
                     }
-                    catch (InvalidArgumentException $e) {
-                        $mustContain = ($element->nodeName === 'feedbackInline') ? 'inline' : 'block';
-                        $msg = "The content of the '" . $element->nodeName . "' is invalid. It must only contain '${mustContain}' elements.";
-                        throw new UnmarshallingException($msg, $element, $e);
-                    }
+                    
+                    $component->setContent($content);
                     
                     if (($xmlBase = self::getXmlBase($element)) !== false) {
                         $component->setXmlBase($xmlBase);

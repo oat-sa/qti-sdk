@@ -24,7 +24,9 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\BlockStaticCollection;
+use qtism\data\content\FlowStatic;
+
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponentCollection;
@@ -61,7 +63,18 @@ class TemplateElementMarshaller extends ContentMarshaller {
                     }
                     
                     try {
-                        $content = ($element->nodeName === 'templateInline') ? new InlineStaticCollection($children->getArrayCopy()) : new BlockStaticCollection($children->getArrayCopy());
+                        $content = ($element->nodeName === 'templateInline') ? new InlineStaticCollection() : new FlowStaticCollection();
+                        foreach ($children as $c) {
+                            
+                            if (!$c instanceof FlowStatic || ($element->nodeName === 'templateBlock' && in_array($c->getQtiClassName(), array('hottext', 'rubricBlock', 'infoControl')))) {
+                                
+                                $msg = "The '" . $element->nodeName . "' cannot contain '" . $c->getQtiClassName() ."' elements.";
+                                throw new UnmarshallingException($msg, $element);
+                            }
+                            
+                            $content[] = $c;
+                        }
+                        
                         $component->setContent($content);
                     }
                     catch (InvalidArgumentException $e) {

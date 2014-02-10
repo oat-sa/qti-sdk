@@ -33,7 +33,23 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FeedbackBlock extends SimpleBlock implements FeedbackElement {
+class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, FeedbackElement {
+    
+    /**
+     * The base URI.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
+    private $xmlBase = '';
+    
+    /**
+     * The components composing the FeedbackBlock content.
+     *
+     * @var FlowCollection
+     * @qtism-bean-property
+     */
+    private $content;
     
     /**
      * From IMS QTI:
@@ -91,6 +107,7 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setIdentifier($identifier);
         $this->setShowHide($showHide);
+        $this->setContent(new FlowCollection());
     }
     
     public function setOutcomeIdentifier($outcomeIdentifier) {
@@ -135,7 +152,63 @@ class FeedbackBlock extends SimpleBlock implements FeedbackElement {
         return $this->identifier;
     }
     
+    /**
+     * Set the collection of objects composing the FeedbackBlock.
+     *
+     * @param FlowCollection $content A collection of FlowStatic objects.
+     */
+    public function setContent(FlowCollection $content) {
+        $this->content = $content;
+    }
+    
+    /**
+     * Get the collection of objects composing the FeedbackBlock.
+     *
+     * @return FlowCollection
+     */
+    public function getContent() {
+        return $this->content;
+    }
+    
+    public function getComponents() {
+        return $this->getContent();
+    }
+    
     public function getQtiClassName() {
         return 'feedbackBlock';
+    }
+    
+    /**
+     * Set the base URI of the TemplateBlock.
+     *
+     * @param string $xmlBase A URI.
+     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     */
+    public function setXmlBase($xmlBase = '') {
+        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
+            $this->xmlBase = $xmlBase;
+        }
+        else {
+            $msg = "The 'base' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Get the base URI of the TemplateBlock.
+     *
+     * @return string An empty string or a URI.
+     */
+    public function getXmlBase() {
+        return $this->xmlBase;
+    }
+    
+    /**
+     * Whether a value is defined for the base URI of the TemplateBlock.
+     *
+     * @return boolean
+     */
+    public function hasXmlBase() {
+        return $this->getXmlBase() !== '';
     }
 }
