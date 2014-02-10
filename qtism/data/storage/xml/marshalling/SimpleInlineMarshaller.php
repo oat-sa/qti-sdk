@@ -44,7 +44,7 @@ class SimpleInlineMarshaller extends ContentMarshaller {
         
         $fqClass = $this->lookupClass($element);
                 
-        if ($element->nodeName === 'a')  {
+        if ($element->localName === 'a')  {
             
             if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
@@ -94,14 +94,14 @@ class SimpleInlineMarshaller extends ContentMarshaller {
             self::setXmlBase($element, $component->getXmlBase());
         }
         
-        if ($element->nodeName === 'a') {
+        if ($element->localName === 'a') {
             $element->setAttribute('href', $component->getHref());
             
             if (($type = $component->getType()) !== '') {
                 $element->setAttribute('type', $type);
             }
         }
-        else if ($element->nodeName === 'q' && ($cite = $component->getCite()) !== '') {
+        else if ($element->localName === 'q' && ($cite = $component->getCite()) !== '') {
             $element->setAttribute('cite', $cite);
         }
         

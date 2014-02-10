@@ -87,7 +87,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory attribute 'variableIdentifier' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'variableIdentifier' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

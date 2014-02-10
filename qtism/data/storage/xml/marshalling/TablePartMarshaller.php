@@ -71,11 +71,11 @@ class TablePartMarshaller extends Marshaller {
 	    }
 	    
 	    if (count($trs) === 0) {
-	        $msg = "A '" . $element->nodeName . "' element must contain at least one 'tr' element.";
+	        $msg = "A '" . $element->localName . "' element must contain at least one 'tr' element.";
 	        throw new UnmarshallingException($msg, $element);
 	    }
 	    
-		$class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->nodeName);
+		$class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->localName);
 	    $component = new $class($trs);
 	    
 	    

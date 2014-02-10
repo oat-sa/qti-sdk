@@ -128,7 +128,7 @@ class ValueMarshaller extends Marshaller {
 				$object->setPartOfRecord(true);
 			}
 			else {
-				$msg = "The 'baseType' attribute value ('${value}') is not a valid QTI baseType in element '" . $element->nodeName . "'.";
+				$msg = "The 'baseType' attribute value ('${value}') is not a valid QTI baseType in element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
@@ -147,7 +147,7 @@ class ValueMarshaller extends Marshaller {
 				
 			}
 			else {
-				$msg = "The element '" . $element->nodeName . "' has no value.";
+				$msg = "The element '" . $element->localName . "' has no value.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}

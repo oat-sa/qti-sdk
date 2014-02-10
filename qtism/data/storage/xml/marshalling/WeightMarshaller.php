@@ -71,22 +71,22 @@ class WeightMarshaller extends Marshaller {
 						return $object;
 					}
 					catch (InvalidArgumentException $e) {
-						$msg = "The value of 'identifier' from element '" . $element->nodeName . "' is not a valid QTI Identifier.";
+						$msg = "The value of 'identifier' from element '" . $element->localName . "' is not a valid QTI Identifier.";
 						throw new UnmarshallingException($msg, $element, $e);
 					}
 				}
 				else {
-					$msg = "The value of attribute 'value' from element '" . $element->nodeName . "' cannot be converted into a float.";
+					$msg = "The value of attribute 'value' from element '" . $element->localName . "' cannot be converted into a float.";
 					throw new UnmarshallingException($msg, $element);
 				}
 			}
 			else {
-				$msg = "The mandatory attribute 'value' is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory attribute 'value' is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'identifier' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

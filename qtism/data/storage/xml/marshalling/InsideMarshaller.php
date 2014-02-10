@@ -80,12 +80,12 @@ class InsideMarshaller extends OperatorMarshaller {
 				return $object;
 			}
 			else {
-				$msg = "The mandatory attribute 'coords' is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'shape' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

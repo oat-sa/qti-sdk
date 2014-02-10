@@ -58,17 +58,17 @@ class TemplateElementMarshaller extends ContentMarshaller {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     }
                     catch (InvalidArgumentException $e) {
-                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->nodeName . "'.";
+                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                     
                     try {
-                        $content = ($element->nodeName === 'templateInline') ? new InlineStaticCollection() : new FlowStaticCollection();
+                        $content = ($element->localName === 'templateInline') ? new InlineStaticCollection() : new FlowStaticCollection();
                         foreach ($children as $c) {
                             
-                            if (!$c instanceof FlowStatic || ($element->nodeName === 'templateBlock' && in_array($c->getQtiClassName(), array('hottext', 'rubricBlock', 'infoControl')))) {
+                            if (!$c instanceof FlowStatic || ($element->localName === 'templateBlock' && in_array($c->getQtiClassName(), array('hottext', 'rubricBlock', 'infoControl')))) {
                                 
-                                $msg = "The '" . $element->nodeName . "' cannot contain '" . $c->getQtiClassName() ."' elements.";
+                                $msg = "The '" . $element->localName . "' cannot contain '" . $c->getQtiClassName() ."' elements.";
                                 throw new UnmarshallingException($msg, $element);
                             }
                             
@@ -78,8 +78,8 @@ class TemplateElementMarshaller extends ContentMarshaller {
                         $component->setContent($content);
                     }
                     catch (InvalidArgumentException $e) {
-                        $mustContain = ($element->nodeName === 'feedbackInline') ? 'inline' : 'block';
-                        $msg = "The content of the '" . $element->nodeName . "' is invalid. It must only contain '${mustContain}' elements.";
+                        $mustContain = ($element->localName === 'feedbackInline') ? 'inline' : 'block';
+                        $msg = "The content of the '" . $element->localName . "' is invalid. It must only contain '${mustContain}' elements.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                     
@@ -92,12 +92,12 @@ class TemplateElementMarshaller extends ContentMarshaller {
                 }
             }
             else {
-                $msg = "The mandatory 'identifier' attribute is missing from element '" . $element->nodeName . "'.";
+                $msg = "The mandatory 'identifier' attribute is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
         }
         else {
-            $msg = "The mandatory 'templateIdentifier' attribute is missing from element '" . $element->nodeName . "'.";
+            $msg = "The mandatory 'templateIdentifier' attribute is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
         

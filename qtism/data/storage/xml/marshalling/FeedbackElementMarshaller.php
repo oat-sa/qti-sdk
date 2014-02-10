@@ -57,11 +57,11 @@ class FeedbackElementMarshaller extends ContentMarshaller {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     }
                     catch (InvalidArgumentException $e) {
-                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->nodeName . "'.";
+                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                     
-                    $inline = $element->nodeName === 'feedbackInline';
+                    $inline = $element->localName === 'feedbackInline';
                     $content = ($inline === true) ? new InlineCollection() : new FlowCollection();
                     $blockExclusion = array('hottext', 'rubricBlock', 'endAttemptInteraction', 'inlineChoiceInteraction', 'textEntryInteraction');
                     foreach ($children as $child) {
@@ -89,12 +89,12 @@ class FeedbackElementMarshaller extends ContentMarshaller {
                 }
             }
             else {
-                $msg = "The mandatory 'identifier' attribute is missing from element '" . $element->nodeName . "'.";
+                $msg = "The mandatory 'identifier' attribute is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
         }
         else {
-            $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element '" . $element->nodeName . "'.";
+            $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
         

@@ -81,7 +81,7 @@ class AreaMapEntryMarshaller extends Marshaller {
 							return new AreaMapEntry($shape, $coords, $mappedValue);
 						}
 						else {
-							$msg = "The mandatory attribute 'mappedValue' is missing from element '" . $element->nodeName . "'.";
+							$msg = "The mandatory attribute 'mappedValue' is missing from element '" . $element->localName . "'.";
 							throw new UnmarshallingException($msg, $element);
 						}
 					}
@@ -91,7 +91,7 @@ class AreaMapEntryMarshaller extends Marshaller {
 					}
 				}
 				else {
-					$msg = "The mandatory attribute 'coords' is missing from element '" . $element->nodeName . "'.";
+					$msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
 					throw new UnmarshallingException($msg, $element);
 				}
 			}
@@ -102,7 +102,7 @@ class AreaMapEntryMarshaller extends Marshaller {
 			
 		}
 		else {
-			$msg = "The mandatory attribute 'shape' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

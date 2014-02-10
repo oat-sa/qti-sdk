@@ -83,7 +83,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function isElementFinal(DOMNode $element) {
-		return !in_array($element->nodeName, array('templateIf', 'templateElseIf', 'templateElse', 'templateCondition'));
+		return !in_array($element->localName, array('templateIf', 'templateElseIf', 'templateElse', 'templateCondition'));
 	}
 	
 	protected function isComponentFinal(QtiComponent $component) {
@@ -129,7 +129,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function createCollection(DOMElement $currentNode) {
-		if ($currentNode->nodeName != 'templateCondition') {
+		if ($currentNode->localName != 'templateCondition') {
 			return new TemplateRuleCollection();
 		}
 		else {

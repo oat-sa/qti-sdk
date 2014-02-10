@@ -100,12 +100,12 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 				return $object;
 			}
 			else {
-				$msg = "The mandatory attribute 'visible' is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory attribute 'visible' is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'title' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'title' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}
@@ -148,7 +148,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function isElementFinal(DOMNode $element) {
-		return $element->nodeName != 'assessmentSection';
+		return $element->localName != 'assessmentSection';
 	}
 	
 	protected function isComponentFinal(QtiComponent $component) {
@@ -156,7 +156,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function getChildrenElements(DOMElement $element) {
-		if ($element->nodeName == 'assessmentSection') {
+		if ($element->localName == 'assessmentSection') {
 			$doc = $element->ownerDocument;
 			$xpath = new DOMXPath($doc);
 			$nodeList = $xpath->query('assessmentSection | assessmentSectionRef | assessmentItemRef', $element);

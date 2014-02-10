@@ -91,11 +91,11 @@ class EqualMarshaller extends OperatorMarshaller {
 			$tolerance = explode("\x20", $tolerance);
 			
 			if (count($tolerance) < 1) {
-				$msg = "No 'tolerance' could be extracted from element '" . $element->nodeName . "'.";
+				$msg = "No 'tolerance' could be extracted from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 			else if (count($tolerance) > 2) {
-				$msg = "'tolerance' attribute not correctly formatted in element '" . $element->nodeName . "'.";
+				$msg = "'tolerance' attribute not correctly formatted in element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 			else {

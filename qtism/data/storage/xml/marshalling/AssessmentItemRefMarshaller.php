@@ -137,7 +137,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory attribute 'href' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'href' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

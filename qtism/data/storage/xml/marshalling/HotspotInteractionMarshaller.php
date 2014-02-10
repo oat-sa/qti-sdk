@@ -97,7 +97,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller {
             }
         }
         else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->nodeName . "' element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->localName . "' element.";
             throw new UnmarshallingException($msg, $element);
         }
     }

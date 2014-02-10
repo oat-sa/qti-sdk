@@ -66,12 +66,12 @@ class MathConstantMarshaller extends Marshaller {
 				return $object;
 			}
 			else {
-				$msg = "'${name}' is not a valid value for the attribute 'name' from element '" . $element->nodeName . "'.";
+				$msg = "'${name}' is not a valid value for the attribute 'name' from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'name' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

@@ -69,12 +69,12 @@ class BranchRuleMarshaller extends Marshaller {
 				return $object;
 			}
 			else {
-				$msg = "The mandatory child element 'expression' is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory child element 'expression' is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'target' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'target' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

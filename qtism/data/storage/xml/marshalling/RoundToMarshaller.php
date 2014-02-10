@@ -84,7 +84,7 @@ class RoundToMarshaller extends OperatorMarshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory attribute 'figures' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'figures' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

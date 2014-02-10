@@ -74,7 +74,7 @@ class TemplateDefaultMarshaller extends Marshaller {
 				$expr = $exprMarshaller->unmarshall($expressionElt);
 			}
 			else {
-				$msg = "Element '" . $element->nodeName . "' does not contain its mandatory expression.";
+				$msg = "Element '" . $element->localName . "' does not contain its mandatory expression.";
 				throw new UnmarshallingException($msg, $element);
 			}
 			
@@ -82,7 +82,7 @@ class TemplateDefaultMarshaller extends Marshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory attribute 'templateIdentifier' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'templateIdentifier' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

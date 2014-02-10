@@ -146,7 +146,7 @@ class XmlDocument extends QtiDocument {
 					throw new XmlStorageException($msg, $e);
 				}
 				catch (RuntimeException $e) {
-				    $msg = "Unmarshallable element '" . $element->nodeName . "' in QTI-XML.";
+				    $msg = "Unmarshallable element '" . $element->localName . "' in QTI-XML.";
 				    throw new XmlStorageException($msg, $e);
 				}
 			}

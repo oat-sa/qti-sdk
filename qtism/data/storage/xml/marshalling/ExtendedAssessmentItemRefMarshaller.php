@@ -122,7 +122,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 			$compactAssessmentItemRef->setTimeDependent($timeDependent);
 		}
 		else {
-			$msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element); 
 		}
 		

@@ -75,7 +75,7 @@ class TextInteractionMarshaller extends Marshaller {
             self::setXmlBase($element, $component->setXmlBase());
         }
         
-        if ($element->nodeName === 'extendedTextInteraction') {
+        if ($element->localName === 'extendedTextInteraction') {
             if ($component->hasMaxStrings() === true) {
                 self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
             }
@@ -113,11 +113,11 @@ class TextInteractionMarshaller extends Marshaller {
 	    if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
             try {
-                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->nodeName);
+                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->localName);
                 $component = new $class($responseIdentifier);
             }
             catch (InvalidArgumentException $e) {
-                $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->nodeName . "' element is not a valid identifier.";
+                $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
             
@@ -145,7 +145,7 @@ class TextInteractionMarshaller extends Marshaller {
                 $component->setXmlBase($xmlBase);
             }
             
-            if ($element->nodeName === 'extendedTextInteraction') {
+            if ($element->localName === 'extendedTextInteraction') {
                 
                 if (($maxStrings = self::getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
                     $component->setMaxStrings($maxStrings);
@@ -173,7 +173,7 @@ class TextInteractionMarshaller extends Marshaller {
 		    return $component;
         }
         else {
-            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->nodeName . "' element.";
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the '" . $element->localName . "' element.";
             throw new UnmarshallingException($msg, $element);
         }
 	}

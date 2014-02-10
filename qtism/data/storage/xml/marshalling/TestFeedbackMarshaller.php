@@ -95,28 +95,28 @@ class TestFeedbackMarshaller extends Marshaller {
 							return $object;
 						}
 						else {
-							$msg = "Element '" . $element->nodeName . "' has no feedback content.";
+							$msg = "Element '" . $element->localName . "' has no feedback content.";
 							throw new UnmarshallingException($msg, $element);
 						}
 						
 					}
 					else {
-						$msg = "The mandatory 'access' attribute is missing from element '" . $element->nodeName . "'.";
+						$msg = "The mandatory 'access' attribute is missing from element '" . $element->localName . "'.";
 						throw new UnmarshallingException($msg, $element);
 					}
 				}
 				else {
-					$msg = "The mandatory 'showHide' attribute is missing from element '" . $element->nodeName . "'.";
+					$msg = "The mandatory 'showHide' attribute is missing from element '" . $element->localName . "'.";
 					throw new UnmarshallingException($msg, $element);
 				}
 			}
 			else {
-				$msg = "The mandatory 'outcomeIdentifier' attribute is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory 'outcomeIdentifier' attribute is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory 'identifier' attribute is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory 'identifier' attribute is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}
@@ -133,11 +133,11 @@ class TestFeedbackMarshaller extends Marshaller {
 	 * @throws InvalidArgumentException If $element is not a testFeedback element.
 	 */
 	protected static function extractContent(DOMElement $element) {
-		if ($element->nodeName == 'testFeedback') {
+		if ($element->localName == 'testFeedback') {
 			return preg_replace('#</{0,1}testFeedback.*?>#iu', '', $element->ownerDocument->saveXML($element));
 		}
 		else {
-			throw new InvalidArgumentException("The element must be a QTI testFeedbackElement, '" . $element->nodeName . "' element given.");
+			throw new InvalidArgumentException("The element must be a QTI testFeedbackElement, '" . $element->localName . "' element given.");
 		}
 	}
 }

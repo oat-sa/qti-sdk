@@ -64,7 +64,7 @@ class MapResponsePointMarshaller extends Marshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory attribute 'identifier' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

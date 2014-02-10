@@ -107,15 +107,15 @@ class HotspotMarshaller extends Marshaller {
 	                    $coords = Utils::stringToCoords($coords, $shape);
 	                }
 	                catch (UnexpectedValueException $e) {
-	                    $msg = "The coordinates 'coords' of element '" . $element->nodeName . "' are not valid regarding the shape they are bound to.";
+	                    $msg = "The coordinates 'coords' of element '" . $element->localName . "' are not valid regarding the shape they are bound to.";
 	                    throw new UnmarshallingException($msg, $element, $e);
 	                }
 	                catch (InvalidArgumentException $e) {
-	                    $msg = "The coordinates 'coords' of element '" . $element->nodeName . "' could not be converted.";
+	                    $msg = "The coordinates 'coords' of element '" . $element->localName . "' could not be converted.";
 	                    throw new UnmarshallingException($msg, $element, $e);
 	                }
 	                
-	                if ($element->nodeName === 'hotspotChoice') {
+	                if ($element->localName === 'hotspotChoice') {
 	                    $component = new HotspotChoice($identifier, $shape, $coords);
 	                }
 	                else {
@@ -150,7 +150,7 @@ class HotspotMarshaller extends Marshaller {
 	                        $component->setShowHide($showHide);
 	                    }
 	                    else {
-	                        $msg = "The value of the 'showHide' attribute of element '" . $element->nodeName . "' is not a value from the 'showHide' enumeration.";
+	                        $msg = "The value of the 'showHide' attribute of element '" . $element->localName . "' is not a value from the 'showHide' enumeration.";
 	                        throw new UnmarshallingException($msg, $element);
 	                    }
 	                }
@@ -159,17 +159,17 @@ class HotspotMarshaller extends Marshaller {
 	                return $component;
 	            }
 	            else {
-	                $msg = "The mandatory attribute 'coords' is missing from element '" . $element->nodeName . "'.";
+	                $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
 	                throw new UnmarshallingException($msg, $element);
 	            }
 	        }
 	        else {
-	            $msg = "The mandatory attribute 'shape' is missing from element '" . $element->nodeName . "'.";
+	            $msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
 	            throw new UnmarshallingException($msg, $element);
 	        }
 	    }
 	    else {
-	        $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->nodeName . "'.";
+	        $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
 	    }
 	}
 	

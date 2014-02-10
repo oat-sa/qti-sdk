@@ -89,7 +89,7 @@ class TableCellMarshaller extends ContentMarshaller {
             return $component;
         }
         catch (InvalidArgumentException $e) {
-            $msg = "A '" . $element->nodeName . "' element can only contain QTI flow elements.";
+            $msg = "A '" . $element->localName . "' element can only contain QTI flow elements.";
             throw new UnmarshallingException($msg, $element);
         }
     }

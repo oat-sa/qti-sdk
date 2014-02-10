@@ -48,18 +48,18 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElts[0]);
 			$expression = $marshaller->unmarshall($expressionElts[0]);
 		}
-		else if (($element->nodeName == 'outcomeIf' || $element->nodeName == 'outcomeElseIf') && count($expressionElts) == 0) {
-			$msg = "An '" . $element->nodeName . "' must contain an 'expression' element. None found at line " . $element->getLineNo() . "'.";
+		else if (($element->localName == 'outcomeIf' || $element->localName == 'outcomeElseIf') && count($expressionElts) == 0) {
+			$msg = "An '" . $element->localName . "' must contain an 'expression' element. None found at line " . $element->getLineNo() . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 		
-		if ($element->nodeName == 'outcomeIf' || $element->nodeName == 'outcomeElseIf') {
-			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
+		if ($element->localName == 'outcomeIf' || $element->localName == 'outcomeElseIf') {
+			$className = 'qtism\\data\\rules\\' . ucfirst($element->localName);
 			$class = new ReflectionClass($className);
 			$object = Reflection::newInstance($class, array($expression, $children));
 		}
 		else {
-			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
+			$className = 'qtism\\data\\rules\\' . ucfirst($element->localName);
 			$class = new ReflectionClass($className);
 			$object = Reflection::newInstance($class, array($children));
 		}
@@ -83,7 +83,7 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function isElementFinal(DOMNode $element) {
-		return in_array($element->nodeName, array_merge(array(
+		return in_array($element->localName, array_merge(array(
 					'exitTest',
 					'lookupOutcomeValue',
 					'setOutcomeValue'	

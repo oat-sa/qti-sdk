@@ -68,7 +68,7 @@ class TemplateConstraintMarshaller extends Marshaller {
 	        return new TemplateConstraint($this->getMarshallerFactory()->createMarshaller($expressionElt)->unmarshall($expressionElt));
 	    }
 	    catch (InvalidArgumentException $e) {
-	        $msg = "A 'templateConstraint' element must contain an 'expression' element, '" . $expressionElt->nodeName . "' given.";
+	        $msg = "A 'templateConstraint' element must contain an 'expression' element, '" . $expressionElt->localName . "' given.";
 	        throw new UnmarshallingException($msg, $element);
 	    }
 		

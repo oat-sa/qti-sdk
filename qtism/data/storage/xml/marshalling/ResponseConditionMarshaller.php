@@ -87,7 +87,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller {
 	
 	protected function isElementFinal(DOMNode $element) {
 		$exclusion = array('responseIf', 'responseElseIf', 'responseElse', 'responseCondition');
-		return !in_array($element->nodeName, $exclusion);
+		return !in_array($element->localName, $exclusion);
 	}
 	
 	protected function isComponentFinal(QtiComponent $component) {
@@ -131,7 +131,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function createCollection(DOMElement $currentNode) {
-		if ($currentNode->nodeName != 'responseCondition') {
+		if ($currentNode->localName != 'responseCondition') {
 			return new ResponseRuleCollection();
 		}
 		else {

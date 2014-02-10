@@ -68,7 +68,7 @@ class PreConditionMarshaller extends Marshaller {
 			return $object;
 		}
 		else {
-			$msg = "The mandatory 'expression' child element is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory 'expression' child element is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}

@@ -48,7 +48,7 @@ class GapChoiceMarshaller extends ContentMarshaller {
                 
                 $fqClass = $this->lookupClass($element);
                 
-                if ($element->nodeName === 'gapImg') {
+                if ($element->localName === 'gapImg') {
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     }
@@ -77,7 +77,7 @@ class GapChoiceMarshaller extends ContentMarshaller {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
                 
-                if ($element->nodeName === 'gapText') {
+                if ($element->localName === 'gapText') {
                     try {
                         $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
                     }
@@ -132,7 +132,7 @@ class GapChoiceMarshaller extends ContentMarshaller {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
         
-        if ($element->nodeName === 'gapImg' && $component->hasObjectLabel() === true) {
+        if ($element->localName === 'gapImg' && $component->hasObjectLabel() === true) {
             self::setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
         }
         

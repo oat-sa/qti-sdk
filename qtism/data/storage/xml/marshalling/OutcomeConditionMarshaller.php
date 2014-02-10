@@ -87,7 +87,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 	
 	protected function isElementFinal(DOMNode $element) {
 		$exclusion = array('outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition');
-		return !in_array($element->nodeName, $exclusion);
+		return !in_array($element->localName, $exclusion);
 	}
 	
 	protected function isComponentFinal(QtiComponent $component) {
@@ -131,7 +131,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function createCollection(DOMElement $currentNode) {
-		if ($currentNode->nodeName != 'outcomeCondition') {
+		if ($currentNode->localName != 'outcomeCondition') {
 			return new OutcomeRuleCollection();
 		}
 		else {

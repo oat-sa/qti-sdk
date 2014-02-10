@@ -49,18 +49,18 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 			$marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElts[0]);
 			$expression = $marshaller->unmarshall($expressionElts[0]);
 		}
-		else if (($element->nodeName == 'templateIf' || $element->nodeName == 'templateElseIf') && count($expressionElts) == 0) {
-			$msg = "An '" . $element->nodeName . "' must contain an 'expression' element. None found at line " . $element->getLineNo() . "'.";
+		else if (($element->localName == 'templateIf' || $element->localName == 'templateElseIf') && count($expressionElts) == 0) {
+			$msg = "An '" . $element->localName . "' must contain an 'expression' element. None found at line " . $element->getLineNo() . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 		
-		if ($element->nodeName == 'templateIf' || $element->nodeName == 'templateElseIf') {
-			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
+		if ($element->localName == 'templateIf' || $element->localName == 'templateElseIf') {
+			$className = 'qtism\\data\\rules\\' . ucfirst($element->localName);
 			$class = new ReflectionClass($className);
 			$object = Reflection::newInstance($class, array($expression, $children));
 		}
 		else {
-			$className = 'qtism\\data\\rules\\' . ucfirst($element->nodeName);
+			$className = 'qtism\\data\\rules\\' . ucfirst($element->localName);
 			$class = new ReflectionClass($className);
 			$object = Reflection::newInstance($class, array($children));
 		}
@@ -84,7 +84,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 	}
 	
 	protected function isElementFinal(DOMNode $element) {
-		return in_array($element->nodeName, array_merge(array(
+		return in_array($element->localName, array_merge(array(
 					'setDefaultValue',
 					'setCorrectResponse',
 					'setTemplateValue',

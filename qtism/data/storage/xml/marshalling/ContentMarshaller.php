@@ -228,55 +228,55 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         if (in_array($element->localName, self::$simpleComposites) === true) {
             return self::getChildElements($element, true);
         }
-        else if ($element->nodeName === 'choiceInteraction') {
+        else if ($element->localName === 'choiceInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');
         }
-        else if ($element->nodeName === 'orderInteraction') {
+        else if ($element->localName === 'orderInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');
         }
-        else if ($element->nodeName === 'associateInteraction') {
+        else if ($element->localName === 'associateInteraction') {
             return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
         }
-        else if ($element->nodeName === 'matchInteraction') {
+        else if ($element->localName === 'matchInteraction') {
             return self::getChildElementsByTagName($element, 'simpleMatchSet');
         }
-        else if ($element->nodeName === 'gapMatchInteraction') {
+        else if ($element->localName === 'gapMatchInteraction') {
             return self::getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
         }
-        else if ($element->nodeName === 'inlineChoiceInteraction') {
+        else if ($element->localName === 'inlineChoiceInteraction') {
             return self::getChildElementsByTagName($element, 'inlineChoice');
         }
-        else if ($element->nodeName === 'hottextInteraction') {
+        else if ($element->localName === 'hottextInteraction') {
             return self::getChildElementsByTagName($element, 'prompt', true);
         }
-        else if ($element->nodeName === 'hotspotInteraction') {
+        else if ($element->localName === 'hotspotInteraction') {
             return self::getChildElementsByTagName($element, 'hotspotChoice');
         }
-        else if ($element->nodeName === 'graphicAssociateInteraction') {
+        else if ($element->localName === 'graphicAssociateInteraction') {
             return self::getChildElementsByTagName($element, 'associableHotspot');
         }
-        else if ($element->nodeName === 'graphicOrderInteraction') {
+        else if ($element->localName === 'graphicOrderInteraction') {
             return self::getChildElementsByTagName($element, 'hotspotChoice');
         }
-        else if ($element->nodeName === 'tr') {
+        else if ($element->localName === 'tr') {
             return self::getChildElementsByTagName($element, array('td', 'th'));
         }
-        else if ($element->nodeName === 'ul' || $element->nodeName === 'ol') {
+        else if ($element->localName === 'ul' || $element->localName === 'ol') {
             return self::getChildElementsByTagName($element, 'li');
         }
-        else if ($element->nodeName === 'dl') {
+        else if ($element->localName === 'dl') {
             return self::getChildElementsByTagName($element, array('dd', 'dt'));
         }
-        else if ($element->nodeName === 'itemBody') {
+        else if ($element->localName === 'itemBody') {
             return self::getChildElements($element);
         }
-        else if ($element->nodeName === 'blockquote') {
+        else if ($element->localName === 'blockquote') {
             return self::getChildElements($element);
         }
-        else if ($element->nodeName === 'simpleMatchSet') {
+        else if ($element->localName === 'simpleMatchSet') {
             return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
         }
-        else if ($element->nodeName === 'gapImg') {
+        else if ($element->localName === 'gapImg') {
             return self::getChildElementsByTagName($element, 'object');
         }
         else {
@@ -307,7 +307,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
      */
     protected function lookupClass(DOMElement $element) {
         $lookup = $this->getLookupClasses();
-        $class = ucfirst($element->nodeName);
+        $class = ucfirst($element->localName);
         
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
@@ -317,7 +317,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
             }
         }
 
-        $msg = "No class could be found for tag with name '" . $element->nodeName . "'.";
+        $msg = "No class could be found for tag with name '" . $element->localName . "'.";
         throw new UnmarshallingException($msg, $element);
     }
 }

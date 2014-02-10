@@ -73,12 +73,12 @@ class VariableMappingMarshaller extends Marshaller {
 				}
 			}
 			else {
-				$msg = "The mandatory attribute 'targetIdentifier' is missing from element '" . $element->nodeName . "'.";
+				$msg = "The mandatory attribute 'targetIdentifier' is missing from element '" . $element->localName . "'.";
 				throw new UnmarshallingException($msg, $element);
 			}
 		}
 		else {
-			$msg = "The mandatory attribute 'sourceIdentifier' is missing from element '" . $element->nodeName . "'.";
+			$msg = "The mandatory attribute 'sourceIdentifier' is missing from element '" . $element->localName . "'.";
 			throw new UnmarshallingException($msg, $element);
 		}
 	}
