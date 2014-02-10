@@ -25,12 +25,12 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$element = $dom->importNode($element, true);
 		
-		$this->assertEquals('<em id="sentence" class="introduction" lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
+		$this->assertEquals('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
 	}
 	
 	public function testUnmarshall() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<em id="sentence" class="introduction" lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>');
+		$dom->loadXML('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>');
 		$element = $dom->documentElement;
 		
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);

@@ -34,7 +34,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $element->childNodes->length);
 	    $this->assertEquals('myControl', $element->getAttribute('id'));
 	    $this->assertEquals('myInfo elt', $element->getAttribute('class'));
-	    $this->assertEquals('en-US', $element->getAttribute('lang'));
+	    $this->assertEquals('en-US', $element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
 	    $this->assertEquals('A label...', $element->getAttribute('label'));
 	}
 	
@@ -51,7 +51,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	}
 	
 	public function testUnmarshallMinimalWithAttributes() {
-	    $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" lang="en-US" label="A label..."/>');
+	    $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
 	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 	
 	    $this->assertInstanceOf('qtism\\data\\content\\InfoControl', $component);

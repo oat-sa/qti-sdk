@@ -315,7 +315,7 @@ abstract class Marshaller {
 	    try {
 	        $bodyElement->setId($element->getAttribute('id'));
 	        $bodyElement->setClass($element->getAttribute('class'));
-	        $bodyElement->setLang($element->getAttribute('lang'));
+	        $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
 	        $bodyElement->setLabel($element->getAttribute('label'));
 	    }
 	    catch (InvalidArgumentException $e) {
@@ -341,7 +341,7 @@ abstract class Marshaller {
 	    }
 	
 	    if (($lang = $bodyElement->getLang()) !== '') {
-	        $element->setAttribute('lang', $lang);
+	        $element->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', $lang);
 	    }
 	
 	    if (($label = $bodyElement->getLabel()) != '') {
