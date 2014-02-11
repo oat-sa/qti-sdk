@@ -128,4 +128,9 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc->load($file);
         $this->assertTrue(true);
     }
+    
+    public function testBT() {
+        $doc = new XmlDocument();
+        $file = self::samplesDir() . 'custom/items/111525A.xml';
+    }
 }

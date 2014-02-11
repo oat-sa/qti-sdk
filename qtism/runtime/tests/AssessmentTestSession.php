@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -129,6 +129,14 @@ class AssessmentTestSession extends State {
 	 * @var Duration
 	 */
 	private $acceptableLatency;
+	
+	/**
+	 * How/When test results must be submitted.
+	 * 
+	 * @var integer
+	 * @see TestResultsSubmission The TestResultsSubmission enumeration.
+	 */
+	private $testResultsSubmission = TestResultsSubmission::OUTCOME_PROCESSING;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -324,6 +332,26 @@ class AssessmentTestSession extends State {
 	    }
 	}
 	
+	/**
+	 * Get the Test Results Submission configuration value.
+	 * 
+	 * @param integer $testResultsSubmission
+	 * @see TestResultsSubmission The TestResultsSubmission enumeration.
+	 */
+	public function setTestResultsSubmission($testResultsSubmission) {
+	    $this->testResultsSubmission = $testResultsSubmission;
+	}
+	
+	/**
+	 * Get the Test Results Submission configuration value.
+	 * 
+	 * @return integer
+	 * @see TestResultsSubmission The TestResultsSubmission enumeration.
+	 */
+	public function getTestResultsSubmission() {
+	    return $this->testResultsSubmission;
+	}
+
 	/**
 	 * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
 	 * where 'Q01' is the item the requested weight belongs to, and 'weight1' is the
@@ -1128,9 +1156,6 @@ class AssessmentTestSession extends State {
             // Update the lastly updated item occurence.
             $this->notifyLastOccurenceUpdate($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
         
-            // Outcome processing.
-            $this->outcomeProcessing();
-             
             // Item Results submission.
             try {
                 $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
@@ -1139,6 +1164,9 @@ class AssessmentTestSession extends State {
                 $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
+            
+            // Outcome processing.
+            $this->outcomeProcessing();
         }
 	}
 	
@@ -1504,7 +1532,7 @@ class AssessmentTestSession extends State {
 	/**
 	 * Apply outcome processing at test-level.
 	 * 
-	 * @throws AssessmentTestSessionException If an error occurs at OutcomeProcessing time.
+	 * @throws AssessmentTestSessionException If an error occurs at OutcomeProcessing time or at result submission time.
 	 */
 	protected function outcomeProcessing() {
 	    
@@ -1519,6 +1547,10 @@ class AssessmentTestSession extends State {
 	        try {
 	            $outcomeProcessingEngine = new OutcomeProcessingEngine($outcomeProcessing, $this);
 	            $outcomeProcessingEngine->process();
+	            
+	            if ($this->getTestResultsSubmission() === TestResultsSubmission::OUTCOME_PROCESSING) {
+	                $this->submitTestResults();
+	            }
 	        }
 	        catch (ProcessingException $e) {
 	            $msg = "An error occured while processing OutcomeProcessing.";
@@ -1551,7 +1583,10 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    $this->submitTestResults();
+	    if ($this->getTestResultsSubmission() === TestResultsSubmission::END) {
+	        $this->submitTestResults();
+	    }
+	    
 	    $this->setState(AssessmentTestSessionState::CLOSED);
 	}
 	
