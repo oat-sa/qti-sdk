@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -22,7 +23,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
 	    $mediaInteraction->setLoop(true);
 	    
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $mediaInteraction->setPrompt($prompt);
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($mediaInteraction)->marshall($mediaInteraction);

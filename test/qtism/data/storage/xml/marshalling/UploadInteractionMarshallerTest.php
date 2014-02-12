@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -13,7 +14,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase {
 	    
 	    $uploadInteraction = new UploadInteraction('RESPONSE', 'my-upload');
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $uploadInteraction->setPrompt($prompt);
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($uploadInteraction)->marshall($uploadInteraction);

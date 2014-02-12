@@ -31,7 +31,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase {
        
         $matchInteraction = new MatchInteraction('RESPONSE', new SimpleMatchSetCollection(array($set1, $set2)));
         $prompt = new Prompt();
-        $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         $matchInteraction->setPrompt($prompt);
         $matchInteraction->setShuffle(true);
         

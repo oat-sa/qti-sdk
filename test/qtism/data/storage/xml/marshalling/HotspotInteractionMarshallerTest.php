@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\common\datatypes\Coords;
 use qtism\data\content\interactions\HotspotInteraction;
 use qtism\data\content\xhtml\Object;
@@ -16,7 +17,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
         $prompt = new Prompt();
-        $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         
         $choice1 = new HotspotChoice('hotspotchoice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(77, 115, 8)));
         $choice2 = new HotspotChoice('hotspotchoice2', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(118, 184, 8)));

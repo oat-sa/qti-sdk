@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -14,7 +15,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase {
 	    $object = new Object('my-canvas.png', 'image/png');
 	    $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $drawingInteraction->setPrompt($prompt);
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($drawingInteraction)->marshall($drawingInteraction);

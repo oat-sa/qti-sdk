@@ -25,7 +25,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase {
         $component = new AssociateInteraction('RESPONSE', $choices);
         $component->setMaxAssociations(2);
         $prompt = new Prompt();
-        $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         $component->setPrompt($prompt);
         
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);

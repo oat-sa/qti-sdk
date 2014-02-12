@@ -1,9 +1,8 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
-
 use qtism\data\content\InlineStaticCollection;
-
 use qtism\data\content\interactions\Prompt;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -13,7 +12,7 @@ class PromptMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
         
         $component = new Prompt('my-prompt', 'qti-prompt');
-        $component->setContent(new InlineStaticCollection(array(new TextRun('This is a prompt'))));
+        $component->setContent(new FlowStaticCollection(array(new TextRun('This is a prompt'))));
         
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
         $element = $marshaller->marshall($component);

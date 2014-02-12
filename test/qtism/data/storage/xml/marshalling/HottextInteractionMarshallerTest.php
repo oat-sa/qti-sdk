@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\Hottext;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -24,7 +25,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase {
 	    $hottextInteraction = new HottextInteraction('RESPONSE', $content);
 	    
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $hottextInteraction->setPrompt($prompt);
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($hottextInteraction)->marshall($hottextInteraction);

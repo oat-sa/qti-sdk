@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -19,7 +20,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase {
 	    $sliderInteraction->setReverse(true);
 	    
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $sliderInteraction->setPrompt($prompt);
 	    
         $element = $this->getMarshallerFactory()->createMarshaller($sliderInteraction)->marshall($sliderInteraction);

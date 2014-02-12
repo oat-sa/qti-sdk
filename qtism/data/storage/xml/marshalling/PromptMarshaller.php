@@ -24,7 +24,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\InlineStaticCollection;
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -42,7 +42,34 @@ class PromptMarshaller extends ContentMarshaller {
             
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass();
-            $component->setContent(new InlineStaticCollection($children->getArrayCopy()));
+            
+            $content = new FlowStaticCollection();
+            $error = false;
+            $exclusion = array('pre', 'hottext', 'printedVariable', 'templateBlock', 'templateInline', 'infoControl', 'feedbackBlock', 'rubricBlock', 'a', 'feedbackInline');
+            
+            foreach ($children as $c) {
+                
+                if (in_array($c->getQtiClassName(), $exclusion) === true) {
+                    $error = true;
+                    break;
+                }
+                
+                try {
+                    $content[] = $c;
+                }
+                catch (InvalidArgumentException $e) {
+                    $error = true;
+                    break;
+                }
+            }
+            
+            if ($error === true) {
+                $qtiClass = $c->getQtiClassName();
+                $msg = "A 'prompt' cannot contain '${qtiClass}' elements.";
+                throw new UnmarshallingException($msg, $element);
+            }
+            
+            $component->setContent($content);
             
             self::fillBodyElement($component, $element);
             

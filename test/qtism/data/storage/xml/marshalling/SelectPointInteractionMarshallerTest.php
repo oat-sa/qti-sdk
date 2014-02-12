@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
@@ -14,7 +15,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	    
 	    $object = new Object('./myimg.png', 'image/png');
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object, 1);
 	    $selectPointInteraction->setPrompt($prompt);
 	    

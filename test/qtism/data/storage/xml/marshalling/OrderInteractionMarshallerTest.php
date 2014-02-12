@@ -23,7 +23,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase {
         
         $component = new OrderInteraction('RESPONSE', $choices);
         $prompt = new Prompt();
-        $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+        $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         $component->setPrompt($prompt);
         $component->setMinChoices(1);
         $component->setMaxChoices(2);

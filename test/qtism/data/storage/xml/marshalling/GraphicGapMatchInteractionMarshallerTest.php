@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\content\interactions\AssociableHotspotCollection;
 use qtism\common\datatypes\Coords;
@@ -19,7 +20,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
         
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
 	    $object = new Object('myimg.png', 'image/png');
 	    

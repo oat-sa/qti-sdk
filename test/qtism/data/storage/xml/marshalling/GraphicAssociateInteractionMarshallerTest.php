@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
-
 use qtism\data\content\interactions\AssociableHotspotCollection;
 use qtism\common\datatypes\Coords;
 use qtism\common\datatypes\Shape;
@@ -18,7 +18,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
         
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
 	    $object = new Object('myimg.png', 'image/png');
 	    

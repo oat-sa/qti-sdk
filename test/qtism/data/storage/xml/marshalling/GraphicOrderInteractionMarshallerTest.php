@@ -1,7 +1,7 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\xhtml\Object;
-
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\common\datatypes\Coords;
@@ -18,7 +18,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
         
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
 	    $choice1 = new HotspotChoice('choice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(0, 0, 15)));
 	    $choice2 = new HotspotChoice('choice2', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(2, 2, 15)));

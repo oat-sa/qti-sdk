@@ -129,8 +129,41 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->assertTrue(true);
     }
     
-    public function testBT() {
+    public function testPromptRuptureNoValidation() {
         $doc = new XmlDocument();
-        $file = self::samplesDir() . 'custom/items/111525A.xml';
+        $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
+        $doc->load($file);
+        
+        $search = $doc->getDocumentComponent()->getComponentsByClassName('prompt');
+        $prompt = $search[0];
+        $this->assertInstanceOf('qtism\\data\\content\\interactions\\prompt', $prompt);
+        
+        $promptContent = $prompt->getContent();
+        $this->assertEquals('Hell ', $promptContent[0]->getContent());
+        $div = $promptContent[1];
+        $divContent = $div->getContent();
+        $this->assertEquals('YEAH!', $divContent[0]->getContent());
+        
+        $search = $doc->getDocumentComponent()->getComponentsByClassName('choiceInteraction');
+        $choiceInteraction = $search[0];
+        $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $choiceInteraction);
+        
+        $simpleChoices = $choiceInteraction->getSimpleChoices();
+        $this->assertEquals(1, count($simpleChoices));
+        
+        $simpleChoiceContent = $simpleChoices[0]->getContent();
+        $this->assertEquals('Resistance is futile!', $simpleChoiceContent[0]->getContent());
+    }
+    
+    public function testPromptRuptureValidation() {
+        $doc = new XmlDocument();
+        $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->load($file);
+        $valid = $dom->schemaValidate(dirname(__FILE__) . '/../../../../../qtism/data/storage/xml/schemes/imsqti_v2p1.xsd');
+        $this->assertTrue($valid, 'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        
+        $doc->load($file);
+        $this->assertTrue(true);
     }
 }

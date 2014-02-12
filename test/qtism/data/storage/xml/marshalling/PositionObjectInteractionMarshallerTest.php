@@ -1,5 +1,6 @@
 <?php
 
+use qtism\data\content\FlowStaticCollection;
 use qtism\common\datatypes\Point;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\TextRun;
@@ -18,7 +19,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 	    $object->setHeight(300);
 	    
 	    $prompt = new Prompt();
-	    $prompt->setContent(new InlineStaticCollection(array(new TextRun('Prompt...'))));
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
 	    $positionObjectInteraction = new PositionObjectInteraction('RESPONSE', $object, 'my-pos');
 	    $positionObjectInteraction->setCenterPoint(new Point(150, 74));

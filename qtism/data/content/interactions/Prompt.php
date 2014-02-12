@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\data\content\InlineStaticCollection;
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\BodyElement;
 use \InvalidArgumentException;
 
@@ -40,7 +40,7 @@ class Prompt extends BodyElement {
      * 
      * A prompt must not contain any nested interactions.
      * 
-     * @var InlineStaticCollection
+     * @var FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -56,22 +56,22 @@ class Prompt extends BodyElement {
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
-        $this->setContent(new InlineStaticCollection());
+        $this->setContent(new FlowStaticCollection());
     } 
     
     /**
      * Set the content of the prompt.
      * 
-     * @param InlineStaticCollection $content A collection of InlineStatic objects.
+     * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(InlineStaticCollection $content) {
+    public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
     }
     
     /**
      * Get the content of the prompt.
      * 
-     * @return InlineStaticCollection A collection of InlineStatic objects.
+     * @return FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent() {
         return $this->content;
