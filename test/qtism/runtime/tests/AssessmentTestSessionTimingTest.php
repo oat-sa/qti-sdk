@@ -271,4 +271,32 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(1, $session['TP01.duration']->getSeconds(true));
         $this->assertEquals(1, $session['duration']->getSeconds(true));
     }
+    
+    public function testMultipleOccurences() {
+        /*
+         * This test aims at testing how duration behaves
+         * when multiple occurences of the same item are involved in
+         * the test.
+         */
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/multiple_occurences.xml');
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        sleep(1);
+        $session->skip();
+        $session->moveNext();
+        
+        $session->beginAttempt();
+        sleep(2);
+        $session->skip();
+        $session->moveNext();
+        
+        $session->beginAttempt();
+        $session->skip();
+        $session->moveNext();
+        
+        $this->assertEquals(1, $session['Q01.1.duration']->getSeconds(true));
+        $this->assertEquals(2, $session['Q01.2.duration']->getSeconds(true));
+        $this->assertEquals(0, $session['Q01.3.duration']->getSeconds(true));
+    }
 }
