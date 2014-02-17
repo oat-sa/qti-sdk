@@ -116,7 +116,7 @@ class State extends AbstractCollection {
 		}
 		
 		if (isset($data[$variableIdentifier])) {
-			unset($data[$variable->getIdentifier()]);
+			unset($data[$variableIdentifier]);
 		}
 		else {
 			$msg = "No Variable object with identifier '${variableIdentifier}' found in the current State object.";
