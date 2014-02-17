@@ -921,7 +921,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
     }
     
     /**
-     * Get the policy ruling the way qti:feedbackElement are managed while rendering.
+     * Get the policy ruling the way qti:feedbackElement and qti:modalFeedback are managed while rendering.
      *
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
