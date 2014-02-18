@@ -51,4 +51,17 @@ class Utils {
     static public function isVariableReference($string) {
         return is_string($string) === true && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
     }
+    
+    /**
+     * Returns a PHP style double quoted string.
+     * 
+     * @param string $string The string to be quoted (e.g. blabla).
+     * @return string The quoted string (e.g. "blabla").
+     */
+    static public function doubleQuotedPhpString($string) {
+        $escapes = array("\\", '"', "\n", "\t", "\v", "\r", "\f", "$");
+        $replace = array("\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$");
+        
+        return "\"" . str_replace($escapes, $replace, $string) . "\""; // UTF-8 safe.
+    }
 }

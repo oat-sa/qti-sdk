@@ -154,6 +154,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('associableHotspot', new AssociableHotspotRenderer());
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
+        $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
         
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());

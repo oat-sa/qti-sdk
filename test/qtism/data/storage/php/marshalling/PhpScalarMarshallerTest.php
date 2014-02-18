@@ -34,7 +34,10 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase {
             array("\$string_0 = \"\";\n", ''),
             array("\$string_0 = \"Hello!\";\n", "Hello!"),
             array("\$boolean_0 = true;\n", true),
-            array("\$boolean_0 = false;\n", false)    
+            array("\$boolean_0 = false;\n", false),
+            array("\$string_0 = \"Hello \\n there!\";\n", "Hello \n there!"),
+            array("\$string_0 = \"Hello \\\\n there!\";\n", "Hello \\n there!"),
+            array("\$string_0 = \"Hello \\\\ there!\";\n", "Hello \\ there!"),
         );
     }
 }

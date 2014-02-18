@@ -53,6 +53,12 @@ abstract class AbstractMarkupRenderer implements Renderable {
         $this->renderingEngine = $renderingEngine;
     }
     
+    /**
+     * Get the rendering engine currently driving the rendering
+     * process.
+     * 
+     * @return AbstractMarkupRenderingEngine
+     */
     public function getRenderingEngine() {
         return $this->renderingEngine;
     }

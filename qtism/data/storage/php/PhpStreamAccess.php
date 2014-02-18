@@ -77,11 +77,7 @@ class PhpStreamAccess extends AbstractStreamAccess {
                 $this->getStream()->write($scalar);
             }
             else if (is_string($scalar) === true) {
-                $escapes = array("\\", '"', "\n", "\t", "\v", "\r", "\f");
-                $replace = array("\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f");
-            
-                $scalar = str_replace($escapes, $replace, $scalar); // UTF-8 safe.
-                $this->getStream()->write("\"${scalar}\"");
+                $this->getStream()->write(PhpUtils::doubleQuotedPhpString($scalar));
             }
             else if (is_bool($scalar) === true) {
                 $this->getStream()->write(($scalar === true) ? 'true' : 'false');

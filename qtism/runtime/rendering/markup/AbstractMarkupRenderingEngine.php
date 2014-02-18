@@ -26,7 +26,6 @@
 namespace qtism\runtime\rendering\markup;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
-
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\data\content\ModalFeedback;
@@ -177,7 +176,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * The Choice rendering policy.
      *
      * @var integer
-     * @see RenderingConfig For information about rendering policies.
     */
     private $choiceShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
     
@@ -185,7 +183,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * The Feedback rendering policy.
      *
      * @var integer
-     * @see RenderingConfig For information about rendering policies
      */
     private $feedbackShowHidePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
     
@@ -193,9 +190,15 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * The View rendering policy.
      *
      * @var integer
-     * @see RenderingConfig For information about rendering policies
      */
     private $viewPolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
+    
+    /**
+     * The policy to adopt while dealing with printed variables.
+     * 
+     * @var integer
+     */
+    private $printedVariablePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
     
     /**
      * The policy to adopt to deal with xml:base values.
@@ -936,7 +939,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * Set the policy ruling the way QTI components with a qti:view attribute are managed during the rendering phase.
      *
      * * In CONTEXT_STATIC mode, the qti-view-candidate|qti-view-auhor|qti-view-proctor|qti-view-tutor|qti-view-tutor|qti-view-testConstructor|qti-view-scorer CSS class will be simply added to the rendered elements.
-     * * In CONTEXT_STATIC mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
      * @param integer $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
@@ -949,12 +952,39 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
      * Set the policy ruling the way QTI components with a qti:view attribute are managed during the rendering phase.
      *
      * * In CONTEXT_STATIC mode, the qti-view-candidate|qti-view-auhor|qti-view-proctor|qti-view-tutor|qti-view-tutor|qti-view-testConstructor|qti-view-scorer CSS class will be simply added to the rendered elements depending on the value of the "view" attribute in the QTI-XML definition.
-     * * In CONTEXT_STATIC mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     * * In CONTEXT_AWARE mode, CSS classes will be set up as in CONTEXT_STATIC mode, but views that do not match the view given by the client-code will be discarded from rendering.
+     * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
      *
      * @return integer AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
     public function getViewPolicy() {
         return $this->viewPolicy;
+    }
+    
+    /**
+     * Set the policy ruling the way qti:printedVariable components are managed during the rendering phase.
+     * 
+     * * In CONTEXT_STATIC mode, the printed variable will be generated in a static way. Data attributes will be used by the client-code to render the appropriate value.
+     * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
+     * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
+     * 
+     * @param integer $printedVariablePolicy AbstractMarkup
+     */
+    public function setPrintedVariablePolicy($printedVariablePolicy) {
+        $this->printedVariablePolicy = $printedVariablePolicy;
+    }
+    
+    /**
+     * Get the policy ruling the way qti:printedVariable components are managed during the rendering phase.
+     * 
+     * * In CONTEXT_STATIC mode, the printed variable will be generated in a static way. Data attributes will be used by the client-code to render the appropriate value.
+     * * In CONTEXT_AWARE mode, the printed variable will be generated as in CONTEXT_STATIC mode, but the value to be displayed will be generated.
+     * * In TEMPLATE_ORIENTED mode, the code to be processed to render the variable value will be enclosed into template tags, that can be processed later on.
+     * 
+     * @return integer
+     */
+    public function getPrintedVariablePolicy() {
+        return $this->printedVariablePolicy;
     }
     
     /**

@@ -50,14 +50,15 @@ class MarkupPostRendererTest extends QtiSmTestCase {
 
         $file = file($file);
         // Check file consistency...
-        $this->assertEquals(trim($file[3]), "<!-- qtism-if (\$qtismState['outcome1'] == 'showoutcome1'): -->");
-        $this->assertEquals(trim($file[5]), "<!-- qtism-if (\$qtismState['outcome2'] != 'hideoutcome2'): -->");
-        $this->assertEquals(trim($file[9]), "<!-- qtism-endif -->");
-        $this->assertEquals(trim($file[11]), "<!-- qtism-endif -->");
-        $this->assertEquals(trim($file[13]), "<!-- qtism-if (\$qtismState['outcome3'] != 'hideoutcome3'): -->");
-        $this->assertEquals(trim($file[15]), "<!-- qtism-endif -->");
-        $this->assertEquals(trim($file[18]), "<!-- qtism-if (\$qtismState['outcome4'] == 'showoutcome4'): -->");
-        $this->assertEquals(trim($file[20]), "<!-- qtism-endif -->");
+        $this->assertEquals("<!-- qtism-if (\$qtismState['outcome1'] == 'showoutcome1'): -->", trim($file[3]));
+        $this->assertEquals("<!-- qtism-if (\$qtismState['outcome2'] != 'hideoutcome2'): -->", trim($file[5]));
+        $this->assertEquals("<!-- qtism-endif -->", trim($file[9]));
+        $this->assertEquals("<!-- qtism-endif -->", trim($file[11]));
+        $this->assertEquals("<!-- qtism-if (\$qtismState['outcome3'] != 'hideoutcome3'): -->", trim($file[13]));
+        $this->assertEquals("<!-- qtism-endif -->", trim($file[15]));
+        $this->assertEquals("<div><!-- qtism-printedVariable(\$qtismState, \"outcome5\", \"hello int %i!\", false, 10, -1, \";\", \"\", \"=\") --></div>", trim($file[17]));
+        $this->assertEquals("<!-- qtism-if (\$qtismState['outcome4'] == 'showoutcome4'): -->", trim($file[19]));
+        $this->assertEquals("<!-- qtism-endif -->", trim($file[21]));
         
         // Check output consistency...
         $renderer = new MarkupPostRenderer(true, true, true);
@@ -67,14 +68,15 @@ class MarkupPostRendererTest extends QtiSmTestCase {
         file_put_contents($filename, $output);
         
         $file = file($filename);
-        $this->assertEquals(trim($file[2]), "<?php if (\$qtismState['outcome1'] == 'showoutcome1'): ?>");
-        $this->assertEquals(trim($file[4]), "<?php if (\$qtismState['outcome2'] != 'hideoutcome2'): ?>");
-        $this->assertEquals(trim($file[8]), "<?php endif; ?>");
-        $this->assertEquals(trim($file[10]), "<?php endif; ?>");
-        $this->assertEquals(trim($file[12]), "<?php if (\$qtismState['outcome3'] != 'hideoutcome3'): ?>");
-        $this->assertEquals(trim($file[14]), "<?php endif; ?>");
-        $this->assertEquals(trim($file[17]), "<?php if (\$qtismState['outcome4'] == 'showoutcome4'): ?>");
-        $this->assertEquals(trim($file[19]), "<?php endif; ?>");
+        $this->assertEquals("<?php if (\$qtismState['outcome1'] == 'showoutcome1'): ?>", trim($file[2]));
+        $this->assertEquals("<?php if (\$qtismState['outcome2'] != 'hideoutcome2'): ?>", trim($file[4]));
+        $this->assertEquals("<?php endif; ?>", trim($file[8]));
+        $this->assertEquals("<?php endif; ?>", trim($file[10]));
+        $this->assertEquals("<?php if (\$qtismState['outcome3'] != 'hideoutcome3'): ?>", trim($file[12]));
+        $this->assertEquals("<?php endif; ?>", trim($file[14]));
+        $this->assertEquals("<div><?php echo qtism\\runtime\\rendering\\markup\\Utils::printVariable(\$qtismState, \"outcome5\", \"hello int %i!\", false, 10, -1, \";\", \"\", \"=\"); ?></div>", trim($file[16]));
+        $this->assertEquals("<?php if (\$qtismState['outcome4'] == 'showoutcome4'): ?>", trim($file[18]));
+        $this->assertEquals("<?php endif; ?>", trim($file[20]));
         
         unlink($filename);
     }

@@ -57,7 +57,7 @@ class MarkupPostRenderer implements Renderable {
      * 
      * @param boolean $formatOutput Whether or not format the XML output.
      * @param boolean $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
-     * @param boolean $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) into PHP control statements.
+     * @param boolean $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
      */
     public function __construct($formatOutput = false, $cleanUpXmlDeclaration = false, $templateOriented = false) {
         $this->formatOutput($formatOutput);
@@ -152,6 +152,10 @@ class MarkupPostRenderer implements Renderable {
         if ($this->isTemplateOriented() === true) {
             $output = preg_replace('/<!--\s+(?:qtism-if)\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
             $output = preg_replace('/<!--\s+(?:qtism-endif)\s+-->/iu', '<?php endif; ?>', $output);
+            
+            $className = "qtism\\runtime\\rendering\\markup\\Utils";
+            $call = "<?php echo ${className}::printVariable(\\1); ?>";
+            $output = preg_replace('/<!--\s+qtism-printedVariable\((.+?)\)\s+-->/iu', $call, $output);
         }
         
         /*
