@@ -274,13 +274,21 @@ class Utils {
 		return preg_match($pattern, $string) === 1;
 	}
 	
+	/**
+	 * Makes $value compliant with baseType $targetBaseType, if $value is compliant. Otherwise,
+	 * the original $value is returned.
+	 * 
+	 * @param mixed $value A QTI Runtime compliant value.
+	 * @param integer $targetBaseType The target baseType.
+	 * @return mixed The juggled value if needed, otherwise the original value of $value.
+	 */
 	public static function juggle($value, $targetBaseType) {
 	    // A lot of people designing QTI items want to put float values
 	    // in integer baseType'd variables... So let's go for type juggling!
 	    
 	    $valueBaseType = RuntimeUtils::inferBaseType($value);
 	    
-	    if ($value instanceof MultipleContainer || $value instanceof OrderedContainer) {
+	    if ($valueBaseType !== $targetBaseType && ($value instanceof MultipleContainer || $value instanceof OrderedContainer)) {
 	        
 	        $class = get_class($value);
 	        
@@ -318,7 +326,7 @@ class Utils {
 	            $value = new $class($targetBaseType, $value->getArrayCopy());
 	        }
 	    }
-	    else {
+	    else if ($valueBaseType !== $targetBaseType) {
 	        // Scalar value.
 	        if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
 	            $value = intval($value);
@@ -331,6 +339,25 @@ class Utils {
 	    return $value;
 	}
 	
+	/**
+	 * Check whether or not $firstBaseType is compliant with $secondBaseType.
+	 * 
+	 * The following associations of baseTypes are considered to be compliant:
+	 * 
+	 * * identifier - string
+	 * * string - identifier
+	 * * uri - string
+	 * * string - uri
+	 * * uri - identifier
+	 * * identifier - uri
+	 * * string - intOrIdentifier
+	 * * integer - intOrIdentifier
+	 * * identifier - intOrIdentifier
+	 * 
+	 * @param integer $firstBaseType A value from the baseType enumeration.
+	 * @param integer $secondBaseType A value from the baseType enumeration.
+	 * @return boolean
+	 */
 	public static function areBaseTypesCompliant($firstBaseType, $secondBaseType) {
 	    if ($firstBaseType === $secondBaseType) {
 	        return true;
@@ -366,6 +393,12 @@ class Utils {
 	    return false;
 	}
 	
+	/**
+	 * Transforms the content of float array to an integer array.
+	 * 
+	 * @param array $floatArray An array containing float values.
+	 * @return array An array containing integer values.
+	 */
 	public static function floatArrayToInteger($floatArray) {
 	    $integerArray = array();
 	    foreach ($floatArray as $f) {
@@ -374,6 +407,12 @@ class Utils {
 	    return $integerArray;
 	}
 	
+	/**
+	 * Transforms the content of an integer array to a float array.
+	 * 
+	 * @param array $integerArray An array containing integer values.
+	 * @return array An array containing float values.
+	 */
 	public static function integerArrayToFloat($integerArray) {
 	    $floatArray = array();
 	    foreach ($integerArray as $i) {
