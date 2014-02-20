@@ -56,7 +56,7 @@ class MarkupPostRendererTest extends QtiSmTestCase {
         $this->assertEquals("<!-- qtism-endif -->", trim($file[11]));
         $this->assertEquals("<!-- qtism-if (\$qtismState['outcome3'] != 'hideoutcome3'): -->", trim($file[13]));
         $this->assertEquals("<!-- qtism-endif -->", trim($file[15]));
-        $this->assertEquals("<div><!-- qtism-printedVariable(\$qtismState, \"outcome5\", \"hello int %i!\", false, 10, -1, \";\", \"\", \"=\") --></div>", trim($file[17]));
+        $this->assertEquals("<div><!-- qtism-printVariable(\$qtismState, \"outcome5\", \"hello int %i!\", false, 10, -1, \";\", \"\", \"=\") --></div>", trim($file[17]));
         $this->assertEquals("<!-- qtism-if (\$qtismState['outcome4'] == 'showoutcome4'): -->", trim($file[19]));
         $this->assertEquals("<!-- qtism-endif -->", trim($file[21]));
         

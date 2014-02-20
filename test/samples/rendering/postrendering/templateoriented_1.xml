@@ -15,7 +15,7 @@
 			<feedbackInline outcomeIdentifier="outcome3" identifier="hideoutcome3" showHide="hide">May I disappear?</feedbackInline>
 			<!-- qtism-endif -->
 		</div>
-		<div><!-- qtism-printedVariable($qtismState, "outcome5", "hello int %i!", false, 10, -1, ";", "", "=") --></div>
+		<div><!-- qtism-printVariable($qtismState, "outcome5", "hello int %i!", false, 10, -1, ";", "", "=") --></div>
 	</itemBody>
 	<!-- qtism-if ($qtismState['outcome4'] == 'showoutcome4'): -->
 	<modalFeedback outcomeIdentifier="outcome4" identifier="showoutcome4" showHide="show">May I pop-up?</modalFeedback>

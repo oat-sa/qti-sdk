@@ -155,7 +155,7 @@ class MarkupPostRenderer implements Renderable {
             
             $className = "qtism\\runtime\\rendering\\markup\\Utils";
             $call = "<?php echo ${className}::printVariable(\\1); ?>";
-            $output = preg_replace('/<!--\s+qtism-printedVariable\((.+?)\)\s+-->/iu', $call, $output);
+            $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
         }
         
         /*
