@@ -99,7 +99,7 @@ class RecordContainer extends Container {
 	 * @return RecordContainer A Container object populated with the values found in $valueCollection.
 	 * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
 	 */
-	public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER) {
+	public static function createFromDataModel(ValueCollection $valueCollection) {
 		$container = new static();
 		foreach ($valueCollection as $value) {
 			$fieldIdentifier = $value->getFieldIdentifier();

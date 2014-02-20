@@ -106,16 +106,7 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		
 		// The variable exists, its new value is processed.
 		try {
-		    // A lot of people designing QTI items want to put float values
-		    // in integer baseType'd variables... So let's go for type juggling!
-		    if (RuntimeUtils::inferBaseType($val) === BaseType::FLOAT && $var->getBaseType() === BaseType::INTEGER) {
-		        $val = intval($val);
-		    }
-		    else if (RuntimeUtils::inferBaseType($val) === BaseType::INTEGER && $var->getBaseType() === BaseType::FLOAT) {
-		        $val = floatval($val);
-		    }
-		    
-			$var->setValue($val);
+			$var->setValue(RuntimeUtils::juggle($val, $var->getBaseType()));
 		}
 		catch (InvalidArgumentException $e) {
 			// The affected value does not match the baseType of the variable $var.

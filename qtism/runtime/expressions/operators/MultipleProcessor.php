@@ -86,7 +86,7 @@ class MultipleProcessor extends OperatorProcessor {
 			}
 			else {
 				if ($refType !== null) {
-					// A reference type as already been identifier.
+					// A reference type as already been identified.
 					if (CommonUtils::inferBaseType($operand) === $refType) {
 						// $operand can be added to $returnValue.
 						static::appendValue($returnValue, $operand);

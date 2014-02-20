@@ -31,7 +31,6 @@ use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Duration;
 use qtism\common\collections\AbstractCollection;
-use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
 use qtism\common\Comparable;
 use \InvalidArgumentException;

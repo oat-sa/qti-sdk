@@ -31,6 +31,7 @@ use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 use \RuntimeException;
 
@@ -271,5 +272,78 @@ class Utils {
 		
 		$pattern = '/^[a-z][a-z0-9_\-]*(?:(?:\.[1-9][0-9]*){0,1}(?:\.[a-z][a-z0-9_\-]*){0,1}){0,1}$/iu';
 		return preg_match($pattern, $string) === 1;
+	}
+	
+	public static function juggle($value, $targetBaseType) {
+	    // A lot of people designing QTI items want to put float values
+	    // in integer baseType'd variables... So let's go for type juggling!
+	    
+	    $valueBaseType = RuntimeUtils::inferBaseType($value);
+	    
+	    if ($value instanceof MultipleContainer || $value instanceof OrderedContainer) {
+	        
+	        $class = get_class($value);
+	        
+	        if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
+	            $value = new $class($targetBaseType, self::floatArrayToInteger($value->getArrayCopy()));
+	        }
+	        else if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
+	            $value = new $class($targetBaseType, self::integerArrayToFloat($value->getArrayCopy()));
+	        }
+	        else if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::STRING) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::IDENTIFIER) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::STRING) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::URI) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::IDENTIFIER) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	        else if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
+	            $value = new $class($targetBaseType, $value->getArrayCopy());
+	        }
+	    }
+	    else {
+	        // Scalar value.
+	        if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
+	            $value = intval($value);
+	        }
+	        else if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
+	            $value = floatval($value);
+	        }
+	    }
+
+	    return $value;
+	}
+	
+	public static function floatArrayToInteger($floatArray) {
+	    $integerArray = array();
+	    foreach ($floatArray as $f) {
+	        $integerArray[] = intval($f);
+	    }
+	    return $integerArray;
+	}
+	
+	public static function integerArrayToFloat($integerArray) {
+	    $floatArray = array();
+	    foreach ($integerArray as $i) {
+	        $floatArray[] = floatval($i);
+	    }
+	    return $floatArray;
 	}
 }

@@ -249,7 +249,7 @@ abstract class Variable {
 	/**
 	 * Set the default value of the Variable.
 	 * 
-	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $defaultValue A value compliant with the QTI Runtime Model.
+	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $defaultValue A value compliant with the QTI Runtime Model.
 	 * @throws InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
 	 */
 	public function setDefaultValue($defaultValue) {

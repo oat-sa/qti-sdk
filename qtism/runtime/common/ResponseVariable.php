@@ -90,7 +90,7 @@ class ResponseVariable extends Variable {
 	/**
 	 * Set the correct response.
 	 * 
-	 * @param CorrectResponse $correctResponse A CorrectResponse object from the QTI Data Model.
+	 * @param mixed $correctResponse A QTI Runtime compliant object.
 	 */
 	public function setCorrectResponse($correctResponse) {
 		if (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true) {
