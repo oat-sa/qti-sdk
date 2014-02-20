@@ -331,6 +331,41 @@ class Utils {
 	    return $value;
 	}
 	
+	public static function areBaseTypesCompliant($firstBaseType, $secondBaseType) {
+	    if ($firstBaseType === $secondBaseType) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::STRING) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::IDENTIFIER) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::STRING) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::URI) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::IDENTIFIER) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::URI) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::INTEGER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+	        return true;
+	    }
+	    else if ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
+	        return true;
+	    }
+	    
+	    return false;
+	}
+	
 	public static function floatArrayToInteger($floatArray) {
 	    $integerArray = array();
 	    foreach ($floatArray as $f) {
