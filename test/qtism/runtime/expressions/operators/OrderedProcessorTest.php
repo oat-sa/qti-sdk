@@ -110,6 +110,20 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($result[1]->equals(new Point(3, 4)));
 	}
 	
+	public function testJuggling() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array('identifier1', 'identifier2'));
+	    $operands[] = 'identifier3';
+	    $operands[] = new OrderedContainer(BaseType::STRING, array('string1', 'string2'));
+	    $operands[] = null;
+	    $processor = new OrderedProcessor($expression, $operands);
+	    $result = $processor->process();
+	    $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+	    $this->assertEquals(5, count($result));
+	    $this->assertTrue($result->equals(new OrderedContainer(BaseType::IDENTIFIER, array('identifier1', 'identifier2', 'identifier3', 'string1', 'string2'))));
+	}
+	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();

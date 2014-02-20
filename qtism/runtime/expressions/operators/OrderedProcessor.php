@@ -92,9 +92,9 @@ class OrderedProcessor extends OperatorProcessor {
 			else {
 				if ($refType !== null) {
 					// A reference type as already been identifier.
-					if (CommonUtils::inferBaseType($operand) === $refType) {
+					if (CommonUtils::areBaseTypesCompliant(CommonUtils::inferBaseType($operand), $refType) === true) {
 						// $operand can be added to $returnValue.
-						static::appendValue($returnValue, $operand);
+						static::appendValue($returnValue, CommonUtils::juggle($operand, $refType));
 					}
 					else {
 						// baseType mismatch.
