@@ -115,7 +115,7 @@ class PrintedVariableEngine extends AbstractEngine {
         $identifier = $printedVariable->getIdentifier();
         $state = $this->getContext();
         
-        if (isset($state[$identifier]) === false) {
+        if ($state[$identifier] === null) {
             return '';
         }
         
@@ -133,7 +133,7 @@ class PrintedVariableEngine extends AbstractEngine {
             $index = $printedVariable->getIndex();
             
             // $index might be a variable reference.
-            if (is_string($index) === true && isset($state[$index]) === true) {
+            if (is_string($index) === true && $state[$index] !== null) {
                 $refIndex = $state[$index];
                 
                 if (is_int($refIndex) === true) {
