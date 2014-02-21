@@ -317,15 +317,6 @@ class Utils {
 	        else if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
 	            $value = new $class($targetBaseType, $value->getArrayCopy());
 	        }
-	        else if ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
-	            $value = new $class($targetBaseType, $value->getArrayCopy());
-	        }
-	        else if ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
-	            $value = new $class($targetBaseType, $value->getArrayCopy());
-	        }
-	        else if ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::INT_OR_IDENTIFIER) {
-	            $value = new $class($targetBaseType, $value->getArrayCopy());
-	        }
 	    }
 	    else if ($valueBaseType !== $targetBaseType) {
 	        // Scalar value.
@@ -403,7 +394,7 @@ class Utils {
 	public static function floatArrayToInteger($floatArray) {
 	    $integerArray = array();
 	    foreach ($floatArray as $f) {
-	        $integerArray[] = intval($f);
+	        $integerArray[] = (is_null($f) === false) ? intval($f) : null;
 	    }
 	    return $integerArray;
 	}
@@ -417,7 +408,7 @@ class Utils {
 	public static function integerArrayToFloat($integerArray) {
 	    $floatArray = array();
 	    foreach ($integerArray as $i) {
-	        $floatArray[] = floatval($i);
+	        $floatArray[] = (is_null($i) === false) ? floatval($i) : null;
 	    }
 	    return $floatArray;
 	}

@@ -15,7 +15,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession {
         }
     }
     
-    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence) {
+    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0) {
         foreach ($assessmentItemSession as $id => $var) {
             $this->addItemResultResult($assessmentItemSession->getAssessmentItem()->getIdentifier() . '.' . $occurence . '.' . $id, $var->getValue());
         }
