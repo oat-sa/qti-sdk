@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\enums\BaseType;
+
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -121,7 +123,8 @@ class RepeatProcessor extends OperatorProcessor {
 				
 				// Check baseType.
 				$currentType = RuntimeUtils::inferBaseType($operand);
-				if ($i === 0 && $refType !== null && $currentType !== $refType) {
+
+				if ($i === 0 && $refType !== null && RuntimeUtils::areBaseTypesCompliant($currentType, $refType) === false) {
 					$msg = "The Repeat operator only accepts operands with the same baseType.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 				}
@@ -133,7 +136,7 @@ class RepeatProcessor extends OperatorProcessor {
 				// Okay we are good...
 				$operandCardinality = RuntimeUtils::inferCardinality($operand);
 				if ($operandCardinality !== Cardinality::ORDERED) {
-					$operand = new OrderedContainer($currentType, array($operand));
+					$operand = new OrderedContainer($currentType, array(RuntimeUtils::juggle($operand, $currentType)));
 				}
 				
 				foreach ($operand as $o) {

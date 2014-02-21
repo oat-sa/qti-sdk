@@ -128,7 +128,8 @@ class Utils {
 			break;
 			
 			case BaseType::INT_OR_IDENTIFIER:
-			    return Format::isIdentifier($value) || is_int($value);
+			    // We cannot afford a full validation for performance purpose.
+			    return is_string($value) || is_int($value);
 			break;
 			
 			case BaseType::POINT:

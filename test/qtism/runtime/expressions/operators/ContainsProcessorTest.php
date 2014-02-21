@@ -351,6 +351,16 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 	}
 	
+	public function testBaseTypeCompliance() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = new MultipleContainer(BaseType::STRING, array('identifier3', 'identifier4', null, 'identifier2'));
+	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array('identifier3', 'identifier2'));
+	    $processor = new ContainsProcessor($expression, $operands);
+	    
+	    $this->assertTrue($processor->process());
+	}
+	
 	public function testNotSameBaseType() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();

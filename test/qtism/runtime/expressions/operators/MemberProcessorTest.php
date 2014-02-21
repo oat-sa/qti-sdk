@@ -64,6 +64,19 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 	}
 	
+	public function testCompliantBaseType() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = 'String1';
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array('String2', 'String1', null));
+	    $processor = new MemberProcessor($expression, $operands);
+	    
+	    $this->assertTrue($processor->process());
+	    
+	    $operands[0] = 'String25';
+	    $this->assertFalse($processor->process());
+	}
+	
 	public function testDifferentBaseType() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();

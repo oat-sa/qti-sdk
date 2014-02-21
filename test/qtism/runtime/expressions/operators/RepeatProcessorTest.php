@@ -71,6 +71,23 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($result->equals($comparison));
 	}
 	
+	public function testJuggling() {
+	    $expression = $this->createFakeExpression(1);
+	    $operands = new OperandsCollection();
+	    $operands[] = null;
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array('id1', 'id2'));
+	    $operands[] = new OrderedContainer(BaseType::URI, array('id3', 'id4'));
+	    $operands[] = 'http://www.taotesting.com';
+	    $operands[] = new OrderedContainer(BaseType::STRING);
+	    
+	    $processor = new RepeatProcessor($expression, $operands);
+	    $result = $processor->process();
+	    
+	    $this->assertEquals(BaseType::IDENTIFIER, $result->getBaseType());
+	    $this->assertEquals(5, count($result));
+	    $this->assertTrue($result->equals(new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3', 'id4', 'http://www.taotesting.com'))));
+	}
+	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(10))));

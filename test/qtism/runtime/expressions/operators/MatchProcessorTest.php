@@ -38,6 +38,27 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process() === true);
 	}
 	
+	public function testBaseTypeCompliance() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array('txt1', 'txt2'));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array('txt1', 'txt2'));
+	    $processor = new MatchProcessor($expression, $operands);
+	    $this->assertTrue($processor->process());
+	}
+	
+	public function testWrongBaseTypeCompliance() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('txt1', 'txt2'));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array('txt1', 'txt2'));
+	    $processor = new MatchProcessor($expression, $operands);
+	    
+	    // Unfortunately, INT_OR_IDENTIFIER cannot be considered as compliant with STRING.
+	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+	    $processor->process();
+	}
+	
 	public function testDifferentBaseTypesScalar() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();

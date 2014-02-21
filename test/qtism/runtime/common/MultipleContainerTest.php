@@ -58,6 +58,18 @@ class MultipleContainerTest extends QtiSmTestCase {
 	}
 	
 	/**
+	 * 
+	 * @param MultipleContainer $firstContainer The first container.
+	 * @param MultipleContainer $secondContainer The second container.
+	 * @param boolean $expected Expected equality result.
+	 * 
+	 * @dataProvider baseTypeComplianceEqualityProvider
+	 */
+	public function testBaseTypeComplianceEquality($firstContainer, $secondContainer, $expected) {
+	    $this->assertEquals($expected, $firstContainer->equals($secondContainer));
+	}
+	
+	/**
 	 * @dataProvider validCreateFromDataModelProvider
 	 */
 	public function testCreateFromDataModelValid($baseType, ValueCollection $valueCollection) {
@@ -96,6 +108,36 @@ class MultipleContainerTest extends QtiSmTestCase {
 		$returnValue[] = array(BaseType::INTEGER, $valueCollection);
 		
 		return $returnValue;
+	}
+	
+	public function baseTypeComplianceEqualityProvider() {
+	    return array(
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), true),
+	        array(new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), true),
+	        array(new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), true),
+	        array(new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), true),
+	        array(new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text2', 'text3')), true),
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), true),
+	        array(new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), true),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), true),
+	        array(new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, 3)), true),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, 3)), new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), true),
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), true),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), true),
+	                    
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id4', 'id3')), false),
+	        array(new MultipleContainer(BaseType::STRING, array('id1', 'Xid2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), false),
+	        array(new MultipleContainer(BaseType::URI, array('http://jquery.be', 'http://twitch.tv')), new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), false),
+	        array(new MultipleContainer(BaseType::STRING, array('http://jquery.be', 'http://twitch.tv')), new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), false),
+	        array(new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text25', 'text3')), false),
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('text1', 't2', 'text3')), new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), false),
+	        array(new MultipleContainer(BaseType::STRING, array('id1', 'i2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), false),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id', 'id2', 'id3')), false),
+	        array(new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 4, 3)), false),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, -258)), new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), false),
+	        array(new MultipleContainer(BaseType::IDENTIFIER, array('d1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), false),
+	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id')), false),
+	    );
 	}
 	
 	public function testEquals() {
