@@ -24,8 +24,9 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
-
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Gcd;
 use qtism\data\expressions\Expression;
@@ -89,11 +90,11 @@ class GcdProcessor extends OperatorProcessor {
 		$zeroCount = 0;
 		$valueCount = 0;
 		foreach ($operands as $operand) {
-			if (is_scalar($operand) === true) {
+			if ($operand instanceof Scalar) {
 				
 				$valueCount++;
 				
-				if ($operand !== 0) {
+				if ($operand->getValue() !== 0) {
 					$flatCollection[] = $operand;
 				}
 				else {
@@ -110,7 +111,7 @@ class GcdProcessor extends OperatorProcessor {
 				foreach ($operand as $o) {
 					$valueCount++;
 					
-					if ($o !== 0) {
+					if ($o->getValue() !== 0) {
 						$flatCollection[] = $o;
 					}
 					else {
@@ -122,7 +123,7 @@ class GcdProcessor extends OperatorProcessor {
 		
 		if ($zeroCount === $valueCount) {
 			// All arguments of gcd() are 0.
-			return 0;
+			return new Integer(0);
 		}
 		else {
 			$g = $flatCollection[0];
@@ -130,7 +131,7 @@ class GcdProcessor extends OperatorProcessor {
 			$i = 0;
 			
 			while ($i < $loopLimit) {
-				$g = Utils::gcd($g, $flatCollection[$i + 1]);
+				$g = new Integer(Utils::gcd($g->getValue(), $flatCollection[$i + 1]->getValue()));
 				$i++;
 			}
 			

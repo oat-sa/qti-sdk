@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\PatternMatch;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
@@ -94,13 +95,13 @@ class PatternMatchProcessor extends OperatorProcessor {
 		// XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
 		$pattern .= 's';
 		
-		$result = @preg_match($pattern, $operands[0]);
+		$result = @preg_match($pattern, $operands[0]->getValue());
 		
 		if ($result === 1) {
-			return true;
+			return new Boolean(true);
 		}
 		else if ($result === 0) {
-			return false;
+			return new Boolean(false);
 		}
 		else {
 			$error = preg_last_error();

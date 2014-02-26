@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtism\data\expressions\Expression;
@@ -115,7 +117,7 @@ class MathOperatorProcessor extends OperatorProcessor {
 		$methodName = 'process' . ucfirst($qtiFuncName);
 		$result = call_user_func_array(array($this, $methodName), array());
 		
-		if (is_nan($result) === true) {
+		if ($result instanceof Float && is_nan($result->getValue()) === true) {
 			// outside the domain of the function.
 			return null;
 		}
@@ -126,68 +128,68 @@ class MathOperatorProcessor extends OperatorProcessor {
 	
 	protected function processSin() {
 		$operands = $this->getOperands();
-		return sin($operands[0]);
+		return new Float(sin($operands[0]->getValue()));
 	}
 	
 	protected function processCos() {
 		$operands = $this->getOperands();
-		return cos($operands[0]);
+		return new Float(cos($operands[0]->getValue()));
 	}
 	
 	protected function processTan() {
 		$operands = $this->getOperands();
-		return tan($operands[0]);
+		return new Float(tan($operands[0]->getValue()));
 	}
 	
 	protected function processSec() {
 		$operands = $this->getOperands();
-		$cos = cos($operands[0]);
+		$cos = cos($operands[0]->getValue());
 		if ($cos == 0) {
 			return null;
 		}
 		else {
-			return 1 / $cos;
+			return new Float(1 / $cos);
 		}
 	}
 	
 	protected function processCsc() {
 		$operands = $this->getOperands();
-		$sin = sin($operands[0]);
+		$sin = sin($operands[0]->getValue());
 		if ($sin == 0) {
 			return null;
 		}
 		else {
-			return 1 / $sin;
+			return new Float(1 / $sin);
 		}
 	}
 	
 	protected function processCot() {
 		$operands = $this->getOperands();
-		$tan = tan($operands[0]);
+		$tan = tan($operands[0]->getValue());
 		if (is_infinite($tan)) {
-			return 0.0;
+			return new Float(0.0);
 		}
 		else if ($tan == 0) {
 			return null;
 		}
 		else {
-			return 1 / $tan;
+			return new Float(1 / $tan);
 		}
 	}
 	
 	protected function processAsin() {
 		$operands = $this->getOperands();
-		return asin($operands[0]);
+		return new Float(asin($operands[0]->getValue()));
 	}
 	
 	protected function processAcos() {
 		$operands = $this->getOperands();
-		return acos($operands[0]);
+		return new Float(acos($operands[0]->getValue()));
 	}
 	
 	protected function processAtan() {
 		$operands = $this->getOperands();
-		return atan($operands[0]);
+		return new Float(atan($operands[0]->getValue()));
 	}
 	
 	protected function processAtan2() {
@@ -205,147 +207,147 @@ class MathOperatorProcessor extends OperatorProcessor {
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
 		
-		return atan2($operand1, $operand2);
+		return new Float(atan2($operand1->getValue(), $operand2->getValue()));
 	}
 	
 	protected function processAsec() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (abs($operand) < 1) {
+		if (abs($operand->getValue()) < 1) {
 			return null;
 		}
 		
-		return acos(1 / $operand);
+		return new Float(acos(1 / $operand->getValue()));
 	}
 	
 	protected function processAcsc() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (abs($operand) < 1) {
+		if (abs($operand->getValue()) < 1) {
 			return null;
 		}
 		
-		return asin(1 / $operand);
+		return new Float(asin(1 / $operand->getValue()));
 	}
 	
 	protected function processAcot() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand === 0) {
-			return M_PI_2;
+		if ($operand->getValue() === 0) {
+			return new Float(M_PI_2);
 		}
 		
-		return atan(1 / $operand);
+		return new Float(atan(1 / $operand->getValue()));
 	}
 	
 	protected function processSinh() {
 		$operands = $this->getOperands();
-		return sinh($operands[0]);
+		return new Float(sinh($operands[0]->getValue()));
 	}
 	
 	protected function processCosh() {
 		$operands = $this->getOperands();
-		return cosh($operands[0]);
+		return new Float(cosh($operands[0]->getValue()));
 	}
 	
 	protected function processTanh() {
 		$operands = $this->getOperands();
-		return tanh($operands[0]);
+		return new Float(tanh($operands[0]->getValue()));
 	}
 	
 	protected function processSech() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand == 0) {
+		if ($operand->getValue() == 0) {
 			return null;
 		}
 		
-		return 1 / cosh($operand);
+		return new Float(1 / cosh($operand->getValue()));
 	}
 	
 	protected function processCsch() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand == 0) {
+		if ($operand->getValue() == 0) {
 			return null;
 		}
 		
-		return 1 / sinh($operand);
+		return new Float(1 / sinh($operand->getValue()));
 	}
 	
 	protected function processCoth() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand == 0) {
+		if ($operand->getValue() == 0) {
 			return null;
 		}
-		else if (is_infinite($operand)) {
-			return 0.0;
+		else if (is_infinite($operand->getValue())) {
+			return new Float(0.0);
 		}
 		
-		return 1 / tanh($operand);
+		return new Float(1 / tanh($operand->getValue()));
 	}
 	
 	protected function processLog() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand < 0) {
+		if ($operand->getValue() < 0) {
 			return null;
 		}
-		else if ($operand == 0) {
-			return -INF;
+		else if ($operand->getValue() == 0) {
+			return new Float(-INF);
 		}
 		
-		return log($operand, 10);
+		return new Float(log($operand->getValue(), 10));
 	}
 	
 	protected function processLn() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if ($operand < 0) {
+		if ($operand->getValue() < 0) {
 			return null;
 		}
-		else if ($operand == 0) {
-			return -INF;
+		else if ($operand->getValue() == 0) {
+			return new Float(-INF);
 		}
 		
-		return log($operand);
+		return new Float(log($operand->getValue()));
 	}
 	
 	protected function processExp() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand) === true) {
+		if (is_nan($operand->getValue()) === true) {
 			return null;
 		}
-		else if (is_infinite($operand) === true && $operand > 0) {
-			return INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
+			return new Float(INF);
 		}
-		else if (is_infinite($operand) === true && $operand < 0) {
-			return 0.0;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
+			return new Float(0.0);
 		}
 		
-		return exp($operand);
+		return new Float(exp($operand->getValue()));
 	}
 	
 	protected function processAbs() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand) === true) {
+		if (is_nan($operand->getValue()) === true) {
 			return null;
 		}
 		
-		return floatval(abs($operand));
+		return new Float(floatval(abs($operand->getValue())));
 	}
 	
 	/**
@@ -357,17 +359,17 @@ class MathOperatorProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if ($operand < 0) {
-			return -1;
+		else if ($operand->getValue() < 0) {
+			return new Integer(-1);
 		}
-		else if ($operand > 0) {
-			return 1;
+		else if ($operand->getValue() > 0) {
+			return new Integer(1);
 		}
 		else {
-			return 0;
+			return new Integer(0);
 		}
 	}
 	
@@ -375,67 +377,67 @@ class MathOperatorProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if (is_infinite($operand) === true && $operand > 0) {
-			return INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
+			return new Float(INF);
 		}
-		else if (is_infinite($operand) === true && $operand < 0) {
-			return -INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
+			return new Float(-INF);
 		}
 		
-		return intval(floor($operand));
+		return new Integer(intval(floor($operand->getValue())));
 	}
 	
 	protected function processCeil() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if (is_infinite($operand) === true && $operand > 0) {
-			return INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
+			return new Float(INF);
 		}
-		else if (is_infinite($operand) === true && $operand < 0) {
-			return -INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
+			return new Float(-INF);
 		}
 		
-		return intval(ceil($operand));
+		return new Integer(intval(ceil($operand->getValue())));
 	}
 	
 	protected function processToDegrees() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if (is_infinite($operand) === true && $operand > 0) {
-			return INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
+			return new Float(INF);
 		}
-		else if (is_infinite($operand) === true && $operand < 0) {
-			return -INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
+			return new Float(-INF);
 		}
 		
-		return floatval(rad2deg($operand));
+		return new Float(floatval(rad2deg($operand->getValue())));
 	}
 	
 	protected function processToRadians() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if (is_infinite($operand) === true && $operand > 0) {
-			return INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
+			return new Float(INF);
 		}
-		else if (is_infinite($operand) === true && $operand < 0) {
-			return -INF;
+		else if (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
+			return new Float(-INF);
 		}
 		
-		return floatval(deg2rad($operand));
+		return new Float(floatval(deg2rad($operand->getValue())));
 	}
 }

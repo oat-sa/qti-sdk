@@ -1,10 +1,11 @@
 <?php
-use qtism\runtime\common\RecordContainer;
-
-use qtism\common\datatypes\Point;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
+use qtism\runtime\common\RecordContainer;
+use qtism\common\datatypes\Point;
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\StatsOperatorProcessor;
@@ -130,7 +131,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(Statistics::MEAN);
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(10)), new MultipleContainer(BaseType::FLOAT, array(10.0))));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new MultipleContainer(BaseType::FLOAT, array(new Float(10.0)))));
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new StatsOperatorProcessor($expression, $operands);
 	}
@@ -140,66 +141,66 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 			$this->assertTrue($value === null);
 		}
 		else {
-			$this->assertInternalType('float', $value);
-			$this->assertSame(round($expected, 3), round($value, 3));
+			$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $value);
+			$this->assertSame(round($expected, 3), round($value->getValue(), 3));
 		}
 	}
 	
 	public function meanProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::FLOAT, array(10.0, 20.0, 30.0)), 20.0),
-			array(new MultipleContainer(BaseType::INTEGER, array(0)), 0.0),
-			array(new MultipleContainer(BaseType::FLOAT, array(10.0, null, 23.3)), null), // contains a null value
+			array(new OrderedContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0), new Float(30.0))), 20.0),
+			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(0))), 0.0),
+			array(new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), null, new Float(23.3))), null), // contains a null value
 			array(null, null)
 		);
 	}
 	
 	public function sampleVarianceProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::FLOAT, array(10.0)), null), // fails because containerSize <= 1
-			array(new MultipleContainer(BaseType::INTEGER, array(600, 470, 170, 430, 300)), 27130),
-			array(new MultipleContainer(BaseType::FLOAT, array(10.0, null, 23.3)), null), // contains a null value
+			array(new OrderedContainer(BaseType::FLOAT, array(new Float(10.0))), null), // fails because containerSize <= 1
+			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 27130),
+			array(new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), null, new Float(23.3))), null), // contains a null value
 			array(null, null)
 		);
 	}
 	
 	public function sampleSDProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(10)), null), // containerSize <= 1
-			array(new OrderedContainer(BaseType::INTEGER, array(600, 470, 170, 430, 300)), 164.712),
-			array(new MultipleContainer(BaseType::FLOAT, array(10.0, null, 23.3)), null), // contains a null value
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), null), // containerSize <= 1
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 164.712),
+			array(new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), null, new Float(23.3))), null), // contains a null value
 			array(null, null)
 		);
 	}
 	
 	public function popVarianceProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(10)), 0), // containerSize <= 1 but applied on a population -> OK.
-			array(new MultipleContainer(BaseType::INTEGER, array(600, 470, 170, 430, 300)), 21704),
-			array(new MultipleContainer(BaseType::FLOAT, array(10.0, null, 23.33333)), null), // contains a null value
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), 0), // containerSize <= 1 but applied on a population -> OK.
+			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 21704),
+			array(new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), null, new Float(23.33333))), null), // contains a null value
 		);
 	}
 	
 	public function popSDProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(10)), 0), // containerSize <= 1 but applied on population
-			array(new OrderedContainer(BaseType::FLOAT, array(600.0, 470.0, 170.0, 430.0, 300.0)), 147.323),
-			array(new MultipleContainer(BaseType::FLOAT, array(10.0, null, 23.33333)), null), // contains a null value
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), 0), // containerSize <= 1 but applied on population
+			array(new OrderedContainer(BaseType::FLOAT, array(new Float(600.0), new Float(470.0), new Float(170.0), new Float(430.0), new Float(300.0))), 147.323),
+			array(new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), null, new Float(23.33333))), null), // contains a null value
 		);
 	}
 	
 	public function wrongCardinalityProvider() {
 		return array(
-			array(array(25.3)),
-			array(array(-10)),
-			array(array(new RecordContainer(array('A' => 1)))),
+			array(array(new Float(25.3))),
+			array(array(new Integer(-10))),
+			array(array(new RecordContainer(array('A' => new Integer(1))))),
 		);
 	}
 	
 	public function wrongBaseTypeProvider() {
 		return array(
 			array(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2))))),
-			array(array(new OrderedContainer(BaseType::STRING, array('String!'))))		
+			array(array(new OrderedContainer(BaseType::STRING, array(new String('String!')))))		
 		);
 	}
 	

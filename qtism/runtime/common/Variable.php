@@ -29,6 +29,7 @@ use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 use \UnexpectedValueException;
 
@@ -200,41 +201,12 @@ abstract class Variable {
 	 */
 	public function setValue($value) {
 		
-		if ($this->isSingle() && Utils::isBaseTypeCompliant($this->baseType, $value)) {
-			$this->value = $value;
-			return;
-		}
-		else if (($this->isMultiple() || $this->isRecord()) && is_null($value) === true) {
+		if (Utils::isBaseTypeCompliant($this->getBaseType(), $value) && Utils::isCardinalityCompliant($this->getCardinality(), $value)) {
 		    $this->value = $value;
-		    return;
 		}
-		else if (($this->isMultiple() || $this->isRecord()) && $value instanceof Container) {
-			if ($value->getCardinality() === $this->cardinality) {
-				
-				if ($value instanceof RecordContainer || 
-					$value->getBaseType() === $this->baseType) {
-					// This is a simple|Record container with no baseType restriction
-					// or a Multiple|Record|Ordered container with a compliant
-					// baseType.
-					$this->value = $value;
-					return;
-				}
-				else {
-					$msg = "The baseType of the given container ('" . BaseType::getNameByConstant($value->getBaseType()) . "') ";
-					$msg.= "is not compliant with ";
-					$msg.= "the baseType of the variable ('" . BaseType::getNameByConstant($this->baseType) . "').";
-					throw new InvalidArgumentException($msg);
-				}
-			}
-			else {
-				$msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
-				$msg.= "is not compliant with ";
-				$msg.= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->cardinality) . "').";
-				throw new InvalidArgumentException($msg);
-			}
+		else {
+		    Utils::throwBaseTypeTypingError($this->baseType, $value);
 		}
-	    
-		Utils::throwBaseTypeTypingError($this->baseType, $value);
 	}
 	
 	/**
@@ -253,37 +225,13 @@ abstract class Variable {
 	 * @throws InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
 	 */
 	public function setDefaultValue($defaultValue) {
-		if (Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue)) {
+		if (Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) && Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
 			$this->defaultValue = $defaultValue;
 			return;
 		}
-		else if ($defaultValue instanceof Container) {
-			if ($defaultValue->getCardinality() === $this->getCardinality()) {
-		
-				if (get_class($defaultValue) === 'qtism\\runtime\\common\\Container' ||
-						$defaultValue->getBaseType() === $this->getBaseType()) {
-					// This is a simple container with no baseType restriction
-					// or a Multiple|Record|Ordered container with a compliant
-					// baseType.
-					$this->defaultValue = $defaultValue;
-					return;
-				}
-				else {
-					$msg = "The baseType of the given container ('" . BaseType::getNameByConstant($defaultValue->getBaseType()) . "') ";
-					$msg.= "is not compliant with ";
-					$msg.= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
-					throw new InvalidArgumentException($msg);
-				}
-			}
-			else {
-				$msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($defaultValue->getCardinality()) . "') ";
-				$msg.= "is not compliant with ";
-				$msg.= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
-				throw new InvalidArgumentException($msg);
-			}
+		else {
+		    Utils::throwBaseTypeTypingError($this->getBaseType(), $defaultValue);
 		}
-		
-		Utils::throwBaseTypeTypingError($this->getBaseType(), $defaultValue);
 	}
 	
 	/**
@@ -322,19 +270,14 @@ abstract class Variable {
 	 * @return mixed The resulting QTI Runtime value (primitive or container depending on baseType/cardinality).
 	 */
 	protected static function dataModelValuesToRuntime(ValueCollection $valueCollection, $baseType, $cardinality) {
+	    
 		// Cardinality?
 		// -> Single? Multiple? Ordered? Record?
 		if ($cardinality === Cardinality::SINGLE) {
 			// We should find a single value in the DefaultValue's values.
 			if (count($valueCollection) == 1) {
-				try {
-					$dataModelValue = $valueCollection[0]->getValue();
-					return $dataModelValue; // return primitive type.
-				}
-				catch (InvalidArgumentException $e) {
-					$msg = "The default value found in the Data Model VariableDeclaration is not consistent with its baseType.";
-					throw new UnexpectedValueException($msg, 0, $e);
-				}
+				$dataModelValue = RuntimeUtils::valueToRuntime($valueCollection[0]);
+				return $dataModelValue;
 			}
 			else {
 				// The Data Model is in an inconsistent state.
@@ -439,18 +382,12 @@ abstract class Variable {
 	 */
 	public function isNull() {
 		$value = $this->getValue();
-		if (gettype($value) === 'object') {
-			// Containers as per QTI Spec, are considered to be NULL if empty.
-			if ($value instanceof Container && $value->isNull() === true) {
-				return true;
-			}
-			else {
-				// There is a value there!
-				return false;
-			}
+		// Containers as per QTI Spec, are considered to be NULL if empty.
+		if ($value instanceof Container && $value->isNull() === true) {
+			return true;
 		}
-		else if (!is_null($value) && $this->getBaseType() === BaseType::STRING) {
-			return $value === '';
+		else if (!$value instanceof Container && !is_null($value) && $this->getBaseType() === BaseType::STRING) {
+			return $value->getValue() === '';
 		}
 		else {
 			return is_null($value);

@@ -189,8 +189,9 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 				$ifStatement = call_user_func(array($rule, $statementGetter . 'If'));
 				$ifExpression = $ifStatement->getExpression();
 				$exprEngine = new ExpressionEngine($ifExpression, $state);
+			    $value = $exprEngine->process();
 				
-				if ($exprEngine->process() === true) {
+				if ($value !== null && $value->getValue() === true) {
 					// Follow the if.
 					$this->pushTrail(call_user_func(array($ifStatement, $ruleGetter)));
 				}
@@ -202,8 +203,9 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 					foreach ($elseIfStatements as $elseIfStatement) {
 						$elseIfExpression = $elseIfStatement->getExpression();
 						$exprEngine->setComponent($elseIfExpression);
+						$value = $exprEngine->process();
 						
-						if ($exprEngine->process() === true) {
+						if ($value !== null && $value->getValue() === true) {
 							// Follow the current else if.
 							$this->pushTrail(call_user_func(array($elseIfStatement, $ruleGetter)));
 							$followElseIf = true;

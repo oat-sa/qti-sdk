@@ -168,6 +168,13 @@ class BaseType implements Enumeration {
 	 */
 	const INT_OR_IDENTIFIER = 11;
 	
+	/**
+	 * In qtism, we consider an extra 'coords' baseType.
+	 * 
+	 * @var integer
+	 */
+	const COORDS = 12;
+	
 	public static function asArray() {
 		return array(
 			'IDENTIFIER' => self::IDENTIFIER,
@@ -181,7 +188,8 @@ class BaseType implements Enumeration {
 			'DURATION' => self::DURATION,
 			'FILE' => self::FILE,
 			'URI' => self::URI,
-			'INT_OR_IDENTIFIER' => self::INT_OR_IDENTIFIER
+			'INT_OR_IDENTIFIER' => self::INT_OR_IDENTIFIER,
+		    'COORDS' => self::COORDS
 		);
 	}
 	
@@ -200,6 +208,7 @@ class BaseType implements Enumeration {
 	 * * 'file' -> BaseType::FILE
 	 * * 'uri' -> BaseType::URI
 	 * * 'intOrIdentifier' -> BaseType::INT_OR_IDENTIFIER
+	 * * extra 'coords' -> BaseType::COORDS
 	 * 
 	 * @param string $name The baseType name.
 	 * @return integer|boolean The related enumeration value or false if the name could not be resolved.
@@ -252,6 +261,10 @@ class BaseType implements Enumeration {
 			
 			case 'intoridentifier':
 				return self::INT_OR_IDENTIFIER;
+			break;
+			
+			case 'coords':
+			    return self::COORDS;
 			break;
 			
 			default:
@@ -314,6 +327,10 @@ class BaseType implements Enumeration {
 			
 			case self::INT_OR_IDENTIFIER:
 				return 'intOrIdentifier';
+			break;
+			
+			case self::COORDS:
+			    return 'coords';
 			break;
 					
 			default:

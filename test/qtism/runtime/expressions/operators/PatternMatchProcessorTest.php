@@ -1,6 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\String;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
@@ -21,7 +24,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression($pattern);
 		$operands = new OperandsCollection(array($string));
 		$processor = new PatternMatchProcessor($expression, $operands);
-		$this->assertSame($expected, $processor->process());
+		$this->assertSame($expected, $processor->process()->getValue());
 	}
 	
 	/**
@@ -46,14 +49,14 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array('string', 'string'));
+		$operands = new OperandsCollection(array(new String('string'), new String('string')));
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new PatternMatchProcessor($expression, $operands);
 	}
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array(new RecordContainer(array('A' => 1))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('A' => new Integer(1)))));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
@@ -61,7 +64,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array(255.34));
+		$operands = new OperandsCollection(array(new Float(255.34)));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
@@ -69,7 +72,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testInternalError() {
 		$expression = $this->createFakeExpression('[');
-		$operands = new OperandsCollection(array('string!'));
+		$operands = new OperandsCollection(array(new String('string!')));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		try {
 			$result = $processor->process();
@@ -83,23 +86,23 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function patternMatchProvider() {
 		return array(
-			array('string', 'string', true),
-			array('string', 'stRing', false),
-			array('string', 'shell', false),
-			array('stringString', '.*', true), // in xml schema 2, dot matches white-spaces
-			array('^String$', 'String', false), // No carret nor dollar in xml schema 2
-			array('^String$', '^String$', true),
-			array('Str/ing', 'Str/ing', true),
-			array('Str^ing', 'Str^ing', true),
-			array('99', '\d{1,2}', true),
-			array('abc', '\d{1,2}', false)
+			array(new String('string'), 'string', true),
+			array(new String('string'), 'stRing', false),
+			array(new String('string'), 'shell', false),
+			array(new String('stringString'), '.*', true), // in xml schema 2, dot matches white-spaces
+			array(new String('^String$'), 'String', false), // No carret nor dollar in xml schema 2
+			array(new String('^String$'), '^String$', true),
+			array(new String('Str/ing'), 'Str/ing', true),
+			array(new String('Str^ing'), 'Str^ing', true),
+			array(new String('99'), '\d{1,2}', true),
+			array(new String('abc'), '\d{1,2}', false)
 		);
 	}
 	
 	public function nullProvider() {
 		return array(
 			array(null, '\d{1,2}'),
-			array('', '\d{1,2}'),
+			array(new String(''), '\d{1,2}'),
 			array(new OrderedContainer(BaseType::STRING), '\d{1,2}')
 		);
 	}

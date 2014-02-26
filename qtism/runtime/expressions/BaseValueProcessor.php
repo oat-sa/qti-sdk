@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\data\state\Value;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -56,6 +58,8 @@ class BaseValueProcessor extends ExpressionProcessor {
 	 * @return mixed A QTI Runtime compliant scalar value.
 	 */
 	public function process() {
-		return $this->getExpression()->getValue();
+	    $expression = $this->getExpression();
+	    $value = new Value($expression->getValue(), $expression->getBaseType());
+		return RuntimeUtils::valueToRuntime($value);
 	}
 }

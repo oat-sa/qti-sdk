@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
@@ -20,8 +21,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor = new InsideProcessor($expression, $operands);
 		
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$point = new Point(-1, -1); // -1, -1 is outside.
 		$operands = new OperandsCollection(array($point));
@@ -29,8 +30,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor->setExpression($expression);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testPoly() {
@@ -41,8 +42,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor = new InsideProcessor($expression, $operands);
 	
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 	
 		$point = new Point(10, 9); // 10, 9 is outside.
 		$operands = new OperandsCollection(array($point));
@@ -50,8 +51,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor->setExpression($expression);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testCircle() {
@@ -62,8 +63,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor = new InsideProcessor($expression, $operands);
 	
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 	
 		$point = new Point(1, 1); // 1,1 is outside
 		$operands = new OperandsCollection(array($point));
@@ -71,8 +72,8 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor->setExpression($expression);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testNull() {
@@ -97,7 +98,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
-		$point = 10;
+		$point = new Integer(10);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);

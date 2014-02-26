@@ -1,7 +1,8 @@
 <?php
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
 use qtism\common\datatypes\Point;
@@ -19,12 +20,12 @@ class MultipleContainerTest extends QtiSmTestCase {
 	}
 	
 	public function testCreationWithValues() {
-		$data = array(10, 20, 10, 30, 40, 50);
+		$data = array(new Integer(10), new Integer(20), new Integer(20), new Integer(30), new Integer(40), new Integer(50));
 		$container = new MultipleContainer(BaseType::INTEGER, $data);
 		$this->assertEquals(6, count($container));
 		$this->assertEquals(BaseType::INTEGER, $container->getBaseType());
 		$this->assertEquals($data, $container->getArrayCopy());
-		$this->assertEquals($container[1], 20);
+		$this->assertEquals($container[1]->getValue(), 20);
 	}
 	
 	public function testCreationEmptyWrongBaseType1() {
@@ -55,18 +56,6 @@ class MultipleContainerTest extends QtiSmTestCase {
 		$this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
 		$this->assertTrue($container->contains($valueCollection[0]->getValue()));
 		$this->assertTrue($container->contains($valueCollection[1]->getValue()));
-	}
-	
-	/**
-	 * 
-	 * @param MultipleContainer $firstContainer The first container.
-	 * @param MultipleContainer $secondContainer The second container.
-	 * @param boolean $expected Expected equality result.
-	 * 
-	 * @dataProvider baseTypeComplianceEqualityProvider
-	 */
-	public function testBaseTypeComplianceEquality($firstContainer, $secondContainer, $expected) {
-	    $this->assertEquals($expected, $firstContainer->equals($secondContainer));
 	}
 	
 	/**
@@ -110,45 +99,15 @@ class MultipleContainerTest extends QtiSmTestCase {
 		return $returnValue;
 	}
 	
-	public function baseTypeComplianceEqualityProvider() {
-	    return array(
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), true),
-	        array(new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), true),
-	        array(new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), true),
-	        array(new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), true),
-	        array(new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text2', 'text3')), true),
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), true),
-	        array(new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), true),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id2', 'id3')), true),
-	        array(new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, 3)), true),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, 3)), new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), true),
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), true),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), true),
-	                    
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id1', 'id4', 'id3')), false),
-	        array(new MultipleContainer(BaseType::STRING, array('id1', 'Xid2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id3')), false),
-	        array(new MultipleContainer(BaseType::URI, array('http://jquery.be', 'http://twitch.tv')), new MultipleContainer(BaseType::STRING, array('http://jquery.com', 'http://twitch.tv')), false),
-	        array(new MultipleContainer(BaseType::STRING, array('http://jquery.be', 'http://twitch.tv')), new MultipleContainer(BaseType::URI, array('http://jquery.com', 'http://twitch.tv')), false),
-	        array(new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), new MultipleContainer(BaseType::IDENTIFIER, array('text1', 'text25', 'text3')), false),
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('text1', 't2', 'text3')), new MultipleContainer(BaseType::URI, array('text1', 'text2', 'text3')), false),
-	        array(new MultipleContainer(BaseType::STRING, array('id1', 'i2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), false),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::STRING, array('id', 'id2', 'id3')), false),
-	        array(new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 4, 3)), false),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(1, 2, -258)), new MultipleContainer(BaseType::INTEGER, array(1, 2, 3)), false),
-	        array(new MultipleContainer(BaseType::IDENTIFIER, array('d1', 'id2', 'id3')), new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), false),
-	        array(new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3')), new MultipleContainer(BaseType::IDENTIFIER, array('id1', 'id2', 'id')), false),
-	    );
-	}
-	
 	public function testEquals() {
-		$c1 = new MultipleContainer(BaseType::INTEGER, array(5, 4, 3, 2, 1));
-		$c2 = new MultipleContainer(BaseType::INTEGER, array(1, 6, 7, 8, 5));
+		$c1 = new MultipleContainer(BaseType::INTEGER, array(new Integer(5), new Integer(4), new Integer(3), new Integer(2), new Integer(1)));
+		$c2 = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(6), new Integer(7), new Integer(8), new Integer(5)));
 		$this->assertFalse($c1->equals($c2));
 	}
 	
 	public function testEqualsTwo() {
-	    $c1 = new MultipleContainer(BaseType::FLOAT, array(2.75, 1.65));
-	    $c2 = new MultipleContainer(BaseType::FLOAT, array(2.75, 1.65));
+	    $c1 = new MultipleContainer(BaseType::FLOAT, array(new Float(2.75), new Float(1.65)));
+	    $c2 = new MultipleContainer(BaseType::FLOAT, array(new Float(2.75), new Float(1.65)));
 	    $this->assertTrue($c1->equals($c2));
 	}
 }

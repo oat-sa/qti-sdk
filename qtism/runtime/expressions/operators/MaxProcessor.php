@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Float;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\Container;
@@ -91,7 +93,7 @@ class MaxProcessor extends OperatorProcessor {
 		$max = -PHP_INT_MAX;
 		foreach ($operands as $operand) {
 			if (!$operand instanceof Container) {
-				$baseType = (gettype($operand) === 'double') ? BaseType::FLOAT : BaseType::INTEGER;
+				$baseType = ($operand instanceof Float) ? BaseType::FLOAT : BaseType::INTEGER;
 				$value = new MultipleContainer($baseType, array($operand));
 			}
 			else {
@@ -99,15 +101,20 @@ class MaxProcessor extends OperatorProcessor {
 			}
 			
 			foreach ($value as $v) {
+			    
+			    if (is_null($v)) {
+			        return null;
+			    }
+			    
 				$valueCount++;
-				$integerCount += (gettype($v) === 'integer') ? 1 : 0;
+				$integerCount += ($v instanceof Integer) ? 1 : 0;
 				
-				if ($v > $max) {
-					$max = $v;
+				if ($v->getValue() > $max) {
+					$max = $v->getValue();
 				}	
 			}
 		}
 		
-		return ($integerCount === $valueCount) ? intval($max) : floatval($max);
+		return ($integerCount === $valueCount) ? new Integer(intval($max)) : new Float(floatval($max));
 	}
 }

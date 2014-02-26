@@ -1,5 +1,7 @@
 <?php
-
+use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\data\storage\xml\XmlDocument;
+use qtism\common\datatypes\Identifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -14,6 +16,7 @@ require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 function loadTestDefinition() {
     $phpDoc = new PhpDocument();
     $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_4_items.php');
+    
     return $phpDoc->getDocumentComponent();
 }
 
@@ -52,7 +55,8 @@ $start = microtime();
 $storage = createStorage(createFactory(loadTestDefinition()));
 $session = $storage->retrieve($sessionId);
 $session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+$session->moveNext();
 $storage->persist($session);
 unset($session);
 unset($storage);
@@ -66,7 +70,8 @@ $start = microtime();
 $storage = createStorage(createFactory(loadTestDefinition()));
 $session = $storage->retrieve($sessionId);
 $session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceB'))));
+$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+$session->moveNext();
 $storage->persist($session);
 unset($session);
 unset($storage);
@@ -80,7 +85,8 @@ $start = microtime();
 $storage = createStorage(createFactory(loadTestDefinition()));
 $session = $storage->retrieve($sessionId);
 $session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC'))));
+$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+$session->moveNext();
 $storage->persist($session);
 unset($session);
 unset($storage);
@@ -94,7 +100,8 @@ $start = microtime();
 $storage = createStorage(createFactory(loadTestDefinition()));
 $session = $storage->retrieve($sessionId);
 $session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD'))));
+$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+$session->moveNext();
 $storage->persist($session);
 unset($session);
 unset($storage);

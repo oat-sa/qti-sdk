@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Float;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -92,12 +93,12 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor {
                     if (($normalMinimum = $var->getNormalMinimum()) !== false) {
                         if ($weight === false) {
                             // No weight to be applied.
-                            $result[] = $normalMinimum;
+                            $result[] = new Float($normalMinimum);
                         }
                         else {
                             
                             // A weight has to be applied.
-                            $result[] = floatval($normalMinimum *= $weight->getValue());
+                            $result[] = new Float(floatval($normalMinimum *= $weight->getValue()));
                         }
                     }
                     // else ... items with no declared minimum are ignored.

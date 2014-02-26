@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Substring;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -81,6 +82,6 @@ class SubstringProcessor extends OperatorProcessor {
 		$operand2 = $operands[1];
 		
 		$call = ($this->getExpression()->isCaseSensitive() === true) ? 'mb_strpos' : 'mb_stripos';
-		return $call($operand2, $operand1, 0, 'UTF-8') !== false;
+		return new Boolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
 	}
 }

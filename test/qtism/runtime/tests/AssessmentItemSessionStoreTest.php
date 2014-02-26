@@ -10,7 +10,7 @@ use qtism\data\AssessmentItemRef;
 class AssessmentItemSessionStoreTest extends QtiSmTestCase {
 	
     public function testHasMultipleOccurences() {
-        $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q02.xml');
+        $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $store = new AssessmentItemSessionStore();
         
         // No session registered for $itemRef1.
@@ -25,6 +25,9 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase {
         $session = new AssessmentItemSession($itemRef1);
         $store->addAssessmentItemSession($session, 1);
         $this->assertTrue($store->hasMultipleOccurences($itemRef1));
+        
+        $this->assertTrue($store->hasAssessmentItemSession($itemRef1, 0));
+        $this->assertFalse($store->hasAssessmentItemSession(new ExtendedAssessmentItemRef('Q02', './Q02.xml')));
     }
     
     public function testGetAllAssessmentItemSessions() {

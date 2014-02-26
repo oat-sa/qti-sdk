@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\operators\Sum;
@@ -85,18 +87,31 @@ class SumProcessor extends OperatorProcessor {
 		}
 		
 		$returnValue = 0;
+		$floatCount = 0;
 		
 		foreach ($this->getOperands() as $operand) {
-			if (gettype($operand) !== 'object') {
-				$returnValue += $operand;
+			if ($operand instanceof Integer) {
+				$returnValue += $operand->getValue();
+			}
+			else if ($operand instanceof Float) {
+			    $returnValue += $operand->getValue();
+			    $floatCount++;
 			}
 			else {
 				foreach ($operand as $val) {
-					$returnValue += $val;
+				    
+				    if ($val !== null) {
+				        
+				        if ($val instanceof Float) {
+				            $floatCount++;
+				        }
+				        
+				        $returnValue += $val->getValue();
+				    }
 				}
 			}
 		}
 		
-		return $returnValue;
+		return ($floatCount > 0) ? new Float(floatval($returnValue)) : new Integer(intval($returnValue));
 	}
 }

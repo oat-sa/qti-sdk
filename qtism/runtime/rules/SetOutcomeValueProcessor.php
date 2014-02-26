@@ -24,6 +24,12 @@
  */
 namespace qtism\runtime\rules;
 
+use qtism\common\enums\Cardinality;
+
+use qtism\common\datatypes\Integer;
+
+use qtism\common\datatypes\Float;
+
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
@@ -106,11 +112,25 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		
 		// The variable exists, its new value is processed.
 		try {
-			$var->setValue(RuntimeUtils::juggle($val, $var->getBaseType()));
+		    // juggle a little bit (int -> float, float -> int)
+		    if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
+		        $baseType = $var->getBaseType();
+		        
+		        if ($baseType === BaseType::INTEGER && $val instanceof Float) {
+		            $val = new Integer(intval($val->getValue()));
+		        }
+		        else if ($baseType === BaseType::FLOAT && $val instanceof Integer) {
+		            $val = new Float(floatval($val->getValue()));
+		        }
+		    }
+		    
+			$var->setValue($val);
 		}
 		catch (InvalidArgumentException $e) {
+		    $varBaseType = (BaseType::getNameByConstant($var->getBaseType())  === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
+		    $varCardinality = (Cardinality::getNameByConstant($var->getCardinality()));
 			// The affected value does not match the baseType of the variable $var.
-			$msg = "Unable to set value ${val} to variable '${identifier}'.";
+			$msg = "Unable to set value ${val} to variable '${identifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
 			throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
 		}
 	}

@@ -1,7 +1,8 @@
 <?php
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LcmProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -21,7 +22,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection($operands);
 		$processor = new LcmProcessor($expression, $operands);
-		$this->assertSame($expected, $processor->process());
+		$this->assertSame($expected, $processor->process()->getValue());
 	}
 	
 	public function testNotEnoughOperands() {
@@ -33,7 +34,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array('String!')), 10));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new String('String!'))), new Integer(10)));
 		$processor = new LcmProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
@@ -41,7 +42,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(10, 20, new RecordContainer(array('A' => 10)), 30));
+		$operands = new OperandsCollection(array(new Integer(10), new Integer(20), new RecordContainer(array('A' => new Integer(10))), new Integer(30)));
 		$processor = new LcmProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
@@ -61,28 +62,28 @@ class LcmProcessorTest extends QtiSmTestCase {
 	
 	public function lcmProvider() {
 		return array(
-			array(array(0), 0),
-			array(array(0, 0), 0),
-			array(array(330, 0), 0),
-			array(array(0, 330), 0),
-			array(array(330, 0, 15), 0),
-			array(array(330, 65, 15), 4290),
-			array(array(-10, -5), 10),
-			array(array(330), 330),
-			array(array(330, new MultipleContainer(BaseType::INTEGER, array(65)), 15), 4290),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(330)), new MultipleContainer(BaseType::INTEGER, array(65)), new MultipleContainer(BaseType::INTEGER, array(15))), 4290),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(330, 65)), new MultipleContainer(BaseType::INTEGER, array(65))), 4290),
+			array(array(new Integer(0)), 0),
+			array(array(new Integer(0), new Integer(0)), 0),
+			array(array(new Integer(330), new Integer(0)), 0),
+			array(array(new Integer(0), new Integer(330)), 0),
+			array(array(new Integer(330), new Integer(0), new Integer(15)), 0),
+			array(array(new Integer(330), new Integer(65), new Integer(15)), 4290),
+			array(array(new Integer(-10), new Integer(-5)), 10),
+			array(array(new Integer(330)), 330),
+			array(array(new Integer(330), new MultipleContainer(BaseType::INTEGER, array(new Integer(65))), new Integer(15)), 4290),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(330))), new MultipleContainer(BaseType::INTEGER, array(new Integer(65))), new MultipleContainer(BaseType::INTEGER, array(new Integer(15)))), 4290),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(330), new Integer(65))), new MultipleContainer(BaseType::INTEGER, array(new Integer(65)))), 4290),
 		);
 	}
 	
 	public function lcmWithNullValuesProvider() {
 		return array(
 			array(array(null)),
-			array(array(null, 10)),
-			array(array(10, null)),
-			array(array(10, null, 10)),
-			array(array(10, new MultipleContainer(BaseType::INTEGER))),
-			array(array(new OrderedContainer(BaseType::INTEGER, array(10, null))))
+			array(array(null, new Integer(10))),
+			array(array(new Integer(10), null)),
+			array(array(new Integer(10), null, new Integer(10))),
+			array(array(new Integer(10), new MultipleContainer(BaseType::INTEGER))),
+			array(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10), null))))
 		);
 	}
 	

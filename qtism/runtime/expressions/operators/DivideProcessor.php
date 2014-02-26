@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Divide;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -84,12 +85,12 @@ class DivideProcessor extends OperatorProcessor {
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
 		
-		if ($operand2 == 0) {
+		if ($operand2->getValue() == 0) {
 			return null;
 		}
 		
-		$divide = floatval($operand1 / $operand2);
+		$divide = floatval($operand1->getValue() / $operand2->getValue());
 		
-		return is_nan($divide) ? null : $divide;
+		return is_nan($divide) ? null : new Float($divide);
 	}
 }

@@ -1,7 +1,9 @@
 <?php
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
@@ -13,66 +15,66 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testRound() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = 6.8;
+		$operands[] = new Float(6.8);
 		$processor = new RoundProcessor($expression, $operands);
 		
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(7, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(7, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = 6.5;
+		$operands[] = new Float(6.5);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(7, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(7, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = 6.49;
+		$operands[] = new Float(6.49);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(6, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(6, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = 6.5;
+		$operands[] = new Float(6.5);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(7, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(7, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = -6.5;
+		$operands[] = new Float(-6.5);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(-6, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(-6, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = -6.51;
+		$operands[] = new Float(-6.51);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(-7, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(-7, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = -6.49;
+		$operands[] = new Float(-6.49);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(-6, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(-6, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = 0;
+		$operands[] = new Integer(0);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(0, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = -0.0;
+		$operands[] = new Float(-0.0);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(0, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = -0.5;
+		$operands[] = new Float(-0.5);
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(0, $result->getValue());
 	}
 	
 	public function testNull() {
@@ -87,7 +89,7 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::FLOAT, array(1.1, 2.2));
+		$operands[] = new OrderedContainer(BaseType::FLOAT, array(new Float(1.1), new Float(2.2)));
 		$processor = new RoundProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -96,7 +98,7 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = true;
+		$operands[] = new Boolean(true);
 		$processor = new RoundProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -121,8 +123,8 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = 10;
-		$operands[] = 1.1;
+		$operands[] = new Integer(10);
+		$operands[] = new Float(1.1);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RoundProcessor($expression, $operands);
 	}

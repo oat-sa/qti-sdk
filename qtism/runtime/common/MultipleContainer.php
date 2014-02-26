@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\data\state\ValueCollection;
 use qtism\common\utils\Format;
 use qtism\common\datatypes\Point;
@@ -31,6 +33,7 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\enums\BaseType;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 
 /**
@@ -42,7 +45,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MultipleContainer extends Container {
+class MultipleContainer extends Container implements QtiDatatype {
 	
 	/**
 	 * The baseType determines the value set of the accepted values of
@@ -109,12 +112,16 @@ class MultipleContainer extends Container {
 	public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER) {
 		$container = new static($baseType);
 		foreach ($valueCollection as $value) {
-			$container[] = $value->getValue();
+			$container[] = RuntimeUtils::valueToRuntime($value);
 		}
 		return $container;
 	}
 	
 	protected function getToStringBounds() {
 		return array('[', ']');
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::MULTIPLE;
 	}
 }

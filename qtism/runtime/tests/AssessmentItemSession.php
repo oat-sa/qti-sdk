@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\Integer;
 use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
 use qtism\runtime\expressions\CorrectProcessor;
@@ -252,11 +254,11 @@ class AssessmentItemSession extends State {
 		$this->setAttempting(false);
 		
 		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, 0));
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
 		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, self::COMPLETION_STATUS_NOT_ATTEMPTED));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
 	}
 	
 	/**
@@ -493,8 +495,8 @@ class AssessmentItemSession extends State {
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
 		$this['duration'] = new Duration('PT0S');
-		$this['numAttempts'] = 0;
-		$this['completionStatus'] = self::COMPLETION_STATUS_NOT_ATTEMPTED;
+		$this['numAttempts']->setValue(0);
+		$this['completionStatus']->setValue(self::COMPLETION_STATUS_NOT_ATTEMPTED);
 	}
 	
 	/**
@@ -528,13 +530,13 @@ class AssessmentItemSession extends State {
 	        $maxAttempts = 1;
 	    }
 	    
-	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED && $maxAttempts !== 0) {
+	    if ($this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED && $maxAttempts !== 0) {
 	        $identifier = $this->assessmentItem->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
 	        $msg.= "completion status is already set to 'complete'";
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
 	    }
-	    else if ($this->assessmentItem->isAdaptive() === false && $this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
+	    else if ($this->assessmentItem->isAdaptive() === false && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_INCOMPLETE) {
 	        // Max duration already exceeded.
 	        $identifier = $this->assessmentItem->getIdentifier();
 	        $msg = "A new attempt for item '${identifier}' is not allowed. The item's ";
@@ -542,7 +544,7 @@ class AssessmentItemSession extends State {
 	        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
 	    }
 	    else if ($this->assessmentItem->isAdaptive() === false) {
-	        if ($maxAttempts > 0 && $this['numAttempts'] >= $maxAttempts) {
+	        if ($maxAttempts > 0 && $this['numAttempts']->getValue() >= $maxAttempts) {
 	            $identifier = $this->assessmentItem->getIdentifier();
 	            $msg = "A new attempt for item '${identifier}' is not allowed. The item's maximum attempts is already reached.";
 	            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
@@ -553,7 +555,7 @@ class AssessmentItemSession extends State {
 		
 		// Response variables' default values are set at the beginning
 		// of the first attempt.
-		if ($this['numAttempts'] === 0) {
+		if ($this['numAttempts']->getValue() === 0) {
 		    
 		    // At the start of the first attempt, the completionStatus
 		    // goes to 'unknown' and response variables get their
@@ -566,9 +568,10 @@ class AssessmentItemSession extends State {
 			}
 			
 			$this['duration'] = new Duration('PT0S');
+			$this['numAttempts'] = new Integer(0);
 		}
 		
-		$this['numAttempts'] = $this['numAttempts'] + 1;
+		$this['numAttempts']->setValue($this['numAttempts']->getValue() + 1);
 		
 		// The session get the INTERACTING STATE.
 		$this->state = AssessmentItemSessionState::INTERACTING;
@@ -627,7 +630,7 @@ class AssessmentItemSession extends State {
 	                
 	                if ($this->timeLimits->doesAllowLateSubmission() === false && $allowLateSubmission === false) {
 	                    // Set the current completionStatus to 'incomplete'.
-	                    $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;
+	                    $this['completionStatus']->setValue(self::COMPLETION_STATUS_INCOMPLETE);
 	                    $this->endItemSession();
 	                    
 	                    $msg = "The maximal duration is exceeded.";
@@ -713,12 +716,12 @@ class AssessmentItemSession extends State {
 	    if ($maxTimeExceeded === true) {
 	        // Special case. The maximum time is exceeded but late submission allowed.
 	        $this->endItemSession();
-	        $this['completionStatus'] = self::COMPLETION_STATUS_INCOMPLETE;   
+	        $this['completionStatus']->setValue(self::COMPLETION_STATUS_INCOMPLETE);   
 	    }
-		else if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+		else if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
 		    $this->endItemSession();
 		}
-		else if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts'] >= $maxAttempts) {
+		else if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
 		    
 		    // Close only if $maxAttempts !== 0 because 0 means no limit!
 		    if ($maxAttempts !== 0) {
@@ -726,7 +729,7 @@ class AssessmentItemSession extends State {
 		    }
 		    
 		    // Even if there is no limit of attempts, we consider the item completed.
-		    $this['completionStatus'] = self::COMPLETION_STATUS_COMPLETED;
+		    $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
 		}
 		// else...
 		// Wait for the next attempt.
@@ -883,9 +886,9 @@ class AssessmentItemSession extends State {
 	            // 0 means unlimited.
 	            return -1;
 	        }
-	        else if ($this['completionStatus'] !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus'] !== self::COMPLETION_STATUS_INCOMPLETE) {
+	        else if ($this['completionStatus']->getValue() !== self::COMPLETION_STATUS_COMPLETED && $this['completionStatus']->getValue() !== self::COMPLETION_STATUS_INCOMPLETE) {
 	            // The item is non-adaptative and is not completed nor time exceeded.
-	            return $maxAttempts - $this['numAttempts'];
+	            return $maxAttempts - $this['numAttempts']->getValue();
 	        }
 	        else {
 	            return 0;
@@ -896,7 +899,7 @@ class AssessmentItemSession extends State {
 	        // Completion status is completed or incomplete (time exceeded).
 	        return 0;
 	    }
-	    else if ($itemRef->isAdaptive() === true && $this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+	    else if ($itemRef->isAdaptive() === true && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
 	        // The item is adaptive and completed.
 	        return 0;
 	    }
@@ -949,7 +952,7 @@ class AssessmentItemSession extends State {
 	 * @return boolean
 	 */
 	public function isPresented() {
-	    return $this['numAttempts'] > 0;
+	    return $this['numAttempts']->getValue() > 0;
 	}
 	
 	/**
@@ -994,13 +997,13 @@ class AssessmentItemSession extends State {
 	 * @return boolean
 	 */
 	public function isAttemptable() {
-	    if ($this['completionStatus'] === self::COMPLETION_STATUS_COMPLETED) {
+	    if ($this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
 	        return false;
 	    }
-	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['completionStatus'] === self::COMPLETION_STATUS_INCOMPLETE) {
+	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_INCOMPLETE) {
 	        return false;
 	    }
-	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts'] >= $this->getItemSessionControl()->getMaxAttempts()) {
+	    else if ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $this->getItemSessionControl()->getMaxAttempts()) {
 	        return false;
 	    }
 	    else {
@@ -1014,7 +1017,7 @@ class AssessmentItemSession extends State {
 	 * @return boolean
 	 */
 	public function isAttempted() {
-	    return $this['numAttempts'] > 0;
+	    return $this['numAttempts']->getValue() > 0;
 	}
 	
 	/**

@@ -1,6 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Boolean;
 use qtism\runtime\expressions\operators\NotProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\datatypes\Point;
@@ -18,7 +20,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(true, false));
+		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new NotProcessor($expression, $operands);
 	}
@@ -33,7 +35,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(25));
+		$operands = new OperandsCollection(array(new Integer(25)));
 		$processor = new NotProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -49,19 +51,19 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testTrue() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(false));
+		$operands = new OperandsCollection(array(new Boolean(false)));
 		$processor = new NotProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertSame(true, $result);
+		$this->assertSame(true, $result->getValue());
 	}
 	
 	public function testFalse() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(true));
+		$operands = new OperandsCollection(array(new Boolean(true)));
 		$processor = new NotProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertSame(false, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertSame(false, $result->getValue());
 	}
 	
 	public function createFakeExpression() {

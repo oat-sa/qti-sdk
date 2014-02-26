@@ -1,6 +1,10 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
@@ -14,18 +18,18 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = 10.1;
-		$mult = new MultipleContainer(BaseType::FLOAT, array(1.1, 2.1, 3.1));
+		$operands[] = new Float(10.1);
+		$mult = new MultipleContainer(BaseType::FLOAT, array(new Float(1.1), new Float(2.1), new Float(3.1)));
 		$operands[] = $mult;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertEquals(false, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertEquals(false, $result->getValue());
 		
-		$mult[] = 10.1;
+		$mult[] = new Float(10.1);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertEquals(true, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertEquals(true, $result->getValue());
 	}
 	
 	public function testOrdered() {
@@ -36,13 +40,13 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = $ordered;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertEquals(false, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertEquals(false, $result->getValue());
 		
 		$ordered[] = new Pair('A', 'B');
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertEquals(true, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertEquals(true, $result->getValue());
 	}
 	
 	public function testNull() {
@@ -50,7 +54,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		
 		// second operand is null.
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$operands[] = new OrderedContainer(BaseType::INTEGER);
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
@@ -59,25 +63,23 @@ class MemberProcessorTest extends QtiSmTestCase {
 		// fist operand is null.
 		$operands->reset();
 		$operands[] = null;
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(10));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10)));
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 	}
 	
-	public function testCompliantBaseType() {
+	public function testDifferentBaseTypeOne() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = 'String1';
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array('String2', 'String1', null));
+	    $operands[] = new String('String1');
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('String2'), new Identifier('String1'), null));
 	    $processor = new MemberProcessor($expression, $operands);
 	    
-	    $this->assertTrue($processor->process());
-	    
-	    $operands[0] = 'String25';
-	    $this->assertFalse($processor->process());
+	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
+	    $processor->process();
 	}
 	
-	public function testDifferentBaseType() {
+	public function testDifferentBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Pair('A', 'B');

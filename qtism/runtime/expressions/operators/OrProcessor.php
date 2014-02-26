@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
 use \InvalidArgumentException;
@@ -37,10 +38,9 @@ use \InvalidArgumentException;
  * 
  * From IMS QTI:
  * 
- * The and operator takes one or more sub-expressions each with a base-type of boolean and single 
- * cardinality. The result is a single boolean which is true if all sub-expressions are true and
- * false if any of them are false. If one or more sub-expressions are NULL and all others are true
- * then the operator also results in NULL.
+ * The or operator takes one or more sub-expressions each with a base-type of boolean and single cardinality. 
+ * The result is a single boolean which is true if any of the sub-expressions are true and false if all of them are 
+ * false. If one or more sub-expressions are NULL and all the others are false then the operator also results in NULL.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -81,11 +81,11 @@ class OrProcessor extends OperatorProcessor {
 		}
 		
 		foreach ($operands as $operand) {
-			if ($operand === true) {
-				return true;
+			if ($operand->getValue() === true) {
+				return new Boolean(true);
 			}
 		}
 		
-		return false;
+		return new Boolean(false);
 	}
 }

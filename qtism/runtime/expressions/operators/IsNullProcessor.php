@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\IsNull;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -69,7 +70,7 @@ class IsNullProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		$expression = $this->getExpression();
 		
-		return $operands->containsNull();
+		return new Boolean($operands->containsNull());
 	}
 	
 }

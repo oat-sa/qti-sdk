@@ -1,6 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Float;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
@@ -15,22 +18,22 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testPrimitiveMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(1.0, 2.0, 3.0));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(2.0), new Float(3.0)));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertGreaterThanOrEqual(1.0, $result);
-		$this->assertLessThanOrEqual(3.0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertGreaterThanOrEqual(1.0, $result->getValue());
+		$this->assertLessThanOrEqual(3.0, $result->getValue());
 	}
 	
 	public function testPrimitiveOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array('s1', 's2', 's3'));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('s1'), new String('s2'), new String('s3')));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('string', $result);
-		$this->assertTrue($result === 's1' || $result === 's2' || $result === 's3');
+		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $result);
+		$this->assertTrue($result->equals(new String('s1')) || $result->equals(new String('s2')) || $result->equals(new String('s3')));
 	}
 	
 	public function testComplexMultiple() {
@@ -78,7 +81,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$processor = new RandomProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -87,7 +90,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new RecordContainer(array('A' => 1));
+		$operands[] = new RecordContainer(array('A' => new Integer(1)));
 		$processor = new RandomProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

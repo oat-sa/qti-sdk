@@ -24,6 +24,15 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
+use qtism\data\state\Value;
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Pair;
@@ -42,37 +51,19 @@ class Utils {
 	/**
 	 * Whether a given primitive $value is compliant with the QTI runtime model.
 	 *
-	 * Compliant primitive values are:
-	 *
-	 * * string (qti:string, qti:identifier)
-	 * * integer
-	 * * float
-	 * * double (qti:float)
-	 * * boolean
-	 * * Duration
-	 * * Point
-	 * * Pair
-	 * * DirectedPair
-	 * * NULL
-	 *
 	 * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
 	 * @return boolean
 	 */
 	public static function isRuntimeCompliant($value) {
-		$primitiveTypes = array('integer', 'float', 'double', 'string', 'boolean');
-	
-		if ($value === null || in_array(gettype($value), $primitiveTypes)) {
-			return true;
+		if ($value === null) {
+		    return true;
 		}
-		else if (gettype($value) == 'object') {
-			if ($value instanceof Duration ||
-					$value instanceof Pair ||
-					$value instanceof Point) {
-				return true;
-			}
+		else if ($value instanceof QtiDatatype) {
+		    return true;
 		}
-	
-		return false;
+		else {
+		    return false;
+		}
 	}
 	
 	/**
@@ -80,7 +71,6 @@ class Utils {
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
 	 * @param mixed $value A value.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 * @return boolean
 	 */
 	public static function isBaseTypeCompliant($baseType, $value) {
@@ -88,67 +78,24 @@ class Utils {
 		if ($value === null) {
 			return true; // A value can always be null.
 		}
-		
-		switch ($baseType) {
-		    case BaseType::IDENTIFIER:
-		        /*
-		         * Developer's note:
-		         * Using is_string instead of a full validation of the identifier
-		         * is a significant performance boost we definitely need.
-		         */
-		        return is_string($value);
-		    break;
-		    
-		    case BaseType::FLOAT:
-		        return is_double($value);
-		    break;
-		    
-		    case BaseType::INTEGER:
-		        return is_int($value);
-		    break;
-		    
-		    case BaseType::STRING:
-		        return is_string($value);
-		    break;
-		    
-		    case BaseType::DURATION:
-		        return $value instanceof Duration;
-		    break;
-		    
-			case BaseType::BOOLEAN:
-				return is_bool($value);
-			break;
-			
-			case BaseType::PAIR:
-			    return $value instanceof Pair;
-			break;
-					
-			case BaseType::DIRECTED_PAIR:
-				return $value instanceof DirectedPair;
-			break;
-			
-			case BaseType::INT_OR_IDENTIFIER:
-			    // We cannot afford a full validation for performance purpose.
-			    return is_string($value) || is_int($value);
-			break;
-			
-			case BaseType::POINT:
-			    return $value instanceof Point;
-		    break;
-					
-		    case BaseType::URI:
-		        return Format::isUri($value);
-		    break;
-		    
-			case BaseType::FILE:
-				return Format::isFile($value);
-			break;
-			
-			default:
-				$msg = "Unknown baseType '" . $baseType . "'.";
-				throw new InvalidArgumentException($msg);
-			break;
+		else if ($value instanceof QtiDatatype && $baseType === $value->getBaseType()) {
+		    return true;
 		}
+		else {
+		    return false;
+		}
+	}
+	
+	public static function isCardinalityCompliant($cardinality, $value) {
+	    if ($value === null) {
+	        return true;
+	    }
+	    else if ($value instanceof QtiDatatype && $cardinality === $value->getCardinality()) {
+	        return true;
+	    }
+	    else {
+	        return false;
+	    }
 	}
 	
 	/**
@@ -187,42 +134,17 @@ class Utils {
 	 * @return integer|false A value from the BaseType enumeration or false if the baseType could not be infered.
 	 */
 	public static function inferBaseType($value) {
-		if (is_scalar($value)) {
-			switch (gettype($value)) {
-				case 'boolean':
-					return BaseType::BOOLEAN;
-				break;
-			
-				case 'integer':
-					return BaseType::INTEGER;
-				break;
-			
-				case 'double':
-					return BaseType::FLOAT;
-				break;
-			
-				case 'string':
-					return BaseType::STRING;
-				break;
-			}
+		if ($value === null) {
+		    return false;
 		}
-		else if ($value instanceof MultipleContainer || $value instanceof OrderedContainer) {
-			return $value->getBaseType();
+		else if ($value instanceof RecordContainer) {
+		    return false;
 		}
-		else if ($value instanceof Point) {
-			return BaseType::POINT;
-		}
-		else if ($value instanceof DirectedPair) {
-			return BaseType::DIRECTED_PAIR;
-		}
-		else if ($value instanceof Pair) {
-			return BaseType::PAIR;
-		}
-		else if ($value instanceof Duration) {
-			return BaseType::DURATION;
+		else if ($value instanceof QtiDatatype) {
+		    return $value->getBaseType();
 		}
 		else {
-			return false;
+		    return false;
 		}
 	}
 	
@@ -238,17 +160,14 @@ class Utils {
 	 * @return integer|boolean A value from the Cardinality enumeration or false if it could not be infered.
 	 */
 	public static function inferCardinality($value) {
-		if (is_scalar($value)) {
-			return Cardinality::SINGLE;
+		if ($value === null) {
+		    return false;
 		}
-		else if ($value instanceof Point || $value instanceof Pair || $value instanceof Duration) {
-			return Cardinality::SINGLE;
-		}
-		else if ($value instanceof Container) {
-			return $value->getCardinality();
+		else if ($value instanceof QtiDatatype) {
+		    return $value->getCardinality();
 		}
 		else {
-			return false;
+		    return false;
 		}
 	}
 	
@@ -411,5 +330,37 @@ class Utils {
 	        $floatArray[] = (is_null($i) === false) ? floatval($i) : null;
 	    }
 	    return $floatArray;
+	}
+	
+	public static function valueToRuntime(Value $value) {
+	    $v = $value->getValue();
+	    
+	    if (is_int($v) === true && ($value->getBaseType() === -1 || $value->getBaseType() === BaseType::INTEGER)) {
+	        return new Integer($v);
+	    }
+	    else if (is_int($v) === true && $value->getBaseType() === BaseType::INT_OR_IDENTIFIER) {
+	        return new IntOrIdentifier($v);
+	    }
+	    else if (is_float($v) === true) {
+	        return new Float($v);
+	    }
+	    else if (is_bool($v) === true) {
+	        return new Boolean($v);
+	    }
+	    else if (is_string($v) === true && ($value->getBaseType() === -1 || $value->getBaseType() === BaseType::STRING)) {
+	        return new String($v);
+	    }
+	    else if (is_string($v) === true && $value->getBaseType() === BaseType::URI) {
+	        return new Uri($v);
+	    }
+	    else if (is_string($v) === true && $value->getBaseType() === BaseType::INT_OR_IDENTIFIER) {
+	        return new IntOrIdentifier($v);
+	    }
+	    else if (is_string($v) === true && $value->getBaseType() === BaseType::IDENTIFIER) {
+	        return new Identifier($v);
+	    }
+	    else {
+	        return $v;
+	    }
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
+use qtism\common\datatypes\Float;
 use qtism\runtime\common\MultipleContainer;
-
 use qtism\common\enums\BaseType;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\OutcomeMaximum;
@@ -39,13 +39,13 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase {
 	    return array(
 	        array(self::getOutcomeMaximum('SCORE'), null), // NULL values involved, the expression returns NULL systematically.
 	        array(self::getOutcomeMaximum('SCOREX'), null), // No variable at all matches.
-	        array(self::getOutcomeMaximum('SCORE', '', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(2.5, 1.5))),
-	        array(self::getOutcomeMaximum('SCORE', 'W0X', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(2.5, 1.5))), // Weight not found then not applied.
-	        array(self::getOutcomeMaximum('SCORE', 'W01', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(5.0, 3.0))),
-	        array(self::getOutcomeMaximum('SCORE', '', 'S01', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(2.5))),
-	        array(self::getOutcomeMaximum('SCORE', '', 'S02', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(1.5))),
-	        array(self::getOutcomeMaximum('SCORE', 'W01', 'S01', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(5.0))),
-	        array(self::getOutcomeMaximum('SCORE', 'W01', 'S02', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(3.0)))
+	        array(self::getOutcomeMaximum('SCORE', '', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(2.5), new Float(1.5)))),
+	        array(self::getOutcomeMaximum('SCORE', 'W0X', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(2.5), new Float(1.5)))), // Weight not found then not applied.
+	        array(self::getOutcomeMaximum('SCORE', 'W01', '', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(5.0), new Float(3.0)))),
+	        array(self::getOutcomeMaximum('SCORE', '', 'S01', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(2.5)))),
+	        array(self::getOutcomeMaximum('SCORE', '', 'S02', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(1.5)))),
+	        array(self::getOutcomeMaximum('SCORE', 'W01', 'S01', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(5.0)))),
+	        array(self::getOutcomeMaximum('SCORE', 'W01', 'S02', new IdentifierCollection(array('maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(3.0))))
 	    );
 	}
 	

@@ -12,24 +12,24 @@ class RandomIntegerProcessorTest extends QtiSmTestCase {
 		$randomIntegerProcessor = new RandomIntegerProcessor($randomIntegerExpr);
 		
 		$result = $randomIntegerProcessor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertGreaterThanOrEqual(0, $result);
-		$this->assertLessThanOrEqual(100, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertGreaterThanOrEqual(0, $result->getValue());
+		$this->assertLessThanOrEqual(100, $result->getValue());
 		
 		$randomIntegerExpr = $this->createComponentFromXml('<randomInteger min="-100" max="100"/>');
 		$randomIntegerProcessor->setExpression($randomIntegerExpr);
 		$result = $randomIntegerProcessor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertGreaterThanOrEqual(-100, $result);
-		$this->assertLessThanOrEqual(100, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertGreaterThanOrEqual(-100, $result->getValue());
+		$this->assertLessThanOrEqual(100, $result->getValue());
 		
 		$randomIntegerExpr = $this->createComponentFromXml('<randomInteger min="-20" max="23" step="4"/>');
 		$randomIntegerProcessor->setExpression($randomIntegerExpr);
 		$result = $randomIntegerProcessor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertGreaterThanOrEqual(-20, $result);
-		$this->assertLessThanOrEqual(23, $result);
-		$this->assertEquals(0, $result % 4);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertGreaterThanOrEqual(-20, $result->getValue());
+		$this->assertLessThanOrEqual(23, $result->getValue());
+		$this->assertEquals(0, $result->getValue() % 4);
 	}
 	
 	public function testMinLessThanMax() {

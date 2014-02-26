@@ -24,6 +24,9 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
+
 /**
  * From IMS QTI:
  * 
@@ -34,7 +37,7 @@ namespace qtism\common\datatypes;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DirectedPair extends Pair implements QtiDatatype {
+class DirectedPair extends Pair {
 	
 	
 	public function equals($obj) {
@@ -43,5 +46,13 @@ class DirectedPair extends Pair implements QtiDatatype {
 		}
 		
 		return false;
+	}
+	
+	public function getBaseType() {
+	    return BaseType::DIRECTED_PAIR;
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::SINGLE;
 	}
 }

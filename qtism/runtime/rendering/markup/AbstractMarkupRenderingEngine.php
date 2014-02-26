@@ -729,7 +729,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         $this->setXmlBaseStack(new SplStack());
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
         $this->setStylesheets($this->getDocument()->createDocumentFragment());
-        $this->setShuffle(false);
     }
     
     /**
@@ -841,8 +840,9 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '==' : '!=';
         $variable = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']"; 
         $identifier = $component->getIdentifier();
+        $identifierType = 'qtism\\common\\datatypes\\Identifier';
         
-        $ifStmt = " qtism-if (${variable} ${operator} '${identifier}'): ";
+        $ifStmt = " qtism-if (${variable} !== null && ${variable} instanceof ${identifierType} && ${variable}->getValue() ${operator} '${identifier}'): ";
         $endifStmt = " qtism-endif ";
         
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);

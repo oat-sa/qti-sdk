@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Float;
 use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
@@ -96,21 +99,20 @@ class MapResponseProcessor extends ExpressionProcessor {
 							$val = $state[$identifier];
 							$mapKey = $mapEntry->getMapKey();
 							
-							if (gettype($val) === 'string' && $mapEntry->isCaseSensitive() === false) {
-								$val = mb_strtolower($val, 'UTF-8');
+							if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
+								$val = mb_strtolower($val->getValue(), 'UTF-8');
 								$mapKey = mb_strtolower($mapKey, 'UTF-8');
 							}
 							
-							if ($val === $mapKey || ($mapKey instanceof Comparable && $mapKey->equals($val))) {
-								
+							if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
 								// relevant mapping found.
 								$mappedValue = $mapEntry->getMappedValue();
-								return $mappedValue;
+								return new Float($mappedValue);
 							}
 						}
 						
 						// No relevant mapping found, return mapping default.
-						return $mapping->getDefaultValue();
+						return new Float($mapping->getDefaultValue());
 					}
 					else if ($variable->isMultiple()) {
 						
@@ -126,8 +128,8 @@ class MapResponseProcessor extends ExpressionProcessor {
 						            
 						            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
 						            
-						            if (gettype($val) === 'string' && $mapEntries[$i]->isCaseSensitive() === false) {
-						                $val = mb_strtolower($val, 'UTF-8');
+						            if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
+						                $val = mb_strtolower($val->getValue(), 'UTF-8');
 						                $mapKey = mb_strtolower($mapKey, 'UTF-8');
 						            }
 						            
@@ -152,18 +154,18 @@ class MapResponseProcessor extends ExpressionProcessor {
 						    
 						    // When mapping a container, try to apply lower or upper bound.
 						    if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-						        return $mapping->getLowerBound();
+						        return new Float($mapping->getLowerBound());
 						    }
 						    else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-						        return $mapping->getUpperBound();
+						        return new Float($mapping->getUpperBound());
 						    }
 						    else {
-						        return $result;
+						        return new Float($result);
 						    }
 						}
 						else {
 						    // Returns a 0.0 result.
-						    return $result;
+						    return new Float($result);
 						}
 						
 						

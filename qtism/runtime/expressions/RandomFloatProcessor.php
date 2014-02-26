@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomFloat;
 use \InvalidArgumentException;
@@ -65,13 +66,13 @@ class RandomFloatProcessor extends ExpressionProcessor {
 		
 		$state = $this->getState();
 		
-		$min = (is_float($min)) ? $min : $state[Utils::sanitizeVariableRef($min)];
-		$max = (is_float($max)) ? $max : $state[Utils::sanitizeVariableRef($max)];
+		$min = (is_float($min)) ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
+		$max = (is_float($max)) ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
 
 		if (is_float($min) && is_float($max)) {
 			
 			if ($min <= $max) {
-				return ($min + lcg_value() * (abs($max - $min)));
+				return new Float(($min + lcg_value() * (abs($max - $min))));
 			}
 			else {
 				$msg = "'min':'${min}' is greater than 'max':'${max}'.";

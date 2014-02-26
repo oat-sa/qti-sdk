@@ -1,5 +1,7 @@
 <?php
 
+use qtism\common\datatypes\Identifier;
+
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -56,34 +58,34 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         // Q01 - We answer correct to bypass Q02.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         
         // Correct? Then we should go to Q03.
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         $testSession->moveNext();
         
         // Q03 - Are we there? We answer incorrect to take Q04.
         $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceZ')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceZ'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // Q04 - Last item, nothing special.
         $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // Test the global scope.
         $this->assertFalse($testSession->isRunning());
         
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
-        $this->assertEquals(0.0, $testSession['Q03.SCORE']);
-        $this->assertEquals(1.0, $testSession['Q04.SCORE']);
+        $this->assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
+        $this->assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
     
     public function testBranchingSingleSectionLinear2() {
@@ -96,22 +98,22 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         // Q01 - We answer correct to move to Q03.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // Q03 - We want to reach the EXIT_TEST target.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceC')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // We should have reached the end.
         $this->assertFalse($testSession->isRunning());
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::CLOSED);
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']);
+        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
-        $this->assertEquals(1.0, $testSession['Q03.SCORE']);
+        $this->assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
     }
     
@@ -129,7 +131,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA')));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
@@ -166,9 +168,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
     
     public function branchingMultipleOccurencesProvider() {
         return array(
-            array('goto21', 'Q02', 0),
-            array('goto22', 'Q02', 1),
-            array('goto23', 'Q02', 2),
+            array(new Identifier('goto21'), 'Q02', 0),
+            array(new Identifier('goto22'), 'Q02', 1),
+            array(new Identifier('goto23'), 'Q02', 2),
             array(null, 'Q02', 3)              
         );
     }

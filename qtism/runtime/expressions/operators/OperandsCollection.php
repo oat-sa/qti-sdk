@@ -24,6 +24,12 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
+
+use qtism\common\datatypes\String;
+
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\common\collections\Stack;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
@@ -80,7 +86,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if ($v instanceof Container && $v->isNull()) {
 				return true;
 			}
-			else if ((gettype($v) === 'string' && empty($v)) || is_null($v)) {
+			else if (($v instanceof String && $v->getValue() === '') || is_null($v)) {
 				return true;
 			}
 		}
@@ -111,7 +117,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
 				return false;
 			}
-			else if (!is_int($v) && !is_float($v) && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof Integer && !$v instanceof Float && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}
@@ -140,7 +146,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::BOOLEAN)) {
 				return false;
 			}
-			else if (!is_bool($v) && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof Boolean && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}
@@ -192,7 +198,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
 				return false;
 			}
-			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (gettype($v) !== 'string' || empty($v))) {
+			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!$v instanceof String || $v->getValue() === '')) {
 				return false;
 			}
 		}
@@ -241,7 +247,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::INTEGER)) {
 				return false;
 			}
-			else if (!is_int($v) && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof Integer && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}
@@ -389,33 +395,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 				$value = $this[$i];
 				$testType = RuntimeUtils::inferBaseType($value);
 				
-				/**
-				 * Developper's note:
-				 * 
-				 * Some baseType are considered compatible. Indeed, while identifier,
-				 * string, and uri datatypes cannot be identified separately due to their
-				 * PHP runtime representation (PHP Strings), we consider them similar.
-				 * 
-				 */
-			    if ($testType === BaseType::IDENTIFIER && $refType === BaseType::STRING) {
-				    return true;
-				}
-				else if ($testType === BaseType::STRING && $refType === BaseType::IDENTIFIER) {
-				    return true;
-				}
-				else if ($testType === BaseType::URI && $refType === BaseType::STRING) {
-				    return true;
-				}
-				else if ($testType === BaseType::STRING && $refType === BaseType::URI) {
-				    return true;
-				}
-				else if ($testType === BaseType::URI && $refType === BaseType::IDENTIFIER) {
-				    return true;
-				}
-				else if ($testType === BaseType::IDENTIFIER && $refType === BaseType::URI) {
-				    return true;
-				}
-				else if ($testType !== $refType) {
+				if ($testType !== $refType) {
 				    return false;
 				}
 			}

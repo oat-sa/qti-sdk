@@ -1,6 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Identifier;
 use qtism\runtime\common\ResponseVariable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -46,7 +48,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 			</responseDeclaration>
 		');
 		$responseVar = ResponseVariable::createFromDataModel($responseVarDeclaration);
-		$this->assertEquals('ChoiceA', $responseVar->getCorrectResponse());
+		$this->assertTrue($responseVar->getCorrectResponse()->equals(new Identifier('ChoiceA')));
 		
 		// Set 'ChoiceA' to 'RESPONSE' in order to get a score of 1.0.
 		$responseVar->setValue($response);
@@ -59,23 +61,23 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 			</outcomeDeclaration>		
 		');
 		$outcomeVar = OutcomeVariable::createFromDataModel($outcomeVarDeclaration);
-		$this->assertEquals(0, $outcomeVar->getDefaultValue());
+		$this->assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
 		
 		$state = new State(array($responseVar, $outcomeVar));
 		$processor = new ResponseConditionProcessor($rule);
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertInternalType('float', $state['SCORE']);
-		$this->assertEquals($expectedScore, $state['SCORE']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $state['SCORE']);
+		$this->assertTrue($expectedScore->equals($state['SCORE']));
 	}
 	
 	public function responseConditionMatchCorrectProvider() {
 		return array(
-			array('ChoiceA', 1.0),
-			array('ChoiceB', 0.0),
-			array('ChoiceC', 0.0),
-			array('ChoiceD', 0.0)
+			array(new Identifier('ChoiceA'), new Float(1.0)),
+			array(new Identifier('ChoiceB'), new Float(0.0)),
+			array(new Identifier('ChoiceC'), new Float(0.0)),
+			array(new Identifier('ChoiceD'), new Float(0.0))
 		);
 	}
 }

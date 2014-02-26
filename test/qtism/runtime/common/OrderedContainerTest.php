@@ -1,5 +1,9 @@
 <?php
 
+use qtism\common\datatypes\Uri;
+
+use qtism\common\datatypes\Integer;
+
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\enums\Cardinality;
@@ -38,16 +42,16 @@ class OrderedContainerTest extends QtiSmTestCase {
 	public function equalsValidProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER), new OrderedContainer(BaseType::INTEGER)),
-			array(new OrderedContainer(BaseType::INTEGER, array(20)), new OrderedContainer(BaseType::INTEGER, array(20))),
-			array(new OrderedContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.tao.lu')), new OrderedContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.tao.lu'))),
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(20)))),
+			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu')))),
 			array(new OrderedContainer(BaseType::PAIR, array(new Pair('abc', 'def'))), new OrderedContainer(BaseType::PAIR, array(new Pair('def', 'abc'))))
 		);
 	}
 	
 	public function equalsInvalidProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(20)), new OrderedContainer(BaseType::INTEGER, array(30))),
-			array(new OrderedContainer(BaseType::URI, array('http://www.taotesting.com', 'http://www.tao.lu')), new OrderedContainer(BaseType::URI, array('http://www.tao.lu', 'http://www.taotesting.com'))),
+			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(30)))),
+			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.tao.lu'), new Uri('http://www.taotesting.com')))),
 			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('def', 'abc')))),
 		);
 	}

@@ -29,7 +29,7 @@ class ExpressionEngineTest extends QtiSmTestCase {
 		
 		$engine = new ExpressionEngine($expression);
 		$result = $engine->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(60.0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(60.0, $result->getValue());
 	}
 }

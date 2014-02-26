@@ -24,6 +24,14 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\datatypes\Scalar;
+
+use qtism\common\datatypes\Identifier;
+
+use qtism\common\datatypes\Integer;
+
+use qtism\data\state\Value;
+
 use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
@@ -108,14 +116,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->setValue(call_user_func(array($this, $toCall)));
+                    $variable->setValue(Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType)));
                 }
                 else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
-                        $values[] = ($isNull === true) ? null : call_user_func(array($this, $toCall));
+                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType));
                     }
                     
                     $variable->setValue($values);
@@ -173,7 +181,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     $this->writeBoolean(true);
             
                     // content
-                    $this->$toCall($value);
+                    $this->$toCall(($value instanceof Scalar) ? $value->getValue() : $value);
                 }
                 else {
                     // is-scalar
@@ -186,7 +194,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     foreach ($value as $v) {
                         if (is_null($v) === false) {
                             $this->writeBoolean(false);
-                            $this->$toCall($v);
+                            $this->$toCall(($v instanceof Scalar) ? $v->getValue() : $v);
                         }
                         else {
                             $this->writeBoolean(true);
@@ -216,7 +224,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $baseType = $this->readTinyInt();
                 
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
-                $value = call_user_func(array($this, $toCall));
+                $value = Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType));
             }
             else {
                 $value = null;
@@ -249,7 +257,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
                 
-                call_user_func(array($this, $toCall), $value);
+                call_user_func(array($this, $toCall), ($value instanceof Scalar) ? $value->getValue() : $value);
             }
         }
         catch (BinaryStreamAccessException $e) {
@@ -555,11 +563,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             }
             
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
-                $session['numAttempts'] = $this->readTinyInt();
+                $session['numAttempts'] = new Integer($this->readTinyInt());
                 $session['duration'] = $this->readDuration();
-                $session['completionStatus'] = $this->readString();
+                $session['completionStatus'] = new Identifier($this->readString());
                 
-                if ($session['numAttempts'] > 0) {
+                if ($session['numAttempts']->getValue() > 0) {
                     $session->setTimeReference($this->readDateTime());
                 }
             }
@@ -623,11 +631,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             }
             
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
-                $this->writeTinyInt($session['numAttempts']);
+                $this->writeTinyInt($session['numAttempts']->getValue());
                 $this->writeDuration($session['duration']);
-                $this->writeString($session['completionStatus']);
+                $this->writeString($session['completionStatus']->getValue());
                 
-                if ($session['numAttempts'] > 0) {
+                if ($session['numAttempts']->getValue() > 0) {
                     $this->writeDateTime($session->getTimeReference());
                 }
             }

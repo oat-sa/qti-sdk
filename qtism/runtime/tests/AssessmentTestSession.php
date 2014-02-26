@@ -528,7 +528,7 @@ class AssessmentTestSession extends State {
 				        // As per QTI 2.1 specs, The value of an item variable taken from an item instantiated multiple times from the 
 				        // same assessmentItemRef (through the use of selection withReplacement) is taken from the last instance submitted
 				        // if submission is simultaneous, otherwise it is undefined.
-				        if ($sequence === false || $this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+				        if ($sequence === false || $this->getCurrentSubmissionMode() === SubmissionMode::INDIVIDUAL) {
 				            return null;
 				        }
 				    }
@@ -1426,7 +1426,8 @@ class AssessmentTestSession extends State {
 	            $branchRules = $route->current()->getBranchRules();
 	            for ($i = 0; $i < count($branchRules); $i++) {
 	                $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
-	                if ($engine->process() === true) {
+	                $condition = $engine->process();
+	                if ($condition !== null && $condition->getValue() === true) {
 	                    
 	                    $target = $branchRules[$i]->getTarget();
 	                    
@@ -1459,8 +1460,9 @@ class AssessmentTestSession extends State {
 	            
 	            for ($i = 0; $i < count($preConditions); $i++) {
 	                $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+	                $condition = $engine->process();
 	                
-	                if ($engine->process() === true) {
+	                if ($condition !== null && $condition->getValue() === true) {
 	                    // The item must be presented.
 	                    $stop = true;
 	                    break;

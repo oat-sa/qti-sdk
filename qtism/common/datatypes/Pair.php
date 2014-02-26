@@ -24,6 +24,8 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use qtism\common\Comparable;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
@@ -139,5 +141,13 @@ class Pair implements Comparable, QtiDatatype {
 		}
 		
 		return false;
+	}
+	
+	public function getBaseType() {
+	    return BaseType::PAIR;
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::SINGLE;
 	}
 }

@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Power;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -81,7 +82,7 @@ class PowerProcessor extends OperatorProcessor {
 		
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
-		$raised = pow($operand1, $operand2);
+		$raised = pow($operand1->getValue(), $operand2->getValue());
 		
 		if (is_nan($raised)) {
 			return null;
@@ -89,13 +90,13 @@ class PowerProcessor extends OperatorProcessor {
 		
 		// If the first operand was not 0 but the result is 0, it means
 		// we are subject to a lower overflow.
-		if ($operand1 != 0 && $raised == 0) {
+		if ($operand1->getValue() != 0 && $raised == 0) {
 			return null;
 		}
 		
 		// If the first and the second operands are not infinite but the result is infinite
 		// it means we are subject to an upper overflow.
-		if (!is_infinite($operand1) && !is_infinite($operand2) && is_infinite($raised)) {
+		if (!is_infinite($operand1->getValue()) && !is_infinite($operand2->getValue()) && is_infinite($raised)) {
 			return null;
 		}
 		
@@ -112,7 +113,7 @@ class PowerProcessor extends OperatorProcessor {
 			return null;
 		}
 		else {
-			return $floatval;
+			return new Float($floatval);
 		}
 	}
 }

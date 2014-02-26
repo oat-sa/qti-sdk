@@ -52,8 +52,8 @@ class CorrectProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		
 		$result = $processor->process();
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(20, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(20, $result->getValue());
 	}
 	
 	public function testNull() {

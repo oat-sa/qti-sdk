@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\Subtract;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -80,6 +82,7 @@ class SubtractProcessor extends OperatorProcessor {
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
 		
-	 	return $operand1 - $operand2;
+	 	$subtract = $operand1->getValue() - $operand2->getValue();
+	 	return (is_int($subtract) === true) ? new Integer($subtract) : new Float($subtract);
 	}
 }

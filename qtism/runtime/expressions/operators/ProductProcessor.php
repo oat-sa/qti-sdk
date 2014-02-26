@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\operators\Product;
@@ -86,16 +89,16 @@ class ProductProcessor extends OperatorProcessor {
 		$returnValue = 1;
 		
 		foreach ($this->getOperands() as $operand) {
-			if (gettype($operand) !== 'object') {
-				$returnValue *= $operand;
+			if ($operand instanceof Scalar) {
+				$returnValue *= $operand->getValue();
 			}
 			else {
 				foreach ($operand as $val) {
-					$returnValue *= $val;
+					$returnValue *= $val->getValue();
 				}
 			}
 		}
 		
-		return $returnValue;
+		return (is_int($returnValue)) ? new Integer($returnValue) : new Float($returnValue);
 	}
 }

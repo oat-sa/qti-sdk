@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\IntegerDivide;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -79,11 +80,11 @@ class IntegerDivideProcessor extends OperatorProcessor {
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
 		
-		if ($operand2 == 0) {
+		if ($operand2->getValue() == 0) {
 			// division by zero forbidden.
 			return null;
 		}
 		
-		return intval(floor($operand1 / $operand2));
+		return new Integer(intval(floor($operand1->getValue() / $operand2->getValue())));
 	}
 }

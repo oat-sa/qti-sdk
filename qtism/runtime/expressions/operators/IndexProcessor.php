@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils as ProcessingUtils;
@@ -80,8 +81,8 @@ class IndexProcessor extends OperatorProcessor {
 			// The value of $n comes from the state.
 			$state = $this->getState();
 			if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
-				if (gettype($index) === 'integer') {
-					$n = $index;
+				if ($index instanceof Integer) {
+					$n = $index->getValue();
 				}
 				else {
 					$msg = "The value '${index}' is not an integer. Ordered containers can be only accessed by integers.";

@@ -24,6 +24,8 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use qtism\common\Comparable;
 use \DateInterval;
 use \DateTimeZone;
@@ -364,5 +366,13 @@ class Duration implements Comparable, QtiDatatype {
 	
 	public function isNegative() {
 	    return $this->interval === 1;
+	}
+	
+	public function getBaseType() {
+	    return BaseType::DURATION;
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::SINGLE;
 	}
 }

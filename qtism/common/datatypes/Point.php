@@ -24,6 +24,8 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 use qtism\common\Comparable;
 
@@ -131,5 +133,13 @@ class Point implements Comparable, QtiDatatype {
 	
 	public function __toString() {
 		return $this->getX() . ' ' . $this->getY();
+	}
+	
+	public function getBaseType() {
+	    return BaseType::POINT;
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::SINGLE;
 	}
 }

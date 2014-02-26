@@ -24,7 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\runtime\common\Container;
+use qtism\common\datatypes\Boolean;
+use qtism\common\Comparable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Match;
 use \InvalidArgumentException;
@@ -91,12 +92,12 @@ class MatchProcessor extends OperatorProcessor {
 		$firstOperand = $operands[0];
 		$secondOperand = $operands[1];
 		
-		if ($operands[0] instanceof Container) {
+		if ($operands[0] instanceof Comparable) {
 			// 2 containers to compare.
-			return $operands[0]->equals($operands[1]);
+			return new Boolean($operands[0]->equals($operands[1]));
 		}
 		else {
-			return $operands[0] === $operands[1];
+			return new Boolean($operands[0] === $operands[1]);
 		}
 	}
 }

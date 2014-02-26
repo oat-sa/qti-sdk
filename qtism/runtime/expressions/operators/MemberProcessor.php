@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Utils as CommonUtils;
 use qtism\data\expressions\operators\Member;
@@ -92,6 +93,6 @@ class MemberProcessor extends OperatorProcessor {
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
-		return $operand2->contains($operand1);
+		return new Boolean($operand2->contains($operand1));
 	}
 }

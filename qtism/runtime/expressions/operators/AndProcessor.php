@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AndOperator;
 use \InvalidArgumentException;
@@ -81,11 +82,11 @@ class AndProcessor extends OperatorProcessor {
 		}
 		
 		foreach ($operands as $operand) {
-			if ($operand === false) {
-				return false;
+			if ($operand->getValue() === false) {
+				return new Boolean(false);
 			}
 		}
 		
-		return true;
+		return new Boolean(true);
 	}
 }

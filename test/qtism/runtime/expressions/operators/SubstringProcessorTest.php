@@ -1,11 +1,10 @@
 <?php
-
-use qtism\common\enums\BaseType;
-
-use qtism\runtime\common\MultipleContainer;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\String;
+use qtism\common\enums\BaseType;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\SubstringProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -14,80 +13,80 @@ class SubstringProcessorTest extends QtiSmTestCase {
 	public function testCaseSensitive() {
 		$expression = $this->createFakeExpression(true);
 		$operands = new OperandsCollection();
-		$operands[] = 'hell';
-		$operands[] = 'Shell';
+		$operands[] = new String('hell');
+		$operands[] = new String('Shell');
 		$processor = new SubstringProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = 'Hell';
-		$operands[] = 'Shell';
+		$operands[] = new String('Hell');
+		$operands[] = new String('Shell');
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testCaseInsensitive() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection();
-		$operands[] = 'hell';
-		$operands[] = 'Shell';
+		$operands[] = new String('hell');
+		$operands[] = new String('Shell');
 		$processor = new SubstringProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = 'Hell';
-		$operands[] = 'Shell';
+		$operands[] = new String('Hell');
+		$operands[] = new String('Shell');
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = 'Hello world!';
-		$operands[] = 'Bye world!';
+		$operands[] = new String('Hello world!');
+		$operands[] = new String('Bye world!');
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 		
 		$operands->reset();
-		$operands[] = 'Hello World!';
-		$operands[] = 'hello world!';
+		$operands[] = new String('Hello World!');
+		$operands[] = new String('hello world!');
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		// Unicode ? x)
 		$operands->reset();
-		$operands[] = '界您';
-		$operands[] = '世界您好！'; // Hello World!
+		$operands[] = new String('界您');
+		$operands[] = new String('世界您好！'); // Hello World!
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = '假'; // 'Fake' in traditional chinese
-		$operands[] = '世界您好！'; // Hello World!
+		$operands[] = new String('假'); // 'Fake' in traditional chinese
+		$operands[] = new String('世界您好！'); // Hello World!
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testNull() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection();
-		$operands[] = 'test';
+		$operands[] = new String('test');
 		$operands[] = null;
 		$processor = new SubstringProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 		
 		$operands->reset();
-		$operands[] = ''; // in QTI, empty string considered to be NULL.
-		$operands[] = 'blah!';
+		$operands[] = new String(''); // in QTI, empty string considered to be NULL.
+		$operands[] = new String('blah!');
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 	}
@@ -95,8 +94,8 @@ class SubstringProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection();
-		$operands[] = '10';
-		$operands[] = 100;
+		$operands[] = new String('10');
+		$operands[] = new Integer(100);
 		$processor = new SubstringProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -105,8 +104,8 @@ class SubstringProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection();
-		$operands[] = 'Wrong Cardinality';
-		$operands[] = new MultipleContainer(BaseType::STRING, array('Wrong', 'Cardinality'));
+		$operands[] = new String('Wrong Cardinality');
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('Wrong'), new String('Cardinality')));
 		$processor = new SubstringProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -114,14 +113,14 @@ class SubstringProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression(false);
-		$operands = new OperandsCollection(array('only 1 operand'));
+		$operands = new OperandsCollection(array(new String('only 1 operand')));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubstringProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(false);
-		$operands = new OperandsCollection(array('exactly', 'three', 'operands'));
+		$operands = new OperandsCollection(array(new String('exactly'), new String('three'), new String('operands')));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubstringProcessor($expression, $operands);
 	}

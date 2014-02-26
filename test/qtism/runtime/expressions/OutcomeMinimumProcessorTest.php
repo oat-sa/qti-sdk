@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\Float;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\collections\IdentifierCollection;
@@ -36,12 +37,12 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase {
 	
 	public function outcomeMinimumProvider() {
 	    return array(
-	        array(self::getOutcomeMinimum('SCORE'), new MultipleContainer(BaseType::FLOAT, array(-2.0, 0.5, 1.0, 1.0, 1.0, 1.0))),
-	        array(self::getOutcomeMinimum('SCORE', '', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(-2.0, 0.5, 1.0, 1.0, 1.0, 1.0))),
-	        array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(-4.0, 1.0, 2.0, 2.0, 2.0, 2.0))),
-	        array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum', 'maximum'))), new MultipleContainer(BaseType::FLOAT, array(-4.0, 1.0, 2.0, 2.0, 2.0, 2.0))),
-	        array(self::getOutcomeMinimum('SCORE', 'W01'), new MultipleContainer(BaseType::FLOAT, array(-4.0, 1.0, 2.0, 2.0, 2.0, 2.0))),
-	        array(self::getOutcomeMinimum('SCORE', 'W02', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(-2.0, 0.5, 1.0, 1.0, 1.0, 1.0))), // Weight not found
+	        array(self::getOutcomeMinimum('SCORE'), new MultipleContainer(BaseType::FLOAT, array(new Float(-2.0), new Float(0.5), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0)))),
+	        array(self::getOutcomeMinimum('SCORE', '', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(-2.0), new Float(0.5), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0)))),
+	        array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(-4.0), new Float(1.0), new Float(2.0), new Float(2.0), new Float(2.0), new Float(2.0)))),
+	        array(self::getOutcomeMinimum('SCORE', 'W01', '', new IdentifierCollection(array('minimum', 'maximum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(-4.0), new Float(1.0), new Float(2.0), new Float(2.0), new Float(2.0), new Float(2.0)))),
+	        array(self::getOutcomeMinimum('SCORE', 'W01'), new MultipleContainer(BaseType::FLOAT, array(new Float(-4.0), new Float(1.0), new Float(2.0), new Float(2.0), new Float(2.0), new Float(2.0)))),
+	        array(self::getOutcomeMinimum('SCORE', 'W02', '', new IdentifierCollection(array('minimum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(-2.0), new Float(0.5), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0)))), // Weight not found
 	    );
 	}
 	

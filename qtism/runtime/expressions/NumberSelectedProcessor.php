@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Integer;
+
 use qtism\data\expressions\NumberSelected;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -75,6 +77,6 @@ class NumberSelectedProcessor extends ItemSubsetProcessor {
 	        }
 	    }
 	    
-	    return $numberSelected;
+	    return new Integer($numberSelected);
 	}
 }

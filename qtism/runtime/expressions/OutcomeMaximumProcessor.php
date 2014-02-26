@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Float;
+
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -98,11 +100,11 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
                         
                         if ($weight === false) {
                             // No weight to be applied.
-                            $result[] = $normalMaximum;
+                            $result[] = new Float($normalMaximum);
                         }
                         else {
                             // A weight has to be applied.
-                            $result[] = floatval($normalMaximum *= $weight->getValue());
+                            $result[] = new Float(floatval($normalMaximum *= $weight->getValue()));
                         }
                     }
                     else {

@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\operators\RoundTo;
@@ -108,12 +110,12 @@ class EqualRoundedProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (is_int($varValue) === false) {
+			else if (!$varValue instanceof Integer) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
 			
-			$figures = $varValue;
+			$figures = $varValue->getValue();
 		}
 		
 		$rounded = new OperandsCollection(); // will contain the rounded operands.
@@ -133,6 +135,6 @@ class EqualRoundedProcessor extends OperatorProcessor {
 			}
 		}
 		
-		return $rounded[0] == $rounded[1];
+		return new Boolean($rounded[0]->getValue() == $rounded[1]->getValue());
 	}
 }

@@ -1,5 +1,11 @@
 <?php
 
+use qtism\common\datatypes\Boolean;
+
+use qtism\common\datatypes\Float;
+
+use qtism\common\datatypes\String;
+
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Point;
@@ -29,7 +35,7 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('a' => 'string!'))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new String('string!')))));
 		$processor = new AndProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -37,7 +43,7 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT, array(25.0))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT, array(new Float(25.0)))));
 		$processor = new AndProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -54,7 +60,7 @@ class AndProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		// Two NULL values, 'null' && new RecordContainer().
-		$operands = new OperandsCollection(array(true, false, true, null, new RecordContainer()));
+		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false), new Boolean(true), null, new RecordContainer()));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -62,32 +68,32 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testTrue() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(true));
+		$operands = new OperandsCollection(array(new Boolean(true)));
 		$processor = new AndProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertSame(true, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertSame(true, $result->getValue());
 		
-		$operands = new OperandsCollection(array(true, true, true));
+		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(true), new Boolean(true)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertSame(true, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertSame(true, $result->getValue());
 	}
 	
 	public function testFalse() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(false));
+		$operands = new OperandsCollection(array(new Boolean(false)));
 		$processor = new AndProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertSame(false, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertSame(false, $result->getValue());
 		
-		$operands = new OperandsCollection(array(false, true, false));
+		$operands = new OperandsCollection(array(new Boolean(false), new Boolean(true), new Boolean(false)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertSame(false, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertSame(false, $result->getValue());
 	}
 	
 	public function createFakeExpression() {

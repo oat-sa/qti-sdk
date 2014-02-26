@@ -24,6 +24,12 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\runtime\common\OrderedContainer;
+
+use qtism\runtime\common\MultipleContainer;
+
+use qtism\common\datatypes\Float;
+
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
@@ -98,9 +104,14 @@ class VariableProcessor extends ExpressionProcessor {
 		$variableIdentifier = $this->getExpression()->getIdentifier();
 		$weightIdentifier = $this->getExpression()->getWeightIdentifier();
 		
+		$variable = $state->getVariable($variableIdentifier);
+		if (empty($variable)) {
+		    return null;
+		}
+		
 		$variableValue = $state[$variableIdentifier];
 		
-		if (empty($variableValue)) {
+		if ($variable->isNull()) {
 			return $variableValue; // Even if empty string, it is considered by QTI as null.
 		}
 		
@@ -110,10 +121,9 @@ class VariableProcessor extends ExpressionProcessor {
 			try {
 				$vIdentifier = new VariableIdentifier($variableIdentifier);
 				if ($vIdentifier->hasPrefix() === true && empty($weightIdentifier) === false) {
-					
 					$weight = $state->getWeight($vIdentifier->getPrefix() . '.' . $weightIdentifier);
-					$baseType = RuntimeUtils::inferBaseType($variableValue);
-					$cardinality = RuntimeUtils::inferCardinality($variableValue);
+					$baseType = $variableValue->getBaseType();
+					$cardinality = $variableValue->getCardinality();
 					
 					// From IMS QTI:
 					// Weights only apply to item variables with base types integer and float.
@@ -121,20 +131,31 @@ class VariableProcessor extends ExpressionProcessor {
 					if (!empty($weight) && ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT)) {
 					
 						if ($cardinality === Cardinality::SINGLE) {
-							$variableValue *= $weight->getValue();
+							return new Float($variableValue->getValue() * $weight->getValue());
 						}
-						else {
+						else if ($cardinality === Cardinality::MULTIPLE || $cardinality === Cardinality::ORDERED) {
 								
 							// variableValue is an object, the weighting should not
 							// affect the content of the state so a new container is created.
-							$cloneValue = clone $variableValue;
-							for ($i = 0; $i < count($cloneValue); $i++) {
-								$cloneValue[$i] *= $weight->getValue();
+							$finalValue = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer(BaseType::FLOAT) : new OrderedContainer(BaseType::FLOAT);
+							for ($i = 0; $i < count($variableValue); $i++) {
+							    if ($variableValue[$i] !== null) {
+							        $finalValue[] = new Float($variableValue[$i]->getValue() * $weight->getValue()) ;
+							    }
+							    else {
+							        $finalValue[] = null;
+							    }
 							}
-								
-							$variableValue = $cloneValue;
+							
+							return $finalValue;
 						}
-					}	
+					}
+					else {
+					    return $variableValue;
+					}
+				}
+				else {
+				    return $variableValue;
 				}
 			}
 			catch (InvalidArgumentException $e) {
@@ -144,7 +165,8 @@ class VariableProcessor extends ExpressionProcessor {
 			}
 			
 		}
-		
-		return $variableValue;
+		else {
+		    return $variableValue;
+		}
 	}
 }

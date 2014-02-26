@@ -10,13 +10,13 @@ class MathConstantProcessorTest extends QtiSmTestCase {
 		$mathConstantProcessor = new MathConstantProcessor($mathConstantExpr);
 		
 		$result = $mathConstantProcessor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(M_E, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(M_E, $result->getValue());
 		
 		$mathConstantExpr = $this->createComponentFromXml('<mathConstant name="pi"/>');
 		$mathConstantProcessor->setExpression($mathConstantExpr);
 		$result = $mathConstantProcessor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(M_PI, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(M_PI, $result->getValue());
 	}
 }

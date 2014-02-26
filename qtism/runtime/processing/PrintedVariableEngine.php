@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\processing;
 
+use qtism\common\datatypes\Integer;
 use qtism\runtime\common\Variable;
 use qtism\data\QtiComponent;
 use qtism\common\utils\Format;
@@ -136,9 +137,9 @@ class PrintedVariableEngine extends AbstractEngine {
             if (is_string($index) === true && $state[$index] !== null) {
                 $refIndex = $state[$index];
                 
-                if (is_int($refIndex) === true) {
+                if ($refIndex instanceof Integer) {
                     // $index references an integer, that's correct.
-                    $index = $refIndex;
+                    $index = $refIndex->getValue();
                 }
                 else {
                     // $index references something else than an integer.
@@ -240,31 +241,31 @@ class PrintedVariableEngine extends AbstractEngine {
         }
         
         if ($baseType === BaseType::STRING) {
-            return $value;
+            return $value->getValue();
         }
         else if ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT) {
             $format = $printedVariable->getFormat();
             
             if (empty($format) === false) {
                $format = Format::printfFormatIsoToPhp($format);
-               return sprintf($format, $value);
+               return sprintf($format, $value->getValue());
             }
             else if ($baseType === BaseType::FLOAT && $printedVariable->mustPowerForm() === true) {
-                return Format::scale10($value, 'x');
+                return Format::scale10($value->getValue(), 'x');
             }
             else if ($baseType === BaseType::FLOAT) {
-                return sprintf('%e', $value);
+                return sprintf('%e', $value->getValue());
             }
             else {
                 // integer to string
-                return '' . $value;
+                return '' . $value->getValue();
             }
         }
         else if ($baseType === BaseType::DURATION) {
             return '' . $value->getSeconds(true);
         }
         else if ($baseType === BaseType::BOOLEAN) {
-            return ($value === true) ? 'true' : 'false';
+            return ($value->getValue() === true) ? 'true' : 'false';
         }
         else if ($baseType === BaseType::POINT || $baseType === BaseType::PAIR || $baseType === BaseType::DIRECTED_PAIR) {
             return $value->__toString();

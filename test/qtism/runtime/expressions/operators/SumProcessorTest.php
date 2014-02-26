@@ -1,6 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -12,48 +15,48 @@ class SumProcessorTest extends QtiSmTestCase {
 	public function testSimple() {
 		$sum = $this->createFakeSumComponent();
 		
-		$operands = new OperandsCollection(array(1, 1));
+		$operands = new OperandsCollection(array(new Integer(1), new Integer(1)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 		
 		$this->assertInstanceOf('qtism\\runtime\\common\\Processable', $sumProcessor);
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(2, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(2, $result->getValue());
 	}
 	
 	public function testNary() {
 		$sum = $this->createFakeSumComponent();
 		
-		$operands = new OperandsCollection(array(24, -4, 0));
+		$operands = new OperandsCollection(array(new Integer(24), new Integer(-4), new Integer(0)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 
-		$this->assertInternalType('integer', $result);
-		$this->assertEquals(20, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertEquals(20, $result->getValue());
 	}
 	
 	public function testComplex() {
 		$sum = $this->createFakeSumComponent();
 		
-		$operands = new OperandsCollection(array(-1, 1));
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(2.1, 4.3));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(10, 15));
+		$operands = new OperandsCollection(array(new Integer(-1), new Integer(1)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(2.1), new Float(4.3)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(15)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 		
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(31.4, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(31.4, $result->getValue());
 	}
 	
 	public function testZero() {
 	    $sum = $this->createFakeSumComponent();
 	    
-	    $operands = new OperandsCollection(array(0, 6.0));
+	    $operands = new OperandsCollection(array(new Integer(0), new Float(6.0)));
 	    $sumProcessor = new SumProcessor($sum, $operands);
 	    $result = $sumProcessor->process();
 	    
-	    $this->assertInternalType('float', $result);
-	    $this->assertEquals(6.0, $result);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertEquals(6.0, $result->getValue());
 	}
 	
 	public function testInvalidOperandsOne() {
@@ -61,7 +64,7 @@ class SumProcessorTest extends QtiSmTestCase {
 		
 		$this->setExpectedException('\\RuntimeException');
 		
-		$operands = new OperandsCollection(array(true, 14, 10));
+		$operands = new OperandsCollection(array(new Boolean(true), new Integer(14), new Integer(10)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 	}
@@ -69,7 +72,7 @@ class SumProcessorTest extends QtiSmTestCase {
 	public function testInvalidOperandsTwo() {
 		$sum = $this->createFakeSumComponent();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(true, false));
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		
 		$this->setExpectedException('\\RuntimeException');
@@ -78,7 +81,7 @@ class SumProcessorTest extends QtiSmTestCase {
 	
 	public function testNullInvolved() {
 		$sum = $this->createFakeSumComponent();
-		$operands = new OperandsCollection(array(10, 10, null));
+		$operands = new OperandsCollection(array(new Integer(10), new Integer(10), null));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 		$this->assertTrue($result === null);

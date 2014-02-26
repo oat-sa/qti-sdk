@@ -1,6 +1,10 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\String;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -13,11 +17,11 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	
 	public function testWithEmptyString() {
 		$operands = new OperandsCollection();
-		$operands[] = '';
+		$operands[] = new String('');
 		
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
-		$this->assertTrue($processor->process());
+		$this->assertTrue($processor->process()->getValue());
 	}
 	
 	public function testWithNull() {
@@ -26,7 +30,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
-		$this->assertTrue($processor->process());
+		$this->assertTrue($processor->process()->getValue());
 	}
 	
 	public function testEmptyContainers() {
@@ -35,47 +39,47 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
-		$this->assertTrue($processor->process());
+		$this->assertTrue($processor->process()->getValue());
 		
 		$operands->reset();
 		$operands[] = new OrderedContainer(BaseType::BOOLEAN);
-		$this->assertTrue($processor->process());
+		$this->assertTrue($processor->process()->getValue());
 		
 		$operands->reset();
 		$operands[] = new RecordContainer();
-		$this->assertTrue($processor->process());
+		$this->assertTrue($processor->process()->getValue());
 	}
 	
 	public function testNotEmpty() {
 		$expression = $this->getFakeExpression();
-		$operands = new OperandsCollection(array(0));
+		$operands = new OperandsCollection(array(new Integer(0)));
 		
 		$processor = new IsNullProcessor($expression, $operands);
-		$this->assertFalse($processor->process());
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = false;
-		$this->assertFalse($processor->process());
+		$operands[] = new Boolean(false);
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = -1;
-		$this->assertFalse($processor->process());
+		$operands[] = new Integer(-1);
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
 		$operands[] = new Point(1, 2);
-		$this->assertFalse($processor->process());
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(25));
-		$this->assertFalse($processor->process());
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
 		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(3, 4), new Point(5, 6)));
-		$this->assertFalse($processor->process());
+		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new RecordContainer(array('a' => true,  'b' => null,  'c' => new Point(1, 2), 'd' => 24, 'e' => 23.3));
-		$this->assertFalse($processor->process());
+		$operands[] = new RecordContainer(array('a' => new Boolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new Integer(24), 'e' => new Float(23.3)));
+		$this->assertFalse($processor->process()->getValue());
 	}
 	
 	public function testLessThanNeededOperands() {
@@ -90,7 +94,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	public function testMoreThanNeededOperands() {
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		
-		$operands = new OperandsCollection(array(25, null));
+		$operands = new OperandsCollection(array(new Integer(25), null));
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
 		$result = $processor->process();

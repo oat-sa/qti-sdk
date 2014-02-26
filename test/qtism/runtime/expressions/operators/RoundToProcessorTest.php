@@ -1,12 +1,11 @@
 <?php
-
-
-use qtism\common\enums\BaseType;
-
-use qtism\runtime\common\MultipleContainer;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
+use qtism\runtime\common\MultipleContainer;
+use qtism\common\enums\BaseType;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\RoundToProcessor;
 
@@ -18,42 +17,43 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">1239451</baseValue>
 			</roundTo>
 		');
+		
 		$operands = new OperandsCollection();
-		$operands[] = 1239451;
+		$operands[] = new Integer(1239451);
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(round(1240000), round($result));
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(round(1240000), round($result->getValue()));
 		
-		$operands[0] = 12.1257;
+		$operands[0] = new Float(12.1257);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(round(12.1, 1), round($result, 1));
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(round(12.1, 1), round($result->getValue(), 1));
 		
-		$operands[0] = 0.0681;
+		$operands[0] = new Float(0.0681);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(round(0.0681, 4), round($result, 4));
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(round(0.0681, 4), round($result->getValue(), 4));
 		
-		$operands[0] = 5;
+		$operands[0] = new Integer(5);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(5, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(5, $result->getValue());
 		
-		$operands[0] = 0;
+		$operands[0] = new Integer(0);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(0, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(0, $result->getValue());
 		
-		$operands[0] = -12.1257;
+		$operands[0] = new Float(-12.1257);
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(round(-12.1, 1), round($result, 1));
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(round(-12.1, 1), round($result->getValue(), 1));
 	}
 	
 	public function testDecimalPlaces() {
@@ -62,44 +62,45 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
+		
 		$operands = new OperandsCollection();
-		$operands[] = 3.4;
+		$operands[] = new Float(3.4);
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(3, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(3, $result->getValue());
 		
-		$operands[0] = 3.5;
+		$operands[0] = new Float(3.5);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(4, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(4, $result->getValue());
 		
-		$operands[0] = 3.6;
+		$operands[0] = new Float(3.6);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(4, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(4, $result->getValue());
 		
-		$operands[0] = 4.0;
+		$operands[0] = new Float(4.0);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(4, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(4, $result->getValue());
 		
 		$expr->setFigures(2); // We now go for 2 figures...
-		$operands[0] = 1.95583;
+		$operands[0] = new Float(1.95583);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(1.96, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(1.96, $result->getValue());
 		
-		$operands[0] = 5.045;
+		$operands[0] = new Float(5.045);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(5.05, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(5.05, $result->getValue());
 		
 		$expr->setFigures(2);
-		$operands[0] = 5.055;
+		$operands[0] = new Float(5.055);
 		$result = $processor->process();
-		$this->assertInternalType('float', $result);
-		$this->assertEquals(5.06, $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertEquals(5.06, $result->getValue());
 	}
 	
 	public function testNoOperands() {
@@ -123,7 +124,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(4, 4));
+		$operands = new OperandsCollection(array(new Integer(4), new Integer(4)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -136,7 +137,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(true));
+		$operands = new OperandsCollection(array(new Boolean(true)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -149,7 +150,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(20, 30, 40))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(20), new Integer(30), new Integer(40)))));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -163,7 +164,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 			</roundTo>
 		');
 		
-		$operands = new OperandsCollection(array(3.4));
+		$operands = new OperandsCollection(array(new Float(3.4)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -176,7 +177,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(3.4));
+		$operands = new OperandsCollection(array(new Float(3.4)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -187,7 +188,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(NAN));
+		$operands = new OperandsCollection(array(new Float(NAN)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 		$this->assertTrue(is_null($result));
@@ -199,15 +200,15 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(INF));
+		$operands = new OperandsCollection(array(new Float(INF)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
-		$this->assertTrue(is_infinite($result));
-		$this->assertTrue(INF === $result);
+		$this->assertTrue(is_infinite($result->getValue()));
+		$this->assertTrue(INF === $result->getValue());
 		
-		$processor->setOperands(new OperandsCollection(array(-INF)));
+		$processor->setOperands(new OperandsCollection(array(new Float(-INF))));
 		$result = $processor->process();
-		$this->assertTrue(is_infinite($result));
-		$this->assertTrue(-INF === $result);
+		$this->assertTrue(is_infinite($result->getValue()));
+		$this->assertTrue(-INF === $result->getValue());
 	}
 }

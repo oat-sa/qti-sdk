@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\common\Comparable;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\Expression;
@@ -88,11 +89,11 @@ class ContainsProcessor extends OperatorProcessor {
 		if ($operand1->getCardinality() === Cardinality::MULTIPLE) {
 			foreach ($operand2 as $value) {
 				if ($operand1->contains($value) === false || $operand1->occurences($value) !== $operand2->occurences($value)) {
-					return false;
+					return new Boolean(false);
 				}
 			}
 			
-			return true;
+			return new Boolean(true);
 		}
 		else {
 			// $operand1->getCardinality() === Cardinality::ORDERED
@@ -110,7 +111,7 @@ class ContainsProcessor extends OperatorProcessor {
 					
 					if ($lastFoundIndex >= 0 && ($op1Index - $lastFoundIndex) > 1) {
 						// Sequence not respected.
-						return false;
+						return new Boolean(false);
 					}
 					else {
 						$lastFoundIndex = $op1Index;
@@ -122,10 +123,10 @@ class ContainsProcessor extends OperatorProcessor {
 			}
 			
 			if ($foundCount > 0 && $foundCount === count($operand2)) {
-				return true;
+				return new Boolean(true);
 			}
 			else {
-				return false;
+				return new Boolean(false);
 			}
 		}
 	}

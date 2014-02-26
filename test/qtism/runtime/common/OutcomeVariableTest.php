@@ -1,8 +1,11 @@
 <?php
-
-use qtism\common\datatypes\Point;
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -40,12 +43,12 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertFalse($variable->getMasteryValue());
 		$this->assertTrue(null === $variable->getLookupTable());
 		
-		$variable->setValue(16);
-		$variable->setDefaultValue(-1);
-		$this->assertInternalType('integer', $variable->getValue());
-		$this->assertEquals(16, $variable->getValue());
-		$this->assertInternalType('integer', $variable->getDefaultValue());
-		$this->assertEquals(-1, $variable->getDefaultValue());
+		$variable->setValue(new Integer(16));
+		$variable->setDefaultValue(new Integer(-1));
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$this->assertEquals(16, $variable->getValue()->getValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getDefaultValue());
+		$this->assertEquals(-1, $variable->getDefaultValue()->getValue());
 		
 		// If I reinit the variable, I should see the NULL value inside.
 		$variable->initialize();
@@ -56,8 +59,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		// was given.
 		$variable->setDefaultValue(null);
 		$variable->applyDefaultValue();
-		$this->assertInternalType('integer', $variable->getValue());
-		$this->assertEquals(0, $variable->getValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$this->assertEquals(0, $variable->getValue()->getValue());
 	}
 	
 	public function testCardinalityMultiple() {
@@ -182,46 +185,46 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	public function testIsNull() {
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue('');
+		$outcome->setValue(new String(''));
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue('String!');
+		$outcome->setValue(new String('String!'));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(0);
+		$outcome->setValue(new Integer(0));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(-1);
+		$outcome->setValue(new Integer(-1));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(100);
+		$outcome->setValue(new Integer(100));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::FLOAT);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(0.25);
+		$outcome->setValue(new Float(0.25));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(-1.2);
+		$outcome->setValue(new Float(-1.2));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(100.12);
+		$outcome->setValue(new Float(100.12));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(true);
+		$outcome->setValue(new Boolean(true));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(false);
+		$outcome->setValue(new Boolean(false));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = true;
+		$value[] = new Boolean(true);
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = 'string';
+		$value[] = new String('string!');
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::RECORD);

@@ -1,4 +1,12 @@
 <?php
+use qtism\common\datatypes\String;
+
+use qtism\common\datatypes\Float;
+
+use qtism\common\datatypes\Boolean;
+
+use qtism\common\datatypes\Integer;
+
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Point;
@@ -38,13 +46,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 	
 	public function testContainsNullFullSingleCardinality() {
 		$operands = $this->getOperands();
-		$operands[] = 15;
+		$operands[] = new Integer(15);
 		
 		$this->assertFalse($operands->containsNull());
 		
-		$operands[] = true;
-		$operands[] = 0.4;
-		$operands[] = 'string';
+		$operands[] = new Boolean(true);
+		$operands[] = new Float(0.4);
+		$operands[] = new String('string');
 		$operands[] = new Duration('P1D');
 		$this->assertFalse($operands->containsNull());
 		
@@ -58,13 +66,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$this->assertTrue($operands->containsNull());
 		
-		$operands[0][] = 15.3;
+		$operands[0][] = new Float(15.3);
 		$this->assertFalse($operands->containsNull());
 		
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertTrue($operands->containsNull());
 		
-		$operands[1] = 'string!';
+		$operands[1] = new String('string!');
 		$this->assertFalse($operands->containsNull());
 		
 		$operands[] = new RecordContainer();
@@ -78,11 +86,11 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyNumeric());
 		
-		$operands[] = 14;
-		$operands[] = 15.3;
+		$operands[] = new Integer(14);
+		$operands[] = new Float(15.3);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertFalse($operands->exclusivelyNumeric());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyNumeric());
@@ -95,13 +103,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$mult = new MultipleContainer(BaseType::INTEGER);
 		$operands[] = $mult;
 		$this->assertFalse($operands->exclusivelyNumeric());
-		$mult[] = 15;
+		$mult[] = new Integer(15);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
 		$ord = new OrderedContainer(BaseType::FLOAT);
 		$operands[] = $ord;
 		$this->assertFalse($operands->exclusivelyNumeric());
-		$ord[] = 15.5;
+		$ord[] = new Float(15.5);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
 		$operands[] = new RecordContainer();
@@ -117,11 +125,11 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyInteger());
 		
-		$operands[] = 14;
-		$operands[] = 15;
+		$operands[] = new Integer(14);
+		$operands[] = new Integer(15);
 		$this->assertTrue($operands->exclusivelyInteger());
 		
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertFalse($operands->exclusivelyInteger());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyInteger());
@@ -134,7 +142,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$mult = new MultipleContainer(BaseType::INTEGER);
 		$operands[] = $mult;
 		$this->assertFalse($operands->exclusivelyInteger());
-		$mult[] = 15;
+		$mult[] = new Integer(15);
 		$this->assertTrue($operands->exclusivelyInteger());
 		
 		$operands[] = new RecordContainer();
@@ -154,7 +162,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(3, 4);
 		$this->assertTrue($operands->exclusivelyPoint());
 	
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertFalse($operands->exclusivelyPoint());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyPoint());
@@ -187,7 +195,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Duration('P2D');
 		$this->assertTrue($operands->exclusivelyDuration());
 	
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertFalse($operands->exclusivelyDuration());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyDuration());
@@ -219,28 +227,28 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = null;
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = 10.11;
+		$operands[] = new Float(10.11);
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new Point(1, 1);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = 'string';
+		$operands[] = new String('string');
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = true;
+		$operands[] = new Boolean(true);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(10, 20));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20)));
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(true, false, true));
+		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new RecordContainer();
@@ -262,7 +270,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 		
-		$operands[] = 15;
+		$operands[] = new Integer(15);
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		unset($operands[3]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
@@ -273,12 +281,12 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 		
-		$operands[] = '';
+		$operands[] = new String('');
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		unset($operands[5]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 		
-		$operands[] = false;
+		$operands[] = new Boolean(false);
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		unset($operands[6]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
@@ -292,10 +300,10 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new OrderedContainer(BaseType::INTEGER);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
-		$operands[] = false;
+		$operands[] = new Boolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
 		$operands[] = new Point(10, 20);
@@ -313,10 +321,10 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
-		$operands[] = false;
+		$operands[] = new Boolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
 		$operands[] = new Point(10, 20);
@@ -336,19 +344,19 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->sameBaseType());
 		
 		// If any of the values is null, false.
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), null, 15));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), null, new Integer(15)));
 		$this->assertFalse($operands->sameBaseType());
 		
 		// If any of the values is null (an empty container is considered null), false.
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), 1, 15));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), new Integer(1), new Integer(15)));
 		$this->assertFalse($operands->sameBaseType());
 		
 		// Non-null values, all integers.
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(15)), 1, 15));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(15))), new Integer(1), new Integer(15)));
 		$this->assertTrue($operands->sameBaseType());
 		
 		// Non-null, exclusively records.
-		$operands = new OperandsCollection(array(new RecordContainer(array('a' => 11)), new RecordContainer(array('b' => 22))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new Integer(15))), new RecordContainer(array('b' => new Integer(22)))));
 		$this->assertTrue($operands->sameBaseType());
 		
 		// Exclusively records but considered to be null because they are empty.
@@ -356,24 +364,24 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->sameBaseType());
 		
 		// Test Exclusively boolean
-		$operands = new OperandsCollection(array(true, false));
+		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false)));
 		$this->assertTrue($operands->sameBaseType());
 		
-		$operands = new Operandscollection(array(false));
+		$operands = new Operandscollection(array(new Boolean(false)));
 		$this->assertTrue($operands->sameBaseType());
 		
 		// Test Exclusively int
-		$operands = new OperandsCollection(array(10, 0));
+		$operands = new OperandsCollection(array(new Integer(10), new Integer(0)));
 		$this->assertTrue($operands->sameBaseType());
 		
-		$operands = new OperandsCollection(array(0));
+		$operands = new OperandsCollection(array(new Integer(0)));
 		$this->assertTrue($operands->sameBaseType());
 		
-		$operands = new OperandsCollection(array(10, new OrderedContainer(BaseType::INTEGER, array(10, -1, 20)), 5));
+		$operands = new OperandsCollection(array(new Integer(10), new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(-1), new Integer(20))), new Integer(5)));
 		$this->assertTrue($operands->sameBaseType());
 		
 		// - Misc
-		$operands = new Operandscollection(array(0, 10, 10.0));
+		$operands = new Operandscollection(array(new Integer(0), new Integer(10), new Float(10.0)));
 		$this->assertFalse($operands->sameBaseType());
 	}
 	
@@ -384,13 +392,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(null));
 		$this->assertFalse($operands->sameCardinality());
 		
-		$operands = new OperandsCollection(array(null, 10, 10));
+		$operands = new OperandsCollection(array(null, new Integer(10), new Integer(10)));
 		$this->assertFalse($operands->sameCardinality());
 		
-		$operands = new OperandsCollection(array(0, false, 16, true, new Point(1, 1)));
+		$operands = new OperandsCollection(array(new Integer(0), new Boolean(false), new Integer(16), new Boolean(true), new Point(1, 1)));
 		$this->assertTrue($operands->sameCardinality());
 		
-		$operands = new OperandsCollection(array(10, 20, new OrderedContainer(BaseType::INTEGER)));
+		$operands = new OperandsCollection(array(new Integer(10), new Integer(20), new OrderedContainer(BaseType::INTEGER)));
 		$this->assertFalse($operands->sameCardinality());
 	}
 	
@@ -398,40 +406,40 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$this->assertFalse($operands->exclusivelyBoolean());
 
-		$operands[] = true;
+		$operands[] = new Boolean(true);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
-		$operands[] = false;
+		$operands[] = new Boolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
 		$container = new MultipleContainer(BaseType::BOOLEAN);
 		$operands[] = $container;
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
-		$container[] = false;
+		$container[] = new Boolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = true;
+		$operands[] = new Boolean(true);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = null;
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(true, false, true));
+		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = new MultipleContainer(BaseType::BOOLEAN);
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = true;
-		$operands[] = false;
+		$operands[] = new Boolean(true);
+		$operands[] = new Boolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
-		$operands[] = new RecordContainer(array('b1' => true, 'b2' => false));
+		$operands[] = new RecordContainer(array('b1' => new Boolean(true), 'b2' => new Boolean(false)));
 		
 		$operands = new OperandsCollection();
-		$operands[] = true;
-		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(true));
+		$operands[] = new Boolean(true);
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true)));
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = new RecordContainer();
 		$this->assertFalse($operands->exclusivelyBoolean());
@@ -445,7 +453,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = $rec;
 		$this->assertTrue($operands->exclusivelyRecord());
 		
-		$rec['A'] = 1;
+		$rec['A'] = new Integer(1);
 		$this->assertTrue($operands->exclusivelyRecord());
 		
 		$operands[] = null;
@@ -455,12 +463,12 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = $rec;
 		$this->assertTrue($operands->exclusivelyRecord());
 		
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertFalse($operands->exclusivelyRecord());
 		
 		$operands->reset();
 		$operands[] = $rec;
-		$operands[] = 'String!';
+		$operands[] = new String('String!');
 		$this->assertFalse($operands->exclusivelyRecord());
 		
 	}
@@ -473,7 +481,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = $mult;
 		$this->assertTrue($operands->exclusivelyOrdered());
 	
-		$mult[] = -10;
+		$mult[] = new Integer(-10);
 		$this->assertTrue($operands->exclusivelyOrdered());
 	
 		$operands[] = null;
@@ -483,12 +491,12 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = $mult;
 		$this->assertTrue($operands->exclusivelyOrdered());
 	
-		$operands[] = 10;
+		$operands[] = new Integer(10);
 		$this->assertFalse($operands->exclusivelyOrdered());
 	
 		$operands->reset();
 		$operands[] = $mult;
-		$operands[] = 'String!';
+		$operands[] = new String('String!');
 		$this->assertFalse($operands->exclusivelyOrdered());
 		
 		$operands->reset();

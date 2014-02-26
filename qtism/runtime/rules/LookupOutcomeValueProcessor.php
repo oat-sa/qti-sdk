@@ -24,6 +24,10 @@
  */
 namespace qtism\runtime\rules;
 
+use qtism\data\state\Value;
+use qtism\runtime\common\Utils as RuntimeUtils;
+use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Duration;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
@@ -113,7 +117,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 			$targetVal = $table->getDefaultValue();
 			
 			if ($table instanceof InterpolationTable) {
-				if (gettype($val) !== 'double' && gettype($val) !== 'integer' && !$val instanceof Duration) {
+				if (!$val instanceof Float && !$val instanceof Integer && !$val instanceof Duration) {
 					$msg = "The value of variable '${identifier}' must be integer, float or duration when used with an interpolationTable";
 					throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
 				}
@@ -122,11 +126,11 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 					$lowerBound = $entry->getSourceValue();
 					$includeBoundary = $entry->doesIncludeBoundary();
 					
-					if ($includeBoundary === true && $val <= $lowerBound) {
+					if ($includeBoundary === true && $val->getValue() <= $lowerBound) {
 						$targetVal = $entry->getTargetValue();
 						break;
 					}
-					else if ($includeBoundary === false && $val < $lowerBound) {
+					else if ($includeBoundary === false && $val->getValue() < $lowerBound) {
 						$targetVal = $entry->getTargetValue();
 						break;
 					}
@@ -134,13 +138,13 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 			}
 			else {
 				// $table instanceof MatchTable
-				if (gettype($val) !== 'integer') {
-					$msg = "The of variable '${identifier}' must be integer when used with a matchTable.";
+				if (!$val instanceof Integer) {
+					$msg = "The value of the variable '${identifier}' must be integer when used with a matchTable.";
 					throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
 				}
 				
 				foreach ($table->getMatchTableEntries() as $entry) {
-					if ($entry->getSourceValue() === $val) {
+					if ($entry->getSourceValue() === $val->getValue()) {
 						$targetVal = $entry->getTargetValue();
 						break;
 					}
@@ -149,7 +153,8 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 			
 			// assign target value
 			try {
-				$state[$identifier] = $targetVal;
+			    $finalVal = RuntimeUtils::valueToRuntime(new Value($targetVal, $var->getBaseType()));
+				$state[$identifier] = $finalVal;
 			}
 			catch (InvalidArgumentException $e) {
 				// $targetVal's baseType not compliant with target variable's baseType.

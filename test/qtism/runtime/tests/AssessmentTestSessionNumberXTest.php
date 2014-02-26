@@ -1,4 +1,5 @@
 <?php
+use qtism\common\datatypes\Identifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -73,7 +74,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // -- Correct answer to Q01.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
         $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
@@ -108,7 +109,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // -- Incorrect answer to Q02.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceA'))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
         $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
@@ -178,7 +179,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // -- Incorrect answer to Q04.1
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceZ'))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceZ')))));
         $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
@@ -213,7 +214,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // -- Correct answer to Q04.2
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceD'))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
         $session->moveNext();
         
         $this->assertEquals(2, $session->numberCorrect());
@@ -283,7 +284,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // Correct answer to Q05.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, 'ChoiceE'))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceE')))));
         $session->moveNext();
         
         $this->assertEquals(3, $session->numberCorrect());

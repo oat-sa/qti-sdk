@@ -70,8 +70,8 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		
 		$this->assertSame(null, $state['outcome1']);
 		$processor->process();
-		$this->assertInternalType('string', $state['outcome1']);
-		$this->assertEquals('Awesome!', $state['outcome1']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertEquals('Awesome!', $state['outcome1']->getValue());
 		
 		// include the boundary for interpolationTableEntry[1]
 		$table = $outcome->getLookupTable();
@@ -79,13 +79,14 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		$entries[1]->setIncludeBoundary(true);
 		
 		$processor->process();
-		$this->assertInternalType('string', $state['outcome1']);
-		$this->assertEquals('Piece of cake!', $state['outcome1']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertEquals('Piece of cake!', $state['outcome1']->getValue());
 		
 		// get the default value.
 		$expr = $rule->getExpression();
 		$expr->setValue(4.0);
 		$processor->process();
-		$this->assertEquals("What's going on?", $state['outcome1']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertEquals("What's going on?", $state['outcome1']->getValue());
 	}
 }

@@ -27,6 +27,7 @@ namespace qtism\runtime\tests;
 use qtism\data\AssessmentItemRef;
 use \SplObjectStorage;
 use \OutOfBoundsException;
+use \UnexpectedValueException;
 
 /**
  * An AssessmentItemSessionStore store AssessmentItemSession objects
@@ -119,7 +120,13 @@ class AssessmentItemSessionStore {
      */
     public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
         $shelves = $this->getShelves();
-        return isset($shelves[$assessmentItemRef][$occurence]);
+        try {
+            isset($shelves[$assessmentItemRef][$occurence]);
+            return true;
+        }
+        catch (UnexpectedValueException $e) {
+            return false;
+        }
     }
     
     /**

@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\DurationGTE;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -79,6 +80,6 @@ class DurationGTEProcessor extends OperatorProcessor {
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
-		return $operands[0]->longerThanOrEquals($operands[1]);
+		return new Boolean($operands[0]->longerThanOrEquals($operands[1]));
 	}
 }

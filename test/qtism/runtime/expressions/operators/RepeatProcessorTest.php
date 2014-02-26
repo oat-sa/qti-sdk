@@ -1,20 +1,22 @@
 <?php
+require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Integer;
 use qtism\runtime\common\MultipleContainer;
-
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
-
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
-
 use qtism\runtime\expressions\operators\RepeatProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
 class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testRepeatScalarOnly() {
-		$initialVal = array(1, 2, 3);
+		$initialVal = array(new Integer(1), new Integer(2), new Integer(3));
 		$expression = $this->createFakeExpression(1);
 		$operands = new OperandsCollection($initialVal);
 		$processor = new RepeatProcessor($expression, $operands);
@@ -29,13 +31,13 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testOrderedOnly() {
 		$expression = $this->createFakeExpression(2);
-		$ordered1 = new OrderedContainer(BaseType::INTEGER, array(1, 2, 3));
-		$ordered2 = new OrderedContainer(BaseType::INTEGER, array(4));
+		$ordered1 = new OrderedContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3)));
+		$ordered2 = new OrderedContainer(BaseType::INTEGER, array(new Integer(4)));
 		$operands = new OperandsCollection(array($ordered1, $ordered2));
 		$processor = new RepeatProcessor($expression, $operands);
 		$result = $processor->process();
 		
-		$comparison = new OrderedContainer(BaseType::INTEGER, array(1, 2, 3, 4, 1, 2, 3, 4));
+		$comparison = new OrderedContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(1), new Integer(2), new Integer(3), new Integer(4)));
 		$this->assertTrue($comparison->equals($result));
 	}
 	
@@ -63,42 +65,39 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		// Any sub-expressions evaluating to NULL are ignored.
-		$operands = new OperandsCollection(array(null, 'String1', new OrderedContainer(BaseType::STRING, array('String2', null)), 'String3'));
+		$operands = new OperandsCollection(array(null, new String('String1'), new OrderedContainer(BaseType::STRING, array(new String('String2'), null)), new String('String3')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		
-		$comparison = new OrderedContainer(BaseType::STRING, array('String1', 'String2', null, 'String3'));
+		$comparison = new OrderedContainer(BaseType::STRING, array(new String('String1'), new String('String2'), null, new String('String3')));
 		$this->assertTrue($result->equals($comparison));
 	}
 	
-	public function testJuggling() {
+	public function testWrongBaseTypeOne() {
 	    $expression = $this->createFakeExpression(1);
 	    $operands = new OperandsCollection();
 	    $operands[] = null;
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array('id1', 'id2'));
-	    $operands[] = new OrderedContainer(BaseType::URI, array('id3', 'id4'));
-	    $operands[] = 'http://www.taotesting.com';
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('id1'), new Identifier('id2')));
+	    $operands[] = new OrderedContainer(BaseType::URI, array(new Uri('id3'), new Uri('id4')));
+	    $operands[] = new Uri('http://www.taotesting.com');
 	    $operands[] = new OrderedContainer(BaseType::STRING);
 	    
 	    $processor = new RepeatProcessor($expression, $operands);
+	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 	    $result = $processor->process();
-	    
-	    $this->assertEquals(BaseType::IDENTIFIER, $result->getBaseType());
-	    $this->assertEquals(5, count($result));
-	    $this->assertTrue($result->equals(new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array('id1', 'id2', 'id3', 'id4', 'http://www.taotesting.com'))));
 	}
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(10))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10)))));
 		$processor = new RepeatProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
 	}
 	
-	public function testWrongBaseType() {
+	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(10)), 10.3));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new Float(10.3)));
 		$processor = new RepeatProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

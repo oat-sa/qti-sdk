@@ -1,6 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\String;
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -87,9 +89,18 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertSame($expectedX, $state['x']);
-		$this->assertSame($expectedY, $state['y']);
-		$this->assertSame($expectedZ, $state['z']);
+		$this->check($expectedX, $state['x']);
+		$this->check($expectedY, $state['y']);
+		$this->check($expectedZ, $state['z']);
+	}
+	
+	protected function check($expected, $value) {
+	    if ($expected === null) {
+	        $this->assertSame($expected, $value);
+	    }
+	    else {
+	        $this->assertTrue($expected === $value->getValue());
+	    }
 	}
 	
 	public function testWrongRuleType() {
@@ -113,11 +124,11 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase {
 	
 	public function testOutcomeConditionComplexProvider() {
 		return array(
-			array(1, 1, 'A', 'C', null),
-			array(1, 0, 'B', 'C', null),
-			array(2, 0, null, 'A', 'B'),
-			array(3, 0, 'V', null, null),
-			array(4, 1, 'Z', null, null)
+			array(new Integer(1), new Integer(1), 'A', 'C', null),
+			array(new Integer(1), new Integer(0), 'B', 'C', null),
+			array(new Integer(2), new Integer(0), null, 'A', 'B'),
+			array(new Integer(3), new Integer(0), 'V', null, null),
+			array(new Integer(4), new Integer(1), 'Z', null, null)
 		);
 	}
 }

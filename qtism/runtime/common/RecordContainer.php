@@ -24,10 +24,12 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ValueCollection;
 use qtism\common\utils\Arrays;
 use qtism\common\enums\BaseType;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 use \RuntimeException;
 
@@ -42,7 +44,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RecordContainer extends Container {
+class RecordContainer extends Container implements QtiDatatype {
 	
 	/**
 	 * Create a new RecordContainer object.
@@ -105,7 +107,7 @@ class RecordContainer extends Container {
 			$fieldIdentifier = $value->getFieldIdentifier();
 			
 			if (!empty($fieldIdentifier)) {
-				$container[$value->getFieldIdentifier()] = $value->getValue();
+				$container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value);
 			}
 			else {
 				$msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
@@ -118,5 +120,9 @@ class RecordContainer extends Container {
 	
 	protected function getToStringBounds() {
 		return array('{', '}');
+	}
+	
+	public function getBaseType() {
+	    return -1;
 	}
 }

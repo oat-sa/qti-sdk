@@ -48,8 +48,8 @@ class DefaultProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
 		
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testNoVariable() {

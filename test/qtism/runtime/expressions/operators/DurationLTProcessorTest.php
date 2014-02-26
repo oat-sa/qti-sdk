@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
@@ -16,14 +17,14 @@ class DurationLTProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new Duration('P1D'), new Duration('P2D')));
 		$processor = new DurationLTProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertTrue($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new Duration('P2D'), new Duration('P1D')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInternalType('boolean', $result);
-		$this->assertFalse($result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertFalse($result->getValue());
 	}
 	
 	public function testNull() {
@@ -36,7 +37,7 @@ class DurationLTProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P1D'), 256));
+		$operands = new OperandsCollection(array(new Duration('P1D'), new Integer(256)));
 		$processor = new DurationLTProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Lte;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -77,6 +78,6 @@ class LteProcessor extends OperatorProcessor {
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
-		return $operands[0] <= $operands[1];
+		return new Boolean($operands[0]->getValue() <= $operands[1]->getValue());
 	}
 }

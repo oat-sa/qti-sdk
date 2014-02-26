@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\RoundTo;
@@ -103,10 +105,10 @@ class RoundToProcessor extends OperatorProcessor {
 		}
 		
 		// As per QTI 2.1 spec...
-		if (is_nan($operand)) {
+		if (is_nan($operand->getValue())) {
 			return null;
 		}
-		else if (is_infinite($operand)) {
+		else if (is_infinite($operand->getValue())) {
 			return $operand;
 		}
 		
@@ -122,10 +124,11 @@ class RoundToProcessor extends OperatorProcessor {
 				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (!is_int($figures)) {
+			else if (!$figures instanceof Integer) {
 				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
+			$figures = $figures->getValue();
 		}
 		
 		if ($roundingMode === RoundingMode::SIGNIFICANT_FIGURES) {
@@ -136,16 +139,16 @@ class RoundToProcessor extends OperatorProcessor {
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
 			}
 			
-			if ($operand == 0) {
-				return 0.0;
+			if ($operand->getValue() == 0) {
+				return new Float(0.0);
 			}
 			
-			$d = ceil(log10($operand < 0 ? -$operand : $operand));
+			$d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
 			$power = $figures - intval($d);
 			
 			$magnitude = pow(10, $power);
-			$shifted = round($operand * $magnitude);
-			return floatval($shifted / $magnitude);
+			$shifted = round($operand->getValue() * $magnitude);
+			return new Float(floatval($shifted / $magnitude));
 		}
 		else {
 			
@@ -155,7 +158,7 @@ class RoundToProcessor extends OperatorProcessor {
 				throw new OperatorProcessingException($msg, $this);
 			}
 			
-			return round($operand, $figures);
+			return new Float(round($operand->getValue(), $figures));
 		}
 	}
 }

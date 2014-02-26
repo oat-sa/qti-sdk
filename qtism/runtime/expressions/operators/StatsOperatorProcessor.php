@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 use qtism\data\expressions\operators\StatsOperator;
@@ -102,39 +103,59 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		$result = OperatorsUtils::mean($operand->getArrayCopy());
-		return ($result !== false) ? floatval($result) : null;
+		$result = OperatorsUtils::mean(self::filterValues($operand->getArrayCopy()));
+		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
 	protected function processSampleVariance() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		$result = OperatorsUtils::variance($operand->getArrayCopy(), true);
-		return ($result !== false) ? floatval($result) : null;
+		$result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), true);
+		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
 	protected function processSampleSD() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		$result = OperatorsUtils::standardDeviation($operand->getArrayCopy(), true);
-		return ($result !== false) ? floatval($result) : null;
+		$result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), true);
+		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
 	protected function processPopVariance() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		$result = OperatorsUtils::variance($operand->getArrayCopy(), false);
-		return ($result !== false) ? floatval($result) : null;
+		$result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), false);
+		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
 	protected function processPopSD() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
 		
-		$result = OperatorsUtils::standardDeviation($operand->getArrayCopy(), false);
-		return ($result !== false) ? floatval($result) : null;
+		$result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), false);
+		return ($result !== false) ? new Float(floatval($result)) : null;
+	}
+	
+	/**
+	 * Filter the $data array by transforming
+	 * Float and Integer object into PHP runtime values.
+	 * 
+	 * @param array $data An array of Float and/or Integer values.
+	 * @return array A filtered array with PHP float and integers.
+	 */
+	static protected function filterValues(array $data) {
+	    $returnValue = array();
+	    foreach ($data as $d) {
+	        if ($d !== null) {
+	            $returnValue[] = $d->getValue();
+	        }
+	        else {
+	            $returnValue[] = $d;
+	        }
+	    }
+	    return $returnValue;
 	}
 }

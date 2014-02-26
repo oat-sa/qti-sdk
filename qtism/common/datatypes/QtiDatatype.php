@@ -26,12 +26,24 @@
 namespace qtism\common\datatypes;
 
 /**
- * A simple marker interface aiming at tagging QTI Complex Datatypes such as
+ * A simple interface aiming at tagging QTI Complex Datatypes such as
  * Pair, Duration, Point, ...
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  */
 interface QtiDatatype {
     
+    /**
+     * Get the QTI baseType of the Datatype instance.
+     * 
+     * @return integer A value from the BaseType enumeration.
+     */
+    public function getBaseType();
+    
+    /**
+     * Get the QTI cardinality of the Datatype instance.
+     * 
+     * @return integer A value from the Cardinality enumeration.
+     */
+    public function getCardinality();
 }

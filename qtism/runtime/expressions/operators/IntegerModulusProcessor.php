@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\IntegerModulus;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -81,11 +82,11 @@ class IntegerModulusProcessor extends OperatorProcessor {
 		$operand1 = $operands[0];
 		$operand2 = $operands[1];
 		
-		if ($operand2 == 0) {
+		if ($operand2->getValue() == 0) {
 			// modulus by zero forbidden.
 			return null;
 		}
 		
-		return intval($operand1 % $operand2);
+		return new Integer(intval($operand1->getValue() % $operand2->getValue()));
 	}
 }

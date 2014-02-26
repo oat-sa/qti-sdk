@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Float;
 use qtism\data\expressions\MathEnumeration;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\MathConstant;
@@ -59,10 +60,10 @@ class MathConstantProcessor extends ExpressionProcessor {
 	public function process() {
 		$expr = $this->getExpression();
 		if ($expr->getName() === MathEnumeration::E) {
-			return M_E;
+			return new Float(M_E);
 		}
 		else {
-			return M_PI;
+			return new Float(M_PI);
 		}
 	}
 }

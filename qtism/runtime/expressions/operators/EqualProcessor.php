@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\Expression;
@@ -103,7 +105,7 @@ class EqualProcessor extends OperatorProcessor {
 		$expression = $this->getExpression();
 		
 		if ($expression->getToleranceMode() === ToleranceMode::EXACT) {
-			return $operand1 == $operand2;
+			return new Boolean($operand1->getValue() == $operand2->getValue());
 		}
 		else {
 			$tolerance = $expression->getTolerance();
@@ -121,43 +123,43 @@ class EqualProcessor extends OperatorProcessor {
 					$msg = "The variable with name '${tolerance0Name}' could not be resolved.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 				}
-				else if (!is_float($varValue)) {
+				else if (!$varValue instanceof Float) {
 					$msg = "The variable with name '${tolerance0Name}' is not a float.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 				}
 				
-				$tolerance[] = $varValue;
+				$tolerance[] = $varValue->getValue();
 				
 				if (isset($strTolerance[1]) && gettype($strTolerance[1]) === 'string') {
 					// A second variableRef to handle.
 					$tolerance1Name = Utils::sanitizeVariableRef($strTolerance[1]);
 					
-					if (($varValue = $state[$tolerance1Name]) !== null && is_float($varValue)) {
-						$tolerance[] = $varValue;
+					if (($varValue = $state[$tolerance1Name]) !== null && $varValue instanceof Float) {
+						$tolerance[] = $varValue->getValue();
 					}
 				}
 			}
 			
 			if ($expression->getToleranceMode() === ToleranceMode::ABSOLUTE) {
 				
-				$t0 = $operand1 - $tolerance[0];
-				$t1 = $operand1 + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]);
+				$t0 = $operand1->getValue() - $tolerance[0];
+				$t1 = $operand1->getValue() + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]);
 					
-				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2 >= $t0 : $operand2 > $t0;
-				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2 <= $t1 : $operand2 < $t1;
+				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
+				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
 					
-				return $moreThanLower && $lessThanUpper;
+				return new Boolean($moreThanLower && $lessThanUpper);
 			}
 			else {
 				// Tolerance mode RELATIVE
 				$tolerance = $expression->getTolerance();
-				$t0 = $operand1 * (1 - $tolerance[0] / 100);
-				$t1 = $operand1 * (1 + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]) / 100);
+				$t0 = $operand1->getValue() * (1 - $tolerance[0] / 100);
+				$t1 = $operand1->getValue() * (1 + ((isset($tolerance[1])) ? $tolerance[1] : $tolerance[0]) / 100);
 					
-				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2 >= $t0 : $operand2 > $t0;
-				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2 <= $t1 : $operand2 < $t1;
+				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
+				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
 					
-				return $moreThanLower && $lessThanUpper;
+				return new Boolean($moreThanLower && $lessThanUpper);
 			}
 		}
 	}

@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Float;
+
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -93,7 +95,7 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 						
 						// -- Null value, nothing will match
 						if ($var->isNull()) {
-							return $areaMapping->getDefaultValue();
+							return new Float($areaMapping->getDefaultValue());
 						}
 						
 						if ($var->isSingle()) {
@@ -120,18 +122,18 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 						
 						// If no relevant mapping found, return the default.
 						if (count($mapped) === 0) {
-							return $areaMapping->getDefaultValue();
+							return new Float($areaMapping->getDefaultValue());
 						}
 						else {
 							// Check upper and lower bound.
 							if ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
-								return $areaMapping->getLowerBound();
+								return new Float($areaMapping->getLowerBound());
 							}
 							else if ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
-								return $areaMapping->getUpperBound();
+								return new Float($areaMapping->getUpperBound());
 							}
 							else {
-								return floatval($result);
+								return new Float(floatval($result));
 							}
 						}
 					}

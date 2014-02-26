@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberResponded;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -77,6 +78,6 @@ class NumberRespondedProcessor extends ItemSubsetProcessor {
 	        }
 	    }
 	    
-	    return $numberResponded;
+	    return new Integer($numberResponded);
 	}
 }

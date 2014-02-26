@@ -24,6 +24,8 @@
  */
 namespace qtism\common\datatypes;
 
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use qtism\common\Comparable;
 use qtism\common\collections\IntegerCollection;
 use \InvalidArgumentException;
@@ -158,5 +160,13 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 	
 	public function equals($obj) {
 	    return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+	}
+	
+	public function getBaseType() {
+	    return BaseType::COORDS;
+	}
+	
+	public function getCardinality() {
+	    return Cardinality::SINGLE;
 	}
 }

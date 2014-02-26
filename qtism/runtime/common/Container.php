@@ -33,6 +33,7 @@ use qtism\common\datatypes\Duration;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\utils\Format;
 use qtism\common\Comparable;
+use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 
 /**
@@ -194,7 +195,7 @@ class Container extends AbstractCollection implements Comparable {
 	public static function createFromDataModel(ValueCollection $valueCollection) {
 		$container = new static();
 		foreach ($valueCollection as $value) {
-			$container[] = $value->getValue();
+			$container[] = RuntimeUtils::valueToRuntime($value);
 		}
 		return $container;
 	}

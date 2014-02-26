@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomInteger;
 use \InvalidArgumentException;
@@ -69,9 +70,9 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 		$step = $expr->getStep();
 		$state = $this->getState();
 
-		$min = (gettype($min) === 'integer') ? $min : $state[Utils::sanitizeVariableRef($min)];
-		$max = (gettype($max) === 'integer') ? $max : $state[Utils::sanitizeVariableRef($max)];
-		$step = (gettype($step) === 'integer') ? $step : $state[Utils::sanitizeVariableRef($step)];
+		$min = (gettype($min) === 'integer') ? $min : $state[Utils::sanitizeVariableRef($min)]->getValue();
+		$max = (gettype($max) === 'integer') ? $max : $state[Utils::sanitizeVariableRef($max)]->getValue();
+		$step = (gettype($step) === 'integer') ? $step : $state[Utils::sanitizeVariableRef($step)]->getValue();
 		
 		if (gettype($min) === 'integer' && gettype($max) === 'integer' && gettype($step) === 'integer') {
 			if ($min > $max) {
@@ -80,12 +81,12 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 			}
 			
 			if ($step === 1) {
-				return mt_rand($min, $max);
+				return new Integer(mt_rand($min, $max));
 			}
 			else {
 				$distance = ($min < 0) ? ($max + abs($min)) : ($max - $min);
 				$mult = mt_rand(0, intval(floor($distance / $step)));
-				$random = $min + ($mult * $step);
+				$random = new Integer($min + ($mult * $step));
 				return $random;
 			}
 		}

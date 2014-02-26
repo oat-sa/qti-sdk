@@ -23,7 +23,7 @@ class RuleEngineTest extends QtiSmTestCase {
 		$this->assertSame(null, $context['outcome1']);
 		
 		$engine->process();		
-		$this->assertEquals(1337, $context['outcome1']);
+		$this->assertEquals(1337, $context['outcome1']->getValue());
 	}
 	
 	public function testLookupOutcomeValue() {
@@ -49,7 +49,7 @@ class RuleEngineTest extends QtiSmTestCase {
 		$this->assertSame(null, $context['outcome1']);
 	
 		$engine->process();
-		$this->assertEquals('String2!', $context['outcome1']);
+		$this->assertEquals('String2!', $context['outcome1']->getValue());
 	}
 	
 	// And it will work for others... x)

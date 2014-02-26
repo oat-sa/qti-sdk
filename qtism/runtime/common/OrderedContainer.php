@@ -24,10 +24,11 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\Comparable;
 
-class OrderedContainer extends MultipleContainer {
+class OrderedContainer extends MultipleContainer implements QtiDatatype {
 	
 	public function equals($obj) {
 		$countA = count($this);

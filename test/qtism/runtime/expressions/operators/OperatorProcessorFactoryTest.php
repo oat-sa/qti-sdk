@@ -1,4 +1,5 @@
 <?php
+use qtism\common\datatypes\Integer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -18,11 +19,11 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		);
 		
 		$factory = new OperatorProcessorFactory();
-		$operands = new OperandsCollection(array(2, 2));
+		$operands = new OperandsCollection(array(new Integer(2), new Integer(2)));
 		$processor = $factory->createProcessor($expression, $operands);
 		$this->assertInstanceOf('qtism\\runtime\\expressions\\operators\\SumProcessor', $processor);
 		$this->assertEquals('sum', $processor->getExpression()->getQtiClassName());
-		$this->assertEquals(4, $processor->process()); // x)
+		$this->assertEquals(4, $processor->process()->getValue()); // x)
 	}
 	
 	public function testInvalidOperatorClass() {

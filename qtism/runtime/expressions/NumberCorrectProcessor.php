@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberCorrect;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -75,6 +76,6 @@ class NumberCorrectProcessor extends ItemSubsetProcessor {
 	        }
 	    }
 	    
-	    return $numberCorrect;
+	    return new Integer($numberCorrect);
 	}
 }

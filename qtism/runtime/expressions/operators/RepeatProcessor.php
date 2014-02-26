@@ -24,8 +24,9 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
-
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -92,12 +93,12 @@ class RepeatProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved.";
 				throw new OperatorProcessingException($msg, $this);
 			}
-			else if (is_int($varValue) === false) {
+			else if ($varValue instanceof Integer) {
 				$msg = "The variable with name '${varName}' is not an integer value.";
 				throw new OperatorProcessingException($msg, $this);
 			}
 			
-			$numberRepeats = $varValue;
+			$numberRepeats = $varValue->getValue();
 		}
 		
 		if ($numberRepeats < 1) {
@@ -116,7 +117,7 @@ class RepeatProcessor extends OperatorProcessor {
 				}
 				
 				// Check cardinality.
-				if ($i === 0 && !$operand instanceof OrderedContainer && !RuntimeUtils::isRuntimeCompliant($operand)) {
+				if ($operand->getCardinality() !== Cardinality::SINGLE && $operand->getCardinality() !== Cardinality::ORDERED) {
 					$msg = "The Repeat operator only accepts operands with a single or ordered cardinality.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 				}
@@ -124,7 +125,7 @@ class RepeatProcessor extends OperatorProcessor {
 				// Check baseType.
 				$currentType = RuntimeUtils::inferBaseType($operand);
 
-				if ($i === 0 && $refType !== null && RuntimeUtils::areBaseTypesCompliant($currentType, $refType) === false) {
+				if ($refType !== null && $currentType !== $refType) {
 					$msg = "The Repeat operator only accepts operands with the same baseType.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 				}
@@ -136,11 +137,11 @@ class RepeatProcessor extends OperatorProcessor {
 				// Okay we are good...
 				$operandCardinality = RuntimeUtils::inferCardinality($operand);
 				if ($operandCardinality !== Cardinality::ORDERED) {
-					$operand = new OrderedContainer($currentType, array(RuntimeUtils::juggle($operand, $currentType)));
+					$operand = new OrderedContainer($currentType, array($operand));
 				}
 				
 				foreach ($operand as $o) {
-					$result[] = (gettype($o) === 'object') ? clone $o : $o;
+					$result[] = ($o instanceof QtiDatatype) ? clone $o : $o;
 				}
 			}
 		}

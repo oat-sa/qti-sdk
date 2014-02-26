@@ -5,7 +5,7 @@ use qtism\runtime\expressions\NullProcessor;
 
 class NullProcessorTest extends QtiSmTestCase {
 	
-	public function testBaseValue() {
+	public function testNullProcessor() {
 		$nullExpression = $this->createComponentFromXml('<null/>');
 		$nullProcessor = new NullProcessor($nullExpression);
 		$result = $nullProcessor->process();

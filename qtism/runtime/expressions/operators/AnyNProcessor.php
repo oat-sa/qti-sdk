@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\AnyN;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils;
@@ -77,7 +79,7 @@ class AnyNProcessor extends OperatorProcessor {
 		
 		// @todo write a generic method to retrieve variable references.
 		
-		if (gettype($min) === 'string') {
+		if (is_string($min) === true) {
 			// variable reference for 'min' to handle.
 			$state = $this->getState();
 			$varName = Utils::sanitizeVariableRef($min);
@@ -87,16 +89,16 @@ class AnyNProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (gettype($varValue) !== 'integer') {
+			else if (!$varValue instanceof Integer) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 			}
 			else {
-				$min = $varValue;
+				$min = $varValue->getValue();
 			}
 		}
 		
-		if (gettype($max) === 'string') {
+		if (is_string($max) === true) {
 			// variable reference for 'max' to handle.
 			$state = $this->getState();
 			$varName = Utils::sanitizeVariableRef($max);
@@ -106,12 +108,12 @@ class AnyNProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (gettype($varValue) !== 'integer') {
+			else if (!$varValue instanceof Integer) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
 			else {
-				$max = $varValue;
+				$max = $varValue->getValue();
 			}
 		}
 		
@@ -123,8 +125,8 @@ class AnyNProcessor extends OperatorProcessor {
 				$nullCount++;
 				continue;
 			}
-			else if (is_bool($operand)) {
-				if ($operand === true) {
+			else if ($operand instanceof Boolean) {
+				if ($operand->getValue() === true) {
 					$trueCount++;
 				}
 			}
@@ -136,7 +138,7 @@ class AnyNProcessor extends OperatorProcessor {
 		}
 		
 		if ($trueCount >= $min && $trueCount <= $max) {
-			return true;
+			return new Boolean(true);
 		}
 		else {
 			// Should we return false or null?
@@ -145,7 +147,7 @@ class AnyNProcessor extends OperatorProcessor {
 				return null;
 			}
 			else {
-				return false;
+				return new Boolean(false);
 			}
 		}
 	}
