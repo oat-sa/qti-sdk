@@ -168,13 +168,23 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	public function setBaseType($baseType) {
-		if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
+		if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
 			$this->baseType = $baseType;
 		}
 		else {
 			$msg = "BaseType must be a value from the BaseType enumeration.";
 			throw new InvalidArgumentException($msg);
 		}
+	}
+	
+	/**
+	 * Whether or not the baseType attribute is defined for this
+	 * VariableDeclaration.
+	 * 
+	 * @return boolean
+	 */
+	public function hasBaseType() {
+	    return $this->getBaseType() !== -1;
 	}
 	
 	/**
@@ -195,6 +205,15 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 */
 	public function setDefaultValue(DefaultValue $defaultValue = null) {
 		$this->defaultValue = $defaultValue;
+	}
+	
+	/**
+	 * Whether or not a DefaultValue object is contained by the VariableDeclaration.
+	 * 
+	 * @return boolean
+	 */
+	public function hasDefaultValue() {
+	    return $this->getDefaultValue() !== null;
 	}
 	
 	/**

@@ -168,6 +168,59 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[1]->getValue());
 	}
 	
+	public function testUnmarshallRecord() {
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML(
+			'
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclarationRec" cardinality="record">
+				<defaultValue interpretation="Just to test records...">
+					<value fieldIdentifier="A" baseType="duration">P2D</value>
+					<value fieldIdentifier="B" baseType="identifier">identifier1</value>
+		            <value fieldIdentifier="C" baseType="float">1.11</value>
+				</defaultValue>
+			</outcomeDeclaration>
+			'
+		);
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$component = $marshaller->unmarshall($element);
+		
+	    $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
+		$this->assertEquals($component->getIdentifier(), 'outcomeDeclarationRec');
+		$this->assertEquals($component->getCardinality(), Cardinality::RECORD);
+		$this->assertEquals($component->getBaseType(), -1);
+		$this->assertFalse($component->hasBaseType());
+		
+		$this->assertTrue($component->hasDefaultValue());
+		$defaultValue = $component->getDefaultValue();
+		$this->assertEquals('Just to test records...', $defaultValue->getInterpretation());
+		
+		$values = $defaultValue->getValues();
+		$this->assertEquals(3, count($values));
+		
+		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
+		$this->assertTrue($values[0]->hasFieldIdentifier());
+		$this->assertTrue($values[0]->hasBaseType());
+		$this->assertEquals('A', $values[0]->getFieldIdentifier());
+		$this->assertEquals(BaseType::DURATION, $values[0]->getBaseType());
+		$this->assertTrue($values[0]->getValue()->equals(new Duration('P2D')));
+		
+		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
+		$this->assertTrue($values[1]->hasFieldIdentifier());
+		$this->assertTrue($values[1]->hasBaseType());
+		$this->assertEquals('B', $values[1]->getFieldIdentifier());
+		$this->assertEquals(BaseType::IDENTIFIER, $values[1]->getBaseType());
+		$this->assertEquals('identifier1', $values[1]->getValue());
+		
+		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[2]);
+		$this->assertTrue($values[2]->hasFieldIdentifier());
+		$this->assertTrue($values[2]->hasBaseType());
+		$this->assertEquals('C', $values[2]->getFieldIdentifier());
+		$this->assertEquals(BaseType::FLOAT, $values[2]->getBaseType());
+		$this->assertEquals(1.11, $values[2]->getValue());
+	}
+	
 	public function testUnmarshallMatchTable() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(

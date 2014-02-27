@@ -22,7 +22,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase {
 	    $divElt = $rendering->documentElement;
 	    $this->assertEquals('div', $divElt->nodeName);
 	    $this->assertEquals('my-div', $divElt->getAttribute('id'));
-	    $this->assertEquals('container', $divElt->getAttribute('class'));
+	    $this->assertEquals('container qti-bodyElement qti-div', $divElt->getAttribute('class'));
 	    
 	    $text = $divElt->firstChild;
 	    $this->assertInstanceOf('\\DOMText', $text);

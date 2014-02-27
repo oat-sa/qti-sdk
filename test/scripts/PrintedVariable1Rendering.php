@@ -1,5 +1,5 @@
 <?php
-
+use qtism\common\datatypes\String;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\TemplateVariable;
@@ -14,12 +14,12 @@ $doc->load('../samples/rendering/printedvariable_1.xml');
 
 $renderer = new XhtmlRenderingEngine();
 $state = new State();
-$state->setVariable(new TemplateVariable('TPL_H', Cardinality::SINGLE, BaseType::STRING, 'Bubble Gum'));
-$state->setVariable(new TemplateVariable('TPL_He', Cardinality::SINGLE, BaseType::STRING, 'Bacta'));
-$state->setVariable(new TemplateVariable('TPL_C', Cardinality::SINGLE, BaseType::STRING, 'Cola'));
-$state->setVariable(new TemplateVariable('TPL_O', Cardinality::SINGLE, BaseType::STRING, 'Meat'));
-$state->setVariable(new TemplateVariable('TPL_N', Cardinality::SINGLE, BaseType::STRING, 'Potatoes'));
-$state->setVariable(new TemplateVariable('TPL_Cl', Cardinality::SINGLE, BaseType::STRING, 'Candies'));
+$state->setVariable(new TemplateVariable('TPL_H', Cardinality::SINGLE, BaseType::STRING, new String('Bubble Gum')));
+$state->setVariable(new TemplateVariable('TPL_He', Cardinality::SINGLE, BaseType::STRING, new String('Bacta')));
+$state->setVariable(new TemplateVariable('TPL_C', Cardinality::SINGLE, BaseType::STRING, new String('Cola')));
+$state->setVariable(new TemplateVariable('TPL_O', Cardinality::SINGLE, BaseType::STRING, new String('Meat')));
+$state->setVariable(new TemplateVariable('TPL_N', Cardinality::SINGLE, BaseType::STRING, new String('Potatoes')));
+$state->setVariable(new TemplateVariable('TPL_Cl', Cardinality::SINGLE, BaseType::STRING, new String('Candies')));
 
 if (isset($argv[1]) && trim(strtolower($argv[1])) === 'context_aware') {
     $renderer->setPrintedVariablePolicy(XhtmlRenderingEngine::CONTEXT_AWARE);

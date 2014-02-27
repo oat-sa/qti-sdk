@@ -34,6 +34,9 @@ use \DOMDocumentFragment;
 /**
  * BodyElement renderer.
  * 
+ * This rendered will add the 'qti-bodyElement' class to the rendered
+ * elements.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
@@ -45,6 +48,8 @@ class BodyElementRenderer extends AbstractXhtmlRenderer {
     
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
+        $this->additionalClass('qti-bodyElement');
+        $this->additionalClass('qti-' . $component->getQtiClassName());
         
         if ($component->hasId() === true) {
             $fragment->firstChild->setAttribute('id', $component->getId());

@@ -60,7 +60,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshallTwo() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
-				'
+			'
 			<defaultValue xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
 				<value>A B</value>
 				<value>C D</value>
@@ -82,5 +82,52 @@ class DefaultValueMarshallerTest extends QtiSmTestCase {
 			$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value->getValue());
 			$this->assertFalse($value->isPartOfRecord());
 		}
+	}
+	
+	public function testUnmarshallThree() {
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML(
+	        '
+			<defaultValue xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+				<value>choiceA</value>
+				<value>choiceB</value>
+	            <value>choiceC</value>
+	            <value>choiceD</value>
+			</defaultValue>
+			'
+	    );
+	    $element = $dom->documentElement;
+	    
+	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::IDENTIFIER));
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $valuesCollection = $component->getValues();
+	    $this->assertInstanceOf('qtism\\data\\state\\DefaultValue', $component);
+	    $this->assertEquals('', $component->getInterpretation());
+	    $this->assertEquals(4, count($component->getValues()));
+	    
+	    $this->assertInstanceOf('qtism\\data\\state\\Value', $valuesCollection[0]);
+	    $this->assertEquals('choiceA', $valuesCollection[0]->getValue());
+	    $this->assertTrue($valuesCollection[0]->hasBaseType());
+	    $this->assertEquals(BaseType::IDENTIFIER, $valuesCollection[0]->getBaseType());
+	    $this->assertFalse($valuesCollection[0]->hasFieldIdentifier());
+	    
+	    $this->assertInstanceOf('qtism\\data\\state\\Value', $valuesCollection[1]);
+	    $this->assertEquals('choiceB', $valuesCollection[1]->getValue());
+	    $this->assertTrue($valuesCollection[1]->hasBaseType());
+	    $this->assertEquals(BaseType::IDENTIFIER, $valuesCollection[1]->getBaseType());
+	    $this->assertFalse($valuesCollection[1]->hasFieldIdentifier());
+	    
+	    $this->assertInstanceOf('qtism\\data\\state\\Value', $valuesCollection[2]);
+	    $this->assertEquals('choiceC', $valuesCollection[2]->getValue());
+	    $this->assertTrue($valuesCollection[2]->hasBaseType());
+	    $this->assertEquals(BaseType::IDENTIFIER, $valuesCollection[2]->getBaseType());
+	    $this->assertFalse($valuesCollection[2]->hasFieldIdentifier());
+	    
+	    $this->assertInstanceOf('qtism\\data\\state\\Value', $valuesCollection[3]);
+	    $this->assertEquals('choiceD', $valuesCollection[3]->getValue());
+	    $this->assertTrue($valuesCollection[3]->hasBaseType());
+	    $this->assertEquals(BaseType::IDENTIFIER, $valuesCollection[3]->getBaseType());
+	    $this->assertFalse($valuesCollection[3]->hasFieldIdentifier());
 	}
 }

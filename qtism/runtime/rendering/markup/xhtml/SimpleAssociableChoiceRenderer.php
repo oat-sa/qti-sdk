@@ -58,7 +58,7 @@ class SimpleAssociableChoiceRenderer extends ChoiceRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-simpleAssociableChoice');
         
-        $fragment->firstChild->setAttribute('match-max', $component->getMatchMax());
-        $fragment->firstChild->setAttribute('match-min', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
+        $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
     }
 }

@@ -154,6 +154,15 @@ class Value extends QtiComponent {
 	}
 	
 	/**
+	 * Whether or not a field identifier is defined.
+	 * 
+	 * @return boolean
+	 */
+	public function hasFieldIdentifier() {
+	    return $this->getFieldIdentifier() !== '';
+	}
+	
+	/**
 	 * Get the BaseType of the value.
 	 * 
 	 * @return int A value of the BaseType enumeration or a negative value (< 0) if there is no baseType.
@@ -169,13 +178,22 @@ class Value extends QtiComponent {
 	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType operation.
 	 */
 	public function setBaseType($baseType) {
-		if (in_array($baseType, BaseType::asArray()) || $baseType < 0) {
+		if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
 			$this->baseType = $baseType;
 		}
 		else {
 			$msg = "'${baseType}' is not a value from the BaseType enumeration.";
 			throw new InvalidArgumentException($msg);
 		}
+	}
+	
+	/**
+	 * Whether the value has a defined baseType.
+	 * 
+	 * @return boolean
+	 */
+	public function hasBaseType() {
+	    return $this->getBaseType() !== -1;
 	}
 	
 	/**

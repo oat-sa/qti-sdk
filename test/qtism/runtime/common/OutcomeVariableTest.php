@@ -139,6 +139,27 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertTrue($defaultValue[1]->equals(new Pair('B', 'C')));
 	}
 	
+	public function testCreateFromVariableDeclarationDefaultValueRecordCardinality() {
+	    $factory = $this->getMarshallerFactory();
+	    $element = $this->createDOMElement('
+			<outcomeDeclaration identifier="outcome1" cardinality="record">
+				<defaultValue>
+					<value fieldIdentifier="A" baseType="pair">A B</value>
+					<value fieldIdentifier="B" baseType="float">1.11</value>
+				</defaultValue>
+			</outcomeDeclaration>
+		');
+	    $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
+	    $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+	    
+	    $defaultValue = $outcomeVariable->getDefaultValue();
+	    $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
+	    $this->assertEquals(2, count($defaultValue));
+	    
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $defaultValue['A']);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $defaultValue['B']);
+	}
+	
 	public function testCreateFromVariableDeclarationExtended() {
 		$factory = $this->getMarshallerFactory();
 		$element = $this->createDOMElement('
