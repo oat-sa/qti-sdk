@@ -24,7 +24,6 @@
 namespace qtism\data\storage\php;
 
 use qtism\common\datatypes\Coords;
-
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
@@ -40,7 +39,7 @@ use qtism\data\storage\php\marshalling\PhpArrayMarshaller;
 use qtism\common\beans\Bean;
 use qtism\common\collections\AbstractCollection;
 use qtism\data\storage\php\marshalling\PhpScalarMarshaller;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\Utils as PhpUtils;
@@ -81,7 +80,7 @@ class PhpDocument extends QtiDocument {
         
         try {
             // marshalling context.
-            $stream = new BinaryStream();
+            $stream = new MemoryStream();
             $stream->open();
             $streamAccess = new PhpStreamAccess($stream);
             $streamAccess->writeOpeningTag();

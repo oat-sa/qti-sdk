@@ -28,7 +28,7 @@ use qtism\data\AssessmentTest;
 
 use qtism\data\Document;
 use qtism\runtime\tests\AssessmentTestSession;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use \RuntimeException;
 
 /**
@@ -47,10 +47,10 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      * the temporary directory of the file system.
      * 
      * @param AssessmentTestSession The AssessmentTestSession to be persisted.
-     * @param BinaryStream The BinaryStream to be stored in the temporary directory of the host file system.
+     * @param MemoryStream The MemoryStream to be stored in the temporary directory of the host file system.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
-    protected function persistStream(AssessmentTestSession $assessmentTestSession, BinaryStream $stream) {
+    protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream) {
         
         $sessionId = $assessmentTestSession->getSessionId();
         
@@ -69,7 +69,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      * 
      * @param AssessmentTest $assessmentTest The AssessmentTest the retrieved AssessmentTestSession was instantiated from.
      * @param string $sessionId The session ID of the AssessmentTestSession to retrieve.
-     * @return BinaryStream A BinaryStream object.
+     * @return MemoryStream A MemoryStream object.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
     protected function getRetrievalStream(AssessmentTest $assessmentTest, $sessionId) {
@@ -83,6 +83,6 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
             throw new RuntimeException($msg);
         }
         
-        return new BinaryStream($read);
+        return new MemoryStream($read);
     }
 }

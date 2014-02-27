@@ -1,12 +1,9 @@
 <?php
 
 use qtism\common\datatypes\Point;
-
 use qtism\common\datatypes\Shape;
-
 use qtism\common\datatypes\Coords;
-
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
 use \RuntimeException;
@@ -34,7 +31,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
     public function setUp() {
         parent::setUp();
         
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $this->setStreamAccess(new PhpStreamAccess($stream));
     }

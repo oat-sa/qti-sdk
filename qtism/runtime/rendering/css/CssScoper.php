@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -26,8 +26,8 @@ namespace qtism\runtime\rendering\css;
 
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
-use qtism\common\storage\BinaryStream;
-use qtism\common\storage\BinaryStreamException;
+use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
 
 class CssScoper implements Renderable {
 	
@@ -92,7 +92,7 @@ class CssScoper implements Renderable {
 	/**
 	 * The stream to read.
 	 * 
-	 * @var BinaryStream
+	 * @var MemoryStream
 	 */
 	private $stream;
 	
@@ -202,7 +202,7 @@ class CssScoper implements Renderable {
             	
             	$this->afterCharReading($char);
         	}
-        	catch (BinaryStreamException $e) {
+        	catch (MemoryStreamException $e) {
         	    $stream->close();
         		$msg = "An unexpected error occured while reading the CSS file '${file}'.";
         		throw new RenderingException($msg, RenderingException::RUNTIME, $e);
@@ -225,7 +225,7 @@ class CssScoper implements Renderable {
     	$this->setPreviousSignificantChar(false);
     	
     	if (($data = @file_get_contents($file)) !== false) {
-    		$stream = new BinaryStream($data);
+    		$stream = new MemoryStream($data);
     		$stream->open();
     		$this->setStream($stream);
     	}
@@ -273,16 +273,16 @@ class CssScoper implements Renderable {
     /**
      * Set the stream to be read.
      * 
-     * @param BinaryStream $stream
+     * @param MemoryStream $stream
      */
-    protected function setStream(BinaryStream $stream) {
+    protected function setStream(MemoryStream $stream) {
     	$this->stream = $stream;
     }
     
     /**
      * Get the stream to be read.
      * 
-     * @return BinaryStream
+     * @return MemoryStream
      */
     protected function getStream() {
     	return $this->stream;

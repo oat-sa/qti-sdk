@@ -34,7 +34,7 @@ use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\AssessmentTest;
 use qtism\runtime\storage\common\AbstractStorage;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use \SplObjectStorage;
 use \Exception;
 use \RuntimeException;
@@ -126,7 +126,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         
         try {
             
-            $stream = new BinaryStream();
+            $stream = new MemoryStream();
             $stream->open();
             $access = new QtiBinaryStreamAccess($stream);
             
@@ -263,25 +263,25 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     }
     
     /**
-     * Get the BinaryStream that has to be used to retrieve an AssessmentTestSession.
+     * Get the MemoryStream that has to be used to retrieve an AssessmentTestSession.
      * 
      * Be careful, the implementation of this method must not open the given $stream.
      * 
      * @param AssessmentTest The AssessmentTestDefinition that defines the AssessmentTestSession to be retrieved.
      * @param string $sessionId A test session identifier.
      * @throws RuntimeException If an error occurs.
-     * @return BinaryStream A BinaryStream object.
+     * @return MemoryStream A MemoryStream object.
      */
     abstract protected function getRetrievalStream(AssessmentTest $assessmentTest, $sessionId);
     
     /**
-     * Persist A BinaryStream that contains the binary data representing $assessmentTestSession
+     * Persist A MemoryStream that contains the binary data representing $assessmentTestSession
      * in an appropriate location.
      * 
      * Be careful, the implementation of this method must not close the given $stream.
      * 
      * @param AssessmentTestSession $assessmentTestSession An AssessmentTestSession object.
-     * @param BinaryStream $stream An open BinaryStream object.
+     * @param MemoryStream $stream An open MemoryStream object.
      */
-    abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, BinaryStream $stream);
+    abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream);
 }

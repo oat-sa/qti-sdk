@@ -4,7 +4,7 @@ use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\data\storage\php\PhpStreamAccess;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use qtism\common\storage\IStream;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -14,23 +14,23 @@ class PhpStreamAccessTest extends QtiSmTestCase {
     /**
      * A stream to be used in each test of this test case.
      * 
-     * @var BinaryStream
+     * @var MemoryStream
      */
     private $stream;
     
     /**
      * Set the stream to be used in each test of this test case.
      * 
-     * @param BinaryStream $stream
+     * @param MemoryStream $stream
      */
-    protected function setStream(BinaryStream $stream) {
+    protected function setStream(MemoryStream $stream) {
         $this->stream = $stream;
     }
     
     /**
      * Get the stream to be used in each test of this test case.
      * 
-     * @return BinaryStream
+     * @return MemoryStream
      */
     protected function getStream() {
         return $this->stream;
@@ -39,7 +39,7 @@ class PhpStreamAccessTest extends QtiSmTestCase {
     public function setUp() {
         parent::setUp();
         
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $this->setStream($stream);
     }

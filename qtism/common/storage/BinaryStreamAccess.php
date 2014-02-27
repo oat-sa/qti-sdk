@@ -342,13 +342,13 @@ class BinaryStreamAccess extends AbstractStreamAccess {
         $strAction = ($read === true) ? 'reading' : 'writing';
         
         switch ($e->getCode()) {
-            case BinaryStreamException::NOT_OPEN:
+            case StreamException::NOT_OPEN:
                 $strAction = ucfirst($strAction);
                 $msg = "${strAction} a ${strType} from a closed binary stream is impossible.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
                 break;
         
-            case BinaryStreamException::READ:
+            case StreamException::READ:
                 $msg = "An error occured while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
                 break;

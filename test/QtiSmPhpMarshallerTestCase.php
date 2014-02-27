@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\PhpStreamAccess;
 
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
@@ -19,14 +19,14 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase {
     /**
      * A stream
      * 
-     * @var BinaryStream
+     * @var MemoryStream
      */
     private $stream;
     
 	public function setUp() {
 	    parent::setUp();
 	    
-	    $stream = new BinaryStream();
+	    $stream = new MemoryStream();
 	    $stream->open();
 	    $this->setStream($stream);
 	    $this->setStreamAccess(new PhpStreamAccess($this->getStream()));
@@ -48,13 +48,13 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase {
 	    return $ctx;
 	}
 	
-	protected function setStream(BinaryStream $stream) {
+	protected function setStream(MemoryStream $stream) {
 	    $this->stream = $stream;
 	}
 	
 	/**
 	 * 
-	 * @return BinaryStream
+	 * @return MemoryStream
 	 */
 	protected function getStream() {
 	    return $this->stream;

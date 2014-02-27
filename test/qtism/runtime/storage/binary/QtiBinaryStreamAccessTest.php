@@ -29,7 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\Variable;
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 
@@ -45,7 +45,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
      * @param mixed $expectedValue
      */
     public function testReadVariableValue(Variable $variable, $binary, $expectedValue) {
-        $stream = new BinaryStream($binary);
+        $stream = new MemoryStream($binary);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         $access->readVariableValue($variable);
@@ -171,7 +171,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
      * @param Variable $variable
      */
     public function testWriteVariableValue(Variable $variable) {
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
@@ -380,7 +380,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
         $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
-        $stream = new BinaryStream($bin);
+        $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
@@ -408,7 +408,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
@@ -444,7 +444,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $bin .= "\x00"; // branchrules-count = 0
         $bin .= "\x00"; // preconditions-count = 0
         
-        $stream = new BinaryStream($bin);
+        $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
@@ -463,7 +463,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
@@ -498,7 +498,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $bin.= pack('S', 0); // item-tree-position = 0
         $bin.= "\x00"; // occurence = 0
         
-        $stream = new BinaryStream($bin);
+        $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         
@@ -520,7 +520,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
-        $stream = new BinaryStream();
+        $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream);
         

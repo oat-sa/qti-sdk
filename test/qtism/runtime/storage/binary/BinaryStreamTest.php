@@ -1,8 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\storage\BinaryStream;
-use qtism\common\storage\BinaryStreamException;
+use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
 
 class BinaryStreamTest extends QtiSmTestCase {
 	
@@ -20,8 +20,8 @@ class BinaryStreamTest extends QtiSmTestCase {
     
     public function setUp() {
         parent::setUp();
-        $this->basicStream =  new BinaryStream('binary-data');
-        $this->emptyStream = new BinaryStream();
+        $this->basicStream =  new MemoryStream('binary-data');
+        $this->emptyStream = new MemoryStream();
     }
     
     public function tearDown() {
@@ -32,7 +32,7 @@ class BinaryStreamTest extends QtiSmTestCase {
     
     public function testInstantiate() {
         $stream = $this->getBasicStream();
-        $this->assertInstanceOf('qtism\\common\\storage\\BinaryStream', $stream);
+        $this->assertInstanceOf('qtism\\common\\storage\\MemoryStream', $stream);
         
         $this->assertEquals('binary-data', $stream->getBinary());
         $this->assertFalse($stream->isOpen());
@@ -49,8 +49,8 @@ class BinaryStreamTest extends QtiSmTestCase {
             // An exception must be thrown.
             $this->assertTrue(false);
         }
-        catch (BinaryStreamException $e) {
-            $this->assertEquals(BinaryStreamException::NOT_OPEN, $e->getCode());
+        catch (MemoryStreamException $e) {
+            $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
     
@@ -62,8 +62,8 @@ class BinaryStreamTest extends QtiSmTestCase {
             // An exception must be thrown.
             $this->assertTrue(false);
         }
-        catch (BinaryStreamException $e) {
-            $this->assertEquals(BinaryStreamException::NOT_OPEN, $e->getCode());
+        catch (MemoryStreamException $e) {
+            $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
     
@@ -110,7 +110,7 @@ class BinaryStreamTest extends QtiSmTestCase {
             $data = $stream->read(1);
             $this->assertTrue(false);
         }
-        catch (BinaryStreamException $e) {
+        catch (MemoryStreamException $e) {
             $this->assertTrue(true);
         }
         
@@ -170,8 +170,8 @@ class BinaryStreamTest extends QtiSmTestCase {
             // An exception must be thrown.
             $this->assertTrue(false);
         }
-        catch (BinaryStreamException $e) {
-            $this->assertEquals(BinaryStreamException::ALREADY_OPEN, $e->getCode());
+        catch (MemoryStreamException $e) {
+            $this->assertEquals(MemoryStreamException::ALREADY_OPEN, $e->getCode());
         }
     }
 }

@@ -1,10 +1,9 @@
 <?php
 
-use qtism\common\storage\BinaryStreamException;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\storage\BinaryStream;
+use qtism\common\storage\MemoryStream;
+use qtism\common\storage\MemoryStreamException;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\StreamException;
@@ -17,7 +16,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     public function setUp() {
         parent::setUp();
         
-        $this->emptyStream = new BinaryStream();
+        $this->emptyStream = new MemoryStream();
         $this->emptyStream->open();
     }
     
@@ -30,14 +29,14 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     /**
      * Get an open empty stream
      * 
-     * @return BinaryStream
+     * @return MemoryStream
      */
     public function getEmptyStream() {
         return $this->emptyStream;
     }
     
     public function testReadTinyInt() {
-        $stream = new BinaryStream("\x00\x01\x0A");
+        $stream = new MemoryStream("\x00\x01\x0A");
         $stream->open();
         
         $reader = new BinaryStreamAccess($stream);
@@ -88,7 +87,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     
     public function testReadDateTime() {
         $date = new DateTime('2013:09:04 09:37:09', new DateTimeZone('Europe/Luxembourg'));
-        $stream = new BinaryStream(pack('l', $date->getTimestamp()));
+        $stream = new MemoryStream(pack('l', $date->getTimestamp()));
         $stream->open();
         $access = new BinaryStreamAccess($stream);
         
@@ -117,7 +116,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadShort() {
-        $stream = new BinaryStream(pack('S', 0) . pack('S', 1) . pack ('S', 65535));
+        $stream = new MemoryStream(pack('S', 0) . pack('S', 1) . pack ('S', 65535));
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
@@ -178,7 +177,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadInt() {
-        $stream = new BinaryStream(pack('l', 0) . pack('l', 1) . pack('l', -1) . pack('l', 2147483647) . pack('l', -2147483648));
+        $stream = new MemoryStream(pack('l', 0) . pack('l', 1) . pack('l', -1) . pack('l', 2147483647) . pack('l', -2147483648));
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
@@ -245,7 +244,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadBool() {
-        $stream = new BinaryStream("\x00\x01");
+        $stream = new MemoryStream("\x00\x01");
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
@@ -284,7 +283,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadString() {
-        $stream = new BinaryStream(pack('S', 0) . '' . pack('S', 1) . 'A' . pack ('S', 6) . 'binary');
+        $stream = new MemoryStream(pack('S', 0) . '' . pack('S', 1) . 'A' . pack ('S', 6) . 'binary');
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         
@@ -332,7 +331,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
     }
     
     public function testReadFloat() {
-        $stream = new BinaryStream(pack('d', 0.0) . pack('d', -M_PI) . pack('d', M_2_PI));
+        $stream = new MemoryStream(pack('d', 0.0) . pack('d', -M_PI) . pack('d', M_2_PI));
         $stream->open();
         $reader = new BinaryStreamAccess($stream);
         

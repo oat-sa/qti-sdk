@@ -29,13 +29,13 @@ use qtism\common\storage\StreamException;
 use \Exception;
 
 /**
- * The BinaryStreamException represents errors that might occur while
- * dealing with a BinaryStream object.
+ * The MemoryStreamException represents errors that might occur while
+ * dealing with a MemoryStream object.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamException extends StreamException {
+class MemoryStreamException extends StreamException {
     
     /**
      * Create a new BinaryStreamException.
