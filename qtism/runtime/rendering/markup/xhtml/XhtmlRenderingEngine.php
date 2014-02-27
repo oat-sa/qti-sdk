@@ -68,6 +68,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('h4', $bodyElementRenderer);
         $this->registerRenderer('h5', $bodyElementRenderer);
         $this->registerRenderer('h6', $bodyElementRenderer);
+        $this->registerRenderer('kbd', $bodyElementRenderer);
         $this->registerRenderer('p', $bodyElementRenderer);
         $this->registerRenderer('pre', $bodyElementRenderer);
         $this->registerRenderer('samp', $bodyElementRenderer);
@@ -80,7 +81,6 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('ol', $bodyElementRenderer);
         $this->registerRenderer('ul', $bodyElementRenderer);
         $this->registerRenderer('li', $bodyElementRenderer);
-        $this->registerRenderer('object', $bodyElementRenderer);
         $this->registerRenderer('b', $bodyElementRenderer);
         $this->registerRenderer('big', $bodyElementRenderer);
         $this->registerRenderer('hr', $bodyElementRenderer);
