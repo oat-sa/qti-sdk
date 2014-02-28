@@ -25,13 +25,9 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\Scalar;
-
 use qtism\common\datatypes\Identifier;
-
 use qtism\common\datatypes\Integer;
-
 use qtism\data\state\Value;
-
 use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
