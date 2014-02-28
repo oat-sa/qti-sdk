@@ -17,6 +17,7 @@ class CssScoperTest extends QtiSmTestCase {
         $expected = file_get_contents($outputFile);
         $actual = $cssScoper->render($inputFile, $id);
         $this->assertEquals($expected, $actual);
+        //var_dump($actual);
     }
     
     public function testOutputProvider() {
@@ -38,6 +39,7 @@ class CssScoperTest extends QtiSmTestCase {
             array(self::samplesDir() . 'rendering/css/css_input15.css', self::samplesDir() . 'rendering/css/css_output15.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input16.css', self::samplesDir() . 'rendering/css/css_output16.css', 'myId'),
             array(self::samplesDir() . 'rendering/css/css_input17.css', self::samplesDir() . 'rendering/css/css_output17.css', 'myId', true),
+            array(self::samplesDir() . 'rendering/css/css_input18.css', self::samplesDir() . 'rendering/css/css_output18.css', 'myId', true),
         );
     }
 }

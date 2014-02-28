@@ -202,6 +202,7 @@ class CssScoper implements Renderable {
 	                                   'i' => 'qti-i',
 	                                   'small' => 'qti-small',
 	                                   'sub' => 'qti-sub',
+	                                   'sup' => 'qti-sup',
 	                                   'tt' => 'qti-tt',
 	                                   'table' => 'qti-table',
 	                                   'caption' => 'qti-caption',
