@@ -28,12 +28,19 @@ function createStorage(AssessmentTestSessionFactory $factory) {
     return new TemporaryQtiBinaryStorage($factory);
 }
 
-function spentTime($start, $end) {
+function spentTime($start, $end, array &$registration = null) {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
+    
+    if (!is_null($registration)) {
+        $registration[] = $time;
+    }
+    
     return $time;
 }
+
+$averageAttempt = array();
 
 // Beginning of the session + persistance.
 $start = microtime();
@@ -62,7 +69,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 1 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 1 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -77,7 +84,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 2 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 2 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -92,7 +99,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 3 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 3 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -107,7 +114,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 4 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 4 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -122,7 +129,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 5 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 5 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -137,7 +144,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 6 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 6 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -152,7 +159,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 7 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 7 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -167,7 +174,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 8 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 8 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -182,7 +189,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 9 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 9 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -197,7 +204,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 10 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 10 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -212,7 +219,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 11 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 11 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -227,7 +234,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 12 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 12 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -242,7 +249,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 13 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 13 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -257,7 +264,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 14 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 14 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -272,7 +279,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 15 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 15 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -287,7 +294,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 16 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 16 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -302,7 +309,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 17 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 17 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -317,7 +324,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 18 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 18 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -332,7 +339,7 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 19 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 19 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attempt + persistance.
 $start = microtime();
@@ -347,4 +354,6 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 20 + persistance (" . spentTime($start, $end) . ")\n";
+echo "Retrieving session + attempt 20 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n\n";
+
+echo "Average attempt time = " . (array_sum($averageAttempt) / count($averageAttempt)) . "\n";

@@ -15,7 +15,7 @@ require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 function loadTestDefinition() {
     $phpDoc = new PhpDocument();
-    $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_10_items.php');
+    $phpDoc->load(dirname(__FILE__) . '/../../test/samples/custom/php/linear_5_items.php');
     
     return $phpDoc->getDocumentComponent();
 }
@@ -56,7 +56,7 @@ unset($storage);
 $end = microtime();
 echo "Beginning of the session + persistance (" . spentTime($start, $end) . ")\n";
 
-// Retrieving session + make an attempt + persistance.
+// Retrieving session + make an attemp + persistance.
 $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition()));
@@ -71,7 +71,7 @@ unset($storage);
 $end = microtime();
 echo "Retrieving session + attempt 1 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
-// Retrieving session + make an attempt + persistance.
+// Retrieving session + make an attemp + persistance.
 $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition()));
@@ -86,7 +86,7 @@ unset($storage);
 $end = microtime();
 echo "Retrieving session + attempt 2 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
-// Retrieving session + make an attempt + persistance.
+// Retrieving session + make an attemp + persistance.
 $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition()));
@@ -101,7 +101,7 @@ unset($storage);
 $end = microtime();
 echo "Retrieving session + attempt 3 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
-// Retrieving session + make an attempt + persistance.
+// Retrieving session + make an attemp + persistance.
 $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition()));
@@ -116,7 +116,7 @@ unset($storage);
 $end = microtime();
 echo "Retrieving session + attempt 4 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
-// Retrieving session + make an attempt + persistance.
+// Retrieving session + make an attemp + persistance.
 $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition()));
@@ -129,81 +129,6 @@ unset($session);
 unset($storage);
 
 $end = microtime();
-echo "Retrieving session + attempt 5 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
-
-// Retrieving session + make an attempt + persistance.
-$start = microtime();
-
-$storage = createStorage(createFactory(loadTestDefinition()));
-$session = $storage->retrieve($sessionId);
-$session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceF')))));
-$session->moveNext();
-$storage->persist($session);
-unset($session);
-unset($storage);
-
-$end = microtime();
-echo "Retrieving session + attempt 6 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
-
-// Retrieving session + make an attempt + persistance.
-$start = microtime();
-
-$storage = createStorage(createFactory(loadTestDefinition()));
-$session = $storage->retrieve($sessionId);
-$session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceG')))));
-$session->moveNext();
-$storage->persist($session);
-unset($session);
-unset($storage);
-
-$end = microtime();
-echo "Retrieving session + attempt 7 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
-
-// Retrieving session + make an attempt + persistance.
-$start = microtime();
-
-$storage = createStorage(createFactory(loadTestDefinition()));
-$session = $storage->retrieve($sessionId);
-$session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceH')))));
-$session->moveNext();
-$storage->persist($session);
-unset($session);
-unset($storage);
-
-$end = microtime();
-echo "Retrieving session + attempt 8 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
-
-// Retrieving session + make an attempt + persistance.
-$start = microtime();
-
-$storage = createStorage(createFactory(loadTestDefinition()));
-$session = $storage->retrieve($sessionId);
-$session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceI')))));
-$session->moveNext();
-$storage->persist($session);
-unset($session);
-unset($storage);
-
-$end = microtime();
-echo "Retrieving session + attempt 9 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
-
-// Retrieving session + make an attempt + persistance.
-$start = microtime();
-
-$storage = createStorage(createFactory(loadTestDefinition()));
-$session = $storage->retrieve($sessionId);
-$session->beginAttempt();
-$session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceJ')))));
-$session->moveNext();
-$storage->persist($session);
-unset($session);
-unset($storage);
-
-$end = microtime();
-echo "Retrieving session + attempt 10 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n\n";
+echo "Retrieving session + attempt 5 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n\n";
 
 echo "Average attempt time = " . (array_sum($averageAttempt) / count($averageAttempt)) . "\n";
