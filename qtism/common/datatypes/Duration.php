@@ -52,6 +52,10 @@ class Duration implements Comparable, QtiDatatype {
      */
     const TIMEZONE = 'UTC';
     
+    /**
+     * 
+     * @var DateInterval
+     */
 	private $interval;
 	
 	/**
@@ -190,31 +194,31 @@ class Duration implements Comparable, QtiDatatype {
 	public function __toString() {
 		$string = 'P';
 		
-		if ($this->getYears() > 0) {
-			$string .= $this->getYears() . 'Y';
+		if ($this->interval->y > 0) {
+			$string .= $this->interval->y . 'Y';
 		}
 		
-		if ($this->getMonths() > 0) {
-			$string .= $this->getMonths() . 'M';
+		if ($this->interval->m > 0) {
+			$string .= $this->interval->m . 'M';
 		}
 		
-		if ($this->getDays() > 0) {
-			$string .= $this->getDays() . 'D';
+		if ($this->interval->d > 0) {
+			$string .= $this->interval->d . 'D';
 		}
 		
-		if ($this->getHours() > 0 || $this->getMinutes() > 0 || $this->getSeconds() > 0) {
+		if ($this->interval->h > 0 || $this->interval->i > 0 || $this->interval->s > 0) {
 			$string .= 'T';
 			
-			if ($this->getHours() > 0) {
-				$string .= $this->getHours() . 'H';
+			if ($this->interval->h > 0) {
+				$string .= $this->interval->h . 'H';
 			}
 			
-			if ($this->getMinutes() > 0) {
-				$string .= $this->getMinutes() . 'M';
+			if ($this->interval->i > 0) {
+				$string .= $this->interval->i . 'M';
 			}
 			
 			if ($this->getSeconds() > 0) {
-				$string .= $this->getSeconds() . 'S';
+				$string .= $this->interval->s . 'S';
 			}
 		}
 		

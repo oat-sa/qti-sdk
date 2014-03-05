@@ -81,14 +81,13 @@ class AssessmentItemSessionStore {
      * @param integer $occurence The occurence number of the session.
      */
     public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0) {
-        $shelves = $this->getShelves();
         $assessmentItemRef = $assessmentItemSession->getAssessmentItem();
         
-        if (isset($shelves[$assessmentItemRef]) === false) {
-            $shelves[$assessmentItemRef] = new AssessmentItemSessionCollection();
+        if (isset($this->shelves[$assessmentItemRef]) === false) {
+            $this->shelves[$assessmentItemRef] = new AssessmentItemSessionCollection();
         }
         
-        $shelves[$assessmentItemRef][$occurence] = $assessmentItemSession;
+        $this->shelves[$assessmentItemRef][$occurence] = $assessmentItemSession;
     }
     
     /**
@@ -100,9 +99,7 @@ class AssessmentItemSessionStore {
      * @throws OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
     public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
-        $shelves = $this->getShelves();
-        
-        if (isset($shelves[$assessmentItemRef]) && isset($shelves[$assessmentItemRef][$occurence]) === true) {
+        if (isset($this->shelves[$assessmentItemRef]) && isset($this->shelves[$assessmentItemRef][$occurence]) === true) {
             return $this->shelves[$assessmentItemRef][$occurence];
         }
         else {
@@ -119,9 +116,8 @@ class AssessmentItemSessionStore {
      * @param integer $occurence An occurence number.
      */
     public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
-        $shelves = $this->getShelves();
         try {
-            isset($shelves[$assessmentItemRef][$occurence]);
+            isset($this->shelves[$assessmentItemRef][$occurence]);
             return true;
         }
         catch (UnexpectedValueException $e) {
@@ -137,9 +133,8 @@ class AssessmentItemSessionStore {
      * @return AssessmentItemSessionCollection A collection of AssessmentItemSession objects related to $assessmentItemRef.
      */
     public function getAssessmentItemSessions(AssessmentItemRef $assessmentItemRef) {
-        $shelves = $this->getShelves();
-        if (isset($shelves[$assessmentItemRef]) === true) {
-            return $shelves[$assessmentItemRef];
+        if (isset($this->shelves[$assessmentItemRef]) === true) {
+            return $this->shelves[$assessmentItemRef];
         }
         else {
             $itemId = $assessmentItemRef->getIdentifier();
@@ -158,8 +153,7 @@ class AssessmentItemSessionStore {
      * @return boolean
      */
     public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef) {
-        $shelves = $this->getShelves();
-        return isset($shelves[$assessmentItemRef]) && count($shelves[$assessmentItemRef]) > 1;
+        return isset($this->shelves[$assessmentItemRef]) && count($this->shelves[$assessmentItemRef]) > 1;
     }
     
     /**
@@ -168,11 +162,10 @@ class AssessmentItemSessionStore {
      * @return AssessmentItemSessionCollection A collection of AssessmentItemSession objects.
      */
     public function getAllAssessmentItemSessions() {
-        $shelves = $this->getShelves();
         $collection = new AssessmentItemSessionCollection();
         
-        foreach ($shelves as $itemRef) {
-            foreach ($shelves[$itemRef] as $session) {
+        foreach ($this->shelves as $itemRef) {
+            foreach ($this->shelves[$itemRef] as $session) {
                 $collection[] = $session;
             }
         }
