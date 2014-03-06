@@ -52,6 +52,8 @@ class Duration implements Comparable, QtiDatatype {
      */
     const TIMEZONE = 'UTC';
     
+    private $refDate;
+    
     /**
      * 
      * @var DateInterval
@@ -93,6 +95,7 @@ class Duration implements Comparable, QtiDatatype {
 				$interval = $d2->diff($d1);
 				$interval->invert = ($interval->invert === 1) ? 0 : 1;
 				$this->interval = $interval;
+				$this->refDate = new DateTime('@0', $tz);
 			}
 			catch (Exception $e) {
 				$msg = "The specified interval specification cannot be processed as an ISO8601 duration.";
@@ -312,10 +315,8 @@ class Duration implements Comparable, QtiDatatype {
 	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
 	 */
 	public function add($duration) {
-		$refStrDate = '@0';
-		$tz = new DateTimeZone(self::TIMEZONE);
-		$d1 = new DateTime($refStrDate, $tz);
-		$d2 = new DateTime($refStrDate, $tz);
+		$d1 = $this->refDate; 
+		$d2 = clone $d1;
 		
 		if ($duration instanceof Duration) {
 		    $toAdd = $duration;
@@ -329,7 +330,7 @@ class Duration implements Comparable, QtiDatatype {
 		$d2->add(new DateInterval($toAdd->__toString()));
 		
 		$interval = $d2->diff($d1);
-		$this->setInterval($interval);
+		$this->interval = $interval;
 	}
 	
 	/**
