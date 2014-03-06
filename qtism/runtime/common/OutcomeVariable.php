@@ -231,4 +231,8 @@ class OutcomeVariable extends Variable {
 			}
 		}
 	}
+	
+	public function __clone() {
+	    parent::__clone();
+	}
 }

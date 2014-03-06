@@ -500,4 +500,14 @@ abstract class Variable {
 	public function applyDefaultValue() {
 		$this->setValue($this->getDefaultValue());
 	}
+	
+	public function __clone() {
+	    if (($v = $this->value) !== null) {
+	        $this->value = clone $v;
+	    }
+	    
+	    if (($dv = $this->defaultValue) !== null) {
+	        $this->defaultValue = clone $dv;
+	    }
+	}
 }

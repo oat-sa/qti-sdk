@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
@@ -65,6 +66,13 @@ use qtism\common\storage\BinaryStreamAccess;
 class QtiBinaryStreamAccess extends BinaryStreamAccess {
     
     /**
+     * An AssessmentItemSession to be cloned for best performance.
+     * 
+     * @var AssessmentItemSession
+     */
+    private $originalSession;
+    
+    /**
      * Create a new QtiBinaryStreamAccess object.
      * 
      * @param IStream $stream The IStream object to be accessed.
@@ -72,6 +80,15 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function __construct(IStream $stream) {
         parent::__construct($stream);
+        $this->originalSession = new AssessmentItemSession(new ExtendedAssessmentItemRef('fake', 'fake.xml'));
+    }
+    
+    private function setOriginalSession(AssessmentItemSession $session) {
+        $this->originalSession = $session;
+    }
+    
+    private function getOriginalSession() {
+        return $this->originalSession;
     }
     
     /**
@@ -543,7 +560,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
             
-            $session = new AssessmentItemSession($assessmentItemRef);
+            $session = clone $this->getOriginalSession();
+            $session->setAssessmentItem($assessmentItemRef);
             $session->setState($this->readTinyInt());
             $session->setNavigationMode($this->readTinyInt());
             $session->setSubmissionMode($this->readTinyInt());

@@ -141,4 +141,8 @@ class TemplateVariable extends Variable {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+	public function __clone() {
+	    parent::__clone();
+	}
 }

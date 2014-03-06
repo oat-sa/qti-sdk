@@ -227,4 +227,8 @@ class ResponseVariable extends Variable {
 			throw new InvalidArgumentException($msg);
 		}
 	}
+	
+	public function __clone() {
+	    parent::__clone();
+	}
 }

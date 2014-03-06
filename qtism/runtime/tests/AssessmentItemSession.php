@@ -1069,4 +1069,15 @@ class AssessmentItemSession extends State {
 	    
 	    return $state;
 	}
+	
+	public function __clone() {
+	    $newData = array();
+	    $oldData = $this->getDataPlaceHolder();
+	    
+	    foreach ($oldData as $k => $v) {
+	        $newData[$k] = clone $v;
+	    }
+	    
+	    $this->setDataPlaceHolder($newData);
+	}
 }
