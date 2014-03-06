@@ -49,7 +49,7 @@ class IntOrIdentifier extends Scalar implements QtiDatatype {
     public function __toString() {
         $v = $this->getValue();
         if (is_string($v) === true) {
-            return "'" . $v . "'";
+            return $v;
         }
         else {
             return '' . $v;

@@ -47,6 +47,6 @@ class Identifier extends String {
     }
     
     public function __toString() {
-        return "'" . $this->getValue() . "'";
+        return $this->getValue();
     }
 }
