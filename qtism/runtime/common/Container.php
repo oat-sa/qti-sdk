@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\Boolean;
+
+use qtism\common\datatypes\String;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Point;
@@ -225,22 +228,19 @@ class Container extends AbstractCollection implements Comparable {
 		
 		foreach (array_keys($data) as $k) {
 			$d = $data[$k];
-			$type = gettype($d);
+			
 			if (is_null($d) === true) {
 			    $strings[] = 'NULL';
 			}
-			else if ($type === 'object') {
-				$strings[] = $d->__toString();
-			}
-			else if ($type === 'boolean') {
-				// PHP boolean primitive type.
-				$strings[] = ($d === true) ? 'true' : 'false';
-			}
-			else if ($type === 'string') {
+			else if ($d instanceof String) {
 				$strings[] = "'${d}'";
 			}
-			else {
-				// Other PHP primitive type.
+			else if ($d instanceof Boolean) {
+				// PHP boolean primitive type.
+				$strings[] = ($d->getValue() === true) ? 'true' : 'false';
+			}
+			else{
+				// Other PHP primitive/object type.
 				$strings[] = '' . $d;
 			}
 		}
