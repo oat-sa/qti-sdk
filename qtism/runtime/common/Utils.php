@@ -31,7 +31,6 @@ use qtism\common\datatypes\String;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
-use qtism\data\state\Value;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Duration;
@@ -332,35 +331,43 @@ class Utils {
 	    return $floatArray;
 	}
 	
-	public static function valueToRuntime(Value $value) {
-	    $v = $value->getValue();
+	public static function valueToRuntime($v, $baseType) {
 	    
-	    if (is_int($v) === true && ($value->getBaseType() === -1 || $value->getBaseType() === BaseType::INTEGER)) {
-	        return new Integer($v);
+	    if ($v !== null) {
+	        
+	        if (is_int($v) === true) {
+	             
+	            if ($baseType === -1 || $baseType === BaseType::INTEGER) {
+	                return new Integer($v);
+	            }
+	            else if ($baseType === BaseType::INT_OR_IDENTIFIER) {
+	                return new IntOrIdentifier($v);
+	            }
+	        }
+	        else if (is_string($v) === true) {
+	            
+	            if ($baseType === BaseType::IDENTIFIER) {
+	                return new Identifier($v);
+	            }
+	            if ($baseType === -1 || $baseType === BaseType::STRING) {
+	                return new String($v);
+	            }
+	            else if ($baseType === BaseType::URI) {
+	                return new Uri($v);
+	            }
+	            else if ($baseType === BaseType::INT_OR_IDENTIFIER) {
+	                return new IntOrIdentifier($v);
+	            }
+	        }
+	        else if (is_float($v) === true) {
+	            return new Float($v);
+	        }
+	        else if (is_bool($v) === true) {
+	            return new Boolean($v);
+	        }
+	        
 	    }
-	    else if (is_int($v) === true && $value->getBaseType() === BaseType::INT_OR_IDENTIFIER) {
-	        return new IntOrIdentifier($v);
-	    }
-	    else if (is_float($v) === true) {
-	        return new Float($v);
-	    }
-	    else if (is_bool($v) === true) {
-	        return new Boolean($v);
-	    }
-	    else if (is_string($v) === true && ($value->getBaseType() === -1 || $value->getBaseType() === BaseType::STRING)) {
-	        return new String($v);
-	    }
-	    else if (is_string($v) === true && $value->getBaseType() === BaseType::URI) {
-	        return new Uri($v);
-	    }
-	    else if (is_string($v) === true && $value->getBaseType() === BaseType::INT_OR_IDENTIFIER) {
-	        return new IntOrIdentifier($v);
-	    }
-	    else if (is_string($v) === true && $value->getBaseType() === BaseType::IDENTIFIER) {
-	        return new Identifier($v);
-	    }
-	    else {
-	        return $v;
-	    }
+	    
+	    return $v;
 	}
 }

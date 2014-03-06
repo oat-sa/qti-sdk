@@ -195,7 +195,7 @@ class Container extends AbstractCollection implements Comparable {
 	public static function createFromDataModel(ValueCollection $valueCollection) {
 		$container = new static();
 		foreach ($valueCollection as $value) {
-			$container[] = RuntimeUtils::valueToRuntime($value);
+			$container[] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
 		}
 		return $container;
 	}

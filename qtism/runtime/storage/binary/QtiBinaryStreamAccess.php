@@ -112,14 +112,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->setValue(Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType)));
+                    $variable->setValue(Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType));
                 }
                 else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
-                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType));
+                        $values[] = ($isNull === true) ? null : Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType);
                     }
                     
                     $variable->setValue($values);
@@ -220,7 +220,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $baseType = $this->readTinyInt();
                 
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
-                $value = Utils::valueToRuntime(new Value(call_user_func(array($this, $toCall)), $baseType));
+                $value = Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType);
             }
             else {
                 $value = null;

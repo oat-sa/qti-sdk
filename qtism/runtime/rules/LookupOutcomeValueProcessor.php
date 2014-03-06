@@ -153,7 +153,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 			
 			// assign target value
 			try {
-			    $finalVal = RuntimeUtils::valueToRuntime(new Value($targetVal, $var->getBaseType()));
+			    $finalVal = RuntimeUtils::valueToRuntime($targetVal, $var->getBaseType());
 				$state[$identifier] = $finalVal;
 			}
 			catch (InvalidArgumentException $e) {

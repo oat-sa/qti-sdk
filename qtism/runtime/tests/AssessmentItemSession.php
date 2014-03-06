@@ -178,7 +178,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @var integer
 	 */
-	private $state = AssessmentItemSessionState::INITIAL;
+	private $state = AssessmentItemSessionState::NOT_SELECTED;
 	
 	/**
 	 * The ItemSessionControl object giving information about how to control
@@ -245,13 +245,11 @@ class AssessmentItemSession extends State {
 	public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
 		
-		$this->setState(AssessmentItemSessionState::NOT_SELECTED);
 		$this->setAcceptableLatency(new Duration('PT0S'));
 		$this->setAssessmentItem($assessmentItem);
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
-		$this->setAttempting(false);
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));

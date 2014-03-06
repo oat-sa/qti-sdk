@@ -59,7 +59,6 @@ class BaseValueProcessor extends ExpressionProcessor {
 	 */
 	public function process() {
 	    $expression = $this->getExpression();
-	    $value = new Value($expression->getValue(), $expression->getBaseType());
-		return RuntimeUtils::valueToRuntime($value);
+		return RuntimeUtils::valueToRuntime($expression->getValue(), $expression->getBaseType());
 	}
 }

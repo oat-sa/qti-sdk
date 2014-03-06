@@ -107,7 +107,7 @@ class RecordContainer extends Container implements QtiDatatype {
 			$fieldIdentifier = $value->getFieldIdentifier();
 			
 			if (!empty($fieldIdentifier)) {
-				$container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value);
+				$container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
 			}
 			else {
 				$msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";

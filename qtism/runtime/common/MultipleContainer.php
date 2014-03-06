@@ -112,7 +112,7 @@ class MultipleContainer extends Container implements QtiDatatype {
 	public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER) {
 		$container = new static($baseType);
 		foreach ($valueCollection as $value) {
-			$container[] = RuntimeUtils::valueToRuntime($value);
+			$container[] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
 		}
 		return $container;
 	}
