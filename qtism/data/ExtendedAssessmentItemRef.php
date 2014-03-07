@@ -261,6 +261,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 		$compactRef->setCategories($assessmentItemRef->getCategories());
 		$compactRef->setFixed($assessmentItemRef->isFixed());
 		$compactRef->setItemSessionControl($assessmentItemRef->getItemSessionControl());
+		$compactRef->setTimeLimits($assessmentItemRef->getTimeLimits());
 		$compactRef->setPreConditions($assessmentItemRef->getPreConditions());
 		$compactRef->setRequired($assessmentItemRef->isRequired());
 		$compactRef->setTemplateDefaults($assessmentItemRef->getTemplateDefaults());
