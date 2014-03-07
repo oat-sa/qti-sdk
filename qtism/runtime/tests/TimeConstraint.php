@@ -41,7 +41,7 @@ class TimeConstraint {
     
     /**
      * The source of the TimeConstraint. Can be
-     * a SectionPart or TestPart object.
+     * an AssessmentTest, TestPart, or SectionPart.
      * 
      * @var QtiComponent
      */
