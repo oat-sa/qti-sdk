@@ -1884,6 +1884,8 @@ class AssessmentTestSession extends State {
 	 * Get the time constraints running for the current testPart or/and current assessmentSection
 	 * or/and assessmentItem.
 	 * 
+	 * If no timeLimits are currently in force, an empty TimeConstraintCollection is systematically returned.
+	 * 
 	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
 	 * @return TimeConstraintCollection A collection of TimeConstraint objects.
 	 * @qtism-test-duration-update
