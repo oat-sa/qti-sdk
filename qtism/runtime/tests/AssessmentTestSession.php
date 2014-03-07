@@ -1280,6 +1280,9 @@ class AssessmentTestSession extends State {
 	    // Reset the pending responses, they are now processed.
 	    $this->setPendingResponseStore(new PendingResponseStore());
 	    
+	    // OutcomeProcessing can now take place.
+	    $this->outcomeProcessing();
+	    
 	    return $result;
 	}
 	
@@ -1395,11 +1398,16 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Move to the next item in the route.
+	 * Move to the next item in the route. 
 	 * 
+	 * * If there is no more item in the route to be explored the session ends gracefully.
+	 * * If there the end of a test part is reached, pending responses are submitted. 
+	 * 
+	 * @param boolean $ignoreBranchings Whether or not to ignore branching.
+	 * @param boolean $ignorePreConditions Whether or not to ignore preConditions.
 	 * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
 	 */
-	protected function nextRouteItem() {
+	protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false) {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next position while the state of the test session is INITIAL or CLOSED.";
@@ -1412,7 +1420,6 @@ class AssessmentTestSession extends State {
 
             // The testPart is complete so deffered response processing must take place.
             $this->defferedResponseProcessing();
-            $this->outcomeProcessing();
 	    }
 	    
 	    $route = $this->getRoute();
@@ -1421,7 +1428,7 @@ class AssessmentTestSession extends State {
 	    while ($route->valid() === true && $stop === false) {
 	        
 	        // Branchings?
-	        if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+	        if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
 	            
 	            $branchRules = $route->current()->getBranchRules();
 	            for ($i = 0; $i < count($branchRules); $i++) {
@@ -1455,7 +1462,7 @@ class AssessmentTestSession extends State {
 	        }
 	        
 	        // Preconditions on target?
-	        if ($route->valid() === true) {
+	        if ($ignorePreConditions === false && $route->valid() === true) {
 	            $preConditions = $route->current()->getPreConditions();
 	            
 	            for ($i = 0; $i < count($preConditions); $i++) {
@@ -1488,11 +1495,12 @@ class AssessmentTestSession extends State {
 	
 	/**
 	 * Set the position in the Route at the very next TestPart in the Route sequence or, if the current
-	 * testPart is the last one of the test session, to the very end of the test.
+	 * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
+	 * is simultaneous, the pending responses are processed.
 	 * 
 	 * @throws AssessmentTestSessionException If the test is currently not running.
 	 */
-	protected function moveNextTestPart() {
+	public function moveNextTestPart() {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
@@ -1503,8 +1511,51 @@ class AssessmentTestSession extends State {
 	    $from = $route->current();
 	    
 	    while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+	        // Move to the next route item. Ignore branchings and preConditions.
 	        $this->nextRouteItem();
 	    }
+	}
+	
+	/**
+	 * Set the position in the Route at the very next assessmentSection in the route sequence.
+	 * 
+	 * * If there is no assessmentSection left in the flow, the test session ends gracefully.
+	 * * If there are still pending responses, they are processed.
+	 * 
+	 * @throws AssessmentTestSessionException If the test is not running.
+	 */
+	public function moveNextAssessmentSection() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    $route = $this->getRoute();
+	    $from = $route->current();
+	    
+	    while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
+	        // Move to the next route item by ignoring branchings and preConditions.
+	        $this->nextRouteItem();
+	    }
+	}
+	
+	/**
+	 * Set the position in the Route at the very next assessmentItem in the route sequence.
+	 * 
+	 * * If there is no item left in the flow, the test session ends gracefully.
+	 * * If there are still pending responses, they are processed.
+	 * 
+	 * @throws AssessmentTestSessionException If the test is not running.
+	 */
+	public function moveNextAssessmentItem() {
+	    
+	    if ($this->isRunning() === false) {
+	        $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
+	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+	    }
+	    
+	    $this->nextRouteItem();
 	}
 	
 	/**
@@ -1584,6 +1635,9 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot end the test session while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
+	    
+	    // If there are still pending responses to be sent, apply a deffered response processing + outcomeProcessing.
+	    $this->defferedResponseProcessing();
 	    
 	    if ($this->getTestResultsSubmission() === TestResultsSubmission::END) {
 	        $this->submitTestResults();
@@ -1961,6 +2015,12 @@ class AssessmentTestSession extends State {
 	public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false) {
 	    
 	    $this->updateDuration();
+	    
+	    $timeLimits = $this->getCurrentRouteItem()->getTimeLimits(!$includeAssessmentItem);
+	    if (count($timeLimits) === 0) {
+	        // Nothing to check, no time limits in force.
+	        return;
+	    }
 	    
 	    $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
 	    // Include assessmentItem only if formally asked by client-code.
