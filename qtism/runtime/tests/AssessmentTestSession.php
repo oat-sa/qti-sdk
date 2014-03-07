@@ -1895,8 +1895,12 @@ class AssessmentTestSession extends State {
 	        $places = (AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_SECTION | AssessmentTestPlace::ASSESSMENT_ITEM);
 	    }
 	    
-	    $route = $this->getRoute();
 	    $constraints = new TimeConstraintCollection();
+	    if ($this->timeLimitsInForce() === false) {
+	        return $constraints;
+	    }
+	    
+	    $route = $this->getRoute();
 	    $navigationMode = $this->getCurrentNavigationMode();
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
@@ -2016,9 +2020,7 @@ class AssessmentTestSession extends State {
 	    
 	    $this->updateDuration();
 	    
-	    $timeLimits = $this->getCurrentRouteItem()->getTimeLimits(!$includeAssessmentItem);
-	    if (count($timeLimits) === 0) {
-	        // Nothing to check, no time limits in force.
+	    if ($this->timeLimitsInForce(!$includeAssessmentItem) === false) {
 	        return;
 	    }
 	    
@@ -2450,5 +2452,15 @@ class AssessmentTestSession extends State {
 	    $factory->setRoute($route);
 	    
 	    return $factory->createAssessmentTestSession();
+	}
+	
+	/**
+	 * Whether or not time limits are in force for the current route item.
+	 * 
+	 * @param boolean $excludeItem Whether or not include item time limits.
+	 * @return boolean
+	 */
+	protected function timeLimitsInForce($excludeItem = false) {
+	    return count($this->getCurrentRouteItem()->getTimeLimits($excludeItem)) !== 0;
 	}
 }
