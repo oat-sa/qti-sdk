@@ -24,6 +24,12 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\enums\BaseType;
+
+use qtism\common\enums\Cardinality;
+
+use qtism\runtime\tests\DurationStore;
+
 use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
@@ -177,6 +183,15 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             	$access->writeVariableValue($outcomeVariable);
             }
             
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 4) {
+                $durationStore = $assessmentTestSession->getDurationStore();
+                $access->writeShort(count($durationStore));
+                foreach ($durationStore->getKeys() as $k) {
+                    $access->writeString($k);
+                    $access->writeVariableValue($durationStore->getVariable($k));
+                }
+            }
+            
             $this->persistStream($assessmentTestSession, $stream);
             
             $stream->close();
@@ -250,6 +265,21 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             	$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
             	$access->readVariableValue($outcomeVariable);
             	$assessmentTestSession->setVariable($outcomeVariable);
+            }
+            
+            // Build the duration store.
+            $durationStore = new DurationStore();
+            
+            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 4) {
+                $durationCount = $access->readShort();
+                for ($i = 0; $i < $durationCount; $i++) {
+                    $varName = $access->readString();
+                    $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
+                    $access->readVariableValue($durationVariable);
+                    $durationStore->setVariable($durationVariable);
+                }
+                
+                $assessmentTestSession->setDurationStore($durationStore);
             }
 
             $stream->close();

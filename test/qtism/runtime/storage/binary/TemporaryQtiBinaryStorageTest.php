@@ -1,5 +1,7 @@
 <?php
 
+use qtism\common\datatypes\Duration;
+
 use qtism\common\datatypes\Identifier;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
@@ -72,7 +74,15 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertSame(null, $session['Q01.RESPONSE']);
     
         $session->beginAttempt();
+        sleep(1);
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        
         $session->moveNext();
     
         // Because Q01 is not a multi-occurence item in the route, isLastOccurenceUpdate always return false.
@@ -137,6 +147,9 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
+        sleep(1);
+        $s02Duration = $session['S02.duration'];
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1S')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
         $session->moveNext();
     
@@ -151,7 +164,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
+        sleep(1);
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(200, 200)))));
+        
+        // Check that S02.duration was not updated.
+        $this->assertTrue($session['S02.duration']->equals($s02Duration));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT2S')));
         $session->moveNext();
     
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));

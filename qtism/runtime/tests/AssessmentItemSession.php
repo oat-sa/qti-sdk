@@ -229,6 +229,8 @@ class AssessmentItemSession extends State {
 	 */
 	private $attempting = false;
 	
+	private $onDurationUpdate = array();
+	
 	/**
 	 * Create a new AssessmentItemSession object.
 	 * 
@@ -576,7 +578,7 @@ class AssessmentItemSession extends State {
 		$this->attempting = true;
 		
 		// Register a time reference that will be used later on to compute the duration built-in variable.
-		$this->timeReference = new DateTime();
+		$this->timeReference = new DateTime('now', new DateTimeZone('UTC'));
 	}
 	
 	/**
@@ -790,9 +792,14 @@ class AssessmentItemSession extends State {
 	        $now = new DateTime('now', new DateTimeZone('UTC'));
 	        
 	        $data = &$this->getDataPlaceHolder();
-	        $data['duration']->getValue()->add($timeRef->diff($now));
+	        $diff = $timeRef->diff($now);
+	        $data['duration']->getValue()->add($diff);
 	        
-	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
+	        $this->setTimeReference($now);
+	        
+	        foreach ($this->onDurationUpdate as $callBack) {
+	            call_user_func_array($callBack, array($this, Duration::createFromDateInterval($diff)));
+	        }
 	    }
 	}
 	
@@ -1068,6 +1075,10 @@ class AssessmentItemSession extends State {
 	    }
 	    
 	    return $state;
+	}
+	
+	public function onDurationUpdate(array $callback) {
+	    $this->onDurationUpdate[] = $callback;
 	}
 	
 	public function __clone() {

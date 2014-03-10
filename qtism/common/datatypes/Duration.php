@@ -109,6 +109,12 @@ class Duration implements Comparable, QtiDatatype {
 		
 	}
 	
+	static public function createFromDateInterval(DateInterval $interval) {
+	    $duration = new Duration('PT0S');
+	    $duration->setInterval($interval);
+	    return $duration;
+	}
+	
 	/**
 	 * Get the PHP DateInterval object corresponding to the duration.
 	 * 

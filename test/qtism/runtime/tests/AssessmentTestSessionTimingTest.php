@@ -22,15 +22,16 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
     
     public function testTestPartAssessmentSectionsDurations() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-         
         // Try to get a duration on a non-begun test session.
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
+        $this->assertSame(null, $session['P01.duration']);
+        $this->assertSame(null, $session['S01.duration']);
+        $this->assertSame(null, $session['itemsubset.duration']);
 
         // Try the same on a running test session.
         $session->beginTestSession();
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT0S')));
          
         // Q01.
         $session->beginAttempt();
@@ -38,6 +39,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT1S')));
         $session->moveNext();
          
         // Q02.
@@ -46,6 +48,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->skip();
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT2S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT2S')));
         $session->moveNext();
          
         // Try to get a duration that does not exist.

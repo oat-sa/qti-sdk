@@ -26,6 +26,8 @@ class DurationStoreTest extends QtiSmTestCase {
         $this->assertTrue($durations['duration1']->equals(new Duration('PT0S')));
         $this->assertTrue($durations['duration2']->equals(new Duration('PT1S')));
         $this->assertTrue($durations['duration3']->equals(new Duration('PT2S')));
+        
+        $this->assertTrue(isset($durations['duration1']));
     }
     
     public function testInstantiationWrongBaseType() {
