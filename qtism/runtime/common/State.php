@@ -53,17 +53,13 @@ class State extends AbstractCollection {
 	public function __construct(array $array = array()) {
 		parent::__construct();
 		foreach ($array as $a) {
-			if ($a instanceof Variable) {
-				$this->setVariable($a);
-			}
-			else {
-				$msg = "An object given to State::__construct is not a Variable object.";
-				throw new InvalidArgumentException($msg);
-			}
+		    $this->checkType($a);
+		    $this->setVariable($a);
 		}
 	}
 	
 	public function setVariable(Variable $variable) {
+	    $this->checkType($variable);
 		$data = &$this->getDataPlaceHolder();
 		$data[$variable->getIdentifier()] = $variable;
 	}
