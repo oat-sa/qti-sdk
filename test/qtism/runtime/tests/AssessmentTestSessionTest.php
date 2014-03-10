@@ -986,35 +986,21 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
 	    $session = AssessmentTestSession::instantiate($factory);
 	    
-	    try {
-	        // Try to suspend the item session on a not running test session...
-	        $session->suspendItemSession();
-	        $this->assertTrue(false, 'The item session cannot be suspended on a not running test session.');
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::STATE_VIOLATION, $e->getCode());
-	    }
 	    
 	    $session->beginTestSession();
 	    
-	    try {
-	        // Try to suspend an item session which is not yet begun.
-	        $session->suspendItemSession();
-	        $this->assertTrue(false, 'The item session cannot be suspended when it is in initial state.');
-	    }
-	    catch (AssessmentItemSessionException $e) {
-	        $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
-	    }
-	    
-	    // Finally, suspend an item session in interacting state.
+	    // Finally, suspend an item session in interacting state by moving to the next item during an attempt.
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->beginAttempt();
 	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
-	    $session->suspendItemSession();
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+	    $previousItemSession = $session->getCurrentAssessmentItemSession();
+	    $session->moveNext();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $previousItemSession->getState());
 	    
 	    // Try to re-enter interacting state.
-	    $session->interactWithItemSession();
+	    $previousItemSession = $session->getCurrentAssessmentItemSession();
+	    $session->moveBack(); // We did not interact, then it remains INITIAL...
+	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $previousItemSession->getState());
 	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
 	    
 	    // Finally answer the question :) !
@@ -1022,6 +1008,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->endAttempt($responses);
 	    $session->moveNext();
 	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
+	    
+	    // Q02...
+	    $session->beginAttempt();
+	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
 	}
 	
 	/**

@@ -1381,6 +1381,7 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
+	    $this->suspendItemSession();
 	    $this->nextRouteItem();
 	    
 	    while ($this->isRunning() === true) {
@@ -1392,6 +1393,7 @@ class AssessmentTestSession extends State {
 	                
 	                // No exception thrown, we found a non timed-out item to be
 	                // presented to the candidate.
+	                $this->interactWithItemSession();
 	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
@@ -1403,6 +1405,7 @@ class AssessmentTestSession extends State {
 	            // $allowTimeout === true, only 1 iteration
 	            // is necessary, the following item is presented
 	            // whatever happens.
+	            $this->interactWithItemSession();
 	            return;
 	        }
 	    }
@@ -1414,7 +1417,7 @@ class AssessmentTestSession extends State {
 	 * Ask the test session to move to the previous RouteItem in the Route sequence.
 	 * 
 	 * If $allowTimeout is set to true, the previous RouteItem in the Route sequence will bet set
-	 * as the current RouteItem, whether or not it is timed out or not.
+	 * as the current RouteItem, whether or not it is timed out.
 	 * 
 	 * On the other hand, if $allowTimeout is set to false, the previous RouteItem in the Route sequence
 	 * which is not timed out will be set as the current RouteItem. If there is no more previous RouteItems
@@ -1432,6 +1435,7 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
+	    $this->suspendItemSession();
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
 	    $this->previousRouteItem();
@@ -1444,6 +1448,7 @@ class AssessmentTestSession extends State {
 	                $this->checkTimeLimits(false, true);
 	                
 	                // No exception thrown, return.
+	                $this->interactWithItemSession();
 	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
@@ -1462,6 +1467,7 @@ class AssessmentTestSession extends State {
 	    if ($allowTimeout === false) {
 	        try {
 	            $this->checkTimeLimits(false, true);
+	            $this->interactWithItemSession();
 	        }
 	        catch (AssessmentTestSessionException $e) {
 	            $route->setPosition($oldPosition);
@@ -1588,6 +1594,10 @@ class AssessmentTestSession extends State {
 	        // Move to the next route item. Ignore branchings and preConditions.
 	        $this->nextRouteItem();
 	    }
+	    
+	    if ($this->isRunning() === true) {
+	        $this->interactWithItemSession();
+	    }
 	}
 	
 	/**
@@ -1612,6 +1622,10 @@ class AssessmentTestSession extends State {
 	        // Move to the next route item by ignoring branchings and preConditions.
 	        $this->nextRouteItem();
 	    }
+	    
+	    if ($this->isRunning() === true) {
+	        $this->interactWithItemSession();
+	    }
 	}
 	
 	/**
@@ -1630,6 +1644,10 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $this->nextRouteItem();
+	    
+	    if ($this->isRunning() === true) {
+	        $this->interactWithItemSession();
+	    }
 	}
 	
 	/**
@@ -2144,7 +2162,7 @@ class AssessmentTestSession extends State {
 	 * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
 	 * @throws UnexpectedValueException If the current item session cannot be retrieved.
 	 */
-	public function suspendItemSession() {
+	protected function suspendItemSession() {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot suspend the item session if the test session is not running.";
@@ -2152,8 +2170,9 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, $code);
 	    }
 	    else if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
-	        // Throws AssessmentItemSessionException.
-	        $itemSession->suspend();
+	        if ($itemSession->getState() === AssessmentItemSessionState::INTERACTING) {
+	            $itemSession->suspend();
+	        }
 	    }
 	    else {
 	        $msg = "Cannot retrieve the current item session.";
@@ -2168,7 +2187,7 @@ class AssessmentTestSession extends State {
 	 * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
 	 * @throws UnexpectedValueException If the current item session cannot be retrieved.
 	 */
-	public function interactWithItemSession() {
+	protected function interactWithItemSession() {
 	    
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot set the item session in interacting state if test session is not running.";
@@ -2176,7 +2195,9 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, $code);
 	    }
 	    else if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
-	        $itemSession->interact();
+	        if ($itemSession->getState() === AssessmentItemSessionState::SUSPENDED && $itemSession->isAttempting()) {
+	            $itemSession->interact();
+	        }
 	    }
 	    else {
 	        $msg = "Cannot retrieve the current item session.";
