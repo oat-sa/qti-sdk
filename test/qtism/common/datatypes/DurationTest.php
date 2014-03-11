@@ -98,6 +98,16 @@ class DurationTest extends QtiSmTestCase {
 	    $d2 = new Duration('P1DT2H');
 	    $d1->sub($d2);
 	    $this->assertEquals('PT25M30S', $d1->__toString());
+	    
+	    $d1 = new Duration('PT20S');
+	    $d2 = new Duration('PT20S');
+	    $d1->sub($d2);
+	    $this->assertEquals('PT0S', $d1->__toString());
+	    
+	    $d1 = new Duration('PT20S');
+	    $d2 = new Duration('PT21S');
+	    $d1->sub($d2);
+	    $this->assertTrue($d1->isNegative());
 	}
 		
 	/**

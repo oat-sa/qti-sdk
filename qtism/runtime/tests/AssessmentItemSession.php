@@ -648,6 +648,7 @@ class AssessmentItemSession extends State {
 	        // Use the correct expression to control if the responses
 	        // are correct.
 	        foreach ($responses as $response) {
+	            // @todo Reconsider the 'valid' concept.
 	            $correctExpression = new Correct($response->getIdentifier());
 	            $correctProcessor = new CorrectProcessor($correctExpression);
 	            $correctProcessor->setState($responses);
@@ -876,7 +877,7 @@ class AssessmentItemSession extends State {
 	 * Be careful! If the item of the session is adaptive but not yet completed or if the maxAttempts is unlimited, -1 is returned
 	 * because there is no way to determine how much remain attempts are possible.
 	 * 
-	 * @return integer The number of remaining items.
+	 * @return integer The number of remaining items. -1 means unlimited.
 	 */
 	public function getRemainingAttempts() {
 	    $itemRef = $this->getAssessmentItem();

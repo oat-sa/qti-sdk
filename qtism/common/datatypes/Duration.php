@@ -376,7 +376,7 @@ class Duration implements Comparable, QtiDatatype {
 	}
 	
 	public function isNegative() {
-	    return $this->interval === 1;
+	    return $this->interval->invert === 0;
 	}
 	
 	public function getBaseType() {
