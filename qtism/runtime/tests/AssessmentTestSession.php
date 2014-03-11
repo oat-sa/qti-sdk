@@ -1457,6 +1457,7 @@ class AssessmentTestSession extends State {
 	            }
 	        }
 	        else {
+	            $this->interactWithItemSession();
 	            return;
 	        }
 	    }
