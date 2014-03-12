@@ -1546,23 +1546,20 @@ class AssessmentTestSession extends State {
 	        if ($ignorePreConditions === false && $route->valid() === true) {
 	            $preConditions = $route->current()->getPreConditions();
 	            
-	            for ($i = 0; $i < count($preConditions); $i++) {
-	                $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-	                $condition = $engine->process();
-	                
-	                if ($condition !== null && $condition->getValue() === true) {
-	                    // The item must be presented.
-	                    $stop = true;
-	                    break;
-	                }
+	            if (count($preConditions) > 0) {
+	                for ($i = 0; $i < count($preConditions); $i++) {
+	                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+	                    $condition = $engine->process();
+	                    
+	                    if ($condition !== null && $condition->getValue() === true) {
+	                        // The item must be presented.
+	                        $stop = true;
+	                        break;
+	                    }
+	                }    
 	            }
-	            
-	            if (count($preConditions) === 0) {
+	            else {
 	                $stop = true;
-	            }
-	            else if ($i >= count($preConditions)) {
-	                // No precondition returned true, move next!
-	                $route->next();
 	            }
 	        }
 	    }

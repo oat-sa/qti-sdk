@@ -64,6 +64,12 @@
 			</assessmentItemRef>
 			
 			<assessmentItemRef identifier="Q05" href="./Q05/qti.xml" fixed="false" timeDependent="false">
+				<preCondition>
+					<equalRounded roundingMode="decimalPlaces" figures="1">
+						<variable identifier="Q04.SCORE"/>
+						<baseValue baseType="float">1.0</baseValue>
+					</equalRounded>
+				</preCondition>
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>GoodChoice</value>
