@@ -46,20 +46,25 @@ class OrProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testNullOperands() {
-		$expression = $this->createFakeExpression();
-		
-		// Even if the cardinality is wrong, the MultipleContainer object will be first considered
-		// to be NULL because it is empty.
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT)));
-		$processor = new OrProcessor($expression, $operands);
-		$result = $processor->process();
-		$this->assertSame(null, $result);
-		
-		// Two NULL values, 'null' && new RecordContainer().
-		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false), new Boolean(true), null, new RecordContainer()));
-		$processor->setOperands($operands);
-		$result = $processor->process();
-		$this->assertSame(null, $result);
+	    $expression = $this->createFakeExpression();
+	    
+	    // As per specs, If one or more sub-expressions are NULL and all the others 
+	    // are false then the operator also results in NULL.
+	    $operands = new OperandsCollection(array(new Boolean(false), null));
+	    $processor = new OrProcessor($expression, $operands);
+	    $result = $processor->process();
+	    $this->assertSame(null, $result);
+	    
+	    $operands = new OperandsCollection(array(new Boolean(false), null, new Boolean(false)));
+	    $processor->setOperands($operands);
+	    $result = $processor->process();
+	    $this->assertSame(null, $result);
+	    
+	    // On the other hand...
+	    $operands = new OperandsCollection(array(new Boolean(false), null, new Boolean(true)));
+	    $processor->setOperands($operands);
+	    $result = $processor->process();
+	    $this->assertTrue($result->getValue());
 	}
 	
 	public function testTrue() {

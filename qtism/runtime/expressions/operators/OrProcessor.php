@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\runtime\common\Container;
+
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
@@ -65,23 +67,35 @@ class OrProcessor extends OperatorProcessor {
 	 */
 	public function process() {
 		$operands = $this->getOperands();
-		
-		if ($operands->containsNull() === true) {
-			return null;
-		}
-		
-		if ($operands->exclusivelySingle() === false) {
-			$msg = "The Or Expression only accept operands with single cardinality.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-		}
-		
-		if ($operands->exclusivelyBoolean() === false) {
-			$msg = "The Or Expression only accept operands with boolean baseType.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-		}
+	    $allFalse = true;
+	    
+	    foreach ($operands as $op) {
+	        if ($op instanceof Container) {
+	            $msg = "The Or Expression only accept operands with single cardinality.";
+	            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+	        }
+	        else if ($op === null) {
+	            continue;
+	        }
+	        else {
+	            if (!$op instanceof Boolean) {
+	                $msg = "The Or Expression only accept operands with boolean baseType.";
+	                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+	            }
+	            else {
+	                if ($op->getValue() !== false) {
+	                    $allFalse = false;
+	                } 
+	            }
+	        }
+	    }
+	    
+	    if ($allFalse === true && $operands->containsNull() === true) {
+	        return null;
+	    }
 		
 		foreach ($operands as $operand) {
-			if ($operand->getValue() === true) {
+			if ($operand !== null && $operand->getValue() === true) {
 				return new Boolean(true);
 			}
 		}
