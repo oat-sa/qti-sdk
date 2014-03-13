@@ -13,6 +13,8 @@ use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\data\storage\php\PhpDocument;
 
+date_default_timezone_set('UTC');
+
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 function loadTestDefinition(array &$average = null) {

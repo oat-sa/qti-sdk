@@ -13,6 +13,8 @@ use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\data\storage\php\PhpDocument;
 
+date_default_timezone_set('UTC');
+
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
 
 function loadTestDefinition(array &$average = null) {
@@ -666,8 +668,6 @@ $session = retrieve($storage, $sessionId, $averageRetrieve);
 attempt($session, 'ChoiceN', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
-unset($session);
-unset($storage);
 
 $end = microtime();
 echo "Retrieving session + attempt 40 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
