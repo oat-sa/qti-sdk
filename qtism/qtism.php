@@ -24,6 +24,12 @@
  */
 namespace qtism;
 
+/**
+ * Use this autoloader if you do not have a dependency management
+ * system such as Composer.
+ * 
+ * @param string $class
+ */
 function qtism_autoload($class) {
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
 	$file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . $class . '.php';
