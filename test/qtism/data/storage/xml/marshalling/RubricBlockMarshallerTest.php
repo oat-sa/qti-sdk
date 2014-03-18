@@ -62,6 +62,6 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    
-	    $this->assertEquals('<rubricBlock view="candidate tutor" class="warning"><stylesheet href="./stylesheet.css" media="screen" type="text/css"/><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p></rubricBlock>', $dom->saveXML($element));
+	    $this->assertEquals('<rubricBlock view="candidate tutor" class="warning"><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p><stylesheet href="./stylesheet.css" media="screen" type="text/css"/></rubricBlock>', $dom->saveXML($element));
 	}
 }

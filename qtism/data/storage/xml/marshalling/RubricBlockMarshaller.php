@@ -75,14 +75,14 @@ class RubricBlockMarshaller extends Marshaller {
 		    static::setXmlBase($element, $component->getXmlBase());
 		}
 		
-		foreach ($component->getStylesheets() as $stylesheet) {
-			$stylesheetMarshaller = $this->getMarshallerFactory()->createMarshaller($stylesheet);
-			$element->appendChild($stylesheetMarshaller->marshall($stylesheet));
-		}
-		
 		foreach ($component->getContent() as $block) {
 		    $marshaller = $this->getMarshallerFactory()->createMarshaller($block);
 		    $element->appendChild($marshaller->marshall($block));
+		}
+		
+		foreach ($component->getStylesheets() as $stylesheet) {
+		    $stylesheetMarshaller = $this->getMarshallerFactory()->createMarshaller($stylesheet);
+		    $element->appendChild($stylesheetMarshaller->marshall($stylesheet));
 		}
 		
 		self::fillElement($element, $component);
