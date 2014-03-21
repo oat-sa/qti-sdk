@@ -1905,11 +1905,22 @@ class AssessmentTestSession extends State {
 	 * @return boolean
 	 */
 	public function canMoveBackward() {
-	    if ($this->getCurrentNavigationMode() === NavigationMode::LINEAR) {
+	    
+	    if ($this->getRoute()->getPosition() === 0) {
 	        return false;
 	    }
 	    else {
-	        return $this->getRoute()->getPosition() > 0;
+	        // We are sure there is a previous route item.
+	        $previousRouteItem = $this->getPreviousRouteItem();
+	        if ($previousRouteItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
+	            return false;
+	        }
+	        else if ($this->getCurrentNavigationMode() === NavigationMode::NONLINEAR) {
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
 	    }
 	}
 	
