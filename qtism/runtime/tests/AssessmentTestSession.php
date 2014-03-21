@@ -1552,6 +1552,9 @@ class AssessmentTestSession extends State {
 	                    else if ($target === 'EXIT_TESTPART') {
 	                        $this->moveNextTestPart();
 	                    }
+	                    else if ($target === 'EXIT_SECTION') {
+	                        $this->moveNextAssessmentSection();
+	                    }
 	                    else {
 	                        $route->branch($branchRules[$i]->getTarget());
 	                    }
