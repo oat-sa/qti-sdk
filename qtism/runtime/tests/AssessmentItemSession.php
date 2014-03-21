@@ -229,6 +229,18 @@ class AssessmentItemSession extends State {
 	 */
 	private $attempting = false;
 	
+	/**
+	 * Whether or not minimum time limits must be considered or not.
+	 * 
+	 * @var boolean
+	 */
+	private $considerMinTime = true;
+	
+	/**
+	 * An array of callbacks to be executed on duration update.
+	 * 
+	 * @var array
+	 */
 	private $onDurationUpdate = array();
 	
 	/**
@@ -242,9 +254,10 @@ class AssessmentItemSession extends State {
 	 * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
 	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
+	 * @param boolean $considerMinTime Whether or not minimum time limits must be considered.
 	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+	public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL, $considerMinTime = true) {
 		parent::__construct();
 		
 		$this->setAcceptableLatency(new Duration('PT0S'));
@@ -252,6 +265,7 @@ class AssessmentItemSession extends State {
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
+		$this->setConsiderMinTime($considerMinTime);
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
@@ -354,6 +368,24 @@ class AssessmentItemSession extends State {
 	 */
 	public function getAcceptableLatency() {
 	    return $this->acceptableLatency;
+	}
+	
+	/**
+	 * Set wether or not minimum time limits must be taken into account.
+	 * 
+	 * @param boolean $considerMinTime
+	 */
+	public function setConsiderMinTime($considerMinTime) {
+	    $this->considerMinTime = $considerMinTime;
+	}
+	
+	/**
+	 * Whether or not minimum time limits must be taken into account.
+	 * 
+	 * @return boolean
+	 */
+	public function mustConsiderMinTime() {
+	    return $this->considerMinTime;
 	}
 	
 	/**
@@ -610,7 +642,7 @@ class AssessmentItemSession extends State {
 	        // assessmentItems only when linear navigation mode is in effect.
 	        if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
 	            
-	            if ($this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
+	            if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
 	                // Suspend and wait for a next attempt.
 	                $this->suspend();

@@ -182,7 +182,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
     }
     
-    public function testTimeConstraintsOne() {
+    public function testTimeConstraints() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/remaining_time_1.xml');
         $session->beginTestSession();
         
@@ -245,6 +245,38 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertTrue($timeConstraints[0]->allowLateSubmission());
         $this->assertFalse($timeConstraints[0]->minTimeInForce());
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
+    }
+    
+    public function testTimeConstraintsConsiderMinTime() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml', false);
+        $session->beginTestSession();
+        
+        // Q01 - timeLimits on assessmentItemRef - minTime = 1, maxTime = 3
+        try {
+            $session->beginAttempt();
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+            
+            // No exception should be thrown even if minTime = 1. Indeed, min time
+            // are not to be considered.
+            $this->assertTrue(true);
+        }
+        catch (AssessmentTestSessionException $e) {
+            $this->fail("No exception should be thrown because minTime must not be considered on Q01.");
+        }
+        
+        // On the other hand, if we go back to min time consideration...
+        unset($session);
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml', true);
+        $session->beginTestSession();
+        try {
+            // Minimum time not respected...
+            $session->beginAttempt();
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+            $this->fail("An exception should be thrown because minTime must be considered now on Q01.");
+        }
+        catch (AssessmentTestSessionException $e) {
+            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), "The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: " . $e->getMessage());
+        }
     }
     
     public function testDurationBetweenItems() {

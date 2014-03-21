@@ -66,13 +66,21 @@ class TimeConstraint {
     private $navigationMode;
     
     /**
+     * Whether or not to consider minimum time constraints.
+     * 
+     * @var boolean
+     */
+    private $considerMinTime;
+    
+    /**
      * Create a new TimeConstraint object.
      * 
      * @param QtiComponent $source The TestPart or SectionPart the constraint applies on.
      * @param Duration $duration The already spent duration by the candidate on $source.
      * @param NavigationMode $navigationMode The current navigation mode.
+     * @param boolean $considerMinTime Whether or not to consider minimum time limits.
      */
-    public function __construct(QtiComponent $source, Duration $duration, $navigationMode = NavigationMode::LINEAR) {
+    public function __construct(QtiComponent $source, Duration $duration, $navigationMode = NavigationMode::LINEAR, $considerMinTime = true) {
         $this->setSource($source);
         $this->setDuration($duration);
         $this->setNavigationMode($navigationMode);
@@ -135,6 +143,24 @@ class TimeConstraint {
     }
     
     /**
+     * Set whether or not minimum time limits must be taken into account.
+     * 
+     * @param boolean $considerMinTime
+     */
+    public function setConsiderMinTime($considerMinTime) {
+        $this->considerMinTime = $considerMinTime;
+    }
+    
+    /**
+     * Whether or not minimum time limits are taken into account.
+     * 
+     * @return boolean
+     */
+    public function doesConsiderMinTime() {
+        return $this->considerMinTime;
+    }
+    
+    /**
      * Get the time remaining to be spent by the candidate on the source of the time
      * constraint. Please note that this method will never return negative durations.
      * 
@@ -191,7 +217,10 @@ class TimeConstraint {
      * @return boolean
      */
     public function minTimeInForce() {
-        if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
+        if ($this->doesConsiderMinTime() === false) {
+            return false;
+        }
+       else if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
             return false;
         }
         else {

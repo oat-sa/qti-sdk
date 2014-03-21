@@ -148,16 +148,24 @@ class AssessmentTestSession extends State {
 	private $durationStore;
 	
 	/**
+	 * Whether or not to consider minimum time limits during the AssessmentTest.
+	 * 
+	 * @var boolean
+	 */
+	private $considerMinTime;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
 	 * @param Route $route The sequence of items that has to be taken for the session.
 	 */
-	public function __construct(AssessmentTest $assessmentTest, Route $route) {
+	public function __construct(AssessmentTest $assessmentTest, Route $route, $considerMinTime = true) {
 		
 		parent::__construct();
 		$this->setAssessmentTest($assessmentTest);
 		$this->setRoute($route);
+		$this->setConsiderMinTime($considerMinTime);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		$this->setPendingResponseStore(new PendingResponseStore());
@@ -298,6 +306,7 @@ class AssessmentTestSession extends State {
 	    
 	    foreach ($this->assessmentItemSessionStore->getAllAssessmentItemSessions() as $itemSession) {
 	        $itemSession->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
+	        $itemSession->setConsiderMinTime($this->mustConsiderMinTime());
 	    }
 	}
 	
@@ -383,6 +392,24 @@ class AssessmentTestSession extends State {
 	 */
 	public function getDurationStore() {
 	    return $this->durationStore;
+	}
+	
+	/**
+	 * Whether or not minimum time limits must be taken into account.
+	 * 
+	 * @return boolean
+	 */
+	public function mustConsiderMinTime() {
+	    return $this->considerMinTime;
+	}
+	
+	/**
+	 * Set whether or not minimum time limits must be taken into account.
+	 * 
+	 * @param boolean $considerMinTime
+	 */
+	protected function setConsiderMinTime($considerMinTime) {
+	    $this->considerMinTime = $considerMinTime;
 	}
 
 	/**
@@ -763,7 +790,7 @@ class AssessmentTestSession extends State {
 	        $navigationMode = $routeItem->getTestPart()->getNavigationMode();
 	        $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
 	        
-	        $session = new AssessmentItemSession($itemRef, $navigationMode, $submissionMode);
+	        $session = new AssessmentItemSession($itemRef, $navigationMode, $submissionMode, $this->mustConsiderMinTime());
 	        $session->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
 	        
 	        // Determine the item session control.
@@ -1989,29 +2016,31 @@ class AssessmentTestSession extends State {
 	    $navigationMode = $this->getCurrentNavigationMode();
 	    $routeItem = $this->getCurrentRouteItem();
 	    $durationStore = $this->getDurationStore();
+	    $considerMinTime = $this->mustConsiderMinTime();
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
-	        $duration = $durationStore[$routeItem->getAssessmentTest()->getIdentifier()];
-	        $constraints[] = new TimeConstraint($routeItem->getAssessmentTest(), $duration, $navigationMode);
+	        $source = $routeItem->getAssessmentTest();
+	        $duration = $durationStore[$source->getIdentifier()];
+	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
 	        $duration = $durationStore[$source->getIdentifier()];
-	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode);
+	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
 	        $source = $this->getCurrentAssessmentSection();
 	        $duration = $durationStore[$source->getIdentifier()];
-	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode);
+	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_ITEM) {
 	        $source = $routeItem->getAssessmentItemRef();
 	        $session = $this->getCurrentAssessmentItemSession();
 	        $duration = $session['duration'];
-	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode);
+	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    return $constraints;

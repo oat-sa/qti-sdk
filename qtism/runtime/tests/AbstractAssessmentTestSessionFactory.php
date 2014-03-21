@@ -58,9 +58,18 @@ class AbstractAssessmentTestSessionFactory {
      */
     private $acceptableLatency;
     
+    /**
+     * Whether or not created AssessmentTestSessions must consider
+     * minimum time limits.
+     * 
+     * @var booolean
+     */
+    private $considerMinTime;
+    
     public function __construct(AssessmentTest $assessmentTest) {
         $this->setAssessmentTest($assessmentTest);
         $this->setAcceptableLatency(new Duration('PT0S'));
+        $this->setConsiderMinTime(true);
     }
     
     /**
@@ -115,6 +124,26 @@ class AbstractAssessmentTestSessionFactory {
      */
     public function getAcceptableLatency() {
         return $this->acceptableLatency;
+    }
+    
+    /**
+     * Set whether or not created AssessmentTestSessions must consider
+     * minimum time limits.
+     * 
+     * @param boolean $considerMinTime
+     */
+    public function setConsiderMinTime($considerMinTime) {
+        $this->considerMinTime = $considerMinTime;
+    }
+    
+    /**
+     * Whether or not created AssessmentTestSessions must consider
+     * minimum time limits.
+     * 
+     * @return boolean
+     */
+    public function mustConsiderMinTime() {
+        return $this->considerMinTime;
     }
     
     /**
