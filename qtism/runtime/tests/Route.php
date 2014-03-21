@@ -1086,9 +1086,9 @@ class Route implements Iterator {
         
         // Check for a assessmentSection.
         $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
-        if (isset($assessmentSectionIdentifierMap[$identifier]) === true) {
+        if (isset($assessmentSectionIdentifierMap[$id]) === true) {
             
-            if ($assessmentSectionIdentifierMap[$identifier][0]->getTestPart() !== $this->current()->getTestPart()) {
+            if ($assessmentSectionIdentifierMap[$id][0]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // In case of an item or section, the target must refer to an item or section
                 // in the same testPart [...]
@@ -1097,16 +1097,16 @@ class Route implements Iterator {
             }
             
             // We branch to the first RouteItem belonging to the section.
-            $this->setPosition($this->getRouteItemPosition($assessmentSectionIdentifierMap[$identifier][0]));
+            $this->setPosition($this->getRouteItemPosition($assessmentSectionIdentifierMap[$id][0]));
             return;
         }
         
         // Check for a testPart.
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
-        if (isset($testPartIdentifierMap[$identifier]) === true) {
+        if (isset($testPartIdentifierMap[$id]) === true) {
             
             // We branch to the first RouteItem belonging to the testPart.
-            if ($testPartIdentifierMap[$identifier][0]->getTestPart() === $this->current()->getTestPart()) {
+            if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
                 // From IMS QTI:
                 // For testParts, the target must refer to another testPart.
                 $msg = "Cannot branch to the same testPart.";
@@ -1114,11 +1114,12 @@ class Route implements Iterator {
             }
             
             // We branch to the first RouteItem belonging to the testPart.
-            $this->setPosition($this->getRouteItemPosition($testPartIdentifierMap[$identifier][0]));
+            $this->setPosition($this->getRouteItemPosition($testPartIdentifierMap[$id][0]));
+            return;
         }
         
         // No such identifier referenced in the route, cannot branch.
-        $msg = "No such identifier '${identifier}' found in the route for branching.";
+        $msg = "No such identifier '${id}' found in the route for branching.";
         throw new OutOfBoundsException($msg);
     }
     
