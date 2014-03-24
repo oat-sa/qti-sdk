@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\common\utils\Format;
+
 /**
  * A utility class for all sub-classes of the OperatorProcessor class.
  * 
@@ -42,7 +44,7 @@ class Utils {
 	 * @param integer $b A positive integer
 	 * @return integer The GCD of $a and $b.
 	 */
-	public static function gcd($a, $b) {
+	static public function gcd($a, $b) {
 		$a = abs($a);
 		$b = abs($b);
 		
@@ -65,7 +67,7 @@ class Utils {
 	 * @param integer $b
 	 * @return integer the LCM of $a and $b.
 	 */
-	public static function lcm($a, $b) {
+	static public function lcm($a, $b) {
 		$a = abs($a);
 		$b = abs($b);
 		
@@ -83,7 +85,7 @@ class Utils {
 	 * @param array An array of numeric values.
 	 * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
 	 */
-	public static function mean(array $sample) {
+	static public function mean(array $sample) {
 		
 		$count = count($sample);
 		if ($count === 0) {
@@ -120,7 +122,7 @@ class Utils {
 	 * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
 	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
 	 */
-	public static function variance(array $sample, $correction = true) {
+	static public function variance(array $sample, $correction = true) {
 		$mean = static::mean($sample);
 		
 		if ($mean === false) {
@@ -164,7 +166,7 @@ class Utils {
 	 * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
 	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance 
 	 */
-	public static function standardDeviation(array $sample, $correction = true) {
+	static public function standardDeviation(array $sample, $correction = true) {
 		$sampleVariance = static::variance($sample, $correction);
 		
 		if ($sampleVariance === false) {
@@ -182,7 +184,7 @@ class Utils {
 	 *
 	 * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
 	 */
-	public static function pregAddDelimiter($string) {
+	static public function pregAddDelimiter($string) {
 		
 		return '/' . static::escapeSymbols($string, '/') . '/';
 	}
@@ -194,7 +196,7 @@ class Utils {
 	 * @param integer $offset
 	 * @return integer
 	 */
-	public static function getPrecedingBackslashesCount($string, $offset) {
+	static public function getPrecedingBackslashesCount($string, $offset) {
 		$count = 0;
 	
 		if ($offset < strlen($string)) {
@@ -218,7 +220,7 @@ class Utils {
 	 * @param array|string $symbols An array of symbols or a single symbol.
 	 * @return string The escaped string.
 	 */
-	public static function escapeSymbols($string, $symbols) {
+	static public function escapeSymbols($string, $symbols) {
 		
 		if (!is_array($symbols)) {
 			$symbols = array($symbols);
@@ -244,5 +246,43 @@ class Utils {
 		}
 		
 		return $returnValue;
+	}
+	
+	/**
+	 * Transform a custom operator class e.g. 'org.qtism.custom.explode' into a PHP
+	 * fully qualified class name e.g. 'org\qtism\custom\Explode'.
+	 * 
+	 * @param string $class A custom operator class name where namespace separator is '.' (dot).
+	 * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
+	 */
+	static public function customOperatorClassToPhpClass($class) {
+	    
+	    if (is_string($class) === false) {
+	        return false;
+	    }
+	    else if (Format::isIdentifier($class, false) === false) {
+	        return false;
+	    }
+	    
+	    $class = strval($class);
+	    $tokens = explode('.', $class);
+	    
+	    if ($tokens === false) {
+	        return $tokens;
+	    }
+	    else {
+	        $tokenCount = count($tokens);
+	        
+	        if ($tokenCount <= 1) {
+	            return false;
+	        }
+	        
+	        // ucfirst on last token (i.e. The actual class name)
+	        $lastPosition = $tokenCount - 1;
+	        $lastToken = ucfirst($tokens[$lastPosition]);
+	        $tokens[$lastPosition] = $lastToken;
+	        
+	        return implode("\\", $tokens);
+	    }
 	}
 }

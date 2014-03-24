@@ -104,6 +104,25 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		$this->assertSame($expected, OperatorsUtils::escapeSymbols($string, $symbols));
 	}
 	
+	/**
+	 * @dataProvider validCustomOperatorClassToPhpClassProvider
+	 * 
+	 * @param string $customClass
+	 * @param string $expected
+	 */
+	public function testValidCustomOperatorClassToPhpClass($customClass, $expected) {
+	    $this->assertEquals($expected, OperatorsUtils::customOperatorClassToPhpClass($customClass));
+	}
+	
+	/**
+	 * @dataProvider invalidCustomOperatorClassToPhpClassProvider
+	 * 
+	 * @param string $customClass
+	 */
+	public function testInvalidCustomOperatorClassToPhpClass($customClass) {
+	    $this->assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
+	}
+	
 	public function pregAddDelimiterProvider() {
 		return array(
 				array('', '//'),
@@ -205,5 +224,22 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 			// the container size must be > 1
 			array(array(10), true, false) 
 		);
+	}
+	
+	public function validCustomOperatorClassToPhpClassProvider() {
+	    return array(
+	        array('com.taotesting.operators.custom.explode', "com\\taotesting\\operators\\custom\\Explode"),
+	        array('org.imsglobal.rStats', "org\\imsglobal\\RStats"),
+	        array('taotesting.Custom', "taotesting\\Custom"),
+	    );
+	}
+	
+	public function invalidCustomOperatorClassToPhpClassProvider() {
+	    return array(
+	        array('taotesting'),
+	        array('com#taotesting'),
+	        array(''),
+	        array('com|taotesting.custom')
+	    );
 	}
 }

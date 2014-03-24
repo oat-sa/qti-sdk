@@ -67,13 +67,13 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory {
 		        // QTI custom operator. Try to load an autoloaded class by using
 		        // its class attribute value.
 		        if ($expression->hasClass() === true) {
-		            $className = str_replace('.', "\\", $expression->getClass());
+		            $className = Utils::customOperatorClassToPhpClass($expression->getClass());
 		            
 		            if (class_exists($className) === true) {
 		                return new $className($expression, $operands);
 		            }
 		            else {
-		                $msg = "No custom operator implementation found for class '${className}'.";
+		                $msg = "No custom operator implementation found for class '" . $expression->getClass() . "'.";
 		                throw new RuntimeException($msg);
 		            }
 		        }
