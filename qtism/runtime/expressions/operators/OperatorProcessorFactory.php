@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
+use qtism\data\expressions\operators\CustomOperator;
 use qtism\data\QtiComponent;
 use qtism\data\expressions\operators\Operator;
 use qtism\runtime\expressions\ExpressionProcessorFactory;
@@ -61,27 +62,49 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory {
 	 */
 	public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null) {
 		if ($expression instanceof Operator) {
-			$qtiClassName = ucfirst($expression->getQtiClassName());
-			$nsPackage = 'qtism\\runtime\\expressions\\operators\\';
-			$className = $nsPackage . $qtiClassName . 'Processor';
-			
-			if (class_exists($className)) {
-				
-				if (is_null($operands) === true) {
-					$operands = new OperandsCollection();
-				}
-				
-				return new $className($expression, $operands);
-			}
-			else {
-				$msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
-				throw new RuntimeException($msg);
-			}
+		    
+		    if ($expression instanceof CustomOperator) {
+		        // QTI custom operator. Try to load an autoloaded class by using
+		        // its class attribute value.
+		        if ($expression->hasClass() === true) {
+		            $className = $expression->getClass();
+		            
+		            if (class_exists($className) === true) {
+		                return new $className($expression, $operands);
+		            }
+		            else {
+		                $msg = "No custom operator implementation found for class '${className}'.";
+		                throw new RuntimeException($msg);
+		            }
+		        }
+		        else {
+		            $msg = "Only custom operators with a 'class' attribute value can be processed.";
+		            throw new RuntimeException($msg);
+		        }
+		    }
+		    else {
+		        // QTI built-in operator.
+		        $qtiClassName = ucfirst($expression->getQtiClassName());
+		        $nsPackage = 'qtism\\runtime\\expressions\\operators\\';
+		        $className = $nsPackage . $qtiClassName . 'Processor';
+		        	
+		        if (class_exists($className)) {
+		        
+		            if (is_null($operands) === true) {
+		                $operands = new OperandsCollection();
+		            }
+		        
+		            return new $className($expression, $operands);
+		        }
+		        else {
+		            $msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
+		            throw new RuntimeException($msg);
+		        }
+		    }
 		}
 		else {
 			$msg = "The OperatorProcessorFactory only accepts to create processors for Operator objects.";
 			throw new InvalidArgumentException($msg);
 		}
 	}
-	
 }
