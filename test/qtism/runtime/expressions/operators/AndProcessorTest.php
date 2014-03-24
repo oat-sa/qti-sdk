@@ -1,11 +1,5 @@
 <?php
 
-use qtism\common\datatypes\Boolean;
-
-use qtism\common\datatypes\Float;
-
-use qtism\common\datatypes\String;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Point;
@@ -14,6 +8,9 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
+use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Float;
+use qtism\common\datatypes\String;
 
 class AndProcessorTest extends QtiSmTestCase {
 	

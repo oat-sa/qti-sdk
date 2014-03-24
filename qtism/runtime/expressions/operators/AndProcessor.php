@@ -73,12 +73,12 @@ class AndProcessor extends OperatorProcessor {
 		
 		if ($operands->exclusivelySingle() === false) {
 			$msg = "The And Expression only accept operands with single cardinality.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
 		if ($operands->exclusivelyBoolean() === false) {
 			$msg = "The And Expression only accept operands with boolean baseType.";
-			throw new OperatorProcessingException($msg, $this);
+			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
 		foreach ($operands as $operand) {

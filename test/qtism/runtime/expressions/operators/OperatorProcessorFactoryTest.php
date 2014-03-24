@@ -1,14 +1,29 @@
 <?php
+require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
+require_once (dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
+
+use qtism\common\enums\BaseType;
+use qtism\runtime\common\OrderedContainer;
+use qtism\common\datatypes\String;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\expressions\operators\OperandsCollection;
-
-require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
-
 use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtism\data\expressions\operators\Operator;
 
 class OperatorProcessorFactoryTest extends QtiSmTestCase {
 	
+    public function setUp() {
+        parent::setUp();
+        // register testing custom operators autoloader.
+        spl_autoload_register('custom_operator_autoloader');
+    }
+    
+    public function tearDown() {
+        parent::tearDown();
+        // unregister testing custom operators autoloader.
+        spl_autoload_unregister('custom_operator_autoloader');
+    }
+    
 	public function testCreateProcessor() {
 		// get a fake sum expression.
 		$expression = $this->createComponentFromXml(
@@ -32,5 +47,21 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		
 		$this->setExpectedException('\\InvalidArgumentException');
 		$processor = $factory->createProcessor($expression);
+	}
+	
+	public function testCustomOperator() {
+	    // Fake expression...
+	    $expression = $this->createComponentFromXml(
+	        '<customOperator xmlns:qtism="http://www.qtism.org/xsd/custom_operators/explode" class="org.qtism.test.Explode" qtism:delimiter="-">
+	            <baseValue baseType="string">this-is-a-test</baseValue>
+	        </customOperator>'
+	    );
+	    
+	    $factory = new OperatorProcessorFactory();
+	    $operands = new OperandsCollection(array(new String('this-is-a-test')));
+	    $processor = $factory->createProcessor($expression, $operands);
+	    $this->assertInstanceOf('org\\qtism\\test\\Explode', $processor);
+	    $this->assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
+	    $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, array(new String('this'), new String('is'), new String('a'), new String('test')))));
 	}
 }
