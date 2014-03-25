@@ -1,6 +1,5 @@
 <?php
 use qtism\runtime\pci\json\MarshallingException;
-
 use qtism\runtime\common\OutcomeVariable;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
