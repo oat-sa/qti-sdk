@@ -103,6 +103,12 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $marshaller->marshall($input);
     }
     
+    public function testMarshallAsArray() {
+        $marshaller = new Marshaller();
+        $data = $marshaller->marshall(new Integer(12), Marshaller::MARSHALL_ARRAY);
+        $this->assertEquals(12, $data['base']['integer']);
+    }
+    
     public function marshallScalarProvider() {
         return array(
             array(new Boolean(true), json_encode(array('base' => array('boolean' => true)))),

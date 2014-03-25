@@ -25,7 +25,6 @@
 
 namespace qtism\runtime\pci\json;
 
-
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Duration;
@@ -58,6 +57,20 @@ use \InvalidArgumentException;
 class Marshaller {
     
     /**
+     * Output of marshalling as an array.
+     * 
+     * @var integer
+     */
+    const MARSHALL_ARRAY = 0;
+    
+    /**
+     * Output of marshalling as JSON string.
+     * 
+     * @var integer
+     */
+    const MARSHALL_JSON = 1;
+    
+    /**
      * Create a new JSON Marshaller object.
      * 
      */
@@ -69,10 +82,12 @@ class Marshaller {
      * Marshall some QTI data into JSON.
      * 
      * @param State|QtiDatatype|null $data The data to be marshalled into JSON.
+     * @param integer How the output will be returned (see class constants). Default is plain JSON string.
+     * @return string|array The JSONified data.
      * @throws InvalidArgumentException If $data has not a compliant type.
      * @throws MarshallingException If an error occurs while marshalling $data into JSON.
      */
-    public function marshall($data) {
+    public function marshall($data, $output = Marshaller::MARSHALL_JSON) {
         
         if (is_null($data) === true) {
             $json = array('base' => $data);
@@ -104,7 +119,7 @@ class Marshaller {
             throw new MarshallingException($msg, $code);
         }
         
-        return json_encode($json);
+        return ($output === self::MARSHALL_JSON) ? json_encode($json) : $json;
     }
     
     /**
