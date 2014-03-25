@@ -1,6 +1,12 @@
 <?php
-use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\pci\json\MarshallingException;
 
+use qtism\runtime\common\OutcomeVariable;
+use qtism\common\enums\Cardinality;
+use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\State;
+use qtism\runtime\common\RecordContainer;
+use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
@@ -63,6 +69,39 @@ class JsonMarshallerTest extends QtiSmTestCase {
     public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson) {
         $marshaller = new Marshaller();
         $this->assertEquals($expectedJson, $marshaller->marshall($ordered));
+    }
+    
+    /**
+     * @dataProvider marshallRecordProvider
+     * 
+     * @param RecordContainer $record
+     * @param string $expectedJson
+     */
+    public function testMarshallRecord(RecordContainer $record, $expectedJson) {
+        $marshaller = new Marshaller();
+        $this->assertEquals($expectedJson, $marshaller->marshall($record));
+    }
+    
+    /**
+     * @dataProvider marshallStateProvider
+     * 
+     * @param State $state
+     * @param string $expectedJson
+     */
+    public function testMarshallState(State $state, $expectedJson) {
+        $marshaller = new Marshaller();
+        $this->assertEquals($expectedJson, $marshaller->marshall($state));
+    }
+    
+    /**
+     * @dataProvider marshallInvalidInputProvider
+     * 
+     * @param mixed $input
+     */
+    public function testMarshallInvalidInput($input) {
+        $this->setExpectedException('qtism\\runtime\\pci\\json\\MarshallingException', MarshallingException::NOT_SUPPORTED);
+        $marshaller = new Marshaller();
+        $marshaller->marshall($input);
     }
     
     public function marshallScalarProvider() {
@@ -190,5 +229,70 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         return $returnValue;
+    }
+    
+    public function marshallRecordProvider() {
+        $returnValue = array();
+        
+        // empty record.
+        $record = new RecordContainer();
+        $json = json_encode(array('record' => array()));
+        $returnValue[] = array($record, $json);
+        
+        // single boolean value record.
+        $record = new RecordContainer(array('rock' => new Boolean(true)));
+        $json = json_encode(array('record' => array(array('name' => 'rock', 'base' => array('boolean' => true)))));
+        $returnValue[] = array($record, $json);
+        
+        // single null valued record.
+        $record = new RecordContainer(array('rock' => null));
+        $json = json_encode(array('record' => array(array('name' => 'rock', 'base' => null))));
+        $returnValue[] = array($record, $json);
+        
+        // miscellaneous record.
+        $record = new RecordContainer(array('numeric' => new Float(1337.1337), 'null' => null, 'coordinates' => new Point(10, 20)));
+        $json = json_encode(array('record' => array(array('name' => 'numeric', 'base' => array('float' => 1337.1337)), array('name' => 'null', 'base' => null), array('name' => 'coordinates', 'base' => array('point' => array(10, 20))))));
+        $returnValue[] = array($record, $json);
+        
+        return $returnValue;
+    }
+    
+    public function marshallStateProvider() {
+        $returnValue = array();
+        
+        // empty state.
+        $state = new State();
+        $json = json_encode(array());
+        $returnValue[] = array($state, $json);
+        
+        // simple state.
+        $state = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $json = json_encode(array('RESPONSE' => array('base' => array('identifier' => 'ChoiceA'))));
+        $returnValue[] = array($state, $json);
+        
+        // complex state 1.
+        $state = new State();
+        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+        $state->setVariable(new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::DURATION));
+        $state->setVariable(new ResponseVariable('RESPONSE3', Cardinality::RECORD, -1, new RecordContainer(array('A' => new Identifier('A'), 'B' => new Identifier('B')))));
+        $json = json_encode(array('RESPONSE1' => array('base' => array('identifier' => 'ChoiceA')), 'RESPONSE2' => array('base' => null), 'RESPONSE3' => array('record' => array(array('name' => 'A', 'base' => array('identifier' => 'A')), array('name' => 'B', 'base' => array('identifier' => 'B'))))));
+        $returnValue[] = array($state, $json);
+        
+        // complex state 2.
+        $state = new State();
+        $state->setVariable(new OutcomeVariable('OUTCOME1', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(10.10)))));
+        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(10, 20)))));
+        $json = json_encode(array('OUTCOME1' => array('list' => array('float' => array(0.0, 10.10))), 'RESPONSE1' => array('list' => array('point' => array(array(10, 20))))));
+        $returnValue[] = array($state, $json);
+        
+        return $returnValue;
+    }
+    
+    public function marshallInvalidInputProvider() {
+        return array(
+            array(10),
+            array('string!'),
+            array(new \stdClass())                
+        );
     }
 }

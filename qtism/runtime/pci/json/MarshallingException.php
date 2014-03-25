@@ -22,18 +22,23 @@
  * @subpackage
  *
  */
+
 namespace qtism\runtime\pci\json;
 
 use \Exception;
 
 /**
- * Exception to be thrown when a Marshalling/Unmarshalling error occurs while
+ * Exception to be thrown when a Marshalling error occurs while
  * dealing with JSON Data.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 class MarshallingException extends Exception {
+    
+    const UNKNOWN = 0;
+    
+    const NOT_SUPPORTED = 1;
     
     /**
      * Create a new MarshallingException object.

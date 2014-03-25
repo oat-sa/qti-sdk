@@ -24,8 +24,8 @@
  */
 namespace qtism\runtime\pci\json;
 
-use qtism\common\enums\BaseType;
 
+use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\DirectedPair;
@@ -99,15 +99,22 @@ class Marshaller {
             }
             
             $msg .= "' given.";
-            throw new InvalidArgumentException($msg);
+            $code = MarshallingException::NOT_SUPPORTED;
+            throw new MarshallingException($msg, $code);
         }
         
         return json_encode($json);
     }
     
+    /**
+     * Marshall a single unit of QTI data.
+     * 
+     * @param State|QtiDatatype|null $unit
+     * @return array An array representing the JSON data to be encoded later on.
+     */
     protected function marshallUnit($unit) {
         if (is_null($unit) === true) {
-            $json = null;
+            $json = array('base' => null);
         }
         else if ($unit instanceof Scalar) {
             $json = $this->marshallScalar($unit);
@@ -123,7 +130,25 @@ class Marshaller {
             }
         }
         else if ($unit instanceof RecordContainer) {
-            // todo
+            $json = array();
+            $json['record'] = array();
+            
+            foreach ($unit as $k => $u) {
+                $data = $this->marshallUnit($u);
+                $jsonEntry = array();
+                $jsonEntry['name'] = $k;
+                
+                if (isset($data['base']) === true || $data['base'] === null) {
+                    // Primitive base type.
+                    $jsonEntry['base'] = $data['base'];
+                }
+                else {
+                    // A nested list.
+                    $jsonEntry['list'] = $data['list'];
+                }
+                
+                $json['record'][] = $jsonEntry;
+            }
         }
         else {
             $json = $this->marshallComplex($unit);
@@ -137,7 +162,8 @@ class Marshaller {
      * later on).
      * 
      * @param null|QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
-     * @return array|scalar|null
+     * @return array An array representing the JSON data to be encoded later on.
+     * @throws MarshallingException
      */
     protected function marshallScalar($scalar) {
         if (is_null($scalar) === true) {
@@ -167,10 +193,27 @@ class Marshaller {
             }
         }
         else {
-            // throw exception.
+            $msg = "The '" . get_class($this) . "::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '";
+            if (is_object($scalar) === true) {
+                $msg .= get_class($scalar);
+            }
+            else {
+                $msg .= gettype($scalar);
+            }
+            
+            $msg .= "' given.";
+            $code = MarshallingException::NOT_SUPPORTED;
+            throw new MarshallingException($msg, $code);
         }
     }
     
+    /**
+     * Marshall a single complex QtiDataType object.
+     * 
+     * @param QtiDatatype $complex
+     * @throws MarshallingException
+     * @return array An array representing the JSON data to be encoded later on.
+     */
     protected function marshallComplex(QtiDatatype $complex) {
         if (is_null($complex) === true) {
             return $complex;
@@ -188,7 +231,17 @@ class Marshaller {
             return array('base' => array('duration' => $complex->__toString()));
         }
         else {
-            // throw exception
+            $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
+            if (is_object($scalar) === true) {
+                $msg .= get_class($complex);
+            }
+            else {
+                $msg .= gettype($complex);
+            }
+            
+            $msg .= "' given.";
+            $code = MarshallingException::NOT_SUPPORTED;
+            throw new MarshallingException($msg, $code);
         }
     }
 }
