@@ -137,7 +137,12 @@ class Unmarshaller {
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
                 try {
-                    $returnValue[] = $this->unmarshallUnit(array('base' => array($keys[0] => $v)));
+                    if ($v === null) {
+                        $returnValue[] = $this->unmarshallUnit(array('base' => $v));
+                    }
+                    else {
+                        $returnValue[] = $this->unmarshallUnit(array('base' => array($keys[0] => $v)));
+                    }
                 }
                 catch (InvalidArgumentException $e) {
                     $strBaseType = BaseType::getNameByConstant($baseType);

@@ -167,6 +167,10 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "duration" : ["PT5S", "PT10S"] } }';
         $returnValue[] = array($container, $json);
         
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), null, new Boolean(false)));
+        $json = '{ "list" : { "boolean": [true, null, false] } }';
+        $returnValue[] = array($container, $json);
+        
         return $returnValue;
     }
     
