@@ -34,7 +34,7 @@ use qtism\common\datatypes\File;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MemoryFile extends DefaultFile {
+class MemoryFile extends AbstractFile {
     
     /**
      * The sequence of bytes composing the file,

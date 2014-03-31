@@ -35,7 +35,7 @@ use qtism\common\datatypes\File;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class DefaultFile implements File {
+abstract class AbstractFile implements File {
     
     public abstract function getData();
     
