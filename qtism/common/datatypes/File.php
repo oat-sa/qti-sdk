@@ -25,6 +25,48 @@
 
 namespace qtism\common\datatypes;
 
+/**
+ * The interface to implement to create a new QTI File datatype
+ * implementation.
+ * 
+ * From IMS QTI:
+ * 
+ * A file value is any sequence of octets (bytes) qualified by a 
+ * content-type and an optional filename given to the file 
+ * (for example, by the candidate when uploading it as part 
+ * of an interaction). The content type of the file is one 
+ * of the MIME types defined by [RFC2045].
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 interface File extends QtiDatatype {
     
+    /**
+     * Get the sequence of bytes composing the file.
+     * 
+     * @return string
+     */
+    public function getData();
+    
+    /**
+     * Get the MIME type of the file. This MIME type is one of the MIME
+     * types defined by RFC2045.
+     */
+    public function getMimeType();
+    
+    /**
+     * Whether or not a file name is defined for this file.
+     * 
+     * @return boolean
+     */
+    public function hasFilename();
+    
+    /**
+     * Get the file name of this file. If no file name is defined,
+     * an empty string is returned.
+     * 
+     * @return string
+     */
+    public function getFilename();
 }
