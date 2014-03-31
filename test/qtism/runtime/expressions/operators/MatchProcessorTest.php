@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\files\MemoryFile;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
@@ -40,6 +41,22 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(6), new Integer(7), new Integer(8), new Integer(5)));
 		$processor->setOperands($operands);
 		$this->assertFalse($processor->process()->getValue() === true);
+	}
+	
+	public function testFile() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection();
+	    $operands[] = new MemoryFile('Some text', 'text/plain');
+	    $operands[] = new MemoryFile('Some text', 'text/plain');
+	    $processor = new MatchProcessor($expression, $operands);
+	    
+	    $this->assertTrue($processor->process()->getValue());
+	    
+	    $operands->reset();
+	    $operands[] = new MemoryFile('Some text', 'text/plain');
+	    $operands[] = new MemoryFile('Other text', 'text/plain');
+	    
+	    $this->assertFalse($processor->process()->getValue());
 	}
 	
 	public function testWrongBaseType() {
