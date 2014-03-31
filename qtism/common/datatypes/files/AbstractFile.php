@@ -37,10 +37,64 @@ use qtism\common\datatypes\File;
  */
 abstract class AbstractFile implements File {
     
+    /**
+     * The MIME type describing the content of the file.
+     *
+     * @var string
+     */
+    private $mimeType;
+    
+    /**
+     * An optional file name. An empty string
+     * represents no file name.
+     *
+     * @var string
+     */
+    private $filename;
+    
     public abstract function getData();
     
-    public abstract function getFilename();
+    /**
+     * Set the MIME type describing the content of the file.
+     * 
+     * @param string $mimeType
+     */
+    protected function setMimeType($mimeType) {
+        $this->mimeType = $mimeType;
+    }
     
+    /**
+     * Get the MIME type describing the content of the file.
+     * 
+     * @return string
+     */
+    public function getMimeType() {
+        return $this->mimeType;
+    }
+    
+    /**
+     * Set the optional name of the file.
+     * 
+     * @param string $filename
+     */
+    protected function setFilename($filename) {
+        $this->filename = $filename;
+    }
+    
+    /**
+     * Get the optional name of the file.
+     * 
+     * @return string
+     */
+    public function getFilename() {
+        return $this->filename;
+    }
+    
+    /**
+     * Whether or not this file has a filename.
+     * 
+     * @return boolean
+     */
     public function hasFilename() {
         return $this->getFilename() !== '';
     }

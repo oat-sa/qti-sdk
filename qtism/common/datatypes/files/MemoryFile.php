@@ -28,7 +28,7 @@ namespace qtism\common\datatypes\files;
 use qtism\common\datatypes\File;
 
 /**
- * An implementation of File focusing on holding a file exclusively
+ * An implementation of File focusing on storing a file exclusively
  * in memory.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -43,21 +43,6 @@ class MemoryFile extends AbstractFile {
      * @var string
      */
     private $data;
-    
-    /**
-     * The MIME type describing the content of the file.
-     * 
-     * @var string
-     */
-    private $mimeType;
-    
-    /**
-     * An optional file name. An empty string
-     * represents no file name.
-     * 
-     * @var string
-     */
-    private $filename;
     
     /**
      * Create a new instance of MemoryFile.
@@ -88,41 +73,5 @@ class MemoryFile extends AbstractFile {
      */
     public function getData() {
         return $this->data;
-    }
-    
-    /**
-     * Set the MIME type describing the content of the file.
-     * 
-     * @param string $mimeType
-     */
-    protected function setMimeType($mimeType) {
-        $this->mimeType = $mimeType;
-    }
-    
-    /**
-     * Get the MIME type describing the content of the file.
-     * 
-     * @return string
-     */
-    public function getMimeType() {
-        return $this->mimeType;
-    }
-    
-    /**
-     * Set the optional name of the file.
-     * 
-     * @param string $filename
-     */
-    protected function setFilename($filename) {
-        $this->filename = $filename;
-    }
-    
-    /**
-     * Get the optional name of the file.
-     * 
-     * @return string
-     */
-    public function getFilename() {
-        return $this->filename;
     }
 }
