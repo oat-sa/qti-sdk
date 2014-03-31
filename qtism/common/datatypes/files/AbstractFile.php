@@ -25,6 +25,7 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\File;
@@ -35,7 +36,7 @@ use qtism\common\datatypes\File;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractFile implements File {
+abstract class AbstractFile implements File, Comparable {
     
     /**
      * The MIME type describing the content of the file.
@@ -51,6 +52,11 @@ abstract class AbstractFile implements File {
      * @var string
      */
     private $filename;
+    
+    public function __construct($mimeType, $filename = '') {
+        $this->setMimeType($mimeType);
+        $this->setFilename($filename);
+    }
     
     public abstract function getData();
     
@@ -105,5 +111,13 @@ abstract class AbstractFile implements File {
     
     public function getBaseType() {
         return BaseType::FILE;
+    }
+    
+    public function equals($obj) {
+        if ($obj instanceof File) {
+            return $this->getData() === $obj->getData() && $this->getFilename() === $obj->getFilename() && $this->getMimeType() === $obj->getMimeType();
+        }
+    
+        return false;
     }
 }

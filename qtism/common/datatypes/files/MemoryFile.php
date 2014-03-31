@@ -25,7 +25,7 @@
 
 namespace qtism\common\datatypes\files;
 
-use qtism\common\datatypes\File;
+use qtism\common\Comparable;
 
 /**
  * An implementation of File focusing on storing a file exclusively

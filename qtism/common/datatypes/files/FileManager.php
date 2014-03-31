@@ -26,17 +26,18 @@
 namespace qtism\common\datatypes\files;
 
 /**
+ * The File Management System of QTISM is an augmented implementation
+ * of AbstractFactory. In addition to focusing on the creation of various
+ * implementations of the File interface, it also provides a way to delete
+ * created persistent Files.
+ * 
  * This interface represents the AbstractFactory interface of the 
  * AbstractFactory Design Pattern.
- * 
- * The FileFactory interface aims at providing a common interface
- * to create new instances of File (the Product in the context of AbstractFactory
- * Design Pattern) in various flavours.
  * 
  * @author Jérôme Bogaerts <jerome@taotesing.com>
  * @see http://en.wikipedia.org/wiki/Abstract_factory_pattern The Abstract Factory Design Pattern.
  */
-interface FileFactory {
+interface FileManager {
     
     /**
      * Instantiate an implementation of File which focuses on
@@ -45,6 +46,27 @@ interface FileFactory {
      * @param string $data The data composing the file.
      * @param string $mimeType The MIME type of the file.
      * @param string $filename An optional file name.
+     * @throws FileManagerException
      */
     public function createMemoryFile($data, $mimeType, $filename = '');
+    
+    /**
+     * Instantiate an implementation of File which focuses
+     * on keeping a file on the file system.
+     * 
+     * @param string $path The path to the file containing the data of the returned File object.
+     * @param string $mimeType The MIME type of the resulting File object.
+     * @param string $filename The filename of the resulting File object.
+     * @return AbstractPersistentFile
+     * @throws FileManagerException
+     */
+    public function createPersistentFile($path, $mimeType, $filename = '');
+    
+    /**
+     * Delete a given AbstractPersistentFile from its storage media.
+     * 
+     * @param AbstractPersistentFile $file A persistent file to be deleted gracefully.
+     * @throws FileManagerException
+     */
+    public function deletePersistentFile(AbstractPersistentFile $file);
 }

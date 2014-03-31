@@ -25,24 +25,33 @@
 
 namespace qtism\common\datatypes\files;
 
+use \Exception;
+
 /**
- * A default implementation of FileFactory. In the context of the
- * AbstractFactory Design Pattern, this is a Concrete Factory.
+ * The exception class to be used when error occurs while dealing
+ * with FileManager objects.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @see http://en.wikipedia.org/wiki/Abstract_factory_pattern The Abstract Factory Design Pattern.
  *
  */
-class DefaultFactory implements FileFactory {
+class FileManagerException extends Exception {
     
     /**
-     * Create a file handled exclusively in memory.
+     * Error code to use when the constitution of the error
+     * is unknown.
      * 
-     * @param string $data The sequence of bytes composing the file content.
-     * @param string $mimeType The MIME type of the file.
-     * @param string $filename An optional file name.
+     * @var integer
      */
-    public function createMemoryFile($data, $mimeType, $filename = '') {
-        return new MemoryFile($data, $mimeType, $filename);
+    const UNKNOWN = 0;
+    
+    /**
+     * Create a new FileManagerException object.
+     * 
+     * @param string $message A human-readable error message.
+     * @param integer $code A machine understandable error code (see class constants).
+     * @param Exception $previous A possible previous Exception object.
+     */
+    public function __construct($message, $code = 0, Exception $previous = null) {
+        parent::__construct($message, $code, $previous);
     }
 }
