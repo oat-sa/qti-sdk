@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,8 @@
  *
  */
 namespace qtism\runtime\storage\binary;
+
+use qtism\common\datatypes\File;
 
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
@@ -63,7 +65,7 @@ use qtism\common\storage\BinaryStreamAccess;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiBinaryStreamAccess extends BinaryStreamAccess {
+abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     
     /**
      * An AssessmentItemSession to be cloned for best performance.
@@ -478,33 +480,17 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      * Read a File from the current binary stream.
      *
      * @throws QtiBinaryStreamAccessException
-     * @return string A File binary content.
+     * @return File A File object
      */
-    public function readFile() {
-        try {
-            return $this->readBinary();
-        }
-        catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a QTI file binary content.";
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
-        }
-    }
+    abstract public function readFile();
     
     /**
      * Write A file composed by some $binaryContent into the current binary stream.
      * 
-     * @param string $binaryContent A binary string.
+     * @param File $file A File object
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeFile($binaryContent) {
-        try {
-            $this->writeBinary($binaryContent);
-        }
-        catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while writing a QTI file binary content.";
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
-        }
-    }
+    abstract public function writeFile(File $file);
     
     /**
      * Read an intOrIdentifier from the current binary stream.

@@ -24,12 +24,10 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
-
 use qtism\common\enums\Cardinality;
-
 use qtism\runtime\tests\DurationStore;
-
 use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 use qtism\runtime\common\OutcomeVariable;
@@ -134,7 +132,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             $stream = new MemoryStream();
             $stream->open();
-            $access = new QtiBinaryStreamAccess($stream);
+            $access = $this->createBinaryStreamAccess($stream);
             
             // write the QTI Binary Storage version in use to persist the test session.
             $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
@@ -215,7 +213,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             $stream = $this->getRetrievalStream($this->getAssessmentTest(), $sessionId);
             $stream->open();
-            $access = new QtiBinaryStreamAccess($stream);
+            $access = $this->createBinaryStreamAccess($stream);
             
             $version = $access->readTinyInt();
             $assessmentTestSessionState = $access->readTinyInt();
@@ -314,4 +312,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * @param MemoryStream $stream An open MemoryStream object.
      */
     abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream);
+    
+    abstract protected function createBinaryStreamAccess(IStream $stream);
 }

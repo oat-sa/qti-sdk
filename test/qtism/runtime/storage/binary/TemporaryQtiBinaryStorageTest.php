@@ -1,11 +1,8 @@
 <?php
-
-use qtism\common\datatypes\Duration;
-
-use qtism\common\datatypes\Identifier;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\Identifier;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -15,7 +12,6 @@ use qtism\common\datatypes\Point;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\data\QtiComponentIterator;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
@@ -28,9 +24,6 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-        $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart',
-                        'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
-        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), $seekerClasses);
     
         $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
@@ -41,7 +34,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
     
         $session->beginTestSession();
-        $storage->persist($session, $seeker);
+        $storage->persist($session);
     
         $session = $storage->retrieve($sessionId);
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
@@ -341,9 +334,6 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     public function testAutoForward() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-        $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart',
-                        'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
-        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), $seekerClasses);
     
         $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
@@ -358,9 +348,6 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     public function testNonLinear() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
-        $seekerClasses = array('assessmentItemRef', 'assessmentSection', 'testPart',
-                        'branchRule', 'preCondition', 'outcomeDeclaration', 'responseDeclaration');
-        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), $seekerClasses);
         
         $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
         $storage = new TemporaryQtiBinaryStorage($testSessionFactory);

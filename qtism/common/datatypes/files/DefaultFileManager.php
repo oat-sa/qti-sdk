@@ -37,8 +37,8 @@ class DefaultFileManager implements FileManager {
     
     private $storageDirectory;
     
-    public function __construct($storageDirectory) {
-        $this->setStorageDirectory($storageDirectory);
+    public function __construct($storageDirectory = '') {
+        $this->setStorageDirectory((empty($storageDirectory) === true) ? sys_get_temp_dir() : $storageDirectory);
     }
     
     protected function setStorageDirectory($storageDirectory) {

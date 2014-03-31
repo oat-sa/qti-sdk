@@ -24,8 +24,8 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\storage\IStream;
 use qtism\data\AssessmentTest;
-
 use qtism\data\Document;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\common\storage\MemoryStream;
@@ -84,5 +84,9 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
         }
         
         return new MemoryStream($read);
+    }
+    
+    protected function createBinaryStreamAccess(IStream $stream) {
+        return new QtiBinaryStreamAccessFsFile($stream);
     }
 }
