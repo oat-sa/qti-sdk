@@ -165,6 +165,11 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $file = $fileManager->retrieve($samples . 'datatypes/file/files_2.txt');
         $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/html", "data" : ' . json_encode(base64_encode('<img src="/qtism/img.png"/>')) . ' } } }');
         
+        $originalfile = $samples . 'datatypes/file/raw/image.png';
+        $filepath = $samples . 'datatypes/file/image-png_noname_data.png';
+        $file = $fileManager->retrieve($filepath);
+        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "image\/png", "data" : ' . json_encode(base64_encode(file_get_contents($originalfile))) . ' } } }');
+        
         return $returnValue;
     }
     
