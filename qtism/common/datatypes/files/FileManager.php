@@ -66,6 +66,14 @@ interface FileManager {
     public function createFromData($data, $mimeType, $filename = '');
     
     /**
+     * Retrieve a previously created instance by $identifier.
+     * 
+     * @param string $identifier
+     * @throws FileManagerException
+     */
+    public function retrieve($identifier);
+    
+    /**
      * Delete a given AbstractPersistentFile from its storage.
      * 
      * @param AbstractPersistentFile $file A persistent file to be deleted gracefully.

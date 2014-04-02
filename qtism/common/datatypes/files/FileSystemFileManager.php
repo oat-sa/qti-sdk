@@ -77,6 +77,8 @@ class FileSystemFileManager implements FileManager {
      * @param string $data
      * @param string $mimeType
      * @param string $filename
+     * @throws FileManagerException
+     * @return FileSystemFile
      */
     public function createFromData($data, $mimeType, $filename = '') {
         $destination = $this->buildDestination();
@@ -86,6 +88,21 @@ class FileSystemFileManager implements FileManager {
         }
         catch (RuntimeException $e) {
             $msg = "An error occured while creating a QTI FileSystemFile object.";
+            throw new FileManagerException($msg, 0, $e);
+        }
+    }
+    
+    /**
+     * @param string identifier
+     * @throws FileManagerException
+     * @return FileSystemFile
+     */
+    public function retrieve($identifier) {
+        try {
+            return FileSystemFile::retrieveFile($identifier);
+        }
+        catch (RuntimeException $e) {
+            $msg = "An error occured while retrieving a QTI FileSystemFile object.";
             throw new FileManagerException($msg, 0, $e);
         }
     }
