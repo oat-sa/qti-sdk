@@ -25,7 +25,6 @@
 
 namespace qtism\common\datatypes\files;
 
-use qtism\common\Comparable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\File;
@@ -38,7 +37,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FileSystemFile implements File, Comparable {
+class FileSystemFile implements File {
 
     /**
      * The path to the file on the persistent storage.
