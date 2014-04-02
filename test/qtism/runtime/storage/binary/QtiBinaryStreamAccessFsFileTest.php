@@ -162,10 +162,10 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x01", null);
         $path = self::samplesDir() . 'datatypes/file/text-plain_text_data.txt';
-        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x00" . "\x01" . pack('S', 10) . 'text/plain' . pack('S', strlen($path)) . $path . pack('S', 8) . 'text.txt' , FileSystemFile::retrieveFile($path));
+        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE), "\x00" . "\x01" . pack('S', strlen($path)) . $path , FileSystemFile::retrieveFile($path));
         $path1 = $path;
         $path2 = self::samplesDir() . 'datatypes/file/text-plain_noname.txt';
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE), "\x00" . "\x00" . pack('S', 2) . "\x00" . pack('S', 10) . 'text/plain' . pack('S', strlen($path1)) . $path1 . pack('S', 8) . 'text.txt' . "\x00" . pack('S', 10) . 'text/plain' . pack('S', strlen($path2)) . $path2 . pack('S', 0) . '', new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile($path1), FileSystemFile::retrieveFile($path2))));
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE), "\x00" . "\x00" . pack('S', 2) . "\x00" . pack('S', strlen($path1)) . $path1 . "\x00" . pack('S', strlen($path2)) . $path2, new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile($path1), FileSystemFile::retrieveFile($path2))));
         
         // Records
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::RECORD), "\x00" . "\x00" . pack('S', 0), new RecordContainer());

@@ -31,27 +31,23 @@ class QtiBinaryStreamAccessFsFile extends AbstractQtiBinaryStreamAccess {
     
     public function writeFile(File $file) {
         try {
-            $this->writeString($file->getMimeType());
             $this->writeString($file->getPath());
-            $this->writeString($file->getFilename());
         }
         catch (QtiBinaryStreamAccessException $e) {
             $msg = "An error occured while reading a QTI File.";
-            throw new QtiBinaryStreamAccessException($msg, QtiBinaryStreamAccessException::FILE, $e);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
     
     public function readFile() {
         try {
-            $mimeType = $this->readString();
             $path = $this->readString();
-            $filename = $this->readString();
             
-            return new FileSystemFile($mimeType, $path, $filename);
+            return new FileSystemFile($path);
         }
-        catch (QtiBinaryStreamAccessException $e) {
+        catch (\Exception $e) {
             $msg = "An error occured while writing a QTI File.";
-            throw new QtiBinaryStreamAccessException($msg, QtiBinaryStreamAccessException::FILE);
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
 }

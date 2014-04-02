@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\storage\BinaryStreamAccess;
+use qtism\common\storage\BinaryStreamAccessException;
+
 use \Exception;
 
 class QtiBinaryStreamAccessException extends BinaryStreamAccessException {

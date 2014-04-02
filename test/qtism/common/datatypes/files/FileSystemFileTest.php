@@ -69,6 +69,11 @@ class FileSystemFileTest extends QtiSmTestCase {
         $this->assertEquals($expectedData, $data);
     }
     
+    public function testInstantiationWrongPath() {
+        $this->setExpectedException('\\RuntimeException');
+        $pFile = new FileSystemFile('/qtism/test');
+    }
+    
     public function retrieveProvider() {
         return array(
             array(self::samplesDir() . 'datatypes/file/text-plain_name.txt', 'yours.txt', 'text/plain', ''),

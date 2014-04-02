@@ -55,11 +55,28 @@ class FileSystemFile extends AbstractPersistentFile {
     /**
      * Create a new PersistentFile object.
      * 
-     * @param string $mimeType The MIME type of the file.
      * @param string $path The path where the file is actually stored.
-     * @param string $filename The name of the file.
+     * @throws RuntimeException If the file cannot be retrieved correctly.
      */
-    public function __construct($mimeType, $path, $filename = '') {
+    public function __construct($path) {
+        // Retrieve filename and mime type.
+        $fp = @fopen($path, 'r');
+        
+        if ($fp === false) {
+            $msg = "Unable to retrieve QTI file at '${path}.";
+            throw new RuntimeException($msg);
+        }
+        
+        // filename.
+        $len = current(unpack('S', fread($fp, 2)));
+        $filename = ($len > 0) ? fread($fp, $len) : '';
+        
+        // MIME type.
+        $len = current(unpack('S', fread($fp, 2)));
+        $mimeType = fread($fp, $len);
+        
+        @fclose($fp);
+        
         parent::__construct($mimeType, $filename);
         $this->setPath($path);
     }
@@ -179,11 +196,11 @@ class FileSystemFile extends AbstractPersistentFile {
                 
                 // filename.
                 $len = strlen($filename);
-                $packedFilename = pack('s', $len) . $filename;
+                $packedFilename = pack('S', $len) . $filename;
                 
                 // MIME type.
                 $len = strlen($mimeType);
-                $packedMimeType = pack('s', $len) . $mimeType;
+                $packedMimeType = pack('S', $len) . $mimeType;
                 
                 $finalSize = strlen($packedFilename) + strlen($packedMimeType) + filesize($source);
                 
@@ -201,7 +218,7 @@ class FileSystemFile extends AbstractPersistentFile {
                 @fclose($sourceFp);
                 @fclose($destinationFp);
                 
-                return new static($mimeType, $destination, $filename);
+                return new static($destination);
             }
             else {
                 // Source file not readable.
@@ -224,24 +241,6 @@ class FileSystemFile extends AbstractPersistentFile {
      * @return PersistentFile
      */
     static public function retrieveFile($path) {
-        // Retrieve filename and mime type.
-        $fp = @fopen($path, 'r');
-        
-        if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '${path}.";
-            throw new RuntimeException($msg);
-        }
-        
-        // filename.
-        $len = current(unpack('s', fread($fp, 2)));
-        $filename = ($len > 0) ? fread($fp, $len) : '';
-        
-        // MIME type.
-        $len = current(unpack('s', fread($fp, 2)));
-        $mimeType = fread($fp, $len);
-        
-        @fclose($fp);
-        
-        return new static($mimeType, $path, $filename);
+        return new static($path);
     }
 }
