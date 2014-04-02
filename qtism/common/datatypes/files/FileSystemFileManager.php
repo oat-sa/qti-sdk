@@ -33,7 +33,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DefaultFileManager implements FileManager {
+class FileSystemFileManager implements FileManager {
     
     private $storageDirectory;
     
@@ -50,17 +50,6 @@ class DefaultFileManager implements FileManager {
     }
     
     /**
-     * Create a file handled exclusively in memory.
-     * 
-     * @param string $data The sequence of bytes composing the file content.
-     * @param string $mimeType The MIME type of the file.
-     * @param string $filename An optional file name.
-     */
-    public function createMemoryFile($data, $mimeType, $filename = '') {
-        return new MemoryFile($data, $mimeType, $filename);
-    }
-    
-    /**
      * 
      * 
      * @param string $path
@@ -69,8 +58,8 @@ class DefaultFileManager implements FileManager {
      * @throws FileManagerException
      * @return FileSystemFile
      */
-    public function createPersistentFile($path, $mimeType, $filename = '') {
-        $destination = rtrim($this->getStorageDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid('qtism', true);
+    public function createFromFile($path, $mimeType, $filename = '') {
+        $destination = $this->buildDestination();
         
         try {
             return FileSystemFile::createFromExistingFile($path, $destination, $mimeType, $filename);
@@ -84,14 +73,37 @@ class DefaultFileManager implements FileManager {
     /**
      * 
      * 
+     * @param string $data
+     * @param string $mimeType
+     * @param string $filename
+     */
+    public function createFromData($data, $mimeType, $filename = '') {
+        $destination = $this->buildDestination();
+        
+        try {
+            return FileSystemFile::createFromData($data, $destination, $mimeType, $filename);
+        }
+        catch (RuntimeException $e) {
+            $msg = "An error occured while creating a QTI FileSystemFile object.";
+            throw new FileManagerException($msg, 0, $e);
+        }
+    }
+    
+    /**
+     * 
+     * 
      * @throws FileManagerException
      */
-    public function deletePersistentFile(AbstractPersistentFile $file) {
+    public function delete(AbstractPersistentFile $file) {
         
         $deletion = @unlink($file->getPath());
         if ($deletion === false) {
             $msg = "The File System File located at '" . $file->getPath() . "' could not be deleted gracefully.";
             throw new FileManagerException($msg);
         }
+    }
+    
+    protected function buildDestination() {
+        return rtrim($this->getStorageDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid('qtism', true);
     }
 }

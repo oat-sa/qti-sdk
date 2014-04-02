@@ -40,19 +40,8 @@ namespace qtism\common\datatypes\files;
 interface FileManager {
     
     /**
-     * Instantiate an implementation of File which focuses on
-     * keeping a file in memory.
-     * 
-     * @param string $data The data composing the file.
-     * @param string $mimeType The MIME type of the file.
-     * @param string $filename An optional file name.
-     * @throws FileManagerException
-     */
-    public function createMemoryFile($data, $mimeType, $filename = '');
-    
-    /**
      * Instantiate an implementation of File which focuses
-     * on keeping a file on the file system.
+     * on keeping a file on the file system from an existing file.
      * 
      * @param string $path The path to the file containing the data of the returned File object.
      * @param string $mimeType The MIME type of the resulting File object.
@@ -60,13 +49,25 @@ interface FileManager {
      * @return AbstractPersistentFile
      * @throws FileManagerException
      */
-    public function createPersistentFile($path, $mimeType, $filename = '');
+    public function createFromFile($path, $mimeType, $filename = '');
     
     /**
-     * Delete a given AbstractPersistentFile from its storage media.
+     * Instantiate an implementation of File which focuses
+     * on keeping a file on the file system from a $data binary string.
+     * 
+     * @param string $data A binary string representing the data.
+     * @param string $mimeType The MIME type of the resulting File object.
+     * @param string $filename The filename of the resulting File object.
+     * @return AbstractPersistentFile
+     * @throws FileManagerException
+     */
+    public function createFromData($data, $mimeType, $filename = '');
+    
+    /**
+     * Delete a given AbstractPersistentFile from its storage.
      * 
      * @param AbstractPersistentFile $file A persistent file to be deleted gracefully.
      * @throws FileManagerException
      */
-    public function deletePersistentFile(AbstractPersistentFile $file);
+    public function delete(AbstractPersistentFile $file);
 }

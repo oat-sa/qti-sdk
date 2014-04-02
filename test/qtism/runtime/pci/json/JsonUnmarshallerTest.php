@@ -1,6 +1,8 @@
 <?php
 
-use qtism\common\datatypes\files\MemoryFile;
+use qtism\common\datatypes\files\FileSystemFileManager;
+
+use qtism\common\datatypes\files\FileSystemFile;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -47,7 +49,24 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
      */
     public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json) {
         $unmarshaller = new Unmarshaller();
-        $this->assertTrue($expectedComplex->equals($unmarshaller->unmarshall($json)));
+        $value = $unmarshaller->unmarshall($json);
+        $this->assertTrue($expectedComplex->equals($value));
+    }
+    
+    /**
+     * @dataProvider unmarshallFileProvider
+     * 
+     * @param File $expectedFile
+     * @param string $json
+     */
+    public function testUnmarshallFile(FileSystemFile $expectedFile, $json) {
+        $unmarshaller = new Unmarshaller();
+        $value = $unmarshaller->unmarshall($json);
+        $this->assertTrue($expectedFile->equals($value));
+        
+        // cleanup.
+        $fileManager = new FileSystemFileManager();
+        $fileManager->delete($value);
     }
     
     /**
@@ -126,15 +145,21 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     
     public function unmarshallComplexProvider() {
         $returnValue = array();
-        $samples = self::samplesDir();
         
         $returnValue[] = array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }');
         $returnValue[] = array(new Pair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
         $returnValue[] = array(new DirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
         $returnValue[] = array(new Duration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
+
+        return $returnValue;
+    }
+    
+    public function unmarshallFileProvider() {
+        $returnValue = array();
+        $samples = self::samplesDir();
         
-        $file = new MemoryFile('Some text...', 'text/plain');
-        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/plain", "data" : "Some text..." } } }');
+        $file = new FileSystemFile($samples . 'datatypes/file/raw/files_2.txt');
+        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/html", "data" : "<img src=\"/qtism/img.png\"/>" } } }');
         
         return $returnValue;
     }

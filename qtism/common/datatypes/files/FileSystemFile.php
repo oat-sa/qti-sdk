@@ -165,7 +165,7 @@ class FileSystemFile extends AbstractPersistentFile {
      * @param string $mimeType The MIME type of the file.
      * @param mixed $withFilename Whether or not consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
      * @throws RuntimeException If something wrong happens.
-     * @return PersistentFile
+     * @return FileSystemFile
      */
     static public function createFromExistingFile($source, $destination, $mimeType, $withFilename = true) {
         
@@ -205,7 +205,7 @@ class FileSystemFile extends AbstractPersistentFile {
                 $finalSize = strlen($packedFilename) + strlen($packedMimeType) + filesize($source);
                 
                 $sourceFp = fopen($source, 'r');
-                $destinationFp = fopen($destination, 'a');
+                $destinationFp = fopen($destination, 'w');
                 
                 fwrite($destinationFp, $packedFilename . $packedMimeType);
                 
@@ -234,11 +234,27 @@ class FileSystemFile extends AbstractPersistentFile {
     }
     
     /**
+     * 
+     * @param string $data
+     * @param string $destination
+     * @param string $mimeType
+     * @param string $filename
+     * @return FileSystemFile
+     */
+    static public function createFromData($data, $destination, $mimeType, $filename = '') {
+        $tmp = tempnam('/tmp', 'qtism');
+        file_put_contents($tmp, $data);
+        
+        $file = self::createFromExistingFile($tmp, $destination, $mimeType, $filename);
+        return $file;
+    }
+    
+    /**
      * Retrieve a previously persisted file.
      * 
      * @param string $path The path to the persisted file.
      * @throws RuntimeException If something wrong occurs while retrieving the file.
-     * @return PersistentFile
+     * @return FileSystemFile
      */
     static public function retrieveFile($path) {
         return new static($path);

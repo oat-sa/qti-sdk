@@ -1,7 +1,9 @@
 <?php
+
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\files\MemoryFile;
+use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
@@ -44,19 +46,30 @@ class MatchProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testFile() {
+	    $fManager = new FileSystemFileManager();
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new MemoryFile('Some text', 'text/plain');
-	    $operands[] = new MemoryFile('Some text', 'text/plain');
+	    
+	    $file1 = $fManager->createFromData('Some text', 'text/plain');
+	    $file2 = $fManager->createFromData('Some text', 'text/plain');
+	    
+	    $operands[] = $file1;
+	    $operands[] = $file2;
 	    $processor = new MatchProcessor($expression, $operands);
 	    
 	    $this->assertTrue($processor->process()->getValue());
+	    $fManager->delete($file1);
+	    $fManager->delete($file2);
 	    
 	    $operands->reset();
-	    $operands[] = new MemoryFile('Some text', 'text/plain');
-	    $operands[] = new MemoryFile('Other text', 'text/plain');
-	    
+	    $file1 = $fManager->createFromData('Some text', 'text/plain');
+	    $file2 = $fManager->createFromData('Other text', 'text/plain');
+	    $operands[] = $file1;
+	    $operands[] = $file2;
+
 	    $this->assertFalse($processor->process()->getValue());
+	    $fManager->delete($file1);
+	    $fManager->delete($file2);
 	}
 	
 	public function testWrongBaseType() {

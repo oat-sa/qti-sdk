@@ -25,10 +25,8 @@
 
 namespace qtism\runtime\pci\json;
 
-use qtism\common\datatypes\files\MemoryFile;
-
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
-
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Identifier;
@@ -249,7 +247,8 @@ class Unmarshaller {
                     break;
                     
                     case 'file':
-                        return new MemoryFile($unit['base']['file']['data'], $unit['base']['file']['mime']);
+                        $fileManager = new FileSystemFileManager();
+                        return $fileManager->createFromData($unit['base']['file']['data'], $unit['base']['file']['mime']);
                     break;
                     
                     case 'uri':
