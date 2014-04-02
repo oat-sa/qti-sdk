@@ -69,4 +69,22 @@ interface File extends QtiDatatype {
      * @return string
      */
     public function getFilename();
+    
+    /**
+     * Get a brand new stream resource on the file. It is the responsibility of the
+     * client code to close the stream when it not needed anymore.
+     *
+     * @throws RuntimeException If the stream on the file cannot be open.
+     * @return resource An open stream.
+     */
+    public function getStream();
+    
+    /**
+     * Get the unique identifier of the file in the storage system it
+     * is stored.
+     * 
+     * @throws RuntimeException If an error occurs while retrieving the file.
+     * @return string A unique identifier.
+     */
+    public function getIdentifier();
 }

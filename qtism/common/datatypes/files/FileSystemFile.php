@@ -25,6 +25,9 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\Comparable;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\File;
 use \RuntimeException;
 
@@ -35,7 +38,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FileSystemFile extends AbstractPersistentFile {
+class FileSystemFile implements File, Comparable {
 
     /**
      * The path to the file on the persistent storage.
@@ -43,6 +46,20 @@ class FileSystemFile extends AbstractPersistentFile {
      * @var string
      */
     private $path;
+    
+    /**
+     * The MIME type of the file content.
+     * 
+     * @var string
+     */
+    private $mimeType;
+    
+    /**
+     * The optional file name.
+     * 
+     * @var string
+     */
+    private $filename = '';
     
     /**
      * When dealing with files, compare, read, write, ...
@@ -77,7 +94,8 @@ class FileSystemFile extends AbstractPersistentFile {
         
         @fclose($fp);
         
-        parent::__construct($mimeType, $filename);
+        $this->setFilename($filename);
+        $this->setMimeType($mimeType);
         $this->setPath($path);
     }
     
@@ -99,6 +117,22 @@ class FileSystemFile extends AbstractPersistentFile {
         return $this->path;
     }
     
+    protected function setMimeType($mimeType) {
+        $this->mimeType = $mimeType;
+    }
+    
+    public function getMimeType() {
+        return $this->mimeType;
+    }
+    
+    public function getFilename() {
+        return $this->filename;
+    }
+    
+    protected function setFilename($filename) {
+        $this->filename = $filename;
+    }
+    
     /**
      * Get the sequence of bytes composing the content of the file.
      * 
@@ -106,27 +140,11 @@ class FileSystemFile extends AbstractPersistentFile {
      */
     public function getData() {
 
-        $fp = @fopen($this->getPath(), 'r');
-        
-        if ($fp === false) {
-            $msg = "Unable to open QTI file at '" . $this->getPath() . "'.";
-            throw new RuntimeException($msg);
-        }
-        
-        // --- Simply consume meta data which is not useful to client code.
-        // filename.
-        $len = current(unpack('s', fread($fp, 2)));
-        $filename = ($len > 0) ? fread($fp, $len) : '';
-        
-        // MIME type.
-        $len = current(unpack('s', fread($fp, 2)));
-        $mimeType = fread($fp, $len);
-        
-        $toRead = filesize($this->getPath()) - 4 - strlen($filename) - strlen($mimeType);
+        $fp = $this->getStream();
         $data = '';
         
-        if ($toRead > 0) {
-            $data = fread($fp, $toRead);
+        while (feof($fp) === false) {
+            $data .= fread($fp, self::CHUNK_SIZE);
         }
         
         @fclose($fp);
@@ -141,17 +159,17 @@ class FileSystemFile extends AbstractPersistentFile {
      * @return resource An open stream.
      */
     public function getStream() {
-        $fp = @fopen($this->getPath(), 'r');
+        $fp = @fopen($this->getPath(), 'rb');
         
         if ($fp === false) {
             $msg = "Cannot retrieve QTI File Stream from '" . $this->getPath() . "'.";
             throw new RuntimeException($msg);
         }
         
-        $len = current(unpack('s', fread($fp, 2)));
+        $len = current(unpack('S', fread($fp, 2)));
         fseek($fp, $len, SEEK_CUR);
         
-        $len = current(unpack('s', fread($fp, 2)));
+        $len = current(unpack('S', fread($fp, 2)));
         fseek($fp, $len, SEEK_CUR);
         
         return $fp;
@@ -258,5 +276,56 @@ class FileSystemFile extends AbstractPersistentFile {
      */
     static public function retrieveFile($path) {
         return new static($path);
+    }
+    
+    public function getCardinality() {
+        return Cardinality::SINGLE;
+    }
+    
+    public function getBaseType() {
+        return BaseType::FILE;
+    }
+    
+    public function hasFilename() {
+        return $this->getFilename() !== '';
+    }
+    
+    public function equals($obj) {
+        if ($obj instanceof File) {
+            if ($this->getFilename() !== $obj->getFilename()) {
+                return false;
+            }
+            else if ($this->getMimeType() !== $obj->getMimeType()) {
+                return false;
+            }
+            else {
+                // We have to check the content of the file.
+                $myStream = $this->getStream();
+                $objStream = $obj->getStream();
+                
+                while (feof($myStream) === false && feof($objStream) === false) {
+                    $myChunk = fread($myStream, self::CHUNK_SIZE);
+                    $objChjunk = fread($objStream, self::CHUNK_SIZE);
+                    
+                    if ($myChunk !== $objChjunk) {
+                        @fclose($myStream);
+                        @fclose($objStream);
+                        
+                        return false;
+                    }
+                }
+                
+                @fclose($myStream);
+                @fclose($objStream);
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function getIdentifier() {
+        return $this->getPath();
     }
 }
