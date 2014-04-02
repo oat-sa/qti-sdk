@@ -160,9 +160,10 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     public function unmarshallFileProvider() {
         $returnValue = array();
         $samples = self::samplesDir();
+        $fileManager = new FileSystemFileManager();
         
-        $file = new FileSystemFile($samples . 'datatypes/file/raw/files_2.txt');
-        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/html", "data" : "<img src=\"/qtism/img.png\"/>" } } }');
+        $file = $fileManager->retrieve($samples . 'datatypes/file/files_2.txt');
+        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/html", "data" : ' . json_encode(base64_encode('<img src="/qtism/img.png"/>')) . ' } } }');
         
         return $returnValue;
     }

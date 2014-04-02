@@ -276,7 +276,7 @@ class Unmarshaller {
                     break;
                     
                     case 'file':
-                        return $this->getFileManager()->createFromData($unit['base']['file']['data'], $unit['base']['file']['mime']);
+                        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime']);
                     break;
                     
                     case 'uri':

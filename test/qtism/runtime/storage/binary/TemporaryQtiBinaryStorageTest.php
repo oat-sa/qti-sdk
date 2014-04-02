@@ -373,7 +373,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // --- Q01 - files_1.txt = ('text.txt', 'text/plain', 'Some text...')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/raw/files_1.txt';
+        $filepath = self::samplesDir() . 'datatypes/file/files_1.txt';
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
         $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
@@ -392,7 +392,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // --- Q02 - files_2.txt = ('', 'text/html', '<img src="/qtism/img.png"/>')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/raw/files_2.txt';
+        $filepath = self::samplesDir() . 'datatypes/file/files_2.txt';
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
         $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
@@ -418,7 +418,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // --- Q03 - files_3.txt ('empty.txt', 'text/plain', '')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/raw/files_3.txt';
+        $filepath = self::samplesDir() . 'datatypes/file/files_3.txt';
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
         $this->assertFalse($session->isRunning());

@@ -248,7 +248,7 @@ class Marshaller {
             return array('base' => array('duration' => $complex->__toString()));
         }
         else if ($complex instanceof File) {
-            return array('base' => array('file' => array('mime' => $complex->getMimeType(), 'data' => $complex->getData())));
+            return array('base' => array('file' => array('mime' => $complex->getMimeType(), 'data' => base64_encode($complex->getData()))));
         }
         else {
             $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
