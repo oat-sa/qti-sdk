@@ -25,6 +25,7 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\datatypes\File;
 use \RuntimeException;
 
 /**
@@ -94,7 +95,7 @@ class FileSystemFileManager implements FileManager {
      * 
      * @throws FileManagerException
      */
-    public function delete(AbstractPersistentFile $file) {
+    public function delete(File $file) {
         
         $deletion = @unlink($file->getPath());
         if ($deletion === false) {

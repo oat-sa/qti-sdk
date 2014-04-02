@@ -25,6 +25,8 @@
 
 namespace qtism\common\datatypes\files;
 
+use qtism\common\datatypes\File;
+
 /**
  * The File Management System of QTISM is an augmented implementation
  * of AbstractFactory. In addition to focusing on the creation of various
@@ -69,5 +71,5 @@ interface FileManager {
      * @param AbstractPersistentFile $file A persistent file to be deleted gracefully.
      * @throws FileManagerException
      */
-    public function delete(AbstractPersistentFile $file);
+    public function delete(File $file);
 }
