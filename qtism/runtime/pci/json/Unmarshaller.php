@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\pci\json;
 
-use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Float;
@@ -62,11 +62,40 @@ use \InvalidArgumentException;
 class Unmarshaller {
     
     /**
+     * A FileManager object making the JSON Unmarshaller able to build
+     * QTI Files from a PCI JSON representation.
+     * 
+     * @var FileManager
+     */
+    private $fileManager;
+    
+    /**
      * Create a new JSON Unmarshaller object.
      * 
+     * @param FileManager A FileManager object making the unmarshaller able to build QTI Files from PCI JSON representation.
      */
-    public function __construct() {
-        
+    public function __construct(FileManager $fileManager) {
+        $this->setFileManager($fileManager);
+    }
+    
+    /**
+     * Set the FileManager object making the Unmarshaller able to build QTI Files from
+     * a PCI JSON representation.
+     * 
+     * @param FileManager $fileManager A FileManager object.
+     */
+    protected function setFileManager(FileManager $fileManager) {
+        $this->fileManager = $fileManager;
+    }
+    
+    /**
+     * Get the FileManager object making the Unmarshaller able to build QTI Files from
+     * a PCI JSON representation.
+     * 
+     * @return FileManager A FileManager object.
+     */
+    protected function getFileManager() {
+        return $this->fileManager;
     }
     
     /**
@@ -247,8 +276,7 @@ class Unmarshaller {
                     break;
                     
                     case 'file':
-                        $fileManager = new FileSystemFileManager();
-                        return $fileManager->createFromData($unit['base']['file']['data'], $unit['base']['file']['mime']);
+                        return $this->getFileManager()->createFromData($unit['base']['file']['data'], $unit['base']['file']['mime']);
                     break;
                     
                     case 'uri':
