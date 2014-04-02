@@ -25,6 +25,7 @@
 
 namespace qtism\runtime\pci\json;
 
+use qtism\common\datatypes\File;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Duration;
@@ -245,6 +246,9 @@ class Marshaller {
         }
         else if ($complex instanceof Duration) {
             return array('base' => array('duration' => $complex->__toString()));
+        }
+        else if ($complex instanceof File) {
+            return array('base' => array('file' => array('mime' => $complex->getMimeType(), 'data' => $complex->getData())));
         }
         else {
             $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";

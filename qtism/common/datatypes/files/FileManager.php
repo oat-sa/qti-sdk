@@ -29,7 +29,7 @@ namespace qtism\common\datatypes\files;
  * The File Management System of QTISM is an augmented implementation
  * of AbstractFactory. In addition to focusing on the creation of various
  * implementations of the File interface, it also provides a way to delete
- * created persistent Files.
+ * created Files.
  * 
  * This interface represents the AbstractFactory interface of the 
  * AbstractFactory Design Pattern.

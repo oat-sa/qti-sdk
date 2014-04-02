@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\files\MemoryFile;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -124,12 +125,18 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     }
     
     public function unmarshallComplexProvider() {
-        return array(
-            array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }'),
-            array(new Pair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }'),
-            array(new DirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }'),
-            array(new Duration('PT3S'), ' { "base" : { "duration" : "PT3S" } }'),
-        );
+        $returnValue = array();
+        $samples = self::samplesDir();
+        
+        $returnValue[] = array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }');
+        $returnValue[] = array(new Pair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
+        $returnValue[] = array(new DirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
+        $returnValue[] = array(new Duration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
+        
+        $file = new MemoryFile('Some text...', 'text/plain');
+        $returnValue[] = array($file, '{ "base" : { "file" : { "mime" : "text\/plain", "data" : "Some text..." } } }');
+        
+        return $returnValue;
     }
     
     public function unmarshallListProvider() {

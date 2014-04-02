@@ -25,6 +25,10 @@
 
 namespace qtism\runtime\pci\json;
 
+use qtism\common\datatypes\files\MemoryFile;
+
+use qtism\common\datatypes\files\FileSystemFile;
+
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Identifier;
@@ -78,7 +82,6 @@ class Unmarshaller {
         if (is_string($json) === true) {
             
             $tmpJson = @json_decode($json, true);
-            
             if ($tmpJson === null) {
                 // An error occured while decoding.
                 $msg = "An error occured while decoding the following JSON data '" . mb_substr($json, 0, 30, 'UTF-8') . "...'.";
@@ -112,6 +115,7 @@ class Unmarshaller {
         // Check whether or not $json is a state (no 'base' nor 'list' keys found),
         // a base, a list or a record.
         $keys = array_keys($json);
+        
         if (in_array('base', $keys) === true) {
             // This is a base.
             return $this->unmarshallUnit($json);
@@ -245,7 +249,7 @@ class Unmarshaller {
                     break;
                     
                     case 'file':
-                        throw new UnmarshallingException("File not supported yet.", UnmarshallingException::NOT_SUPPORTED);
+                        return new MemoryFile($unit['base']['file']['data'], $unit['base']['file']['mime']);
                     break;
                     
                     case 'uri':
