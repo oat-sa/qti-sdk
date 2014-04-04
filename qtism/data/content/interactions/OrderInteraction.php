@@ -241,7 +241,7 @@ class OrderInteraction extends BlockInteraction {
             $this->maxChoices = $maxChoices;
         }
         else {
-            $msg = "The 'maxChoices' argument must be a strictly positive (> 0) integer or -1, '" . gettype($minChoices) . "' given.";
+            $msg = "The 'maxChoices' argument must be a strictly positive (> 0) integer or -1, '" . gettype($maxChoices) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

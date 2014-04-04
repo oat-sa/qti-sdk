@@ -53,7 +53,15 @@ class ChoiceInteractionMarshaller extends ContentMarshaller {
                 }
                 
                 if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                    $component->setMaxChoices($maxChoices);
+                    if ($element->localName === 'orderInteraction') {
+                        
+                        if ($maxChoices !== 0) {
+                            $component->setMaxChoices($maxChoices);
+                        }
+                    }
+                    else {
+                        $component->setMaxChoices($maxChoices);
+                    }
                 }
                 
                 if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
