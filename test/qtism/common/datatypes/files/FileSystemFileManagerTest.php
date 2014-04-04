@@ -21,6 +21,16 @@ class FileSystemFileManagerTest extends QtiSmTestCase {
         unlink($mFile->getPath());
     }
     
+    public function testCreateFromData() {
+        $manager = new FileSystemFileManager();
+        $file = $manager->createFromData('Some <em>text</em>...', 'text/html');
+        
+        $this->assertEquals('Some <em>text</em>...', $file->getData());
+        $this->assertEquals('text/html', $file->getMimeType());
+        
+        $manager->delete($file);
+    }
+    
     public function testDelete() {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
