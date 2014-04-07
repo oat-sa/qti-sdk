@@ -244,51 +244,51 @@ class Unmarshaller {
                 $keys = array_keys($unit['base']);
                 switch ($keys[0]) {
                     case 'boolean':
-                        return new Boolean($unit['base']['boolean']);
+                        return $this->unmarshallBoolean($unit);
                     break;
                     
                     case 'integer':
-                        return new Integer($unit['base']['integer']);
+                        return $this->unmarshallInteger($unit);
                     break;
                     
                     case 'float':
-                        return new Float($unit['base']['float']);
+                        return $this->unmarshallFloat($unit);
                     break;
                     
                     case 'string':
-                        return new String($unit['base']['string']);
+                        return $this->unmarshallString($unit);
                     break;
                     
                     case 'point':
-                        return new Point($unit['base']['point'][0], $unit['base']['point'][1]);
+                        return $this->unmarshallPoint($unit);
                     break;
                     
                     case 'pair':
-                        return new Pair($unit['base']['pair'][0], $unit['base']['pair'][1]);
+                        return $this->unmarshallPair($unit);
                     break;
                     
                     case 'directedPair':
-                        return new DirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
+                        return $this->unmarshallDirectedPair($unit);
                     break;
                     
                     case 'duration':
-                        return new Duration($unit['base']['duration']);
+                        return $this->unmarshallDuration($unit);
                     break;
                     
                     case 'file':
-                        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime']);
+                        return $this->unmarshallFile($unit);
                     break;
                     
                     case 'uri':
-                        return new Uri($unit['base']['uri']);
+                        return $this->unmarshallUri($unit);
                     break;
                     
                     case 'intOrIdentifier':
-                        return new IntOrIdentifier($unit['base']['intOrIdentifier']);
+                        return $this->unmarshallIntOrIdentifier($unit);
                     break;
                     
                     case 'identifier':
-                        return new Identifier($unit['base']['identifier']);
+                        return $this->unmarshallIdentifier($unit);
                     break;
                     
                     default:
@@ -301,5 +301,125 @@ class Unmarshaller {
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
             }
         }
+    }
+    
+    /**
+     * Unmarshall a boolean JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Boolean
+     */
+    protected function unmarshallBoolean(array $unit) {
+        return new Boolean($unit['base']['boolean']);
+    }
+    
+    /**
+     * Unmarshall an integer JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Integer
+     */
+    protected function unmarshallInteger(array $unit) {
+        return new Integer($unit['base']['integer']);
+    }
+    
+    /**
+     * Unmarshall a float JSON PCI representation.
+     * 
+     * @param array $unit
+     * @returnFloat
+     */
+    protected function unmarshallFloat(array $unit) {
+        return new Float($unit['base']['float']);
+    }
+    
+    /**
+     * Unmarshall a string JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return String
+     */
+    protected function unmarshallString(array $unit) {
+        return new String($unit['base']['string']);
+    }
+    
+    /**
+     * Unmarshall a point JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Point
+     */
+    protected function unmarshallPoint(array $unit) {
+        return new Point($unit['base']['point'][0], $unit['base']['point'][1]);
+    }
+    
+    /**
+     * Unmarshall a pair JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Pair
+     */
+    protected function unmarshallPair(array $unit) {
+        return new Pair($unit['base']['pair'][0], $unit['base']['pair'][1]);
+    }
+    
+    /**
+     * Unmarshall a directed pair JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return DirectedPair
+     */
+    protected function unmarshallDirectedPair(array $unit) {
+        return new DirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
+    }
+    
+    /**
+     * Unmarshall a duration JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Duration
+     */
+    protected function unmarshallDuration(array $unit) {
+        return new Duration($unit['base']['duration']);
+    }
+    
+    /**
+     * Unmarshall a duration JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return AbstractPersistentFile
+     */
+    protected function unmarshallFile(array $unit) {
+        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime']);
+    }
+    
+    /**
+     * Unmarshall a duration JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Uri
+     */
+    protected function unmarshallUri(array $unit) {
+        return new Uri($unit['base']['uri']);
+    }
+    
+    /**
+     * Unmarshall an intOrIdentifier JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return IntOrIdentifier
+     */
+    protected function unmarshallIntOrIdentifier(array $unit) {
+        return new IntOrIdentifier($unit['base']['intOrIdentifier']);
+    }
+    
+    /**
+     * Unmarshall an identifier JSON PCI representation.
+     * 
+     * @param array $unit
+     * @return Identifier
+     */
+    protected function unmarshallIdentifier(array $unit) {
+        return new Identifier($unit['base']['identifier']);
     }
 }
