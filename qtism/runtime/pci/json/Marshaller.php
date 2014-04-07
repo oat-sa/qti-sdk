@@ -188,25 +188,25 @@ class Marshaller {
         }
         else if ($scalar instanceof QtiDatatype) {
             if ($scalar instanceof Boolean) {
-                return array('base' => array('boolean' => $scalar->getValue()));
+                return $this->marshallBoolean($scalar);
             }
             else if ($scalar instanceof Integer) {
-                return array('base' => array('integer' => $scalar->getValue()));
+                return $this->marshallInteger($scalar);
             }
             else if ($scalar instanceof Float) {
-                return array('base' => array('float' => $scalar->getValue()));
+                return $this->marshallFloat($scalar);
             }
             else if ($scalar instanceof Identifier) {
-                return array('base' => array('identifier' => $scalar->getValue()));
+                return $this->marshallIdentifier($scalar);
             }
             else if ($scalar instanceof Uri) {
-                return array('base' => array('uri' => $scalar->getValue()));
+                return $this->marshallUri($scalar);
             }
             else if ($scalar instanceof String) {
-                return array('base' => array('string' => $scalar->getValue()));
+                return $this->marshallString($scalar);
             }
             else if ($scalar instanceof IntOrIdentifier) {
-                return array('base' => array('intOrIdentifier' => $scalar->getValue()));
+                return $this->marshallIntOrIdentifier($scalar);
             }
         }
         else {
@@ -236,19 +236,19 @@ class Marshaller {
             return $complex;
         }
         else if ($complex instanceof Point) {
-            return array('base' => array('point' => array($complex->getX(), $complex->getY())));
+            return $this->marshallPoint($complex);
         }
         else if ($complex instanceof DirectedPair) {
-            return array('base' => array('directedPair' => array($complex->getFirst(), $complex->getSecond())));
+            return $this->marshallDirectedPair($complex);
         }
         else if ($complex instanceof Pair) {
-            return array('base' => array('pair' => array($complex->getFirst(), $complex->getSecond())));
+            return $this->marshallPair($complex);
         }
         else if ($complex instanceof Duration) {
-            return array('base' => array('duration' => $complex->__toString()));
+            return $this->marshallDuration($complex);
         }
         else if ($complex instanceof File) {
-            return array('base' => array('file' => array('mime' => $complex->getMimeType(), 'data' => base64_encode($complex->getData()))));
+            return $this->marshallFile($complex);
         }
         else {
             $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
@@ -263,5 +263,125 @@ class Marshaller {
             $code = MarshallingException::NOT_SUPPORTED;
             throw new MarshallingException($msg, $code);
         }
+    }
+    
+    /**
+     * Marshall a QTI boolean datatype into its PCI JSON Representation.
+     * 
+     * @param Boolean $boolean
+     * @return array
+     */
+    protected function marshallBoolean(Boolean $boolean) {
+        return array('base' => array('boolean' => $boolean->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI integer datatype into its PCI JSON Representation.
+     *
+     * @param Integer $integer
+     * @return array
+     */
+    protected function marshallInteger(Integer $integer) {
+        return array('base' => array('integer' => $integer->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI float datatype into its PCI JSON Representation.
+     *
+     * @param Float $float
+     * @return array
+     */
+    protected function marshallFloat(Float $float) {
+        return array('base' => array('float' => $float->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI identifier datatype into its PCI JSON Representation.
+     *
+     * @param Identifier $identifier
+     * @return array
+     */
+    protected function marshallIdentifier(Identifier $identifier) {
+        return array('base' => array('identifier' => $identifier->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI uri datatype into its PCI JSON Representation.
+     *
+     * @param Uri $uri
+     * @return array
+     */
+    protected function marshallUri(Uri $uri) {
+        return array('base' => array('uri' => $uri->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI string datatype into its PCI JSON Representation.
+     *
+     * @param String $string
+     * @return array
+     */
+    protected function marshallString(String $string) {
+        return array('base' => array('string' => $string->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI intOrIdentifier datatype into its PCI JSON Representation.
+     *
+     * @param IntOrIdentifier $intOrIdentifier
+     * @return array
+     */
+    protected function marshallIntOrIdentifier(IntOrIdentifier $intOrIdentifier) {
+        return array('base' => array('intOrIdentifier' => $intOrIdentifier->getValue()));
+    }
+    
+    /**
+     * Marshall a QTI point datatype into its PCI JSON Representation.
+     *
+     * @param Point $point
+     * @return array
+     */
+    protected function marshallPoint(Point $point) {
+        return array('base' => array('point' => array($point->getX(), $point->getY())));
+    }
+    
+    /**
+     * Marshall a QTI directedPair datatype into its PCI JSON Representation.
+     *
+     * @param DirectedPair $directedPair
+     * @return array
+     */
+    protected function marshallDirectedPair(DirectedPair $directedPair) {
+        return array('base' => array('directedPair' => array($directedPair->getFirst(), $directedPair->getSecond())));
+    }
+    
+    /**
+     * Marshall a QTI pair datatype into its PCI JSON Representation.
+     *
+     * @param Pair $pair
+     * @return array
+     */
+    protected function marshallPair(Pair $pair) {
+        return array('base' => array('pair' => array($pair->getFirst(), $pair->getSecond())));
+    }
+    
+    /**
+     * Marshall a QTI duration datatype into its PCI JSON Representation.
+     *
+     * @param Duration $duration
+     * @return array
+     */
+    protected function marshallDuration(Duration $duration) {
+        return array('base' => array('duration' => $duration->__toString()));
+    }
+    
+    /**
+     * Marshall a QTI file datatype into its PCI JSON Representation.
+     *
+     * @param File $file
+     * @return array
+     */
+    protected function marshallFile(File $file) {
+        return array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))));
     }
 }
