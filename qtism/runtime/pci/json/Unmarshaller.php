@@ -390,7 +390,10 @@ class Unmarshaller {
      * @return AbstractPersistentFile
      */
     protected function unmarshallFile(array $unit) {
-        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime']);
+        
+        $filename = (empty($unit['base']['file']['name']) === true) ? '' : $unit['base']['file']['name'];
+        
+        return $this->getFileManager()->createFromData(base64_decode($unit['base']['file']['data']), $unit['base']['file']['mime'], $filename);
     }
     
     /**

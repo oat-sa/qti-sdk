@@ -136,7 +136,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array(new Duration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
         
         $file = new FileSystemFile($samples . 'datatypes/file/text-plain_text_data.txt');
-        $returnValue[] = array($file, json_encode(array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))))));
+        $returnValue[] = array($file, json_encode(array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()), 'name' => 'text.txt')))));
         
         $file = new FileSystemFile($samples . 'datatypes/file/image-png_noname_data.png');
         $returnValue[] = array($file, json_encode(array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))))));

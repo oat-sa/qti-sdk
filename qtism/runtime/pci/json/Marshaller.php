@@ -382,6 +382,12 @@ class Marshaller {
      * @return array
      */
     protected function marshallFile(File $file) {
-        return array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))));
+        $data = array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))));
+        
+        if ($file->hasFilename() === true) {
+            $data['base']['file']['name'] = $file->getFilename();
+        }
+        
+        return $data;
     }
 }
