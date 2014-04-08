@@ -263,6 +263,7 @@ class FileSystemFile implements File {
         file_put_contents($tmp, $data);
         
         $file = self::createFromExistingFile($tmp, $destination, $mimeType, $filename);
+        unlink($tmp);
         return $file;
     }
     
