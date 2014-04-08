@@ -764,6 +764,9 @@ class AssessmentItemSession extends State {
 		    // Even if there is no limit of attempts, we consider the item completed.
 		    $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
 		}
+		else if ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() < $maxAttempts) {
+		    $this['completionStatus']->setValue(self::COMPLETION_STATUS_UNKNOWN);
+		}
 		// else...
 		// Wait for the next attempt.
 		
