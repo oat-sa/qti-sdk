@@ -702,7 +702,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $this->assertFalse(true, 'Only a single attempt is allowed for Q03.');
 	    }
 	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW, $e->getCode());
+	        // The assessment item session is closed.
+	        $this->assertEquals(AssessmentTestSessionException::STATE_VIOLATION, $e->getCode());
 	    }
 	    
 	    // Move to Q07.2
@@ -775,7 +776,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $this->assertFalse(true, 'Only a single attempt is allowed for Q03.');
 	    }
 	    catch (AssessmentTestSessionException $e) {
-	        $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW, $e->getCode());
+	        // The assessment test session is closed.
+	        $this->assertEquals(AssessmentTestSessionException::STATE_VIOLATION, $e->getCode());
 	    }
 	    
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());

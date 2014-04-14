@@ -114,7 +114,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
@@ -189,7 +189,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+            // The session is closed, you cannot begin another attempt.
+            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
     
@@ -341,7 +342,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertTrue(false, 'Nore more attempts should be allowed.');
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
 }
