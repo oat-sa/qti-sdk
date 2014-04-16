@@ -29,6 +29,7 @@ use qtism\data\QtiIdentifiable;
 use qtism\data\ShowHide;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
+use \SplObserver;
 use \InvalidArgumentException;
 
 /**

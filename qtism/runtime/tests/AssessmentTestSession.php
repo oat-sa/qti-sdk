@@ -2367,6 +2367,46 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
+	 * Obtain the number of items considered to be completed during the AssessmentTestSession.
+	 *
+	 * An item involved in a candidate test session is considered complete if:
+	 *
+	 * * The navigation mode in force for the item is non-linear, and its completion status is 'complete'.
+	 * * The navigation mode in force for the item is linear, and it was presented at least one time.
+	 *
+	 * @return integer The number of completed items.
+	 */
+	public function numberCompleted() {
+	
+	    $numberCompleted = 0;
+	    $route = $this->getRoute();
+	    $oldPosition = $route->getPosition();
+	    
+	    foreach ($this->getRoute() as $routeItem) {
+	
+	        $itemSession = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+	
+	        if ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
+	            // In linear mode, we consider the item completed if it was presented.
+	            if ($itemSession->isPresented() === true) {
+	                $numberCompleted++;
+	            }
+	        }
+	        else {
+	            // In nonlinear mode, we consider the item completed if it's completion status
+	            // is 'completed'.
+	            if ($itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
+	                $numberCompleted++;
+	            }
+	        }
+	    }
+	    
+	    $route->setPosition($oldPosition);
+	    
+	    return $numberCompleted;
+	}
+	
+	/**
 	 * Transforms any exception to a suitable AssessmentTestSessionException object.
 	 * 
 	 * This method takes car to return matching AssessmentTestSessionException objects

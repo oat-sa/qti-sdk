@@ -93,12 +93,22 @@ function moveNext(AssessmentTestSession $session, array &$average) {
     }
 }
 
+function neighbourhood(AssessmentTestSession $session, array &$average = null) {
+    $start = microtime();
+    $neighbourhood = $session->getPossibleJumps();
+
+    if (is_null($average) === false) {
+        spentTime($start, microtime(), $average);
+    }
+}
+
 $averageAttempt = array();
 $effectiveAverageAttempt = array();
 $averageRetrieve = array();
 $averagePersist = array();
 $averageNext = array();
 $averageLoad = array();
+$averageNeighbourhood = array();
 
 // Beginning of the session + persistance.
 $start = microtime();
@@ -119,6 +129,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceA', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -133,6 +144,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceB', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -147,6 +159,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceC', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -161,6 +174,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceD', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -175,6 +189,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceE', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -189,6 +204,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceF', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -203,6 +219,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceG', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -217,6 +234,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceH', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -231,6 +249,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceI', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -245,6 +264,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceJ', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -259,6 +279,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceK', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -273,6 +294,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceL', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -287,6 +309,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceM', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -301,6 +324,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceN', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -315,6 +339,7 @@ $start = microtime();
 
 $storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
 $session = retrieve($storage, $sessionId, $averageRetrieve);
+neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceO', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
@@ -329,3 +354,4 @@ echo "Retrieve average time = " . (array_sum($averageRetrieve) / count($averageR
 echo "Persist average time = " . (array_sum($averagePersist) / count($averagePersist)) . "\n";
 echo "MoveNext average time = " . (array_sum($averageNext) / count($averageNext)) . "\n";
 echo "Load average time = " . (array_sum($averageLoad) / count($averageLoad)) . "\n";
+echo "Neighbourhood average time = " . (array_sum($averageNeighbourhood) / count($averageNeighbourhood)) . "\n";
