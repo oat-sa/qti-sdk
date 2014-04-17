@@ -2393,9 +2393,15 @@ class AssessmentTestSession extends State {
 	            }
 	        }
 	        else {
-	            // In nonlinear mode, we consider the item completed if it's completion status
-	            // is 'completed'.
-	            if ($itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
+	            // In nonlinear mode we consider: 
+	            // - an adaptive item completed if it's completion status is 'completed'.
+	            // - a non-adaptive item to be completed if it is responded.
+	            $isAdaptive = $itemSession->getAssessmentItem()->isAdaptive();
+	            
+	            if ($isAdaptive === true && $itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
+	                $numberCompleted++;
+	            }
+	            else if ($isAdaptive === false && $itemSession->isResponded() === true) {
 	                $numberCompleted++;
 	            }
 	        }

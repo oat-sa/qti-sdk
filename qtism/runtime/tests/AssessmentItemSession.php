@@ -998,7 +998,11 @@ class AssessmentItemSession extends State {
 	        
 	        if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
 	            
-	            if ($var->getValue() !== $var->getDefaultValue()) {
+	            $currentValue = $var->getValue();
+	            if ($currentValue === null && $currentValue !== $var->getDefaultValue()) {
+	                return true;
+	            }
+	            else if ($currentValue !== null && $currentValue->equals($var->getDefaultValue()) !== true) {
 	                return true;
 	            }
 	        }
