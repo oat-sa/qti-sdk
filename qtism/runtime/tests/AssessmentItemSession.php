@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\runtime\common\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
 use qtism\data\IAssessmentItem;
@@ -999,11 +1000,22 @@ class AssessmentItemSession extends State {
 	        if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
 	            
 	            $currentValue = $var->getValue();
-	            if ($currentValue === null && $currentValue !== $var->getDefaultValue()) {
-	                return true;
+	            $currentDefaultValue = $var->getDefaultValue();
+	            
+	            if ($currentValue === null) {
+	                if ($currentValue !== $currentDefaultValue) {
+	                    return true;
+	                }
 	            }
-	            else if ($currentValue !== null && $currentValue->equals($var->getDefaultValue()) !== true) {
-	                return true;
+	            else if ($currentValue instanceof Container && $currentValue->isNull() === true) {
+	                if ($currentDefaultValue !== null && $currentDefaultValue->isNull() === false) {
+	                    return true;
+	                }
+	            }
+	            else {
+	                if ($currentValue->equals($currentDefaultValue) === false) {
+	                    return true;
+	                }
 	            }
 	        }
 	    }
