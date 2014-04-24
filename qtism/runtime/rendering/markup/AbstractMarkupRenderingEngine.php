@@ -837,12 +837,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
         
-        $operator = ($component->getShowHide() === ShowHide::SHOW) ? '==' : '!=';
-        $variable = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']"; 
+        $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
+        $val = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']"; 
         $identifier = $component->getIdentifier();
         $identifierType = 'qtism\\common\\datatypes\\Identifier';
+        $scalarType = 'qtism\\common\\datatypes\\Scalar';
+        $containerType = 'qtism\\runtime\\common\\Container';
+        $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
+        $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
+        $valCheck = "(${scalarCheck} || ${containerCheck})";
         
-        $ifStmt = " qtism-if (${variable} !== null && ${variable} instanceof ${identifierType} && ${variable}->getValue() ${operator} '${identifier}'): ";
+        $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
         $endifStmt = " qtism-endif ";
         
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
