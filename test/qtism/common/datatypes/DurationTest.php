@@ -29,7 +29,6 @@ class DurationTest extends QtiSmTestCase {
 		$this->assertEquals(8, $duration->getMinutes());
 		$this->assertEquals(0, $duration->getMonths());
 		$this->assertEquals(0, $duration->getSeconds());
-		$this->assertEquals(1100, $duration->getDays(true));
 	}
 	
 	public function testEquality() {

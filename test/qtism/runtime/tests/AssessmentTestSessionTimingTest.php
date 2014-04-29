@@ -20,6 +20,75 @@ require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentTestSessionTestCase.
 
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase {
     
+    public function testNonLinearNavigation() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/nonlinear_5_items.xml');
+        $session->beginTestSession();
+        $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        
+        // -- Move to Q03. It must take 1 second.
+        $session->moveNext();
+        sleep(1);
+        $session->moveNext();
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT1S')));
+        
+        // -- Make an attempt of 1 second.
+        $session->beginAttempt();
+        sleep(1);
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT2S')));
+        
+        // -- Go back to Q01. Take 2 seconds.
+        sleep(1);
+        $session->moveBack();
+        sleep(1);
+        $session->moveBack();
+        $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT4S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT4S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT4S')));
+        
+        // -- Begin the attempt but suspend it by moving next (the partial attempt time is 1 second).
+        $session->beginAttempt();
+        sleep(1);
+        $session->moveNext();
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        
+        // -- We are now at Q02. We also begin an attempt but suspend it (the partial attempt time is 1 second).
+        $session->beginAttempt();
+        sleep(1);
+        $session->moveBack();
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT6S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT6S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT6S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT1S')));
+        
+        // -- We are back to Q01. Finish the attempt which is currently suspended (spend 1 more second before ending the attempt). 
+        sleep(1);
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT7S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT7S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT7S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT2S')));
+        
+        // Move to Q02 and finish the attempt by skippig it (1 second thinking time).
+        $session->moveNext();
+        sleep(1);
+        $session->skip();
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['nonlinear5items.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+    }
+    
     public function testTestPartAssessmentSectionsDurations() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         // Try to get a duration on a non-begun test session.
@@ -333,4 +402,4 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(2, $session['Q01.2.duration']->getSeconds(true));
         $this->assertEquals(0, $session['Q01.3.duration']->getSeconds(true));
     }
-}
+ }

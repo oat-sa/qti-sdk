@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,8 @@
  *
  */
 namespace qtism\runtime\storage\binary;
+
+use qtism\runtime\tests\CandidateInteraction;
 
 use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
@@ -136,11 +138,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             // write the QTI Binary Storage version in use to persist the test session.
             $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
-            
             $access->writeTinyInt($assessmentTestSession->getState());
             
             $route = $assessmentTestSession->getRoute();
             $access->writeTinyInt($route->getPosition());
+            
+            $access->writeTinyInt($assessmentTestSession->getLastCandidateInteraction());
+            $access->writeDateTime($assessmentTestSession->getLastCandidateInteractionTime());
             
             // Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
@@ -181,13 +185,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             	$access->writeVariableValue($outcomeVariable);
             }
             
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 4) {
-                $durationStore = $assessmentTestSession->getDurationStore();
-                $access->writeShort(count($durationStore));
-                foreach ($durationStore->getKeys() as $k) {
-                    $access->writeString($k);
-                    $access->writeVariableValue($durationStore->getVariable($k));
-                }
+            $durationStore = $assessmentTestSession->getDurationStore();
+            $access->writeShort(count($durationStore));
+            foreach ($durationStore->getKeys() as $k) {
+                $access->writeString($k);
+                $access->writeVariableValue($durationStore->getVariable($k));
             }
             
             $this->persistStream($assessmentTestSession, $stream);
@@ -218,6 +220,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $version = $access->readTinyInt();
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
+            
+            if ($version >= 5) {
+                // In version 5 of the binary protocol, we store the last candidate action and
+                // its time.
+                $lastCandidateInteraction = $access->readTinyInt();
+                $lastCandidateInteractionTime = $access->readDateTime();
+            }
             
             // Build the route and the item sessions.
             $route = new Route();
@@ -253,6 +262,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
+            
+            if ($version >= 5) {
+                $assessmentTestSession->setLastCandidateInteraction($lastCandidateInteraction);
+                $assessmentTestSession->setLastCandidateInteractionTime($lastCandidateInteractionTime);
+            }
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).
@@ -268,7 +282,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             // Build the duration store.
             $durationStore = new DurationStore();
             
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 4) {
+            if ($version >= 4) {
                 $durationCount = $access->readShort();
                 for ($i = 0; $i < $durationCount; $i++) {
                     $varName = $access->readString();

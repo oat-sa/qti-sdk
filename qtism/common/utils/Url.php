@@ -64,6 +64,12 @@ class Url {
         return rtrim($urlComponent, "/\t\n\r\0\x0B");
     }
     
+    /**
+     * Whether or not a given $url is relative.
+     * 
+     * @param string $url
+     * @return boolean
+     */
     static public function isRelative($url) {
         return (preg_match("/^[a-z][a-z0-9+\-\.]+:(\/\/){0,1}|^\//i", $url) === 0) ? true : false;
     }
