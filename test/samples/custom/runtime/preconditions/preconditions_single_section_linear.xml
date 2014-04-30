@@ -2,7 +2,7 @@
 <assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
-	identifier="branchings_single_section_linear.xml" title="Branchings Single Section Linear">
+	identifier="preconditions_single_section_linear" title="Branchings Single Section Linear">
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<!-- This test is a longevity context. You need to have the correct answer to
 		all items to see them all... :) -->

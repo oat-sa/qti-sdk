@@ -461,19 +461,21 @@ class AssessmentTestSession extends State {
 	        $routeItem = ($sourceRouteItem !== null) ? $sourceRouteItem : $this->getCurrentRouteItem();
 	            
             if ($lastInt === CandidateInteraction::MOVE_NEXT && $newInt === CandidateInteraction::MOVE_NEXT) {
-                // Adjacent moveNexts.
+                $this->updateTestDuration($routeItem, $diff);
+            }
+            else if ($lastInt === CandidateInteraction::MOVE_NEXT && $newInt === CandidateInteraction::MOVE_BACK) {
                 $this->updateTestDuration($routeItem, $diff);
             }
             else if ($lastInt === CandidateInteraction::MOVE_BACK && $newInt === CandidateInteraction::MOVE_BACK) {
-                // Adjacent moveBacks.
+                $this->updateTestDuration($routeItem, $diff);
+            }
+            else if ($lastInt === CandidateInteraction::MOVE_BACK && $newInt === CandidateInteraction::MOVE_NEXT) {
                 $this->updateTestDuration($routeItem, $diff);
             }
             else if ($lastInt === CandidateInteraction::END_ATTEMPT && $newInt === CandidateInteraction::MOVE_BACK) {
-                // The time between the end of an attempt and a move back must be recorded.
                 $this->updateTestDuration($routeItem, $diff);
             }
             else if ($lastInt === CandidateInteraction::END_ATTEMPT && $newInt === CandidateInteraction::MOVE_NEXT) {
-                // The time between the end of an attempt and a move next must be recorded.
                 $this->updateTestDuration($routeItem, $diff);
             }
 	    }
@@ -2174,24 +2176,23 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $navigationMode = $this->getCurrentNavigationMode();
 	    $routeItem = $this->getCurrentRouteItem();
-	    $durationStore = $this->getDurationStore();
 	    $considerMinTime = $this->mustConsiderMinTime();
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
 	        $source = $routeItem->getAssessmentTest();
-	        $duration = $durationStore[$source->getIdentifier()];
+	        $duration = $this[$source->getIdentifier() . '.duration'];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
-	        $duration = $durationStore[$source->getIdentifier()];
+	        $duration = $this[$source->getIdentifier() . '.duration'];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
 	        $source = $this->getCurrentAssessmentSection();
-	        $duration = $durationStore[$source->getIdentifier()];
+	        $duration = $this[$source->getIdentifier() . '.duration'];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    

@@ -2,7 +2,7 @@
 <assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
-	identifier="branchings_single_section_nonlinear.xml" title="Branchings Single Section Non Linear">
+	identifier="branchings_single_section_nonlinear" title="Branchings Single Section Non Linear">
 	<testPart identifier="P01" navigationMode="nonlinear" submissionMode="individual">
 		<!-- This test only aims at showing that branch rules are ignored in non linear mode. -->
 		<assessmentSection identifier="S01" fixed="false" title="Section1" visible="false">

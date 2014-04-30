@@ -2,7 +2,7 @@
 <assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
-	identifier="branchings_single_section_linear.xml" title="Branchings Single Section Linear">
+	identifier="branchings_single_section_linear" title="Branchings Single Section Linear">
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" fixed="false" title="Section1" visible="false">
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" fixed="false" timeDependent="false">
