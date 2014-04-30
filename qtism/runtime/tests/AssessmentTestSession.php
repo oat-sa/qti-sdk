@@ -55,9 +55,6 @@ use \OutOfBoundsException;
 use \LogicException;
 use \UnexpectedValueException;
 use \Exception;
-use \DateTime;
-use \DateTimeZone;
-use \DateInterval;
 
 /**
  * The AssessmentTestSession class represents a candidate session
@@ -158,22 +155,6 @@ class AssessmentTestSession extends State {
 	private $considerMinTime;
 	
 	/**
-	 * The last @qtism-test-candidate-interaction undertook by
-	 * the candidate.
-	 * 
-	 * @var int
-	 */
-	private $lastCandidateInteraction = CandidateInteraction::UNKNOWN;
-	
-	/**
-	 * The moment when the last candidate interaction was triggered.
-	 * candidate interactions are annotated @qtism-test-candidate-interaction.
-	 * 
-	 * @var DateTime
-	 */
-	private $lastCandidateInteractionTime;
-	
-	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -202,7 +183,6 @@ class AssessmentTestSession extends State {
 		
 		$this->setSessionId('no_session_id');
 		$this->setState(AssessmentTestSessionState::INITIAL);
-		$this->setLastCandidateInteractionTime(new DateTime('now', new DateTimeZone('UTC')));
 	}
 	
 	/**
@@ -430,103 +410,6 @@ class AssessmentTestSession extends State {
 	 */
 	protected function setConsiderMinTime($considerMinTime) {
 	    $this->considerMinTime = $considerMinTime;
-	}
-	
-	/**
-	 * Get the last @qtism-test-candidate-interaction successfully undertaken by the candidate.
-	 * 
-	 * @return integer A value from the CandidateInteraction enumeration.
-	 */
-	public function getLastCandidateInteraction() {
-	    return $this->lastCandidateInteraction;
-	}
-	
-	/**
-	 * Update and set the last candidate interaction that was performed
-	 * by the candidate.
-	 * 
-	 * @param integer $newInt The candidate interaction to be set as the last one. It must be a value from the CandidatInteraction enumeration.
-	 * @param RouteItem $sourceRouteItem An optional source RouteItem object defining where in the flow the candidate interaction changed.
-	 */
-	protected function updateLastCandidateInteraction($newInt, RouteItem $sourceRouteItem = null) {
-	    
-	    $lastInt = $this->getLastCandidateInteraction();
-	    $this->setLastCandidateInteraction($newInt);
-	    $now = new DateTime('now', new DateTimeZone('UTC'));
-	    
-	    if (($timeRef = $this->getLastCandidateInteractionTime()) !== null) {
-	        
-	        $do = false;
-	        $diff = $timeRef->diff($now);
-	        $routeItem = ($sourceRouteItem !== null) ? $sourceRouteItem : $this->getCurrentRouteItem();
-	            
-            if ($lastInt === CandidateInteraction::MOVE_NEXT && $newInt === CandidateInteraction::MOVE_NEXT) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-            else if ($lastInt === CandidateInteraction::MOVE_NEXT && $newInt === CandidateInteraction::MOVE_BACK) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-            else if ($lastInt === CandidateInteraction::MOVE_BACK && $newInt === CandidateInteraction::MOVE_BACK) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-            else if ($lastInt === CandidateInteraction::MOVE_BACK && $newInt === CandidateInteraction::MOVE_NEXT) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-            else if ($lastInt === CandidateInteraction::END_ATTEMPT && $newInt === CandidateInteraction::MOVE_BACK) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-            else if ($lastInt === CandidateInteraction::END_ATTEMPT && $newInt === CandidateInteraction::MOVE_NEXT) {
-                $this->updateTestDuration($routeItem, $diff);
-            }
-	    }
-	    
-	    $this->setLastCandidateInteractionTime($now);
-	}
-	
-	/**
-	 * Update the durations at the test level. Durations for
-	 * the assessmentTest, testPart and currentSections will incremented
-	 * by the $diff duration for the given context $routeItem.
-	 * 
-	 * @param RouteItem $routeItem A RouteItem you want to update the duration by $diff.
-	 * @param mixed $diff A Duration or DateInterval object.
-	 */
-	protected function updateTestDuration(RouteItem $routeItem, $diff) {
-	    $assessmentTestDurationId = $routeItem->getAssessmentTest()->getIdentifier();
-	    $testPartDurationId = $routeItem->getTestPart()->getIdentifier();
-	    $assessmentSectionDurationIds = $routeItem->getAssessmentSections()->getKeys();
-	    $durationStore = $this->getDurationStore();
-	    
-	    foreach (array_merge(array($assessmentTestDurationId), array($testPartDurationId), $assessmentSectionDurationIds) as $id) {
-	        $durationStore[$id]->add($diff);
-	    }
-	}
-	
-	/**
-	 * Set the last @qtism-test-candidate-interaction successfully undertaken by the candidate.
-	 *
-	 * @param integer $lastCandidateInteraction A value from the CandidateInteraction enumeration.
-	 */
-	public function setLastCandidateInteraction($lastCandidateInteraction) {
-	    $this->lastCandidateInteraction = $lastCandidateInteraction;
-	}
-	
-	/**
-	 * Set the last moment when the candidate interaction changed.
-	 * 
-	 * @param DateTime $lastCandidateInteractionTime
-	 */
-	public function setLastCandidateInteractionTime(DateTime $lastCandidateInteractionTime) {
-	    $this->lastCandidateInteractionTime = $lastCandidateInteractionTime;
-	}
-	
-	/**
-	 * Get the last moment when the candidate interaction changed.
-	 * 
-	 * @return DateTime
-	 */
-	public function getLastCandidateInteractionTime() {
-	    return $this->lastCandidateInteractionTime;
 	}
 
 	/**
@@ -936,7 +819,16 @@ class AssessmentTestSession extends State {
 	 */
 	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, Duration $diff) {
 	    $routeItem = $this->getCurrentRouteItem();
-	    $this->updateTestDuration($routeItem, $diff);
+	    $durationStore = $this->getDurationStore();
+	    
+	    $assessmentTestDurationId = $routeItem->getAssessmentTest()->getIdentifier();
+	    $testPartDurationId = $routeItem->getTestPart()->getIdentifier();
+	    $assessmentSectionDurationIds = $routeItem->getAssessmentSections()->getKeys();
+	    
+	    
+	    foreach (array_merge(array($assessmentTestDurationId), array($testPartDurationId), $assessmentSectionDurationIds) as $id) {
+	        $durationStore[$id]->add($diff);
+	    }
 	}
 	
 	/**
@@ -969,6 +861,7 @@ class AssessmentTestSession extends State {
 	 * Begins the test session. Calling this method will make the state
 	 * change into AssessmentTestSessionState::INTERACTING.
 	 * 
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function beginTestSession() {
@@ -1250,7 +1143,7 @@ class AssessmentTestSession extends State {
 	 * Skip the current item.
 	 * 
 	 * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function skip() {
@@ -1263,7 +1156,6 @@ class AssessmentTestSession extends State {
         $item = $this->getCurrentAssessmentItemRef();
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
         $session = $this->getItemSession($item, $occurence);
-        $sourceRouteItem = $this->getCurrentRouteItem();
         
         try {
             // Might throw an AssessmentItemSessionException.
@@ -1278,9 +1170,6 @@ class AssessmentTestSession extends State {
                 $this->submitItemResults($session, $occurence);
                 $this->outcomeProcessing();
             }
-            
-            // Successfuly skip!
-            $this->updateLastCandidateInteraction(CandidateInteraction::SKIP);
         }
         catch (Exception $e) {
             throw $this->transformException($e);
@@ -1291,7 +1180,7 @@ class AssessmentTestSession extends State {
 	 * Begin an attempt for the current item in the route.
 	 * 
 	 * @throws AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed or time limits are not respected.
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function beginAttempt() {
@@ -1309,9 +1198,6 @@ class AssessmentTestSession extends State {
         
         try {
             $session->beginAttempt();
-            
-            // Successfull beginAttempt!
-            $this->updateLastCandidateInteraction(CandidateInteraction::BEGIN_ATTEMPT);
         }
         catch (Exception $e) {
             throw $this->transformException($e);
@@ -1327,7 +1213,7 @@ class AssessmentTestSession extends State {
 	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
 	 * @throws AssessmentTestSessionException
 	 * @throws AssessmentItemSessionException
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function endAttempt(State $responses, $allowLateSubmission = false) {
@@ -1355,9 +1241,6 @@ class AssessmentTestSession extends State {
             
             try {
                 $session->endAttempt($responses, false, $allowLateSubmission);
-                
-                // Successful endAttempt!
-                $this->updateLastCandidateInteraction(CandidateInteraction::END_ATTEMPT);
             }
             catch (Exception $e) {
                 throw $this->transformException($e);
@@ -1366,9 +1249,6 @@ class AssessmentTestSession extends State {
         else {
             try {
                 $session->endAttempt($responses, true, $allowLateSubmission);
-                
-                // Successful endAttempt!
-                $this->updateLastCandidateInteraction(CandidateInteraction::END_ATTEMPT);
             }
             catch (Exception $e) {
                 throw $this->transformException($e);
@@ -1398,7 +1278,7 @@ class AssessmentTestSession extends State {
 	 * @param integer $position The position in the route the jump has to be made.
 	 * @param boolean $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
 	 * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function jumpTo($position, $allowTimeout = false) {
@@ -1411,7 +1291,6 @@ class AssessmentTestSession extends State {
 	    
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
-	    $sourceRouteItem = $this->getCurrentRouteItem();
 	    
 	    try {
             $route->setPosition($position);
@@ -1420,9 +1299,6 @@ class AssessmentTestSession extends State {
             // Check the time limits after the jump is trully performed.
             if ($allowTimeout === false) {
                 $this->checkTimeLimits(false, true);
-                
-                // Successful jumpTo!
-                $this->updateLastCandidateInteraction(CandidateInteraction::JUMP_TO, $sourceRouteItem);
             }
 	    }
 	    catch (AssessmentTestSessionException $e) {
@@ -1523,7 +1399,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param boolean $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
 	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function moveNext($allowTimeout = false) {
@@ -1532,7 +1408,6 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
 	    
-	    $sourceRouteItem = $this->getCurrentRouteItem();
 	    $this->suspendItemSession();
 	    $this->nextRouteItem();
 	    
@@ -1546,9 +1421,6 @@ class AssessmentTestSession extends State {
 	                // No exception thrown, we found a non timed-out item to be
 	                // presented to the candidate.
 	                $this->interactWithItemSession();
-	                
-	                // Successful moveNext!
-	                $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_NEXT, $sourceRouteItem);
 	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
@@ -1561,17 +1433,11 @@ class AssessmentTestSession extends State {
 	            // is necessary, the following item is presented
 	            // whatever happens.
 	            $this->interactWithItemSession();
-	            
-	            // Successful moveNext!
-	            $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_NEXT, $sourceRouteItem);
 	            return;
 	        }
 	    }
 	    
 	    // If the execution comes here, this is the end of the test...
-	    
-	    // Successful moveNext!
-	    $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_NEXT, $sourceRouteItem);
 	}
 	
 	/**
@@ -1587,7 +1453,7 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
 	 * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
-	 * @qtism-test-candidate-interaction
+	 * @qtism-test-interaction
 	 * @qtism-test-duration-update
 	 */
 	public function moveBack($allowTimeout = false) {
@@ -1598,7 +1464,6 @@ class AssessmentTestSession extends State {
 	    
 	    $this->suspendItemSession();
 	    $route = $this->getRoute();
-	    $sourceRouteItem = $route->current();
 	    $oldPosition = $route->getPosition();
 	    $this->previousRouteItem();
 	    
@@ -1611,9 +1476,6 @@ class AssessmentTestSession extends State {
 	                
 	                // No exception thrown, return.
 	                $this->interactWithItemSession();
-	                
-	                // Successful moveBack!
-	                $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_BACK, $sourceRouteItem);
 	                return;
 	            }
 	            catch (AssessmentTestSessionException $e) {
@@ -1623,8 +1485,6 @@ class AssessmentTestSession extends State {
 	        }
 	        else {
 	            $this->interactWithItemSession();
-	            // Successful moveBack!
-	            $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_BACK, $sourceRouteItem);
 	            return;
 	        }
 	    }
@@ -1636,20 +1496,12 @@ class AssessmentTestSession extends State {
 	        try {
 	            $this->checkTimeLimits(false, true);
 	            $this->interactWithItemSession();
-	            
-	            // Successful moveBack!
-	            $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_BACK, $sourceRouteItem);
-	            return;
 	        }
 	        catch (AssessmentTestSessionException $e) {
 	            $route->setPosition($oldPosition);
 	            $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
 	            throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
 	        }
-	    }
-	    else {
-	        // Successful moveBack!
-	        $this->updateLastCandidateInteraction(CandidateInteraction::MOVE_BACK, $sourceRouteItem);
 	    }
 	}
 	
@@ -1894,6 +1746,7 @@ class AssessmentTestSession extends State {
 	 * End the test session.
 	 * 
 	 * @throws AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
+	 * @qtism-test-interaction
 	 * @qtism-test-update-duration
 	 */
 	public function endTestSession() {
@@ -2176,23 +2029,24 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $navigationMode = $this->getCurrentNavigationMode();
 	    $routeItem = $this->getCurrentRouteItem();
+	    $durationStore = $this->getDurationStore();
 	    $considerMinTime = $this->mustConsiderMinTime();
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
 	        $source = $routeItem->getAssessmentTest();
-	        $duration = $this[$source->getIdentifier() . '.duration'];
+	        $duration = $durationStore[$source->getIdentifier()];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::TEST_PART) {
 	        $source = $this->getCurrentTestPart();
-	        $duration = $this[$source->getIdentifier() . '.duration'];
+	        $duration = $durationStore[$source->getIdentifier()];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    
 	    if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
 	        $source = $this->getCurrentAssessmentSection();
-	        $duration = $this[$source->getIdentifier() . '.duration'];
+	        $duration = $durationStore[$source->getIdentifier()];
 	        $constraints[] = new TimeConstraint($source, $duration, $navigationMode, $considerMinTime);
 	    }
 	    

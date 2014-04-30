@@ -143,9 +143,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $route = $assessmentTestSession->getRoute();
             $access->writeTinyInt($route->getPosition());
             
-            $access->writeTinyInt($assessmentTestSession->getLastCandidateInteraction());
-            $access->writeDateTime($assessmentTestSession->getLastCandidateInteractionTime());
-            
             // Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
@@ -221,13 +218,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
             
-            if ($version >= 5) {
-                // In version 5 of the binary protocol, we store the last candidate action and
-                // its time.
-                $lastCandidateInteraction = $access->readTinyInt();
-                $lastCandidateInteractionTime = $access->readDateTime();
-            }
-            
             // Build the route and the item sessions.
             $route = new Route();
             $lastOccurenceUpdate = new SplObjectStorage();
@@ -262,11 +252,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
-            
-            if ($version >= 5) {
-                $assessmentTestSession->setLastCandidateInteraction($lastCandidateInteraction);
-                $assessmentTestSession->setLastCandidateInteractionTime($lastCandidateInteractionTime);
-            }
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).

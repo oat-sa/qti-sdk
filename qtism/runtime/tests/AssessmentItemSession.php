@@ -793,7 +793,7 @@ class AssessmentItemSession extends State {
 	        $this->setState(AssessmentItemSessionState::INTERACTING);
 	        
 	        // Reset the time reference. If not, the time spent in SUSPENDED mode will be taken into account!
-	        $this->setTimeReference(new DateTime());
+	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
 	    }
 	}
 	
