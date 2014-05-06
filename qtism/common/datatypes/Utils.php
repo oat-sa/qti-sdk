@@ -36,7 +36,7 @@ class Utils {
     
     /**
      * Whether a given $integer value is a QTI compliant
-     * integer in the [-2147483648, 2147483647] range.
+     * integer in the [-2147483647, 2147483647] range.
      * 
      * @param mixed $integer
      * @return boolean
@@ -49,7 +49,7 @@ class Utils {
         else if ($integer > 2147483647) {
             return false;
         }
-        else if ($integer < -2147483648) {
+        else if ($integer < -2147483647) {
             return false;
         }
         else {

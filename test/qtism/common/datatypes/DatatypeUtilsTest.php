@@ -29,7 +29,7 @@ class DatatypeUtilsTest extends QtiSmTestCase {
             array(250),
             array(-250),
             array(2147483647),
-            array(-2147483648)
+            array(-2147483647)
         );
     }
     
