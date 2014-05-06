@@ -234,7 +234,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER)),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER)),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(-2147483648))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(-2147483647))))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(2147483647))))),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000))))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000))))),
