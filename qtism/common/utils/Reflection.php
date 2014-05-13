@@ -56,4 +56,35 @@ class Reflection {
             return $class->newInstanceArgs($args);
         }
     }
+    
+    /**
+     * Obtains the short class name of a given $object.
+     * 
+     * If $object is not an object, false is returned instead of a string.
+     * 
+     * Examples:
+     * 
+     * + my\namespace\A -> A
+     * + A -> A
+     * + \my\A -> A
+     * 
+     * @param mixed $object An object or a fully qualified class name.
+     * @return boolean|string A short class name or false if $object is not an object nor a string.
+     */
+    public static function shortClassName($object) {
+         
+        $shortClassName = false;
+         
+        if (is_object($object) === true) {
+            $parts = explode("\\", get_class($object));
+            $shortClassName = array_pop($parts);
+        }
+        else if (is_string($object) === true && empty($object) === false) {
+            $parts = explode("\\", $object);
+            $shortClassName = array_pop($parts);
+            
+        }
+        
+        return empty($shortClassName) ? false : $shortClassName;
+    }
 }

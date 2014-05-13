@@ -24,6 +24,10 @@
  */
 namespace qtism\runtime\expressions;
 
+use qtism\common\utils\Reflection;
+
+use qtism\data\expressions\Expression;
+
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -50,5 +54,19 @@ class Utils {
 			$msg = "The Utils::sanitizeVariableRef method only accepts a string argument, '" . gettype($variableRef) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
+	}
+	
+	/**
+	 * Returns a processing error reporting message in the following format:
+	 * 
+	 * [ExpressionClassName] My message...
+	 * 
+	 * @param Expression $expression A given expression that failed to be processed.
+	 * @param string $message A formatted error reporting message.
+	 * @return string
+	 */
+	public static function errorReporting(Expression $expression, $message) {
+	    $shortClassName = Reflection::shortClassName($expression);
+	    return "[${shortClassName}] ${message}";
 	}
 }
