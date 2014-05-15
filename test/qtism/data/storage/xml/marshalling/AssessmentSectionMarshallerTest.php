@@ -196,6 +196,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 	    			<baseValue baseType="boolean">false</baseValue>
 	  			</branchRule>
 	  			<itemSessionControl allowReview="true"/>
+		        <selection select="1"/>
 	  			<assessmentItemRef identifier="Q01" required="false" fixed="false" href="./questions/Q01.xml"/>
 	  			<assessmentItemRef identifier="Q02" required="false" fixed="false" href="./questions/Q02.xml"/>
 	  			<assessmentSectionRef identifier="S01" required="false" fixed="false" href="./sections/S01.xml"/>
@@ -226,6 +227,18 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(1, count($component->getPreconditions()));
 		$this->assertEquals(1, count($component->getBranchRules()));
 		$this->assertTrue($component->getItemSessionControl()->doesAllowReview());
+		
+		// Does it contain a selection?
+		$this->assertTrue($component->hasSelection());
+		
+		// Does it contain an itemSessionControl?
+		$this->assertTrue($component->hasItemSessionControl());
+		
+		// Does it contain a preCondition?
+		$this->assertEquals(1, count($component->getPreconditions()));
+		
+		// Does it contain a branchRule?
+		$this->assertEquals(1, count($component->getBranchRules()));
 	}
 	
 	public function testUnmarshallRecursive() {
@@ -239,6 +252,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 					<assessmentItemRef identifier="Q02" href="./questions/Q02.xml"/>
 				</assessmentSection>
 				<assessmentSection identifier="sub2AssessmentSection" title="Sub2 Assessment Section" visible="true">
+		            <selection select="1"/>
 					<assessmentItemRef identifier="Q03" href="./questions/Q03.xml"/>
 					<assessmentSection identifier="sub21AssessmentSection" title="Sub21 Assessment Section" visible="false">
 						<assessmentItemRef identifier="Q04" href="./questions/Q04.xml"/>
@@ -268,6 +282,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('Q01', $subSectionParts['Q01']->getIdentifier());
 		$this->assertEquals('Q02', $subSectionParts['Q02']->getIdentifier());
 		$this->assertEquals('sub2AssessmentSection', $sectionParts['sub2AssessmentSection']->getIdentifier());
+		$this->assertTrue($sectionParts['sub2AssessmentSection']->hasSelection());
 		
 		$subSectionParts = $sectionParts['sub2AssessmentSection']->getSectionParts();
 		$this->assertEquals('Q03', $subSectionParts['Q03']->getIdentifier());
