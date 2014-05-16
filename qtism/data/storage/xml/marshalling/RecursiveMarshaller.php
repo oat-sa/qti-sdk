@@ -317,7 +317,7 @@ abstract class RecursiveMarshaller extends Marshaller {
 				else {
 				    
 				    if ($node instanceof DOMText) {
-				        $node = self::getDOMCradle()->createElement('textRun', $node->wholeText);
+				        $node = self::getDOMCradle()->createElement('textRun', preg_replace('/&(?!\w+;)/', '&amp;', $node->wholeText));
 				    }
 				    
 					// Process it and make its a final element to be used by hierarchical nodes.

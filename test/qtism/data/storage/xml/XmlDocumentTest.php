@@ -166,4 +166,18 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc->load($file);
         $this->assertTrue(true);
     }
+    
+    public function testAmps() {
+        $file = self::samplesDir() . 'custom/amps.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+        
+        $root = $doc->getDocumentComponent();
+        $divs = $root->getComponentsByClassName('div');
+        $this->assertEquals(1, count($divs));
+        
+        $divContent = $divs[0]->getContent();
+        $divText = $divContent[0];
+        $this->assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
+    }
 }
