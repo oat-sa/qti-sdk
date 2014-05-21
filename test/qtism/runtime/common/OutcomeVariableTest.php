@@ -80,7 +80,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 			$this->assertTrue(true);
 		}
 		
-		// Try to set up a value with an incorrect cardinality.
+		// Try to set up a value with an incorrect cardinality (1).
 		try {
 			$variable->setValue(new OrderedContainer(BaseType::INTEGER));
 			$this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
@@ -88,6 +88,15 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		catch (InvalidArgumentException $e) {
 			$this->assertTrue(true);
 		}
+		
+		// Try to set up a value with an incorrect cardinality (2).
+		try {
+		    $variable->setValue(new Integer(25));
+		    $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
+		}
+		catch (InvalidArgumentException $e) {
+		    $this->assertTrue(true);
+		} 
 	}
 	
 	public function testCreateFromVariableDeclarationMinimal() {
