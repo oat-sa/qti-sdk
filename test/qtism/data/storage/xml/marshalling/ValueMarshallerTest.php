@@ -82,6 +82,30 @@ class ValueMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($component->getValue()->getSecond(), 'B');
 	}
 	
+	public function testUnmarshallNoBaseTypeButForcedAndEntities() {
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">Hello &lt;b&gt;bold&lt;/b&gt;</value>');
+	    $element = $dom->documentElement;
+	    
+	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::STRING));
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $this->assertInstanceOf('qtism\\data\\state\\Value', $component);
+	    $this->assertInternalType('string', $component->getValue());
+	    $this->assertSame('Hello <b>bold</b>', $component->getValue());
+	}
+	
+	public function testMarshallNoBaseTypeButForcedAndEntities() {
+	    $value = "Hello <b>bold</b>";
+	    $baseType = BaseType::STRING;
+	    $component = new Value($value, $baseType);
+	    
+	    $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+	    $this->assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
+	}
+	
 	public function testUnmarshallNoValue() {
 		$this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
 		
