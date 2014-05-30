@@ -750,31 +750,6 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Begin an item session for a given AssessmentItemRef.
-	 * 
-	 * @param AssessmentItemRef $assessmentItemRef The AssessmentItemRef you want to session to begin.
-	 * @throws OutOfBoundsException If no such AssessmentItemRef is referenced in the route to be taken.
-	 */
-	protected function beginItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
-	    $assessmentItemRefs = $this->getAssessmentItemRefs();
-	    if (isset($assessmentItemRefs[$assessmentItemRef->getIdentifier()]) === true) {
-	        $itemSession = new AssessmentItemSession($assessmentItemRef);
-	        
-	        $currentItemSessions = &$this->getAssessmentItemSessions();
-	        if (isset($currentItemSessions[$identifier]) === false) {
-	            // No item session registered for item $identifier.
-	            $currentItemSessions[$identifier] = array();
-	        }
-
-	        $currentItemSessions[$identifier][] = $itemSession;
-	    }
-	    else {
-	        $msg = "No assessmentItemRef with identifier '${identifier}' found in the current assessmentTest.";
-	        throw new OutOfBoundsException($msg);
-	    }
-	}
-	
-	/**
 	 * Initialize the AssessmentItemSession for the whole route.
 	 * 
 	 */
@@ -784,7 +759,6 @@ class AssessmentTestSession extends State {
 	    
 	    foreach ($this->getRoute() as $routeItem) {
 	        $itemRef = $routeItem->getAssessmentItemRef();
-	        $assessmentSection = $routeItem->getAssessmentSection();
 	        $testPart = $routeItem->getTestPart();
 	        
 	        $navigationMode = $routeItem->getTestPart()->getNavigationMode();
