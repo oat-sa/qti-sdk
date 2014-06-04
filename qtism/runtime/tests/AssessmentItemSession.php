@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\processing\ResponseProcessing;
+
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
@@ -713,7 +715,7 @@ class AssessmentItemSession extends State {
 	        
 	        // Some items (especially to collect information) have no response processing!
 	        if ($responseProcessing !== null && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
-	            $engine = new ResponseProcessingEngine($responseProcessing, $this);
+	            $engine = $this->createResponseProcessingEngine($responseProcessing);
 	            $engine->process();
 	        }
 	    }
@@ -1109,6 +1111,16 @@ class AssessmentItemSession extends State {
 	    }
 	    
 	    return $state;
+	}
+	
+	/**
+	 * This protected method contains the logic of creating a new ResponseProcessingEngine object.
+	 * 
+	 * @param ResponseProcessing $responseProcessing
+	 * @return ResponseProcessingEngine
+	 */
+	protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing) {
+	    return new ResponseProcessingEngine($responseProcessing, $this);
 	}
 	
 	public function onDurationUpdate(array $callback) {

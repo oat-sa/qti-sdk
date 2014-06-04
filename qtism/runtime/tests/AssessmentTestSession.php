@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\processing\ResponseProcessing;
+
+use qtism\data\IAssessmentItem;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\expressions\ExpressionEngine;
@@ -764,7 +767,7 @@ class AssessmentTestSession extends State {
 	        $navigationMode = $routeItem->getTestPart()->getNavigationMode();
 	        $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
 	        
-	        $session = new AssessmentItemSession($itemRef, $navigationMode, $submissionMode, $this->mustConsiderMinTime());
+	        $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode, $this->mustConsiderMinTime());
 	        $session->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
 	        
 	        // Determine the item session control.
@@ -783,6 +786,18 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $route->setPosition($oldPosition);
+	}
+	
+	/**
+	 * This protected method contains the logic of instantiating a new AssessmentItemSession object.
+	 * 
+	 * @param IAssessmentItem $assessmentItem
+	 * @param integer $navigationMode
+	 * @param integer $submissionMode
+	 * @param boolean $mustConsiderMinTime
+	 */
+	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime) {
+	    return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime);
 	}
 	
 	/**
@@ -1334,7 +1349,7 @@ class AssessmentTestSession extends State {
 	        // If the item has a processable response processing...
 	        if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
 	            try {
-	                $engine = new ResponseProcessingEngine($responseProcessing, $itemSession);
+	                $engine = $this->createResponseProcessingEngine($responseProcessing, $itemSession);
 	                $engine->process();
 	                $this->submitItemResults($itemSession, $occurence);
 	            }
@@ -1359,6 +1374,17 @@ class AssessmentTestSession extends State {
 	    $this->outcomeProcessing();
 	    
 	    return $result;
+	}
+	
+	/**
+	 * This protected method contains the logic of creating a new ResponseProcessingEngine.
+	 * 
+	 * @param ResponseProcessing $responseProcessing
+	 * @param AssessmentItemSession $assessmentItemSession
+	 * @return ResponseProcessingEngine
+	 */
+	protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing, AssessmentItemSession $assessmentItemSession) {
+	    return new ResponseProcessingEngine($responseProcessing, $assessmentItemSession);
 	}
 	
 	/**
