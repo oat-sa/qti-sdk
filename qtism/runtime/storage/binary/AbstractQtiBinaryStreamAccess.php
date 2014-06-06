@@ -218,7 +218,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                 }
             }
         }
-        catch (BinaryStreamAccessExceptionn $e) {
+        catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing a Variable value.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
