@@ -1338,6 +1338,7 @@ class AssessmentTestSession extends State {
 	protected function defferedResponseProcessing() {
 	    $itemSessionStore = $this->getAssessmentItemSessionStore();
 	    $pendingResponses = $this->getPendingResponses();
+	    $pendingResponsesProcessed = 0;
 	    
 	    foreach ($pendingResponses as $pendingResponses) {
 	        
@@ -1351,6 +1352,7 @@ class AssessmentTestSession extends State {
 	            try {
 	                $engine = $this->createResponseProcessingEngine($responseProcessing, $itemSession);
 	                $engine->process();
+	                $pendingResponsesProcessed++;
 	                $this->submitItemResults($itemSession, $occurence);
 	            }
 	            catch (ProcessingException $e) {
@@ -1370,8 +1372,11 @@ class AssessmentTestSession extends State {
 	    // Reset the pending responses, they are now processed.
 	    $this->setPendingResponseStore(new PendingResponseStore());
 	    
-	    // OutcomeProcessing can now take place.
-	    $this->outcomeProcessing();
+	    // OutcomeProcessing can now take place (only makes sense if pending response
+	    // processing were performed.
+	    if ($pendingResponsesProcessed > 0) {
+	        $this->outcomeProcessing();
+	    }
 	    
 	    return $result;
 	}
