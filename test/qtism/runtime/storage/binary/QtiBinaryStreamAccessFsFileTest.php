@@ -1,8 +1,7 @@
 <?php
+use qtism\runtime\tests\AssessmentItemSessionFactory;
 use qtism\common\datatypes\files\DefaultFileManager;
-
 use qtism\common\datatypes\files\FileSystemFile;
-
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\String;
@@ -400,7 +399,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccessFsfile($stream);
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession($seeker);
+        $session = $access->readAssessmentItemSession(new AssessmentItemSessionFactory(), $seeker);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
@@ -433,7 +432,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
         
         $stream->rewind();
-        $session = $access->readAssessmentItemSession($seeker);
+        $session = $access->readAssessmentItemSession(new AssessmentItemSessionFactory(), $seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());

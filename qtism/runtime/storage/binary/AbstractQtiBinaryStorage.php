@@ -223,9 +223,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $pendingResponseStore = new PendingResponseStore();
             $routeCount = $access->readTinyInt();
             
-           for ($i = 0; $i < $routeCount; $i++) {
+            // Create the item session factory that will be used to instantiate
+            // new item sessions.
+            $itemSessionFactory = $this->getFactory()->createAssessmentItemSessionFactory();
+            
+            for ($i = 0; $i < $routeCount; $i++) {
                 $routeItem = $access->readRouteItem($this->getSeeker());
-                $itemSession = $access->readAssessmentItemSession($this->getSeeker());
+                $itemSession = $access->readAssessmentItemSession($itemSessionFactory, $this->getSeeker());
                 
                 // last-update
                 if ($access->readBoolean() === true) {

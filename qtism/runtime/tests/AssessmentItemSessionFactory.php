@@ -38,9 +38,11 @@ class AssessmentItemSessionFactory extends AbstractAssessmentItemSessionFactory 
     
     /**
      * Create a new AssessmentItemSessionFactory object.
+     * 
+     * @param boolean $considerMinTime Whether or not sessions created by this factory will consider minimum time constraints.
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct($considerMinTime = true) {
+        parent::__construct($considerMinTime);
     }
     
     /**
@@ -52,7 +54,7 @@ class AssessmentItemSessionFactory extends AbstractAssessmentItemSessionFactory 
      * @param integer $considerMinTime Wheter or not to consider minimum time constraints.
      * @return AssessmentItemSession A pristine AssessmentItemSession object.
      */
-    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL, $considerMinTime = true) {
-        return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $considerMinTime);
+    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+        return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $this->mustConsiderMinTime());
     }
 }

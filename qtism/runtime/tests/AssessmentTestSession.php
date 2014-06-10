@@ -793,7 +793,7 @@ class AssessmentTestSession extends State {
 	        $navigationMode = $routeItem->getTestPart()->getNavigationMode();
 	        $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
 	        
-	        $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode, $this->mustConsiderMinTime());
+	        $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
 	        $session->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
 	        
 	        // Determine the item session control.
@@ -823,8 +823,8 @@ class AssessmentTestSession extends State {
 	 * @param boolean $mustConsiderMinTime
 	 * @return AssessmentItemSession
 	 */
-	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime) {
-	    return $this->getAssessmentItemSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime);
+	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
+	    return $this->getAssessmentItemSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
 	}
 	
 	/**

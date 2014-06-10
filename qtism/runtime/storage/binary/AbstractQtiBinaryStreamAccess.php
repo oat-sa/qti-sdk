@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\tests\AbstractAssessmentItemSessionFactory;
 use qtism\common\datatypes\File;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
@@ -540,12 +541,12 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
      * @throws QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AssessmentTestSeeker $seeker) {
+    public function readAssessmentItemSession(AbstractAssessmentItemSessionFactory $factory, AssessmentTestSeeker $seeker) {
         try {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
             
-            $session = clone $this->getOriginalSession();
+            $session = $factory->createAssessmentItemSession($assessmentItemRef);
             $session->setAssessmentItem($assessmentItemRef);
             $session->setState($this->readTinyInt());
             $session->setNavigationMode($this->readTinyInt());
@@ -752,7 +753,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
             $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
             
             if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
-                // Prior to version 3, only a singe assessmentSection might be bound
+                // Prior to version 3, only a single assessmentSection might be bound
                 // to the RouteItem.
                 $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
             }

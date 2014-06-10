@@ -146,6 +146,13 @@ abstract class AbstractAssessmentTestSessionFactory {
     abstract protected function instantiateAssessmentTestSession(Route $route);
     
     /**
+     * Contains the logic of creating a new implementation of AbstractAssessmentItemSessionFactory.
+     * 
+     * @return AbstractAssessmentItemSessionFactory
+     */
+    abstract public function createAssessmentItemSessionFactory();
+    
+    /**
      * Contains the Route create logic depending on whether or not
      * an optional Route to be used is given or not.
      * 

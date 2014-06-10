@@ -8,6 +8,10 @@ use qtism\runtime\tests\TestResultsSubmission;
 class SimpleResultsSubmittableTestSessionFactory extends AbstractAssessmentTestSessionFactory {
     
     protected function instantiateAssessmentTestSession(Route $route) {
-        return new SimpleResultsSubmittableTestSession($this->getAssessmentTest(), new AssessmentItemSessionFactory(), $route, $this->mustConsiderMinTime());
+        return new SimpleResultsSubmittableTestSession($this->getAssessmentTest(), $this->createAssessmentItemSessionFactory(), $route, $this->mustConsiderMinTime());
+    }
+    
+    public function createAssessmentItemSessionFactory() {
+        return new AssessmentItemSessionFactory();
     }
 }

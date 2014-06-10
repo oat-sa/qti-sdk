@@ -37,10 +37,38 @@ use qtism\data\IAssessmentItem;
 abstract class AbstractAssessmentItemSessionFactory {
     
     /**
-     * Create a new AbstractAssessmentItemSessionFactory object.
+     * Whether or not sessions built in the factory
+     * will consider minimum time constraints.
+     * 
+     * @var boolean
      */
-    public function __construct() {
-        
+    private $considerMinTime;
+    
+    /**
+     * Create a new AbstractAssessmentItemSessionFactory object.
+     * 
+     * @param boolean $considerMinTime Whether or not sessions built by the factory will consider minimum time constraints.
+     */
+    public function __construct($considerMinTime = true) {
+        $this->setConsiderMinTime($considerMinTime);
+    }
+    
+    /**
+     * Set whether or not sessions created by this factory will consider minimum time constraints.
+     * 
+     * @param boolean $considerMinTime
+     */
+    public function setConsiderMinTime($considerMinTime) {
+        $this->considerMinTime = $considerMinTime;
+    }
+    
+    /**
+     * Whether or not sessions created by this factory will consider minimum time constraints.
+     * 
+     * @return boolean
+     */
+    public function mustConsiderMinTime() {
+        return $this->considerMinTime;
     }
     
     /**
@@ -49,9 +77,8 @@ abstract class AbstractAssessmentItemSessionFactory {
      * @param IAssessmentItem $assessmentItem The IAssessmentItem object representing the item to be run.
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
-     * @param integer $considerMinTime Wheter or not to consider minimum time constraints.
      * @return AssessmentItemSession A pristine AssessmentItemSession object.
      */
-    public abstract function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL, $considerMinTime = true);
+    public abstract function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL);
     
 }
