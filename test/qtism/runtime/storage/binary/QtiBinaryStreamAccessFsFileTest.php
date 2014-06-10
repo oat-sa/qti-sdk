@@ -485,7 +485,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
         $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($testSessionFactory);
+        $testSession =$testSessionFactory->createAssessmentTestSession();
         $routeItem = $testSession->getRoute()->getRouteItemAt(2);
         
         $access->writeRouteItem($seeker, $routeItem);
@@ -540,7 +540,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccessFsFile($stream);
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $session = AssessmentTestSession::instantiate($factory);
+        $session = $factory->createAssessmentTestSession();
         $session->beginTestSession();
         
         $session->beginAttempt();

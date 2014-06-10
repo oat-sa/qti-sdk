@@ -24,12 +24,10 @@
  */
 namespace qtism\runtime\tests;
 
-use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
-
 /**
  * An AssessmentTestSessionFactory implementation that creates basic
  * AssessmentTestSession objects from a given AssessmentTest definition
- * and a Route to be taken.
+ * and an optional Route to be taken.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -37,17 +35,11 @@ use qtism\runtime\tests\AbstractAssessmentTestSessionFactory;
 class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory {
     
     /**
-     * Create a new AssessmentTestSession object that will be filled with the content of
-     * the factory, in other words, the Route to be taken and the AssessmentTest definition.
+     * Instantiates an AssessmentTestSession with the default implementation.
      * 
-     * @throws RuntimeException If no Route has been given to the factory yet.
+     * @return AssessmentTestSession
      */
-    public function createAssessmentTestSession() {
-        parent::createAssessmentTestSession();
-        
-        $session = new AssessmentTestSession($this->getAssessmentTest(), $this->getRoute(), $this->mustConsiderMinTime());
-        $session->setAcceptableLatency($this->getAcceptableLatency());
-        return $session;
+    protected function instantiateAssessmentTestSession(Route $route) {
+        return new AssessmentTestSession($this->getAssessmentTest(), $route, $this->mustConsiderMinTime());
     }
-    
 }

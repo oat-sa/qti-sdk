@@ -20,7 +20,7 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $doc = new XmlCompactDocument();
         $doc->load($file);
         $factory = new SimpleResultsSubmittableTestSessionFactory($doc->getDocumentComponent());
-        $testSession = SimpleResultsSubmittableTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->setTestResultsSubmission(TestResultsSubmission::OUTCOME_PROCESSING);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
         $testSession->beginTestSession();
@@ -71,7 +71,7 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $doc = new XmlCompactDocument();
         $doc->load($file);
         $factory = new SimpleResultsSubmittableTestSessionFactory($doc->getDocumentComponent());
-        $testSession = SimpleResultsSubmittableTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->setTestResultsSubmission(TestResultsSubmission::END);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
         $testSession->beginTestSession();

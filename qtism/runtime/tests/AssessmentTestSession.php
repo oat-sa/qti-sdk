@@ -25,7 +25,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\processing\ResponseProcessing;
-
 use qtism\data\IAssessmentItem;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -2494,95 +2493,6 @@ class AssessmentTestSession extends State {
 	    $itemIdentifier = $this->getCurrentAssessmentItemRef()->getIdentifier();
 	    $itemOccurence = $this->getCurrentAssessmentItemRefOccurence();
 	    return "${itemIdentifier}.${itemOccurence}";
-	}
-	
-	/**
-	 * Instantiate a new AssessmentItemSession from a factory.
-	 * 
-	 * @param AbstractAssessmentTestSessionFactory $factory
-	 * @return AssessmentTestSession An instantiated AssessmentTestSession object.
-	 */
-	public static function instantiate(AbstractAssessmentTestSessionFactory $factory) {
-	    
-	    $routeStack = array();
-	    
-	    foreach ($factory->getAssessmentTest()->getTestParts() as $testPart) {
-	       
-	        $assessmentSectionStack = array();
-	        
-	        foreach ($testPart->getAssessmentSections() as $assessmentSection) {
-	            $trail = array();
-	            $mark = array();
-	            
-	            array_push($trail, $assessmentSection);
-	            
-	            while (count($trail) > 0) {
-	               
-	                $current = array_pop($trail);
-	                
-	                if (!in_array($current, $mark, true) && $current instanceof AssessmentSection) {
-	                    // 1st pass on assessmentSection.
-	                    $currentAssessmentSection = $current;
-	                    array_push($assessmentSectionStack, $currentAssessmentSection);
-	                    
-	                    array_push($mark, $current);
-	                    array_push($trail, $current);
-	                    
-	                    foreach (array_reverse($current->getSectionParts()->getArrayCopy()) as $sectionPart) {
-	                        array_push($trail, $sectionPart);
-	                    }
-	                }
-	                else if (in_array($current, $mark, true)) {
-	                    // 2nd pass on assessmentSection.
-	                    // Pop N routeItems where N is the children count of $current.
-	                    $poppedRoutes = array();
-	                    for ($i = 0; $i < count($current->getSectionParts()); $i++) {
-	                        $poppedRoutes[] = array_pop($routeStack);
-	                    }
-	                    
-	                    $selection = new BasicSelection($current, new SelectableRouteCollection(array_reverse($poppedRoutes)));
-	                    $selectedRoutes = $selection->select();
-	                    
-	                    // Shuffling can be applied on selected routes.
-	                    // $route will contain the final result of the selection + ordering.
-	                    $ordering = new BasicOrdering($current, $selectedRoutes);
-	                    $selectedRoutes = $ordering->order();
-	                    
-                        $route = new SelectableRoute($current->isFixed(), $current->isRequired(), $current->isVisible(), $current->mustKeepTogether());
-	                    foreach ($selectedRoutes as $r) {
-	                        $route->appendRoute($r);
-	                    }
-	                    
-	                    // Add to the last item of the selection the branch rules of the AssessmentSection/testPart
-	                    // on which the selection is applied.
-	                    $route->getLastRouteItem()->addBranchRules($current->getBranchRules());
-	                    
-	                    // Do the same as for branch rules for pre conditions, except that they must be
-	                    // attached on the first item of the route.
-	                    $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
-	                    
-	                    array_push($routeStack, $route);
-	                    array_pop($assessmentSectionStack);
-	                }
-	                else if ($current instanceof AssessmentItemRef) {
-	                    // leaf node.
-	                    $route = new SelectableRoute($current->isFixed(), $current->isRequired());
-	                    $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart, $factory->getAssessmentTest());
-	                    array_push($routeStack, $route);
-	                }
-	            }
-	        }
-	    }
-	    
-	    $finalRoutes = $routeStack;
-	    $route = new SelectableRoute();
-	    foreach ($finalRoutes as $finalRoute) {
-	        $route->appendRoute($finalRoute);
-	    }
-	    
-	    $factory->setRoute($route);
-	    
-	    return $factory->createAssessmentTestSession();
 	}
 	
 	/**

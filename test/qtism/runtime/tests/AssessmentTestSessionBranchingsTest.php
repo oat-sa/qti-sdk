@@ -20,7 +20,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         
         $route = $testSession->getRoute();
         
@@ -52,7 +52,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->beginTestSession();
         
         // Q01 - We answer correct to bypass Q02.
@@ -92,7 +92,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->beginTestSession();
         
         // Q01 - We answer correct to move to Q03.
@@ -126,7 +126,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         // However, in non linear mode branch rules are ignored and we go then
         // to Q02.
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();
@@ -147,7 +147,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
         
         $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $testSession = AssessmentTestSession::instantiate($factory);
+        $testSession = $factory->createAssessmentTestSession();
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();

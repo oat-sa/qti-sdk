@@ -76,7 +76,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
 		$testSessionFactory = new AssessmentTestSessionFactory($assessmentTest);
-		$assessmentTestSession = AssessmentTestSession::instantiate($testSessionFactory);
+		$assessmentTestSession = $testSessionFactory->createAssessmentTestSession();
 		$assessmentTestSession->beginTestSession();
 		
 		$assessmentTestSession['Q01.var1'] = new Integer(1337);
@@ -116,7 +116,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
 	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-	    $session = AssessmentTestSession::instantiate($testSessionFactory);
+	    $session = $testSessionFactory->createAssessmentTestSession();
 	    $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.SCORE"/>');
 	    $occurenceVariableExpression = $this->createComponentFromXml('<variable identifier="Q01.1.SCORE"/>');
 	    $variableProcessor = new VariableProcessor($variableExpr);

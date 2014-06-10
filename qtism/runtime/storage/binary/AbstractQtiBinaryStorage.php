@@ -24,8 +24,6 @@
  */
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\tests\CandidateInteraction;
-
 use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -108,7 +106,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         }
         
         try {
-            $session = AssessmentTestSession::instantiate($this->getFactory());
+            $session = $this->getFactory()->createAssessmentTestSession();
             $session->setSessionId($sessionId);
             
             return $session;
@@ -245,8 +243,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             $route->setPosition($currentPosition);
             $factory = $this->getFactory();
-            $factory->setRoute($route);
-            $assessmentTestSession = $factory->createAssessmentTestSession();
+            $assessmentTestSession = $factory->createAssessmentTestSession($route);
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
