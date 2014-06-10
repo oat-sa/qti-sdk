@@ -25,7 +25,6 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\File;
-
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
 use qtism\common\datatypes\Identifier;

@@ -157,15 +157,24 @@ class AssessmentTestSession extends State {
 	private $considerMinTime;
 	
 	/**
+	 * The factory to be used to create AssessmentItemSession objects.
+	 * 
+	 * @var AbstractAssessmentItemSessionFactory
+	 */
+	private $assessmentItemSessionFactory;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
+	 * @param AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory The factory to be used for AssessmentItemSession objects creation.
 	 * @param Route $route The sequence of items that has to be taken for the session.
 	 */
-	public function __construct(AssessmentTest $assessmentTest, Route $route, $considerMinTime = true) {
+	public function __construct(AssessmentTest $assessmentTest, AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory, Route $route, $considerMinTime = true) {
 		
 		parent::__construct();
 		$this->setAssessmentTest($assessmentTest);
+		$this->setAssessmentItemSessionFactory($assessmentItemSessionFactory);
 		$this->setRoute($route);
 		$this->setConsiderMinTime($considerMinTime);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
@@ -412,6 +421,24 @@ class AssessmentTestSession extends State {
 	 */
 	protected function setConsiderMinTime($considerMinTime) {
 	    $this->considerMinTime = $considerMinTime;
+	}
+	
+	/**
+	 * Set the factory to be used to create new AssessmentItemSession objects.
+	 * 
+	 * @param AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory
+	 */
+	public function setAssessmentItemSessionFactory(AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory) {
+	    $this->assessmentItemSessionFactory = $assessmentItemSessionFactory;
+	}
+	
+	/**
+	 * Get the factory to be used to create new AssessmentItemSession objects.
+	 * 
+	 * @return AbstractAssessmentItemSessionFactory
+	 */
+	public function getAssessmentItemSessionFactory() {
+	    return $this->assessmentItemSessionFactory;
 	}
 
 	/**
@@ -794,9 +821,10 @@ class AssessmentTestSession extends State {
 	 * @param integer $navigationMode
 	 * @param integer $submissionMode
 	 * @param boolean $mustConsiderMinTime
+	 * @return AssessmentItemSession
 	 */
 	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime) {
-	    return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime);
+	    return $this->getAssessmentItemSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, $mustConsiderMinTime);
 	}
 	
 	/**

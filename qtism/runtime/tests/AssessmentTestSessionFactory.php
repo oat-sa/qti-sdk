@@ -40,6 +40,6 @@ class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory 
      * @return AssessmentTestSession
      */
     protected function instantiateAssessmentTestSession(Route $route) {
-        return new AssessmentTestSession($this->getAssessmentTest(), $route, $this->mustConsiderMinTime());
+        return new AssessmentTestSession($this->getAssessmentTest(), new AssessmentItemSessionFactory(), $route, $this->mustConsiderMinTime());
     }
 }
