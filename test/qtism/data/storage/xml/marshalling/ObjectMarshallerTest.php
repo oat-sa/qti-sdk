@@ -39,6 +39,17 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(ParamType::DATA, $param2->getValueType());
 	}
 	
+	public function testUnmarshallNoDataAttributeValue() {
+	    $object = $this->createComponentFromXml('
+	        <object id="flash-movie" data="" type="application/x-shockwave-flash"/>
+	    ');
+	    
+	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Object', $object);
+	    $this->assertEquals('flash-movie', $object->getId());
+	    $this->assertEquals('', $object->getData());
+	    $this->assertEquals('application/x-shockwave-flash', $object->getType());
+	}
+	
 	public function testMarshallSimple() {
 	    $param1 = new Param('movie', 'movie.swf', ParamType::REF);
 	    $param2 = new Param('quality', 'high', ParamType::DATA);
@@ -50,5 +61,14 @@ class ObjectMarshallerTest extends QtiSmTestCase {
 	    $element = $dom->importNode($element, true);
 	    
 	    $this->assertEquals('<object data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash" id="flash-movie"><param name="movie" value="movie.swf" valuetype="REF"/><param name="quality" value="high" valuetype="DATA"/></object>', $dom->saveXml($element));
+	}
+	
+	public function testMarshallNoDataAttributeValue() {
+	    $object = new Object('', 'application/x-shockwave-flash', 'flash-movie');
+	    $element = $this->getMarshallerFactory()->createMarshaller($object)->marshall($object);
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    
+	    $this->assertEquals('<object data="" type="application/x-shockwave-flash" id="flash-movie"/>', $dom->saveXml($element));
 	}
 }

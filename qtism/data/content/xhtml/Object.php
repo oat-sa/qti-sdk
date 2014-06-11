@@ -116,11 +116,11 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * @throws InvalidArgumentException If $data is not a URI.
 	 */
 	public function setData($data) {
-		if (Format::isUri($data) === true) {
+		if ((is_string($data) === true && $data === '') || Format::isUri($data) === true) {
 			$this->data = $data;
 		}
 		else {
-			$msg = "The 'data' argument must be a non-empty string, '" . gettype($data) . "' given.";
+			$msg = "The 'data' argument must be a URI or an empty string, '" . gettype($data) . "' given.";
 			throw new InvalidArgumentException($msg);
 		}
 	}

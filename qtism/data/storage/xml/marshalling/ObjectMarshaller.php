@@ -39,39 +39,38 @@ class ObjectMarshaller extends ContentMarshaller {
     
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
-        if (($data = self::getDOMElementAttributeAs($element, 'data')) !== null) {
-            
-            if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
-                
-                $fqClass = $this->lookupClass($element);
-                $component = new $fqClass($data, $type);
-                $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
-                
-                if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
-                    $component->setWidth($width);
-                }
-                
-                if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
-                    $component->setHeight($height);
-                }
-                
-                if (($xmlBase = self::getXmlBase($element)) !== false) {
-                    $component->setXmlBase($xmlBase);
-                }
-                
-                self::fillBodyElement($component, $element);
-                
-                return $component;
+        // At item authoring time, we could admit that an empty data attribute
+        // may occur.
+        if (($data = self::getDOMElementAttributeAs($element, 'data')) === null) {
+            $data = '';
+        }
+        
+        if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+        
+            $fqClass = $this->lookupClass($element);
+            $component = new $fqClass($data, $type);
+            $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
+        
+            if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
+                $component->setWidth($width);
             }
-            else {
-                $msg = "The mandatory attribute 'type' is missign from the 'object' element.";
-                throw new UnmarshallingException($msg, $element);
+        
+            if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
+                $component->setHeight($height);
             }
+        
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
+            }
+        
+            self::fillBodyElement($component, $element);
+        
+            return $component;
         }
         else {
-            $msg = "The mandatory attribute 'data' is missing from the 'object' element.";
+            $msg = "The mandatory attribute 'type' is missign from the 'object' element.";
             throw new UnmarshallingException($msg, $element);
-        } 
+        }
     }
     
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
