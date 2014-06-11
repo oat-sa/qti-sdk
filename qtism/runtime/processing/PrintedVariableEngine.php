@@ -19,7 +19,7 @@
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
- * @subpackage
+ * 
  *
  */
 namespace qtism\runtime\processing;
