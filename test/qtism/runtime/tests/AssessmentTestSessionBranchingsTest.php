@@ -6,7 +6,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 
@@ -19,8 +19,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $factory = new SessionFactory();
-        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+        $manager = new SessionManager();
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         
         $route = $testSession->getRoute();
         
@@ -51,8 +51,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $factory = new SessionFactory();
-        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+        $manager = new SessionManager();
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
         // Q01 - We answer correct to bypass Q02.
@@ -91,8 +91,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $factory = new SessionFactory();
-        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+        $manager = new SessionManager();
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
         // Q01 - We answer correct to move to Q03.
@@ -125,8 +125,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         // Q01 - We answer correct. In linear mode we should go to Q03.
         // However, in non linear mode branch rules are ignored and we go then
         // to Q02.
-        $factory = new SessionFactory();
-        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+        $manager = new SessionManager();
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();
@@ -146,8 +146,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument('1.0');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
         
-        $factory = new SessionFactory();
-        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+        $manager = new SessionManager();
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();

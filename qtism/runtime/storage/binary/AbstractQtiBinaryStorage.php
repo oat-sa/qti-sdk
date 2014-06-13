@@ -29,7 +29,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\tests\DurationStore;
 use qtism\runtime\tests\PendingResponseStore;
-use qtism\runtime\tests\AbstractSessionFactory;
+use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\Route;
@@ -62,12 +62,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Create a new AbstractQtiBinaryStorage.
      * 
-     * @param AbstractSessionFactory $factory
+     * @param AbstractSessionManager $factory
      * @param BinaryAssessmentTestSeeker $seeker
      * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
-    public function __construct(AbstractSessionFactory $factory, BinaryAssessmentTestSeeker $seeker) {
-        parent::__construct($factory);
+    public function __construct(AbstractSessionManager $manager, BinaryAssessmentTestSeeker $seeker) {
+        parent::__construct($manager);
         $this->setSeeker($seeker);
     }
     
@@ -104,7 +104,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
         }
         
         try {
-            $session = $this->getFactory()->createAssessmentTestSession($test);
+            $session = $this->getManager()->createAssessmentTestSession($test);
             $session->setSessionId($sessionId);
             
             return $session;
@@ -226,7 +226,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             for ($i = 0; $i < $routeCount; $i++) {
                 $routeItem = $access->readRouteItem($this->getSeeker());
-                $itemSession = $access->readAssessmentItemSession($this->getFactory(), $this->getSeeker());
+                $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker());
                 
                 // last-update
                 if ($access->readBoolean() === true) {
@@ -243,8 +243,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             }
             
             $route->setPosition($currentPosition);
-            $factory = $this->getFactory();
-            $assessmentTestSession = $factory->createAssessmentTestSession($test, $route);
+            $manager = $this->getManager();
+            $assessmentTestSession = $manager->createAssessmentTestSession($test, $route);
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);

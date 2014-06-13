@@ -25,7 +25,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\processing\ResponseProcessing;
-
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
@@ -239,9 +238,9 @@ class AssessmentItemSession extends State {
 	
 	/**
 	 * 
-	 * @var AbstractSessionFactory
+	 * @var AbstractSessionManager
 	 */
-	private $sessionFactory;
+	private $sessionManager;
 	
 	/**
 	 * Create a new AssessmentItemSession object.
@@ -252,19 +251,19 @@ class AssessmentItemSession extends State {
 	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
 	 * 
 	 * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
-	 * @param AbstractSessionFactory $sessionFactory
+	 * @param AbstractSessionManager $sessionManager
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
 	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
 	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(IAssessmentItem $assessmentItem, AbstractSessionFactory $sessionFactory, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+	public function __construct(IAssessmentItem $assessmentItem, AbstractSessionManager $sessionManager, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
 		
 		$this->setAssessmentItem($assessmentItem);
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
-		$this->setSessionFactory($sessionFactory);
+		$this->setSessionManager($sessionManager);
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
@@ -356,7 +355,7 @@ class AssessmentItemSession extends State {
 	 * @return Duration A Duration object.
 	 */
 	public function getAcceptableLatency() {
-	    return $this->getSessionFactory()->getAcceptableLatency();
+	    return $this->getSessionManager()->getAcceptableLatency();
 	}
 	
 	/**
@@ -365,7 +364,7 @@ class AssessmentItemSession extends State {
 	 * @return boolean
 	 */
 	public function mustConsiderMinTime() {
-	    return $this->getSessionFactory()->mustConsiderMinTime();
+	    return $this->getSessionManager()->mustConsiderMinTime();
 	}
 	
 	/**
@@ -476,21 +475,21 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * Get the session factory.
+	 * Get the session manager.
 	 * 
-	 * @return AbstractSessionFactory
+	 * @return AbstractSessionManager
 	 */
-	protected function getSessionFactory() {
-	    return $this->sessionFactory;
+	protected function getSessionManager() {
+	    return $this->sessionManager;
 	}
 	
 	/**
-	 * Set the session factory.
+	 * Set the session manager.
 	 * 
-	 * @param AbstractSessionFactory $sessionFactory
+	 * @param AbstractSessionManager $sessionManager
 	 */
-	protected function setSessionFactory(AbstractSessionFactory $sessionFactory) {
-	    $this->sessionFactory = $sessionFactory;
+	protected function setSessionManager(AbstractSessionManager $sessionManager) {
+	    $this->sessionManager = $sessionManager;
 	}
 	
 	/**

@@ -3,12 +3,12 @@
 use qtism\common\datatypes\Duration;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 
-class SessionFactoryTest extends QtiSmTestCase {
+class SessionManagerTest extends QtiSmTestCase {
 	
     private $test;
     
@@ -44,8 +44,8 @@ class SessionFactoryTest extends QtiSmTestCase {
     public function testDefaultAssessmentTestSessionCreation() {
         // Default acceptable latency is PT0S.
         // default considerMinTime is true.
-        $factory = new SessionFactory();
-        $session = $factory->createAssessmentTestSession($this->getTest());
+        $manager = new SessionManager();
+        $session = $manager->createAssessmentTestSession($this->getTest());
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertTrue($session->mustConsiderMinTime());
@@ -56,11 +56,11 @@ class SessionFactoryTest extends QtiSmTestCase {
         $acceptableLatency = new Duration('PT5S');
         $considerMinTime = false;
         
-        $factory = new SessionFactory();
-        $factory->setAcceptableLatency($acceptableLatency);
-        $factory->setConsiderMinTime($considerMinTime);
+        $manager = new SessionManager();
+        $manager->setAcceptableLatency($acceptableLatency);
+        $manager->setConsiderMinTime($considerMinTime);
         
-        $session = $factory->createAssessmentTestSession($this->getTest());
+        $session = $manager->createAssessmentTestSession($this->getTest());
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertFalse($session->mustConsiderMinTime());

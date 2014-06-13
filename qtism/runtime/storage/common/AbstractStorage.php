@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\storage\common;
 
-use qtism\runtime\tests\AbstractSessionFactory;
+use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\AssessmentTest;
 use \LogicException;
@@ -47,37 +47,37 @@ use \LogicException;
 abstract class AbstractStorage {
     
     /**
-     * The factory to be used to instantiate AssessmentTestSession objects.
+     * The manager to be used to instantiate AssessmentTestSession and AssessmentItemSession objects.
      * 
-     * @var AbstractSessionFactory
+     * @var AbstractSessionManager
      */
-    private $factory;
+    private $manager;
     
     /**
      * Create a new AbstracStorage object.
      * 
-     * @param AbstractSessionFactory The factory to be used to instantiate AssessmentTestSession objects.
+     * @param AbstractSessionManager $manager The manager to be used to instantiate AssessmentTestSession and AssessmentItemSession objects.
      */
-    public function __construct(AbstractSessionFactory $factory) {
-        $this->setFactory($factory);
+    public function __construct(AbstractSessionManager $manager) {
+        $this->setManager($manager);
     }
     
     /**
-     * Set the factory to be used to instantiate AssessmentTestSession objects.
+     * Set the manager to be used to instantiate AssessmentTestSession and AssessmentItemSession objects.
      * 
-     * @param AbstractSessionFactory
+     * @param AbstractSessionManager
      */
-    protected function setFactory(AbstractSessionFactory $factory) {
-        $this->factory = $factory;
+    protected function setManager(AbstractSessionManager $manager) {
+        $this->manager = $manager;
     }
     
     /**
-     * Get the factory to be used to instantiate AssessmentTestSession objects.
+     * Get the manager to be used to instantiate AssessmentTestSession and AssessmentItemSession objects.
      *
-     * @return AbstractSessionFactory
+     * @return AbstractSessionManager
      */
-    protected function getFactory() {
-        return $this->factory;
+    protected function getManager() {
+        return $this->manager;
     }
     
     /**

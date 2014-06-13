@@ -5,7 +5,7 @@ use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Identifier;
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Pair;
@@ -28,8 +28,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         $test = $doc->getDocumentComponent();
     
-        $sessionFactory = new SessionFactory();
-        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
+        $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
         $session = $storage->instantiate($test);
         $sessionId = $session->getSessionId();
     
@@ -206,7 +206,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         $test = $doc->getDocumentComponent();
         
-        $factory = new SessionFactory($doc->getDocumentComponent());
+        $factory = new SessionManager($doc->getDocumentComponent());
         $storage = new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
         $sessionId = 'linearSimultaneous1337';
         $session = $storage->instantiate($doc->getDocumentComponent(), $sessionId);
@@ -341,8 +341,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionFactory = new SessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($test));
+        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
         $session = $storage->instantiate($test);
         $session->beginTestSession();
         $sessionId = $session->getSessionId();
@@ -356,8 +356,8 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionFactory = new SessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($test));
+        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
         $session = $storage->instantiate($test);
         $session->beginTestSession();
         $sessionId = $session->getSessionId();

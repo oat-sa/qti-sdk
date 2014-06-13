@@ -34,14 +34,14 @@ use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentItemRef;
 
 /**
- * The AbstractSessionFactory class is a bed for instantiating
+ * The AbstractSessionManager class is a bed for instantiating
  * various implementations of AssessmentTestSession and AssessmentItemSession.
  * 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractSessionFactory {
+abstract class AbstractSessionManager {
     
     /**
      * The acceptable latency time for AssessmentTestSession and AssessmentItemSession objects.

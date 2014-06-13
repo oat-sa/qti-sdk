@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\tests\AbstractSessionFactory;
+use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
@@ -522,16 +522,16 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read an AssessmentItemSession from the current binary stream.
      * 
-     * @param AbstractSessionFactory
+     * @param AbstractSessionManager $manager
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
      * @throws QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AbstractSessionFactory $factory, AssessmentTestSeeker $seeker) {
+    public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker) {
         try {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
             
-            $session = $factory->createAssessmentItemSession($assessmentItemRef);
+            $session = $manager->createAssessmentItemSession($assessmentItemRef);
             $session->setAssessmentItem($assessmentItemRef);
             $session->setState($this->readTinyInt());
             $session->setNavigationMode($this->readTinyInt());

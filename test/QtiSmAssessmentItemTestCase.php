@@ -5,7 +5,7 @@ use qtism\common\datatypes\Duration;
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
 
@@ -52,13 +52,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    $factory = new SessionFactory();
+	    $manager = new SessionManager();
 	    
 	    if (is_null($acceptableLatency) === false) {
-	        $factory->setAcceptableLatency($acceptableLatency);
+	        $manager->setAcceptableLatency($acceptableLatency);
 	    }
 	    
-	    return new AssessmentItemSession($itemRef, $factory);
+	    return new AssessmentItemSession($itemRef, $manager);
 	}
 	
 	/**
@@ -116,12 +116,12 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    $factory = new SessionFactory();
+	    $manager = new SessionManager();
 	    
 	    if (is_null($acceptableLatency) === false) {
-	        $factory->setAcceptableLatency($acceptableLatency);
+	        $manager->setAcceptableLatency($acceptableLatency);
 	    }
 	    
-	    return new AssessmentItemSession($itemRef, $factory);
+	    return new AssessmentItemSession($itemRef, $manager);
 	}
 }

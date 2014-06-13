@@ -9,7 +9,7 @@ use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
@@ -45,8 +45,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		$xml = new XmlCompactDocument('1.0');
 		$xml->load(self::samplesDir() . 'custom/runtime/assessmenttest_context.xml');
 		
-		$sessionFactory = new SessionFactory();
-		$this->state = $sessionFactory->createAssessmentTestSession($xml->getDocumentComponent());
+		$sessionManager = new SessionManager();
+		$this->state = $sessionManager->createAssessmentTestSession($xml->getDocumentComponent());
 		$this->state['OUTCOME1'] = new String('String!');
 	}
 	
@@ -63,8 +63,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
 	    
 	    // You cannot get information on the current elements of 
@@ -103,8 +103,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    // check Q01.1, Q01.2, Q01.3 item sessions are not all initialized.
 	    for ($i = 1; $i <= 3; $i++) {
@@ -128,8 +128,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	     
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    // Change the value of the global SCORE.
@@ -180,8 +180,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
@@ -221,8 +221,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    // Q01 - Correct Response = 'ChoiceA'.
@@ -281,8 +281,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
 	    $this->assertTrue($doc->getDocumentComponent()->isExclusivelyLinear());
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
 	    // Q01 - Correct.
@@ -379,8 +379,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
 	     
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    // There must be 8 outcome variables to be checked:
@@ -454,8 +454,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		$doc = new XmlCompactDocument();
 		$doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 		
-		$sessionFactory = new SessionFactory();
-		$assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+		$sessionManager = new SessionManager();
+		$assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 		$assessmentTestSession->beginTestSession();
 		
 		$this->assertFalse($assessmentTestSession->whichLastOccurenceUpdate($doc->getDocumentComponent()->getComponentByIdentifier('Q01')));
@@ -483,8 +483,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    foreach (array('Q01', 'Q02', 'Q03') as $identifier) {
@@ -509,8 +509,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
 	    
 	    $sessions = $assessmentTestSession->getAssessmentItemSessions('Q01');
@@ -524,8 +524,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
 	    // Try to get the previous route item but... there is no one because
@@ -555,8 +555,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
 	    // Q01
@@ -589,8 +589,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    
 	    // The session has not begun, the candidate is not able to jump anywhere.
 	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
@@ -650,8 +650,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	public function testPossibleJumpsWholeTest() {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
 	    $jumps = $session->getPossibleJumps();
@@ -664,8 +664,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
 	     
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	     
 	    $session->beginTestSession();
 	    
@@ -741,8 +741,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
 	
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	
 	    $session->beginTestSession();
 	     
@@ -851,8 +851,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_nonlinear.xml');
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    
 	    $session->beginTestSession();
 	    $this->assertEquals(NavigationMode::NONLINEAR, $session->getCurrentNavigationMode());
@@ -915,8 +915,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
 	     
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	     
 	    $session->beginTestSession();
 	    $this->assertEquals(NavigationMode::NONLINEAR, $session->getCurrentNavigationMode());
@@ -962,8 +962,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
 	     
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
@@ -985,8 +985,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    
 	    
 	    $session->beginTestSession();
@@ -1086,8 +1086,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
 	}
 	
@@ -1095,8 +1095,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
 
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(3, $assessmentTestSession->getRouteCount());
 	}
 	
@@ -1104,8 +1104,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(5, $assessmentTestSession->getRouteCount());
 	}
     
@@ -1113,8 +1113,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
 	     
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(9, $assessmentTestSession->getRouteCount());
 	}
 	
@@ -1122,8 +1122,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
 	
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
 	
@@ -1131,8 +1131,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
 	
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
 	
@@ -1140,8 +1140,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_assessmentsections.xml');
 	    
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1259,8 +1259,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
 	     
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	     
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1288,8 +1288,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_timelimits.xml');
 	     
-	    $sessionFactory = new SessionFactory();
-	    $assessmentTestSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	     
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1343,8 +1343,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/rubricblockrefs_hierarchy.xml', true);
 	    
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $route = $session->getRoute();
 	    
 	    // S01 - S01A - Q01
@@ -1367,8 +1367,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	public function testRouteItemPosition() {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
-	    $factory = new SessionFactory();
-	    $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $route = $session->getRoute();
 	    
 	    // Q01 - position 0.

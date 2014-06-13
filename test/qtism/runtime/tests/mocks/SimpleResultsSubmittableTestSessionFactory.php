@@ -3,11 +3,11 @@
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\IAssessmentItem;
-use qtism\runtime\tests\AbstractSessionFactory;
+use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\Route;
 use qtism\runtime\tests\TestResultsSubmission;
 
-class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionFactory {
+class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager {
     
     protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route) {
         return new SimpleResultsSubmittableTestSession($test, $this, $route);

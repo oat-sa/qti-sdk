@@ -143,24 +143,24 @@ class AssessmentTestSession extends State {
 	private $durationStore;
 	
 	/**
-	 * The factory to be used to create new AssessmentItemSession objects.
+	 * The manager to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @var AbstractSessionFactory
+	 * @var AbstractSessionManager
 	 */
-	private $sessionFactory;
+	private $sessionManager;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
-	 * @param AbstractSessionFactory $sessionFactory The factory to be used to create new AssessmentItemSession objects.
+	 * @param AbstractSessionManager $sessionManager The manager to be used to create new AssessmentItemSession objects.
 	 * @param Route $route The sequence of items that has to be taken for the session.
 	 */
-	public function __construct(AssessmentTest $assessmentTest, AbstractSessionFactory $sessionFactory, Route $route) {
+	public function __construct(AssessmentTest $assessmentTest, AbstractSessionManager $sessionManager, Route $route) {
 		
 		parent::__construct();
 		$this->setAssessmentTest($assessmentTest);
-		$this->setSessionFactory($sessionFactory);
+		$this->setSessionManager($sessionManager);
 		$this->setRoute($route);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
@@ -394,25 +394,25 @@ class AssessmentTestSession extends State {
 	 * @return boolean
 	 */
 	public function mustConsiderMinTime() {
-	    return $this->getSessionFactory()->mustConsiderMinTime();
+	    return $this->getSessionManager()->mustConsiderMinTime();
 	}
 	
 	/**
-	 * Set the factory to be used to create new AssessmentItemSession objects.
+	 * Set the manager to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @param AbstractSessionFactory $assessmentItemSessionFactory
+	 * @param AbstractSessionManager $sessionManager
 	 */
-	public function setSessionFactory(AbstractSessionFactory $sessionFactory) {
-	    $this->sessionFactory = $sessionFactory;
+	public function setSessionManager(AbstractSessionManager $sessionManager) {
+	    $this->sessionManager = $sessionManager;
 	}
 	
 	/**
-	 * Get the factory to be used to create new AssessmentItemSession objects.
+	 * Get the manager to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @return AbstractSessionFactory
+	 * @return AbstractSessionManager
 	 */
-	public function getSessionFactory() {
-	    return $this->sessionFactory;
+	public function getSessionManager() {
+	    return $this->sessionManager;
 	}
 
 	/**
@@ -797,7 +797,7 @@ class AssessmentTestSession extends State {
 	 * @return AssessmentItemSession
 	 */
 	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
-	    return $this->getSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+	    return $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
 	}
 	
 	/**
@@ -2004,7 +2004,7 @@ class AssessmentTestSession extends State {
 	 * @return Duration A Duration object.
 	 */
 	public function getAcceptableLatency() {
-	    return $this->getSessionFactory()->getAcceptableLatency();
+	    return $this->getSessionManager()->getAcceptableLatency();
 	}
 	
 	/**

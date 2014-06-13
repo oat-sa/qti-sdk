@@ -28,13 +28,13 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 
 /**
- * An SessionFactory implementation that creates default AssessmentTestSession and
+ * An SessionManager implementation that creates default AssessmentTestSession and
  * AssessmentItemSession objects.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SessionFactory extends AbstractSessionFactory {
+class SessionManager extends AbstractSessionManager {
     
     /**
      * Instantiates an AssessmentTestSession with the default implementation.

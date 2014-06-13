@@ -1,5 +1,5 @@
 <?php
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Uri;
@@ -398,7 +398,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccessFsfile($stream);
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession(new SessionFactory(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
@@ -425,13 +425,13 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $stream->open();
         $access = new QtiBinaryStreamAccessFsFile($stream);
         
-        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'), new SessionFactory());
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'), new SessionManager());
         $session->beginItemSession();
         
         $access->writeAssessmentItemSession($seeker, $session);
         
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionFactory(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -482,8 +482,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
-        $sessionFactory = new SessionFactory();
-        $testSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
+        $sessionManager = new SessionManager();
+        $testSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $routeItem = $testSession->getRoute()->getRouteItemAt(2);
         
         $access->writeRouteItem($seeker, $routeItem);
@@ -537,7 +537,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $stream->open();
         $access = new QtiBinaryStreamAccessFsFile($stream);
         
-        $factory = new SessionFactory();
+        $factory = new SessionManager();
         $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $session->beginTestSession();
         
