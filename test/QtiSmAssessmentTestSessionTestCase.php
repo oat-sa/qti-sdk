@@ -1,5 +1,5 @@
 <?php
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\SessionFactory;
 use qtism\data\storage\xml\XmlCompactDocument;
 
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
@@ -21,8 +21,8 @@ abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load($url);
 	     
-	    $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
+	    $factory = new SessionFactory();
 	    $factory->setConsiderMinTime($considerMinTime);
-	    return $factory->createAssessmentTestSession();
+	    return $factory->createAssessmentTestSession($doc->getDocumentComponent());
 	}
 }

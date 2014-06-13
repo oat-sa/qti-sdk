@@ -9,8 +9,9 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\data\AssessmentTest;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\SessionFactory;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
+use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\data\storage\php\PhpDocument;
 
 require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
@@ -30,12 +31,12 @@ function loadTestDefinition(array &$average = null) {
     return $phpDoc->getDocumentComponent();
 }
 
-function createFactory(AssessmentTest $assessmentTest) {
-    return new AssessmentTestSessionFactory($assessmentTest);
+function createFactory() {
+    return new SessionFactory();
 }
 
-function createStorage(AssessmentTestSessionFactory $factory) {
-    return new TemporaryQtiBinaryStorage($factory);
+function createStorage(SessionFactory $factory, AssessmentTest $test) {
+    return new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($test));
 }
 
 function spentTime($start, $end, array &$registration = null) {
@@ -52,32 +53,32 @@ function spentTime($start, $end, array &$registration = null) {
 
 function attempt(AssessmentTestSession $session, $identifier, array &$average = null) {
     $start = microtime();
-    
+
     $session->beginAttempt();
     $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier($identifier)))));
-    
+
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
 }
 
-function retrieve(AbstractStorage $storage, $sessionId, array &$average = null) {
+function retrieve(AbstractStorage $storage, AssessmentTest $test, $sessionId, array &$average = null) {
     $start = microtime();
-    
-    $session = $storage->retrieve($sessionId);
-    
+
+    $session = $storage->retrieve($test, $sessionId);
+
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
-    
+
     return $session;
 }
 
-function persist(AbstractStorage $storage, AssessmentTestSession $session, array &$average = null) {
+function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null) {
     $start = microtime();
-    
+
     $storage->persist($session);
-    
+
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
@@ -85,9 +86,9 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, array
 
 function moveNext(AssessmentTestSession $session, array &$average) {
     $start = microtime();
-    
+
     $session->moveNext();
-    
+
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);
     }
@@ -113,21 +114,25 @@ $averageNeighbourhood = array();
 // Beginning of the session + persistance.
 $start = microtime();
 
-$storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
-$session = $storage->instantiate();
+$test = loadTestDefinition($averageLoad);
+$storage = createStorage(createFactory(), $test);
+$session = $storage->instantiate($test);
 $sessionId = $session->getSessionId();
 $session->beginTestSession();
 $storage->persist($session);
-$end = microtime();
 unset($session);
 unset($storage);
+unset($test);
+$end = microtime();
+
 echo "Beginning of the session + persistance (" . spentTime($start, $end) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
 
-$storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
-$session = retrieve($storage, $sessionId, $averageRetrieve);
+$test = loadTestDefinition($averageLoad);
+$storage = createStorage(createFactory(), $test);
+$session = retrieve($storage, $test, $sessionId, $averageRetrieve);
 neighbourhood($session, $averageNeighbourhood);
 attempt($session, 'ChoiceA', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
@@ -135,50 +140,58 @@ persist($storage, $session, $averagePersist);
 $end = microtime();
 unset($session);
 unset($storage);
+unset($test);
 
 echo "Retrieving session + attempt 1 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
 
-$storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
-$session = retrieve($storage, $sessionId, $averageRetrieve);
-attempt($session, 'ChoiceB', $effectiveAverageAttempt);
+$test = loadTestDefinition($averageLoad);
+$storage = createStorage(createFactory(), $test);
+$session = retrieve($storage, $test, $sessionId, $averageRetrieve);
 neighbourhood($session, $averageNeighbourhood);
+attempt($session, 'ChoiceA', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
 $end = microtime();
 unset($session);
 unset($storage);
+unset($test);
 
 echo "Retrieving session + attempt 2 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
 
-$storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
-$session = retrieve($storage, $sessionId, $averageRetrieve);
+$test = loadTestDefinition($averageLoad);
+$storage = createStorage(createFactory(), $test);
+$session = retrieve($storage, $test, $sessionId, $averageRetrieve);
 neighbourhood($session, $averageNeighbourhood);
-attempt($session, 'ChoiceC', $effectiveAverageAttempt);
+attempt($session, 'ChoiceA', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
 $end = microtime();
 unset($session);
 unset($storage);
+unset($test);
 echo "Retrieving session + attempt 3 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
 
-$storage = createStorage(createFactory(loadTestDefinition($averageLoad)));
-$session = retrieve($storage, $sessionId, $averageRetrieve);
+$test = loadTestDefinition($averageLoad);
+$storage = createStorage(createFactory(), $test);
+$session = retrieve($storage, $test, $sessionId, $averageRetrieve);
 neighbourhood($session, $averageNeighbourhood);
-attempt($session, 'ChoiceD', $effectiveAverageAttempt);
+attempt($session, 'ChoiceA', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
 $end = microtime();
 unset($session);
 unset($storage);
+unset($test);
+
 echo "Retrieving session + attempt 4 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n\n";
 
 echo "Average attempt time = " . (array_sum($averageAttempt) / count($averageAttempt)) . "\n";

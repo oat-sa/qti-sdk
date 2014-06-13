@@ -1,7 +1,11 @@
 <?php
+
+use qtism\common\datatypes\Duration;
+
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
+use qtism\runtime\tests\SessionFactory;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
 
@@ -31,7 +35,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return AssessmentItemSession
 	 */
-	protected static function instantiateBasicAssessmentItemSession() {
+	protected static function instantiateBasicAssessmentItemSession(Duration $acceptableLatency = null) {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -48,7 +52,13 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    return new AssessmentItemSession($itemRef);
+	    $factory = new SessionFactory();
+	    
+	    if (is_null($acceptableLatency) === false) {
+	        $factory->setAcceptableLatency($acceptableLatency);
+	    }
+	    
+	    return new AssessmentItemSession($itemRef, $factory);
 	}
 	
 	/**
@@ -64,7 +74,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return \qtism\runtime\tests\AssessmentItemSession
 	 */
-	protected static function instantiateBasicAdaptiveAssessmentItem() {
+	protected static function instantiateBasicAdaptiveAssessmentItem(Duration $acceptableLatency = null) {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -106,6 +116,12 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    return new AssessmentItemSession($itemRef);
+	    $factory = new SessionFactory();
+	    
+	    if (is_null($acceptableLatency) === false) {
+	        $factory->setAcceptableLatency($acceptableLatency);
+	    }
+	    
+	    return new AssessmentItemSession($itemRef, $factory);
 	}
 }

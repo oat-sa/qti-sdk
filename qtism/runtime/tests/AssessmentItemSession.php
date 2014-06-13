@@ -166,15 +166,6 @@ class AssessmentItemSession extends State {
      */
     private $timeReference;
     
-    /**
-     * An acceptable latency to be applied
-     * on duration when timelimits are in
-     * force.
-     * 
-     * @var Duration
-     */
-    private $acceptableLatency;
-    
 	/**
 	 * The state of the Item Session as described
 	 * by the AssessmentItemSessionState enumeration.
@@ -247,6 +238,12 @@ class AssessmentItemSession extends State {
 	private $onDurationUpdate = array();
 	
 	/**
+	 * 
+	 * @var AbstractSessionFactory
+	 */
+	private $sessionFactory;
+	
+	/**
 	 * Create a new AssessmentItemSession object.
 	 * 
 	 * * Unless provided in the $variables array, the built-in response/outcome variables 'numAttempts', 'duration' and
@@ -255,20 +252,19 @@ class AssessmentItemSession extends State {
 	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
 	 * 
 	 * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
+	 * @param AbstractSessionFactory $sessionFactory
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
 	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
-	 * @param boolean $considerMinTime Whether or not minimum time limits must be considered.
 	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
-	public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL, $considerMinTime = true) {
+	public function __construct(IAssessmentItem $assessmentItem, AbstractSessionFactory $sessionFactory, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
 		
-		$this->setAcceptableLatency(new Duration('PT0S'));
 		$this->setAssessmentItem($assessmentItem);
 		$this->setNavigationMode($navigationMode);
 		$this->setSubmissionMode($submissionMode);
 		$this->setItemSessionControl(new ItemSessionControl());
-		$this->setConsiderMinTime($considerMinTime);
+		$this->setSessionFactory($sessionFactory);
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
@@ -354,32 +350,13 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * Set the acceptable latency time to be applied
-	 * when timelimits are in force.
-	 * 
-	 * @param Duration $acceptableLatency A Duration object.
-	 */
-	public function setAcceptableLatency(Duration $acceptableLatency) {
-	    $this->acceptableLatency = $acceptableLatency;
-	}
-	
-	/**
 	 * Get the acceptable latency time to be applied when timelimits
 	 * are in force.
 	 * 
 	 * @return Duration A Duration object.
 	 */
 	public function getAcceptableLatency() {
-	    return $this->acceptableLatency;
-	}
-	
-	/**
-	 * Set wether or not minimum time limits must be taken into account.
-	 * 
-	 * @param boolean $considerMinTime
-	 */
-	public function setConsiderMinTime($considerMinTime) {
-	    $this->considerMinTime = $considerMinTime;
+	    return $this->getSessionFactory()->getAcceptableLatency();
 	}
 	
 	/**
@@ -388,7 +365,7 @@ class AssessmentItemSession extends State {
 	 * @return boolean
 	 */
 	public function mustConsiderMinTime() {
-	    return $this->considerMinTime;
+	    return $this->getSessionFactory()->mustConsiderMinTime();
 	}
 	
 	/**
@@ -496,6 +473,24 @@ class AssessmentItemSession extends State {
 	 */
 	public function isAttempting() {
 	    return $this->attempting;
+	}
+	
+	/**
+	 * Get the session factory.
+	 * 
+	 * @return AbstractSessionFactory
+	 */
+	protected function getSessionFactory() {
+	    return $this->sessionFactory;
+	}
+	
+	/**
+	 * Set the session factory.
+	 * 
+	 * @param AbstractSessionFactory $sessionFactory
+	 */
+	protected function setSessionFactory(AbstractSessionFactory $sessionFactory) {
+	    $this->sessionFactory = $sessionFactory;
 	}
 	
 	/**

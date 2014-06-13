@@ -69,8 +69,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     }
     
     public function testAcceptableLatency() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $itemSession->setAcceptableLatency(new Duration('PT1S'));
+        $itemSession = self::instantiateBasicAssessmentItemSession(new Duration('PT1S'));
     
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts(3);

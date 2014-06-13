@@ -24,31 +24,38 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\AssessmentTest;
+use qtism\data\IAssessmentItem;
+
 /**
- * An AssessmentTestSessionFactory implementation that creates basic
- * AssessmentTestSession objects from a given AssessmentTest definition
- * and an optional Route to be taken.
+ * An SessionFactory implementation that creates default AssessmentTestSession and
+ * AssessmentItemSession objects.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestSessionFactory extends AbstractAssessmentTestSessionFactory {
+class SessionFactory extends AbstractSessionFactory {
     
     /**
      * Instantiates an AssessmentTestSession with the default implementation.
      * 
+     * @param AssessmentTest $test
+     * @param Route An optional route to be set. If not provided, the default instantiation process occurs.
      * @return AssessmentTestSession
      */
-    protected function instantiateAssessmentTestSession(Route $route) {
-        return new AssessmentTestSession($this->getAssessmentTest(), $this->createAssessmentItemSessionFactory(), $route, $this->mustConsiderMinTime());
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route) {
+        return new AssessmentTestSession($test, $this, $route);
     }
     
     /**
-     * Creates a brand new AssessmentItemSessionFactory object.
+     * Instantiates an AssessmentItemSession with the default implementation.
      * 
-     * @return AssessmentItemSessionFactory
+     * @param IAssessmentItem $assessmentItem
+     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @return AssessmentItemSession
      */
-    public function createAssessmentItemSessionFactory() {
-        return new AssessmentItemSessionFactory($this->mustConsiderMinTime());
+    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
+        return new AssessmentItemSession($assessmentItem, $this, $navigationMode, $submissionMode);
     }
 }

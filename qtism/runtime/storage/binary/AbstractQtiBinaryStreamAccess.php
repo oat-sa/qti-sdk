@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
-use qtism\runtime\tests\AbstractAssessmentItemSessionFactory;
+use qtism\runtime\tests\AbstractSessionFactory;
 use qtism\common\datatypes\File;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
@@ -68,13 +68,6 @@ use qtism\common\storage\BinaryStreamAccess;
 abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     
     /**
-     * An AssessmentItemSession to be cloned for best performance.
-     * 
-     * @var AssessmentItemSession
-     */
-    private $originalSession;
-    
-    /**
      * Create a new QtiBinaryStreamAccess object.
      * 
      * @param IStream $stream The IStream object to be accessed.
@@ -82,15 +75,6 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function __construct(IStream $stream) {
         parent::__construct($stream);
-        $this->originalSession = new AssessmentItemSession(new ExtendedAssessmentItemRef('fake', 'fake.xml'));
-    }
-    
-    private function setOriginalSession(AssessmentItemSession $session) {
-        $this->originalSession = $session;
-    }
-    
-    private function getOriginalSession() {
-        return $this->originalSession;
     }
     
     /**
@@ -538,10 +522,11 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read an AssessmentItemSession from the current binary stream.
      * 
+     * @param AbstractSessionFactory
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
      * @throws QtiBinaryStreamAccessException
      */
-    public function readAssessmentItemSession(AbstractAssessmentItemSessionFactory $factory, AssessmentTestSeeker $seeker) {
+    public function readAssessmentItemSession(AbstractSessionFactory $factory, AssessmentTestSeeker $seeker) {
         try {
             $itemRefPosition = $this->readShort();
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);

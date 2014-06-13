@@ -19,8 +19,8 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
         $doc->load($file);
-        $factory = new SimpleResultsSubmittableTestSessionFactory($doc->getDocumentComponent());
-        $testSession = $factory->createAssessmentTestSession();
+        $factory = new SimpleResultsSubmittableTestSessionFactory();
+        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::OUTCOME_PROCESSING);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
         $testSession->beginTestSession();
@@ -70,8 +70,8 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
         $doc->load($file);
-        $factory = new SimpleResultsSubmittableTestSessionFactory($doc->getDocumentComponent());
-        $testSession = $factory->createAssessmentTestSession();
+        $factory = new SimpleResultsSubmittableTestSessionFactory();
+        $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::END);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
         $testSession->beginTestSession();

@@ -1,11 +1,11 @@
 <?php
-use qtism\common\datatypes\files\FileSystemFile;
-
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
+use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Identifier;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\SessionFactory;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Pair;
@@ -26,10 +26,11 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        $test = $doc->getDocumentComponent();
     
-        $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
-        $session = $storage->instantiate();
+        $sessionFactory = new SessionFactory();
+        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
+        $session = $storage->instantiate($test);
         $sessionId = $session->getSessionId();
     
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
@@ -38,7 +39,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->beginTestSession();
         $storage->persist($session);
     
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
     
         // The test session has begun. We are in linear mode so that all
@@ -84,7 +85,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
@@ -107,7 +108,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     
         // Q04 - Correct response.
         $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
@@ -121,7 +122,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
     
         // Q05 - Skip.
@@ -135,7 +136,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     
         // Q07.1 - Incorrect response (but inside the circle).
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
@@ -151,7 +152,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // We now test the lastOccurence update for this multi-occurence item.
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
     
@@ -170,7 +171,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
     
@@ -183,7 +184,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // End of test, outcome processing performed.
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
         $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS01']);
         $this->assertEquals(1, $session['NCORRECTS01']->getValue());
@@ -203,10 +204,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
-        $factory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($factory);
+        $test = $doc->getDocumentComponent();
+        
+        $factory = new SessionFactory($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
         $sessionId = 'linearSimultaneous1337';
-        $session = $storage->instantiate($sessionId);
+        $session = $storage->instantiate($doc->getDocumentComponent(), $sessionId);
         $session->beginTestSession();
     
         // Nothing in pending responses. The test has just begun.
@@ -218,7 +221,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(1, count($session->getPendingResponseStore()->getAllPendingResponses()));
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
         $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
@@ -229,7 +232,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))));
         $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
         $this->assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
@@ -240,7 +243,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(3, count($session->getPendingResponseStore()->getAllPendingResponses()));
     
         // Q04 - Skip
@@ -249,7 +252,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(4, count($session->getPendingResponseStore()->getAllPendingResponses()));
     
         // Q05 - Skip
@@ -258,7 +261,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(5, count($session->getPendingResponseStore()->getAllPendingResponses()));
     
         // Q06 - Skip
@@ -267,7 +270,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(6, count($session->getPendingResponseStore()->getAllPendingResponses()));
     
         // Q07.1 - Correct
@@ -276,7 +279,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
         $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
         $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
@@ -287,7 +290,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
         $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 114)));
         $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
@@ -298,7 +301,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->moveNext();
     
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     
         // Response processing should have taken place beauce this is the end of the current test part.
         // The Pending Response Store should be then flushed and now empty.
@@ -306,7 +309,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(30, 13)));
         $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     
         // Let's check the overall Assessment Test Session state.
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
@@ -333,41 +336,29 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
     
-    public function testAutoForward() {
-        $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
-    
-        $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
-        $session = $storage->instantiate();
-        $session->beginTestSession();
-        $sessionId = $session->getSessionId();
-    
-        $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
-    }
-    
     public function testNonLinear() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
+        $test = $doc->getDocumentComponent();
         
-        $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
-        $session = $storage->instantiate();
+        $sessionFactory = new SessionFactory($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
         $session->beginTestSession();
         $sessionId = $session->getSessionId();
         
         $storage->persist($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
     }
     
     public function testFiles() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
+        $test = $doc->getDocumentComponent();
         
-        $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-        $storage = new TemporaryQtiBinaryStorage($testSessionFactory);
-        $session = $storage->instantiate();
+        $sessionFactory = new SessionFactory($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($sessionFactory, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
         $session->beginTestSession();
         $sessionId = $session->getSessionId();
         
@@ -384,7 +375,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // Let's persist and retrieve and look if we have the same value in Q01.RESPONSE.
         $storage->persist($session);
         unset($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
@@ -403,7 +394,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // Again, we persist and retrieve.
         $storage->persist($session);
         unset($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         
         // We now test all the collected variables.
         $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
@@ -429,7 +420,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         $storage->persist($session);
         unset($session);
-        $session = $storage->retrieve($sessionId);
+        $session = $storage->retrieve($test, $sessionId);
         
         // Final big check.
         $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);

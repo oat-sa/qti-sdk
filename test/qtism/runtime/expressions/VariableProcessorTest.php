@@ -1,12 +1,10 @@
 <?php
-use qtism\common\datatypes\Identifier;
-
-use qtism\common\datatypes\Float;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\SessionFactory;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\data\TestPartCollection;
@@ -75,8 +73,8 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$testPart = new TestPart('P01', $assessmentSections);
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
-		$testSessionFactory = new AssessmentTestSessionFactory($assessmentTest);
-		$assessmentTestSession = $testSessionFactory->createAssessmentTestSession();
+		$sessionFactory = new SessionFactory();
+		$assessmentTestSession = $sessionFactory->createAssessmentTestSession($assessmentTest);
 		$assessmentTestSession->beginTestSession();
 		
 		$assessmentTestSession['Q01.var1'] = new Integer(1337);
@@ -115,8 +113,8 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
-	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-	    $session = $testSessionFactory->createAssessmentTestSession();
+	    $sessionFactory = new SessionFactory();
+	    $session = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
 	    $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.SCORE"/>');
 	    $occurenceVariableExpression = $this->createComponentFromXml('<variable identifier="Q01.1.SCORE"/>');
 	    $variableProcessor = new VariableProcessor($variableExpr);

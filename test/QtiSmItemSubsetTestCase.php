@@ -1,6 +1,6 @@
 <?php
 
-use qtism\runtime\tests\AssessmentTestSessionFactory;
+use qtism\runtime\tests\SessionFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 
@@ -23,8 +23,8 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load($testFilePath);
 	    
-	    $testSessionFactory = new AssessmentTestSessionFactory($doc->getDocumentComponent());
-	    $testSession = $testSessionFactory->createAssessmentTestSession();
+	    $sessionFactory = new SessionFactory();
+	    $testSession = $sessionFactory->createAssessmentTestSession($doc->getDocumentComponent());
 	    $testSession->beginTestSession();
 	    $this->setTestSession($testSession);
 	}

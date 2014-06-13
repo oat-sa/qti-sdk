@@ -24,6 +24,9 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\data\SubmissionMode;
+use qtism\data\NavigationMode;
+use qtism\data\IAssessmentItem;
 use qtism\common\datatypes\Duration;
 use qtism\data\AssessmentTest;
 use qtism\data\AssessmentSection;
@@ -31,65 +34,39 @@ use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentItemRef;
 
 /**
- * The AbstractAssessmentTestSessionFactory class is a bed for instantiating
- * various implementations of AssessmentTestSession.
+ * The AbstractSessionFactory class is a bed for instantiating
+ * various implementations of AssessmentTestSession and AssessmentItemSession.
  * 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractAssessmentTestSessionFactory {
+abstract class AbstractSessionFactory {
     
     /**
-     * The AssessmentTest object to be used to instantiate an AssessmentTestSession object.
-     * 
-     * @var AssessmentTest
-     */
-    private $assessmentTest;
-    
-    /**
-     * The acceptable latency time for AssessmentTestSessions and their item sessions.
+     * The acceptable latency time for AssessmentTestSession and AssessmentItemSession objects.
      * 
      * @var Duration
      */
     private $acceptableLatency;
     
     /**
-     * Whether or not created AssessmentTestSessions must consider
-     * minimum time limits.
+     * Whether or not created AssessmentTestSession and AssessmentItemSession objects
+     * must consider the minimum time constraints.
      * 
      * @var booolean
      */
     private $considerMinTime;
     
-    public function __construct(AssessmentTest $assessmentTest) {
-        $this->setAssessmentTest($assessmentTest);
+    public function __construct() {
         $this->setAcceptableLatency(new Duration('PT0S'));
         $this->setConsiderMinTime(true);
     }
     
     /**
-     * Set the AssessmentTest object to be used to instantiate an AssessmentTestSession object.
-     * 
-     * @param AssessmentTest $assessmentTest An AssessmentTest object.
-     */
-    public function setAssessmentTest(AssessmentTest $assessmentTest) {
-        $this->assessmentTest = $assessmentTest;
-    }
-    
-    /**
-     * Get the AssessmentTest object to be used to instantiate an AssessmentTestSession object.
-     * 
-     * @return AssessmentTest An AssessmentTest object.
-     */
-    public function getAssessmentTest() {
-        return $this->assessmentTest;
-    }
-    
-    /**
      * Set the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
      * 
-     * @param Duration $latency A Duration object.
+     * @param Duration $latency
      */
     public function setAcceptableLatency(Duration $latency) {
         $this->acceptableLatency = $latency;
@@ -125,42 +102,59 @@ abstract class AbstractAssessmentTestSessionFactory {
     }
     
     /**
-     * Create a new AssessmentTestSession object with the content
-     * of the factory.
+     * Create a new AssessmentTestSession object.
      * 
      * @return AssessmentTestSession An AssessmentTestSession object.
      */
-    public function createAssessmentTestSession(Route $route = null) {
-        $session = $this->instantiateAssessmentTestSession($this->getRoute($route));
-        $this->configure($session);
+    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null) {
+        $session = $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route));
+        $this->configureAssessmentTestSession($session);
         return $session;
     }
     
     /**
-     * Contains the logic of instantiating the appropriate AssessmentTestSession
-     * implementation
+     * Contains the logic of instantiating the appropriate AssessmentTestSession implementation.
      * 
+     * @param AssessmentTest $assessmentTest
      * @param Route $route
      * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
-    abstract protected function instantiateAssessmentTestSession(Route $route);
+    abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route);
     
     /**
-     * Contains the logic of creating a new implementation of AbstractAssessmentItemSessionFactory.
+     * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
      * 
-     * @return AbstractAssessmentItemSessionFactory
+     * @param IAssessmentItem $assessmentItem
+     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param integer $submissionMode A value from the SubmissionMode enumeration.
+     * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
-    abstract public function createAssessmentItemSessionFactory();
+    abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
+    
+    /**
+     * 
+     * @param IAssessmentItem $assessmentItem
+     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param A value from the SubmissionMode enumeration $submissionMode.
+     * 
+     * @return AssessmentItemSession
+     */
+    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+        $session = $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+        $this->configureAssessmentItemSession($session);
+        return $session;
+    }
     
     /**
      * Contains the Route create logic depending on whether or not
      * an optional Route to be used is given or not.
      * 
+     * @param AssessmentTest $test
      * @param Route $route
      * @return Route
      */
-    protected function getRoute(Route $route = null) {
-        return (is_null($route) === true) ? $this->createRoute() : $route;
+    protected function getRoute(AssessmentTest $test, Route $route = null) {
+        return (is_null($route) === true) ? $this->createRoute($test) : $route;
     }
     
     /**
@@ -169,21 +163,31 @@ abstract class AbstractAssessmentTestSessionFactory {
      * 
      * @param AssessmentTestSession $assessmentTestSession
      */
-    protected function configure(AssessmentTestSession $assessmentTestSession) {
-        $assessmentTestSession->setAcceptableLatency($this->getAcceptableLatency());
+    protected function configureAssessmentTestSession(AssessmentTestSession $assessmentTestSession) {
+        return;
+    }
+    
+    /**
+     * Contains the logic of configuring a newly instantiated AssessmentItemSession object
+     * with additional configuration values held by the factory.
+     * 
+     * @param AssessmentItemSession $assessmentItemSession
+     */
+    protected function configureAssessmentItemSession(AssessmentItemSession $assessmentItemSession) {
+        return;
     }
     
     /**
      * Contains the logic of creating the Route of a brand new AssessmentTestSession object.
      * The resulting Route object will be injected in the created AssessmentTestSession.
      *
+     * @param AssessmentTest $test
      * @return Route A newly instantiated Route object.
      */
-    protected function createRoute() {
-         
+    protected function createRoute(AssessmentTest $test) {
         $routeStack = array();
          
-        foreach ($this->getAssessmentTest()->getTestParts() as $testPart) {
+        foreach ($test->getTestParts() as $testPart) {
     
             $assessmentSectionStack = array();
              
@@ -244,7 +248,7 @@ abstract class AbstractAssessmentTestSessionFactory {
                     else if ($current instanceof AssessmentItemRef) {
                         // leaf node.
                         $route = new SelectableRoute($current->isFixed(), $current->isRequired());
-                        $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart, $this->getAssessmentTest());
+                        $route->addRouteItem($current, new AssessmentSectionCollection($assessmentSectionStack), $testPart, $test);
                         array_push($routeStack, $route);
                     }
                 }

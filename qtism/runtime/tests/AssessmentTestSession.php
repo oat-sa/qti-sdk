@@ -128,13 +128,6 @@ class AssessmentTestSession extends State {
 	private $autoForward = true;
 	
 	/**
-	 * The acceptable latencty time for the AssessmentTestSession.
-	 * 
-	 * @var Duration
-	 */
-	private $acceptableLatency;
-	
-	/**
 	 * How/When test results must be submitted.
 	 * 
 	 * @var integer
@@ -150,37 +143,28 @@ class AssessmentTestSession extends State {
 	private $durationStore;
 	
 	/**
-	 * Whether or not to consider minimum time limits during the AssessmentTest.
+	 * The factory to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @var boolean
+	 * @var AbstractSessionFactory
 	 */
-	private $considerMinTime;
-	
-	/**
-	 * The factory to be used to create AssessmentItemSession objects.
-	 * 
-	 * @var AbstractAssessmentItemSessionFactory
-	 */
-	private $assessmentItemSessionFactory;
+	private $sessionFactory;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
-	 * @param AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory The factory to be used for AssessmentItemSession objects creation.
+	 * @param AbstractSessionFactory $sessionFactory The factory to be used to create new AssessmentItemSession objects.
 	 * @param Route $route The sequence of items that has to be taken for the session.
 	 */
-	public function __construct(AssessmentTest $assessmentTest, AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory, Route $route, $considerMinTime = true) {
+	public function __construct(AssessmentTest $assessmentTest, AbstractSessionFactory $sessionFactory, Route $route) {
 		
 		parent::__construct();
 		$this->setAssessmentTest($assessmentTest);
-		$this->setAssessmentItemSessionFactory($assessmentItemSessionFactory);
+		$this->setSessionFactory($sessionFactory);
 		$this->setRoute($route);
-		$this->setConsiderMinTime($considerMinTime);
 		$this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
 		$this->setLastOccurenceUpdate(new SplObjectStorage());
 		$this->setPendingResponseStore(new PendingResponseStore());
-		$this->setAcceptableLatency(new Duration('PT0S'));
 		$durationStore = new DurationStore();
 		$this->setDurationStore($durationStore);
 
@@ -317,7 +301,6 @@ class AssessmentTestSession extends State {
 	    
 	    foreach ($this->assessmentItemSessionStore->getAllAssessmentItemSessions() as $itemSession) {
 	        $itemSession->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
-	        $itemSession->setConsiderMinTime($this->mustConsiderMinTime());
 	    }
 	}
 	
@@ -411,34 +394,25 @@ class AssessmentTestSession extends State {
 	 * @return boolean
 	 */
 	public function mustConsiderMinTime() {
-	    return $this->considerMinTime;
-	}
-	
-	/**
-	 * Set whether or not minimum time limits must be taken into account.
-	 * 
-	 * @param boolean $considerMinTime
-	 */
-	protected function setConsiderMinTime($considerMinTime) {
-	    $this->considerMinTime = $considerMinTime;
+	    return $this->getSessionFactory()->mustConsiderMinTime();
 	}
 	
 	/**
 	 * Set the factory to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @param AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory
+	 * @param AbstractSessionFactory $assessmentItemSessionFactory
 	 */
-	public function setAssessmentItemSessionFactory(AbstractAssessmentItemSessionFactory $assessmentItemSessionFactory) {
-	    $this->assessmentItemSessionFactory = $assessmentItemSessionFactory;
+	public function setSessionFactory(AbstractSessionFactory $sessionFactory) {
+	    $this->sessionFactory = $sessionFactory;
 	}
 	
 	/**
 	 * Get the factory to be used to create new AssessmentItemSession objects.
 	 * 
-	 * @return AbstractAssessmentItemSessionFactory
+	 * @return AbstractSessionFactory
 	 */
-	public function getAssessmentItemSessionFactory() {
-	    return $this->assessmentItemSessionFactory;
+	public function getSessionFactory() {
+	    return $this->sessionFactory;
 	}
 
 	/**
@@ -807,7 +781,6 @@ class AssessmentTestSession extends State {
 	        }
 	        // else ... No time limits !
 	        
-	        $session->setAcceptableLatency($this->getAcceptableLatency());
 	        $this->addItemSession($session, $routeItem->getOccurence());
 	    }
 	    
@@ -824,7 +797,7 @@ class AssessmentTestSession extends State {
 	 * @return AssessmentItemSession
 	 */
 	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
-	    return $this->getAssessmentItemSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+	    return $this->getSessionFactory()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
 	}
 	
 	/**
@@ -2026,21 +1999,12 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Set the acceptable latency time for the AssessmentTestSession.
-	 * 
-	 * @param Duration $latency A Duration object.
-	 */
-	public function setAcceptableLatency(Duration $latency) {
-	    $this->acceptableLatency = $latency;
-	}
-	
-	/**
 	 * Get the acceptable latency time for the AssessmentTestSession.
 	 * 
 	 * @return Duration A Duration object.
 	 */
 	public function getAcceptableLatency() {
-	    return $this->acceptableLatency;
+	    return $this->getSessionFactory()->getAcceptableLatency();
 	}
 	
 	/**
