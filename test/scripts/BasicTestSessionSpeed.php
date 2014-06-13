@@ -9,7 +9,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\data\AssessmentTest;
-use qtism\runtime\tests\SessionFactory;
+use qtism\runtime\tests\SessionManager;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\data\storage\php\PhpDocument;
@@ -32,10 +32,10 @@ function loadTestDefinition(array &$average = null) {
 }
 
 function createFactory() {
-    return new SessionFactory();
+    return new SessionManager();
 }
 
-function createStorage(SessionFactory $factory, AssessmentTest $test) {
+function createStorage(SessionManager $factory, AssessmentTest $test) {
     return new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($test));
 }
 
