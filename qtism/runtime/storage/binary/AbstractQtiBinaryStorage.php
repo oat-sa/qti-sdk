@@ -121,6 +121,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * The QTI Binary Storage Version that will be used to persist the AssessmentTestSession
      * will be systematically the one defined in QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION. 
      * 
+     * @param AssessmentTestSession $assessmentTestSession
+     * @throws StorageException
      */
     public function persist(AssessmentTestSession $assessmentTestSession) {
         
