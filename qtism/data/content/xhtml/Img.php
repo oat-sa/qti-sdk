@@ -63,7 +63,12 @@ class Img extends AtomicInline {
      * The img's height attribute. A negative (< 0) value
      * means that no height is indicated.
      * 
-     * @var integer
+     * The value of this attribute can be:
+     * 
+     * * a string, in order to describe a percentage e.g. "10%".
+     * * an integer, in order to describe a width in pixels e.g. 10.
+     * 
+     * @var integer|string
      * @qtism-bean-property
      */
     private $height = -1;
@@ -71,6 +76,11 @@ class Img extends AtomicInline {
     /**
      * The img's width attribute. A negative (< 0) value
      * means that no width is indicated.
+     * 
+     * The value of this attribute can be:
+     * 
+     * * a string, in order to describe a percentag e.g. "10%".
+     * * an integer, in order to describe a width in pixels e.g. 10.
      * 
      * @var integer
      * @qtism-bean-property
@@ -185,15 +195,15 @@ class Img extends AtomicInline {
      * Set the height attribute. A negative (< 0) value for $height means there
      * is no height indicated.
      * 
-     * @param integer $height An integer.
-     * @throws InvalidArgumentException If $height is not a valid integer value.
+     * @param integer|string $height An integer (pixels) or a string (percentage).
+     * @throws InvalidArgumentException If $height is not a valid integer or string value.
      */
     public function setHeight($height) {
-        if (is_int($height) === true) {
+        if ((is_int($height) && $height === -1) || Format::isXhtmlLength($height) === true) {
             $this->height = $height;
         }
         else {
-            $msg = "The 'height' argument must be an integer, '" . gettype($height) . "' given.";
+            $msg = "The 'height' argument must be a valid XHTML length value, '" . $height . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -221,15 +231,15 @@ class Img extends AtomicInline {
      * Set the width attribute. A negative (< 0) value for $width means there
      * is no width indicated.
      * 
-     * @param integer $width A width.
+     * @param integer $width An integer (pixels) or a string (percentage).
      * @throws InvalidArgumentException If $width is not an integer value.
      */
     public function setWidth($width) {
-        if (is_int($width) === true) {
+        if ((is_int($width) && $width === -1) || Format::isXhtmlLength($width) === true) {
             $this->width = $width;
         }
         else {
-            $msg = "The 'width' argument must be an integer, '" . gettype($width) . "'.";
+            $msg = "The 'width' argument must be a valid XHTML length value, '" . $width . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

@@ -223,13 +223,6 @@ class AssessmentItemSession extends State {
 	private $attempting = false;
 	
 	/**
-	 * Whether or not minimum time limits must be considered or not.
-	 * 
-	 * @var boolean
-	 */
-	private $considerMinTime = true;
-	
-	/**
 	 * An array of callbacks to be executed on duration update.
 	 * 
 	 * @var array

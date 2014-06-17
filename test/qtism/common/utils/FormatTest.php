@@ -109,6 +109,16 @@ class FormatTest extends QtiSmTestCase {
 	    $this->assertEquals($expected, Format::printfFormatIsoToPhp($input));
 	}
 	
+	/**
+	 * @dataProvider isXhtmlLengthProvider
+	 * 
+	 * @param mixed $input
+	 * @param boolean $expected
+	 */
+	public function testIsXhtmlLength($input, $expected) {
+	    $this->assertSame($expected, Format::isXhtmlLength($input));
+	}
+	
 	public function scale10Provider() {
 	    return array(
 	        // No precision, no X
@@ -287,6 +297,24 @@ class FormatTest extends QtiSmTestCase {
 	        array('%a', '%x'),
 	        array('%A', '%X'),
 	        array('blablabla', 'blablabla')
+	    );
+	}
+	
+	public function isXhtmlLengthProvider() {
+	    return array(
+	        // input, expected
+	        array(0, true),
+	        array(1, true),
+	        array(100, true),
+	        array('100%', true),
+	        array('1%', true),
+	        array('0%', true),
+	        array(new \stdClass(), false),
+	        array(-10, false),
+	        array('-10', false),
+	        array('10', false),
+	        array(true, false),
+	        array(10.0, false)                
 	    );
 	}
 }

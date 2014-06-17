@@ -94,12 +94,22 @@ class ImgMarshaller extends Marshaller {
 	            $component->setLongdesc($longdesc);
 	        }
 	         
-	        if (($height = self::getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
-	            $component->setHeight($height);
+	        if (($height = self::getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
+	            if (stripos($height, '%') === false) {
+	                $component->setHeight(intval($height));
+	            }
+	            else {
+	                $component->setHeight($height);
+	            }
 	        }
 	         
-	        if (($width = self::getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
-	            $component->setWidth($width);
+	        if (($width = self::getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
+	            if (stripos($width, '%') === false) {
+	                $component->setWidth(intval($width));
+	            }
+	            else {
+	                $component->setWidth($width);
+	            }
 	        }
 	         
 	        if (($xmlBase = self::getXmlBase($element)) !== false) {
