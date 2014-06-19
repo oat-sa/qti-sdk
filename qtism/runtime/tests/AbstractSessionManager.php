@@ -235,12 +235,14 @@ abstract class AbstractSessionManager {
                         }
                          
                         // Add to the last item of the selection the branch rules of the AssessmentSection/testPart
-                        // on which the selection is applied.
-                        $route->getLastRouteItem()->addBranchRules($current->getBranchRules());
-                         
-                        // Do the same as for branch rules for pre conditions, except that they must be
-                        // attached on the first item of the route.
-                        $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
+                        // on which the selection is applied... Only if the route contains something (empty assessmentSection edge case).
+                        if ($route->count() > 0) {
+                            $route->getLastRouteItem()->addBranchRules($current->getBranchRules());
+                             
+                            // Do the same as for branch rules for pre conditions, except that they must be
+                            // attached on the first item of the route.
+                            $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
+                        }
                          
                         array_push($routeStack, $route);
                         array_pop($assessmentSectionStack);

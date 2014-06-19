@@ -1388,4 +1388,25 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q12', $routeItem->getAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(11, $route->getRouteItemPosition($routeItem));
 	}
+	
+	public function testEmptySection() {
+	    // Aims at testing that even a section of the test is empty,
+	    // it is simply ignored at runtime.
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/empty_section.xml');
+	    $manager = new SessionManager();
+	    
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+	    $session->beginTestSession();
+	    
+	    // First section contains a single item.
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->skip();
+	    $session->moveNext();
+	    
+	    // The second section is empty, moveNext() goes to the end of the current route,
+	    // and the session is then closed.
+	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+	}
 }
