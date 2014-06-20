@@ -102,7 +102,7 @@ class HottextInteraction extends BlockInteraction {
      * Set the maximum number of choices that can be selected by the candidate. If the returned value
      * is 0, it means that the candidate is not requitred to select any choice.
      * 
-     * @param integer $maxChoices A positive (>= 0) integer.
+     * @param integer $maxChoices A positive  integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
@@ -132,15 +132,18 @@ class HottextInteraction extends BlockInteraction {
      * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
     public function setMinChoices($minChoices) {
-        if (is_int($minChoices) && $minChoices >= 0) {
+        if (is_int($minChoices) && $minChoices > 0) {
             
-            if ($this->getMaxChoices() > 0 && $minChoices <= $this->getMaxChoices()) {
+            if ($minChoices <= $this->getMaxChoices()) {
                 $this->minChoices = $minChoices;
             }
             else {
                 $msg = "The 'minChoices' argument must respect the limits imposed by maxChoice.";
                 throw new InvalidArgumentException($msg);
             }
+        }
+        else if (is_int($minChoices) && $minChoices === 0) {
+            $this->minChoices = $minChoices;
         }
         else {
             $msg = "The 'minChoices' argument must be a positive (>= 0) integer value, '" . gettype($minChoices) . "' given.";
