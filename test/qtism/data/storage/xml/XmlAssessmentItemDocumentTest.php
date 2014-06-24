@@ -269,6 +269,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 			array(self::decorateUri('text_entry.xml', '2.0')),
 			array(self::decorateUri('upload_composite.xml', '2.0')),
 			array(self::decorateUri('upload.xml', '2.0')),
+		    
+		    // Other miscellaneous items...
+		    array(self::samplesDir() . 'custom/items/custom_operator_item.xml'),
 		);
 	}
 	
