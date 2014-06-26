@@ -180,7 +180,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 	 * Whether the collection is exclusively composed of string values: primitive or Containers.
 	 * Please note that:
 	 * 
-	 * * A primitive with the NULL value is not considered numeric.
+	 * * A primitive with the NULL value is not considered as a string.
 	 * * An empty string is considered to be NULL and then not considered a valid string as per QTI 2.1 specification.
 	 * * An empty Multiple/OrderedContainer with baseType string is not considered to contain strings.
 	 * * If the collection contains a container with cardinality RECORD, it is not considered exclusively string.
