@@ -87,6 +87,17 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	    $this->assertEquals(array('Hello World!'), $result->getArrayCopy());
 	}
 	
+	public function testExplodeThree() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection(array(new String(' '), new String('Hello World!')));
+	    $processor = new Explode($expression, $operands);
+	    $result = $processor->process();
+	     
+	    $this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
+	    $this->assertSame(2, count($result));
+	    $this->assertEquals(array('Hello',  'World!'), $result->getArrayCopy());
+	}
+	
 	public function createFakeExpression() {
 		return $this->createComponentFromXml('
 			<customOperator class="qtism.runtime.expressions.operators.custom.Explode">
