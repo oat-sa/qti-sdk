@@ -19,7 +19,7 @@
 		"forum": "http://forum.taotesting.com",
 		"issues": "http://forge.taotesting.com"
 	},
-	"keywords" : ["QTI", "OAT", "TAO", "CBA", "Computer-Based Assessment", "Computer-Aided Assessment", "Computer-Assisted Assessment"],
+	"keywords" : ["QTI", "IMS", "OAT", "TAO", "CBA", "Computer-Based Assessment", "Computer-Aided Assessment", "Computer-Assisted Assessment"],
 	"homepage" : "http://www.taotesting.com",
 	"license" : [
 		"GPL-2.0"
