@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -231,7 +231,16 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * @throws BinaryStreamAccessException
      */
     public function writeString($string) {
+        
+        // $maxLen = 2^16 -1 = max val of unsigned short integer.
+        $maxLen = 65535;
         $len = strlen($string);
+        
+        if ($len > $maxLen) {
+            $len = $maxLen;
+            $string = substr($string, 0, $maxLen);
+        }
+        
         try {
             $this->getStream()->write(pack('S', $len) . $string);
         }
