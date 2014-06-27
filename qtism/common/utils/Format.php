@@ -324,12 +324,15 @@ class Format {
 	/**
 	 * Whether or not a given string is a coordinate collection.
 	 * 
+	 * For compatibility reasons, float formatted numbers will also
+	 * be accepted as valid numbers to compose coordinates.
+	 * 
 	 * @param string $string A given string.
 	 * @return boolean Wether $string is a valid coordinate collection.
 	 * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
 	 */
 	static public function isCoords($string) {
-		$pattern = "/^-{0,1}[0-9]+(?:\s*,\s*-{0,1}[0-9]+)*$/";
+		$pattern = "/^-{0,1}[0-9]+(?:\.[0-9]+){0,1}(?:\s*,\s*-{0,1}[0-9]+(?:\.[0-9]+){0,1})*$/";
 		return preg_match($pattern, $string) === 1;
 	}
 	

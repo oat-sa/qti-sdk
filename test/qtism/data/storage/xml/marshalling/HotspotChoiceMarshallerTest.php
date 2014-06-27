@@ -48,4 +48,18 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('This is a circle.', $component->getHotspotLabel());
 	    $this->assertTrue($component->hasHotspotLabel());
 	}
+	
+	public function testUnmarshallFloatCoords() {
+	    // Example taken from a TAO migration issue. Coordinates contain "string-float" values.
+	    $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128, 222  , 18.36"/>
+	    ');
+	    
+	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
+	    $this->assertEquals('r_50', $component->getIdentifier());
+	    $this->assertFalse($component->isFixed());
+	    $this->assertEquals(Shape::CIRCLE, $component->getShape());
+	    $this->assertTrue($component->getCoords()->equals(new Coords(Shape::CIRCLE, array(128, 222, 18))));
+	}
 }
