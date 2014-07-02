@@ -328,4 +328,8 @@ class FileSystemFile implements File {
     public function getIdentifier() {
         return $this->getPath();
     }
+    
+    public function __toString() {
+        return $this->getFilename();
+    }
 }
