@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\QtiDatatype;
 use qtism\data\expressions\operators\IsNull;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
@@ -199,7 +200,7 @@ abstract class Variable {
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $value A value compliant with the QTI Runtime Model.
 	 * @throws InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
 	 */
-	public function setValue($value) {
+	public function setValue(QtiDatatype $value = null) {
 		
 		if (Utils::isBaseTypeCompliant($this->getBaseType(), $value) && Utils::isCardinalityCompliant($this->getCardinality(), $value)) {
 		    $this->value = $value;
