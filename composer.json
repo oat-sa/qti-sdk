@@ -33,5 +33,10 @@
 		"psr-0": {
 			"qtism\\": "src/qtism"
 		}
-	}
+	},
+	"extra": {
+        	"branch-alias": {
+            		"dev-master": "1.0.x-dev"
+        	}
+    	}
 }
