@@ -557,7 +557,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable {
         $showHide = $component->getShowHide();
         $state = $this->getState();
         
-        return (($val = $state[$variableIdentifier]) !== null && $val === $identifier);
+        return (($val = $state[$variableIdentifier]) !== null && $val->equals($identifier));
     }
     
     /**

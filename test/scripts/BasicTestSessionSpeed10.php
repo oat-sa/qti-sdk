@@ -17,7 +17,7 @@ use qtism\data\storage\php\PhpDocument;
 
 date_default_timezone_set('UTC');
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../src/qtism.php');
 
 function loadTestDefinition(array &$average = null) {
     $start = microtime();

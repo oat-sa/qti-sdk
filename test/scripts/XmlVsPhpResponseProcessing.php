@@ -3,7 +3,7 @@
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../src/qtism.php');
 
 function spentTime($start, $end) {
     $startTime = explode(' ', $start);
@@ -12,7 +12,7 @@ function spentTime($start, $end) {
     return $time;
 }
 
-$basePath = '/../../qtism/runtime/processing/templates/2_1/';
+$basePath = '/../../src/qtism/runtime/processing/templates/2_1/';
 $templates = array('match_correct', 'map_response', 'map_response_point');
 
 $xmlTimings = array('match_correct' => array(), 'map_response' => array(), 'map_response_point' => array());

@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\Duration;
 
-require_once(dirname(__FILE__) . '/../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../src/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
 
 use qtism\runtime\tests\SessionManager;

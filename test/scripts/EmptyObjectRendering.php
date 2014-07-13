@@ -3,7 +3,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../src/qtism.php');
 
 /*
  * The goal of this script is to demonstrate that empty <qti:object> elements

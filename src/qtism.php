@@ -32,7 +32,7 @@ namespace qtism;
  */
 function qtism_autoload($class) {
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-	$file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . $class . '.php';
+	$file = dirname(__FILE__) . DIRECTORY_SEPARATOR . $class . '.php';
 	
     if (file_exists($file)) {
         require $file;
