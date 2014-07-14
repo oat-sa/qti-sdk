@@ -30,6 +30,8 @@ use \ReflectionMethod;
 use \ReflectionProperty;
 
 /**
+ * A wrapper implementing a similar approach to Java Beans to annotate
+ * PHP classes.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
