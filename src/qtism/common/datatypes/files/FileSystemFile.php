@@ -72,7 +72,7 @@ class FileSystemFile implements File {
      * Create a new PersistentFile object.
      * 
      * @param string $path The path where the file is actually stored.
-     * @throws RuntimeException If the file cannot be retrieved correctly.
+     * @throws \RuntimeException If the file cannot be retrieved correctly.
      */
     public function __construct($path) {
         // Retrieve filename and mime type.
@@ -135,7 +135,7 @@ class FileSystemFile implements File {
     /**
      * Get the sequence of bytes composing the content of the file.
      * 
-     * @throws RuntimeException If the data cannot be retrieved.
+     * @throws \RuntimeException If the data cannot be retrieved.
      */
     public function getData() {
 
@@ -154,7 +154,7 @@ class FileSystemFile implements File {
     /**
      * Get a stream resource on the file.
      * 
-     * @throws RuntimeException If the stream on the file cannot be open.
+     * @throws \RuntimeException If the stream on the file cannot be open.
      * @return resource An open stream.
      */
     public function getStream() {
@@ -181,8 +181,8 @@ class FileSystemFile implements File {
      * @param string $destination Where the file resulting from $source will be stored.
      * @param string $mimeType The MIME type of the file.
      * @param mixed $withFilename Whether or not consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
-     * @throws RuntimeException If something wrong happens.
-     * @return FileSystemFile
+     * @throws \RuntimeException If something wrong happens.
+     * @return qtism\common\datatypes\files\FileSystemFile
      */
     static public function createFromExistingFile($source, $destination, $mimeType, $withFilename = true) {
         
@@ -251,12 +251,13 @@ class FileSystemFile implements File {
     }
     
     /**
+     * Create a File from existing data.
      * 
      * @param string $data
      * @param string $destination
      * @param string $mimeType
      * @param string $filename
-     * @return FileSystemFile
+     * @return qtism\common\datatypes\files\FileSystemFile
      */
     static public function createFromData($data, $destination, $mimeType, $filename = '') {
         $tmp = tempnam('/tmp', 'qtism');
@@ -278,18 +279,40 @@ class FileSystemFile implements File {
         return new static($path);
     }
     
+    /**
+     * Get the cardinality of the File value.
+     * 
+     * @return integer A value from the Cardinality enumeration.
+     */
     public function getCardinality() {
         return Cardinality::SINGLE;
     }
     
+    /**
+     * Get the baseType of the File value.
+     * 
+     * @return integer A value from the BaseType enumeration.
+     */
     public function getBaseType() {
         return BaseType::FILE;
     }
     
+    /**
+     * Whether or not the File has a file name.
+     * 
+     * @return boolean
+     */
     public function hasFilename() {
         return $this->getFilename() !== '';
     }
     
+    /**
+     * Whether or not two File objects are equals. Two File values
+     * are considered to be identical if they have the same file name,
+     * mime-type and data.
+     * 
+     * @return boolean
+     */
     public function equals($obj) {
         if ($obj instanceof File) {
             if ($this->getFilename() !== $obj->getFilename()) {
@@ -325,6 +348,11 @@ class FileSystemFile implements File {
         return false;
     }
     
+    /**
+     * Get the unique identifier of the File.
+     * 
+     * @return string
+     */
     public function getIdentifier() {
         return $this->getPath();
     }

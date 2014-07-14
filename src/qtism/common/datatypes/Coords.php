@@ -50,7 +50,7 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 	 * 
 	 * @param integer $shape A value from the Shape enumeration.
 	 * @param array $coords An array of number values.
-	 * @throws InvalidArgumentException If an error occurs while creating the Coords object.
+	 * @throws \InvalidArgumentException If an error occurs while creating the Coords object.
 	 */
 	public function __construct($shape, array $coords = array()) {
 		parent::__construct($coords);
@@ -87,6 +87,12 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 		}
 	}
 	
+	/**
+	 * Set the $shape on which the coordinates apply.
+	 * 
+	 * @param integer $shape A value from the Shape enumeration.
+	 * @throws \InvalidArgumentException
+	 */
 	protected function setShape($shape) {
 		if (in_array($shape, Shape::asArray())) {
 			$this->shape = $shape;
@@ -98,7 +104,7 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 	}
 	
 	/**
-	 * Get the shape associated to the coordinates.
+	 * Get the shape on which the coordinates apply.
 	 * 
 	 * @return integer A value from the Shape enumeration.
 	 * 
@@ -176,14 +182,32 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 		return implode(",", $this->getDataPlaceHolder());
 	}
 	
+	/**
+	 * Whether or not $obj is equals to $this. Two Coords objects are
+	 * considered to be equal if they have the same coordinates and shape.
+	 * 
+	 * return boolean
+	 */
 	public function equals($obj) {
 	    return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
 	}
 	
+	/**
+	 * Get the baseType of the value. This method systematically returns
+	 * BaseType::COORDS.
+	 * 
+	 * @return integer A value from the BaseType enumeration.
+	 */
 	public function getBaseType() {
 	    return BaseType::COORDS;
 	}
 	
+	/**
+	 * Get the cardinality of the value. This method systematically returns
+	 * Cardinality::SINGLE.
+	 * 
+	 * @return integer A value from the Cardinality enumeration.
+	 */
 	public function getCardinality() {
 	    return Cardinality::SINGLE;
 	}

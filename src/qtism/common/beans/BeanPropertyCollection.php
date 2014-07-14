@@ -37,7 +37,7 @@ class BeanPropertyCollection extends AbstractCollection {
     /**
      * Checks if the given $value is an instance of BeanProperty.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of BeanProperty.
+     * @throws \InvalidArgumentException If $value is not an instance of BeanProperty.
      */
     protected function checkType($value) {
         if (!$value instanceof BeanProperty) {

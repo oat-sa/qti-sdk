@@ -51,13 +51,14 @@ class FileSystemFileManager implements FileManager {
     }
     
     /**
+     * Create a FileSystemFile object from an existing
+     * file on the file system.
      * 
-     * 
-     * @param string $path
-     * @param string $mimeType
-     * @param string $filename
-     * @throws FileManagerException
-     * @return FileSystemFile
+     * @param string $path The canonical path to the file.
+     * @param string $mimeType The mime-type of the file (if you want to force it).
+     * @param string $filename The file name of the file (if you want to force it).
+     * @throws qtism\common\datatypes\files\FileManagerException
+     * @return qtism\common\datatypes\files\FileSystemFile
      */
     public function createFromFile($path, $mimeType, $filename = '') {
         $destination = $this->buildDestination();
@@ -72,13 +73,13 @@ class FileSystemFileManager implements FileManager {
     }
     
     /**
+     * Create a FileSystemFile from existing data on the file system.
      * 
-     * 
-     * @param string $data
-     * @param string $mimeType
-     * @param string $filename
-     * @throws FileManagerException
-     * @return FileSystemFile
+     * @param string $data The binary data of the FileSystemFile object to be created.
+     * @param string $mimeType A mime-type.
+     * @param string $filename A file name e.g. "myfile.txt".
+     * @throws qtism\common\datatypes\files\FileManagerException
+     * @return qtism\common\datatypes\files\FileSystemFile
      */
     public function createFromData($data, $mimeType, $filename = '') {
         $destination = $this->buildDestination();
@@ -93,9 +94,11 @@ class FileSystemFileManager implements FileManager {
     }
     
     /**
+     * Retrieve a FileSystemFile object from its unique identifier.
+     * 
      * @param string identifier
-     * @throws FileManagerException
-     * @return FileSystemFile
+     * @throws qtism\common\datatypes\files\FileManagerException
+     * @return qtism\common\datatypes\files\FileSystemFile
      */
     public function retrieve($identifier) {
         try {
@@ -108,9 +111,9 @@ class FileSystemFileManager implements FileManager {
     }
     
     /**
+     * Delete a FileSystemFile object from the persistence.
      * 
-     * 
-     * @throws FileManagerException
+     * @throws qtism\common\datatypes\files\FileManagerException
      */
     public function delete(File $file) {
         
@@ -121,6 +124,11 @@ class FileSystemFileManager implements FileManager {
         }
     }
     
+    /**
+     * Build the destination directory where file will be stored.
+     * 
+     * @return string
+     */
     protected function buildDestination() {
         return rtrim($this->getStorageDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid('qtism', true);
     }

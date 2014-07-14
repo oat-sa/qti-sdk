@@ -24,6 +24,12 @@
  */
 namespace qtism\common\enums;
 
+/**
+ * The interface to be implemented to represent an enumeration.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 interface Enumeration {
 	
 	/**

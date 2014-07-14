@@ -43,8 +43,8 @@ abstract class AbstractStreamAccess {
     /**
      * Create a new AbstractStreamAccess object.
      *
-     * @param IStream $stream An IStream object to be read.
-     * @throws StreamAccessException If $stream is not open yet.
+     * @param qtism\common\storage\IStream $stream An IStream object to be read.
+     * @throws qtism\common\storage\StreamAccessException If $stream is not open yet.
      */
     public function __construct(IStream $stream) {
         $this->setStream($stream);
@@ -53,7 +53,7 @@ abstract class AbstractStreamAccess {
     /**
      * Get the IStream object to be read.
      *
-     * @return IStream An IStream object.
+     * @return qtism\common\storage\IStream An IStream object.
      */
     protected function getStream() {
         return $this->stream;
@@ -62,8 +62,8 @@ abstract class AbstractStreamAccess {
     /**
      * Set the IStream object to be read.
      *
-     * @param IStream $stream An IStream object.
-     * @throws StreamAccessException If the $stream is not open yet.
+     * @param qtism\common\storage\IStream $stream An IStream object.
+     * @throws qtism\common\storage\StreamAccessException If the $stream is not open yet.
      */
     protected function setStream(IStream $stream) {
     

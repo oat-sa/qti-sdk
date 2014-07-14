@@ -29,8 +29,19 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
+/**
+ * Represents the Boolean QTI Datatype.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class Boolean extends Scalar implements QtiDatatype {
     
+    /**
+     * Check whether or not the intrinsic $value is a PHP boolean.
+     * 
+     * @throws \InvalidArgumentException
+     */
     protected function checkType($value) {
         if (is_bool($value) !== true) {
             $msg = "The Boolean Datatype only accepts to store boolean values.";
@@ -38,14 +49,32 @@ class Boolean extends Scalar implements QtiDatatype {
         }
     }
     
+    /**
+     * Get the baseType of the Boolean value. This method
+     * systematically returns BaseType::BOOLEAN.
+     * 
+     * @return integer A value from the BaseType enumeration.
+     */
     public function getBaseType() {
         return BaseType::BOOLEAN;
     }
     
+    /**
+     * Get the cardinality of the Boolean value. This method
+     * systematically returns Cardinality::SINGLE.
+     * 
+     * @return integer A value from the BaseType enumeration.
+     */
     public function getCardinality() {
         return Cardinality::SINGLE;
     }
     
+    /**
+     * "true" or "false" depending on the intrinsic value of the Boolean
+     * object.
+     * 
+     * @return string
+     */
     public function __toString() {
         return ($this->getValue() === true) ? 'true' : 'false';
     }

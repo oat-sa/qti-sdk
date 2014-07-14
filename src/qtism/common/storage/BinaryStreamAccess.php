@@ -38,8 +38,8 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Set the IStream object to be read.
      *
-     * @param IStream $stream An IStream object.
-     * @throws StreamAccessException If the $stream is not open yet.
+     * @param qtism\common\storage\IStream $stream An IStream object.
+     * @throws qtism\common\storage\StreamAccessException If the $stream is not open yet.
      */
     protected function setStream(IStream $stream) {
     
@@ -54,7 +54,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a single byte unsigned integer from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return integer
      */
     public function readTinyInt() {
@@ -71,7 +71,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a single byte unsigned integer in the current binary stream.
      * 
      * @param integer $tinyInt
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeTinyInt($tinyInt) {
         try {
@@ -85,7 +85,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a 2 bytes unsigned integer from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return integer
      */
     public function readShort() {
@@ -102,7 +102,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a 2 bytes unsigned integer in the current binary stream.
      * 
      * @param integer $short
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeShort($short) {
         try {
@@ -116,7 +116,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a 8 bytes signed integer from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return integer
      */
     public function readInteger() {
@@ -133,7 +133,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a 8 bytes signed integer in the current binary stream.
      * 
      * @param integer $int
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeInteger($int) {
         try {
@@ -147,7 +147,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a double precision float from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return integer
      */
     public function readFloat() {
@@ -164,7 +164,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a double precision float in the current binary stream.
      * 
      * @param float $float
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeFloat($float) {
         try {
@@ -178,7 +178,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a boolean value from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return boolean
      */
     public function readBoolean() {
@@ -195,7 +195,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a boolean value from the current binary stream.
      * 
      * @param boolean $boolean
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeBoolean($boolean) {
         try {
@@ -210,7 +210,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a string value from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return string
      */
     public function readString() {
@@ -228,7 +228,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write a string value from in the current binary string.
      * 
      * @param string $string
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeString($string) {
         
@@ -252,7 +252,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read binary data from the current binary stream.
      * 
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      * @return string A binary string.
      */
     public function readBinary() {
@@ -263,7 +263,7 @@ class BinaryStreamAccess extends AbstractStreamAccess {
      * Write binary data in the current binary stream.
      * 
      * @param string $binary
-     * @throws BinaryStreamAccessException
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeBinary($binary) {
         $this->writeString($binary);
@@ -272,8 +272,8 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Read a DateTime from the current binary stream.
      * 
-     * @return DateTime A DateTime object.
-     * @throws BinaryStreamAccessException
+     * @return \DateTime A DateTime object.
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function readDateTime() {
         try {
@@ -289,8 +289,8 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Write a DateTime from the current binary stream.
      * 
-     * @param DateTime $dateTime A DateTime object.
-     * @throws BinaryStreamAccessException
+     * @param \DateTime $dateTime A DateTime object.
+     * @throws qtism\common\storage\BinaryStreamAccessException
      */
     public function writeDateTime(DateTime $dateTime) {
         try {
@@ -305,10 +305,10 @@ class BinaryStreamAccess extends AbstractStreamAccess {
     /**
      * Handle a BinaryStreamException in order to throw the relevant BinaryStreamAccessException.
      * 
-     * @param StreamException $e The StreamException object to deal with.
+     * @param qtism\common\storage\StreamException $e The StreamException object to deal with.
      * @param integer $typeError The BinaryStreamAccess exception code to be trown in case of READ error.
      * @param boolean $read Wheter the error occured in a reading/writing context.
-     * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
+     * @throws qtism\common\storage\BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
     protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true) {
         

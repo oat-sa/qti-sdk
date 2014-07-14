@@ -37,7 +37,7 @@ class IntegerCollection extends AbstractCollection {
 	/**
 	 * Check if $value is a valid integer.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a valid integer.
+	 * @throws \InvalidArgumentException If $value is not a valid integer.
 	 */
 	protected function checkType($value) {
 		if (!is_int($value)) {

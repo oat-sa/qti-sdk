@@ -49,7 +49,7 @@ class FileManagerException extends Exception {
      * 
      * @param string $message A human-readable error message.
      * @param integer $code A machine understandable error code (see class constants).
-     * @param Exception $previous A possible previous Exception object.
+     * @param \Exception $previous A possible previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);

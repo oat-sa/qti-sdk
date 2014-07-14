@@ -38,12 +38,12 @@ use \Exception;
 class MemoryStreamException extends StreamException {
     
     /**
-     * Create a new BinaryStreamException.
+     * Create a new MemoryStreamException.
      *
      * @param string $message The human-readable message describing the error.
-     * @param BinaryStream $source The BinaryStream object where in the error occured.
+     * @param qtism\common\storage\MemoryStream $source The MemoryStream object where in the error occured.
      * @param integer $code A code describing the error.
-     * @param Exception $previous An optional previous exception.
+     * @param \Exception $previous An optional previous exception.
      */
     public function __construct($message, IStream $source,  $code = 0, Exception $previous = null) {
         parent::__construct($message, $source, $code, $previous);

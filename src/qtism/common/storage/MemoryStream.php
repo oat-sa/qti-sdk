@@ -136,7 +136,7 @@ class MemoryStream implements IStream {
     /**
      * Open the binary stream.
      * 
-     * @throws MemoryStreamException If the stream is already opened.
+     * @throws qtism\common\storage\MemoryStreamException If the stream is already opened.
      */
     public function open() {
         if ($this->isOpen() === true) {
@@ -150,7 +150,7 @@ class MemoryStream implements IStream {
     /**
      * Close the binary stream.
      * 
-     * @throws MemoryStreamException If the stream is closed prior the call.
+     * @throws qtism\common\storage\MemoryStreamException If the stream is closed prior the call.
      */
     public function close() {
         if ($this->isOpen() === false) {
@@ -164,7 +164,7 @@ class MemoryStream implements IStream {
     /**
      * Read $length bytes from the MemoryStream.
      * 
-     * @throws MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
+     * @throws qtism\common\storage\MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      * @return string The read value or an empty string if length = 0.
      */
     public function read($length) {
@@ -242,7 +242,7 @@ class MemoryStream implements IStream {
     /**
      * Rewind the stream to its initial position.
      * 
-     * @throws MemoryStreamException If the binary stream is not open.
+     * @throws qtism\common\storage\MemoryStreamException If the binary stream is not open.
      */
     public function rewind() {
         if ($this->isOpen() === false) {
@@ -262,6 +262,11 @@ class MemoryStream implements IStream {
         $this->open = $open;
     }
     
+    /**
+     * Flush the whole stream.
+     * 
+     * @throws qtism\common\storage\MemoryStreamException If the binary stream is closed.
+     */
     public function flush() {
         if ($this->isOpen() === true) {
             $this->setBinary('');
@@ -269,7 +274,7 @@ class MemoryStream implements IStream {
         }
         else {
             $msg = "Cannot flush a closed MemoryStream.";
-            throw new MemoryStreamAccessException($msg, $this, MemoryStreamAccessException::NOT_OPEN);
+            throw new MemoryStreamAccess($msg, $this, MemoryStreamException::NOT_OPEN);
         }
     }
 }

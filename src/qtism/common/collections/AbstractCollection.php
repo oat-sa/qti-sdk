@@ -100,7 +100,6 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * @return mixed The current element.
 	 */
 	public function current() {
-		// @todo find why sometimes, the current value is the placeholder itself!
 		return current($this->dataPlaceHolder);
 	}
 	
@@ -163,7 +162,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * 
 	 * @param mixed $offset The offset to assign the value to.
 	 * @param mixed $value The value to set.
-	 * @throws InvalidArgumentException If $value has not a valid type regarding the implementation.
+	 * @throws \InvalidArgumentException If $value has not a valid type regarding the implementation.
 	 */
 	public function offsetSet($offset, $value) {
 		$this->checkType($value);
@@ -212,7 +211,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * Attach a given $object to the collection.
 	 * 
 	 * @param mixed $object An object.
-	 * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
+	 * @throws \InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
 	 */
 	public function attach($object) {
 		$this->checkType($object);
@@ -230,8 +229,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * Detach a given $object from the collection.
 	 * 
 	 * @param mixed $object An object.
-	 * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
-	 * @throws UnexpectedValueException If $object cannot be found in the collection.
+	 * @throws \InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
+	 * @throws \UnexpectedValueException If $object cannot be found in the collection.
 	 */
 	public function detach($object) {
 		$this->checkType($object);
@@ -257,8 +256,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	 * 
 	 * @param mixed $object An object to be replaced.
 	 * @param mixed $replacement An object to be used as a replacement.
-	 * @throws InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
-	 * @throws UnexpectedValueException If $object is not contained in the collection.
+	 * @throws \InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
+	 * @throws \UnexpectedValueException If $object is not contained in the collection.
 	 */
 	public function replace($object, $replacement) {
 		$this->checkType($object);
@@ -321,8 +320,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	/**
 	 * Merge the collection with another one.
 	 * 
-	 * @param AbstractCollection $collection
-	 * @throws InvalidArgumentException If $collection is not a subclass of the target of the call.
+	 * @param qtism\common\collections\AbstractCollection $collection
+	 * @throws \InvalidArgumentException If $collection is not a subclass of the target of the call.
 	 */
 	public function merge(AbstractCollection $collection) {
 	    if (is_subclass_of($collection, get_class($this)) === true || get_class($collection) === get_class($this)) {
@@ -339,8 +338,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	/**
 	 * Get the difference between this collection and another one.
 	 * 
-	 * @param AbstractCollection $collection
-	 * @return AbstractCollection
+	 * @param qtism\common\collections\AbstractCollection $collection
+	 * @return qtism\common\collections\AbstractCollection
 	 */
 	public function diff(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {
@@ -356,8 +355,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	/**
 	 * Get the intersection between this collection and another one.
 	 * 
-	 * @param AbstractCollection $collection
-	 * @return AbstractCollection
+	 * @param qtism\common\collections\AbstractCollection $collection
+	 * @return qtism\common\collections\AbstractCollection
 	 */
 	public function intersect(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {

@@ -61,9 +61,9 @@ class StreamAccessException extends Exception {
      * Create a new StreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
+     * @param qtism\common\storage\AbstractStreamAccess $source The AbstractStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
-     * @param Exception $previous An optional previously thrown exception.
+     * @param \Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
@@ -73,7 +73,7 @@ class StreamAccessException extends Exception {
     /**
      * Get the AbstractStreamAccess object that caused the error.
      *
-     * @param AbstractStreamAccess $source An AbstractStreamAccess object.
+     * @param qtism\common\storage\AbstractStreamAccess $source An AbstractStreamAccess object.
      */
     protected function setSource(AbstractStreamAccess $source) {
         $this->source = $source;
@@ -82,7 +82,7 @@ class StreamAccessException extends Exception {
     /**
      * Set the AbstractStreamAccess object that caused the error.
      *
-     * @return AbstractStreamAccess An AbstractStreamAccess object.
+     * @return qtism\common\storage\AbstractStreamAccess An AbstractStreamAccess object.
      */
     public function getSource() {
         return $this->source;

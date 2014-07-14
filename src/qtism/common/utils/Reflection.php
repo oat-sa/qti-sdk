@@ -41,10 +41,10 @@ class Reflection {
      * goal of this method is to avoid to encounter the issue with empty $args
      * argument described at: http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517
      * 
-     * @param ReflectionClass $class
-     * @param unknown_type $args
+     * @param \ReflectionClass $class
+     * @param array $args
      * @return mixed An instance of $class
-     * @throws ReflectionException
+     * @throws \ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
     public static function newInstance(ReflectionClass $class, $args = array()) {

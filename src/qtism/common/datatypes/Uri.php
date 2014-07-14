@@ -29,8 +29,19 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
+/**
+ * Represents the Uri QTI datatype.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class Uri extends String {
     
+    /**
+     * Checks whether or not $value is a string.
+     * 
+     * @throws \InvalidArgumentException If $value is not a valid string.
+     */
     protected function checkType($value) {
         if (is_string($value) !== true) {
             $msg = "The Uri Datatype only accepts to store URI values.";
@@ -38,10 +49,22 @@ class Uri extends String {
         }
     }
     
+    /**
+     * Get the baseType of the value. This method systematically returns
+     * the BaseType::URI value.
+     * 
+     * @return A value from the BaseType enumeration.
+     */
     public function getBaseType() {
         return BaseType::URI;
     }
     
+    /**
+     * Get the cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
+     * 
+     * @return A value from the Cardinality enumeration.
+     */
     public function getCardinality() {
         return Cardinality::SINGLE;
     }

@@ -103,7 +103,7 @@ abstract class StreamException extends Exception {
      * @param string $message The human-readable message describing the error.
      * @param IStream $source The IStream object where in the error occured.
      * @param integer $code A code describing the error.
-     * @param Exception $previous An optional previous exception.
+     * @param \Exception $previous An optional previous exception.
      */
     public function __construct($message, IStream $source, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
@@ -113,7 +113,7 @@ abstract class StreamException extends Exception {
     /**
      * Get the IStream object where the error occured.
      * 
-     * @return IStream An IStream object.
+     * @return qtism\common\storage\IStream An IStream object.
      */
     public function getSource() {
         return $this->source;
@@ -122,7 +122,7 @@ abstract class StreamException extends Exception {
     /**
      * Set the IStream object where the error occured.
      * 
-     * @param IStream $source An IStream object.
+     * @param qtism\common\storage\IStream $source An IStream object.
      */
     protected function setSource(IStream $source) {
         $this->source = $source;

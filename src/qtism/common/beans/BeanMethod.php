@@ -37,7 +37,7 @@ class BeanMethod {
     /**
      * The wrapped ReflectionObject representing the BeanMethod.
      * 
-     * @var ReflectionMethod
+     * @var \ReflectionMethod
      */
     private $method;
     
@@ -69,7 +69,7 @@ class BeanMethod {
     /**
      * Set the wrapper object representing the BeanMethod.
      * 
-     * @param ReflectionMethod $method A ReflectionMethod object.
+     * @param \ReflectionMethod $method A ReflectionMethod object.
      */
     protected function setMethod(ReflectionMethod $method) {
         $this->method = $method;
@@ -78,7 +78,7 @@ class BeanMethod {
     /**
      * Get the wrapper object representing the BeanMethod.
      * 
-     * @return ReflectionMethod A ReflectionMethod object.
+     * @return \ReflectionMethod A ReflectionMethod object.
      */
     public function getMethod() {
         return $this->method;

@@ -83,7 +83,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Please note that this datatype does not support negative durations.
 	 * 
 	 * @param string $intervalSpec A duration as in ISO8601.
-	 * @throws InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
+	 * @throws \InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
 	 */
 	public function __construct($intervalSpec) {
 		if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
@@ -109,6 +109,12 @@ class Duration implements Comparable, QtiDatatype {
 		
 	}
 	
+	/**
+	 * Create a Duration object from a DateInterval object.
+	 * 
+	 * @param \DateInterval $interval
+	 * @return qtism\common\datatypes\Duration
+	 */
 	static public function createFromDateInterval(DateInterval $interval) {
 	    $duration = new Duration('PT0S');
 	    $duration->setInterval($interval);
@@ -118,7 +124,7 @@ class Duration implements Comparable, QtiDatatype {
 	/**
 	 * Get the PHP DateInterval object corresponding to the duration.
 	 * 
-	 * @return DateInterval A DateInterval PHP object.
+	 * @return \DateInterval A DateInterval PHP object.
 	 */
 	protected function getInterval() {
 		return $this->interval;
@@ -127,7 +133,7 @@ class Duration implements Comparable, QtiDatatype {
 	/**
 	 * Set the PHP DateInterval object corresponding to the duration.
 	 * 
-	 * @param DateInterval $interval A DateInterval PHP object.
+	 * @param \DateInterval $interval A DateInterval PHP object.
 	 */
 	protected function setInterval(DateInterval $interval) {
 		$this->interval = $interval;
@@ -255,7 +261,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is shorter
 	 * than the one described by $duration.
 	 * 
-	 * @param Duration $duration A Duration object to compare with this one.
+	 * @param qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
 	public function shorterThan(Duration $duration) {
@@ -286,7 +292,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is longer than or
 	 * equal to the one described by $duration.
 	 * 
-	 * @param Duration $duration A Duration object to compare with this one.
+	 * @param qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
 	public function longerThanOrEquals(Duration $duration) {
@@ -318,7 +324,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * 
 	 * For instance, PT1S + PT1S = PT2S.
 	 * 
-	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
+	 * @param qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
 	 */
 	public function add($duration) {
 		$d1 = $this->refDate; 
@@ -375,14 +381,31 @@ class Duration implements Comparable, QtiDatatype {
 		$this->setInterval($interval);
 	}
 	
+	/**
+	 * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
+	 * 
+	 * @return boolean
+	 */
 	public function isNegative() {
 	    return $this->interval->invert === 0;
 	}
 	
+	/**
+	 * Get the baseType of the value. This method systematically returns
+	 * the BaseType::DURATION value.
+	 * 
+	 * @return integer A value from the BaseType enumeration.
+	 */
 	public function getBaseType() {
 	    return BaseType::DURATION;
 	}
 	
+	/**
+	 * Get the cardinality of the value. This method systematically returns
+	 * the Cardinality::SINGLE value.
+	 * 
+	 * @return integer A value from the Cardinality enumeration.
+	 */
 	public function getCardinality() {
 	    return Cardinality::SINGLE;
 	}

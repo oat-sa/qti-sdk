@@ -38,7 +38,7 @@ class IdentifierCollection extends StringCollection {
 	/**
 	 * Check if $value is a valid QTI Identifier.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $value is not a valid QTI Identifier.
 	 */
 	protected function checkType($value) {
 		if (gettype($value) !== 'string') {

@@ -28,7 +28,16 @@ namespace qtism\common\datatypes;
 use qtism\common\Comparable;
 
 /**
- * The base class for all Scalar wrappers.
+ * The base class for all Scalar QTI datatypes. The following QTI datatypes
+ * are considered to be Scalar values:
+ * 
+ * * Boolean
+ * * Float
+ * * Identifier
+ * * Integer
+ * * IntOrIdentifier
+ * * String
+ * * Uri
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -46,7 +55,7 @@ abstract class Scalar implements Comparable {
      * Create a new Scalar object with a given $value as its content.
      * 
      * @param mixed $value
-     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function __construct($value) {
         $this->setValue($value);
@@ -56,7 +65,7 @@ abstract class Scalar implements Comparable {
      * Set the PHP value to be encapsulated witin the Scalar object.
      * 
      * @param mixed $value
-     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function setValue($value) {
         $this->checkType($value);
@@ -72,10 +81,22 @@ abstract class Scalar implements Comparable {
         return $this->value;
     }
     
+    /**
+     * Whether or not the Scalar object holds a QTI NULL value.
+     * 
+     * @return boolean
+     */
     public function isNull() {
         return $this->getValue() === null;
     }
     
+    /**
+     * Wheter or not $this is equal to $obj. Two Scalar
+     * objects are considered to be identical if their intrinsic
+     * values are strictly (===) equal.
+     * 
+     * @return boolean
+     */
     public function equals($obj) {
         if ($obj instanceof Scalar) {
             return $obj->getValue() === $this->getValue();
@@ -90,7 +111,7 @@ abstract class Scalar implements Comparable {
      * be encapsulated withing the Scalar object.
      * 
      * @param mixed $value A value to be encapsulated whithin the Scalar object.
-     * @throws InvalidArgumentException If $value has a not compliant PHP datatype.
+     * @throws \InvalidArgumentException If $value has a not compliant PHP datatype.
      */
     abstract protected function checkType($value);
 }

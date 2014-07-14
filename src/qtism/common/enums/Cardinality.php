@@ -25,6 +25,8 @@
 namespace qtism\common\enums;
 
 /**
+ * The Cardinality enumeration.
+ * 
  * From IMS QTI:
  * 
  * An expression or itemVariable can either be single-valued or multi-valued. A multi-valued 
@@ -52,12 +54,32 @@ namespace qtism\common\enums;
  */
 class Cardinality implements Enumeration {
 	
+    /**
+     * The QTI single cardinality.
+     * 
+     * @var integer
+     */
 	const SINGLE = 0;
 	
+	/**
+	 * The QTI multiple cardinality.
+	 * 
+	 * @var integer
+	 */
 	const MULTIPLE = 1;
 	
+	/**
+	 * The QTI ordered cardinality.
+	 * 
+	 * @var integer
+	 */
 	const ORDERED = 2;
 	
+	/**
+	 * The QTI record cardinality.
+	 * 
+	 * @var integer
+	 */
 	const RECORD = 3;
 	
 	public static function asArray() {
