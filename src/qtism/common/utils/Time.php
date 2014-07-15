@@ -67,7 +67,7 @@ class Time {
     }
     
     /**
-     * Switch a given $time to UTC.
+     * Clone a given $time into its UTC equivalent.
      * 
      * @param \DateTime $time
      * @return \DateTime

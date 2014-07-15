@@ -25,7 +25,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\common\utils\Time;
-
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\Identifier;
@@ -487,6 +486,9 @@ class AssessmentItemSession extends State {
 	}
 	
 	public function setTime(DateTime $time) {
+	    
+	    // Force time to be UTC.
+	    $time = Time::toUtc($time);
 	    
 	    if ($this->hasTimeReference() === true) {
 	        

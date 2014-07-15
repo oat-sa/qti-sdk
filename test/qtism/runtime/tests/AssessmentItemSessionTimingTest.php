@@ -23,14 +23,14 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT30S'));
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The session duration must remain the PT0S, because we are not interacting yet.
         $this->assertTrue($session['duration']->equals(new Duration('PT0S')));
         
         // The time reference must remain the same as the one provided at item session beginning time.
-        $this->assertEquals('2014-07-14@13:00:00@GMT+0000', $session->getTimeReference()->format('Y-m-d@H:i:s@T'));
+        $this->assertEquals('2014-07-14@13:00:00@UTC', $session->getTimeReference()->format('Y-m-d@H:i:s@T'));
     }
     
     /**
@@ -41,16 +41,16 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT30S'));
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The candidate spent 3 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:03+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:03'));
         $session->beginAttempt();
         
         // Remember that time-tracking is not enabled in the INITIAL state.
         $this->assertTrue($session['duration']->equals(new Duration('PT0S')));
-        $this->assertEquals('2014-07-14@13:00:03@GMT+0000', $session->getTimeReference()->format('Y-m-d@H:i:s@T'));
+        $this->assertEquals('2014-07-14@13:00:03@UTC', $session->getTimeReference()->format('Y-m-d@H:i:s@T'));
     }
     
     /**
@@ -61,15 +61,15 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT30S'));
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
         
         // The candidate spent 15 seconds to end his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:17+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:17'));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
         
         // Duration should be 15S.
@@ -92,15 +92,15 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $session->setItemSessionControl($itemSessionControl);
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
         
         // The candidate spent 15 seconds to end his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:17+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:17'));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
         
         // Infinite number of attempts, so the session is not closed.
@@ -120,15 +120,15 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT30S'));
     
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
     
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
 
         // Close the session while the candidate spent 10 seconds on the attempt, but without ending it.
-        $session->setTime(new DateTime('2014-07-14T13:00:12+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:12'));
         $session->endItemSession();
         $this->assertTrue($session['duration']->equals(new Duration('PT10S')));
     }
@@ -144,15 +144,15 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $session->setTimeLimits($timeLimits);
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
         
         // The candidate spent 60 seconds on the attempt.
-        $session->setTime(new DateTime('2014-07-14T13:01:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:01:02'));
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getState());
     }
     
@@ -166,11 +166,11 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $session->setTimeLimits($timeLimits);
         
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
         
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
         
         // The candidate spent 60 seconds on the attempt.
@@ -199,15 +199,15 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $session->setTimeLimits($timeLimits);
     
         // The session is time-tracked and begins 2014-07-14 at 1 PM.
-        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginItemSession();
     
         // The candidate spent 2 seconds to begin his first attempt.
-        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
     
         // The candidate spent 60 seconds on the attempt.
-        $session->setTime(new DateTime('2014-07-14T13:01:02+00:00', new DateTimeZone('UTC')));
+        $session->setTime(self::createDate('2014-07-14 13:01:02'));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
         
         // The attempt is taken into account because allowLateSubmission = true.
@@ -229,7 +229,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
         $itemSession->setTimeLimits($timeLimits);
         
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
     
         // End the attempt before minTime of 1 second.
@@ -255,7 +255,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         // Try again by waiting too much to respect max time at endAttempt time.
         $itemSession->beginAttempt();
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:03+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:03'));
     
         try {
             $itemSession->endAttempt();
@@ -282,7 +282,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSessionControl->setMaxAttempts($count);
         $itemSession->setItemSessionControl($itemSessionControl);
         
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
     
         for ($i = 0; $i < $count; $i++) {
@@ -292,7 +292,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
             // simulate some time... 1 second to answer the item.
             $t = $i + 1;
-            $itemSession->setTime(new DateTime("2014-07-14T13:00:0${t}+00:00", new DateTimeZone('UTC')));
+            $itemSession->setTime(self::createDate("2014-07-14 13:00:0${t}"));
     
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
@@ -321,14 +321,14 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits = new TimeLimits(null, new Duration('PT1S'), true);
         $itemSession->setTimeLimits($timeLimits);
     
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
     
         $itemSession->beginAttempt();
         $itemSession['RESPONSE'] = new Identifier('ChoiceB');
     
         // No exception because late submission is allowed.
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:05+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:05'));
         $itemSession->endAttempt();
         $this->assertEquals(1.0, $itemSession['SCORE']->getValue());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
@@ -337,14 +337,14 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     public function testDurationBrutalSessionClosing() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
         $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
     
         $this->assertTrue($itemSession->isAttemptable());
         $itemSession->beginAttempt();
         
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:01+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:01'));
     
         // End session while attempting (brutal x))
         $itemSession->endItemSession();
@@ -358,16 +358,16 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $timeLimits->setMaxTime(new Duration('PT3S'));
         $itemSession->setTimeLimits($timeLimits);
         
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:00'));
         $itemSession->beginItemSession();
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
     
         $itemSession->beginAttempt();
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:02'));
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT1S')));
 
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:03+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:03'));
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
         
         try {
@@ -386,7 +386,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $this->assertFalse($itemSession->getRemainingTime());
          
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
+        $itemSession->setTime(self::createDate('2014-07-14 13:00:02'));
         $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();

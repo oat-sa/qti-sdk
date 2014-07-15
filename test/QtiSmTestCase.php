@@ -85,6 +85,18 @@ abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
+	 * Create a DateTime object from a $date with format
+	 * Y-m-d H:i:s, and an optional timezone name.
+	 * 
+	 * @param string $date A date
+	 * @param string $tz A timezone name.
+	 * @return Date
+	 */
+	public static function createDate($date, $tz = 'UTC') {
+	    return DateTime::createFromFormat('Y-m-d H:i:s', $date, new DateTimeZone($tz));
+	}
+	
+	/**
 	 * Create a QtiComponent object from an XML String.
 	 *
 	 * @param string $xmlString An XML String to transform in a QtiComponent object.

@@ -192,11 +192,14 @@ class AssessmentTestSession extends State {
 	
 	public function setTime(DateTime $time) {
 	    
+	    // Force $time to be UTC.
+	    $time = Time::toUtc($time);
+	    
 	    if ($this->hasTimeReference() === true) {
 	        
 	        if ($this->getState() === AssessmentTestSessionState::INTERACTING) {
 	            
-	            $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
+	            $diffSeconds = abs(Time::timeDiffSeconds($this->getTimeReference(), $time));
 	            $diffDuration = new Duration("PT${diffSeconds}S");
 	            
 	            // Update the duration store.
