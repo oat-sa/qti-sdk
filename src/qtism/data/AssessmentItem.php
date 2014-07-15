@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -39,7 +39,7 @@ use \SplObserver;
 
 /**
  * The AssessmentItem QTI class implementation. It contains all the information
- * needed by a QTI Test Runner to run a test which include items.
+ * needed by a QTI Item Delivery engine to be run.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -207,7 +207,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * @param string $title The title of the item.
 	 * @param boolean $timeDependent Whether the item is time dependent.
 	 * @param string $lang The language (code) of the item.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value. 
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value. 
 	 */
 	public function __construct($identifier, $title, $timeDependent, $lang = '') {
 		$this->setObservers(new SplObjectStorage());
@@ -227,7 +227,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the identifier.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -254,7 +254,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the title of the item.
 	 * 
 	 * @param string $title A title.
-	 * @throws InvalidArgumentException If $title is not a string value.
+	 * @throws \InvalidArgumentException If $title is not a string value.
 	 */
 	public function setTitle($title) {
 	    if (is_string($title) === true) {
@@ -279,7 +279,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the language code.
 	 * 
 	 * @param string $lang A language code.
-	 * @throws InvalidArgumentException If $lang is not a string.
+	 * @throws \InvalidArgumentException If $lang is not a string.
 	 */
 	public function setLang($lang = '') {
 		if (gettype($lang) === 'string') {
@@ -295,7 +295,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the label of the item.
 	 * 
 	 * @param string $label A string with at most 256 characters.
-	 * @throws InvalidArgumentException If $label is not a string with at most 256 characters.
+	 * @throws \InvalidArgumentException If $label is not a string with at most 256 characters.
 	 */
 	public function setLabel($label) {
 	    if (Format::isString256($label) === true) {
@@ -348,7 +348,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set whether the item is adaptive.
 	 * 
 	 * @param boolean $adaptive Adaptive or not.
-	 * @throws InvalidArgumentException If $adaptive is not a boolean value.
+	 * @throws \InvalidArgumentException If $adaptive is not a boolean value.
 	 */
 	public function setAdaptive($adaptive) {
 		if (is_bool($adaptive)) {
@@ -373,7 +373,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set whether the item is time dependent or not.
 	 * 
 	 * @param boolean $timeDependent Time dependent or not.
-	 * @throws InvalidArgumentException If $timeDependent is not a boolean value.
+	 * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
 	 */
 	public function setTimeDependent($timeDependent) {
 		if (is_bool($timeDependent)) {
@@ -398,7 +398,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the name of the tool with which the item was created.
 	 * 
 	 * @param string $toolName A tool name with at most 256 characters.
-	 * @throws InvalidArgumentException If $toolName is not a string value with at most 256 characters.
+	 * @throws \InvalidArgumentException If $toolName is not a string value with at most 256 characters.
 	 */
 	public function setToolName($toolName) {
 	    if (Format::isString256($toolName) === true) {
@@ -432,7 +432,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Set the version of the tool with which the item was created.
 	 * 
 	 * @param string $toolVersion A tool version with at most 256 characters.
-	 * @throws InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
+	 * @throws \InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
 	 */
 	public function setToolVersion($toolVersion) {
 	    if (Format::isString256($toolVersion) === true) {
@@ -465,7 +465,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the response declarations.
 	 * 
-	 * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
+	 * @param qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
 	 */
 	public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations) {
 		$this->responseDeclarations = $responseDeclarations;
@@ -474,7 +474,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the response declarations.
 	 * 
-	 * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+	 * @return qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
 	 */
 	public function getResponseDeclarations() {
 		return $this->responseDeclarations;
@@ -483,7 +483,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the outcome declarations.
 	 * 
-	 * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+	 * @param qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
 	 */
 	public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations) {
 		$this->outcomeDeclarations = $outcomeDeclarations;
@@ -492,7 +492,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the outcome declarations.
 	 * 
-	 * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+	 * @return qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
@@ -501,7 +501,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the template declarations.
 	 * 
-	 * @param TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+	 * @param qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
 	 */
 	public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations) {
 	    $this->templateDeclarations = $templateDeclarations;
@@ -510,7 +510,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the template declarations.
 	 * 
-	 * @return TemplateDeclarationCollection A collection of TemplateDeclaration objects.
+	 * @return qtism\data\state\TemplateDeclarationCollection A collection of TemplateDeclaration objects.
 	 */
 	public function getTemplateDeclarations() {
 	    return $this->templateDeclarations;
@@ -521,7 +521,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * to $templateProcessing to express that there is not TemplateProcessing object
 	 * bound to the item.
 	 * 
-	 * @param TemplateProcessing $templateProcessing A TemplateProcessing object or null.
+	 * @param qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null.
 	 */
 	public function setTemplateProcessing(TemplateProcessing $templateProcessing = null) {
 	    $this->templateProcessing = $templateProcessing;
@@ -531,7 +531,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Get the TemplateProcessing object composing the item. If no TemplateProcessing
 	 * object is bound to the item, the null value is returned.
 	 * 
-	 * @return TemplateProcessing A TemplateProcessing object or null.
+	 * @return qtism\data\processing\TemplateProcessing A TemplateProcessing object or null.
 	 */
 	public function getTemplateProcessing() {
 	    return $this->templateProcessing;
@@ -549,7 +549,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the stylesheets.
 	 * 
-	 * @param StylesheetCollection $stylesheets A collection of Stylesheet objects.
+	 * @param qtism\data\content\StylesheetCollection $stylesheets A collection of Stylesheet objects.
 	 */
 	public function setStylesheets(StylesheetCollection $stylesheets) {
 	    $this->stylesheets = $stylesheets;
@@ -558,7 +558,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the stylesheets.
 	 * 
-	 * @return StylesheetCollection A collection of Stylesheet objects.
+	 * @return qtism\data\content\StylesheetCollection A collection of Stylesheet objects.
 	 */
 	public function getStylesheets() {
 	    return $this->stylesheets;
@@ -567,7 +567,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the ItemBody object representing the content body of the item.
 	 * 
-	 * @param ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
+	 * @param qtism\data\content\ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
 	 */
 	public function setItemBody(ItemBody $itemBody = null) {
 	    $this->itemBody = $itemBody;
@@ -576,7 +576,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the ItemBody object representing the content body of the item.
 	 * 
-	 * @return ItemBody An ItemBody object or the NULL value if the item has no content.
+	 * @return qtism\data\content\ItemBody An ItemBody object or the NULL value if the item has no content.
 	 */
 	public function getItemBody() {
 	    return $this->itemBody;
@@ -594,7 +594,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the associated ResponseProcessing object.
 	 * 
-	 * @return ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+	 * @return qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
 	 */
 	public function getResponseProcessing() {
 		return $this->responseProcessing;
@@ -603,7 +603,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the associated ResponseProcessing object.
 	 * 
-	 * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
+	 * @param qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
 	 */
 	public function setResponseProcessing(ResponseProcessing $responseProcessing = null) {
 		$this->responseProcessing = $responseProcessing;
@@ -621,7 +621,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the associated ModalFeedback objects.
 	 * 
-	 * @param ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
+	 * @param qtism\data\content\ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
 	 */
 	public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks) {
 	    $this->modalFeedbacks = $modalFeedbacks;
@@ -630,7 +630,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the associated ModalFeedback objects.
 	 * 
-	 * @return ModalFeedbackCollection A collection of ModalFeedback objects.
+	 * @return qtism\data\content\ModalFeedbackCollection A collection of ModalFeedback objects.
 	 */
 	public function getModalFeedbacks() {
 	    return $this->modalFeedbacks;
@@ -667,7 +667,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the observers of the object.
 	 *
-	 * @return SplObjectStorage An SplObjectStorage object.
+	 * @return \SplObjectStorage An SplObjectStorage object.
 	 */
 	protected function getObservers() {
 		return $this->observers;
@@ -676,7 +676,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the observers of the object.
 	 *
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 * @param \SplObjectStorage $observers An SplObjectStorage object.
 	 */
 	protected function setObservers(SplObjectStorage $observers) {
 		$this->observers = $observers;
@@ -685,7 +685,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * SplSubject::attach implementation.
 	 *
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -694,7 +694,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * SplSubject::detach implementation.
 	 *
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);
