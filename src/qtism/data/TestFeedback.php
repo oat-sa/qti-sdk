@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data;
 
@@ -118,7 +117,7 @@ class TestFeedback extends QtiComponent {
 	 * @param string $outcomeIdentifier The identifier of the outcome variable bound to the feedback.
 	 * @param string $content The content of the feedback as an XML markup binary stream.
 	 * @param string $title The title of the feedback. An empty string means that no title is specified.
-	 * @throws InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
+	 * @throws \InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
 	 */
 	public function __construct($identifier, $outcomeIdentifier, $content, $title = '') {		
 		$this->setIdentifier($identifier);
@@ -146,7 +145,7 @@ class TestFeedback extends QtiComponent {
 	 * * TestFeedbackAccess:AT_END = At the end of the TestPart or AssessmentTest.
 	 * 
 	 * @param int $access A value of the TestFeedbackAccess enumeration.
-	 * @throws InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
+	 * @throws \InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
 	 */
 	public function setAccess($access) {
 		if (in_array($access, TestFeedbackAccess::asArray())) {
@@ -171,7 +170,7 @@ class TestFeedback extends QtiComponent {
 	 * Set the QTI Identifier of the outcome variable bound to this TestFeedback.
 	 * 
 	 * @param string $outcomeIdentifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
 	 */
 	public function setOutcomeIdentifier($outcomeIdentifier) {
 		if (Format::isIdentifier($outcomeIdentifier)) {
@@ -195,8 +194,8 @@ class TestFeedback extends QtiComponent {
 	/**
 	 * Set how the feedback should be displayed.
 	 * 
-	 * @param unknown_type $showHide A value from the ShowHide enumeration.
-	 * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+	 * @param boolean $showHide A value from the ShowHide enumeration.
+	 * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
 	 */
 	public function setShowHide($showHide) {
 		if (in_array($showHide, ShowHide::asArray())) {
@@ -221,7 +220,7 @@ class TestFeedback extends QtiComponent {
 	 * Set the QTI identifier of this TestFeedback.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -246,7 +245,7 @@ class TestFeedback extends QtiComponent {
 	 * Set the title of this TestFeedback. Empty string means no title specified.
 	 * 
 	 * @param string $title A title.
-	 * @throws InvalidArgumentException If $title is not a string.
+	 * @throws \InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
 		if (gettype($title) === 'string') {
@@ -272,7 +271,7 @@ class TestFeedback extends QtiComponent {
 	 * Set the XML stream of the content of the TestFeedback.
 	 * 
 	 * @param string $content XML markup binary stream as a string.
-	 * @throws InvalidArgumentException If $content is not a string.
+	 * @throws \InvalidArgumentException If $content is not a string.
 	 */
 	public function setContent($content) {
 		if (gettype($content) === 'string') {

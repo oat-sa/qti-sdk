@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data;
 
@@ -54,7 +53,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * The navigation mode, a value of the NavigationMode enumeration.
 	 * 
-	 * @var int
+	 * @var integer
 	 * @qtism-bean-property
 	 */
 	private $navigationMode = NavigationMode::LINEAR;
@@ -62,7 +61,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * The submission mode, a value of the SubmissionMode enumeration.
 	 * 
-	 * @var int
+	 * @var integer
 	 * @qtism-bean-property
 	 */
 	private $submissionMode = SubmissionMode::INDIVIDUAL;
@@ -73,7 +72,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * A set of conditions evaluated during the test, that determine 
 	 * if this part is to be skipped.
 	 * 
-	 * @var PreConditionCollection
+	 * @var \qtism\data\rules\PreConditionCollection
 	 * @qtism-bean-property
 	 */
 	private $preConditions;
@@ -84,7 +83,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * A set of rules, evaluated during the test, for setting an alternative
 	 * target as the next part of the test.
 	 * 
-	 * @var BranchRuleCollection
+	 * @var \qtism\data\rules\BranchRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $branchRules;
@@ -95,7 +94,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Parameters used to control the allowable states of each item session in this part. 
 	 * These values may be overridden at section and item level.
 	 * 
-	 * @var ItemSessionControl
+	 * @var \qtism\data\ItemSessionControl
 	 * @qtism-bean-property
 	 */
 	private $itemSessionControl = null;
@@ -105,7 +104,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * Optionally controls the amount of time a candidate is allowed for this part of the test.
 	 * 
-	 * @var TimeLimits
+	 * @var \qtism\data\TimeLimits
 	 * @qtism-bean-property
 	 */
 	private $timeLimits = null;
@@ -115,7 +114,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * The items contained in each testPart are arranged into sections and sub-sections.
 	 * 
-	 * @var AssessmentSectionCollection
+	 * @var \qtism\data\AssessmentSectionCollection
 	 * @qtism-bean-property
 	 */
 	private $assessmentSections;
@@ -125,7 +124,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * Test-level feedback specific to this part of the test.
 	 * 
-	 * @var TestFeedbackCollection
+	 * @var \qtism\data\TestFeedbackCollection
 	 * @qtism-bean-property
 	 */
 	private $testFeedbacks;
@@ -144,7 +143,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
 	 * @param int $navigationMode A value of the NavigationMode enumeration.
 	 * @param int $submissionMode A value of the SubmissionMode enumeration.
-	 * @throws InvalidArgumentException If an argument has the wrong type or format.
+	 * @throws \InvalidArgumentException If an argument has the wrong type or format.
 	 */
 	public function __construct($identifier, AssessmentSectionCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		$this->setObservers(new SplObjectStorage());
@@ -171,7 +170,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Set the identifier of the Test Part.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -188,7 +187,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the navigation mode of the Test Part.
 	 * 
-	 * @return int A value of the Navigation enumeration.
+	 * @return integer A value of the Navigation enumeration.
 	 */
 	public function getNavigationMode() {
 		return $this->navigationMode;
@@ -197,8 +196,8 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the navigation mode of the Test Part.
 	 * 
-	 * @param int $navigationMode A value of the Navigation enumaration.
-	 * @throws InvalidArgumentException If $navigation mode is not a value from the Navigation enumeration.
+	 * @param integer $navigationMode A value of the Navigation enumaration.
+	 * @throws \InvalidArgumentException If $navigation mode is not a value from the Navigation enumeration.
 	 */
 	public function setNavigationMode($navigationMode) {
 		if (in_array($navigationMode, NavigationMode::asArray())) {
@@ -213,7 +212,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the submission mode of the Test Part.
 	 * 
-	 * @return int A value of the SubmissionMode enumeration.
+	 * @return integer A value of the SubmissionMode enumeration.
 	 */
 	public function getSubmissionMode() {
 		return $this->submissionMode;
@@ -222,8 +221,8 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the submission mode of the Test Part.
 	 * 
-	 * @param int $submissionMode A value of the SubmissionMode enumeration.
-	 * @throws InvalidArgumentException If $submissionMode is not a value from the SubmissionMode enumeration.
+	 * @param integer $submissionMode A value of the SubmissionMode enumeration.
+	 * @throws \InvalidArgumentException If $submissionMode is not a value from the SubmissionMode enumeration.
 	 */
 	public function setSubmissionMode($submissionMode) {
 		if (in_array($submissionMode, SubmissionMode::asArray())) {
@@ -238,7 +237,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the PreConditions that must be applied to this Test Part.
 	 * 
-	 * @return PreConditionCollection A collection of PreCondition objects.
+	 * @return \qtism\data\rules\PreConditionCollection A collection of PreCondition objects.
 	 */
 	public function getPreConditions() {
 		return $this->preConditions;
@@ -247,7 +246,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the PreConditions that must be applied to this Test Part.
 	 * 
-	 * @param PreConditionCollection $preConditions A collection of PreCondition objects.
+	 * @param \qtism\data\rules\PreConditionCollection $preConditions A collection of PreCondition objects.
 	 */
 	public function setPreConditions(PreConditionCollection $preConditions) {
 		$this->preConditions = $preConditions;
@@ -256,7 +255,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the BranchRules that must be applied to this Test Part.
 	 * 
-	 * @return BranchRuleCollection A collection of BranchRule objects.
+	 * @return \qtism\data\rules\BranchRuleCollection A collection of BranchRule objects.
 	 */
 	public function getBranchRules() {
 		return $this->branchRules;
@@ -265,7 +264,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the BranchRules that must be applied to this Test Part.
 	 * 
-	 * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
+	 * @param \qtism\data\rules\BranchRuleCollection $branchRules A collection of BranchRule objects.
 	 */
 	public function setBranchRules(BranchRuleCollection $branchRules) {
 		$this->branchRules = $branchRules;
@@ -275,7 +274,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Get the ItemSessionControl applied to this Test Part. Returns null if there
 	 * is no ItemSessionControl to apply.
 	 * 
-	 * @return ItemSessionControl An ItemSessionControl object.
+	 * @return \qtism\data\ItemSessionControl An ItemSessionControl object.
 	 */
 	public function getItemSessionControl() {
 		return $this->itemSessionControl;
@@ -284,7 +283,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the ItemSessionControl applied to this Test Part.
 	 * 
-	 * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
+	 * @param \qtism\data\ItemSessionControl $itemSessionControl An ItemSessionControl object.
 	 */
 	public function setItemSessionControl(ItemSessionControl $itemSessionControl = null) {
 		$this->itemSessionControl = $itemSessionControl;
@@ -303,7 +302,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Get the TimeLimits applied to this Test Part. Returns null if there is no
 	 * TimeLimits to apply.
 	 * 
-	 * @return TimeLimits A TimeLimits object.
+	 * @return \qtism\data\TimeLimits A TimeLimits object.
 	 */
 	public function getTimeLimits() {
 		return $this->timeLimits;
@@ -313,7 +312,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Set the TimeLimits applied to this Test Part. Returns null if there is no
 	 * TimeLimits to apply.
 	 * 
-	 * @param TimeLimits $timeLimits A TimeLimits object.
+	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
 	 */
 	public function setTimeLimits(TimeLimits $timeLimits = null) {
 		$this->timeLimits = $timeLimits;
@@ -331,7 +330,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the AssessmentSection that are part of this Test Part.
 	 * 
-	 * @return AssessmentSectionCollection  A collection of AssessmentSection object.
+	 * @return \qtism\data\AssessmentSectionCollection  A collection of AssessmentSection object.
 	 */
 	public function getAssessmentSections() {
 		return $this->assessmentSections;
@@ -341,7 +340,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Set the AssessmentSection that are part of this Test Part.
 	 * 
 	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
-	 * @throws InvalidArgumentException If $assessmentSections is an empty collection.
+	 * @throws \InvalidArgumentException If $assessmentSections is an empty collection.
 	 */
 	public function setAssessmentSections(AssessmentSectionCollection $assessmentSections) {
 		if (count($assessmentSections) > 0) {
@@ -356,7 +355,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the feedbacks that are part of this Test Part.
 	 * 
-	 * @return TestFeedbackCollection A collection of TestFeedback objects.
+	 * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
 	 */
 	public function getTestFeedbacks() {
 		return $this->testFeedbacks;
@@ -365,7 +364,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the feedbacks that are part of this Test Part.
 	 * 
-	 * @param TestFeedbackCollection $testFeedbacks A collection of TestFeedback objects.
+	 * @param \qtism\data\TestFeedbackCollection $testFeedbacks A collection of TestFeedback objects.
 	 */
 	public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks) {
 		$this->testFeedbacks = $testFeedbacks;
@@ -395,7 +394,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the observers of the object.
 	 *
-	 * @return SplObjectStorage An SplObjectStorage object.
+	 * @return \SplObjectStorage An SplObjectStorage object.
 	 */
 	protected function getObservers() {
 		return $this->observers;
@@ -404,7 +403,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the observers of the object.
 	 *
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 * @param \SplObjectStorage $observers An SplObjectStorage object.
 	 */
 	protected function setObservers(SplObjectStorage $observers) {
 		$this->observers = $observers;
@@ -413,7 +412,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::attach implementation.
 	 *
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -422,7 +421,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::detach implementation.
 	 *
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);

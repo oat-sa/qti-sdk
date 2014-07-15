@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -67,14 +67,14 @@ class QtiComponentIterator implements Iterator {
 	 * The QtiComponent object which contains the QtiComponent objects
 	 * to be traversed.
 	 * 
-	 * @var QtiComponent
+	 * @var \qtism\data\QtiComponent
 	 */
 	private $rootComponent = null;
 	
 	/**
 	 * The QtiComponent object being traversed.
 	 * 
-	 * @var QtiComponent
+	 * @var \qtism\data\QtiComponent
 	 */
 	private $currentComponent = null;
 	
@@ -107,7 +107,7 @@ class QtiComponentIterator implements Iterator {
 	 * The QtiComponent object which is the container of the QtiComponent object
 	 * returned by QtiComponentIterator::current().
 	 * 
-	 * @var QtiComponent
+	 * @var \qtism\data\QtiComponent
 	 */
 	private $currentContainer = null;
 	
@@ -128,7 +128,7 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * Create a new QtiComponentIterator object.
 	 * 
-	 * @param QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
+	 * @param \qtism\data\QtiComponent $rootComponent The QtiComponent which contains the QtiComponent objects to be traversed.
 	 */
 	public function __construct(QtiComponent $rootComponent, array $classes = array()) {
 		$this->setRootComponent($rootComponent);
@@ -140,7 +140,7 @@ class QtiComponentIterator implements Iterator {
 	 * Set the root QtiComponent. In other words, the QtiComponent which
 	 * contains the QtiComponent objects to be traversed.
 	 * 
-	 * @param QtiComponent $component
+	 * @param \qtism\data\QtiComponent $component
 	 */
 	protected function setRootComponent(QtiComponent $rootComponent) {
 		$this->rootComponent = $rootComponent;
@@ -158,7 +158,7 @@ class QtiComponentIterator implements Iterator {
 	 * Get the root QtiComponent. In other words, the QtiComponent which contains
 	 * the QtiComponent objects to be traversed.
 	 *
-	 * @return QtiComponent
+	 * @return \qtism\data\QtiComponent
 	 */
 	public function getRootComponent() {
 		return $this->rootComponent;
@@ -167,7 +167,7 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * Set the currently traversed QtiComponent object.
 	 * 
-	 * @param QtiComponent $currentComponent
+	 * @param \qtism\data\QtiComponent $currentComponent
 	 */
 	protected function setCurrentComponent(QtiComponent $currentComponent = null) {
 		$this->currentComponent = $currentComponent;
@@ -176,7 +176,7 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * Get the currently traversed QtiComponent object.
 	 * 
-	 * @return QtiComponent A QtiComponent object.
+	 * @return \qtism\data\QtiComponent A QtiComponent object.
 	 */
 	protected function getCurrentComponent() {
 		return $this->currentComponent;
@@ -203,8 +203,8 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * Push a trail entry on the trail.
 	 * 
-	 * @param QTIComponent $source From where we are coming from.
-	 * @param QTIComponentCollection $components The next components to explore.
+	 * @param \qtism\data\QTIComponent $source From where we are coming from.
+	 * @param \qtism\data\QTIComponentCollection $components The next components to explore.
 	 */
 	protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components) {
 		
@@ -266,12 +266,18 @@ class QtiComponentIterator implements Iterator {
 	/**
 	 * Mark a QTIComponent object as traversed.
 	 * 
-	 * @param QtiComponent $component A QTIComponent object.
+	 * @param \qtism\data\QtiComponent $component A QTIComponent object.
 	 */
 	protected function markTraversed(QtiComponent $component) {
 		array_push($this->traversed, $component);
 	}
 	
+	/**
+	 * Whether or not a given $component has already been traversed by
+	 * the iterator.
+	 * 
+	 * @param \qtism\data\QtiComponent $component
+	 */
 	protected function isTraversed(QtiComponent $component) {
 		return in_array($component, $this->traversed, true);
 	}
@@ -324,7 +330,7 @@ class QtiComponentIterator implements Iterator {
 	 * Get the current QtiComponent object the iterator
 	 * is traversing.
 	 * 
-	 * @return QtiComponent A QtiComponent object.
+	 * @return \qtism\data\QtiComponent A QtiComponent object.
 	 */
 	public function current() {
 		return $this->getCurrentComponent();
@@ -339,8 +345,8 @@ class QtiComponentIterator implements Iterator {
 	 * * The QtiComponentIterator::valid method returns false.
 	 * * The component returned by QtiComponentIterator::current is the root component.
 	 * 
-	 * @return null|QtiComponent The null value if there is no parent, otherwise a QtiComponent.
-	 * @see QtiComponentIterator::current()
+	 * @return null|\qtism\data\QtiComponent The null value if there is no parent, otherwise a QtiComponent.
+	 * @see \qtism\data\QtiComponentIterator::current()
 	 */
 	public function parent() {
 	    return $this->getCurrentContainer();

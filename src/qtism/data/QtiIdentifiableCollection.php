@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data;
 
@@ -43,7 +42,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * Create a new QtiIdentifiableCollection object.
 	 * 
 	 * @param array $array (optional) An array of QtiIdentifiable objects to populate the new collection.
-	 * @throws InvalidArgumentException If a value of $array is not a QtiIdentifiable object.
+	 * @throws \InvalidArgumentException If a value of $array is not a QtiIdentifiable object.
 	 */
 	public function __construct(array $array = array()) {
 		foreach ($array as $a) {
@@ -63,7 +62,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * the collection.
 	 * 
 	 * @return boolean
-	 * @throws OutOfRangeException If the request $offset is not a string or is empty.
+	 * @throws \OutOfRangeException If the request $offset is not a string or is empty.
 	 */
 	public function offsetExists($offset) {
 		if (gettype($offset) !== 'string' && empty($offset) === false) {
@@ -78,8 +77,8 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	/**
 	 * Retrieve a QtiIdentifiable object from the collection.
 	 * 
-	 * @return QtiIdentifiable|null The requested QtiIdentifiable object or null if no object with 'identifier' = $offset is found.
-	 * @throws OutOfRangeException If the request $offset is not a string or is empty.
+	 * @return \qtism\data\QtiIdentifiable|null The requested QtiIdentifiable object or null if no object with 'identifier' = $offset is found.
+	 * @throws \OutOfRangeException If the request $offset is not a string or is empty.
 	 */
 	public function offsetGet($offset) {
 		if (gettype($offset) !== 'string') {
@@ -103,9 +102,9 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * value.
 	 * 
 	 * @param null $offset
-	 * @param QtiIdentifiable $value A QtiIdentifiable object.
-	 * @throws InvalidArgumentException If $value is not a QtiIdentifiable object.
-	 * @throws OutOfRangeException If the offset is not null.
+	 * @param \qtism\data\QtiIdentifiable $value A QtiIdentifiable object.
+	 * @throws \InvalidArgumentException If $value is not a QtiIdentifiable object.
+	 * @throws \OutOfRangeException If the offset is not null.
 	 */
 	public function offsetSet($offset, $value) {
 		$this->checkType($value);
@@ -130,8 +129,8 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * 
 	 * This method overrides AbstractCollection::attach.
 	 *
-	 * @param QtiIdentifiable $object A QtiIdentifiable object.
-	 * @throws InvalidArgumentException If $object is not a QtiIdentifiable object.
+	 * @param \qtism\data\QtiIdentifiable $object A QtiIdentifiable object.
+	 * @throws \InvalidArgumentException If $object is not a QtiIdentifiable object.
 	 */
 	public function attach($object) {
 		$this->offsetSet(null, $object);
@@ -141,7 +140,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	 * Remove a QTIIdentifiable object from the collection that has its
 	 * 'identifier' attribute equals to $offset.
 	 * 
-	 * @throws OutOfRangeException If $offset is not a string.
+	 * @throws \OutOfRangeException If $offset is not a string.
 	 */
 	public function offsetUnset($offset) {
 		if (gettype($offset) === 'string') {
@@ -159,7 +158,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	/**
 	 * Implementation of SplObserver::update.
 	 * 
-	 * @param SplSubject $subject
+	 * @param \SplSubject $subject
 	 */
 	public function update(SplSubject $subject) {
 		// -- case 1 (QtiIdentifiable)

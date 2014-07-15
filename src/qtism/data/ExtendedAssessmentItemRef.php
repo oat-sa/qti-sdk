@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -46,7 +46,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * The outcomeDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @var OutcomeDeclarationCollection
+	 * @var \qtism\data\state\OutcomeDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeDeclarations;
@@ -54,7 +54,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * The responseDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @var ResponseDeclarationCollection
+	 * @var \qtism\data\state\ResponseDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $responseDeclarations;
@@ -62,7 +62,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * The responseProcessing found in the referenced assessmentItem
 	 * 
-	 * @var ResponseProcessing
+	 * @var \qtism\data\processing\ResponseProcessing
 	 * @qtism-bean-property
 	 */
 	private $responseProcessing = null;
@@ -88,8 +88,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * 
 	 * @param string $identifier A QTI Identifier.
 	 * @param string $href The URL to locate the referenced assessmentItem.
-	 * @param IdentifierCollection $categories Optional categories.
-	 * @throws InvalidArgumentException if $identifier is not a valid QTI Identifier or $href is not a valid URI.
+	 * @param \qtism\common\collections\IdentifierCollection $categories Optional categories.
+	 * @throws \InvalidArgumentException if $identifier is not a valid QTI Identifier or $href is not a valid URI.
 	 */
 	public function __construct($identifier, $href, IdentifierCollection $categories = null) {
 		parent::__construct($identifier, $href, $categories);
@@ -101,7 +101,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Set the outcomeDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+	 * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
 	 */
 	public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations) {
 		$this->outcomeDeclarations = $outcomeDeclarations;
@@ -110,7 +110,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Get the outcomeDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
@@ -119,7 +119,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Set the responseProcessing found in the referenced assessmentItem.
 	 * 
-	 * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
+	 * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
 	 */
 	public function setResponseProcessing(ResponseProcessing $responseProcessing = null) {
 		$this->responseProcessing = $responseProcessing;
@@ -128,7 +128,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Get the responseProcessing found in the referenced assessmentItem.
 	 * 
-	 * @return ResponseProcessing A ResponseProcessing object or null if no response processing described. 
+	 * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no response processing described. 
 	 */
 	public function getResponseProcessing() {
 		return $this->responseProcessing;
@@ -146,7 +146,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Add an OutcomeDeclaration object.
 	 * 
-	 * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
+	 * @param \qtism\data\state\OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
 	 */
 	public function addOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration) {
 		$this->getOutcomeDeclarations()->attach($outcomeDeclaration);
@@ -155,7 +155,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Remove an OutcomeDeclaration object from the current one.
 	 * 
-	 * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
+	 * @param \qtism\data\state\OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
 	 */
 	public function removeOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration) {
 		$this->getOutcomeDeclarations()->detach($outcomeDeclaration);
@@ -164,7 +164,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Set the responseDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects.
+	 * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects.
 	 */
 	public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations) {
 		$this->responseDeclarations = $responseDeclarations;
@@ -173,7 +173,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Get the responseDeclarations found in the referenced assessmentItem.
 	 * 
-	 * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+	 * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
 	 */
 	public function getResponseDeclarations() {
 		return $this->responseDeclarations;
@@ -182,7 +182,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Add a ResponseDeclaration object.
 	 * 
-	 * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
+	 * @param \qtism\data\state\ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
 	 */
 	public function addResponseDeclaration(ResponseDeclaration $responseDeclaration) {
 		$this->getResponseDeclarations()->attach($responseDeclaration);
@@ -191,7 +191,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Remove a ResponseDeclaration object.
 	 * 
-	 * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
+	 * @param \qtism\data\state\ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
 	 */
 	public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration) {
 		$this->getResponseDeclarations()->detach($responseDeclaration);
@@ -210,7 +210,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * Set if the referenced Item is considered to be adaptive or not.
 	 * 
 	 * @param boolean $adaptive Whether the referenced Item is adaptive.
-	 * @throws InvalidArgumentException If $adaptive is not a boolean value.
+	 * @throws \InvalidArgumentException If $adaptive is not a boolean value.
 	 */
 	public function setAdaptive($adaptive) {
 		if (gettype($adaptive) === 'boolean') {
@@ -226,7 +226,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	 * Set if the referenced Item is considered to be time dependent or not.
 	 * 
 	 * @param boolean $timeDependent Whether the referenced item is time dependent.
-	 * @throws InvalidArgumentException If $timeDependent is not a boolean value.
+	 * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
 	 */
 	public function setTimeDependent($timeDependent) {
 		if (gettype($timeDependent) === 'boolean') {
@@ -250,8 +250,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 	/**
 	 * Create a new ExtendedAssessmentItemRef object from an AssessmentItemRef object.
 	 * 
-	 * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-	 * @return ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
+	 * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+	 * @return \qtism\data\ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
 	 */
 	public static function createFromAssessmentItemRef(AssessmentItemRef $assessmentItemRef) {
 		$identifier = $assessmentItemRef->getIdentifier();

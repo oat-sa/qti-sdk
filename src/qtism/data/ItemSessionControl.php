@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -169,7 +169,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set the maximum number of attempts in the given test context.
 	 * 
 	 * @param integer $maxAttempts An integer.
-	 * @throws InvalidArgumentException If $maxAttempts is not an integer.
+	 * @throws \InvalidArgumentException If $maxAttempts is not an integer.
 	 */
 	public function setMaxAttempts($maxAttempts) {
 		if (is_int($maxAttempts)) {
@@ -194,6 +194,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set if feedbacks must be shown in the given test context.
 	 * 
 	 * @param boolean $showFeedback true if feedbacks must be shown, otherwise false.
+	 * @throws \InvalidArgumentException If $showFeedback is not a boolean value.
 	 */
 	public function setShowFeedback($showFeedback) {
 		if (is_bool($showFeedback)) {
@@ -201,6 +202,7 @@ class ItemSessionControl extends QtiComponent {
 		}
 		else {
 			$msg = "ShowFeedback must be a boolean, '" . gettype($showFeedback) . "' given.";
+			throw new InvalidArgumentException($msg);
 		}
 	}
 	
@@ -218,7 +220,7 @@ class ItemSessionControl extends QtiComponent {
 	 * after the last item.
 	 * 
 	 * @param boolean $allowReview true if allowed, false if not.
-	 * @throws InvalidArgumentException If $allowReview is not a boolean.
+	 * @throws \InvalidArgumentException If $allowReview is not a boolean.
 	 */
 	public function setAllowReview($allowReview) {
 		if (is_bool($allowReview)) {
@@ -243,7 +245,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set if the candidate is provided a way to enter the 'solution' state.
 	 * 
 	 * @param boolean $showSolution true if he is provided, false if not.
-	 * @throws InvalidArgumentException If $showSolution is not a boolean.
+	 * @throws \InvalidArgumentException If $showSolution is not a boolean.
 	 */
 	public function setShowSolution($showSolution) {
 		if (is_bool($showSolution)) {
@@ -268,7 +270,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set if the candidate is allowed to communicate comments during the session.
 	 * 
 	 * @param boolean $allowComment true if allowed, false if not.
-	 * @throws InvalidArgumentException If $allowComment is not a boolean.
+	 * @throws \InvalidArgumentException If $allowComment is not a boolean.
 	 */
 	public function setAllowComment($allowComment) {
 		if (is_bool($allowComment)) {
@@ -293,7 +295,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set if the candidate is allowed to skip items.
 	 * 
 	 * @param boolean $allowSkipping true if allowed, false otherwise.
-	 * @throws InvalidArgumentException If $allowSkipping is not a valid boolean.
+	 * @throws \InvalidArgumentException If $allowSkipping is not a valid boolean.
 	 */
 	public function setAllowSkipping($allowSkipping) {
 		if (is_bool($allowSkipping)) {
@@ -333,7 +335,7 @@ class ItemSessionControl extends QtiComponent {
 	 * Set if the responses must be validated.
 	 * 
 	 * @param boolean $validateResponses true if responses must be validated, false if not.
-	 * @throws InvalidArgumentException If $validateResponses is not a boolean.
+	 * @throws \InvalidArgumentException If $validateResponses is not a boolean.
 	 */
 	public function setValidateResponses($validateResponses) {
 		if (is_bool($validateResponses)) {

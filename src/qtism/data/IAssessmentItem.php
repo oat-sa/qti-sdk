@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -42,7 +42,7 @@ interface IAssessmentItem extends QtiIdentifiable {
      * Set whether the item is time dependent or not.
      *
      * @param boolean $timeDependent Time dependent or not.
-     * @throws InvalidArgumentException If $timeDependent is not a boolean value.
+     * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
      */
     public function setTimeDependent($timeDependent);
     
@@ -57,7 +57,7 @@ interface IAssessmentItem extends QtiIdentifiable {
      * Set whether the item is adaptive.
      *
      * @param boolean $adaptive Adaptive or not.
-     * @throws InvalidArgumentException If $adaptive is not a boolean value.
+     * @throws \InvalidArgumentException If $adaptive is not a boolean value.
      */
     public function setAdaptive($adaptive);
     
@@ -71,42 +71,42 @@ interface IAssessmentItem extends QtiIdentifiable {
     /**
      * Get the response declarations.
      *
-     * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+     * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
      */
     public function getResponseDeclarations();
     
     /**
      * Set the response declarations.
      *
-     * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
+     * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
      */
     public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations);
     
     /**
      * Get the outcome declarations.
      *
-     * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+     * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
     public function getOutcomeDeclarations();
     
     /**
      * Set the outcome declarations.
      *
-     * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations);
     
     /**
      * Get the associated ResponseProcessing object.
      *
-     * @return ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+     * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function getResponseProcessing();
     
     /**
      * Set the associated ResponseProcessing object.
      *
-     * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
+     * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
 }

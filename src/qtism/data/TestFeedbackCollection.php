@@ -14,17 +14,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
 
-
 namespace qtism\data;
 
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection that aims at storing TestFeedback objects.
@@ -35,9 +34,9 @@ use InvalidArgumentException as InvalidArgumentException;
 class TestFeedbackCollection extends QtiComponentCollection {
 
 	/**
-	 * Check if $value is a TestFeedbackn object.
+	 * Check if $value is a TestFeedback object.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a TestFeedback object.
+	 * @throws \InvalidArgumentException If $value is not a TestFeedback object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof TestFeedback) {

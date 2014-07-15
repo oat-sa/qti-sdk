@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data;
 
@@ -53,7 +52,7 @@ class TimeLimits extends QtiComponent {
 	 * 
 	 * null = unlimited
 	 * 
-	 * @var Duration
+	 * @var \qtism\common\datatypes\Duration
 	 * @qtism-bean-property
 	 */
 	private $minTime = null;
@@ -63,7 +62,7 @@ class TimeLimits extends QtiComponent {
 	 * 
 	 * null = unlimited
 	 * 
-	 * @var Duration
+	 * @var \qtism\common\datatypes\Duration
 	 * @qtism-bean-property
 	 */
 	private $maxTime = null;
@@ -82,9 +81,9 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Create a new instance of TimeLimits.
 	 * 
-	 * @param Duration $minTime The minimum time. Give null if not defined.
-	 * @param Duration $maxTime The maximum time. Give null if not defined.
-	 * @param string $allowLateSubmission Wether it allows late submission of responses.
+	 * @param \qtism\common\datatypes\Duration $minTime The minimum time. Give null if not defined.
+	 * @param \qtism\common\datatypes\Duration $maxTime The maximum time. Give null if not defined.
+	 * @param boolean $allowLateSubmission Wether it allows late submission of responses.
 	 */
 	public function __construct($minTime = null, $maxTime = null, $allowLateSubmission = false) {
 		$this->setMinTime($minTime);
@@ -95,7 +94,7 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Get the minimum time.
 	 * 
-	 * @return Duration A Duration object or null if unlimited.
+	 * @return \qtism\common\datatypes\Duration A Duration object or null if unlimited.
 	 */
 	public function getMinTime() {
 		return $this->minTime;
@@ -113,7 +112,7 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Set the minimum time.
 	 * 
-	 * @param Duration $minTime A Duration object or null if unlimited.
+	 * @param \qtism\common\datatypes\Duration $minTime A Duration object or null if unlimited.
 	 */
 	public function setMinTime(Duration $minTime = null) {
 	    // Prevent to get 0s durations stored.
@@ -127,7 +126,7 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Get the maximum time. Returns null if unlimited
 	 * 
-	 * @return Duration A Duration object or null if unlimited.
+	 * @return \qtism\common\datatypes\Duration A Duration object or null if unlimited.
 	 */
 	public function getMaxTime() {
 		return $this->maxTime;
@@ -145,7 +144,7 @@ class TimeLimits extends QtiComponent {
 	/**
 	 * Set the maximum time or null if unlimited.
 	 * 
-	 * @param Duration $maxTime A duration object or null if unlimited.
+	 * @param \qtism\common\datatypes\Duration $maxTime A duration object or null if unlimited.
 	 */
 	public function setMaxTime(Duration $maxTime = null) {
 	    // Prevent to get 0s durations stored.
@@ -171,7 +170,7 @@ class TimeLimits extends QtiComponent {
 	 * accepted.
 	 * 
 	 * @param boolean $allowLateSubmission true if the candidate's response should still be accepted, false if not.
-	 * @throws InvalidArgumentException If $allowLateSubmission is not a boolean.
+	 * @throws \InvalidArgumentException If $allowLateSubmission is not a boolean.
 	 */
 	public function setAllowLateSubmission($allowLateSubmission) {
 		if (is_bool($allowLateSubmission)) {

@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -45,7 +45,7 @@ abstract class QtiComponent {
 	/**
 	 * Get the direct child components of this one.
 	 * 
-	 * @return QtiComponentCollection A collection of QtiComponent objects.
+	 * @return \qtism\data\QtiComponentCollection A collection of QtiComponent objects.
 	 */
 	abstract public function getComponents();
 	
@@ -53,7 +53,7 @@ abstract class QtiComponent {
 	 * Get a QtiComponentIterator object which allows you to iterate
 	 * on all QtiComponent objects hold by this one.
 	 * 
-	 * @return QtiComponentIterator A QtiComponentIterator object.
+	 * @return \qtism\data\QtiComponentIterator A QtiComponentIterator object.
 	 */
 	public function getIterator() {
 		return new QtiComponentIterator($this);
@@ -65,8 +65,8 @@ abstract class QtiComponent {
 	 * 
 	 * @param string $identifier The identifier to search for.
 	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
-	 * @return QtiComponent|null A QtiComponent object or null if not found.
-	 * @throws InvalidArgumentException If $identifier is not a string.
+	 * @return \qtism\data\QtiComponent|null A QtiComponent object or null if not found.
+	 * @throws \InvalidArgumentException If $identifier is not a string.
 	 */
 	public function getComponentByIdentifier($identifier, $recursive = true) {
 		
@@ -101,8 +101,8 @@ abstract class QtiComponent {
 	 * 
 	 * @param array|string An array of strings or a string.
 	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
-	 * @return QtiComponentCollection
-	 * @throws InvalidArgumentException If $classNames is not an array nor a string value.
+	 * @return \qtism\data\QtiComponentCollection
+	 * @throws \InvalidArgumentException If $classNames is not an array nor a string value.
 	 */
 	public function getComponentsByClassName($classNames, $recursive = true) {
 		if (gettype($classNames) !== 'string' && !is_array($classNames)) {
@@ -135,7 +135,7 @@ abstract class QtiComponent {
 	 * * If an identifier collision occurs within the retrieved set, a QtiComponentCollection is returned.
 	 * 
 	 * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
-	 * @return QtiComponentCollection A QtiIdentifiableCollection or a QtiComponentCollection in case of collision.
+	 * @return \qtism\data\QtiComponentCollection A QtiIdentifiableCollection or a QtiComponentCollection in case of collision.
 	 */
 	public function getIdentifiableComponents($recursive = true) {
 	    

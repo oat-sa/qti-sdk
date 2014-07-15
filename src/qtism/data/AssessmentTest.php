@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -101,7 +101,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Each test has an associated set of outcomes. The values of these outcomes are set by the 
 	 * test's outcomeProcessing rules.
 	 * 
-	 * @var OutcomeDeclarationCollection
+	 * @var \qtism\data\state\OutcomeDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeDeclarations;
@@ -111,7 +111,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * Optionally controls the amount of time a candidate is allowed for the entire test.
 	 * 
-	 * @var TimeLimits
+	 * @var \qtism\data\TimeLimits
 	 * @qtism-bean-property
 	 */
 	private $timeLimits = null;
@@ -124,7 +124,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * to control the basic mode parameters that apply to all sections and sub-sections within 
 	 * that part.
 	 * 
-	 * @var TestPartCollection
+	 * @var \qtism\data\TestPartCollection
 	 * @qtism-bean-property
 	 */
 	private $testParts;
@@ -134,7 +134,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * The set of rules used for calculating the values of the test outcomes.
 	 * 
-	 * @var OutcomeProcessing
+	 * @var \qtism\data\processing\OutcomeProcessing
 	 * @qtism-bean-property
 	 */
 	private $outcomeProcessing = null;
@@ -144,7 +144,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * Contains the test-level feedback controlled by the test outcomes.
 	 * 
-	 * @var TestFeedbackCollection
+	 * @var \qtism\data\TestFeedbackCollection
 	 * @qtism-bean-property
 	 */
 	private $testFeedbacks;
@@ -152,7 +152,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * The observers of this object.
 	 * 
-	 * @var SplObjectStorage
+	 * @var \SplObjectStorage
 	 */
 	private $observers = null;
 	
@@ -179,7 +179,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Set the identifier of the AssessmentTest.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -206,7 +206,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Set the title of the AssessmentTest.
 	 * 
 	 * @param string $title A title.
-	 * @throws InvalidArgumentException If $title is not a string.
+	 * @throws \InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
 		if (gettype($title) === 'string') {
@@ -232,7 +232,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Set the name of the tool that was used to author the AssessmentTest.
 	 * 
 	 * @param string $toolName A tool name.
-	 * @throws InvalidArgumentException If $toolName is not a string.
+	 * @throws \InvalidArgumentException If $toolName is not a string.
 	 */
 	public function setToolName($toolName) {
 		if (gettype($toolName) === 'string') {
@@ -259,7 +259,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * empty string if it was not specified.
 	 * 
 	 * @param string $toolVersion A tool version.
-	 * @throws InvalidArgumentException If $toolVersion is not a string.
+	 * @throws \InvalidArgumentException If $toolVersion is not a string.
 	 */
 	public function setToolVersion($toolVersion) {
 		if (gettype($toolVersion) === 'string') {
@@ -274,7 +274,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get a collection of OutcomeDeclaration objects bound to the AssessmentTest.
 	 * 
-	 * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
@@ -283,7 +283,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set a collection of OutcomeDeclaration objects bound to the AssessmentTest.
 	 * 
-	 * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+	 * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
 	 */
 	public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations) {
 		$this->outcomeDeclarations = $outcomeDeclarations;
@@ -292,7 +292,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the time limits of this AssessmentTest. Returns null if not specified.
 	 * 
-	 * @return TimeLimits A TimeLimits object or null value if not specified.
+	 * @return \qtism\data\TimeLimits A TimeLimits object or null value if not specified.
 	 */
 	public function getTimeLimits() {
 		return $this->timeLimits;
@@ -301,7 +301,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the time limits of this AssessmentTest.
 	 * 
-	 * @param TimeLimits $timeLimits A TimeLimits object.
+	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
 	 */
 	public function setTimeLimits(TimeLimits $timeLimits = null) {
 		$this->timeLimits = $timeLimits;
@@ -310,7 +310,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the test parts that form the AssessmentTest.
 	 * 
-	 * @return TestPartCollection A collection of TestPart objects.
+	 * @return \qtism\data\TestPartCollection A collection of TestPart objects.
 	 */
 	public function getTestParts() {
 		return $this->testParts;
@@ -319,7 +319,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the test parts that form the AssessmentTest.
 	 * 
-	 * @param TestPartCollection $testParts A collection of TestPart objects.
+	 * @param \qtism\data\TestPartCollection $testParts A collection of TestPart objects.
 	 */
 	public function setTestParts(TestPartCollection $testParts) {
 		$this->testParts = $testParts;
@@ -329,7 +329,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	 * Get the OutcomeProcessing of the AssessmentTest. Returns null if it was not
 	 * specified.
 	 * 
-	 * @return OutcomeProcessing An OutcomeProcessing object or null if not specified.
+	 * @return \qtism\data\processing\OutcomeProcessing An OutcomeProcessing object or null if not specified.
 	 */
 	public function getOutcomeProcessing() {
 		return $this->outcomeProcessing;
@@ -338,7 +338,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the OutcomeProcessing of the AssessmentTest.
 	 * 
-	 * @param OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
+	 * @param \qtism\data\processing\OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
 	 */
 	public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null) {
 		$this->outcomeProcessing = $outcomeProcessing;
@@ -356,7 +356,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the feedbacks associated to the AssessmentTest.
 	 * 
-	 * @return TestFeedbackCollection A collection of TestFeedback objects.
+	 * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
 	 */
 	public function getTestFeedbacks() {
 		return $this->testFeedbacks;
@@ -365,7 +365,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the feedbacks associated to the AssessmentTest.
 	 * 
-	 * @param TestFeedbackCollection A collection of TestFeedback objects.
+	 * @param \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
 	 */
 	public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks) {
 		$this->testFeedbacks = $testFeedbacks;

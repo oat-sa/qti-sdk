@@ -14,13 +14,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
-
 
 namespace qtism\data;
 
@@ -45,7 +44,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * A collection of SplObservers.
 	 * 
-	 * @var SplObjectStorage
+	 * @var \SplObjectStorage
 	 */
 	private $observers = null;
 	
@@ -90,7 +89,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * An optional set of conditions evaluated during the test, that determine if the 
 	 * item or section is to be skipped (in nonlinear mode, pre-conditions are ignored).
 	 * 
-	 * @var PreConditionCollection
+	 * @var \qtism\data\rules\PreConditionCollection
 	 * @qtism-bean-property
 	 */
 	private $preConditions;
@@ -101,7 +100,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * An optional set of rules, evaluated during the test, for setting an alternative 
 	 * target as the next item or section (in nonlinear mode, branch rules are ignored).
 	 * 
-	 * @var BranchRuleCollection
+	 * @var \qtism\data\rules\BranchRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $branchRules;
@@ -112,7 +111,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Parameters used to control the allowable states of each item session 
 	 * (may be overridden at sub-section or item level).
 	 * 
-	 * @var ItemSessionControl
+	 * @var \qtism\data\ItemSessionControl
 	 * @qtism-bean-property
 	 */
 	private $itemSessionControl = null;
@@ -122,7 +121,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * 
 	 * Optionally controls the amount of time a candidate is allowed for this item or section.
 	 * 
-	 * @var TimeLimits
+	 * @var \qtism\data\TimeLimits
 	 * @qtism-bean-property
 	 */
 	private $timeLimits = null;
@@ -133,7 +132,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * @param string $identifier A QTI Identifier.
 	 * @param boolean $required true if it must absolutely appear during the session, false if not.
 	 * @param boolean $fixed true if it must not be affected by shuffling, false if it can be affected by shuffling.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier, $required or $fixed are not booleans.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, $required or $fixed are not booleans.
 	 */
 	public function __construct($identifier, $required = false, $fixed = false) {
 		$this->setObservers(new SplObjectStorage());
@@ -158,7 +157,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Set the identifier of the Section Part.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -185,7 +184,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Set if it must appear at least one during the session.
 	 * 
 	 * @param boolean $required true if it must appear at least one, otherwise false.
-	 * @throws InvalidArgumentException If $required is not a boolean.
+	 * @throws \InvalidArgumentException If $required is not a boolean.
 	 */
 	public function setRequired($required) {
 		if (is_bool($required)) {
@@ -210,7 +209,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Set if the section part is subject to shuffling.
 	 * 
 	 * @param boolean $fixed true if subject to shuffling, false if not.
-	 * @throws InvalidArgumentException If $fixed is not a boolean.
+	 * @throws \InvalidArgumentException If $fixed is not a boolean.
 	 */
 	public function setFixed($fixed) {
 		if (is_bool($fixed)) {
@@ -225,7 +224,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Get the collection of PreConditions bound to this section part.
 	 * 
-	 * @return PreConditionCollection A collection of PreCondition objects.
+	 * @return \qtism\data\rules\PreConditionCollection A collection of PreCondition objects.
 	 */
 	public function getPreConditions() {
 		return $this->preConditions;
@@ -234,7 +233,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Set the collection of PreConditions bound to this sections part.
 	 * 
-	 * @param PreConditionCollection $preConditions A collection of PreCondition objects.
+	 * @param \qtism\data\rules\PreConditionCollection $preConditions A collection of PreCondition objects.
 	 */
 	public function setPreConditions(PreConditionCollection $preConditions) {
 		$this->preConditions = $preConditions;
@@ -243,7 +242,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Get the collection of BranchRules bound to this section part.
 	 * 
-	 * @return BranchRuleCollection A collection of BranchRule objects.
+	 * @return \qtism\data\rules\BranchRuleCollection A collection of BranchRule objects.
 	 */
 	public function getBranchRules() {
 		return $this->branchRules;
@@ -252,7 +251,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Set the collection of BranchRules bound to this section part.
 	 * 
-	 * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
+	 * @param \qtism\data\rules\BranchRuleCollection $branchRules A collection of BranchRule objects.
 	 */
 	public function setBranchRules(BranchRuleCollection $branchRules) {
 		$this->branchRules = $branchRules;
@@ -262,7 +261,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Get the parameters used to control the allowable states of each item session.
 	 * Returns null value if not specified.
 	 * 
-	 * @return ItemSessionControl
+	 * @return \qtism\data\ItemSessionControl
 	 */
 	public function getItemSessionControl() {
 		return $this->itemSessionControl;
@@ -271,7 +270,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Set the parameters used to control the allowable states of each item session.
 	 * 
-	 * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
+	 * @param \qtism\data\ItemSessionControl $itemSessionControl An ItemSessionControl object.
 	 */
 	public function setItemSessionControl(ItemSessionControl $itemSessionControl = null) {
 		$this->itemSessionControl = $itemSessionControl;
@@ -290,7 +289,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Set the amount of time a candidate is allowed for this section.
 	 * Returns null value if not specified.
 	 * 
-	 * @return TimeLimits A TimeLimits object.
+	 * @return \qtism\data\TimeLimits A TimeLimits object.
 	 */
 	public function getTimeLimits() {
 		return $this->timeLimits;
@@ -308,7 +307,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Get the observers of the object.
 	 * 
-	 * @return SplObjectStorage An SplObjectStorage object.
+	 * @return \SplObjectStorage An SplObjectStorage object.
 	 */
 	protected function getObservers() {
 		return $this->observers;
@@ -317,7 +316,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * Set the observers of the object.
 	 * 
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 * @param \SplObjectStorage $observers An SplObjectStorage object.
 	 */
 	protected function setObservers(SplObjectStorage $observers) {
 		$this->observers = $observers;
@@ -327,7 +326,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	 * Set the amount of time a candidate is allowed for this section.
 	 * Returns null value if not specified.
 	 * 
-	 * @param TimeLimits $timeLimits A TimeLimits object.
+	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
 	 */
 	public function setTimeLimits(TimeLimits $timeLimits = null) {
 		$this->timeLimits = $timeLimits;
@@ -355,7 +354,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * SplSubject::attach implementation.
 	 * 
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -364,7 +363,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable {
 	/**
 	 * SplSubject::detach implementation.
 	 * 
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);
