@@ -374,6 +374,9 @@ attempt($session, 'ChoiceO', $effectiveAverageAttempt);
 moveNext($session, $averageNext);
 persist($storage, $session, $averagePersist);
 $end = microtime();
+
+$numberCorrect = $session->numberCorrect();
+
 unset($session);
 unset($storage);
 unset($test);
@@ -387,3 +390,4 @@ echo "Persist average time = " . (array_sum($averagePersist) / count($averagePer
 echo "MoveNext average time = " . (array_sum($averageNext) / count($averageNext)) . "\n";
 echo "Load average time = " . (array_sum($averageLoad) / count($averageLoad)) . "\n";
 echo "Neighbourhood average time = " . (array_sum($averageNeighbourhood) / count($averageNeighbourhood)) . "\n";
+echo "Number correct = ${numberCorrect}\n";

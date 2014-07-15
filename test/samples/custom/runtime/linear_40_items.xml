@@ -481,7 +481,7 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q34" href="./Q34.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q35" href="./Q34.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceI</value>
@@ -495,35 +495,7 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q35" href="./Q35.xml" timeDependent="false">
-				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-					<correctResponse>
-						<value>ChoiceH</value>
-					</correctResponse>
-				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-					<defaultValue>
-						<value>0</value>
-					</defaultValue>
-				</outcomeDeclaration>
-				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-			</assessmentItemRef>
-			
-			<assessmentItemRef identifier="Q36" href="./Q36.xml" timeDependent="false">
-				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-					<correctResponse>
-						<value>ChoiceI</value>
-					</correctResponse>
-				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-					<defaultValue>
-						<value>0</value>
-					</defaultValue>
-				</outcomeDeclaration>
-				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-			</assessmentItemRef>
-			
-			<assessmentItemRef identifier="Q37" href="./Q37.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q36" href="./Q35.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceJ</value>
@@ -537,21 +509,7 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q38" href="./Q38.xml" timeDependent="false">
-				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
-					<correctResponse>
-						<value>ChoiceJ</value>
-					</correctResponse>
-				</responseDeclaration>
-				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-					<defaultValue>
-						<value>0</value>
-					</defaultValue>
-				</outcomeDeclaration>
-				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-			</assessmentItemRef>
-			
-			<assessmentItemRef identifier="Q39" href="./Q39.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q37" href="./Q36.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceK</value>
@@ -565,10 +523,38 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 			
-			<assessmentItemRef identifier="Q40" href="./Q40.xml" timeDependent="false">
+			<assessmentItemRef identifier="Q38" href="./Q37.xml" timeDependent="false">
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>ChoiceL</value>
+					</correctResponse>
+				</responseDeclaration>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+					<defaultValue>
+						<value>0</value>
+					</defaultValue>
+				</outcomeDeclaration>
+				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+			</assessmentItemRef>
+			
+			<assessmentItemRef identifier="Q39" href="./Q38.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceM</value>
+					</correctResponse>
+				</responseDeclaration>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+					<defaultValue>
+						<value>0</value>
+					</defaultValue>
+				</outcomeDeclaration>
+				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+			</assessmentItemRef>
+			
+			<assessmentItemRef identifier="Q40" href="./Q39.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceN</value>
 					</correctResponse>
 				</responseDeclaration>
 				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
