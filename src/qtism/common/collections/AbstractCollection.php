@@ -338,8 +338,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	/**
 	 * Get the difference between this collection and another one.
 	 * 
-	 * @param qtism\common\collections\AbstractCollection $collection
-	 * @return qtism\common\collections\AbstractCollection
+	 * @param \qtism\common\collections\AbstractCollection $collection
+	 * @return \qtism\common\collections\AbstractCollection
 	 */
 	public function diff(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {
@@ -355,8 +355,8 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 	/**
 	 * Get the intersection between this collection and another one.
 	 * 
-	 * @param qtism\common\collections\AbstractCollection $collection
-	 * @return qtism\common\collections\AbstractCollection
+	 * @param \qtism\common\collections\AbstractCollection $collection
+	 * @return \qtism\common\collections\AbstractCollection
 	 */
 	public function intersect(AbstractCollection $collection) {
 	    if (get_class($this) === get_class($collection)) {

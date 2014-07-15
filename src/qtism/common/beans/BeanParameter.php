@@ -46,7 +46,7 @@ class BeanParameter {
      * @param string $class The class name.
      * @param string $method The method name.
      * @param string $name The parameter name.
-     * @throws qtism\common\beans\BeanException If no such parameter exists in $class::$method.
+     * @throws \qtism\common\beans\BeanException If no such parameter exists in $class::$method.
      */
     public function __construct($class, $method, $name) {
         try {
@@ -61,7 +61,7 @@ class BeanParameter {
     /**
      * Set the wrapped ReflectionParameter object.
      * 
-     * @param qtism\common\beans\ReflectionParameter $parameter A ReflectionParameter object.
+     * @param \qtism\common\beans\ReflectionParameter $parameter A ReflectionParameter object.
      */
     protected function setParameter(ReflectionParameter $parameter) {
         $this->parameter = $parameter;
@@ -70,7 +70,7 @@ class BeanParameter {
     /**
      * Get the wrapped ReflectionParameter object.
      * 
-     * @return qtism\common\beans\ReflectionParameter A ReflectionParameter object.
+     * @return \qtism\common\beans\ReflectionParameter A ReflectionParameter object.
      */
     public function getParameter() {
         return $this->parameter;

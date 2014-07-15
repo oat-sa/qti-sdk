@@ -113,7 +113,7 @@ abstract class StreamException extends Exception {
     /**
      * Get the IStream object where the error occured.
      * 
-     * @return qtism\common\storage\IStream An IStream object.
+     * @return \qtism\common\storage\IStream An IStream object.
      */
     public function getSource() {
         return $this->source;
@@ -122,7 +122,7 @@ abstract class StreamException extends Exception {
     /**
      * Set the IStream object where the error occured.
      * 
-     * @param qtism\common\storage\IStream $source An IStream object.
+     * @param \qtism\common\storage\IStream $source An IStream object.
      */
     protected function setSource(IStream $source) {
         $this->source = $source;

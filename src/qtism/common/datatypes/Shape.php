@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
  *  
@@ -87,6 +87,11 @@ class Shape implements Enumeration {
 	 */
 	const ELLIPSE = 4;
 	
+	/**
+	 * Get the enumeration as an array.
+	 * 
+	 * @return array An associative array.
+	 */
 	public static function asArray() {
 		return array(
 			'DEF' => self::DEF,
@@ -97,6 +102,12 @@ class Shape implements Enumeration {
 		);
 	}
 	
+	/**
+	 * Get the constant value associated with $name.
+	 * 
+	 * @param string $name
+	 * @return integer|boolean The constant value associated with the name or false if not found.
+	 */
 	public static function getConstantByName($name) {
 		switch (strtolower($name)) {
 			case 'default':
@@ -125,6 +136,12 @@ class Shape implements Enumeration {
 		}
 	}
 	
+	/**
+	 * Get the name associated with $constant.
+	 * 
+	 * @param integer $constant
+	 * @return string|boolean The name or false if not found.
+	 */
 	public static function getNameByConstant($constant) {
 		switch ($constant) {
 			case self::DEF:

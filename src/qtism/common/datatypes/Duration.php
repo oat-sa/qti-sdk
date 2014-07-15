@@ -56,7 +56,7 @@ class Duration implements Comparable, QtiDatatype {
     
     /**
      * 
-     * @var DateInterval
+     * @var \DateInterval
      */
 	private $interval;
 	
@@ -90,7 +90,7 @@ class Duration implements Comparable, QtiDatatype {
 			try {
 			    $tz = new DateTimeZone(self::TIMEZONE);
 				$d1 = new DateTime('now', $tz);
-				$d2 = new DateTime('now', $tz);
+				$d2 = clone $d1;
 				$d2->add(new DateInterval($intervalSpec));
 				$interval = $d2->diff($d1);
 				$interval->invert = ($interval->invert === 1) ? 0 : 1;
@@ -113,7 +113,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Create a Duration object from a DateInterval object.
 	 * 
 	 * @param \DateInterval $interval
-	 * @return qtism\common\datatypes\Duration
+	 * @return \qtism\common\datatypes\Duration
 	 */
 	static public function createFromDateInterval(DateInterval $interval) {
 	    $duration = new Duration('PT0S');
@@ -261,7 +261,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is shorter
 	 * than the one described by $duration.
 	 * 
-	 * @param qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+	 * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
 	public function shorterThan(Duration $duration) {
@@ -292,7 +292,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is longer than or
 	 * equal to the one described by $duration.
 	 * 
-	 * @param qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+	 * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
 	public function longerThanOrEquals(Duration $duration) {
@@ -324,7 +324,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * 
 	 * For instance, PT1S + PT1S = PT2S.
 	 * 
-	 * @param qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
+	 * @param \qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
 	 */
 	public function add($duration) {
 		$d1 = $this->refDate; 

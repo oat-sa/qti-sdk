@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -47,7 +47,7 @@ class BeanProperty {
      * 
      * @param string $class The name of the class the property belongs to.
      * @param string $name The name of the property.
-     * @throws qtism\common\beans\BeanException If such a property does not exist or is not correctly annotated.
+     * @throws \qtism\common\beans\BeanException If such a property does not exist or is not correctly annotated.
      */
     public function __construct($class, $name) {
         try {
@@ -76,7 +76,7 @@ class BeanProperty {
      * Set the wrapped ReflectionProperty object.
      * 
      * @param \ReflectionProperty $property A ReflectionProperty object.
-     * @throws qtism\common\beans\BeanException If the given $property is not annotated with @qtism-bean-property.
+     * @throws \qtism\common\beans\BeanException If the given $property is not annotated with @qtism-bean-property.
      */
     protected function setProperty(ReflectionProperty $property) {
         if (mb_strpos($property->getDocComment(), Bean::ANNOTATION_PROPERTY, 0, 'UTF-8') !== false) {
@@ -91,7 +91,7 @@ class BeanProperty {
     /**
      * Get the wrapped ReflectionProperty.
      * 
-     * @return qtism\common\beans\ReflectionProperty A ReflectionProperty object.
+     * @return \qtism\common\beans\ReflectionProperty A ReflectionProperty object.
      */
     public function getProperty() {
         return $this->property;

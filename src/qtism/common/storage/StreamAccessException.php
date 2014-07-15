@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
  *  
@@ -73,7 +73,7 @@ class StreamAccessException extends Exception {
     /**
      * Get the AbstractStreamAccess object that caused the error.
      *
-     * @param qtism\common\storage\AbstractStreamAccess $source An AbstractStreamAccess object.
+     * @param \qtism\common\storage\AbstractStreamAccess $source An AbstractStreamAccess object.
      */
     protected function setSource(AbstractStreamAccess $source) {
         $this->source = $source;
@@ -82,7 +82,7 @@ class StreamAccessException extends Exception {
     /**
      * Set the AbstractStreamAccess object that caused the error.
      *
-     * @return qtism\common\storage\AbstractStreamAccess An AbstractStreamAccess object.
+     * @return \qtism\common\storage\AbstractStreamAccess An AbstractStreamAccess object.
      */
     public function getSource() {
         return $this->source;

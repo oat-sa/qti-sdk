@@ -60,7 +60,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A collection of QTI identifiers representing categories to which the 
 	 * Assessment Item is assigned.
 	 * 
-	 * @var qtism\common\collections\IdentifierCollection
+	 * @var \qtism\common\collections\IdentifierCollection
 	 * @qtism-bean-property
 	 */
 	private $categories;
@@ -68,7 +68,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * A collection of VariableMapping objects.
 	 * 
-	 * @var qtism\data\state\VariableMappingCollection
+	 * @var \qtism\data\state\VariableMappingCollection
 	 * @qtism-bean-property
 	 */
 	private $variableMappings;
@@ -84,7 +84,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * A collection of TemplateDefault objects.
 	 * 
-	 * @var qtism\data\state\TemplateDefaultCollection
+	 * @var \qtism\data\state\TemplateDefaultCollection
 	 * @qtism-bean-property
 	 */
 	private $templateDefaults;
@@ -141,7 +141,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Get the categories to which the item belongs.
 	 * 
-	 * @return qtism\common\collections\IdentifierCollection A collection of QTI Identifiers.
+	 * @return \qtism\common\collections\IdentifierCollection A collection of QTI Identifiers.
 	 */
 	public function getCategories() {
 		return $this->categories;
@@ -150,7 +150,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the categories to which the item belongs.
 	 * 
-	 * @param qtism\common\collections\IdentifierCollection $categories A collection of QTI Identifiers.
+	 * @param \qtism\common\collections\IdentifierCollection $categories A collection of QTI Identifiers.
 	 */
 	public function setCategories(IdentifierCollection $categories) {
 		$this->categories = $categories;
@@ -168,7 +168,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the Variable Mappings related to the referenced item.
 	 * 
-	 * @param qtism\data\state\VariableMappingCollection $variableMappings A collection of VariableMapping objects.
+	 * @param \qtism\data\state\VariableMappingCollection $variableMappings A collection of VariableMapping objects.
 	 */
 	public function setVariableMappings(VariableMappingCollection $variableMappings) {
 		$this->variableMappings = $variableMappings;
@@ -177,7 +177,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Get the Weights defined for scaling the referenced item's outcomes.
 	 * 
-	 * @return qtism\data\state\WeightCollection A collection of Weight objects.
+	 * @return \qtism\data\state\WeightCollection A collection of Weight objects.
 	 */
 	public function getWeights() {
 		return $this->weights;
@@ -186,7 +186,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the Weights defined for scaling the referenced item's outcomes.
 	 * 
-	 * @param qtism\data\state\WeightCollection $weights A collection of Weight objects.
+	 * @param \qtism\data\state\WeightCollection $weights A collection of Weight objects.
 	 */
 	public function setWeights(WeightCollection $weights) {
 		$this->weights = $weights;
@@ -196,7 +196,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Get the Template Defaults that alter the default value of a template variable
 	 * declared by the referenced item.
 	 * 
-	 * @return qtism\data\state\TemplateDefaultCollection A collection of TemplateDefault objects.
+	 * @return \qtism\data\state\TemplateDefaultCollection A collection of TemplateDefault objects.
 	 */
 	public function getTemplateDefaults() {
 		return $this->templateDefaults;
@@ -206,7 +206,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Set the Template Defaults that alter the default value of a template variable
 	 * declared by the referenced item.
 	 * 
-	 * @param qtism\data\state\TemplateDefaultCollection $templateDefaults A collection of TemplateDefault objects.
+	 * @param \qtism\data\state\TemplateDefaultCollection $templateDefaults A collection of TemplateDefault objects.
 	 */
 	public function setTemplateDefaults(TemplateDefaultCollection $templateDefaults) {
 		$this->templateDefaults = $templateDefaults;

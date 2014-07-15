@@ -133,7 +133,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The response declarations.
 	 * 
-	 * @var ResponseDeclarationCollection
+	 * @var \qtism\data\state\ResponseDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $responseDeclarations;
@@ -141,7 +141,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The outcome declarations.
 	 * 
-	 * @var OutcomeDeclarationCollection
+	 * @var \qtism\data\state\OutcomeDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeDeclarations;
@@ -149,7 +149,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The template declarations.
 	 * 
-	 * @var TemplateDeclarationCollection
+	 * @var \qtism\data\state\TemplateDeclarationCollection
 	 * @qtism-bean-property
 	 */
 	private $templateDeclarations;
@@ -157,7 +157,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The stylesheets of the item.
 	 * 
-	 * @var StylesheetCollection
+	 * @var \qtism\data\content\StylesheetCollection
 	 * @qtism-bean-property
 	 */
 	private $stylesheets;
@@ -165,7 +165,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The content body of the item.
 	 * 
-	 * @var ItemBody
+	 * @var \qtism\data\ItemBody
 	 * @qtism-bean-property
 	 */
 	private $itemBody = null;
@@ -173,7 +173,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The templateProcessing.
 	 * 
-	 * @var TemplateProcessing
+	 * @var \qtism\data\processing\TemplateProcessing
 	 * @qtism-bean-property
 	 */
 	private $templateProcessing = null;
@@ -181,7 +181,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The responseProcessing.
 	 * 
-	 * @var ResponseProcessing
+	 * @var \qtism\data\processing\ResponseProcessing
 	 * @qtism-bean-property
 	 */
 	private $responseProcessing = null;
@@ -189,14 +189,14 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * The modalFeedbacks.
 	 * 
-	 * @var ModalFeedbackCollection
+	 * @var \qtism\data\content\ModalFeedbackCollection
 	 */
 	private $modalFeedbacks;
 	
 	/**
 	 * The observers of this object.
 	 * 
-	 * @var SplObjectStorage
+	 * @var \SplObjectStorage
 	 */
 	private $observers;
 	
@@ -465,7 +465,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the response declarations.
 	 * 
-	 * @param qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
+	 * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
 	 */
 	public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations) {
 		$this->responseDeclarations = $responseDeclarations;
@@ -474,7 +474,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the response declarations.
 	 * 
-	 * @return qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+	 * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
 	 */
 	public function getResponseDeclarations() {
 		return $this->responseDeclarations;
@@ -492,7 +492,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the outcome declarations.
 	 * 
-	 * @return qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
 	 */
 	public function getOutcomeDeclarations() {
 		return $this->outcomeDeclarations;
@@ -501,7 +501,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the template declarations.
 	 * 
-	 * @param qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+	 * @param \qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
 	 */
 	public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations) {
 	    $this->templateDeclarations = $templateDeclarations;
@@ -521,7 +521,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * to $templateProcessing to express that there is not TemplateProcessing object
 	 * bound to the item.
 	 * 
-	 * @param qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null.
+	 * @param \qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null.
 	 */
 	public function setTemplateProcessing(TemplateProcessing $templateProcessing = null) {
 	    $this->templateProcessing = $templateProcessing;
@@ -531,7 +531,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	 * Get the TemplateProcessing object composing the item. If no TemplateProcessing
 	 * object is bound to the item, the null value is returned.
 	 * 
-	 * @return qtism\data\processing\TemplateProcessing A TemplateProcessing object or null.
+	 * @return \qtism\data\processing\TemplateProcessing A TemplateProcessing object or null.
 	 */
 	public function getTemplateProcessing() {
 	    return $this->templateProcessing;
@@ -549,7 +549,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the stylesheets.
 	 * 
-	 * @param qtism\data\content\StylesheetCollection $stylesheets A collection of Stylesheet objects.
+	 * @param \qtism\data\content\StylesheetCollection $stylesheets A collection of Stylesheet objects.
 	 */
 	public function setStylesheets(StylesheetCollection $stylesheets) {
 	    $this->stylesheets = $stylesheets;
@@ -558,7 +558,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the stylesheets.
 	 * 
-	 * @return qtism\data\content\StylesheetCollection A collection of Stylesheet objects.
+	 * @return \qtism\data\content\StylesheetCollection A collection of Stylesheet objects.
 	 */
 	public function getStylesheets() {
 	    return $this->stylesheets;
@@ -567,7 +567,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the ItemBody object representing the content body of the item.
 	 * 
-	 * @param qtism\data\content\ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
+	 * @param \qtism\data\content\ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
 	 */
 	public function setItemBody(ItemBody $itemBody = null) {
 	    $this->itemBody = $itemBody;
@@ -576,7 +576,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the ItemBody object representing the content body of the item.
 	 * 
-	 * @return qtism\data\content\ItemBody An ItemBody object or the NULL value if the item has no content.
+	 * @return \qtism\data\content\ItemBody An ItemBody object or the NULL value if the item has no content.
 	 */
 	public function getItemBody() {
 	    return $this->itemBody;
@@ -594,7 +594,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the associated ResponseProcessing object.
 	 * 
-	 * @return qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+	 * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
 	 */
 	public function getResponseProcessing() {
 		return $this->responseProcessing;
@@ -603,7 +603,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the associated ResponseProcessing object.
 	 * 
-	 * @param qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
+	 * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
 	 */
 	public function setResponseProcessing(ResponseProcessing $responseProcessing = null) {
 		$this->responseProcessing = $responseProcessing;
@@ -621,7 +621,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Set the associated ModalFeedback objects.
 	 * 
-	 * @param qtism\data\content\ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
+	 * @param \qtism\data\content\ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
 	 */
 	public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks) {
 	    $this->modalFeedbacks = $modalFeedbacks;
@@ -630,7 +630,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	/**
 	 * Get the associated ModalFeedback objects.
 	 * 
-	 * @return qtism\data\content\ModalFeedbackCollection A collection of ModalFeedback objects.
+	 * @return \qtism\data\content\ModalFeedbackCollection A collection of ModalFeedback objects.
 	 */
 	public function getModalFeedbacks() {
 	    return $this->modalFeedbacks;

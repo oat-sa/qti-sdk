@@ -116,18 +116,38 @@ class FileSystemFile implements File {
         return $this->path;
     }
     
+    /**
+     * Set the mime-type of the file.
+     * 
+     * @param string $mimeType
+     */
     protected function setMimeType($mimeType) {
         $this->mimeType = $mimeType;
     }
     
+    /**
+     * Get the mime-type of the file.
+     * 
+     * @return string
+     */
     public function getMimeType() {
         return $this->mimeType;
     }
     
+    /**
+     * Get the name of the file.
+     * 
+     * @return string
+     */
     public function getFilename() {
         return $this->filename;
     }
     
+    /**
+     * Set the name of the file.
+     * 
+     * @param string $filename
+     */
     protected function setFilename($filename) {
         $this->filename = $filename;
     }
@@ -182,7 +202,7 @@ class FileSystemFile implements File {
      * @param string $mimeType The MIME type of the file.
      * @param mixed $withFilename Whether or not consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
      * @throws \RuntimeException If something wrong happens.
-     * @return qtism\common\datatypes\files\FileSystemFile
+     * @return \qtism\common\datatypes\files\FileSystemFile
      */
     static public function createFromExistingFile($source, $destination, $mimeType, $withFilename = true) {
         
@@ -257,7 +277,7 @@ class FileSystemFile implements File {
      * @param string $destination
      * @param string $mimeType
      * @param string $filename
-     * @return qtism\common\datatypes\files\FileSystemFile
+     * @return \qtism\common\datatypes\files\FileSystemFile
      */
     static public function createFromData($data, $destination, $mimeType, $filename = '') {
         $tmp = tempnam('/tmp', 'qtism');
@@ -272,8 +292,8 @@ class FileSystemFile implements File {
      * Retrieve a previously persisted file.
      * 
      * @param string $path The path to the persisted file.
-     * @throws RuntimeException If something wrong occurs while retrieving the file.
-     * @return FileSystemFile
+     * @throws \RuntimeException If something wrong occurs while retrieving the file.
+     * @return \qtism\common\datatypes\files\FileSystemFile
      */
     static public function retrieveFile($path) {
         return new static($path);

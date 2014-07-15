@@ -45,5 +45,4 @@ class BeanMethodCollection extends AbstractCollection {
             throw new InvalidArgumentException($msg);
         }
     }
-    
 }
