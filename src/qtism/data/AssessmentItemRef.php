@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -60,7 +60,7 @@ class AssessmentItemRef extends SectionPart {
 	 * A collection of QTI identifiers representing categories to which the 
 	 * Assessment Item is assigned.
 	 * 
-	 * @var IdentifierCollection
+	 * @var qtism\common\collections\IdentifierCollection
 	 * @qtism-bean-property
 	 */
 	private $categories;
@@ -68,7 +68,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * A collection of VariableMapping objects.
 	 * 
-	 * @var VariableMappingCollection
+	 * @var qtism\data\state\VariableMappingCollection
 	 * @qtism-bean-property
 	 */
 	private $variableMappings;
@@ -76,7 +76,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * A collection of Weight objects.
 	 * 
-	 * @var WeightCollection
+	 * @var qtism\data\state\WeightCollection
 	 * @qtism-bean-property
 	 */
 	private $weights;
@@ -84,7 +84,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * A collection of TemplateDefault objects.
 	 * 
-	 * @var TemplateDefaultCollection
+	 * @var qtism\data\state\TemplateDefaultCollection
 	 * @qtism-bean-property
 	 */
 	private $templateDefaults;
@@ -95,7 +95,7 @@ class AssessmentItemRef extends SectionPart {
 	 * @param string $identifier A QTI Identifier.
 	 * @param string $href The URI to refer to the item's file.
 	 * @param IdentifierCollection $categories The categories to which the item belongs to.
-	 * @throws InvalidArgumentException If $href is not a string.
+	 * @throws \InvalidArgumentException If $href is not a string.
 	 */
 	public function __construct($identifier, $href, IdentifierCollection $categories = null) {
 		parent::__construct($identifier);
@@ -126,7 +126,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Set the URI that references the item's file.
 	 * 
 	 * @param string $href A URI.
-	 * @throws InvalidArgumentException If $href is not a string.
+	 * @throws \InvalidArgumentException If $href is not a string.
 	 */
 	public function setHref($href) {
 		if (gettype($href) === 'string') {
@@ -141,7 +141,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Get the categories to which the item belongs.
 	 * 
-	 * @return IdentifierCollection A collection of QTI Identifiers.
+	 * @return qtism\common\collections\IdentifierCollection A collection of QTI Identifiers.
 	 */
 	public function getCategories() {
 		return $this->categories;
@@ -150,7 +150,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the categories to which the item belongs.
 	 * 
-	 * @param IdentifierCollection $categories A collection of QTI Identifiers.
+	 * @param qtism\common\collections\IdentifierCollection $categories A collection of QTI Identifiers.
 	 */
 	public function setCategories(IdentifierCollection $categories) {
 		$this->categories = $categories;
@@ -159,7 +159,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Get the Variable Mappings related to the referenced item.
 	 * 
-	 * @return VariableMappingCollection A collection of VariableMapping objects.
+	 * @return qtism\data\state\VariableMappingCollection A collection of VariableMapping objects.
 	 */
 	public function getVariableMappings() {
 		return $this->variableMappings;
@@ -168,7 +168,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the Variable Mappings related to the referenced item.
 	 * 
-	 * @param VariableMappingCollection $variableMappings A collection of VariableMapping objects.
+	 * @param qtism\data\state\VariableMappingCollection $variableMappings A collection of VariableMapping objects.
 	 */
 	public function setVariableMappings(VariableMappingCollection $variableMappings) {
 		$this->variableMappings = $variableMappings;
@@ -177,7 +177,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Get the Weights defined for scaling the referenced item's outcomes.
 	 * 
-	 * @return WeightCollection A collection of Weight objects.
+	 * @return qtism\data\state\WeightCollection A collection of Weight objects.
 	 */
 	public function getWeights() {
 		return $this->weights;
@@ -186,7 +186,7 @@ class AssessmentItemRef extends SectionPart {
 	/**
 	 * Set the Weights defined for scaling the referenced item's outcomes.
 	 * 
-	 * @param WeightCollection $weights A collection of Weight objects.
+	 * @param qtism\data\state\WeightCollection $weights A collection of Weight objects.
 	 */
 	public function setWeights(WeightCollection $weights) {
 		$this->weights = $weights;
@@ -196,7 +196,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Get the Template Defaults that alter the default value of a template variable
 	 * declared by the referenced item.
 	 * 
-	 * @return TemplateDefaultCollection A collection of TemplateDefault objects.
+	 * @return qtism\data\state\TemplateDefaultCollection A collection of TemplateDefault objects.
 	 */
 	public function getTemplateDefaults() {
 		return $this->templateDefaults;
@@ -206,7 +206,7 @@ class AssessmentItemRef extends SectionPart {
 	 * Set the Template Defaults that alter the default value of a template variable
 	 * declared by the referenced item.
 	 * 
-	 * @param TemplateDefaultCollection $templateDefaults A collection of TemplateDefault objects.
+	 * @param qtism\data\state\TemplateDefaultCollection $templateDefaults A collection of TemplateDefault objects.
 	 */
 	public function setTemplateDefaults(TemplateDefaultCollection $templateDefaults) {
 		$this->templateDefaults = $templateDefaults;

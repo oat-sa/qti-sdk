@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
  *  
@@ -24,7 +24,7 @@
  */
 namespace qtism\common\collections;
 
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 use qtism\common\utils\Format as Format;
 
 /**
