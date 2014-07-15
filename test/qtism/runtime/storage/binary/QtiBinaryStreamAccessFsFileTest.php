@@ -386,13 +386,14 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $numAttempts = "\x02"; // 2
         $duration = pack('S', 4) . 'PT0S'; // 0 seconds recorded yet.
         $completionStatus = pack('S', 10) . 'incomplete';
+        $hasTimeReference = "\x01"; // true
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
         $varCount = "\x02"; // 2 variables (SCORE & RESPONSE).
         
         $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
         $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
-        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response));
+        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response));
         $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccessFsfile($stream);
@@ -441,6 +442,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $this->assertFalse($session->isAttempting());
         $this->assertEquals(0.0, $session['SCORE']->getValue());
         $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
+        $this->assertSame(null, $session->getTimeReference());
+        $this->assertFalse($session->hasTimeReference());
     }
     
     public function testReadRouteItem() {

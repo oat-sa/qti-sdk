@@ -552,8 +552,16 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                 $session['duration'] = $this->readDuration();
                 $session['completionStatus'] = new Identifier($this->readString());
                 
-                if ($session['numAttempts']->getValue() > 0) {
-                    $session->setTimeReference($this->readDateTime());
+                if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 6) {
+                    if ($this->readBoolean() === true) {
+                        // A time reference is set.
+                        $session->setTimeReference($this->readDateTime());
+                    }
+                }
+                else {
+                    if ($session['numAttempts']->getValue() > 0) {
+                        $session->setTimeReference($this->readDateTime());
+                    }
                 }
             }
             
@@ -620,8 +628,17 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                 $this->writeDuration($session['duration']);
                 $this->writeString($session['completionStatus']->getValue());
                 
-                if ($session['numAttempts']->getValue() > 0) {
-                    $this->writeDateTime($session->getTimeReference());
+                $timeReference = $session->getTimeReference();
+                if (is_null($timeReference) === true) {
+                    // Describe that we have no time reference for the session.
+                    $this->writeBoolean(false);
+                }
+                else {
+                    // Describe that we have a time reference for the session.
+                    $this->writeBoolean(true);
+                    
+                    // Write the time reference.
+                    $this->writeDateTime($timeReference);
                 }
             }
             

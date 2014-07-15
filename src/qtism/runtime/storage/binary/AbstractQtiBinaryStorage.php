@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\storage\BinaryStreamAccess;
+
 use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -132,14 +134,26 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
             
+            // -- Deal with intrinsic values of the Test Session.
             // write the QTI Binary Storage version in use to persist the test session.
             $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
             $access->writeTinyInt($assessmentTestSession->getState());
             
+            // Write the current position in the route.
             $route = $assessmentTestSession->getRoute();
             $access->writeTinyInt($route->getPosition());
             
-            // Persist the Route of the AssessmentTestSession and the related item sessions.
+            // persist time reference.
+            $timeReference = $assessmentTestSession->getTimeReference();
+            if (is_null($timeReference) === true) {
+                $access->writeBoolean(false);
+            }
+            else {
+                $access->writeBoolean(true);
+                $access->writeDateTime($timeReference);
+            }
+            
+            // -- Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
@@ -169,7 +183,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             }
             
             // Deal with test session configuration.
-            // -- AutoForward (not in use anymore, fake it).
+            // !!! AutoForward (not in use anymore, fake it).
             $access->writeBoolean(false);
             
             // Persist the test-level global scope.
@@ -212,9 +226,20 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
             
+            // -- Retrieve in which version the binary date is persisted.
             $version = $access->readTinyInt();
+            
+            // -- Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
+            
+            if ($access->readBoolean() === true) {
+                $timeReference = $access->readDateTime();
+            }
+            else {
+                $timeReference = null;
+            }
+            
             
             // Build the route and the item sessions.
             $route = new Route();
@@ -252,6 +277,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
+            $assessmentTestSession->setTimeReference($timeReference);
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).
@@ -311,5 +337,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      */
     abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream);
     
+    /**
+     * 
+     * @param IStream $stream
+     * @return BinaryStreamAccess
+     */
     abstract protected function createBinaryStreamAccess(IStream $stream);
 }

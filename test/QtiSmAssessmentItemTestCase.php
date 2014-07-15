@@ -33,7 +33,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * The responseProcessing for item of the session is the template 'match_correct'.
 	 *
-	 * @return AssessmentItemSession
+	 * @return \qtism\runtime\tests\AssessmentItemSession
 	 */
 	protected static function instantiateBasicAssessmentItemSession(Duration $acceptableLatency = null) {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('

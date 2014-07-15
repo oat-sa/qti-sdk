@@ -36,10 +36,14 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
     
+        // The candidate begins the test session at 13:00:00.
+        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
         $session->beginTestSession();
+        
+        // A little bit of noisy persistence...
         $storage->persist($session);
-    
         $session = $storage->retrieve($test, $sessionId);
+        
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
     
         // The test session has begun. We are in linear mode so that all
@@ -64,14 +68,21 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
             $this->assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]->getValue());
         }
     
-        // Q01 - Correct response.
+        
+        // S01 -> Q01 - Correct response.
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
         $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
         $this->assertSame(null, $session['Q01.RESPONSE']);
     
+        // The candidate begins the attempt on Q01 at 13:00:00.
+        $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
-        sleep(1);
+        
+        // The canditate spends 1 second on item Q01.
+        $session->setTime(new DateTime('2014-07-14T13:00:01+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        
+        // Are durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT1S')));
         $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
         $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
@@ -84,107 +95,268 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // Because Q01 is not a multi-occurence item in the route, isLastOccurenceUpdate always return false.
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
     
+        // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
     
+        // After the persist, do we still have the correct scores and durations for Q01?.
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
     
-        // Q02 - Incorrect response.
+        
+        // S01 -> Q02 - Incorrect response.
         $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S01', $session->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
+        
+        // The candidate begins an attempt on Q02 at 13:00:02.
+        $session->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
+        
+        // The candidate spends 2 seconds on item Q02.
+        $session->setTime(new DateTime('2014-07-14T13:00:04+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'M')))))));
-        $session->moveNext();
-    
+        
+        // Whate about scores of Q02?
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
         $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
-    
-        // Q03 - Skip.
-        $session->beginAttempt();
-        $session->skip();
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT4S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT4S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT4S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        
         $session->moveNext();
     
+        
+        // S01 -> Q03 - Skip.
+        // The candidate begins an attempt on Q03 at 13:00:04.
+        $session->setTime(new DateTime('2014-07-14T13:00:04+00:00', new DateTimeZone('UTC')));
+        $session->beginAttempt();
+        
+        // The candidate spends 10 seconds on Q03 and then skip the item.
+        $session->setTime(new DateTime('2014-07-14T13:00:14+00:00', new DateTimeZone('UTC')));
+        $session->skip();
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        
+        // !!! We move to the next section S02.
+        $session->moveNext();
+    
+        // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
     
-        // Q04 - Correct response.
+        
+        // S02 -> Q04 - Correct response.
         $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals('S02', $session->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
+        
+        // The candidate begins an attempt on Q04 at 13:00:15.
+        $session->setTime(new DateTime('2014-07-14T13:00:15+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
+        
+        // The candidate spends 5 seconds on Q04.
+        $session->setTime(new DateTime('2014-07-14T13:00:20+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))))));
-        $session->moveNext();
-    
+        
+        // A little bit of noisy persistence...
+        $storage->persist($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // What about score of Q04.
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
         $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
-    
-        // Q05 - Skip.
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT20S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT20S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT6S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        
+        // A little bit of noisy persistence...
+        $storage->persist($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $session->moveNext();
+
+        
+        // S02 -> Q05 - Skip.
+        // The candidate begins the attempt on Q05 at 13:00:20.
+        $session->setTime(new DateTime('2014-07-14T13:00:20+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
+        
+        // The candidate spends 1 second on Q05.
+        $session->setTime(new DateTime('2014-07-14T13:00:21+00:00', new DateTimeZone('UTC')));
         $session->skip();
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT21S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT21S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT7S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        
+        // !!! We move to the next section S03.
         $session->moveNext();
     
+        
         // Q06 - Skip.
+        // The candidate begins the attempt on Q06 at 13:00:24.
+        $session->setTime(new DateTime('2014-07-14T13:00:24+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
+        
+        // The candidate spends 2 seconds on Q06.
+        $session->setTime(new DateTime('2014-07-14T13:00:26+00:00', new DateTimeZone('UTC')));
         $session->skip();
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT26S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT26S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
+        
+        // !!! We move to the next section S03.
         $session->moveNext();
     
+        // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
     
-        // Q07.1 - Incorrect response (but inside the circle).
+        
+        // S03 -> Q07.1 - Incorrect response (but inside the circle).
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
+        
+        // The candidate begins an attempt on Q07.1 at 13:00:28.
+        $session->setTime(new DateTime('2014-07-14T13:00:28+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
-        sleep(1);
-        $s02Duration = $session['S02.duration'];
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1S')));
+        
+        // The candidate spends 10 seconds on Q07.1.
+        $session->setTime(new DateTime('2014-07-14T13:00:38+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        
+        // Are the durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT38S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT38S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT12S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
+        
         $session->moveNext();
     
         // We now test the lastOccurence update for this multi-occurence item.
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
+        
+        // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
+        
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
     
-        // Q07.2 Incorrect response (outside the circle).
+        
+        // S03 -> Q07.2 - Incorrect response (outside the circle).
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
+        
+        // The candidate begins the attempt on Q07.2 at 13:00:38.
+        $session->setTime(new DateTime('2014-07-14T13:00:38+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
-        sleep(1);
+        
+        // The candidate spends a whole minute on Q07.2.
+        $session->setTime(new DateTime('2014-07-14T13:01:38+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(200, 200)))));
         
-        // Check that S02.duration was not updated.
-        $this->assertTrue($session['S02.duration']->equals($s02Duration));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT98S'))); // NO FEAR!
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M38S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1M12S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q07.2.duration']->equals(new Duration('PT1M')));
+        
         $session->moveNext();
     
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
+
+        // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
+
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));
         $this->assertTrue($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 1));
     
-        // Q07.3 Correct response (perfectly on the point).
+        
+        // S03 -> Q07.3 - Correct response (perfectly on the point).
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
+        
+        // The candidate takes an attempt on Q07.3 at 13:01:39
+        $session->setTime(new DateTime('2014-07-14T13:01:39+00:00', new DateTimeZone('UTC')));
         $session->beginAttempt();
+        
+        // The candidate takes an hour (yes, an hour) to respond on Q07.3.
+        $session->setTime(new DateTime('2014-07-14T14:01:39+00:00', new DateTimeZone('UTC')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
         $session->moveNext();
     
-        // End of test, outcome processing performed.
+        // -- End of test, outcome processing performed correctly?
+        
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
+        
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
         $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS01']);
         $this->assertEquals(1, $session['NCORRECTS01']->getValue());
@@ -198,6 +370,22 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(9, $session['NSELECTED']->getValue());
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['PERCENT_CORRECT']);
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
+        
+        // -- End of test, are durations correct?
+        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT3699S'))); // NO FEAR!
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1H1M39S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1H1M13S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q07.2.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['Q07.3.duration']->equals(new Duration('PT1H')));
     }
     
     public function testLinearNavigationSimultaneousSubmission() {

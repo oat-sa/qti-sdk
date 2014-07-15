@@ -24,6 +24,8 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\common\utils\Time;
+
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\Identifier;
@@ -163,7 +165,7 @@ class AssessmentItemSession extends State {
      * 
      * @var DateTime
      */
-    private $timeReference;
+    private $timeReference = null;
     
 	/**
 	 * The state of the Item Session as described
@@ -342,6 +344,15 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
+	 * Whether or not a timing reference is defined for this item session.
+	 * 
+	 * @return boolean
+	 */
+	public function hasTimeReference() {
+	    return $this->timeReference !== null;
+	}
+	
+	/**
 	 * Get the acceptable latency time to be applied when timelimits
 	 * are in force.
 	 * 
@@ -485,6 +496,42 @@ class AssessmentItemSession extends State {
 	    $this->sessionManager = $sessionManager;
 	}
 	
+	public function setTime(DateTime $time) {
+	    
+	    if ($this->hasTimeReference() === true) {
+	        
+	        if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
+	            // The session state is INTERACTING. Thus, we need to update the built-in
+	            // duration variable.
+	            $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
+	            $diffDuration = new Duration("PT${diffSeconds}S");
+	            $this['duration']->add($diffDuration);
+	            
+	            // Call all durationUpdate callbacks.
+	            foreach ($this->onDurationUpdate as $callBack) {
+	                call_user_func_array($callBack, array($this, $diffDuration));
+	            }
+	        }
+	        
+	        if ($this->isMaxTimeReached() === true) {
+	            // -- Maximum time is reached, close the session.
+	            
+	            // Limit duration to max time if needed.
+                $tl = $this->getTimeLimits();
+                if (($maxTime = $tl->getMaxTime()) !== null && $maxTime->shorterThan($this['duration']) === true) {
+                    $newDuration = clone $maxTime;
+                    $newDuration->add($this->getAcceptableLatency());
+                    $this['duration'] = $newDuration;
+                }
+	            
+	            $this->endItemSession();
+	        }
+	    }
+	    
+	    // Update reference time with $time.
+	    $this->setTimeReference($time);
+	}
+	
 	/**
 	 * Start the item session. The item session is started when the related item
 	 * becomes eligible for the candidate.
@@ -530,8 +577,6 @@ class AssessmentItemSession extends State {
 	 * @throws AssessmentItemSessionException
 	 */
 	public function beginAttempt() {
-	    
-	    // -- Are we allowed to begin a new attempt?
 	    
 	    /* If the current submission mode is SIMULTANEOUS, only 1 attempt is allowed per item.
 	     *
@@ -583,9 +628,6 @@ class AssessmentItemSession extends State {
 		// The session get the INTERACTING STATE.
 		$this->state = AssessmentItemSessionState::INTERACTING;
 		$this->attempting = true;
-		
-		// Register a time reference that will be used later on to compute the duration built-in variable.
-		$this->timeReference = new DateTime('now', new DateTimeZone('UTC'));
 	}
 	
 	/**
@@ -599,16 +641,28 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
-	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
+	 * @param boolean $forceLateSubmission
 	 * @throws AssessmentItemSessionException
 	 */
-	public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false) {
+	public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false) {
 	    
-	    // End of attempt, go in SUSPEND state.
-	    $this->suspend();
-
 	    // Flag to indicate if time is exceed or not.
 	    $maxTimeExceeded = false;
+	    
+	    if ($this->getState() === AssessmentItemSessionState::CLOSED) {
+	        
+	        if (($reached = $this->isMaxTimeReached()) === true && ($this->getTimeLimits()->doesAllowLateSubmission() || $forceLateSubmission) === false) {
+	            $msg = "The maximum time to be spent on the item session has been reached.";
+	            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);            
+	        }
+	        else if ($reached === true && ($this->getTimeLimits()->doesAllowLateSubmission() || $forceLateSubmission) === true) {
+	            $maxTimeExceeded = true;
+	        }
+	        else {
+	            $msg = "Cannot switch from item session state CLOSED to state SUPSPENDED.";
+	            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::STATE_VIOLATION);
+	        }
+	    }
 	    
 	    // Is timeLimits in force.
 	    if ($this->hasTimeLimits() === true) {
@@ -633,7 +687,7 @@ class AssessmentItemSession extends State {
 	            
 	            $maxTimeExceeded = true;
 	            
-	            if ($this->timeLimits->doesAllowLateSubmission() === false && $allowLateSubmission === false) {
+	            if ($this->timeLimits->doesAllowLateSubmission() === false && $forceLateSubmission === false) {
 	                $this['completionStatus']->setValue(self::COMPLETION_STATUS_INCOMPLETE);
 	                $msg = "The maximal duration is exceeded.";
 	                $this->endItemSession();
@@ -715,8 +769,7 @@ class AssessmentItemSession extends State {
 	    
 	    // -- Adaptive or non-adaptive item, maximum time limit reached but late submission allowed.
 	    if ($maxTimeExceeded === true) {
-	        $this->endItemSession();
-	        $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);   
+	        $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
 	    }
 	    // -- Adaptive item.
 		else if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
@@ -741,6 +794,12 @@ class AssessmentItemSession extends State {
 		// Wait for the next attempt.
 		
 		$this->attempting = false;
+		
+		// End of attempt, go in SUSPEND state.
+		if ($this->getState() !== AssessmentItemSessionState::CLOSED) {
+		    $this->suspend();
+		}
+	    
 	}
 	
 	/**
@@ -757,8 +816,7 @@ class AssessmentItemSession extends State {
 	            $code = AssessmentItemSessionException::STATE_VIOLATION;
 	            throw new AssessmentItemSessionException($msg, $this, $code);
 	        }
-	         
-	        $this->updateDuration();
+	        
 	        $this->state = AssessmentItemSessionState::SUSPENDED;
 	    }
 	}
@@ -780,32 +838,6 @@ class AssessmentItemSession extends State {
 	        } 
 	        
 	        $this->setState(AssessmentItemSessionState::INTERACTING);
-	        
-	        // Reset the time reference. If not, the time spent in SUSPENDED mode will be taken into account!
-	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
-	    }
-	}
-	
-	/**
-	 * Update the duration built-in variable. The update will only take
-	 * place if the current state of the item session is INTERACTING.
-	 * 
-	 */
-	public function updateDuration() {
-	    // If the current state is INTERACTING update duration built-in variable.
-	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
-	        $timeRef = $this->getTimeReference();
-	        $now = new DateTime('now', new DateTimeZone('UTC'));
-	        
-	        $data = &$this->getDataPlaceHolder();
-	        $diff = $timeRef->diff($now);
-	        $data['duration']->getValue()->add($diff);
-	        
-	        $this->setTimeReference($now);
-	        
-	        foreach ($this->onDurationUpdate as $callBack) {
-	            call_user_func_array($callBack, array($this, Duration::createFromDateInterval($diff)));
-	        }
 	    }
 	}
 	
@@ -815,7 +847,6 @@ class AssessmentItemSession extends State {
 	 * @return false|Duration A Duration object or false if there is no time limit.
 	 */
 	public function getRemainingTime() {
-	    $this->updateDuration();
 	    
 	    // false = unlimited
 	    $remainingTime = false;
@@ -1052,7 +1083,8 @@ class AssessmentItemSession extends State {
 	    $reached = false;
 	    
 	    if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
-	        if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
+            
+	        if ($this['duration']->getSeconds(true) >= $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
 	            $reached = true;
 	        }
 	    }

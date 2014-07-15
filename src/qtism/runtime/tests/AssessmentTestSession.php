@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
  *  
@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\tests;
 
+use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\IAssessmentItem;
 use qtism\common\enums\BaseType;
@@ -50,6 +51,8 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
+use \DateTime;
+use \DateTimeZone;
 use \SplObjectStorage;
 use \InvalidArgumentException;
 use \OutOfRangeException;
@@ -150,6 +153,13 @@ class AssessmentTestSession extends State {
 	private $sessionManager;
 	
 	/**
+	 * The Time Reference object.
+	 * 
+	 * @var DateTime
+	 */
+	private $timeReference = null;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -178,6 +188,50 @@ class AssessmentTestSession extends State {
 		
 		$this->setSessionId('no_session_id');
 		$this->setState(AssessmentTestSessionState::INITIAL);
+	}
+	
+	public function setTime(DateTime $time) {
+	    
+	    if ($this->hasTimeReference() === true) {
+	        
+	        if ($this->getState() === AssessmentTestSessionState::INTERACTING) {
+	            
+	            $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
+	            $diffDuration = new Duration("PT${diffSeconds}S");
+	            
+	            // Update the duration store.
+	            $routeItem = $this->getCurrentRouteItem();
+	            $durationStore = $this->getDurationStore();
+	             
+	            $assessmentTestDurationId = $routeItem->getAssessmentTest()->getIdentifier();
+	            $testPartDurationId = $routeItem->getTestPart()->getIdentifier();
+	            $assessmentSectionDurationIds = $routeItem->getAssessmentSections()->getKeys();
+
+	            foreach (array_merge(array($assessmentTestDurationId), array($testPartDurationId), $assessmentSectionDurationIds) as $id) {
+	                $durationStore[$id]->add($diffDuration);
+	            }
+	        }
+	    }
+	    
+	    // Update reference time with $time.
+	    $this->setTimeReference($time);
+	    
+	    if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
+	        // Tell the current item session the time has changed.
+	        $itemSession->setTime($time);
+	    }
+	}
+	
+	public function getTimeReference() {
+	    return $this->timeReference;
+	}
+	
+	public function setTimeReference(DateTime $timeReference = null) {
+	    $this->timeReference = $timeReference;
+	}
+	
+	public function hasTimeReference() {
+	    return $this->timeReference !== null;
 	}
 	
 	/**
@@ -298,10 +352,6 @@ class AssessmentTestSession extends State {
 	 */
 	public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore) {
 	    $this->assessmentItemSessionStore = $assessmentItemSessionStore;
-	    
-	    foreach ($this->assessmentItemSessionStore->getAllAssessmentItemSessions() as $itemSession) {
-	        $itemSession->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
-	    }
 	}
 	
 	/**
@@ -556,9 +606,8 @@ class AssessmentTestSession extends State {
 				
 				if ($v->getVariableName() === 'duration') {
 				    // Duration of the whole assessmentTest requested.
-				    $this->updateDuration();
 				    $durationStore = $this->getDurationStore();
-				    return $durationStore[$this->getCurrentRouteItem()->getAssessmentTest()->getIdentifier()];
+				    return $durationStore[$this->getAssessmentTest()->getIdentifier()];
 				}
 				else {
 				    $data = &$this->getDataPlaceHolder();
@@ -603,13 +652,7 @@ class AssessmentTestSession extends State {
 				    }
 				    
 				    try {
-				        $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);
-				        
-				        // If duration, update!
-				        if ($v->getVariableName() === 'duration') {
-				            $session->updateDuration();
-				        }
-				        
+				        $session = $store->getAssessmentItemSession($items[$v->getPrefix()], $sequence);				        
 				        return $session[$v->getVariableName()];
 				    }
 				    catch (OutOfBoundsException $e) {
@@ -618,7 +661,6 @@ class AssessmentTestSession extends State {
 				    }
 				}
 				else if ($v->getVariableName() === 'duration') {
-				    $this->updateDuration();
 				    $durationStore = $this->getDurationStore();
 				    return $durationStore[$v->getPrefix()];
 				}
@@ -768,7 +810,6 @@ class AssessmentTestSession extends State {
 	        $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
 	        
 	        $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
-	        $session->onDurationUpdate(array($this, 'onItemSessionDurationUpdate'));
 	        
 	        // Determine the item session control.
 	        if (($control = $routeItem->getItemSessionControl()) !== null) {
@@ -798,26 +839,6 @@ class AssessmentTestSession extends State {
 	 */
 	protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
 	    return $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
-	}
-	
-	/**
-	 * Callback to invoked when an item session duration is updated.
-	 * 
-	 * @param AssessmentItemSession $assessmentItemSession
-	 * @param Duration $diff
-	 */
-	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, Duration $diff) {
-	    $routeItem = $this->getCurrentRouteItem();
-	    $durationStore = $this->getDurationStore();
-	    
-	    $assessmentTestDurationId = $routeItem->getAssessmentTest()->getIdentifier();
-	    $testPartDurationId = $routeItem->getTestPart()->getIdentifier();
-	    $assessmentSectionDurationIds = $routeItem->getAssessmentSections()->getKeys();
-	    
-	    
-	    foreach (array_merge(array($assessmentTestDurationId), array($testPartDurationId), $assessmentSectionDurationIds) as $id) {
-	        $durationStore[$id]->add($diff);
-	    }
 	}
 	
 	/**
@@ -885,6 +906,13 @@ class AssessmentTestSession extends State {
 	        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
 	        
 	        if ($session->getState() === AssessmentItemSessionState::NOT_SELECTED) {
+	            
+	            // If we know "what time it is", we transmit
+	            // that information to the eligible item.
+	            if ($this->hasTimeReference() === true) {
+	                $session->setTime($this->getTimeReference());
+	            }
+	            
 	            $session->beginItemSession();
 	        }
 	        
@@ -1141,6 +1169,8 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
+	    
+	    $this->checkTimeLimits(true);
 
         $item = $this->getCurrentAssessmentItemRef();
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
@@ -1215,7 +1245,6 @@ class AssessmentTestSession extends State {
 	    $currentItem = $routeItem->getAssessmentItemRef();
 	    $currentOccurence = $routeItem->getOccurence();
 	    $session = $this->getItemSession($currentItem, $currentOccurence);
-	    $session->updateDuration();
 	    
 	    // -- Are time limits in force respected?
 	    if ($allowLateSubmission === false) {
@@ -2062,14 +2091,14 @@ class AssessmentTestSession extends State {
 	 * 
 	 * In case of error, the error code shipped with the AssessmentTestSessionException might be:
 	 * 
-	 * * AssessmentTestSession::ASSESSMENT_TEST_DURATION_OVERFLOW
-	 * * AssessmentTestSession::ASSESSMENT_TEST_DURATION_UNDERFLOW
-	 * * AssessmentTestSession::TEST_PART_DURATION_OVERFLOW
-	 * * AssessmentTestSession::TEST_PART_DURATION_UNDERFLOW
-	 * * AssessmentTestSession::ASSESSMENT_SECTION_DURATION_OVERFLOW
-	 * * AssessmentTestSession::ASSESSMENT_SECTION_DURATION_UNDERFLOW
-	 * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_OVERFLOW
-	 * * AssessmentTestSession::ASSESSMENT_ITEM_DURATION_UNDERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW
+	 * * AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW
+	 * * AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW
+	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW
 	 * 
 	 * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
 	 * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
@@ -2078,8 +2107,6 @@ class AssessmentTestSession extends State {
 	 * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
 	 */
 	public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false, $acceptableLatency = true) {
-	    
-	    $this->updateDuration();
 	    
 	    $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
 	    // Include assessmentItem only if formally asked by client-code.
@@ -2179,17 +2206,6 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    return $session;
-	}
-	
-	/**
-	 * Update the durations involved in the AssessmentTestSession to mirror the durations at the current time.
-	 * This method can be useful for stateless systems that make use of QtiSm.
-	 */
-	public function updateDuration() {
-	    
-	    if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
-	        $itemSession->updateDuration();
-	    }
 	}
 	
 	/**
