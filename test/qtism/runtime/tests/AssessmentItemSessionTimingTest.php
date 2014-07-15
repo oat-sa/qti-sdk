@@ -271,40 +271,6 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testAcceptableLatency() {
-        $itemSession = self::instantiateBasicAssessmentItemSession(new Duration('PT1S'));
-    
-        $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setMaxAttempts(3);
-        $itemSession->setItemSessionControl($itemSessionControl);
-    
-        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
-        $itemSession->setTimeLimits($timeLimits);
-    
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
-        $itemSession->beginItemSession();
-    
-        // Sleep 1 second to respect minTime and stay in the acceptable latency time.
-        $itemSession->beginAttempt();
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:02+00:00', new DateTimeZone('UTC')));
-        $itemSession->endAttempt();
-    
-        // Sleep 1 more second to achieve the attempt outside the time frame.
-        $itemSession->beginAttempt();
-        $itemSession->setTime(new DateTime('2014-07-14T13:00:03+00:00', new DateTimeZone('UTC')));
-    
-        try {
-            $itemSession->endAttempt();
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-            $this->assertEquals('PT3S', $itemSession['duration']->__toString());
-            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-            $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        }
-    }
-    
     public function testEvolutionBasicMultipleAttempts() {
     
         $count = 5;

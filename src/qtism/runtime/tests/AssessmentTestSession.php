@@ -2028,15 +2028,6 @@ class AssessmentTestSession extends State {
 	}
 	
 	/**
-	 * Get the acceptable latency time for the AssessmentTestSession.
-	 * 
-	 * @return Duration A Duration object.
-	 */
-	public function getAcceptableLatency() {
-	    return $this->getSessionManager()->getAcceptableLatency();
-	}
-	
-	/**
 	 * Get the time constraints running for the current testPart or/and current assessmentSection
 	 * or/and assessmentItem.
 	 * 
@@ -2102,11 +2093,10 @@ class AssessmentTestSession extends State {
 	 * 
 	 * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
 	 * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
-	 * @param boolean $acceptableLatency Whether or not consider the acceptable latency.
 	 * @throws AssessmentTestSessionException If one or more time limits in force are not respected.
 	 * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
 	 */
-	public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false, $acceptableLatency = true) {
+	public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false) {
 	    
 	    $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
 	    // Include assessmentItem only if formally asked by client-code.
@@ -2125,18 +2115,10 @@ class AssessmentTestSession extends State {
 	        
 	        if ($includeMinTime === true) {
 	            $minRemainingTime = $constraint->getMinimumRemainingTime();
-	            
-	            if ($acceptableLatency === true) {
-	                $minRemainingTime->add($this->getAcceptableLatency());
-	            }
 	        }
 	        
 	        if ($includeMaxTime === true) {
 	            $maxRemainingTime = $constraint->getMaximumRemainingTime();
-	            
-	            if ($acceptableLatency === true) {
-	                $maxRemainingTime->add($this->getAcceptableLatency());
-	            }
 	        }
 	        
 	        $minTimeRespected = !($includeMinTime === true && $minRemainingTime->getSeconds(true) > 0);

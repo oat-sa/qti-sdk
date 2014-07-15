@@ -353,16 +353,6 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * Get the acceptable latency time to be applied when timelimits
-	 * are in force.
-	 * 
-	 * @return Duration A Duration object.
-	 */
-	public function getAcceptableLatency() {
-	    return $this->getSessionManager()->getAcceptableLatency();
-	}
-	
-	/**
 	 * Whether or not minimum time limits must be taken into account.
 	 * 
 	 * @return boolean
@@ -520,7 +510,6 @@ class AssessmentItemSession extends State {
                 $tl = $this->getTimeLimits();
                 if (($maxTime = $tl->getMaxTime()) !== null && $maxTime->shorterThan($this['duration']) === true) {
                     $newDuration = clone $maxTime;
-                    $newDuration->add($this->getAcceptableLatency());
                     $this['duration'] = $newDuration;
                 }
 	            
@@ -1062,18 +1051,6 @@ class AssessmentItemSession extends State {
 	}
 	
 	/**
-	 * Get a cloned $duration with the acceptable latency of the item
-	 * session added.
-	 * 
-	 * @return Duration $duration + acceptable latency.
-	 */
-	protected function getDurationWithLatency(Duration $duration) {
-	    $duration = clone $duration;
-	    $duration->add($this->getAcceptableLatency());
-	    return $duration;
-	}
-	
-	/**
 	 * Whether or not the maximum time limits in force are reached. If there is
 	 * no time limits in force, this method systematically returns false.
 	 * 
@@ -1084,7 +1061,7 @@ class AssessmentItemSession extends State {
 	    
 	    if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
             
-	        if ($this['duration']->getSeconds(true) >= $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
+	        if ($this['duration']->getSeconds(true) >= $this->timeLimits->getMaxTime()->getSeconds(true)) {
 	            $reached = true;
 	        }
 	    }

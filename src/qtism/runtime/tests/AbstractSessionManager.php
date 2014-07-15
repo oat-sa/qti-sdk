@@ -44,13 +44,6 @@ use qtism\data\AssessmentItemRef;
 abstract class AbstractSessionManager {
     
     /**
-     * The acceptable latency time for AssessmentTestSession and AssessmentItemSession objects.
-     * 
-     * @var Duration
-     */
-    private $acceptableLatency;
-    
-    /**
      * Whether or not created AssessmentTestSession and AssessmentItemSession objects
      * must consider the minimum time constraints.
      * 
@@ -59,26 +52,7 @@ abstract class AbstractSessionManager {
     private $considerMinTime;
     
     public function __construct() {
-        $this->setAcceptableLatency(new Duration('PT0S'));
         $this->setConsiderMinTime(true);
-    }
-    
-    /**
-     * Set the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
-     * 
-     * @param Duration $latency
-     */
-    public function setAcceptableLatency(Duration $latency) {
-        $this->acceptableLatency = $latency;
-    }
-    
-    /**
-     * Get the acceptable latency for AssessmentTestSessions and their AssessmentItemSessions.
-     * 
-     * @return Duration A Duration object.
-     */
-    public function getAcceptableLatency() {
-        return $this->acceptableLatency;
     }
     
     /**

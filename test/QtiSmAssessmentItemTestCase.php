@@ -35,7 +35,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return \qtism\runtime\tests\AssessmentItemSession
 	 */
-	protected static function instantiateBasicAssessmentItemSession(Duration $acceptableLatency = null) {
+	protected static function instantiateBasicAssessmentItemSession() {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -53,11 +53,6 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
         ');
 	
 	    $manager = new SessionManager();
-	    
-	    if (is_null($acceptableLatency) === false) {
-	        $manager->setAcceptableLatency($acceptableLatency);
-	    }
-	    
 	    return new AssessmentItemSession($itemRef, $manager);
 	}
 	
@@ -74,7 +69,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return \qtism\runtime\tests\AssessmentItemSession
 	 */
-	protected static function instantiateBasicAdaptiveAssessmentItem(Duration $acceptableLatency = null) {
+	protected static function instantiateBasicAdaptiveAssessmentItem() {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -117,11 +112,6 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
         ');
 	
 	    $manager = new SessionManager();
-	    
-	    if (is_null($acceptableLatency) === false) {
-	        $manager->setAcceptableLatency($acceptableLatency);
-	    }
-	    
 	    return new AssessmentItemSession($itemRef, $manager);
 	}
 }
