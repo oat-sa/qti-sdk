@@ -37,7 +37,7 @@ class ModalFeedbackCollection extends QtiComponentCollection {
     /**
      * Checks whether or not $value is an instance of ModalFeedback.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of ModalFeedback.
+     * @throws \InvalidArgumentException If $value is not an instance of ModalFeedback.
      */
     protected function checkType($value) {
         if (!$value instanceof ModalFeedback) {

@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -52,7 +52,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The components composing the RubricBlock content.
      *
-     * @var FlowStaticCollection
+     * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -60,7 +60,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * The views in which the RubricBlock's content are to be shown.
 	 * 
-	 * @var ViewCollection
+	 * @var \qtism\data\ViewCollection
 	 * @qtism-bean-property
 	 */
 	private $views;
@@ -76,7 +76,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * The stylesheets are used to format just the contents of the rubricBlock.
 	 * 
-	 * @var StyleSheetCollection
+	 * @var \qtism\data\content\StyleSheetCollection
 	 * @qtism-bean-property
 	 */
 	private $stylesheets;
@@ -84,12 +84,12 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Create a new RubricBlock object.
 	 * 
-	 * @param ViewCollection $views A collection of values from the View enumeration.
+	 * @param \qtism\data\ViewCollection $views A collection of values from the View enumeration.
 	 * @param string $id The identifier of the bodyElement.
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
-	 * @throws InvalidArgumentException If any of the arguments is invalid.
+	 * @throws \InvalidArgumentException If any of the arguments is invalid.
 	 */
 	public function __construct(ViewCollection $views, $id = '', $class = '', $lang = '', $label = '') {
 	    parent::__construct($id, $class, $lang, $label);
@@ -102,7 +102,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Get the views in which the rubric block's content are to be shown.
 	 * 
-	 * @return ViewCollection A collection of values that belong to the View enumeration.
+	 * @return \qtism\data\ViewCollection A collection of values that belong to the View enumeration.
 	 */
 	public function getViews() {
 		return $this->views;
@@ -111,8 +111,8 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Set the views in which the rubric block's content are to be shown.
 	 * 
-	 * @param ViewCollection $views A collection of values that belong to the View enumeration.
-	 * @throws InvalidArgumentException If $views is an empty collection.
+	 * @param \qtism\data\ViewCollection $views A collection of values that belong to the View enumeration.
+	 * @throws \InvalidArgumentException If $views is an empty collection.
 	 */
 	public function setViews(ViewCollection $views) {
 		if (count($views) > 0) {
@@ -139,7 +139,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	 * use for the Rubric Block.
 	 * 
 	 * @param string $use A use.
-	 * @throws InvalidArgumentException If $use is not a string.
+	 * @throws \InvalidArgumentException If $use is not a string.
 	 */
 	public function setUse($use) {
 		if (gettype($use) === 'string') {
@@ -154,7 +154,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Get the stylesheets to format the contents of the Rubric Block.
 	 * 
-	 * @return StylesheetCollection A collection of stylesheet references.
+	 * @return \qtism\data\content\StylesheetCollection A collection of stylesheet references.
 	 */
 	public function getStylesheets() {
 		return $this->stylesheets;
@@ -163,7 +163,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Set the stylesheets to format the contents of the Rubric Block.
 	 * 
-	 * @param StylesheetCollection $stylesheets A collection of stylesheet references.
+	 * @param \qtism\data\content\StylesheetCollection $stylesheets A collection of stylesheet references.
 	 */
 	public function setStylesheets(StylesheetCollection $stylesheets) {
 		$this->stylesheets = $stylesheets;
@@ -181,7 +181,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Set the collection of objects composing the RubricBlock.
 	 *
-	 * @param FlowStaticCollection $content A collection of FlowStatic objects.
+	 * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
 	 */
 	public function setContent(FlowStaticCollection $content) {
 	    $this->content = $content;
@@ -190,7 +190,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	/**
 	 * Get the content of objects composing the RubricBlock.
 	 *
-	 * @return BlockCollection
+	 * @return \qtism\data\content\BlockCollection
 	 */
 	public function getContent() {
 	    return $this->content;
@@ -200,7 +200,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic {
 	 * Set the base URI of the RubricBlock.
 	 *
 	 * @param string $xmlBase A URI.
-	 * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+	 * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
 	 */
 	public function setXmlBase($xmlBase = '') {
 	    if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

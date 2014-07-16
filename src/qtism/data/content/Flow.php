@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -41,7 +41,7 @@ interface Flow extends ObjectFlow {
      * URIs for the scope of this object.
      * 
      * @param string $base A URI or an empty string if the there is no base set.
-     * @throws InvalidArgumentException If $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException If $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($base = '');
     

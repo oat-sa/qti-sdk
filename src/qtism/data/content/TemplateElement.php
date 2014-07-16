@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -75,7 +75,7 @@ abstract class TemplateElement extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any argument is invalid.
+     * @throws \InvalidArgumentException If any argument is invalid.
      */
     public function __construct($templateIdentifier, $identifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -87,7 +87,7 @@ abstract class TemplateElement extends BodyElement {
      * Set the template variable identifier.
      * 
      * @param string $templateIdentifier A QTI identifier.
-     * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $templateIdentifier is not a valid QTI identifier.
      */
     public function setTemplateIdentifier($templateIdentifier) {
         if (Format::isIdentifier($templateIdentifier, false) === true) {
@@ -112,7 +112,7 @@ abstract class TemplateElement extends BodyElement {
      * Set the value of the showHide attribute.
      * 
      * @param integer $showHide A value from the ShowHide enumeration.
-     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide) {
         if (in_array($showHide, ShowHide::asArray()) === true) {
@@ -154,8 +154,8 @@ abstract class TemplateElement extends BodyElement {
     /**
      * Set the identifier of the templateElement.
      * 
-     * @param unknown_type $identifier A QTI identifier.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     * @param string $identifier A QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {

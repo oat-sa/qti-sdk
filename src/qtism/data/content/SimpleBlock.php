@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -42,7 +42,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * The Block components composing the SimpleBlock object.
      * 
-     * @var BlockCollection
+     * @var \qtism\data\content\BlockCollection
      * @qtism-bean-property
      */
     private $content;
@@ -63,7 +63,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Block objects composing the Simpleblock.
      * 
-     * @return BlockCollection A collection of Block objects.
+     * @return \qtism\data\content\BlockCollection A collection of Block objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -72,7 +72,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Set the collection of Block objects composing the SimpleBlock.
      * 
-     * @param BlockCollection $content A collection of Block objects.
+     * @param \qtism\data\content\BlockCollection $content A collection of Block objects.
      */
     public function setContent(BlockCollection $content) {
         $this->content = $content;
@@ -81,7 +81,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the content of Block objects composing the Simpleblock.
      * 
-     * @return BlockCollection
+     * @return \qtism\data\content\BlockCollection
      */
     public function getContent() {
         return $this->content;
@@ -91,7 +91,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      * Set the base URI of the SimpleBlock.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

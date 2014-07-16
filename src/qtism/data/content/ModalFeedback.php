@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -94,7 +94,7 @@ class ModalFeedback extends QtiComponent {
      * 
      * The content of the modalFeedback must not contain any interactions.
      * 
-     * @var FlowStaticCollection
+     * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -106,7 +106,7 @@ class ModalFeedback extends QtiComponent {
      * @param string $identifier The identifier to be used in conjunction with the showHide attribute.
      * @param FlowStaticCollection $content The content of the modal feedback.
      * @param string $title The title of the modal feedback.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($outcomeIdentifier, $identifier, FlowStaticCollection $content = null, $title = '') {
         $this->setOutcomeIdentifier($outcomeIdentifier);
@@ -120,7 +120,7 @@ class ModalFeedback extends QtiComponent {
      * determine the visibility of the modal feedback.
      * 
      * @param string $outcomeIdentifier A valid QTI identifier.
-     * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
      */
     public function setOutcomeIdentifier($outcomeIdentifier) {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
@@ -146,7 +146,7 @@ class ModalFeedback extends QtiComponent {
      * Set how the visibility of the modal feedback is controlled.
      * 
      * @param integer $showHide A value from the ShowHide enumeration.
-     * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
     public function setShowHide($showHide) {
         if (in_array($showHide, ShowHide::asArray()) === true) {
@@ -172,7 +172,7 @@ class ModalFeedback extends QtiComponent {
      * showHide attribute.
      * 
      * @param string $identifier A QTI identifier
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
@@ -224,7 +224,7 @@ class ModalFeedback extends QtiComponent {
     /**
      * Set the content of the modal feedback that must not contain any interactions.
      * 
-     * @param FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
@@ -233,7 +233,7 @@ class ModalFeedback extends QtiComponent {
     /**
      * Get the content of the modal feedback that does not contain any interactions.
      * 
-     * @return FlowStaticCollection A collection of FlowStatic objects.
+     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent() {
         return $this->content;

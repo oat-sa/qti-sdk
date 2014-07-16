@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -53,7 +53,7 @@ class ItemBody extends BodyElement {
     /**
      * The blocks composing the itemBody.
      * 
-     * @var BlockCollection
+     * @var \qtism\data\content\BlockCollection
      * @qtism-bean-property
      */
     private $content;
@@ -65,7 +65,7 @@ class ItemBody extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -75,7 +75,7 @@ class ItemBody extends BodyElement {
     /**
      * Set the Block objects composing the ItemBody.
      * 
-     * @param BlockCollection $content The collection of blocks composing the itemBody.
+     * @param \qtism\data\content\BlockCollection $content The collection of blocks composing the itemBody.
      */
     public function setContent(BlockCollection $content) {
         $this->content = $content;
@@ -84,7 +84,7 @@ class ItemBody extends BodyElement {
     /**
      * Get the Block objects the ItemBody.
      * 
-     * @return BlockCollection
+     * @return \qtism\data\content\BlockCollection
      */
     public function getContent() {
         return $this->content;
@@ -93,7 +93,7 @@ class ItemBody extends BodyElement {
     /**
      * Get the Block objects composing the ItemBody.
      * 
-     * @return BlockCollection A collection of Block objects.
+     * @return \qtism\data\content\BlockCollection A collection of Block objects.
      */
     public function getComponents() {
         return $this->getContent();

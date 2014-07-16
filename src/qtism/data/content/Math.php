@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -56,7 +56,7 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
      * Set the base URI of the Math.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -77,6 +77,11 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
         return $this->xmlBase;
     }
     
+    /**
+     * Whether or not a value is defined for the xmlBase attribute.
+     * 
+     * @return boolean
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }

@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -84,7 +84,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
      * @param string $class The class(es) of the bodyElement. If multiple classes, separate them with whitespaces (' ').
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any arguments of the constructor is invalid.
+     * @throws \InvalidArgumentException If any arguments of the constructor is invalid.
      */
     public function __construct($outcomeIdentifier, $identifier, $showHide = ShowHide::SHOW, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -93,6 +93,12 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
         $this->setShowHide($showHide);
     }
     
+    /**
+     * Set the identifier of the outcome variable that determines the visibility of the feedbackInline.
+     * 
+     * @param string $outcomeIdentifier A QTI identifier.
+     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
+     */
     public function setOutcomeIdentifier($outcomeIdentifier) {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -103,10 +109,23 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
         }
     }
     
+    /**
+     * Get the identifier of the outcome variable that determines the visibility of the feedbackInline.
+     * 
+     * @return string A QTI identifier.
+     */
     public function getOutcomeIdentifier() {
         return $this->outcomeIdentifier;
     }
     
+    /**
+     * Set how the visibility of the feedbackInline is handled. If set to ShowHide::show, the feedback is hidden by default
+     * and shown if the identifier matches. If set the ShowHide::hide, the feedback is shown by default, and hidden if the identifier
+     * matches.
+     * 
+     * @param integer $showHide A value from the ShowHide enumeration.
+     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     */
     public function setShowHide($showHide) {
         if (in_array($showHide, ShowHide::asArray()) === true) {
             $this->showHide = $showHide;
@@ -117,10 +136,21 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
         }
     }
     
+    /**
+     * Get how the visibility of the feedbackInline is handled.
+     * 
+     * @return integer A value from the ShowHide enumeration.
+     */
     public function getShowHide() {
         return $this->showHide;
     }
     
+    /**
+     * Set the identifier to be matched to show/hide the feedbackInline.
+     * 
+     * @param string $identifier A QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -131,6 +161,11 @@ class FeedbackInline extends SimpleInline implements FeedbackElement {
         }
     }
     
+    /**
+     * Get the identifier to be matched to show/hide the feedbackInline.
+     * 
+     * @return string A QTI identifier.
+     */
     public function getIdentifier() {
         return $this->identifier;
     }

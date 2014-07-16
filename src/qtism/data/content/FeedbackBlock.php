@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -100,7 +100,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * @param string $class The class(es) of the bodyElement. If multiple classes, separate them with whitespaces (' ').
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any arguments of the constructor is invalid.
+     * @throws \InvalidArgumentException If any arguments of the constructor is invalid.
      */
     public function __construct($outcomeIdentifier, $identifier, $showHide = ShowHide::SHOW, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -110,6 +110,12 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         $this->setContent(new FlowCollection());
     }
     
+    /**
+     * The identifier of an outcome variable ruling the visibility of the feedbackBlock.
+     * 
+     * @param string $identifier A QTI identifier.
+     * @throws \InvalidArgumentException If $outcomeIdentifier is an invalid identifier.
+     */
     public function setOutcomeIdentifier($outcomeIdentifier) {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -120,10 +126,22 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         }
     }
     
+    /**
+     * Get the identifier of the outcome variable ruling the visibility of the feedbackBlock.
+     * 
+     * @return string a QTI identifier.
+     */
     public function getOutcomeIdentifier() {
         return $this->outcomeIdentifier;
     }
     
+    /**
+     * Set how the visibility of the feedbackElement is controlled. If set to ShowHide::show, the feedback is hidden by default
+     * and shown only if the outcome variable has the correct value. If set to ShowHide::hide, the feedback is shown by default
+     * and hidden if the outcome variable has the correct value.
+     * 
+     * @param integer A value from the ShowHide enumeration.
+     */
     public function setShowHide($showHide) {
         if (in_array($showHide, ShowHide::asArray()) === true) {
             $this->showHide = $showHide;
@@ -134,10 +152,21 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         }
     }
     
+    /**
+     * Get how the visibility of the feedbackElement is controlled.
+     * 
+     * @return integer A value from the ShowHide enumeration.
+     */
     public function getShowHide() {
         return $this->showHide;
     }
     
+    /**
+     * Set the identifier to match in order to show/hide the feedbackBlock.
+     * 
+     * @param string $identifier A QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
+     */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -148,6 +177,11 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
         }
     }
     
+    /**
+     * Get the identifier to match in order to show/hide the feedbackBlock.
+     * 
+     * @return string A QTI identifier.
+     */
     public function getIdentifier() {
         return $this->identifier;
     }
@@ -182,7 +216,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * Set the base URI of the TemplateBlock.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -106,7 +106,7 @@ class Stylesheet extends QtiComponent {
 	 * Set the hypertext reference to the stylesheet.
 	 * 
 	 * @param string $href An hypertext reference (as a URI).
-	 * @throws InvalidArgumentException If $href is not a string.
+	 * @throws \InvalidArgumentException If $href is not a string.
 	 */
 	public function setHref($href) {
 		if (gettype($href) === 'string') {
@@ -131,7 +131,7 @@ class Stylesheet extends QtiComponent {
 	 * Set the mime-type of the stylesheet.
 	 * 
 	 * @param string $type A mime-type.
-	 * @throws InvalidArgumentException If $type is not a string.
+	 * @throws \InvalidArgumentException If $type is not a string.
 	 */
 	public function setType($type) {
 		if (gettype($type) === 'string') {
@@ -156,7 +156,7 @@ class Stylesheet extends QtiComponent {
 	 * Set the media to apply the stylesheet on.
 	 * 
 	 * @param string $media A media.
-	 * @throws InvalidArgumentException If $media is not a string.
+	 * @throws \InvalidArgumentException If $media is not a string.
 	 */
 	public function setMedia($media) {
 		if (is_string($media)) {
@@ -190,7 +190,7 @@ class Stylesheet extends QtiComponent {
 	 * Set the title of the stylesheet.
 	 * 
 	 * @param string $title A title.
-	 * @throws InvalidArgumentException If $title is not a string.
+	 * @throws \InvalidArgumentException If $title is not a string.
 	 */
 	public function setTitle($title) {
 		if (gettype($title) === 'string') {

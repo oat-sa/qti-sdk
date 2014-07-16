@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -58,7 +58,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
      * An atomicInline component does not contain any other component. As
      * a result, this method always returns an empty QtiComponentCollection object.
      * 
-     * @return QtiComponentCollection An empty QtiComponentCollection.
+     * @return \qtism\data\QtiComponentCollection An empty QtiComponentCollection.
      */
     public function getComponents() {
         return new QtiComponentCollection();
@@ -68,7 +68,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
      * Set the base URI of the AtomicInline.
      *
      * @param string $XmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

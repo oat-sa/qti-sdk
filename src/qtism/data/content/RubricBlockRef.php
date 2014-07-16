@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -44,7 +44,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
     /**
      * A collection of SplObservers.
      *
-     * @var SplObjectStorage
+     * @var \SplObjectStorage
      */
     private $observers = null;
     
@@ -70,7 +70,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      * 
      * @param string $identifier A QTI identifier.
      * @param string $href A URI locating the external rubrickBlock definition.
-     * @throws InvalidArgumentException If any argument is invalid.
+     * @throws \InvalidArgumentException If any argument is invalid.
      */
     public function __construct($identifier, $href) {
         $this->setIdentifier($identifier);
@@ -82,7 +82,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      * Set the identifier of the rubricBlockRef.
      * 
      * @param string $identifier A QTI identifier.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
@@ -107,7 +107,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
      * Set the URI locating the external rubricBlock definition.
      * 
      * @param string $href A URI.
-     * @throws InvalidArgumentException If $href is not a valid URI.
+     * @throws \InvalidArgumentException If $href is not a valid URI.
      */
     public function setHref($href) {
         if (Format::isUri($href) === true) {
@@ -131,7 +131,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
     /**
      * Get the observers of the object.
      *
-     * @return SplObjectStorage An SplObjectStorage object.
+     * @return \SplObjectStorage An SplObjectStorage object.
      */
     protected function getObservers() {
         return $this->observers;
@@ -140,7 +140,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
     /**
      * Set the observers of the object.
      *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
+     * @param \SplObjectStorage $observers An SplObjectStorage object.
      */
     protected function setObservers(SplObjectStorage $observers) {
         $this->observers = $observers;
@@ -157,7 +157,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
     /**
      * SplSubject::attach implementation.
      *
-     * @param SplObserver An SplObserver object.
+     * @param \SplObserver An SplObserver object.
      */
     public function attach(SplObserver $observer) {
         $this->getObservers()->attach($observer);
@@ -166,7 +166,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
     /**
      * SplSubject::detach implementation.
      *
-     * @param SplObserver $observer An SplObserver object.
+     * @param \SplObserver $observer An SplObserver object.
      */
     public function detach(SplObserver $observer) {
         $this->getObservers()->detach($observer);

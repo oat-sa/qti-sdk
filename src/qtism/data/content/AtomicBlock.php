@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -42,7 +42,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * The collection of Inline components contained by the AtomicBlock.
      * 
-     * @var InlineCollection
+     * @var \qtism\data\content\InlineCollection
      * @qtism-bean-property
      */
     private $content;
@@ -63,7 +63,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Set the collection of Inline components composing the AtomicBlock.
      * 
-     * @param InlineCollection $content A collection of Inline objects.
+     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content) {
         $this->content = $content;
@@ -72,7 +72,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Inline components composing the AtomicBlock.
      * 
-     * @return InlineCollection
+     * @return \qtism\data\content\InlineCollection
      */
     public function getContent() {
         return $this->content;
@@ -81,7 +81,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
     /**
      * Get the collection of Inline components composing the AtomicBlock.
      * 
-     * @return InlineCollection A collection of Inline objects.
+     * @return \qtism\data\content\InlineCollection A collection of Inline objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -91,7 +91,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      * Set the base URI of the AtomicBlock.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

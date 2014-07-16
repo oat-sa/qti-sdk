@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -114,7 +114,7 @@ abstract class BodyElement extends QtiComponent {
      * Set the unique identifier of the body element.
      * 
      * @param string $id A QTI Identifier.
-     * @throws InvalidArgumentException If $id is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $id is not a valid QTI identifier.
      */
     public function setId($id = '') {
         if (is_string($id) && (empty($id) === true || Format::isIdentifier($id, false) === true)) {
@@ -148,7 +148,7 @@ abstract class BodyElement extends QtiComponent {
      * Set the classes assigned to the body element.
      * 
      * @param string $class One or more class names separated by spaces.
-     * @throws InvalidArgumentException If $class does not represent valid class name(s).
+     * @throws \InvalidArgumentException If $class does not represent valid class name(s).
      */
     public function setClass($class = '') {
         $class = trim($class);
@@ -210,7 +210,7 @@ abstract class BodyElement extends QtiComponent {
      * Set the label of the body element.
      * 
      * @param string $label A string of 256 characters maximum.
-     * @throws InvalidArgumentException If $label is not or a string or contains more than 256 characters.
+     * @throws \InvalidArgumentException If $label is not or a string or contains more than 256 characters.
      */
     public function setLabel($label = '') {
         if (Format::isString256($label) === true) {

@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -53,7 +53,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The content of the InfoControl.
      * 
-     * @var FlowStaticCollection
+     * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -75,7 +75,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the content of the InfoControl.
      * 
-     * @param FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
@@ -84,7 +84,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the content of the InfoControl.
      * 
-     * @return FlowStaticCollection A collection of FlowStatic objects.
+     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent() {
         return $this->content;
@@ -94,7 +94,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic {
      * Set the base URI of the InfoControl.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

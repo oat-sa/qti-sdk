@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package
  */
@@ -46,7 +46,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * The Inline components contained within the SimpleInline.
      * 
-     * @var InlineCollection
+     * @var \qtism\data\content\InlineCollection
      * @qtism-bean-property
      */
     private $content;
@@ -58,7 +58,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -68,7 +68,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Get the Inline components contained by the SimpleInline object.
      * 
-     * @return InlineCollection A collection of Inline components.
+     * @return \qtism\data\content\InlineCollection A collection of Inline components.
      */
     public function getComponents() {
         return $this->getContent();
@@ -77,7 +77,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Set the inline components contained by the SimpleInline object.
      * 
-     * @param QtiComponentCollection $content A collection of Inline components.
+     * @param \qtism\data\QtiComponentCollection $content A collection of Inline components.
      */
     public function setContent(InlineCollection $content) {
         $this->content = $content;
@@ -86,7 +86,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Get the inline components contained by the SimpleInline object.
      * 
-     * @return InlineCollection
+     * @return \qtism\data\content\InlineCollection
      */
     public function getContent() {
         return $this->content;
@@ -96,7 +96,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      * Set the base URI of the SimpleInline.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {

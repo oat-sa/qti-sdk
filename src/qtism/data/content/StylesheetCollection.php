@@ -16,7 +16,7 @@
  * 
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  * @package 
  */
@@ -38,7 +38,7 @@ class StylesheetCollection extends QtiComponentCollection {
 	/**
 	 * Check if $value is a Stylesheet object.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a Stylesheet object.
+	 * @throws \InvalidArgumentException If $value is not a Stylesheet object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof Stylesheet) {
