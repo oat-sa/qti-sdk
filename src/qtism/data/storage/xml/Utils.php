@@ -66,7 +66,7 @@ class Utils {
 			return false;
 		}
 		else {
-			switch (trim($root->lookupNamespaceURI(null))) {
+			switch ($root->namespaceURI) {
 				case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
 					return '2.1';
 				break;
