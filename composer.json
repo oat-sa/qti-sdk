@@ -1,8 +1,8 @@
 {
-	"name": "oat/qtism",
+	"name": "qtism/qtism",
 	"description": "OAT QTI Software Module Library",
 	"type": "library",
-	"version": "0.16.9",
+	"version": "0.9.0",
 	"authors": [
 		{
 			"name": "Open Assessment Technologies S.A.",
