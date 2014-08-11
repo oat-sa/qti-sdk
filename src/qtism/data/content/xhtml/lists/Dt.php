@@ -48,7 +48,7 @@ class Dt extends DlElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -58,7 +58,7 @@ class Dt extends DlElement {
     /**
      * Set the Inline objects composing the Dt.
      * 
-     * @param InlineCollection $content A collection of Inline objects.
+     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content) {
         $this->content = $content;
@@ -67,7 +67,7 @@ class Dt extends DlElement {
     /**
      * Get the Inline objects composing the Dt.
      * 
-     * @return InlineCollection 
+     * @return \qtism\data\content\InlineCollection 
      */
     public function getContent() {
         return $this->content;
@@ -76,12 +76,15 @@ class Dt extends DlElement {
     /**
      * Get the Inline objects composing the Dt.
      * 
-     * @return InlineCollection The Inline objects composing the Dt.
+     * @return \qtism\data\QtiComponentCollection The Inline objects composing the Dt.
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'dt';
     }

@@ -46,7 +46,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The Li objects composing the Ul.
      * 
-     * @var LiCollection
+     * @var \qtism\data\content\xhtml\lists\LiCollection
      * @qtism-bean-property
      */
     private $content;
@@ -58,7 +58,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -68,7 +68,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the Li objects composing the Ul.
      * 
-     * @param LiCollection $content A collection of Li objects.
+     * @param \qtism\data\content\xhtml\lists\LiCollection $content A collection of Li objects.
      */
     public function setContent(LiCollection $content) {
         $this->content = $content;
@@ -77,7 +77,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Li objects composing the Ul.
      * 
-     * @return LiCollection
+     * @return \qtism\data\content\xhtml\lists\LiCollection
      */
     public function getContent() {
         return $this->content;
@@ -86,7 +86,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Li objects composing the Ul.
      * 
-     * @return LiCollection A collection of Li objects.
+     * @return \qtism\data\QtiComponentCollection A collection of Li objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -96,7 +96,7 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
      * Set the base URI of the Ul.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -117,10 +117,16 @@ class Ol extends BodyElement implements BlockStatic, FlowStatic {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'ol';
     }

@@ -37,11 +37,20 @@ class Li extends BodyElement {
     /**
      * The Flow objects composing the Li.
      * 
-     * @var FlowCollection
+     * @var \qtism\data\content\FlowCollection
      * @qtism-bean-property
      */
     private $content;
     
+    /**
+     * Create a new Li object.
+     * 
+     * @param string $id The identifier of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
+     */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new FlowCollection());
@@ -50,7 +59,7 @@ class Li extends BodyElement {
     /**
      * Get the Flow objects composing the Li.
      * 
-     * @return FlowCollection A collection of Flow objects.
+     * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -59,7 +68,7 @@ class Li extends BodyElement {
     /**
      * Set the Flow objects composing the Li.
      * 
-     * @param FlowCollection $content
+     * @param \qtism\data\content\FlowCollection $content
      */
     public function setContent(FlowCollection $content) {
         $this->content = $content;
@@ -68,12 +77,15 @@ class Li extends BodyElement {
     /**
      * Get the Flow objects composing the Li.
      * 
-     * @return FlowCollection
+     * @return \qtism\data\content\FlowCollection
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'li';
     }

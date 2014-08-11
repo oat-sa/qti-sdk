@@ -36,7 +36,7 @@ class Dd extends DlElement {
     /**
      * The Flow objects composing the Dd.
      * 
-     * @var FlowCollection
+     * @var \qtism\data\content\FlowCollection
      * @qtism-bean-property
      */
     private $content;
@@ -48,7 +48,7 @@ class Dd extends DlElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -58,7 +58,7 @@ class Dd extends DlElement {
     /**
      * Set the Flow objects composing the Dd.
      * 
-     * @param FlowCollection $content A collection of Flow objects.
+     * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content) {
         $this->content = $content;
@@ -67,7 +67,7 @@ class Dd extends DlElement {
     /**
      * Set the Flow objects composing the Dd.
      * 
-     * @return FlowCollection
+     * @return \qtism\data\content\FlowCollection
      */
     public function getContent() {
         return $this->content;
@@ -76,12 +76,15 @@ class Dd extends DlElement {
     /**
      * Get the Flow objects composing the Dd.
      * 
-     * @return FlowCollection A collection of Flow objects.
+     * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'dd';
     }

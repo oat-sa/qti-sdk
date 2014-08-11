@@ -37,7 +37,7 @@ class LiCollection extends QtiComponentCollection {
     /**
      * Check if $value is an instance of Li.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of Li.
+     * @throws \InvalidArgumentException If $value is not an instance of Li.
      */
     protected function checkType($value) {
         if (!$value instanceof Li) {

@@ -46,7 +46,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The DlElement objects composing the Dl.
      * 
-     * @var DlElementCollection
+     * @var \qtism\data\content\xhtml\lists\DlElementCollection
      * @qtism-bean-property
      */
     private $content;
@@ -58,7 +58,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -68,7 +68,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the DlElement objects composing the Dl.
      * 
-     * @param DlElementCollection $content A collection of DlElement objects.
+     * @param \qtism\data\content\xhtml\lists\DlElementCollection $content A collection of DlElement objects.
      */
     public function setContent(DlElementCollection $content) {
         $this->content = $content;
@@ -77,7 +77,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the DlElement objects composing the Dl.
      * 
-     * @return DlElementCollection
+     * @return \qtism\data\content\xhtml\lists\DlElementCollection
      */
     public function getContent() {
         return $this->content;
@@ -86,12 +86,15 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the DlElement objects composing the Dl.
      * 
-     * @return DlElementCollection A collection of DlElement objects.
+     * @return \qtism\data\QtiComponentCollection A collection of DlElement objects.
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'dl';
     }
@@ -100,7 +103,7 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
      * Set the base URI of the Dl.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -121,6 +124,9 @@ class Dl extends BodyElement implements BlockStatic, FlowStatic {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
