@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -66,8 +65,7 @@ class GapImg extends GapChoice {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * 
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $matchMax, Object $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
@@ -80,7 +78,7 @@ class GapImg extends GapChoice {
      * string indicates the GapImg has no objectLabel.
      * 
      * @param string $objectLabel A label for the image.
-     * @throws InvalidArgumentException If $objectLabel is not a string value.
+     * @throws \InvalidArgumentException If $objectLabel is not a string value.
      */
     public function setObjectLabel($objectLabel) {
         if (is_string($objectLabel) === true) {
@@ -114,7 +112,7 @@ class GapImg extends GapChoice {
     /**
      * Set the Object representing the GapImg's image.
      * 
-     * @param Object $object An Object object.
+     * @param \qtism\data\content\xhtml\Object $object An Object object.
      */
     public function setObject(Object $object) {
         $this->object = $object;
@@ -123,16 +121,22 @@ class GapImg extends GapChoice {
     /**
      * Get the Object representing the GapImg's image.
      * 
-     * @return Object An Object object.
+     * @return \qtism\data\content\xhtml\Object An Object object.
      */
     public function getObject() {
         return $this->object;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getObject()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'gapImg';
     }

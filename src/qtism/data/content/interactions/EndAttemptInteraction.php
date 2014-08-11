@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -65,12 +64,12 @@ class EndAttemptInteraction extends InlineInteraction {
     /**
      * 
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param unknown_type $title The title to be displayed to the candidate as a prompt for ending the attempt.
-     * @param unknown_type $id The id of the bodyElement.
-     * @param unknown_type $class The class of the bodyElement.
-     * @param unknown_type $lang The language of the bodyElement.
-     * @param unknown_type $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of the argument is invalid.
+     * @param string $title The title to be displayed to the candidate as a prompt for ending the attempt.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the argument is invalid.
      */
     public function __construct($responseIdentifier, $title, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -82,7 +81,7 @@ class EndAttemptInteraction extends InlineInteraction {
      * for ending the attempt.
      * 
      * @param string $title A string.
-     * @throws InvalidArgumentException If $title is not a string.
+     * @throws \InvalidArgumentException If $title is not a string.
      */
     public function setTitle($title) {
         if (is_string($title) === true && empty($title) === false) {
@@ -104,10 +103,16 @@ class EndAttemptInteraction extends InlineInteraction {
         return $this->title;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'endAttemptInteraction';
     }

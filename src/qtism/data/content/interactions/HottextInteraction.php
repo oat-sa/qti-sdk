@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -76,7 +75,7 @@ class HottextInteraction extends BlockInteraction {
      * The content of the interaction is simply a piece of content, such as a 
      * simple passage of text, that contains the hottext areas.
      * 
-     * @var BlockStaticCollection
+     * @var \qtism\data\content\BlockStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -85,11 +84,12 @@ class HottextInteraction extends BlockInteraction {
      * Create a new HottextInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param BlockStaticCollection $content A collection of BlockStatic objects as the content of the interaction.
+     * @param \qtism\data\content\BlockStaticCollection $content A collection of BlockStatic objects as the content of the interaction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, BlockStaticCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -103,7 +103,7 @@ class HottextInteraction extends BlockInteraction {
      * is 0, it means that the candidate is not requitred to select any choice.
      * 
      * @param integer $maxChoices A positive  integer.
-     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices >= 0) {
@@ -129,7 +129,7 @@ class HottextInteraction extends BlockInteraction {
      * Set the minimum number of choices that the candidate is required to select to form a valid response.
      * 
      * @param integer $minChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
+     * @throws \InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
     public function setMinChoices($minChoices) {
         if (is_int($minChoices) && $minChoices > 0) {
@@ -163,8 +163,8 @@ class HottextInteraction extends BlockInteraction {
     /**
      * Set the content of the interaction, containing the hottext areas.
      * 
-     * @param BlockStaticCollection $content A collection of at least one BlockStatic object.
-     * @throws InvalidArgumentException If $content is empty.
+     * @param \qtism\data\content\BlockStaticCollection $content A collection of at least one BlockStatic object.
+     * @throws \InvalidArgumentException If $content is empty.
      */
     public function setContent(BlockStaticCollection $content) {
         if (count($content) > 0) {
@@ -179,16 +179,22 @@ class HottextInteraction extends BlockInteraction {
     /**
      * Get the content of the interaction, containing the hottext areas.
      * 
-     * @return BlockStaticCollection A collection of at least one BlockStatic object.
+     * @return \qtism\data\content\BlockStaticCollection A collection of at least one BlockStatic object.
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'hottextInteraction';
     }

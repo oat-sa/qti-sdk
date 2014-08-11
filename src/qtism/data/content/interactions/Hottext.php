@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -48,7 +47,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
     /**
      * The components composing the hottext.
      * 
-     * @var InlineStaticCollection
+     * @var \qtism\data\content\InlineStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -74,7 +73,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $id, $class, $lang, $label);
@@ -85,7 +84,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
      * Set the base URI of the HotText.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -106,6 +105,9 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
@@ -113,7 +115,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
     /**
      * Set the components composing the hottext.
      * 
-     * @param InlineStaticCollection $content A collection of InlineStatic objects.
+     * @param \qtism\data\content\InlineStaticCollection $content A collection of InlineStatic objects.
      */
     public function setContent(InlineStaticCollection $content) {
         $this->content = $content;
@@ -122,16 +124,22 @@ class Hottext extends Choice implements FlowStatic, InlineStatic {
     /**
      * Get the components composing the hottext.
      * 
-     * @return InlineStaticCollection
+     * @return \qtism\data\content\InlineStaticCollection
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'hottext';
     }

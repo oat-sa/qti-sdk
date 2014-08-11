@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -58,7 +57,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     
     /**
      * 
-     * @var ExternalQtiComponent
+     * @var \qtism\data\ExternalQtiComponent
      */
     private $externalComponent = null;
     
@@ -71,6 +70,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, $xmlString, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -78,14 +78,27 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'customInteraction';
     }
     
+    /**
+     * Get the complete XML String representing the customInteraction.
+     * 
+     * @return string
+     */
     public function getXmlString() {
         return $this->xmlString;
     }
     
+    /**
+     * Set the complete XML String representing the customInteraction.
+     * 
+     * @param string $xmlString
+     */
     public function setXmlString($xmlString) {
         $this->xmlString = $xmlString;
         if ($this->externalComponent !== null) {
@@ -96,8 +109,8 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     /**
      * Get the XML content of the custom interaction itself and its content.
      *
-     * @return DOMDocument A DOMDocument object representing the custom interaction.
-     * @throws RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
+     * @return \DOMDocument A DOMDocument object representing the custom interaction.
+     * @throws \RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
      */
     public function getXml() {
         return $this->getExternalComponent()->getXml();
@@ -106,7 +119,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     /**
      * Set the encapsulated external component.
      *
-     * @param ExternalQtiComponent $externalComponent
+     * @param \qtism\data\ExternalQtiComponent $externalComponent
      */
     private function setExternalComponent(ExternalQtiComponent $externalComponent) {
         $this->externalComponent = $externalComponent;
@@ -115,7 +128,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
     /**
      * Get the encapsulated external component.
      *
-     * @return ExternalQtiComponent
+     * @return \qtism\data\ExternalQtiComponent
      */
     private function getExternalComponent() {
         return $this->externalComponent;
@@ -125,7 +138,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
      * Set the base URI of the CustomInteraction.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -155,6 +168,9 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
         return $this->getXmlBase() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection();
     }

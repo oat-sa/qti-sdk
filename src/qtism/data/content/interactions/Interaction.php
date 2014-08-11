@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -77,7 +76,7 @@ abstract class Interaction extends BodyElement {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
-	 * @throws InvalidArgumentException If one of the argument is invalid.
+	 * @throws \InvalidArgumentException If one of the argument is invalid.
 	 */
 	public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($id, $class, $lang, $label);
@@ -88,7 +87,7 @@ abstract class Interaction extends BodyElement {
 	 * Set the response variable associated with the interaction. 
 	 * 
 	 * @param string $responseIdentifier A QTI identifier.
-	 * @throws InvalidArgumentException If $responseIdentifier is not a valid QTI identifier.
+	 * @throws \InvalidArgumentException If $responseIdentifier is not a valid QTI identifier.
 	 */
 	public function setResponseIdentifier($responseIdentifier) {
 		if (Format::isIdentifier($responseIdentifier, false) === true) {

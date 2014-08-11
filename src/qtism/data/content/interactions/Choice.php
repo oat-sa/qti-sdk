@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -109,6 +108,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	 * @param string $class The class of the body element.
 	 * @param string $lang The language of the body element.
 	 * @param string $label The label of the body element.
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($id, $class, $lang, $label);
@@ -150,7 +150,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	 * Set the identifier of the choice.
 	 * 
 	 * @param string $identifier A QTI identifier.
-	 * @throws InvalidArgumentException If the given $identifier is not valid.
+	 * @throws \InvalidArgumentException If the given $identifier is not valid.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false) === true) {
@@ -166,7 +166,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	 * Set whether the choice is fixed.
 	 * 
 	 * @param boolean $fixed
-	 * @throws InvalidArgumentException If $fixed is not a boolean value.
+	 * @throws \InvalidArgumentException If $fixed is not a boolean value.
 	 */
 	public function setFixed($fixed) {
 		if (is_bool($fixed) === true) {
@@ -191,7 +191,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	 * Set the template identifier of the choice.
 	 * 
 	 * @param string $templateIdentifier An empty string if no identifier is provided or a QTI identifier.
-	 * @throws InvalidArgumentException If the given $templateIdentifier is not a valid QTI identifier.
+	 * @throws \InvalidArgumentException If the given $templateIdentifier is not a valid QTI identifier.
 	 */
 	public function setTemplateIdentifier($templateIdentifier) {
 		if (is_string($templateIdentifier) === true && (empty($templateIdentifier) === true) || Format::isIdentifier($templateIdentifier, false) === true) {
@@ -225,7 +225,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	 * Set the visibility of the choice.
 	 * 
 	 * @param integer $showHide A value from the ShowHide enumeration.
-	 * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+	 * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
 	 */
 	public function setShowHide($showHide) {
 		if (in_array($showHide, ShowHide::asArray()) === true) {
@@ -249,7 +249,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	/**
 	 * SplSubject::attach implementation.
 	 * 
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -258,7 +258,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 	/**
 	 * SplSubject::detach implementation.
 	 * 
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);

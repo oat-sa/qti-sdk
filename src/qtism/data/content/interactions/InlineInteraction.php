@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -53,7 +52,7 @@ abstract class InlineInteraction extends Interaction implements Flow, Inline {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException  If any of the arguments is invalid.
+     * @throws \InvalidArgumentException  If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -63,7 +62,7 @@ abstract class InlineInteraction extends Interaction implements Flow, Inline {
      * Set the base URI of the InlineInteraction.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -84,6 +83,9 @@ abstract class InlineInteraction extends Interaction implements Flow, Inline {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }

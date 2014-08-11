@@ -18,7 +18,6 @@
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package 
  */
 
 
@@ -285,10 +284,16 @@ class AssessmentSection extends SectionPart {
 		$this->sectionParts = $sectionParts;
 	}
 	
+	/**
+	 * @see \qtism\data\SectionPart::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'assessmentSection';
 	}
 	
+	/**
+	 * @see \qtism\data\SectionPart::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(parent::getComponents()->getArrayCopy(),
 							$this->getRubricBlocks()->getArrayCopy(),

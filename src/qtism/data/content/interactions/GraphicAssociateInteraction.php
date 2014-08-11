@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -87,13 +86,13 @@ class GraphicAssociateInteraction extends GraphicInteraction {
      * Create a new GraphicAssociateInteraction.
      * 
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object The associated image as an Object object.
-     * @param AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
+     * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
+     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots The hotspots that define the choices that are to be associated by the candidate.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, Object $object, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
@@ -103,8 +102,8 @@ class GraphicAssociateInteraction extends GraphicInteraction {
     /**
      * Set the hotspots that define the gaps that are to be filled by the candidate.
      * 
-     * @param AssociableHotspotCollection $associableHotspots A collection of at least 1 AssociableHotspot object.
-     * @throws InvalidArgumentException If $associableHotspots is empty.
+     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of at least 1 AssociableHotspot object.
+     * @throws \InvalidArgumentException If $associableHotspots is empty.
      */
     public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots) {
         if (count($associableHotspots) > 0) {
@@ -119,7 +118,7 @@ class GraphicAssociateInteraction extends GraphicInteraction {
     /**
      * Get the hotspots that define the gaps that are to be filled by the candidate.
      * 
-     * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
+     * @return \qtism\data\content\interactions\AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
     public function getAssociableHotspots() {
         return $this->associableHotspots;
@@ -130,7 +129,7 @@ class GraphicAssociateInteraction extends GraphicInteraction {
      * to make.
      * 
      * @param integer $maxAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
+     * @throws \InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations) {
         if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
@@ -157,7 +156,7 @@ class GraphicAssociateInteraction extends GraphicInteraction {
      * make.
      * 
      * @param integer $minAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
+     * @throws \InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations) {
         if (is_int($minAssociations) === true && $minAssociations >= 0) {
@@ -185,10 +184,16 @@ class GraphicAssociateInteraction extends GraphicInteraction {
         return $this->minAssociations;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getAssociableHotspots()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'graphicAssociateInteraction';
     }

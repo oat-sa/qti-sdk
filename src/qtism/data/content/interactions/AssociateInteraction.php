@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -81,7 +80,7 @@ class AssociateInteraction extends BlockInteraction {
      * 
      * An ordered set of choices.
      * 
-     * @var SimpleAssociableChoiceCollection
+     * @var \qtism\data\content\interactions\SimpleAssociableChoiceCollection
      * @qtism-bean-property
      */
     private $simpleAssociableChoices;
@@ -95,7 +94,7 @@ class AssociateInteraction extends BlockInteraction {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, SimpleAssociableChoiceCollection $simpleAssociableChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -110,7 +109,7 @@ class AssociateInteraction extends BlockInteraction {
      * the choices are displayed.
      * 
      * @param boolean $shuffle
-     * @throws InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle) {
         if (is_bool($shuffle) === true) {
@@ -137,7 +136,7 @@ class AssociateInteraction extends BlockInteraction {
      * is 0, there is no maximum number of associations.
      * 
      * @param integer $maxAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
+     * @throws \InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations) {
         if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
@@ -173,7 +172,7 @@ class AssociateInteraction extends BlockInteraction {
      * $minAssociations is 0, there is no minimum number of associations required.
      * 
      * @param integer $minAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
+     * @throws \InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
      */
     public function setMinAssociations($minAssociations) {
         if (is_int($minAssociations) === true && $minAssociations >= 0) {
@@ -213,8 +212,8 @@ class AssociateInteraction extends BlockInteraction {
     /**
      * Set the choices.
      * 
-     * @param SimpleAssociableChoiceCollection $simpleAssociableChoices A collection of at least one SimpleAssociableChoice object.
-     * @throws InvalidArgumentException If $simpleAssociableChoices is empty.
+     * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices A collection of at least one SimpleAssociableChoice object.
+     * @throws \InvalidArgumentException If $simpleAssociableChoices is empty.
      */
     public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices) {
         if (count($simpleAssociableChoices) > 0) {
@@ -229,17 +228,23 @@ class AssociateInteraction extends BlockInteraction {
     /**
      * Get the choices.
      * 
-     * @return SimpleAssociableChoiceCollection A collection of at least one SimpleAssociableChoice.
+     * @return \qtism\data\content\interactions\SimpleAssociableChoiceCollection A collection of at least one SimpleAssociableChoice.
      */
     public function getSimpleAssociableChoices() {
         return $this->simpleAssociableChoices;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleAssociableChoices()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'associateInteraction';
     }

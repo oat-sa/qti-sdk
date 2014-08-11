@@ -18,7 +18,6 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data;
@@ -139,18 +138,33 @@ class ExternalQtiComponent extends QtiComponent implements IExternal {
         return $this->targetNamespace;
     }
     
+    /**
+     * Set the namespace URI the XML content must belong to.
+     * 
+     * @param string $targetNamespace A URI (Uniform Resource Locator).
+     */
     public function setTargetNamespace($targetNamespace) {
         $this->targetNamespace = $targetNamespace;
     }
     
+    /**
+     * Method to be overloaded by subclasses to setup a default
+     * target namespace.
+     */
     protected function buildTargetNamespace() {
-        return '';
+        return;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'external';
     }

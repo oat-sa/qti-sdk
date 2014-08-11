@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -42,7 +41,7 @@ class HotspotChoice extends Choice implements Hotspot {
      *
      * The shape of the hotspot.
      *
-     * @var Shape
+     * @var \qtism\common\datatypes\Shape
      * @qtism-bean-property
      */
     private $shape;
@@ -52,7 +51,7 @@ class HotspotChoice extends Choice implements Hotspot {
      *
      * The size and position of the hotspot, interpreted in conjunction with the shape.
      *
-     * @var Coords
+     * @var \qtism\common\datatypes\Coords
      * @qtism-bean-property
      */
     private $coords;
@@ -74,12 +73,12 @@ class HotspotChoice extends Choice implements Hotspot {
      * 
      * @param string $identifier The identifier of the choice.
      * @param integer $shape A value from the Shape enumeration
-     * @param Coords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
+     * @param \qtism\common\datatypes\Coords $coords The size and position of the hotspot, interpreted in conjunction with $shape.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($identifier, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $id, $class, $lang, $label);
@@ -114,7 +113,7 @@ class HotspotChoice extends Choice implements Hotspot {
     /**
      * Set the coords of the associableHotspot.
      *
-     * @param Coords $coords A Coords object.
+     * @param \qtism\common\datatypes\Coords $coords A Coords object.
      */
     public function setCoords(Coords $coords) {
         $this->coords = $coords;
@@ -123,7 +122,7 @@ class HotspotChoice extends Choice implements Hotspot {
     /**
      * Get the coords of the associableHotspot.
      *
-     * @return Coords A Coords object.
+     * @return \qtism\common\datatypes\Coords A Coords object.
      */
     public function getCoords() {
         return $this->coords;
@@ -133,7 +132,7 @@ class HotspotChoice extends Choice implements Hotspot {
      * Set the hotspotLabel of the associableHotspot.
      *
      * @param string $hotspotLabel A string with at most 256 characters.
-     * @throws InvalidArgumentException If $hotspotLabel has more than 256 characters.
+     * @throws \InvalidArgumentException If $hotspotLabel has more than 256 characters.
      */
     public function setHotspotLabel($hotspotLabel) {
         if (Format::isString256($hotspotLabel) === true) {
@@ -167,12 +166,15 @@ class HotspotChoice extends Choice implements Hotspot {
      * HotspotChoice components are not composite. Then, this method
      * systematically returns an empty collection.
      * 
-     * @return QtiComponentCollection An empty collection.
+     * @return \qtism\data\QtiComponentCollection An empty collection.
      */
     public function getComponents() {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'hotspotChoice';
     }

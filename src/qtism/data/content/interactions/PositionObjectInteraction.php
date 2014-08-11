@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -58,7 +57,7 @@ class PositionObjectInteraction extends Interaction {
      * several position object interactions and is therefore defined in a class 
      * of its own: positionObjectStage.
      * 
-     * @var Point
+     * @var \qtism\common\datatypes\Point
      * @qtism-bean-property
      */
     private $centerPoint = null;
@@ -93,7 +92,7 @@ class PositionObjectInteraction extends Interaction {
     /**
      * The image to be positioned on the stage by the candidate.
      * 
-     * @var Object
+     * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
@@ -102,12 +101,12 @@ class PositionObjectInteraction extends Interaction {
      * Create a new PositionObjectInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the associated response.
-     * @param Object $object An image as an Object object.
+     * @param \qtism\data\content\xhtml\Object $object An image as an Object object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -118,7 +117,7 @@ class PositionObjectInteraction extends Interaction {
      * Set the centerPoint attribute. Give the null value if there is no centerPoint
      * specified.
      * 
-     * @param Point $centerPoint A Point object or null.
+     * @param \qtism\common\datatypes\Point $centerPoint A Point object or null.
      */
     public function setCenterPoint(Point $centerPoint = null) {
         $this->centerPoint = $centerPoint;
@@ -128,7 +127,7 @@ class PositionObjectInteraction extends Interaction {
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      * 
-     * @return Point A Point object or null.
+     * @return \qtism\common\datatypes\Point A Point object or null.
      */
     public function getCenterPoint() {
         return $this->centerPoint;
@@ -147,7 +146,7 @@ class PositionObjectInteraction extends Interaction {
      * Set the maximum number of positions (on the stage) that the image can be placed.
      * 
      * @param integer $maxChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices >= 0) {
@@ -173,7 +172,7 @@ class PositionObjectInteraction extends Interaction {
      * to the interaction.
      * 
      * @param integer $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
-     * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
+     * @throws \InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
     public function setMinChoices($minChoices) {
         if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
@@ -201,6 +200,11 @@ class PositionObjectInteraction extends Interaction {
         return $this->minChoices;
     }
     
+    /**
+     * Whether or not a value is defined for the minChoices attribute.
+     * 
+     * @return boolean
+     */
     public function hasMinChoices() {
         return $this->getMinChoices() > 0;
     }
@@ -208,7 +212,7 @@ class PositionObjectInteraction extends Interaction {
     /**
      * Set the image to be positioned on the stage by the candidate.
      * 
-     * @param Object $object An image as an Object object.
+     * @param \qtism\data\content\xhtml\Object $object An image as an Object object.
      */
     public function setObject(Object $object) {
         $this->object = $object;
@@ -217,16 +221,22 @@ class PositionObjectInteraction extends Interaction {
     /**
      * Get the image to be positioned on the stage by the candidate.
      * 
-     * @return Object An image as an Object object.
+     * @return \qtism\data\content\xhtml\Object An image as an Object object.
      */
     public function getObject() {
         return $this->object;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getObject()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'positionObjectInteraction';
     }

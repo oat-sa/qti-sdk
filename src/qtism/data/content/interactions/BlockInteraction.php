@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -65,7 +64,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
-	 * @throws InvalidArgumentException If one of the argument is invalid.
+	 * @throws \InvalidArgumentException If one of the argument is invalid.
 	 */
 	public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
 	    parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -74,7 +73,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	/**
 	 * Get the prompt for the interaction.
 	 * 
-	 * @return Prompt
+	 * @return \qtism\data\content\interactions\Prompt
 	 */
 	public function getPrompt() {
 		return $this->prompt;
@@ -83,7 +82,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	/**
 	 * Set the prompt for the interaction.
 	 * 
-	 * @param Prompt $prompt
+	 * @param \qtism\data\content\interactions\Prompt $prompt
 	 */
 	public function setPrompt($prompt = null) {
 		$this->prompt = $prompt;
@@ -102,7 +101,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
      * Set the base URI of the BlockInteraction.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -123,10 +122,16 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         
         $array = array();

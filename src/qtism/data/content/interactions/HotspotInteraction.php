@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -79,7 +78,7 @@ class HotspotInteraction extends GraphicInteraction {
     /**
      * The hotspotChoice components of the hotspotInteraction.
      *
-     * @var HotspotChoiceCollection
+     * @var \qtism\data\content\interactions\HotspotChoiceCollection
      * @qtism-bean-property
      */
     private $hotspotChoices;
@@ -88,13 +87,14 @@ class HotspotInteraction extends GraphicInteraction {
      * Create a new HotspotInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param Object $object The associated image given as an Object object.
+     * @param \qtism\data\content\xhtml\Object $object The associated image given as an Object object.
      * @param integer $maxChoices The maximum number of choices the candidate is allowed to select as a positive (>= 0) integer.
-     * @param HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
+     * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, Object $object, $maxChoices, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
@@ -107,7 +107,7 @@ class HotspotInteraction extends GraphicInteraction {
      * to select.
      * 
      * @param integer $maxChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices >= 0) {
@@ -134,7 +134,7 @@ class HotspotInteraction extends GraphicInteraction {
      * select.
      * 
      * @param integer $minChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $minChoices is not a positive integer.
      */
     public function setMinChoices($minChoices) {
         if (is_int($minChoices) === true && $minChoices >= 0) {
@@ -159,8 +159,8 @@ class HotspotInteraction extends GraphicInteraction {
     /**
      * Set the hotspotChoices composing the interaction.
      * 
-     * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
-     * @throws InvalidArgumentException If the given collection is empty.
+     * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
+     * @throws \InvalidArgumentException If the given collection is empty.
      */
     public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices) {
         if (count($hotspotChoices) > 0) {
@@ -175,16 +175,22 @@ class HotspotInteraction extends GraphicInteraction {
     /**
      * Get the hotspotChoices composing the interaction.
      * 
-     * @return HotspotChoiceCollection A collection of HotspotChoice objects.
+     * @return \qtism\data\content\interactions\HotspotChoiceCollection A collection of HotspotChoice objects.
      */
     public function getHotspotChoices() {
         return $this->hotspotChoices;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getHotspotChoices()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'hotspotInteraction';
     }

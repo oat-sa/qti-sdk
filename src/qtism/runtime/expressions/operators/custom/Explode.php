@@ -16,9 +16,9 @@
  *
  * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
+ *
  *  
  */
 namespace qtism\runtime\expressions\operators\custom;

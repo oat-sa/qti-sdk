@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -147,6 +146,7 @@ class SliderInteraction extends BlockInteraction {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, $lowerBound, $upperBound, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -158,7 +158,7 @@ class SliderInteraction extends BlockInteraction {
      * Get the value of the lowerBound attribute.
      * 
      * @param float $lowerBound A float value.
-     * @throws InvalidArgumentException If $lowerBound is not a float value.
+     * @throws \InvalidArgumentException If $lowerBound is not a float value.
      */
     public function setLowerBound($lowerBound) {
         if (is_float($lowerBound) === true) {
@@ -183,7 +183,7 @@ class SliderInteraction extends BlockInteraction {
      * Set the value of the upperBound attribute.
      *  
      * @param float $upperBound A float value.
-     * @throws InvalidArgumentException If $upperBound is not a float value.
+     * @throws \InvalidArgumentException If $upperBound is not a float value.
      */
     public function setUpperBound($upperBound) {
         if (is_float($upperBound) === true) {
@@ -209,7 +209,7 @@ class SliderInteraction extends BlockInteraction {
      * that no value is actually defined for the step attribute.
      * 
      * @param integer $step A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $step is not a positive integer.
+     * @throws \InvalidArgumentException If $step is not a positive integer.
      */
     public function setStep($step) {
         if (is_int($step) && $step >= 0) {
@@ -243,7 +243,7 @@ class SliderInteraction extends BlockInteraction {
      * Set whether or not each step on the slider has to be labelled.
      * 
      * @param boolean $stepLabel
-     * @throws InvalidArgumentException If $stepLabel is not a boolean value.
+     * @throws \InvalidArgumentException If $stepLabel is not a boolean value.
      */
     public function setStepLabel($stepLabel) {
         if (is_bool($stepLabel) === true) {
@@ -268,7 +268,7 @@ class SliderInteraction extends BlockInteraction {
      * Set the orientation of the slider (horizontal or vertical).
      * 
      * @param integer $orientation A value from the Orientation enumeration.
-     * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
+     * @throws \InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation) {
         if (in_array($orientation, Orientation::asArray()) === true) {
@@ -293,7 +293,7 @@ class SliderInteraction extends BlockInteraction {
      * Set whether or not the upper and lower bounds are reversed.
      * 
      * @param boolean $reverse
-     * @throws InvalidArgumentException If $reverse is not a boolean value.
+     * @throws \InvalidArgumentException If $reverse is not a boolean value.
      */
     public function setReverse($reverse) {
         if (is_bool($reverse) === true) {
@@ -314,10 +314,16 @@ class SliderInteraction extends BlockInteraction {
         return $this->reverse;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return parent::getComponents();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'sliderInteraction';
     }

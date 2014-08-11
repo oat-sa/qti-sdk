@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -116,7 +115,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -132,7 +131,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * to interpret the value entered by the candidate.
      * 
      * @param integer $base A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $base is not a positive integer.
+     * @throws \InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base) {
         if (is_int($base) === true && $base >= 0) {
@@ -160,7 +159,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * there is no value for the stringIdentifier attribute.
      * 
      * @param string $stringIdentifier A QTI Identifier or an empty string.
-     * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
+     * @throws \InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier) {
         if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier) === true)) {
@@ -197,7 +196,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * is -1, it means that no value is defined for the expectedLength attribute.
      * 
      * @param integer A strictly positive (> 0) integer or -1.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
+     * @throws \InvalidArgumentException If $expectedLength is not a strictly positive integer nor -1.
      */
     public function setExpectedLength($expectedLength) {
         if (is_int($expectedLength) && ($expectedLength > 0 || $expectedLength === -1)) {
@@ -233,7 +232,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * match with. If $patternMask is an empty string, it means that there is no value defined for patternMask.
      * 
      * @param string $patternMask An XML Schema 2 regular expression or an empty string.
-     * @throws InvalidArgumentException If $patternMask is not a string value.
+     * @throws \InvalidArgumentException If $patternMask is not a string value.
      */
     public function setPatternMask($patternMask) {
         if (is_string($patternMask) === true) {
@@ -270,7 +269,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * for the placeholderText attribute.
      * 
      * @param string $placeholderText A placeholder text or an empty string.
-     * @throws InvalidArgumentException If $placeholderText is not a string value.
+     * @throws \InvalidArgumentException If $placeholderText is not a string value.
      */
     public function setPlaceholderText($placeholderText) {
         if (is_string($placeholderText) === true) {
@@ -301,10 +300,16 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
         return $this->getPlaceholderText() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'textEntryInteraction';
     }

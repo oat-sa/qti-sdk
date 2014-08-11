@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -75,13 +74,13 @@ class SelectPointInteraction extends GraphicInteraction {
      * Create a new SelectPointInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
-     * @param Object $object The associated image as an Object object.
+     * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
      * @param integer $maxChoices The maximum number of choices that the candidate is allowed to select as a positive (>= 0) integer.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($responseIdentifier, Object $object, $maxChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
@@ -102,7 +101,7 @@ class SelectPointInteraction extends GraphicInteraction {
      * Set the maximum number of points that the candidate is allowed to select.
      * 
      * @param integer $maxChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $maxChoices is not a positive integer.
      */
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices >= 0) {
@@ -127,7 +126,7 @@ class SelectPointInteraction extends GraphicInteraction {
      * Set the minimum number of points that the candidate is allowed to select.
      * 
      * @param integer $minChoices A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minChoices is not a positive integer.
+     * @throws \InvalidArgumentException If $minChoices is not a positive integer.
      */
     public function setMinChoices($minChoices) {
         if (is_int($minChoices) === true && $minChoices >= 0) {
@@ -139,10 +138,16 @@ class SelectPointInteraction extends GraphicInteraction {
         }
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getObject()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'selectPointInteraction';
     }

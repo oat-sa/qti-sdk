@@ -18,9 +18,6 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package qtism
- *  
- *
  */
 namespace qtism\common;
 

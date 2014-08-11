@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -57,7 +56,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
-	 * @throws InvalidArgumentException If one of the constructor's argument is invalid.
+	 * @throws \InvalidArgumentException If one of the constructor's argument is invalid.
 	 */
 	public function __construct($identifier, $required = false, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
@@ -68,7 +67,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	 * Set whether the gap must be filled by the candidate or not.
 	 * 
 	 * @param boolean $required
-	 * @throws InvalidArgumentException If $required is not a boolean value.
+	 * @throws \InvalidArgumentException If $required is not a boolean value.
 	 */
 	public function setRequired($required) {
 		if (is_bool($required) === true) {
@@ -89,10 +88,16 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 		return $this->required;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'gap';
 	}

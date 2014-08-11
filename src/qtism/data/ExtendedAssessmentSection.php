@@ -18,7 +18,6 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 
@@ -98,6 +97,9 @@ class ExtendedAssessmentSection extends AssessmentSection {
         return $extended;
     }
     
+    /**
+     * @see \qtism\data\AssessmentSection::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         $parentComponents->merge($this->getRubricBlockRefs());

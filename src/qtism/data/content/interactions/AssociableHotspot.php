@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -104,7 +103,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
-	 * @throws InvalidArgument If one of the constructor's argument is invalid.
+	 * @throws \InvalidArgument If one of the constructor's argument is invalid.
 	 */
 	public function __construct($identifier, $matchMax, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
@@ -117,7 +116,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * Set the matchMax of the associableHotspot.
 	 * 
 	 * @param integer $matchMax A positive (>= 0) integer.
-	 * @throws InvalidArgumentException If $matchMax is not a positive integer.
+	 * @throws \InvalidArgumentException If $matchMax is not a positive integer.
 	 */
 	public function setMatchMax($matchMax) {
 		if (is_int($matchMax) === true && $matchMax >= 0) {
@@ -142,7 +141,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * Set the matchMin of the associableHotspot.
 	 * 
 	 * @param integer $matchMin A positive (>= 0) integer.
-	 * @throws InvalidArgumentException If $matchMin is not a positive integer.
+	 * @throws \InvalidArgumentException If $matchMin is not a positive integer.
 	 */
 	public function setMatchMin($matchMin) {
 		if (is_int($matchMin) === true && $matchMin >= 0) {
@@ -181,7 +180,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	/**
 	 * Get the shape of the associableHotspot.
 	 * 
-	 * @return Shape A Shape object.
+	 * @return \qtism\common\datatypes\Shape A Shape object.
 	 */
 	public function getShape() {
 		return $this->shape;
@@ -190,7 +189,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	/**
 	 * Set the coords of the associableHotspot.
 	 * 
-	 * @param Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
 	public function setCoords(Coords $coords) {
 		$this->coords = $coords;
@@ -199,7 +198,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	/**
 	 * Get the coords of the associableHotspot.
 	 * 
-	 * @return Coords A Coords object.
+	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
 	public function getCoords() {
 		return $this->coords;
@@ -209,7 +208,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * Set the hotspotLabel of the associableHotspot.
 	 * 
 	 * @param string $hotspotLabel A string with at most 256 characters.
-	 * @throws InvalidArgumentException If $hotspotLabel has more than 256 characters.
+	 * @throws \InvalidArgumentException If $hotspotLabel has more than 256 characters.
 	 */
 	public function setHotspotLabel($hotspotLabel) {
 		if (Format::isString256($hotspotLabel) === true) {
@@ -230,14 +229,25 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 		return $this->hotspotLabel;
 	}
 	
+	/**
+	 * Whether or not the associableHotspot has an hotspotLabel.
+	 * 
+	 * @return boolean
+	 */
 	public function hasHotspotLabel() {
 	    return $this->getHotspotLabel() !== '';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'associableHotspot';
 	}

@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -37,7 +36,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	/**
 	 * The elements composing the SimpleAssociableChoice.
 	 * 
-	 * @var FlowStaticCollection
+	 * @var \qtism\data\content\FlowStaticCollection
 	 * @qtism-bean-property
 	 */
 	private $content;
@@ -79,6 +78,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The lang of the bodyElement.
 	 * @param string $label The label of the bodyElement.
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($identifier, $id, $class, $lang, $label);
@@ -91,7 +91,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	 * Set the matchMax attribute.
 	 * 
 	 * @param integer $matchMax A positive (>= 0) integer.
-	 * @throws InvalidArgumentException If $matchMax is not a positive integer.
+	 * @throws \InvalidArgumentException If $matchMax is not a positive integer.
 	 */
 	public function setMatchMax($matchMax) {
 		if (is_int($matchMax) === true && $matchMax >= 0) {
@@ -116,7 +116,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	 * Get the matchMin attribute.
 	 * 
 	 * @param integer $matchMin A positive (>= 0) integer.
-	 * @throws InvalidArgumentException If $matchMin is not a positive integer.
+	 * @throws \InvalidArgumentException If $matchMin is not a positive integer.
 	 */
 	public function setMatchMin($matchMin) {
 		if (is_int($matchMin) === true && $matchMin >= 0) {
@@ -128,6 +128,9 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return $this->getContent();
 	}
@@ -135,7 +138,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	/**
 	 * Set the elements composing the simpleAssociableChoice.
 	 * 
-	 * @param FlowStaticCollection $content A collection of FlowStatic objects.
+	 * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
 	 */
 	public function setContent(FlowStaticCollection $content) {
 		$this->content = $content;
@@ -144,7 +147,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 	/**
 	 * Get the elements composing the simpleAssociableChoice.
 	 * 
-	 * @return FlowStaticCollection A collection of FlowStatic objects.
+	 * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
 	 */
 	public function getContent() {
 	    return $this->content;
@@ -159,6 +162,9 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice {
 		return $this->matchMin;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'simpleAssociableChoice';
 	}

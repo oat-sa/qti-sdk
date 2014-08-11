@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -77,7 +76,7 @@ class GapMatchInteraction extends BlockInteraction {
      * the gaps. If the block contains more than one gap then the interaction must 
      * be bound to a response with multiple cardinality.
      * 
-     * @var BlockStaticCollection
+     * @var \qtism\data\content\BlockStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -86,13 +85,13 @@ class GapMatchInteraction extends BlockInteraction {
      * Create a new GapMatchInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param GapChoiceCollection $gapChoices The GapChoices object composing the GapMatchInteraction.
-     * @param BlockStaticCollection $content The BlockStatic objects composing the GapMatchInteraction.
-     * @param unknown_type $id The body of the bodyElement.
-     * @param unknown_type $class The class of the bodyElement.
-     * @param unknown_type $lang The language of the bodyElement.
-     * @param unknown_type $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @param \qtism\data\content\interactions\GapChoiceCollection $gapChoices The GapChoices object composing the GapMatchInteraction.
+     * @param \qtism\data\content\BlockStaticCollection $content The BlockStatic objects composing the GapMatchInteraction.
+     * @param string $id The body of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, GapChoiceCollection $gapChoices, BlockStaticCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -106,7 +105,7 @@ class GapMatchInteraction extends BlockInteraction {
      * the gaps) are initially presented.
      * 
      * @param boolean $shuffle A boolean value.
-     * @throws InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle) {
         if (is_bool($shuffle) === true) {
@@ -131,8 +130,8 @@ class GapMatchInteraction extends BlockInteraction {
     /**
      * Set the collection of choices for filling the gaps.
      * 
-     * @param GapChoiceCollection $gapChoices A collection of at least one GapChoice object.
-     * @throws InvalidArgumentException If $gapChoices is empty.
+     * @param \qtism\data\content\interactions\GapChoiceCollection $gapChoices A collection of at least one GapChoice object.
+     * @throws \InvalidArgumentException If $gapChoices is empty.
      */
     public function setGapChoices(GapChoiceCollection $gapChoices) {
         if (count($gapChoices) > 0) {
@@ -147,7 +146,7 @@ class GapMatchInteraction extends BlockInteraction {
     /**
      * Get the collection of choices for filling the gaps.
      * 
-     * @return GapChoiceCollection A collection of at least one GapChoice object.
+     * @return \qtism\data\content\interactions\GapChoiceCollection A collection of at least one GapChoice object.
      */
     public function getGapChoices() {
         return $this->gapChoices;
@@ -156,8 +155,8 @@ class GapMatchInteraction extends BlockInteraction {
     /**
      * Get the content of the interaction as simply a piece of content that contains the gaps.
      * 
-     * @param BlockStaticCollection $content A collection of at least one BlockStatic object.
-     * @throws InvalidArgumentException If $content is empty.
+     * @param \qtism\data\content\BlockStaticCollection $content A collection of at least one BlockStatic object.
+     * @throws \InvalidArgumentException If $content is empty.
      */
     public function setContent(BlockStaticCollection $content) {
         if (count($content) > 0) {
@@ -172,17 +171,23 @@ class GapMatchInteraction extends BlockInteraction {
     /**
      * Set the content of the interaction as simply a piece of content that contains the gaps.
      * 
-     * @return BlockStaticCollection A collection of at least one BlockStatic object.
+     * @return \qtism\data\content\BlockStaticCollection A collection of at least one BlockStatic object.
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getGapChoices()->getArrayCopy(), $this->getContent()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'gapMatchInteraction';
     }

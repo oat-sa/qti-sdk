@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -60,7 +59,7 @@ class OrderInteraction extends BlockInteraction {
      * is the initial order of the choices presented to the user unless shuffle 
      * is true.
      * 
-     * @var SimpleChoiceCollection
+     * @var \qtism\data\content\interactions\SimpleChoiceCollection
      * @qtism-bean-property
      */
     private $simpleChoices;
@@ -118,12 +117,12 @@ class OrderInteraction extends BlockInteraction {
      * Create a new OrderInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the associated response variable.
-     * @param SimpleChoiceCollection $simpleChoices A collection of at least one SimpleChoice object.
+     * @param \qtism\data\content\interactions\SimpleChoiceCollection $simpleChoices A collection of at least one SimpleChoice object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($responseIdentifier, SimpleChoiceCollection $simpleChoices, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -137,7 +136,7 @@ class OrderInteraction extends BlockInteraction {
     /**
      * Set the ordered list of choices that are displayed to the user.
      * 
-     * @param SimpleChoiceCollection $simpleChoices A list of at lease one SimpleChoice object.
+     * @param \qtism\data\content\interactions\SimpleChoiceCollection $simpleChoices A list of at lease one SimpleChoice object.
      * @throws InvalidArgumentException If $simpleChoices is empty.
      */
     public function setSimpleChoices(SimpleChoiceCollection $simpleChoices) {
@@ -153,7 +152,7 @@ class OrderInteraction extends BlockInteraction {
     /**
      * Get the ordered list of choices that are displayed to the user.
      * 
-     * @return SimpleChoiceCollection A list of at lease one SimpleChoice object.
+     * @return \qtism\data\content\interactions\SimpleChoiceCollection A list of at lease one SimpleChoice object.
      */
     public function getSimpleChoices() {
         return $this->simpleChoices;
@@ -163,7 +162,7 @@ class OrderInteraction extends BlockInteraction {
      * Set whether the delivery engine must randomize the choices.
      * 
      * @param boolean $shuffle A boolean value.
-     * @throws InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle) {
         if (is_bool($shuffle) === true) {
@@ -188,7 +187,7 @@ class OrderInteraction extends BlockInteraction {
      * Set the minimum number of choices that the candidate may select.
      * 
      * @param integer $minChoices A strictly (> 0) positive integer or -1 if no value is specified for the attribute.
-     * @throws InvalidArgumentException If $minChoices is not a strictly positive integer nor -1.
+     * @throws \InvalidArgumentException If $minChoices is not a strictly positive integer nor -1.
      */
     public function setMinChoices($minChoices) {
         if (is_int($minChoices) === true && ($minChoices > 0 || $minChoices === -1)) {
@@ -228,7 +227,7 @@ class OrderInteraction extends BlockInteraction {
      * Set the maximum number of choices that the candidate may select and order when responding to the interaction.
      * 
      * @param integer $maxChoices A strictly positive (> 0) integer or -1 if no value is specified for the attribuite.
-     * @throws InvalidArgumentException If $maxChoices is not a strictly positive integer nor -1.
+     * @throws \InvalidArgumentException If $maxChoices is not a strictly positive integer nor -1.
      */
     public function setMaxChoices($maxChoices) {
         if (is_int($maxChoices) === true && $maxChoices > 0 || $maxChoices === -1) {
@@ -268,7 +267,7 @@ class OrderInteraction extends BlockInteraction {
      * Set the orientation of the choices.
      * 
      * @param integer $orientation A value from the Orientation enumeration.
-     * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
+     * @throws \InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
     public function setOrientation($orientation) {
         if (in_array($orientation, Orientation::asArray()) === true) {
@@ -289,11 +288,17 @@ class OrderInteraction extends BlockInteraction {
         return $this->orientation;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleChoices()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'orderInteraction';
     }

@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -38,7 +37,7 @@ class SimpleMatchSet extends QtiComponent {
      * 
      * An ordered set of choices for the set.
      * 
-     * @var SimpleAssociableChoiceCollection
+     * @var \qtism\data\content\interactions\SimpleAssociableChoiceCollection
      * @qtism-bean-property
      */
     private $simpleAssociableChoices;
@@ -46,7 +45,7 @@ class SimpleMatchSet extends QtiComponent {
     /**
      * Create a new SimpleMatchSet object.
      * 
-     * @param SimpleAssociableChoiceCollection $simpleAssociableChoices The ordered set of choices for the set.
+     * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices The ordered set of choices for the set.
      */
     public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null) {
         $this->setSimpleAssociableChoices((is_null($simpleAssociableChoices) === true) ? new SimpleAssociableChoiceCollection() : $simpleAssociableChoices);
@@ -55,7 +54,7 @@ class SimpleMatchSet extends QtiComponent {
     /**
      * Set the ordered set of choices for the set.
      * 
-     * @param SimpleAssociableChoiceCollection $simpleAssociableChoices
+     * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices
      */
     public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices) {
         $this->simpleAssociableChoices = $simpleAssociableChoices;
@@ -64,16 +63,22 @@ class SimpleMatchSet extends QtiComponent {
     /**
      * Get the ordered set of choices for the set.
      * 
-     * @return SimpleAssociableChoiceCollection
+     * @return \qtism\data\content\interactions\SimpleAssociableChoiceCollection
      */
     public function getSimpleAssociableChoices() {
         return $this->simpleAssociableChoices;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return $this->getSimpleAssociableChoices();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'simpleMatchSet';
     }

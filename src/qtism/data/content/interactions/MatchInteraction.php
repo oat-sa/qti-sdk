@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -70,7 +69,7 @@ class MatchInteraction extends BlockInteraction {
     /**
      * From IMS QTI:
      *
-     * @var SimpleMatchSetCollection
+     * @var \qtism\data\content\interactions\SimpleMatchSetCollection
      * @qtism-bean-property
      */
     private $simpleMatchSets;
@@ -87,7 +86,7 @@ class MatchInteraction extends BlockInteraction {
      * Set whether the delivery engine must randomize the choices.
      *
      * @param boolean $shuffle A boolean value.
-     * @throws InvalidArgumentException If $shuffle is not a boolean value.
+     * @throws \InvalidArgumentException If $shuffle is not a boolean value.
      */
     public function setShuffle($shuffle) {
         if (is_bool($shuffle) === true) {
@@ -113,7 +112,7 @@ class MatchInteraction extends BlockInteraction {
      * is 0 then there is no restriction.
      * 
      * @param integer $maxAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
+     * @throws \InvalidArgumentException If $maxAssociations is not a positive integer.
      */
     public function setMaxAssociations($maxAssociations) {
         if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
@@ -150,7 +149,7 @@ class MatchInteraction extends BlockInteraction {
      * there is no restriction.
      * 
      * @param integer $minAssociations A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minAssociations is not a positive integer or does not respect the limit imposed by maxAssociations.
+     * @throws \InvalidArgumentException If $minAssociations is not a positive integer or does not respect the limit imposed by maxAssociations.
      */
     public function setMinAssociations($minAssociations) {
         if (is_int($minAssociations) === true && $minAssociations >= 0) {
@@ -191,8 +190,8 @@ class MatchInteraction extends BlockInteraction {
      * Set the set of choices. The first defines the source choices and the second one the
      * targets.
      * 
-     * @param SimpleMatchSetCollection $simpleMatchSets A collection of exactly two SimpleMatchSet objects.
-     * @throws InvalidArgumentException If $simpleMatchSets does not contain exactly two SimpleMatchSet objects.
+     * @param \qtism\data\content\interactions\SimpleMatchSetCollection $simpleMatchSets A collection of exactly two SimpleMatchSet objects.
+     * @throws \InvalidArgumentException If $simpleMatchSets does not contain exactly two SimpleMatchSet objects.
      */
     public function setSimpleMatchSets(SimpleMatchSetCollection $simpleMatchSets) {
         if (count($simpleMatchSets) === 2) {
@@ -208,7 +207,7 @@ class MatchInteraction extends BlockInteraction {
      * Get the set of choices. The first defines the source choices and the secon one the
      * targets.
      * 
-     * @return SimpleMatchSetCollection A collection of exactly two SimpleMatchSet objects.
+     * @return \qtism\data\content\interactions\SimpleMatchSetCollection A collection of exactly two SimpleMatchSet objects.
      */
     public function getSimpleMatchSets() {
         return $this->simpleMatchSets;
@@ -217,7 +216,7 @@ class MatchInteraction extends BlockInteraction {
     /**
      * Get the source choices.
      * 
-     * @return SimpleMatchSet A SimpleMatchSet object.
+     * @return \qtism\data\content\interactions\SimpleMatchSet A SimpleMatchSet object.
      */
     public function getSourceChoices() {
         $matchSets = $this->getSimpleMatchSets();
@@ -227,18 +226,24 @@ class MatchInteraction extends BlockInteraction {
     /**
      * Get the target choices.
      * 
-     * @return SimpleMatchSet A SimpleMatchSet object.
+     * @return \qtism\data\content\interactions\SimpleMatchSet A SimpleMatchSet object.
      */
     public function getTargetChoices() {
         $matchSets = $this->getSimpleMatchSets();
         return $matchSets[1];
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleMatchSets()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'matchInteraction';
     }

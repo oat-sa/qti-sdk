@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -59,7 +58,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
      * An ordered list of choices for filling the gaps. There may be 
      * fewer choices than gaps if required.
      * 
-     * @var GapImgCollection
+     * @var \qtism\data\content\interactions\GapImgCollection
      * @qtism-bean-property
      */
     private $gapImgs;
@@ -70,7 +69,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
      * The hotspots that define the gaps that are to be filled
      * by the candidate.
      * 
-     * @var AssociableHotspotCollection
+     * @var \qtism\data\content\interactions\AssociableHotspotCollection
      * @qtism-bean-property
      */
     private $associableHotspots;
@@ -79,13 +78,14 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
      * Create a new GraphicGapMatchInteraction object.
      * 
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
-     * @param Object $object An image as an Object object.
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
-     * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
+     * @param \qtism\data\content\xhtml\Object $object An image as an Object object.
+     * @param \qtism\data\content\interactions\GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
@@ -96,8 +96,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
     /**
      * Set the list of choices for filling the gaps.
      * 
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
-     * @throws InvalidArgumentException If $gapImgs is empty.
+     * @param \qtism\data\content\interactions\GapImgCollection $gapImgs A collection of GapImg objects.
+     * @throws \InvalidArgumentException If $gapImgs is empty.
      */
     public function setGapImgs(GapImgCollection $gapImgs) {
         if (count($gapImgs) > 0) {
@@ -112,7 +112,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
     /**
      * Get the list of choices for filling the gaps.
      * 
-     * @return GapImgCollection A collection of GapImg objects.
+     * @return \qtism\data\content\interactions\GapImgCollection A collection of GapImg objects.
      */
     public function getGapImgs() {
         return $this->gapImgs;
@@ -121,8 +121,8 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
     /**
      * Set the hotspots that define the gaps that are to be filled by the candidate.
      * 
-     * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
-     * @throws InvalidArgumentException If $associableHotspots is empty.
+     * @param \qtism\data\content\interactions\AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
+     * @throws \InvalidArgumentException If $associableHotspots is empty.
      */
     public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots) {
         if (count($associableHotspots) > 0) {
@@ -137,16 +137,22 @@ class GraphicGapMatchInteraction extends GraphicInteraction {
     /**
      * Get the hotspots that define the gaps that are to be filled by the candidate.
      * 
-     * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
+     * @return \qtism\data\content\interactions\AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
     public function getAssociableHotspots() {
         return $this->associableHotspots;
     }
 
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array_merge(array($this->getObject()), $this->getGapImgs()->getArrayCopy(), $this->getAssociableHotspots()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'graphicGapMatchInteraction';
     }

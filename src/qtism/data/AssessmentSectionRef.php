@@ -18,7 +18,6 @@
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package 
  */
 
 
@@ -94,6 +93,9 @@ class AssessmentSectionRef extends SectionPart {
 		return $this->href;
 	}
 	
+	/**
+	 * @see \qtism\data\SectionPart::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'assessmentSectionRef';
 	}

@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -94,7 +93,7 @@ class MediaInteraction extends BlockInteraction {
      * 
      * The media object itself.
      * 
-     * @var Object
+     * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
@@ -104,11 +103,12 @@ class MediaInteraction extends BlockInteraction {
      * 
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param boolean $autostart Whether the media has to be played immediately after the begining of the attempt.
-     * @param Object $object The media object itself.
+     * @param \qtism\data\content\xhtml\Object $object The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException
      */
     public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -120,7 +120,7 @@ class MediaInteraction extends BlockInteraction {
      * Set whether or not the media must start as soon as the candidate starts the attempt.
      * 
      * @param boolean $autostart
-     * @throws InvalidArgumentException If $autostart is not a boolean value.
+     * @throws \InvalidArgumentException If $autostart is not a boolean value.
      */
     public function setAutostart($autostart) {
         if (is_bool($autostart) === true) {
@@ -145,7 +145,7 @@ class MediaInteraction extends BlockInteraction {
      * Set the minimum number of times the media must be played.
      * 
      * @param integer $minPlays A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $minPlays is not a positive integer.
+     * @throws \InvalidArgumentException If $minPlays is not a positive integer.
      */
     public function setMinPlays($minPlays) {
         if (is_int($minPlays) === true && $minPlays >= 0) {
@@ -179,7 +179,7 @@ class MediaInteraction extends BlockInteraction {
      * Set the maximum number of times the media can be played.
      * 
      * @param integer $maxPlays A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $maxPlays is not a positive integer.
+     * @throws \InvalidArgumentException If $maxPlays is not a positive integer.
      */
     public function setMaxPlays($maxPlays) {
         if (is_int($maxPlays) && $maxPlays >= 0) {
@@ -213,7 +213,7 @@ class MediaInteraction extends BlockInteraction {
      * Set whether or not the continuous play (subject to maxPlays) of the media is in force.
      * 
      * @param boolean $loop
-     * @throws InvalidArgumentException If $loop is not a boolean value.
+     * @throws \InvalidArgumentException If $loop is not a boolean value.
      */
     public function setLoop($loop) {
         if (is_bool($loop) === true) {
@@ -237,7 +237,7 @@ class MediaInteraction extends BlockInteraction {
     /**
      * Set the media object itself.
      * 
-     * @param Object $object
+     * @param \qtism\data\content\xhtml\Object $object
      */
     public function setObject(Object $object) {
         $this->object = $object;
@@ -246,17 +246,23 @@ class MediaInteraction extends BlockInteraction {
     /**
      * Get the media object itself.
      * 
-     * @return Object
+     * @return \qtism\data\content\xhtml\Object
      */
     public function getObject() {
         return $this->object;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponent = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponent->getArrayCopy(), array($this->getObject())));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'mediaInteraction';
     }

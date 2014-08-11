@@ -1,6 +1,5 @@
 <?php
 use qtism\runtime\tests\AssessmentItemSession;
-
 use qtism\runtime\tests\AssessmentTestSession;
 
 class SimpleResultsSubmittableTestSession extends AssessmentTestSession {

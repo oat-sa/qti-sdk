@@ -18,7 +18,6 @@
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package 
  */
 
 
@@ -636,10 +635,16 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 	    return $this->modalFeedbacks;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'assessmentItem';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge($this->getResponseDeclarations()->getArrayCopy(),
 		                    $this->getOutcomeDeclarations()->getArrayCopy(),

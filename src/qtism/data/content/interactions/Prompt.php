@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -40,7 +39,7 @@ class Prompt extends BodyElement {
      * 
      * A prompt must not contain any nested interactions.
      * 
-     * @var FlowStaticCollection
+     * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
@@ -52,7 +51,7 @@ class Prompt extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of the arguments is invalid.
+     * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -62,7 +61,7 @@ class Prompt extends BodyElement {
     /**
      * Set the content of the prompt.
      * 
-     * @param FlowStaticCollection $content A collection of FlowStatic objects.
+     * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
      */
     public function setContent(FlowStaticCollection $content) {
         $this->content = $content;
@@ -71,16 +70,22 @@ class Prompt extends BodyElement {
     /**
      * Get the content of the prompt.
      * 
-     * @return FlowStaticCollection A collection of FlowStatic objects.
+     * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'prompt';
     }

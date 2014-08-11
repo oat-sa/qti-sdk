@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -50,7 +49,7 @@ interface StringInteraction {
      * Set the base attribute of the StringInteraction.
      * 
      * @param integer $base A positive (>= 0) integer.
-     * @throws InvalidArgumentException If $base is not a positive integer.
+     * @throws \InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base);
     
@@ -66,7 +65,7 @@ interface StringInteraction {
      * an empty string, it means no value is defined for the stringIdentifier attribute.
      * 
      * @param string $stringIdentifier The identifier of a response variable of baseType string.
-     * @throws InvalidArgumentException If $stringIdentifier is not a valid QTI identifier nor an empty string.
+     * @throws \InvalidArgumentException If $stringIdentifier is not a valid QTI identifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier);
 
@@ -90,7 +89,7 @@ interface StringInteraction {
      * it means that no expectedLength is defined.
      * 
      * @param string $expectedLength A strictly positive integer (> 0) or -1 if no expectedLength is defined.
-     * @throws InvalidArgumentException If $expectedLength is not a strictly positive (> 0) integer nor -1.
+     * @throws \InvalidArgumentException If $expectedLength is not a strictly positive (> 0) integer nor -1.
      */
     public function setExpectedLength($expectedLength);
     
@@ -114,7 +113,7 @@ interface StringInteraction {
      * is an empty string, it means there is no patternMask defined.
      * 
      * @param string $patternMask An XML Schema 2 regular expression or an empty string.
-     * @throws InvalidArgumentException If $patternMash is not a string value.
+     * @throws \InvalidArgumentException If $patternMash is not a string value.
      */
     public function setPatternMask($patternMask);
     
@@ -138,7 +137,7 @@ interface StringInteraction {
      * an empty string, it means that there is not placeholderText defined.
      * 
      * @param string $placeholderText A placeholder text for the interaction.
-     * @throws InvalidArgumentException If $placeholderText is not a string value.
+     * @throws \InvalidArgumentException If $placeholderText is not a string value.
      */
     public function setPlaceholderText($placeholderText);
     

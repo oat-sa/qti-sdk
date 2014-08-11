@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -47,7 +46,7 @@ class DrawingInteraction extends BlockInteraction {
      * place is given as an object which must be of an image type, as 
      * specified by the type attribute.
      * 
-     * @var Object
+     * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
@@ -61,7 +60,7 @@ class DrawingInteraction extends BlockInteraction {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any argument is invalid.
+     * @throws \InvalidArgumentException If any argument is invalid.
      */
     public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
@@ -71,7 +70,7 @@ class DrawingInteraction extends BlockInteraction {
     /**
      * Set the image that acts as a canvas for drawing.
      * 
-     * @param Object $object An Object object representing an image.
+     * @param \qtism\data\content\xhtml\Object $object An Object object representing an image.
      */
     public function setObject(Object $object) {
         $this->object = $object;
@@ -80,17 +79,23 @@ class DrawingInteraction extends BlockInteraction {
     /**
      * Get the image that acts as a canvas for drawing.
      * 
-     * @return Object An Object object representing an image.
+     * @return \qtism\data\content\xhtml\Object An Object object representing an image.
      */
     public function getObject() {
         return $this->object;
     }
     
+    /**
+     * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
+     */
     public function getComponents() {
         $parentComponents = parent::getComponents();
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), array($this->getObject())));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'drawingInteraction';
     }

@@ -14,11 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts, <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * @package
  */
 
 namespace qtism\data\content\interactions;
@@ -41,7 +40,7 @@ interface Hotspot {
 	 * Set the shape of the hotspot.
 	 * 
 	 * @param integer $shape A value from the Shape enumeration.
-	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
+	 * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape);
 	
@@ -55,14 +54,14 @@ interface Hotspot {
 	/**
 	 * Set the coords of the hotspot.
 	 * 
-	 * @param Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
 	public function setCoords(Coords $coords);
 	
 	/**
 	 * Get the coords of the hotspot.
 	 * 
-	 * @return Coords A Coords object.
+	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
 	public function getCoords();
 	
@@ -70,7 +69,7 @@ interface Hotspot {
 	 * Set the alternative text for this hotspot.
 	 * 
 	 * @param string $hotspotLabel A string with a maximum of 256 characters.
-	 * @throws InvalidArgumentException If $hotspotLabel is larger than 256 characters.
+	 * @throws \InvalidArgumentException If $hotspotLabel is larger than 256 characters.
 	 */
 	public function setHotspotLabel($hotspotLabel);
 	
