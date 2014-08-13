@@ -36,7 +36,7 @@ class Tr extends BodyElement {
     /**
      * The TableCell objects composing the tr.
      * 
-     * @var TableCellCollection
+     * @var \qtism\data\content\xhtml\tables\TableCellCollection
      * @qtism-bean-property
      */
     private $content;
@@ -48,7 +48,7 @@ class Tr extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct(TableCellCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -56,9 +56,7 @@ class Tr extends BodyElement {
     }
     
     /**
-     * Get the TableCell objects composing the tr.
-     * 
-     * @return TableCellCollection A collection of TableCell objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();
@@ -67,7 +65,7 @@ class Tr extends BodyElement {
     /**
      * Set the TableCell objects composing the tr.
      * 
-     * @param TableCellCollection $content A collection of TableCell objects.
+     * @param \qtism\data\content\xhtml\tables\TableCellCollection $content A collection of TableCell objects.
      */
     public function setContent(TableCellCollection $content) {
         $this->content = $content;
@@ -76,12 +74,15 @@ class Tr extends BodyElement {
     /**
      * Get the TableCell objects composing the tr.
      * 
-     * @return TableCellCollection
+     * @return \qtism\data\content\xhtml\tables\TableCellCollection
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'tr';
     }

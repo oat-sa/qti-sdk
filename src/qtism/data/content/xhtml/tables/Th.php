@@ -30,10 +30,22 @@ namespace qtism\data\content\xhtml\tables;
  */
 class Th extends TableCell {
     
+    /**
+     * Create a new Th object.
+     * 
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the arguments above is invalid.
+     */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'th';
     }

@@ -37,7 +37,7 @@ class TableCellCollection extends QtiComponentCollection {
     /**
      * Check if $value is an instance of TableCell.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of TableCell.
+     * @throws \InvalidArgumentException If $value is not an instance of TableCell.
      */
     protected function checkType($value) {
         if (!$value instanceof TableCell) {

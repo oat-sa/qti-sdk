@@ -36,7 +36,7 @@ class Thead extends BodyElement {
     /**
      * The Tr elements composing the Thead.
      * 
-     * @var TrCollection
+     * @var \qtism\data\content\xhtml\tables\TrCollection
      * @qtism-bean-property
      */
     private $content;
@@ -44,12 +44,12 @@ class Thead extends BodyElement {
     /**
      * Create a new Thead object.
      * 
-     * @param TrCollection $content The Tr objects composing the Thead.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content The Tr objects composing the Thead.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -59,8 +59,8 @@ class Thead extends BodyElement {
     /**
      * Set the Tr objects composing the Thead.
      * 
-     * @param TrCollection $content A collection of Tr objects.
-     * @throws InvalidArgumentException If $content is empty.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content A collection of Tr objects.
+     * @throws \InvalidArgumentException If $content is empty.
      */
     public function setContent(TrCollection $content) {
         if (count($content) > 0) {
@@ -75,21 +75,22 @@ class Thead extends BodyElement {
     /**
      * Get the Tr objects composing the Thead.
      * 
-     * @return TrCollection
+     * @return \qtism\data\content\xhtml\tables\TrCollection
      */
     public function getContent() {
         return $this->content;
     }
     
     /**
-     * Get the Tr objects composing the Thead.
-     * 
-     * @return TrCollection A collection of Tr objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'thead';
     }

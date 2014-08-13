@@ -37,7 +37,7 @@ class ColCollection extends QtiComponentCollection {
     /**
      * Check if $value is an instance of Col.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of Col.
+     * @throws \InvalidArgumentException If $value is not an instance of Col.
      */
     protected function checkType($value) {
         if (!$value instanceof Col) {

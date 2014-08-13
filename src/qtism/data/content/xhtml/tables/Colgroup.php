@@ -57,7 +57,7 @@ class Colgroup extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '' , $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -69,7 +69,7 @@ class Colgroup extends BodyElement {
      * Set the value for the span attribute.
      * 
      * @param integer $span A strictly positive (> 0) integer.
-     * @throws InvalidArgumentException If $span is not a strictly positive integer.
+     * @throws \InvalidArgumentException If $span is not a strictly positive integer.
      */
     public function setSpan($span) {
         if (is_int($span) && $span > 0) {
@@ -91,9 +91,7 @@ class Colgroup extends BodyElement {
     }
     
     /**
-     * Get the collection of Col objects composing the Colgroup.
-     * 
-     * @return ColCollection A collection of Col objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();
@@ -102,7 +100,7 @@ class Colgroup extends BodyElement {
     /**
      * Set the collection of Col objects composing the ColGroup.
      * 
-     * @param ColCollection $content A collection of Col objects.
+     * @param \qtism\data\content\xhtml\tables\ColCollection $content A collection of Col objects.
      */
     public function setContent(ColCollection $content) {
         $this->content = $content;
@@ -111,12 +109,15 @@ class Colgroup extends BodyElement {
     /**
      * Get the collection of Col objects composing the ColGroup.
      * 
-     * @return ColCollection
+     * @return \qtism\data\content\xhtml\tables\ColCollection
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'colgroup';
     }

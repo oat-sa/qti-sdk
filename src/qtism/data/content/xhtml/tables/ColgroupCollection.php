@@ -37,7 +37,7 @@ class ColgroupCollection extends QtiComponentCollection {
     /**
      * Check if $value is an instance of Colgroup.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of $value.
+     * @throws \InvalidArgumentException If $value is not an instance of $value.
      */
     protected function checkType($value) {
         if (!$value instanceof Colgroup) {

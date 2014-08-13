@@ -36,7 +36,7 @@ class Tbody extends BodyElement {
     /**
      * The Tr objects composing the Tbody.
      * 
-     * @var TrCollection
+     * @var \qtism\data\content\xhtml\tables\TrCollection
      * @qtism-bean-property
      */
     private $content;
@@ -44,12 +44,12 @@ class Tbody extends BodyElement {
     /**
      * Create a new Tbody object.
      * 
-     * @param TrCollection $content A non-empty TrCollection object.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -59,8 +59,8 @@ class Tbody extends BodyElement {
     /**
      * Set the collection of Tr objects composing the Tbody.
      * 
-     * @param TrCollection $content A non-empty TrCollection object.
-     * @throws InvalidArgumentException If $components is empty.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
+     * @throws \InvalidArgumentException If $components is empty.
      */
     public function setContent(TrCollection $content) {
         if (count($content) > 0) {
@@ -72,19 +72,25 @@ class Tbody extends BodyElement {
         }
     }
     
+    /**
+     * Get the content of the object as a collection of Tr objects.
+     * 
+     * @return \qtism\data\content\xhtml\tables\TrCollection
+     */
     public function getContent() {
         return $this->content;
     }
     
     /**
-     * Get the collection of Tr objects composing the Tbody.
-     * 
-     * @return TrCollection A collection of Tr objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'tbody';
     }

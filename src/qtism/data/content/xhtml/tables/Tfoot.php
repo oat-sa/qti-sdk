@@ -36,7 +36,7 @@ class Tfoot extends BodyElement {
     /**
      * The Tr objects composing the Tfoot.
      * 
-     * @var TrCollection
+     * @var \qtism\data\content\xhtml\tables\TrCollection
      * @qtism-bean-property
      */
     private $content;
@@ -44,11 +44,12 @@ class Tfoot extends BodyElement {
     /**
      * Create a new Tfoot object.
      * 
-     * @param TrCollection $content A collection of Tr objects with at least one Tr object.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content A collection of Tr objects with at least one Tr object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the arguments above is invalid.
      */
     public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -58,8 +59,8 @@ class Tfoot extends BodyElement {
     /**
      * Set the Tr objects composing the Tfoot.
      * 
-     * @param TrCollection $content A collection of Tfoot object.
-     * @throws InvalidArgumentException If $content is empty.
+     * @param \qtism\data\content\xhtml\tables\TrCollection $content A collection of Tfoot object.
+     * @throws \InvalidArgumentException If $content is empty.
      */
     public function setContent(TrCollection $content) {
         if (count($content) > 0) {
@@ -74,21 +75,22 @@ class Tfoot extends BodyElement {
     /**
      * Get the Tr objects composing the Tfoot.
      * 
-     * @return TrCollection
+     * @return \qtism\data\content\xhtml\tables\TrCollection
      */
     public function getContent() {
         return $this->content;
     }
     
     /**
-     * Get the Tr objects composing the Tfoot.
-     * 
-     * @return TrCollection A collection Tr objects.
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'tfoot';
     }

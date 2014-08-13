@@ -55,7 +55,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * A caption.
      * 
-     * @var Caption
+     * @var \qtism\data\content\xhtml\tables\Caption
      * @qtism-bean-property
      */
     private $caption = null;
@@ -65,7 +65,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * 
      * If a table directly contains a col then it must not contain any colgroup elements.
      * 
-     * @var ColCollection
+     * @var \qtism\data\content\xhtml\tables\ColCollection
      * @qtism-bean-property
      */
     private $cols;
@@ -75,7 +75,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * 
      * If a table contains a colgroup it must not directly contain any col elements.
      * 
-     * @var ColgroupCollection
+     * @var \qtism\data\content\xhtml\tables\ColgroupCollection
      * @qtism-bean-property
      */
     private $colgroups;
@@ -99,7 +99,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The tbody elements.
      * 
-     * @var TbodyCollection
+     * @var \qtism\data\content\xhtml\tables\TbodyCollection
      * @qtism-bean-property
      */
     private $tbodies;
@@ -107,12 +107,12 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Create a new Table object.
      * 
-     * @param TbodyCollection $tbodies A collection of Tbody objects.
+     * @param \qtism\data\content\xhtml\tables\TbodyCollection $tbodies A collection of Tbody objects.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If any of arguments is invalid.
+     * @throws \InvalidArgumentException If any of arguments is invalid.
      */
     public function __construct(TbodyCollection $tbodies, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -126,7 +126,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * means there is no summary.
      * 
      * @param string $summary
-     * @throws InvalidArgumentException If $summary is not a string.
+     * @throws \InvalidArgumentException If $summary is not a string.
      */
     public function setSummary($summary) {
         if (is_string($summary) === true) {
@@ -161,7 +161,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * Set the Caption object of the Table. A null value means there
      * is no Caption.
      * 
-     * @param Caption $caption A Caption object or null.
+     * @param \qtism\data\content\xhtml\tables\Caption $caption A Caption object or null.
      */
     public function setCaption(Caption $caption = null) {
         $this->caption = $caption;
@@ -171,7 +171,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * Get the Caption object of the Table. A null value means there
      * is no Caption.
      * 
-     * @return Caption|null A Caption object or null.
+     * @return \qtism\data\content\xhtml\tables\Caption|null A Caption object or null.
      */
     public function getCaption() {
         return $this->caption;
@@ -189,7 +189,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the Col objects composing the Table.
      * 
-     * @param ColCollection $cols A collection of Col objects.
+     * @param \qtism\data\content\xhtml\tables\ColCollection $cols A collection of Col objects.
      */
     public function setCols(ColCollection $cols) {
         $this->cols = $cols;
@@ -198,7 +198,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Col objects composing the Table.
      * 
-     * @return ColCollection A collection of Col objects.
+     * @return \qtism\data\content\xhtml\tables\ColCollection A collection of Col objects.
      */
     public function getCols() {
         return $this->cols;
@@ -207,7 +207,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the Colgroup objects composing the Table.
      * 
-     * @param ColgroupCollection $colgroups A collection of Colgroup objects.
+     * @param \qtism\data\content\xhtml\tables\ColgroupCollection $colgroups A collection of Colgroup objects.
      */
     public function setColgroups(ColgroupCollection $colgroups) {
         $this->colgroups = $colgroups;
@@ -216,7 +216,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Colgroup objects composing the Table.
      * 
-     * @return ColgroupCollection A collection of Colgroup objects.
+     * @return \qtism\data\content\xhtml\tables\ColgroupCollection A collection of Colgroup objects.
      */
     public function getColgroups() {
         return $this->colgroups;
@@ -226,7 +226,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * Set the Thead object. A null value means there is no
      * Thead.
      * 
-     * @param Thead $thead A Thead object or null.
+     * @param \qtism\data\content\xhtml\tables\Thead $thead A Thead object or null.
      */
     public function setThead(Thead $thead = null) {
         $this->thead = $thead;
@@ -235,7 +235,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Thead object. A null value means there is no Thead.
      * 
-     * @return Thead A Thead object or null.
+     * @return \qtism\data\content\xhtml\tables\Thead A Thead object or null.
      */
     public function getThead() {
         return $this->thead;
@@ -253,7 +253,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the Tfoot object 
      * 
-     * @param Tfoot $tfoot
+     * @param \qtism\data\content\xhtml\tables\Tfoot $tfoot
      */
     public function setTfoot(Tfoot $tfoot) {
         $this->tfoot = $tfoot;
@@ -263,7 +263,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * Get the Tfoot object of the Table. A null value means there is no
      * Tfoot.
      * 
-     * @return Tfoot A Tfoot object or null.
+     * @return \qtism\data\content\xhtml\tables\Tfoot A Tfoot object or null.
      */
     public function getTfoot() {
         return $this->tfoot;
@@ -281,7 +281,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the Tbody objects composing the Table.
      * 
-     * @param TbodyCollection $tbodies A collection of Tbody objects.
+     * @param \qtism\data\content\xhtml\tables\TbodyCollection $tbodies A collection of Tbody objects.
      */
     public function setTbodies(TbodyCollection $tbodies) {
         $this->tbodies = $tbodies;
@@ -290,7 +290,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the Tbody objects composing the Table.
      * 
-     * @return TbodyCollection A collection of Tbody objects.
+     * @return \qtism\data\content\xhtml\tables\TbodyCollection A collection of Tbody objects.
      */
     public function getTbodies() {
         return $this->tbodies;
@@ -300,7 +300,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
      * Set the base URI of the Table.
      *
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -313,18 +313,22 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
     }
     
     /**
-     * Get the base URI of the Table.
-     *
-     * @return string An empty string or a URI.
+     * @see \qtism\data\content\Flow::getXmlBase()
      */
     public function getXmlBase() {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         $array = array();
         
@@ -347,6 +351,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic {
         return new QtiComponentCollection($array);
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'table';
     }

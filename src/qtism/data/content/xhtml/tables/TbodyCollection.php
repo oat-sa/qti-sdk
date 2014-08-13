@@ -37,7 +37,7 @@ class TbodyCollection extends QtiComponentCollection {
     /**
      * Check if $value is an instance of Tbody.
      * 
-     * @throws InvalidArgumentException if $value is not an instance of Tbody.
+     * @throws \InvalidArgumentException if $value is not an instance of Tbody.
      */
     protected function checkType($value) {
         if (!$value instanceof Tbody) {

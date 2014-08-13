@@ -45,11 +45,11 @@ class Caption extends BodyElement {
     /**
      * Create a new Caption object.
      * 
-     * @param unknown_type $id The id of the bodyElement.
-     * @param unknown_type $class The class of the bodyElement.
-     * @param unknown_type $lang The language of the bodyElement.
-     * @param unknown_type $label The label of the bodyElement;
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement;
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -59,7 +59,7 @@ class Caption extends BodyElement {
     /**
      * Get the components composing the caption.
      * 
-     * @return InlineCollection A collection of Inline objects.
+     * @return \qtism\data\content\InlineCollection A collection of Inline objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -68,7 +68,7 @@ class Caption extends BodyElement {
     /**
      * Set the components composing the caption.
      * 
-     * @param InlineCollection $content A collection of Inline objects.
+     * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
      */
     public function setContent(InlineCollection $content) {
         $this->content = $content;
@@ -77,12 +77,15 @@ class Caption extends BodyElement {
     /**
      * Get the components composing the caption.
      * 
-     * @return InlineCollection
+     * @return \qtism\data\content\InlineCollection
      */
     public function getContent() {
         return $this->content;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'caption';
     }

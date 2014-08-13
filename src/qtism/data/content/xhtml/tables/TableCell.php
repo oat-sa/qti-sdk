@@ -89,7 +89,7 @@ abstract class TableCell extends BodyElement {
     /**
      * The components composing the TableCell.
      * 
-     * @var FlowCollection
+     * @var \qtism\data\content\FlowCollection
      * @qtism-bean-property
      */
     private $content;
@@ -101,7 +101,7 @@ abstract class TableCell extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the arguments is invalid.
+     * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -117,7 +117,7 @@ abstract class TableCell extends BodyElement {
     /**
      * Specify the th element each td element is related to.
      * 
-     * @param IdentifierCollection $collection A collection of QTI identifiers.
+     * @param \qtism\common\collections\IdentifierCollection $collection A collection of QTI identifiers.
      */
     public function setHeaders(IdentifierCollection $headers) {
         $this->headers = $headers;
@@ -126,7 +126,7 @@ abstract class TableCell extends BodyElement {
     /**
      * Get the th element each td element is related to.
      * 
-     * @return IdentifierCollection A collection of QTI identifiers.
+     * @return \qtism\common\collections\IdentifierCollection A collection of QTI identifiers.
      */
     public function getHeaders() {
         return $this->headers;
@@ -145,7 +145,7 @@ abstract class TableCell extends BodyElement {
      * Set the scope attribute.
      * 
      * @param integer $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
-     * @throws InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
+     * @throws \InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
      */
     public function setScope($scope) {
         if (in_array($scope, TableCellScope::asArray()) === true || $scope === -1) {
@@ -179,7 +179,7 @@ abstract class TableCell extends BodyElement {
      * Set the value of the abbr attribute.
      * 
      * @param string $attr A string or an empty string if no abbr is defined.
-     * @throws InvalidArgumentException If $bbr is not a string.
+     * @throws \InvalidArgumentException If $bbr is not a string.
      */
     public function setAbbr($abbr) {
         if (is_string($abbr) === true) {
@@ -213,7 +213,7 @@ abstract class TableCell extends BodyElement {
      * Set the value of the axis attribute.
      * 
      * @param string $axis A string. Give an empty string if no axis is indicated.
-     * @throws InvalidArgumentException If $axis is not a string.
+     * @throws \InvalidArgumentException If $axis is not a string.
      */
     public function setAxis($axis) {
         if (is_string($axis) === true) {
@@ -248,7 +248,7 @@ abstract class TableCell extends BodyElement {
      * no rowspan attribute is set.
      * 
      * @param integer $rowspan 
-     * @throws InvalidArgumentException If $rowspan is not an integer.
+     * @throws \InvalidArgumentException If $rowspan is not an integer.
      */
     public function setRowspan($rowspan) {
         if (is_int($rowspan) === true) {
@@ -284,7 +284,7 @@ abstract class TableCell extends BodyElement {
      * no colspan is set.
      * 
      * @param integer $colspan An integer.
-     * @throws InvalidArgumentException If $colspan is not an integer.
+     * @throws \InvalidArgumentException If $colspan is not an integer.
      */
     public function setColspan($colspan) {
         if (is_int($colspan) === true) {
@@ -318,7 +318,7 @@ abstract class TableCell extends BodyElement {
     /**
      * Set the components composing the TableCell.
      * 
-     * @param FlowCollection $content A collection of Flow objects.
+     * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content) {
         $this->content = $content;
@@ -327,16 +327,14 @@ abstract class TableCell extends BodyElement {
     /**
      * Get the components composing the TableCell.
      * 
-     * @return FlowCollection
+     * @return \qtism\data\content\FlowCollection
      */
     public function getContent() {
         return $this->content;
     }
     
     /**
-     * Get the components composing the TableCell.
-     * 
-     * @return FlowCollection
+     * @see \qtism\data\QtiComponent::getComponents()
      */
     public function getComponents() {
         return $this->getContent();

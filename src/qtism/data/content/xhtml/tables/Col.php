@@ -50,7 +50,7 @@ class Col extends BodyElement {
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The language of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -61,7 +61,7 @@ class Col extends BodyElement {
      * Set the span attribute.
      * 
      * @param integer $span A strictly positive integer.
-     * @throws InvalidArgumentException If $span is not a positive integer.
+     * @throws \InvalidArgumentException If $span is not a positive integer.
      */
     public function setSpan($span) {
         if (is_int($span) === true && $span > 0) {
@@ -82,10 +82,16 @@ class Col extends BodyElement {
         return $this->span;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'col';
     }
