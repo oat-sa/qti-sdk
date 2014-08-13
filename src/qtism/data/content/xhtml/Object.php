@@ -50,7 +50,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	/**
 	 * The content elements of the object.
 	 * 
-	 * @var ObjectFlowCollection
+	 * @var \qtism\data\content\ObjectFlowCollection
 	 */
 	private $content;
 	
@@ -98,6 +98,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * @param string $class The class of the bodyElement.
 	 * @param string $lang The language of the bodyElement.
 	 * @param string $label The label of the bodyElement.
+	 * @throws \InvalidArgumentException If any of the arguments above is invalid.
 	 */
 	public function __construct($data, $type, $id = '', $class = '', $lang = '', $label = '') {
 		parent::__construct($id, $class, $lang, $label);
@@ -112,7 +113,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * Set the URI for locating the data of the object.
 	 * 
 	 * @param string $data The URI for locating the data of the object.
-	 * @throws InvalidArgumentException If $data is not a URI.
+	 * @throws \InvalidArgumentException If $data is not a URI.
 	 */
 	public function setData($data) {
 		if ((is_string($data) === true && $data === '') || Format::isUri($data) === true) {
@@ -137,7 +138,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * Set the mime-type of the object.
 	 * 
 	 * @param string $type A mime-type.
-	 * @throws InvalidArgumentException If $type is not a valid mime-type.
+	 * @throws \InvalidArgumentException If $type is not a valid mime-type.
 	 */
 	public function setType($type) {
 		if (is_string($type) === true && empty($type) === false) {
@@ -163,7 +164,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * is provided.
 	 * 
 	 * @param integer $width A width.
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function setWidth($width) {
 		if (is_int($width) === true) {
@@ -199,7 +200,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	 * is provided.
 	 * 
 	 * @param integer $height A height.
-	 * @throws InvalidArgumentException If $height is not an integer value.
+	 * @throws \InvalidArgumentException If $height is not an integer value.
 	 */
 	public function setHeight($height) {
 		if (is_int($height) === true) {
@@ -230,10 +231,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	}
 	
 	/**
-	 * Set the base URI of the Object.
-	 *
-	 * @param string $xmlBase A URI.
-	 * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+	 * @see \qtism\data\content\Flow::setXmlBase()
 	 */
 	public function setXmlBase($xmlBase = '') {
 	    if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -246,22 +244,21 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	}
 	
 	/**
-	 * Get the base URI of the Object.
-	 *
-	 * @return string An empty string or a URI.
+	 * @see \qtism\data\content\Flow::getXmlBase()
 	 */
 	public function getXmlBase() {
 	    return $this->xmlBase;
 	}
 	
+	/**
+	 * @see \qtism\data\content\Flow::hasXmlBase()
+	 */
 	public function hasXmlBase() {
 	    return $this->getXmlBase() !== '';
 	}
 	
 	/**
-	 * Get the components composing the Object.
-	 * 
-	 * @return ObjectFlowCollection A collection of ObjectFlow objects.
+	 * @see \qtism\data\QtiComponent::getComponents()
 	 */
 	public function getComponents() {
 		return $this->getContent();
@@ -270,7 +267,7 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	/**
 	 * Set the components composing the Object.
 	 * 
-	 * @param ObjectFlowCollection $content
+	 * @param \qtism\data\content\ObjectFlowCollection $content
 	 */
 	public function setContent(ObjectFlowCollection $content) {
 		$this->content = $content;
@@ -279,12 +276,15 @@ class Object extends BodyElement implements FlowStatic, InlineStatic {
 	/**
 	 * Get the components composing the Object.
 	 * 
-	 * @return ObjectFlowCollection
+	 * @return \qtism\data\content\ObjectFlowCollection
 	 */
 	public function getContent() {
 	    return $this->content;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'object';
 	}

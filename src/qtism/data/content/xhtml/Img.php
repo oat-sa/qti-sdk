@@ -95,7 +95,7 @@ class Img extends AtomicInline {
      * @param string $class The class of the bodyElement.
      * @param string $lang The lang of the bodyElement.
      * @param string $label The label of the bodyElement.
-     * @throws InvalidArgumentException If one of the argument is invalid.
+     * @throws \InvalidArgumentException If one of the argument is invalid.
      */
     public function __construct($src, $alt, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -110,7 +110,7 @@ class Img extends AtomicInline {
      * Set the src attribute.
      * 
      * @param string $src A URI.
-     * @throws InvalidArgumentException If $src is not a valid URI.
+     * @throws \InvalidArgumentException If $src is not a valid URI.
      */
     public function setSrc($src) {
         if (Format::isUri($src) === true) {
@@ -135,7 +135,7 @@ class Img extends AtomicInline {
      * Set the alt attribute.
      * 
      * @param string $alt A string
-     * @throws InvalidArgumentException If $alt is not a string.
+     * @throws \InvalidArgumentException If $alt is not a string.
      */
     public function setAlt($alt) {
         if (is_string($alt)) {
@@ -160,7 +160,7 @@ class Img extends AtomicInline {
      * Get the longdesc attribute.
      * 
      * @param string $longdesc A valid URI.
-     * @throws InvalidArgumentException If $longdesc is not a valid URI.
+     * @throws \InvalidArgumentException If $longdesc is not a valid URI.
      */
     public function setLongdesc($longdesc) {
         if (Format::isUri($longdesc) === true || (is_string($longdesc) === true && empty($longdesc) === true)) {
@@ -195,7 +195,7 @@ class Img extends AtomicInline {
      * is no height indicated.
      * 
      * @param integer|string $height An integer (pixels) or a string (percentage).
-     * @throws InvalidArgumentException If $height is not a valid integer or string value.
+     * @throws \InvalidArgumentException If $height is not a valid integer or string value.
      */
     public function setHeight($height) {
         if ((is_int($height) && $height === -1) || Format::isXhtmlLength($height) === true) {
@@ -231,7 +231,7 @@ class Img extends AtomicInline {
      * is no width indicated.
      * 
      * @param integer $width An integer (pixels) or a string (percentage).
-     * @throws InvalidArgumentException If $width is not an integer value.
+     * @throws \InvalidArgumentException If $width is not an integer value.
      */
     public function setWidth($width) {
         if ((is_int($width) && $width === -1) || Format::isXhtmlLength($width) === true) {
@@ -262,6 +262,9 @@ class Img extends AtomicInline {
         return $this->getWidth() >= 0;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'img';
     }

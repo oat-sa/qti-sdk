@@ -24,6 +24,12 @@ namespace qtism\data\content\xhtml;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * The paramType enumeration.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class ParamType implements Enumeration {
     
     /**
