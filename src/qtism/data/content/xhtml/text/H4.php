@@ -33,6 +33,9 @@ use qtism\data\content\AtomicBlock;
  */
 class H4 extends AtomicBlock {
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'h4';
     }

@@ -48,6 +48,7 @@ class Q extends SimpleInline {
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
+     * @throws \InvalidArgumentException If any of the arguments above is invalid.
      */
     public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '') {
         parent::__construct($id, $class, $lang, $label);
@@ -67,7 +68,7 @@ class Q extends SimpleInline {
      * Set the cite attribute's value.
      * 
      * @param string $cite
-     * @throws InvalidArgumentException If $cite is not a valid URI.
+     * @throws \InvalidArgumentException If $cite is not a valid URI.
      */
     public function setCite($cite) {
         if (Format::isUri($cite) === true) {
@@ -88,6 +89,9 @@ class Q extends SimpleInline {
         return $this->getCite() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'q';
     }

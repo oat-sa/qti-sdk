@@ -49,7 +49,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * The Flow objects composing the Div.
      * 
-     * @var FlowCollection A collection of Flow objects.
+     * @var \qtism\data\content\FlowCollection A collection of Flow objects.
      * @qtism-bean-property
      */
     private $content;
@@ -57,7 +57,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the collection of Flow objects composing the Div.
      * 
-     * @return FlowCollection A collection of Flow objects.
+     * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
     public function getComponents() {
         return $this->getContent();
@@ -66,7 +66,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Set the collection of Flow objects composing the Div.
      * 
-     * @param FlowCollection $content A collection of Flow objects.
+     * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
      */
     public function setContent(FlowCollection $content) {
         $this->content = $content;
@@ -75,7 +75,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
     /**
      * Get the collection of Flow objects composing the Div.
      * 
-     * @return FlowCollection
+     * @return \qtism\data\content\FlowCollection
      */
     public function getContent() {
         return $this->content;
@@ -85,7 +85,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
      * Set the base URI of the Div.
      * 
      * @param string $xmlBase A URI.
-     * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
+     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($xmlBase = '') {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
@@ -98,18 +98,22 @@ class Div extends BodyElement implements BlockStatic, FlowStatic {
     }
     
     /**
-     * Get the base URI of the Div.
-     * 
-     * @return string An empty string or a URI.
+     * @see \qtism\data\content\Flow::getXmlBase()
      */
     public function getXmlBase() {
         return $this->xmlBase;
     }
     
+    /**
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
     public function hasXmlBase() {
         return $this->getXmlBase() !== '';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'div';
     }
