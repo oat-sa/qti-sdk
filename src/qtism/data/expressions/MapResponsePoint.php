@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\utils\Format;
@@ -28,6 +27,20 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use \InvalidArgumentException;
 
+/**
+ * From IMS QTI:
+ * 
+ * This expression looks up the value of a response variable that must be of 
+ * base-type point, and transforms it using the associated areaMapping. The 
+ * transformation is similar to mapResponse except that the points are tested 
+ * against each area in turn. When mapping containers each area can be mapped 
+ * once only. For example, if the candidate identified two points that both 
+ * fall in the same area then the mappedValue is still added to the calculated 
+ * total just once.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class MapResponsePoint extends Expression {
 	
 	/**
@@ -42,7 +55,7 @@ class MapResponsePoint extends Expression {
 	 * Create a new instance of MapResponsePoint.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function __construct($identifier) {
 		$this->setIdentifier($identifier);
@@ -52,7 +65,7 @@ class MapResponsePoint extends Expression {
 	 * Set the QTI Identifier of the associated mapping.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -73,6 +86,9 @@ class MapResponsePoint extends Expression {
 		return $this->identifier;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mapResponsePoint';
 	}

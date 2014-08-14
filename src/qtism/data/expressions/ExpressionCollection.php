@@ -37,7 +37,7 @@ class ExpressionCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of Expression.
 	 *
-	 * @throws InvalidArgumentException If the given $value is not an instance of Expression.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of Expression.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof Expression) {

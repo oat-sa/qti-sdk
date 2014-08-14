@@ -64,6 +64,9 @@ abstract class Expression extends QtiComponent {
 		return self::$expressionClassNames;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

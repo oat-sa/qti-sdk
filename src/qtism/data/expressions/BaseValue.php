@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use \InvalidArgumentException;
@@ -60,7 +59,7 @@ class BaseValue extends Expression {
 	 * 
 	 * @param int $baseType The base type of the value.
 	 * @param mixed $value The actual value.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	public function __construct($baseType, $value) {
 		$this->setBaseType($baseType);
@@ -80,7 +79,7 @@ class BaseValue extends Expression {
 	 * Set the base type.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	public function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray())) {
@@ -110,6 +109,9 @@ class BaseValue extends Expression {
 		$this->value = $value;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'baseValue';
 	}

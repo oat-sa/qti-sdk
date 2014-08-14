@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\enums\BaseType;
@@ -38,6 +37,9 @@ use qtism\common\enums\Cardinality;
  */
 class NumberCorrect extends ItemSubset {
 	
+    /**
+     * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+     */
 	public function getQtiClassName() {
 		return 'numberCorrect';
 	}

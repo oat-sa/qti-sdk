@@ -69,7 +69,7 @@ class RandomInteger extends Expression {
 	 * @param int|string $min
 	 * @param int|string $max
 	 * @param int $step
-	 * @throws InvalidArgumentException If $min, $max, or $step are not integers.
+	 * @throws \InvalidArgumentException If $min, $max, or $step are not integers.
 	 */
 	public function __construct($min, $max, $step = 1) {
 		$this->setMin($min);
@@ -77,10 +77,21 @@ class RandomInteger extends Expression {
 		$this->setStep($step);
 	}
 	
+	/**
+	 * Get the value of the min attribute.
+	 * 
+	 * @return integer
+	 */
 	public function getMin() {
 		return $this->min;
 	}
 	
+	/**
+	 * Set the value of the min attribute.
+	 * 
+	 * @param integer $min
+	 * @throws \InvalidArgumentException
+	 */
 	public function setMin($min) {
 		if (is_int($min) || Format::isVariableRef($max)) {
 			$this->min = $min;
@@ -91,10 +102,21 @@ class RandomInteger extends Expression {
 		}
 	}
 	
+	/**
+	 * Get the value of the max attribute.
+	 * 
+	 * @return integer
+	 */
 	public function getMax() {
 		return $this->max;
 	}
 	
+	/**
+	 * Set the value of the max attribute.
+	 * 
+	 * @param integer $max
+	 * @throws \InvalidArgumentException
+	 */
 	public function setMax($max) {
 		if (is_int($max) || Format::isVariableRef($max)) {
 			$this->max = $max;
@@ -105,10 +127,21 @@ class RandomInteger extends Expression {
 		}
 	}
 	
+	/**
+	 * Get the value of the step attribute.
+	 * 
+	 * @return integer
+	 */
 	public function getStep() {
 		return $this->step;
 	}
 	
+	/**
+	 * Set the value of the step attribute.
+	 * 
+	 * @param integer $step
+	 * @throws \InvalidArgumentException
+	 */
 	public function setStep($step) {
 		if (is_int($step)) {
 			$this->step = $step;
@@ -119,6 +152,9 @@ class RandomInteger extends Expression {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'randomInteger';
 	}

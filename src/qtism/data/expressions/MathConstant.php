@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use \InvalidArgumentException;
@@ -68,7 +67,7 @@ class MathConstant extends Expression {
 	 * Set the name of the math constant.
 	 * 
 	 * @param string $name The name of the math constant.
-	 * @throws InvalidArgumentException If $name is not a valid QTI math constant name.
+	 * @throws \InvalidArgumentException If $name is not a valid QTI math constant name.
 	 */
 	public function setName($name) {
 		if (in_array($name, MathEnumeration::asArray())) {
@@ -80,6 +79,9 @@ class MathConstant extends Expression {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mathConstant';
 	}

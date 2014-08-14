@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use \InvalidArgumentException;
@@ -58,7 +57,7 @@ class RandomFloat extends Expression {
 	 * 
 	 * @param number|string $min A variableRef or a float value.
 	 * @param number|string $max A variableRef or a float value.
-	 * @throws InvalmidArgumentException If $min or $max are not valid numerics/variableRefs.
+	 * @throws \InvalmidArgumentException If $min or $max are not valid numerics/variableRefs.
 	 */
 	public function __construct($min, $max) {
 		$this->setMin($min);
@@ -78,7 +77,7 @@ class RandomFloat extends Expression {
 	 * Set the min attribute value.
 	 * 
 	 * @param number|string $min A float value, int value or a variableRef.
-	 * @throws InvalidArgumentException If $min is not a numeric value nor a variableRef.
+	 * @throws \InvalidArgumentException If $min is not a numeric value nor a variableRef.
 	 */
 	public function setMin($min) {
 		if (is_numeric($min) || Format::isVariableRef($min)) {
@@ -103,7 +102,7 @@ class RandomFloat extends Expression {
 	 * Set the max attribute.
 	 * 
 	 * @param number|string $max A numeric value or a variableRef.
-	 * @throws InvalidArgumentException If $max is not a numeric value nor a variableRef.
+	 * @throws \InvalidArgumentException If $max is not a numeric value nor a variableRef.
 	 */
 	public function setMax($max) {
 		if (is_numeric($max) || Format::isVariableRef($max)) {
@@ -115,6 +114,9 @@ class RandomFloat extends Expression {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'randomFloat';
 	}

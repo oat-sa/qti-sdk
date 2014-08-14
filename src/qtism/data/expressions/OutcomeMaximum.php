@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\utils\Format;
@@ -67,7 +66,7 @@ class OutcomeMaximum extends ItemSubset {
 	 * 
 	 * @param string $outcomeIdentifier A QTI Identifier.
 	 * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
-	 * @throws InvalidArgumentException If one of the arguments is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If one of the arguments is not a valid QTI Identifier.
 	 */
 	public function __construct($outcomeIdentifier, $weightIdentifier = '') {
 		$this->setOutcomeIdentifier($outcomeIdentifier);
@@ -78,7 +77,7 @@ class OutcomeMaximum extends ItemSubset {
 	 * Set the outcome identifier.
 	 * 
 	 * @param string $outcomeIdentifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
 	 */
 	public function setOutcomeIdentifier($outcomeIdentifier) {
 		if (Format::isIdentifier($outcomeIdentifier)) {
@@ -103,7 +102,7 @@ class OutcomeMaximum extends ItemSubset {
 	 * Set the weight identifier. Can be '' (empty string) if no weight specified.
 	 * 
 	 * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
-	 * @throws InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier nor '' (empty string).
+	 * @throws \InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier nor '' (empty string).
 	 */
 	public function setWeightIdentifier($weightIdentifier) {
 		if (Format::isIdentifier($weightIdentifier) || $weightIdentifier == '') {
@@ -124,6 +123,9 @@ class OutcomeMaximum extends ItemSubset {
 		return $this->weightIdentifier;
 	}
 	
+	/**
+	 * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'outcomeMaximum';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 /**
@@ -34,6 +33,9 @@ namespace qtism\data\expressions;
  */
 class NullValue extends Expression {
 	
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
 	public function getQtiClassName() {
 		return 'null';
 	}

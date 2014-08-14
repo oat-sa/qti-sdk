@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\enums\BaseType;
@@ -40,8 +39,10 @@ use qtism\common\enums\Cardinality;
  */
 class NumberResponded extends ItemSubset {
 	
+    /**
+     * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+     */
 	public function getQtiClassName() {
 		return 'numberResponded';
 	}
-	
 }

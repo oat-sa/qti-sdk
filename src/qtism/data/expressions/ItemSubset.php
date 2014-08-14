@@ -56,7 +56,7 @@ class ItemSubset extends Expression {
 	 * 
 	 * If specified, only variables from items with a matching category are included.
 	 * 
-	 * @var IdentifierCollection
+	 * @var \qtism\common\collections\IdentifierCollection
 	 * @qtism-bean-property
 	 */
 	private $includeCategories = null;
@@ -66,14 +66,13 @@ class ItemSubset extends Expression {
 	 * 
 	 * If specified, only variables from items with no matching category are included.
 	 * 
-	 * @var IdentifierCollection
+	 * @var \qtism\common\collections\IdentifierCollection
 	 * @qtism-bean-property
 	 */
 	private $excludeCategories = null;
 	
 	/**
 	 * Create a new instance of ItemSubset.
-	 * 
 	 */
 	public function __construct() {
 		$this->setIncludeCategories(new IdentifierCollection());
@@ -84,7 +83,7 @@ class ItemSubset extends Expression {
 	 * Set the assessment section identifier to match.
 	 * 
 	 * @param string $sectionIdentifier A QTI Identifier. 
-	 * @throws InvalidArgumentException If $sectionIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $sectionIdentifier is not a valid QTI Identifier.
 	 */
 	public function setSectionIdentifier($sectionIdentifier) {
 		if (Format::isIdentifier($sectionIdentifier) || empty($sectionIdentifier)) {
@@ -108,7 +107,7 @@ class ItemSubset extends Expression {
 	/**
 	 * Set the matching categories.
 	 * 
-	 * @param IdentifierCollection $includeCategories A collection of QTI Identifiers.
+	 * @param \qtism\common\collections\IdentifierCollection $includeCategories A collection of QTI Identifiers.
 	 */
 	public function setIncludeCategories(IdentifierCollection $includeCategories) {
 		$this->includeCategories = $includeCategories;
@@ -117,7 +116,7 @@ class ItemSubset extends Expression {
 	/**
 	 * Get the matching categories.
 	 * 
-	 * @return IdentifierCollection
+	 * @return \qtism\common\collections\IdentifierCollection
 	 */
 	public function getIncludeCategories() {
 		return $this->includeCategories;
@@ -126,7 +125,7 @@ class ItemSubset extends Expression {
 	/**
 	 * Set the categories that must not be matched.
 	 * 
-	 * @param IdentifierCollection $excludeCategories A collection of QTI Identifiers.
+	 * @param \qtism\common\collections\IdentifierCollection $excludeCategories A collection of QTI Identifiers.
 	 */
 	public function setExcludeCategories(IdentifierCollection $excludeCategories) {
 		$this->excludeCategories = $excludeCategories;
@@ -135,12 +134,15 @@ class ItemSubset extends Expression {
 	/**
 	 * Get the categories that must not be matched.
 	 * 
-	 * @return IdentifierCollection
+	 * @return \qtism\common\collections\IdentifierCollection
 	 */
 	public function getExcludeCategories() {
 		return $this->excludeCategories;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'itemSubset';
 	}

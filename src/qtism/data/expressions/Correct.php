@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\utils\Format;
@@ -51,7 +50,7 @@ class Correct extends Expression {
 	 * Create a new instance of Correct.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function __construct($identifier) {
 		$this->setIdentifier($identifier);
@@ -61,7 +60,7 @@ class Correct extends Expression {
 	 * Set the identifier of the response variable you want the correct value.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -82,6 +81,9 @@ class Correct extends Expression {
 		return $this->identifier;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'correct';
 	}

@@ -62,7 +62,7 @@ class MapResponse extends Expression {
 	 * Create a new instance of MapResponse.
 	 * 
 	 * @param string $identifier The QTI Identifier of the associated mapping.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function __construct($identifier) {
 		$this->setIdentifier($identifier);
@@ -72,7 +72,7 @@ class MapResponse extends Expression {
 	 * Set the identifier of the associated mapping.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -93,6 +93,9 @@ class MapResponse extends Expression {
 		return $this->identifier;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mapResponse';
 	}

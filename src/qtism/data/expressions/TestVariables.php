@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions;
 
 use qtism\common\utils\Format;
@@ -106,7 +105,7 @@ class TestVariables extends ItemSubset {
 	 * Set the variable identifier.
 	 * 
 	 * @param string $variableIdentifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $variableIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $variableIdentifier is not a valid QTI Identifier.
 	 */
 	public function setVariableIdentifier($variableIdentifier) {
 		if (Format::isIdentifier($variableIdentifier)) {
@@ -131,7 +130,7 @@ class TestVariables extends ItemSubset {
 	 * Set the baseType. $baseType = -1 if no baseType is specified.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration or -1.
-	 * @throws InvalidArgumentException If $baseType is not a valid QTI Identifier nor -1.
+	 * @throws \InvalidArgumentException If $baseType is not a valid QTI Identifier nor -1.
 	 */
 	public function setBaseType($baseType) {
 		if ($baseType == -1 || in_array($baseType, BaseType::asArray())) {
@@ -156,7 +155,7 @@ class TestVariables extends ItemSubset {
 	 * Set the weight identifier.
 	 * 
 	 * @param string $weightIdentifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier.
 	 */
 	public function setWeightIdentifier($weightIdentifier) {
 		if (Format::isIdentifier($weightIdentifier) || empty($weightIdentifier)) {
@@ -177,6 +176,9 @@ class TestVariables extends ItemSubset {
 		return $this->weightIdentifier;
 	}
 	
+	/**
+	 * @see \qtism\data\expressions\ItemSubset::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'testVariables';
 	}
