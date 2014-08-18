@@ -20,11 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of OutcomeElseIf objects.
@@ -37,7 +36,7 @@ class OutcomeElseIfCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of OutcomeElseIf.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of OutcomeElseIf.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of OutcomeElseIf.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof OutcomeElseIf) {

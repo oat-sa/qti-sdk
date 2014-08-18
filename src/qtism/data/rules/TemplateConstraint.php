@@ -64,7 +64,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule {
      * with the next templateRule after the templateConstraint, or finishes if there are no 
      * further templateRules.
      * 
-     * @var Expression
+     * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -72,7 +72,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule {
     /**
      * Create a new TemplateConstraint object.
      * 
-     * @param Expression $expression An Expression object defining the constraint to be applied.
+     * @param \qtism\data\expressions\Expression $expression An Expression object defining the constraint to be applied.
      */
     public function __construct(Expression $expression) {
         $this->setExpression($expression);
@@ -81,7 +81,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule {
     /**
      * Set the expresssion defining the constraint.
      * 
-     * @param Expression $expression An Expression object.
+     * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression) {
         $this->expression = $expression;
@@ -90,16 +90,22 @@ class TemplateConstraint extends QtiComponent implements TemplateRule {
     /**
      * Get the expression defining the constraint.
      * 
-     * @return Expression An Expression object.
+     * @return \qtism\data\expressions\Expression An Expression object.
      */
     public function getExpression() {
         return $this->expression;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'templateConstraint';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getExpression()));
     }

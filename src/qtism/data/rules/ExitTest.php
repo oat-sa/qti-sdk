@@ -36,14 +36,23 @@ use qtism\data\QtiComponent;
  */
 class ExitTest extends QtiComponent implements OutcomeRule {
 	
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
 	public function getQtiClassName() {
 		return 'exitTest';
 	}
 	
+	/**
+	 * Create a new ExitTest object.
+	 */
 	public function __construct() {
 		
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

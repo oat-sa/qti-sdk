@@ -58,7 +58,7 @@ class SetTemplateValue extends QtiComponent implements TemplateRule {
      * variable being set may appear in the expression where it takes the value 
      * previously assigned to it.
      * 
-     * @var Expression
+     * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -67,8 +67,8 @@ class SetTemplateValue extends QtiComponent implements TemplateRule {
      * Create a new SetTemplateValue object.
      * 
      * @param string $identifier The identifier of the template variable to be set.
-     * @param Expression $expression The expression that depicts the way to compute the value to be set to the template variable.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @param \qtism\data\expressions\Expression $expression The expression that depicts the way to compute the value to be set to the template variable.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function __construct($identifier, Expression $expression) {
         $this->setIdentifier($identifier);
@@ -102,7 +102,7 @@ class SetTemplateValue extends QtiComponent implements TemplateRule {
     /**
      * Set the expression that provides the value to be set to the template variable.
      * 
-     * @param Expression $expression An Expression object.
+     * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression) {
         $this->expression = $expression;
@@ -111,16 +111,22 @@ class SetTemplateValue extends QtiComponent implements TemplateRule {
     /**
      * Get the expression that provides the value to be set to the template variable.
      * 
-     * @return Expression An expression object.
+     * @return \qtism\data\expressions\Expression An expression object.
      */
     public function getExpression() {
         return $this->expression;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'setTemplateValue';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getExpression()));
     }

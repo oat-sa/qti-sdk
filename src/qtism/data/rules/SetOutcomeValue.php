@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -62,7 +61,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	 * An expression which must have an effective baseType and cardinality that matches 
 	 * the base-type and cardinality of the outcome variable being set.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -71,8 +70,8 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	 * Create a new instance of SetOutcomeValue.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @param Expression $expression A QTI Expression.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function __construct($identifier, Expression $expression) {
 		$this->setIdentifier($identifier);
@@ -92,7 +91,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	 * Set the identifier of the oucome variable to set.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -107,7 +106,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	/**
 	 * Set the expression used to set the variable targeted by the identifier attribute.
 	 * 
-	 * @param Expression $expression A QTI Expression.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
@@ -116,16 +115,22 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule 
 	/**
 	 * Get the expression used to set the variabled targeted by the identifier attribute.
 	 * 
-	 * @return Expression
+	 * @return \qtism\data\expressions\Expression
 	 */
 	public function getExpression() {
 		return $this->expression;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'setOutcomeValue';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection(array($this->getExpression()));
 	}

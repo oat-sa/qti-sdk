@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -56,7 +55,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	 * either integer, float or duration. Integer type is required when the associated 
 	 * table is a matchTable.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -65,8 +64,8 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	 * Create a new instance of LookupOutcomeValue.
 	 * 
 	 * @param string $identifier The identifier of the outcome variable to set.
-	 * @param Expression $expression An expression which must have single cardinality and an effective baseType of either integer, float or duration.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @param \qtism\data\expressions\Expression $expression An expression which must have single cardinality and an effective baseType of either integer, float or duration.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function __construct($identifier, Expression $expression) {
 		$this->setIdentifier($identifier);
@@ -86,7 +85,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	 * Set the identifier of the outcome variable to set.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -101,7 +100,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	/**
 	 * Get the expression.
 	 * 
-	 * @return Expression A QTI Expression object.
+	 * @return \qtism\data\expressions\Expression A QTI Expression object.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -110,16 +109,22 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
 	/**
 	 * Set the expression.
 	 * 
-	 * @param Expression $expression A QTI Expression object.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression object.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'lookupOutcomeValue';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array($this->getExpression());
 		return new QtiComponentCollection($comp);

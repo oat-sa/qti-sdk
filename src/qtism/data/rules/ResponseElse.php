@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
@@ -39,7 +37,7 @@ class ResponseElse extends QtiComponent {
 	/**
 	 * A collection of ResponseRule objects to be evaluated.
 	 * 
-	 * @var ResponseRuleCollection
+	 * @var \qtism\data\rules\ResponseRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $responseRules;
@@ -47,8 +45,8 @@ class ResponseElse extends QtiComponent {
 	/**
 	 * Create a new instance of ResponseElse.
 	 * 
-	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+	 * @throws \InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function __construct(ResponseRuleCollection $responseRules) {
 		$this->responseRules = $responseRules;
@@ -57,7 +55,7 @@ class ResponseElse extends QtiComponent {
 	/**
 	 * Get the ResponseRule objects to be evaluated.
 	 * 
-	 * @return ResponseRuleCollection A collection of ResponseRule objects.
+	 * @return \qtism\data\rules\ResponseRuleCollection A collection of ResponseRule objects.
 	 */
 	public function getResponseRules() {
 		return $this->responseRules;
@@ -66,8 +64,8 @@ class ResponseElse extends QtiComponent {
 	/**
 	 * Set the ResponseRule objects to be evaluated.
 	 * 
-	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+	 * @throws \InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function setOutcomeRules(ResponseRuleCollection $responseRules) {
 		if (count($responseRules) > 0) {
@@ -79,10 +77,16 @@ class ResponseElse extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'responseElse';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = $this->getResponseRules()->getArrayCopy();
 		return new QtiComponentCollection($comp);

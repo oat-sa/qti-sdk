@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -48,7 +46,7 @@ class ResponseIf extends QtiComponent {
 	/**
 	 * The expression to be evaluated with the If statement.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -56,7 +54,7 @@ class ResponseIf extends QtiComponent {
 	/**
 	 * The sub rules to execute if the Expression returns true;
 	 * 
-	 * @var ResponseRuleCollection
+	 * @var \qtism\data\rules\ResponseRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $responseRules;
@@ -64,9 +62,9 @@ class ResponseIf extends QtiComponent {
 	/**
 	 * Create a new instance of ResponseIf.
 	 * 
-	 * @param Expression $expression The expression to be evaluated with the If statement.
-	 * @param ResponseRuleCollection $responseRules A collection of sub expressions to be evaluated if the Expression returns true.
-	 * @throws InvalidArgumentException If $responseRules does not contain any ResponseRule object.
+	 * @param \qtism\data\expressions\Expression $expression The expression to be evaluated with the If statement.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of sub expressions to be evaluated if the Expression returns true.
+	 * @throws \InvalidArgumentException If $responseRules does not contain any ResponseRule object.
 	 */
 	public function __construct(Expression $expression, ResponseRuleCollection $responseRules) {
 		$this->setExpression($expression);
@@ -76,7 +74,7 @@ class ResponseIf extends QtiComponent {
 	/**
 	 * Get the expression to be evaluated with the If statement.
 	 * 
-	 * @return Expression An expression.
+	 * @return \qtism\data\expressions\Expression An expression.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -85,7 +83,7 @@ class ResponseIf extends QtiComponent {
 	/**
 	 * Set the expression to be evaluated with the If statement.
 	 * 
-	 * @param Expression $expression An expression.
+	 * @param \qtism\data\expressions\Expression $expression An expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
@@ -95,8 +93,8 @@ class ResponseIf extends QtiComponent {
 	 * Set the ResponseRule objects to be evaluated as sub expressions if the expression
 	 * evaluated with the If statement returns true.
 	 * 
-	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+	 * @throws \InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function setResponseRules(ResponseRuleCollection $responseRules) {
 		if (count($responseRules) > 0) {
@@ -112,16 +110,22 @@ class ResponseIf extends QtiComponent {
 	 * Get the ResponseRule objects to be evaluated as sub expressions if the expression
 	 * evaluated with the If statement returns true.
 	 * 
-	 * @return ResponseRuleCollection A collection of ResponseRule objects.
+	 * @return \qtism\data\rules\ResponseRuleCollection A collection of ResponseRule objects.
 	 */
 	public function getResponseRules() {
 		return $this->responseRules;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'responseIf';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(array($this->getExpression()), 
 							$this->getResponseRules()->getArrayCopy());

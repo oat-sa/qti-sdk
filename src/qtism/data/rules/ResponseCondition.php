@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 
 /**
@@ -47,7 +45,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * A ResponseIf object.
 	 * 
-	 * @var ResponseIf
+	 * @var \qtism\data\rules\ResponseIf
 	 * @qtism-bean-property
 	 */
 	private $responseIf;
@@ -55,7 +53,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * A collection of ResponseElseIf objects.
 	 * 
-	 * @var ResponseElseIfCollection
+	 * @var \qtism\data\rules\ResponseElseIfCollection
 	 * @qtism-bean-property
 	 */
 	private $responseElseIfs;
@@ -63,7 +61,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * An optional ResponseElse object.
 	 * 
-	 * @var ResponseElse
+	 * @var \qtism\data\rules\ResponseElse
 	 * @qtism-bean-property
 	 */
 	private $responseElse = null;
@@ -71,9 +69,9 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Create a new instance of ResponseCondition.
 	 * 
-	 * @param ResponseIf $responseIf An ResponseIf object.
-	 * @param ResponseElseIfCollection $responseElseIfs A collection of ResponseElseIf objects.
-	 * @param ResponseElse $responseElse An ResponseElse object.
+	 * @param \qtism\data\rules\ResponseIf $responseIf An ResponseIf object.
+	 * @param \qtism\data\rules\ResponseElseIfCollection $responseElseIfs A collection of ResponseElseIf objects.
+	 * @param \qtism\data\rules\ResponseElse $responseElse An ResponseElse object.
 	 */
 	public function __construct(ResponseIf $responseIf, ResponseElseIfCollection $responseElseIfs = null, ResponseElse $responseElse = null) {
 		$this->setResponseIf($responseIf);
@@ -84,7 +82,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Get the ResponseIf object.
 	 * 
-	 * @return ResponseIf A ResponseIf object.
+	 * @return \qtism\data\rules\ResponseIf A ResponseIf object.
 	 */
 	public function getResponseIf() {
 		return $this->responseIf;
@@ -93,7 +91,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Set the ResponseIf object.
 	 * 
-	 * @param ResponseIf $responseIf A ResponseIf object.
+	 * @param \qtism\data\rules\ResponseIf $responseIf A ResponseIf object.
 	 */
 	public function setResponseIf(ResponseIf $responseIf) {
 		$this->responseIf = $responseIf;
@@ -102,7 +100,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Get the collection of ResponseElseIf objects.
 	 * 
-	 * @return ResponseElseIfCollection A ResponseElseIfCollection object.
+	 * @return \qtism\data\rules\ResponseElseIfCollection A ResponseElseIfCollection object.
 	 */
 	public function getResponseElseIfs() {
 		return $this->responseElseIfs;
@@ -111,7 +109,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Set the collection of ResponseElseIf objects.
 	 * 
-	 * @param ResponseElseIfCollection $responseElseIfs A ResponseElseIfCollection object.
+	 * @param \qtism\data\rules\ResponseElseIfCollection $responseElseIfs A ResponseElseIfCollection object.
 	 */
 	public function setResponseElseIfs(ResponseElseIfCollection $responseElseIfs) {
 		$this->responseElseIfs = $responseElseIfs;
@@ -120,7 +118,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Get the optional ResponseElse object. Returns null if not specified.
 	 * 
-	 * @return ResponseElse A ResponseElse object.
+	 * @return \qtism\data\rules\ResponseElse A ResponseElse object.
 	 */
 	public function getResponseElse() {
 		return $this->responseElse;
@@ -129,7 +127,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	/**
 	 * Set the optional ResponseElse object. A null value means there is no else.
 	 * 
-	 * @param ResponseElse $responseElse A ResponseElse object.
+	 * @param \qtism\data\rules\ResponseElse $responseElse A ResponseElse object.
 	 */
 	public function setResponseElse(ResponseElse $responseElse = null) {
 		$this->responseElse = $responseElse;
@@ -144,10 +142,16 @@ class ResponseCondition extends QtiComponent implements ResponseRule {
 	    return $this->getResponseElse() !== null;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'responseCondition';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(array($this->getResponseIf()),
 							$this->getResponseElseIfs()->getArrayCopy());

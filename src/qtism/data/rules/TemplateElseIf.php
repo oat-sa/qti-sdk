@@ -40,7 +40,7 @@ class TemplateElseIf extends QtiComponent {
     /**
      * The expression to be evaluated.
      * 
-     * @var Expression
+     * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -49,7 +49,7 @@ class TemplateElseIf extends QtiComponent {
      * The template rules to be evaluated if the expression
      * returns true.
      * 
-     * @var TemplateRuleCollection
+     * @var \qtism\data\rules\TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templateRules;
@@ -57,8 +57,8 @@ class TemplateElseIf extends QtiComponent {
     /**
      * Create a new TemplateElseIf object.
      * 
-     * @param Expression $expression The Expression to be evaluated.
-     * @param TemplateRuleCollection $templateRules The TemplateRule objects to be evaluated if the expression returns true.
+     * @param \qtism\data\expressions\Expression $expression The Expression to be evaluated.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules The TemplateRule objects to be evaluated if the expression returns true.
      */
     public function __construct(Expression $expression, TemplateRuleCollection $templateRules) {
         $this->setExpression($expression);
@@ -68,7 +68,7 @@ class TemplateElseIf extends QtiComponent {
     /**
      * Set the Expression object to be evaluated.
      * 
-     * @param Expression $expression An Expression object.
+     * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression) {
         $this->expression = $expression;
@@ -77,7 +77,7 @@ class TemplateElseIf extends QtiComponent {
     /**
      * Get the Expression object to be evaluated.
      * 
-     * @return Expression An Expression object.
+     * @return \qtism\data\expressions\Expression An Expression object.
      */
     public function getExpression() {
         return $this->expression;
@@ -87,7 +87,7 @@ class TemplateElseIf extends QtiComponent {
      * Set the collection of TemplateRule objects to be evaluated if the
      * expression returns true.
      * 
-     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
     public function setTemplateRules(TemplateRuleCollection $templateRules) {
         $this->templateRules = $templateRules;
@@ -97,16 +97,22 @@ class TemplateElseIf extends QtiComponent {
      * Get the collection of TemplateRule objects to be evaluated if the expression
      * returns true.
      * 
-     * @return TemplateRuleCollection A collection of TemplateRule objects.
+     * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
      */
     public function getTemplateRules() {
         return $this->templateRules;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array_merge(array($this->getExpression()), $this->getTemplateRules()->getArrayCopy()));
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'templateElseIf';
     }

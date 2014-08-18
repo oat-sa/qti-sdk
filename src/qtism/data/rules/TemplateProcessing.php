@@ -42,7 +42,7 @@ class TemplateProcessing extends QtiComponent {
      * The TemplateRule objects composing the 
      * template processing.
      * 
-     * @var TemplateRuleCollection
+     * @var \qtism\data\rules\TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templatesRules;
@@ -50,8 +50,8 @@ class TemplateProcessing extends QtiComponent {
     /**
      * Create a new TemplateProcessing object.
      * 
-     * @param TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
-     * @throws InvalidArgumentException If $templateRules does not contain any TemplateRule objects.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
+     * @throws \InvalidArgumentException If $templateRules does not contain any TemplateRule objects.
      */
     public function __construct(TemplateRuleCollection $templateRules) {
         $this->setTemplateRules($templateRules);
@@ -60,8 +60,8 @@ class TemplateProcessing extends QtiComponent {
     /**
      * Set the collection of TemplateRule objects composing the template processing.
      * 
-     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
-     * @throws InvalidArgumentException If $templateRules does not contain any TemplateRule objects.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * @throws \InvalidArgumentException If $templateRules does not contain any TemplateRule objects.
      */
     public function setTemplateRules(TemplateRuleCollection $templateRules) {
         if (count($templateRules) > 0) {
@@ -76,12 +76,15 @@ class TemplateProcessing extends QtiComponent {
     /**
      * Get the collection of TemplateRule objects composing the template processing.
      * 
-     * @return TemplateRuleCollection A collection of TemplateRule objects.
+     * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
      */
     public function getTemplateRules() {
         return $this->templateRules;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'templateProcessing';
     }

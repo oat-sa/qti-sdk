@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -56,7 +55,7 @@ class BranchRule extends QtiComponent implements Rule {
 	/**
 	 * The expression of the BranchRule.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -76,9 +75,9 @@ class BranchRule extends QtiComponent implements Rule {
 	/**
 	 * Create a new instance of BranchRule.
 	 * 
-	 * @param Expression $expression The expression of the BranchRule.
+	 * @param \qtism\data\expressions\Expression $expression The expression of the BranchRule.
 	 * @param string $target The target identifier of the BranchRule.
-	 * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $target is not a valid QTI Identifier.
 	 */
 	public function __construct(Expression $expression, $target) {
 		$this->setExpression($expression);
@@ -88,7 +87,7 @@ class BranchRule extends QtiComponent implements Rule {
 	/**
 	 * Get the expression of the BranchRule.
 	 * 
-	 * @return Expression A QTI Expression.
+	 * @return \qtism\data\expressions\Expression A QTI Expression.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -97,7 +96,7 @@ class BranchRule extends QtiComponent implements Rule {
 	/**
 	 * Set the expression of the BranchRule.
 	 * 
-	 * @param Expression $expression A QTI Expression.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
@@ -116,7 +115,7 @@ class BranchRule extends QtiComponent implements Rule {
 	 * Get the target identifier of the BranchRule.
 	 * 
 	 * @param string $target A QTI Identifier.
-	 * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $target is not a valid QTI Identifier.
 	 */
 	public function setTarget($target) {
 		if (Format::isIdentifier($target)) {
@@ -128,10 +127,16 @@ class BranchRule extends QtiComponent implements Rule {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'branchRule';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array($this->getExpression());
 		return new QtiComponentCollection($comp);

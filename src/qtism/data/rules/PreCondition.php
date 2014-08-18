@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -45,7 +44,7 @@ class PreCondition extends QtiComponent {
 	/**
 	 * The expression that will make the Precondition return true or false. 
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -53,7 +52,7 @@ class PreCondition extends QtiComponent {
 	/**
 	 * Create a new instance of PreCondition.
 	 * 
-	 * @param Expression $expression
+	 * @param \qtism\data\expressions\Expression $expression
 	 */
 	public function __construct(Expression $expression) {
 		$this->setExpression($expression);
@@ -62,7 +61,7 @@ class PreCondition extends QtiComponent {
 	/**
 	 * Get the expression of the PreCondition.
 	 * 
-	 * @return Expression A QTI Expression.
+	 * @return \qtism\data\expressions\Expression A QTI Expression.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -71,16 +70,22 @@ class PreCondition extends QtiComponent {
 	/**
 	 * Set the expression of the Precondition.
 	 * 
-	 * @param Expression $expression A QTI Expression.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'preCondition';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection(array($this->getExpression()));
 	}

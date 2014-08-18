@@ -35,14 +35,14 @@ class TemplateElse extends QtiComponent {
     /**
      * The collection of TemplateRule objects to be evaluated.
      * 
-     * @var TemplateRuleCollection
+     * @var \qtism\data\rules\TemplateRuleCollection
      */
     private $templateRules;
     
     /**
      * Create a new TemplateElse object.
      * 
-     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
     public function __construct(TemplateRuleCollection $templateRules) {
         $this->setTemplateRules($templateRules);
@@ -51,7 +51,7 @@ class TemplateElse extends QtiComponent {
     /**
      * Set the TemplateRule objects to be evaluated.
      * 
-     * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
     public function setTemplateRules(TemplateRuleCollection $templateRules) {
         $this->templateRules = $templateRules;
@@ -60,16 +60,22 @@ class TemplateElse extends QtiComponent {
     /**
      * Get the TemplateRule objects to be evaluated.
      * 
-     * @return TemplateRuleCollection A collection of TemplateRule objects.
+     * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
      */
     public function getTemplateRules() {
         return $this->templateRules;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new $this->getTemplateRules();
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'templateElse';
     }

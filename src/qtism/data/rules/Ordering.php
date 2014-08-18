@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -50,7 +49,7 @@ class Ordering extends QtiComponent {
 	 * Create a new instance of Ordering.
 	 * 
 	 * @param boolean $shuffle If child elements must be randomized.
-	 * @throws InvalidArgumentException If $shuffle is not a boolean.
+	 * @throws \InvalidArgumentException If $shuffle is not a boolean.
 	 */
 	public function __construct($shuffle = false) {
 		$this->setShuffle($shuffle);
@@ -69,7 +68,7 @@ class Ordering extends QtiComponent {
 	 * Set if the child elements must be randomized.
 	 * 
 	 * @param boolean $shuffle true if they must be randomized, false otherwise.
-	 * @throws InvalidArgumentException If $shuffle is not a boolean.
+	 * @throws \InvalidArgumentException If $shuffle is not a boolean.
 	 */
 	public function setShuffle($shuffle) {
 		if (is_bool($shuffle)) {
@@ -81,10 +80,16 @@ class Ordering extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'ordering';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

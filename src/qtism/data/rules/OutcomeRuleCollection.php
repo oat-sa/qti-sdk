@@ -37,7 +37,7 @@ class OutcomeRuleCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of OutcomeRule.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of OutcomeRule.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of OutcomeRule.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof OutcomeRule) {

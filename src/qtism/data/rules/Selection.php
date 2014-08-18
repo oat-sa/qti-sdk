@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -60,7 +59,7 @@ class Selection extends QtiComponent {
 	 * 
 	 * @param int $select The number of child elements to be selected.
 	 * @param boolean $withReplacement Selection (combinations) with or without replacement.
-	 * @throws InvalidArgumentException If $select is not a valid integer or if $withReplacement is not a valid boolean.
+	 * @throws \InvalidArgumentException If $select is not a valid integer or if $withReplacement is not a valid boolean.
 	 */
 	public function __construct($select, $withReplacement = false) {
 		$this->setSelect($select);
@@ -80,7 +79,7 @@ class Selection extends QtiComponent {
 	 * Set the number of child elements to be selected.
 	 * 
 	 * @param integer $select An integer.
-	 * @throws InvalidArgumentException If $select is not an integer.
+	 * @throws \InvalidArgumentException If $select is not an integer.
 	 */
 	public function setSelect($select) {
 		if (is_int($select)) {
@@ -104,7 +103,7 @@ class Selection extends QtiComponent {
 	 * Set if the selection of items must be with or without replacements.
 	 * 
 	 * @param boolean $withReplacement true if it must be with replacements, false otherwise.
-	 * @throws InvalidArgumentException If $withReplacement is not a boolean.
+	 * @throws \InvalidArgumentException If $withReplacement is not a boolean.
 	 */
 	public function setWithReplacement($withReplacement) {
 		if (is_bool($withReplacement)) {
@@ -116,10 +115,16 @@ class Selection extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'selection';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

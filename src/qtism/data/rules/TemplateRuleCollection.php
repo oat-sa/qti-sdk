@@ -39,7 +39,7 @@ class TemplateRuleCollection extends QtiComponentCollection {
     /**
      * Check whether or not $value is an instance of TemplateRule.
      * 
-     * @throws InvalidArgumentException If $value is not an instance of TemplateRule.
+     * @throws \InvalidArgumentException If $value is not an instance of TemplateRule.
      */
     protected function checkType($value) {
         if (!$value instanceof TemplateRule) {

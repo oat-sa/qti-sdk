@@ -49,7 +49,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule {
      * The expression to be executed to get the value to be set as the correct response
      * to a given variable.
      * 
-     * @var Expression
+     * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -58,8 +58,8 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule {
      * Create a new SetCorrectResponse object.
      * 
      * @param string $identifier The identifier of the variable to have its correct value set.
-     * @param Expression $expression An expression to be executed to get the value to be set as the correct response value.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @param \qtism\data\expressions\Expression $expression An expression to be executed to get the value to be set as the correct response value.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function __construct($identifier, Expression $expression) {
         $this->setIdentifier($identifier);
@@ -70,7 +70,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule {
      * Set the identifier of the response variable to have its correct value set.
      * 
      * @param string $identifier A valid QTI identifier.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
@@ -95,7 +95,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule {
      * Set the expression to be executed to get the value to be set as the correct response
      * to a given variable.
      * 
-     * @param Expression $expression An Expression object.
+     * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression) {
         $this->expression = $expression;
@@ -105,16 +105,22 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule {
      * Get the expression to be executed to get the value to be set as the correct response
      * to a given variable.
      * 
-     * @return Expression An Expression object.
+     * @return \qtism\data\expressions\Expression An Expression object.
      */
     public function getExpression() {
         return $this->expression;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'setCorrectResponse';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getExpression()));
     }

@@ -50,7 +50,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule {
     /**
      * The expression to be executed to get the default value to be set.
      * 
-     * @var Expression
+     * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
@@ -59,8 +59,8 @@ class SetDefaultValue extends QtiComponent implements TemplateRule {
      * Create a new SetDefaultValue object.
      * 
      * @param string $identifier The identifier of the response variable or outcome variable to have its default value set.
-     * @param Expression $expression An expression to be executed to get the value to assign to the variable.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @param \qtism\data\expressions\Expression $expression An expression to be executed to get the value to assign to the variable.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function __construct($identifier, Expression $expression) {
         $this->setIdentifier($identifier);
@@ -72,7 +72,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule {
      * default value set.
      * 
      * @param string $identifier A valid QTI identifier.
-     * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
     public function setIdentifier($identifier) {
         if (Format::isIdentifier($identifier, false) === true) {
@@ -97,7 +97,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule {
     /**
      * Get the expression to be executed to get the default value to be set.
      * 
-     * @param Expression $expression An Expression object.
+     * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
     public function setExpression(Expression $expression) {
         $this->expression = $expression;
@@ -106,16 +106,22 @@ class SetDefaultValue extends QtiComponent implements TemplateRule {
     /**
      * Get the expression to be executed to get the default value to be set.
      * 
-     * @return Expression An Expression object.
+     * @return \qtism\data\expressions\Expression An Expression object.
      */
     public function getExpression() {
         return $this->expression;
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'setDefaultValue';
     }
     
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents() {
         return new QtiComponentCollection(array($this->getExpression()));
     }

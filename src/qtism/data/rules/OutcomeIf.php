@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -47,7 +45,7 @@ class OutcomeIf extends QtiComponent {
 	/**
 	 * The expression to be evaluated with the If statement.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -55,7 +53,7 @@ class OutcomeIf extends QtiComponent {
 	/**
 	 * The sub rules to execute if the Expression returns true;
 	 * 
-	 * @var OutcomeRuleCollection
+	 * @var \qtism\data\rules\OutcomeRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
@@ -63,9 +61,9 @@ class OutcomeIf extends QtiComponent {
 	/**
 	 * Create a new instance of OutcomeIf.
 	 * 
-	 * @param Expression $expression The expression to be evaluated with the If statement.
-	 * @param OutcomeRuleCollection $outcomeRules A collection of sub expressions to be evaluated if the Expression returns true.
-	 * @throws InvalidArgumentException If $outcomeRules does not contain any OutcomeRule object.
+	 * @param \qtism\data\expressions\Expression $expression The expression to be evaluated with the If statement.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of sub expressions to be evaluated if the Expression returns true.
+	 * @throws \InvalidArgumentException If $outcomeRules does not contain any OutcomeRule object.
 	 */
 	public function __construct(Expression $expression, OutcomeRuleCollection $outcomeRules) {
 		$this->setExpression($expression);
@@ -75,7 +73,7 @@ class OutcomeIf extends QtiComponent {
 	/**
 	 * Get the expression to be evaluated with the If statement.
 	 * 
-	 * @return Expression An expression.
+	 * @return \qtism\data\expressions\Expression An expression.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -84,7 +82,7 @@ class OutcomeIf extends QtiComponent {
 	/**
 	 * Set the expression to be evaluated with the If statement.
 	 * 
-	 * @param Expression $expression An expression.
+	 * @param \qtism\data\expressions\Expression $expression An expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
@@ -94,8 +92,8 @@ class OutcomeIf extends QtiComponent {
 	 * Set the OutcomeRule objects to be evaluated as sub expressions if the expression
 	 * evaluated with the If statement returns true.
 	 * 
-	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 * @throws InvalidArgumentException If $outcomeRules is an empty collection.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
 	 */
 	public function setOutcomeRules(OutcomeRuleCollection $outcomeRules) {
 		if (count($outcomeRules) > 0) {
@@ -111,16 +109,22 @@ class OutcomeIf extends QtiComponent {
 	 * Get the OutcomeRule objects to be evaluated as sub expressions if the expression
 	 * evaluated with the If statement returns true.
 	 * 
-	 * @return OutcomeRuleCollection A collection of Outcomeule objects.
+	 * @return \qtism\data\rules\OutcomeRuleCollection A collection of Outcomeule objects.
 	 */
 	public function getOutcomeRules() {
 		return $this->outcomeRules;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'outcomeIf';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(array($this->getExpression()), 
 							$this->getOutcomeRules()->getArrayCopy());

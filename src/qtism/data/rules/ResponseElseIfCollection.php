@@ -20,11 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of ResponseElseIf objects.
@@ -37,7 +36,7 @@ class ResponseElseIfCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of ResponseElseIf.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of ResponseElseIf.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of ResponseElseIf.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof ResponseElseIf) {

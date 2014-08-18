@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
@@ -37,7 +36,7 @@ class BranchRuleCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of BranchRule.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of BranchRule.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of BranchRule.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof BranchRule) {

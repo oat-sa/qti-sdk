@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
@@ -39,7 +37,7 @@ class OutcomeElse extends QtiComponent {
 	/**
 	 * A collection of OutcomeRule objects to be evaluated.
 	 * 
-	 * @var OutcomeRuleCollection
+	 * @var \qtism\data\rules\OutcomeRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
@@ -47,8 +45,8 @@ class OutcomeElse extends QtiComponent {
 	/**
 	 * Create a new instance of OutcomeElse.
 	 * 
-	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 * @throws InvalidArgumentException If $outcomeRules is an empty collection.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
 	 */
 	public function __construct(OutcomeRuleCollection $outcomeRules) {
 		$this->outcomeRules = $outcomeRules;
@@ -57,7 +55,7 @@ class OutcomeElse extends QtiComponent {
 	/**
 	 * Get the OutcomeRule objects to be evaluated.
 	 * 
-	 * @return OutcomeRuleCollection A collection of OutcomeRule objects.
+	 * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule objects.
 	 */
 	public function getOutcomeRules() {
 		return $this->outcomeRules;
@@ -66,8 +64,8 @@ class OutcomeElse extends QtiComponent {
 	/**
 	 * Set the OutcomeRule objects to be evaluated.
 	 * 
-	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 * @throws InvalidArgumentException If $outcomeRules is an empty collection.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
 	 */
 	public function setOutcomeRules(OutcomeRuleCollection $outcomeRules) {
 		if (count($outcomeRules) > 0) {
@@ -79,10 +77,16 @@ class OutcomeElse extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'outcomeElse';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = $this->getOutcomeRules()->getArrayCopy();
 		return new QtiComponentCollection($comp);
