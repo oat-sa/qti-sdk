@@ -59,7 +59,7 @@ class ResponseProcessing extends QtiComponent {
 	/**
 	 * A collection of ResponseRule objects.
 	 * 
-	 * @var ResponseRuleCollection
+	 * @var \qtism\data\rules\ResponseRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $responseRules;
@@ -83,7 +83,7 @@ class ResponseProcessing extends QtiComponent {
 	/**
 	 * Create a new instance of ResponseProcessing.
 	 * 
-	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
 	 */
 	public function __construct(ResponseRuleCollection $responseRules = null) {
 		if (empty($responseRules)) {
@@ -96,7 +96,7 @@ class ResponseProcessing extends QtiComponent {
 	/**
 	 * Get the ResponseRule objects that form the ResponseProcessing.
 	 * 
-	 * @return ResponseRuleCollection A collection of ResponseRule objects.
+	 * @return \qtism\data\rules\ResponseRuleCollection A collection of ResponseRule objects.
 	 */
 	public function getResponseRules() {
 		return $this->responseRules;
@@ -105,7 +105,7 @@ class ResponseProcessing extends QtiComponent {
 	/**
 	 * Set the ResponseRule objects that form the ResponseProcessing.
 	 * 
-	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
+	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
 	 */
 	public function setResponseRules(ResponseRuleCollection $responseRules) {
 		$this->responseRules = $responseRules;
@@ -135,7 +135,7 @@ class ResponseProcessing extends QtiComponent {
 	 * there is no template description.
 	 * 
 	 * @param string $template The URI of the template.
-	 * @throws InvalidArgumentException If $template is not a valid URI nor an empty string.
+	 * @throws \InvalidArgumentException If $template is not a valid URI nor an empty string.
 	 */
 	public function setTemplate($template) {
 		if (Format::isUri($template) === true || (gettype($template) === 'string' && empty($template) === true)) {
@@ -171,7 +171,7 @@ class ResponseProcessing extends QtiComponent {
 	 * there is no template location description.
 	 *
 	 * @param string $templateLocaton The URI of the template location.
-	 * @throws InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
+	 * @throws \InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
 	 */
 	public function setTemplateLocation($templateLocation) {
 		if (Format::isUri($templateLocation) === true || (gettype($templateLocation) === 'string' && empty($templateLocation) === true)) {
@@ -183,10 +183,16 @@ class ResponseProcessing extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'responseProcessing';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection($this->getResponseRules()->getArrayCopy());
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\processing;
 
 use qtism\data\QtiComponentCollection;
@@ -50,7 +49,7 @@ class OutcomeProcessing extends QtiComponent {
 	/**
 	 * A collection of OutcomeRule objects.
 	 * 
-	 * @var OutcomeRuleCollection
+	 * @var \qtism\data\rules\OutcomeRuleCollection
 	 * @qtism-bean-property
 	 */
 	private $outcomeRules;
@@ -58,7 +57,7 @@ class OutcomeProcessing extends QtiComponent {
 	/**
 	 * Create a new instance of OutcomeProcessing.
 	 * 
-	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
 	 */
 	public function __construct(OutcomeRuleCollection $outcomeRules = null) {
 		if (empty($outcomeRules)) {
@@ -71,7 +70,7 @@ class OutcomeProcessing extends QtiComponent {
 	/**
 	 * Get the OutcomeRule objects that form the OutcomeProcessing.
 	 * 
-	 * @return OutcomeRuleCollection A collection of OutcomeRule object.
+	 * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule object.
 	 */
 	public function getOutcomeRules() {
 		return $this->outcomeRules;
@@ -80,16 +79,22 @@ class OutcomeProcessing extends QtiComponent {
 	/**
 	 * Set the OutcomeRule objects that form the OutcomeProcessing.
 	 * 
-	 * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
 	 */
 	public function setOutcomeRules(OutcomeRuleCollection $outcomeRules) {
 		$this->outcomeRules = $outcomeRules;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'outcomeProcessing';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection($this->getOutcomeRules()->getArrayCopy());
 	}
