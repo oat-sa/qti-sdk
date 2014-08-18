@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -41,7 +40,7 @@ class MatchTable extends LookupTable {
 	/**
 	 * A collection of MatchTableEntry objects.
 	 * 
-	 * @var MatchTableEntryCollection
+	 * @var \qtism\data\state\MatchTableEntryCollection
 	 * @qtism-bean-property
 	 */
 	private $matchTableEntries;
@@ -49,9 +48,9 @@ class MatchTable extends LookupTable {
 	/**
 	 * Create a new instance of MatchTable.
 	 * 
-	 * @param MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+	 * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
 	 * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
-	 * @throws InvalidArgumentException If $matchTableEntries is an empty collection.
+	 * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
 	 */
 	public function __construct(MatchTableEntryCollection $matchTableEntries, $defaultValue = null) {
 		parent::__construct($defaultValue);
@@ -61,7 +60,7 @@ class MatchTable extends LookupTable {
 	/**
 	 * Get the collection of MatchTableEntry objects.
 	 * 
-	 * @return MatchTableEntryCollection A collection of MatchTableEntry objects.
+	 * @return \qtism\data\state\MatchTableEntryCollection A collection of MatchTableEntry objects.
 	 */
 	public function getMatchTableEntries() {
 		return $this->matchTableEntries;
@@ -70,8 +69,8 @@ class MatchTable extends LookupTable {
 	/**
 	 * Set the collection of MatchTableEntry objects.
 	 * 
-	 * @param MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
-	 * @throws InvalidArgumentException If $matchTableEntries is an empty collection.
+	 * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+	 * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
 	 */
 	public function setMatchTableEntries(MatchTableEntryCollection $matchTableEntries) {
 		if (count($matchTableEntries) > 0) {
@@ -83,10 +82,16 @@ class MatchTable extends LookupTable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\state\LookupTable::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'matchTable';
 	}
 	
+	/**
+	 * @see \qtism\data\state\LookupTable::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(parent::getComponents()->getArrayCopy(),
 							$this->getMatchTableEntries()->getArrayCopy());

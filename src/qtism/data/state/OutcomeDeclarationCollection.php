@@ -20,11 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiIdentifiableCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of OutcomeDeclaration objects.
@@ -37,7 +36,7 @@ class OutcomeDeclarationCollection extends QtiIdentifiableCollection {
 	/**
 	 * Check if a given $value is an instance of OutcomeDeclaration.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of OutcomeDeclaration.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of OutcomeDeclaration.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof OutcomeDeclaration) {

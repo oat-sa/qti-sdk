@@ -26,7 +26,7 @@ namespace qtism\data\state;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use qtism\common\utils\Format as Format;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -62,7 +62,7 @@ class VariableMapping extends QtiComponent {
 	 * 
 	 * @param string $source The source variable identifier.
 	 * @param string $target The target variable identifier.
-	 * @throws InvalidArgumentException If $source or $target are not valid QTI identifiers.
+	 * @throws \InvalidArgumentException If $source or $target are not valid QTI identifiers.
 	 */
 	public function __construct($source, $target) {
 		$this->setSource($source);
@@ -82,7 +82,7 @@ class VariableMapping extends QtiComponent {
 	 * Set the source variable identifier.
 	 * 
 	 * @param string $source A valid QTI identifier.
-	 * @throws InvalidArgumentException If $source is not a valid QTI identifier.
+	 * @throws \InvalidArgumentException If $source is not a valid QTI identifier.
 	 */
 	public function setSource($source) {
 		if (Format::isIdentifier($source)) {
@@ -107,7 +107,7 @@ class VariableMapping extends QtiComponent {
 	 * Set the target variable identifier.
 	 * 
 	 * @param string $target A valid QTI identifier.
-	 * @throws InvalidArgumentException If $target is not a valid QTI identifier.
+	 * @throws \InvalidArgumentException If $target is not a valid QTI identifier.
 	 */
 	public function setTarget($target) {
 		if (Format::isIdentifier($target)) {
@@ -119,10 +119,16 @@ class VariableMapping extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'variableMapping';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -53,7 +52,7 @@ class AreaMapEntry extends QtiComponent {
 	 * The size and position of the area, interpreted in conjunction
 	 * with the shape.
 	 * 
-	 * @var Coords
+	 * @var \qtism\common\datatypes\Coords
 	 * @qtism-bean-property
 	 */
 	private $coords;
@@ -72,9 +71,9 @@ class AreaMapEntry extends QtiComponent {
 	 * Create a new AreaMapEntry object.
 	 * 
 	 * @param int $shape A value from the Shape enumeration.
-	 * @param Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 * @param float $mappedValue A mapped value.
-	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
+	 * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
 	 */
 	public function __construct($shape, Coords $coords, $mappedValue) {
 		$this->setShape($shape);
@@ -86,7 +85,7 @@ class AreaMapEntry extends QtiComponent {
 	 * Set the shape of the area.
 	 * 
 	 * @param int $shape A value from the Shape enumeration.
-	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
+	 * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
 		if (in_array($shape, Shape::asArray())) {
@@ -111,7 +110,7 @@ class AreaMapEntry extends QtiComponent {
 	 * Set the size and position of the area, in conjunction with the
 	 * shape.
 	 * 
-	 * @param Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
 	public function setCoords(Coords $coords) {
 		$this->coords = $coords;
@@ -121,7 +120,7 @@ class AreaMapEntry extends QtiComponent {
 	 * Get the size and position of the area, in conjunction with the
 	 * shape.
 	 * 
-	 * @return Coords A Coords object.
+	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
 	public function getCoords() {
 		return $this->coords;
@@ -131,7 +130,7 @@ class AreaMapEntry extends QtiComponent {
 	 * Set the mapped value.
 	 * 
 	 * @param float $mappedValue A mapped value.
-	 * @throws InvalidArgumentException If $mappedValue is not a float value.
+	 * @throws \InvalidArgumentException If $mappedValue is not a float value.
 	 */
 	public function setMappedValue($mappedValue) {
 		if (is_float($mappedValue) || is_double($mappedValue)) {
@@ -146,16 +145,22 @@ class AreaMapEntry extends QtiComponent {
 	/**
 	 * Get the mapped value.
 	 * 
-	 * @return float A mapped value.
+	 * @return \float A mapped value.
 	 */
 	public function getMappedValue() {
 		return $this->mappedValue;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'areaMapEntry';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

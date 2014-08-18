@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -77,7 +76,7 @@ class MapEntry extends QtiComponent {
 	 * @param mixed $mapKey A qti:valueType value (any baseType).
 	 * @param float $mappedValue A mapped value.
 	 * @param boolean $caseSensitive Whether a mapEntry string is matched case sensitively.
-	 * @throws InvalidArgumentException If $mappedValue is not a float or $caseSensitive is not a boolean.
+	 * @throws \InvalidArgumentException If $mappedValue is not a float or $caseSensitive is not a boolean.
 	 */
 	public function __construct($mapKey, $mappedValue, $caseSensitive = true) {
 		$this->setMapKey($mapKey);
@@ -107,7 +106,7 @@ class MapEntry extends QtiComponent {
 	 * Set the mapped value.
 	 * 
 	 * @param float $mappedValue A mapped value.
-	 * @throws InvalidArgumentException If $mappedValue is not a float value.
+	 * @throws \InvalidArgumentException If $mappedValue is not a float value.
 	 */
 	public function setMappedValue($mappedValue) {
 		if (is_float($mappedValue) || is_double($mappedValue)) {
@@ -132,7 +131,7 @@ class MapEntry extends QtiComponent {
 	 * Set whether the mapEntry string is matched case sensitively.
 	 * 
 	 * @param boolean $caseSensitive
-	 * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
+	 * @throws \InvalidArgumentException If $caseSensitive is not a boolean value.
 	 */
 	public function setCaseSensitive($caseSensitive) {
 		if (is_bool($caseSensitive)) {
@@ -153,10 +152,16 @@ class MapEntry extends QtiComponent {
 		return $this->caseSensitive;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mapEntry';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

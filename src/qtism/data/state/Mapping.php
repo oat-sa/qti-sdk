@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -81,7 +80,7 @@ class Mapping extends QtiComponent {
 	 * The map is defined by a set of mapEntries, each of which maps a
 	 * single value from the source set onto a single float.
 	 * 
-	 * @var MapEntryCollection
+	 * @var \qtism\data\state\MapEntryCollection
 	 * @qtism-bean-property
 	 */
 	private $mapEntries;
@@ -89,11 +88,11 @@ class Mapping extends QtiComponent {
 	/**
 	 * Create a new Mapping object.
 	 * 
-	 * @param MapEntryCollection $mapEntries A collection of MapEntry which compose the Mapping object to be created.
+	 * @param \qtism\data\state\MapEntryCollection $mapEntries A collection of MapEntry which compose the Mapping object to be created.
 	 * @param float|boolean $lowerBound A lower bound. Give false if not specified.
 	 * @param float|boolean $upperBound An upper bound. Give false if not specified.
 	 * @param integer|float $defaultValue A default value. Default is 0.
-	 * @throws InvalidArgumentException If $defaultValue is not a float, if $lowerBound or $upperBound are not floats nor false, If $mapEntries is an empty collection.
+	 * @throws \InvalidArgumentException If $defaultValue is not a float, if $lowerBound or $upperBound are not floats nor false, If $mapEntries is an empty collection.
 	 */
 	public function __construct(MapEntryCollection $mapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false) {
 		$this->setLowerBound($lowerBound);
@@ -106,7 +105,7 @@ class Mapping extends QtiComponent {
 	 * Set the lower bound.
 	 * 
 	 * @param boolean|float $lowerBound A float or false if not lower bound.
-	 * @throws InvalidArgumentException If $lowerBound is not a float nor false.
+	 * @throws \InvalidArgumentException If $lowerBound is not a float nor false.
 	 */
 	public function setLowerBound($lowerBound) {
 		if (is_float($lowerBound) || is_double($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
@@ -140,7 +139,7 @@ class Mapping extends QtiComponent {
 	 * Set the upper bound.
 	 * 
 	 * @param boolean|float $upperBound A float value or false if not specified.
-	 * @throws InvalidArgumentException If $upperBound is not a float nor false.
+	 * @throws \InvalidArgumentException If $upperBound is not a float nor false.
 	 */
 	public function setUpperBound($upperBound) {
 		if (is_float($upperBound) || is_double($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
@@ -174,7 +173,7 @@ class Mapping extends QtiComponent {
 	 * Set the default value of the Mapping.
 	 * 
 	 * @param float $defaultValue A float value.
-	 * @throws InvalidArgumentException If $defaultValue is not a float value.
+	 * @throws \InvalidArgumentException If $defaultValue is not a float value.
 	 */
 	public function setDefaultValue($defaultValue) {
 		if (is_numeric($defaultValue)) {
@@ -198,8 +197,8 @@ class Mapping extends QtiComponent {
 	/**
 	 * Set the collection of MapEntry objects which compose the Mapping.
 	 * 
-	 * @param MapEntryCollection $mapEntries A collection of MapEntry objects with at least one item.
-	 * @throws InvalidArgumentException If $mapEnties is an empty collection.
+	 * @param \qtism\data\state\MapEntryCollection $mapEntries A collection of MapEntry objects with at least one item.
+	 * @throws \InvalidArgumentException If $mapEnties is an empty collection.
 	 */
 	public function setMapEntries(MapEntryCollection $mapEntries) {
 		if (count($mapEntries) > 0) {
@@ -214,16 +213,22 @@ class Mapping extends QtiComponent {
 	/**
 	 * Get the collection of MapEntry objects which compose the Mapping.
 	 * 
-	 * @return MapEntryCollection A collection of MapEntry objects.
+	 * @return \qtism\data\state\MapEntryCollection A collection of MapEntry objects.
 	 */
 	public function getMapEntries() {
 		return $this->mapEntries;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mapping';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection($this->getMapEntries()->getArrayCopy());
 	}

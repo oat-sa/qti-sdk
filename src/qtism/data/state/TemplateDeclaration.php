@@ -74,7 +74,7 @@ class TemplateDeclaration extends VariableDeclaration {
      * object parameters.
      * 
      * @param boolean $paramVariable A boolean value.
-     * @throws InvalidArgumentException If $paramVariable is not a boolean value.
+     * @throws \InvalidArgumentException If $paramVariable is not a boolean value.
      */
     public function setParamVariable($paramVariable) {
         if (is_bool($paramVariable) === true) {
@@ -101,7 +101,7 @@ class TemplateDeclaration extends VariableDeclaration {
      * that match its name in MathML.
      * 
      * @param boolean $mathVariable A boolean value.
-     * @throws InvalidArgumentException If $mathVariable is not a boolean value.
+     * @throws \InvalidArgumentException If $mathVariable is not a boolean value.
      */
     public function setMathVariable($mathVariable) {
         if (is_bool($mathVariable) === true) {
@@ -123,6 +123,9 @@ class TemplateDeclaration extends VariableDeclaration {
         return $this->mathVariable;
     }
     
+    /**
+     * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+     */
     public function getQtiClassName() {
         return 'templateDeclaration';
     }

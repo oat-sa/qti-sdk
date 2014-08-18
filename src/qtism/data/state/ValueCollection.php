@@ -24,7 +24,7 @@
 namespace qtism\data\state;
 
 use qtism\common\collections\AbstractCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of Value objects.
@@ -37,7 +37,7 @@ class ValueCollection extends AbstractCollection {
 	/**
 	 * Check if a given $value is an instance of Value.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of Value.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of Value.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof Value) {

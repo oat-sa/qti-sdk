@@ -20,12 +20,11 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException;
 use qtism\data\QtiComponent;
+use \InvalidArgumentException;
 
 /**
  * The DefaultValue class.
@@ -51,7 +50,7 @@ class DefaultValue extends QtiComponent {
 	 * The order of the values is significant only if the variable being set 
 	 * has ordered cardinality.
 	 * 
-	 * @var ValueCollection
+	 * @var \qtism\data\state\ValueCollection
 	 * @qtism-bean-property
 	 */
 	private $values;
@@ -59,9 +58,9 @@ class DefaultValue extends QtiComponent {
 	/**
 	 * Create a new instance of DefaultValue.
 	 * 
-	 * @param ValueCollection $values A collection of Value objects with at least one Value object.
+	 * @param \qtism\data\state\ValueCollection $values A collection of Value objects with at least one Value object.
 	 * @param string $interpretation A human-readable interpretation of the DefaultValue.
-	 * @throws InvalidArgumentException If $values does not contain at least one Value object or $interpretation is not a string.
+	 * @throws \InvalidArgumentException If $values does not contain at least one Value object or $interpretation is not a string.
 	 */
 	public function __construct(ValueCollection $values, $interpretation = '') {
 		$this->setValues($values);
@@ -83,7 +82,7 @@ class DefaultValue extends QtiComponent {
 	 * if not specified.
 	 * 
 	 * @param string $interpretation An interpretation.
-	 * @throws InvalidArgumentException If $interpretation is not a string.
+	 * @throws \InvalidArgumentException If $interpretation is not a string.
 	 */
 	public function setInterpretation($interpretation) {
 		if (gettype($interpretation) === 'string') {
@@ -98,7 +97,7 @@ class DefaultValue extends QtiComponent {
 	/**
 	 * Get the intrinsic values of the DefaultValue.
 	 * 
-	 * @return ValueCollection A ValueCollection containing at least one Value object.
+	 * @return \qtism\data\state\ValueCollection A ValueCollection containing at least one Value object.
 	 */
 	public function getValues() {
 		return $this->values;
@@ -107,8 +106,8 @@ class DefaultValue extends QtiComponent {
 	/**
 	 * Set the intrinsic values of the DefaultValue.
 	 * 
-	 * @param ValueCollection $values A collection of Value objects containing at least one Value object.
-	 * @throws InvalidArgumentException If $values does not contain at least one Value object.
+	 * @param \qtism\data\state\ValueCollection $values A collection of Value objects containing at least one Value object.
+	 * @throws \InvalidArgumentException If $values does not contain at least one Value object.
 	 */
 	public function setValues(ValueCollection $values) {
 		if (count($values) > 0) {
@@ -120,10 +119,16 @@ class DefaultValue extends QtiComponent {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'defaultValue';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection($this->getValues()->getArrayCopy());
 	}

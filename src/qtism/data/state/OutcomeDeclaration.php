@@ -77,7 +77,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * be able to view an outcome variable the view attribute should contain a 
 	 * comma delimited list.
 	 * 
-	 * @var Viewcollection
+	 * @var \qtism\data\Viewcollection
 	 * @qtism-bean-property
 	 */
 	private $views;
@@ -147,7 +147,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	/**
 	 * The lookup table. See LookupTable for more information.
 	 * 
-	 * @var LookupTable
+	 * @var \qtism\data\state\LookupTable
 	 * @qtism-bean-property
 	 */
 	private $lookupTable = null;
@@ -158,8 +158,8 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * @param string $identifier A QTI identifier.
 	 * @param int $baseType A value from the BaseType enumeration.
 	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @param DefaultValue $defaultValue A DefaultValue object.
-	 * @throws InvalidArgumentException If one or more of the arguments are invalid.
+	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
+	 * @throws \InvalidArgumentException If one or more of the arguments are invalid.
 	 */
 	public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null) {
 		parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
@@ -171,7 +171,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * collection is empty, it means that the outcomeDeclaration is relevant to
 	 * all views.
 	 * 
-	 * @return Viewcollection A Collection of values that are values from the View enumeration.
+	 * @return \qtism\data\Viewcollection A Collection of values that are values from the View enumeration.
 	 */
 	public function getViews() {
 		return $this->views;
@@ -181,7 +181,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set the intended audience for this Outcome Declaration. If the given collection
 	 * is empty, it means that the outcomeDeclaration is relevant to all views.
 	 * 
-	 * @param ViewCollection $views A collection of values that are values from the View enumeration.
+	 * @param \qtism\data\ViewCollection $views A collection of values that are values from the View enumeration.
 	 */
 	public function setViews(ViewCollection $views) {
 		$this->views = $views;
@@ -201,7 +201,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set the human interpretation of the outcome variable's value.
 	 * 
 	 * @param string $interpretation A string.
-	 * @throws InvalidArgumentException If $interpretation is not a string.
+	 * @throws \InvalidArgumentException If $interpretation is not a string.
 	 */
 	public function setInterpretation($interpretation) {
 		if (gettype($interpretation) === 'string') {
@@ -226,7 +226,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set a link (URI) to an extended interpretation of the outcome variable's value.
 	 * 
 	 * @param string $longInterpretation A string.
-	 * @throws InvalidArgumentException If $longInterpretation is not a string.
+	 * @throws \InvalidArgumentException If $longInterpretation is not a string.
 	 */
 	public function setLongInterpretation($longInterpretation) {
 		if (gettype($longInterpretation) === 'string') {
@@ -251,7 +251,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set the normal minimum.
 	 * 
 	 * @param boolean|numeric $normalMinimum A numeric value.
-	 * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
+	 * @throws \InvalidArgumentException If $normalMinimum is not numeric nor false.
 	 */
 	public function setNormalMinimum($normalMinimum) {
 		if (is_numeric($normalMinimum) || (is_bool($normalMinimum) && $normalMinimum === false)) {
@@ -276,7 +276,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set the normal maximum.
 	 * 
 	 * @param boolean|number $normalMaximum A numeric value.
-	 * @throws InvalidArgumentException If $normalMaximum is not a numeric value nor false.
+	 * @throws \InvalidArgumentException If $normalMaximum is not a numeric value nor false.
 	 */
 	public function setNormalMaximum($normalMaximum) {
 		if (is_numeric($normalMaximum) || (is_bool($normalMaximum) && $normalMaximum === false)) {
@@ -301,7 +301,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	 * Set the mastery value. Set to false if not specified.
 	 * 
 	 * @param boolean|number $masteryValue A numeric value or false.
-	 * @throws InvalidArgumentException If $masteryValue is not numeric nor false.
+	 * @throws \InvalidArgumentException If $masteryValue is not numeric nor false.
 	 */
 	public function setMasteryValue($masteryValue) {
 		if (is_numeric($masteryValue) || (is_bool($masteryValue) && $masteryValue === false)) {
@@ -316,7 +316,7 @@ class OutcomeDeclaration extends VariableDeclaration {
 	/**
 	 * Get the LookupTable. Returns null value if no LookupTable was specified.
 	 * 
-	 * @return LookupTable A LookupTable or null value if not specified.
+	 * @return \qtism\data\state\LookupTable A LookupTable or null value if not specified.
 	 */
 	public function getLookupTable() {
 		return $this->lookupTable;
@@ -325,16 +325,22 @@ class OutcomeDeclaration extends VariableDeclaration {
 	/**
 	 * Set the LookupTable.
 	 * 
-	 * @param LookupTable $lookupTable A LookupTable object.
+	 * @param \qtism\data\state\LookupTable $lookupTable A LookupTable object.
 	 */
 	public function setLookupTable(LookupTable $lookupTable = null) {
 		$this->lookupTable = $lookupTable;
 	}
 	
+	/**
+	 * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'outcomeDeclaration';
 	}
 	
+	/**
+	 * @see \qtism\data\state\VariableDeclaration::getComponents()
+	 */
 	public function getComponents() {
 		$comp = parent::getComponents()->getArrayCopy();
 		

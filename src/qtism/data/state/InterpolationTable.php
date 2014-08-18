@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
-
 use \InvalidArgumentException;
 use qtism\data\QtiComponent;
 
@@ -47,7 +45,7 @@ class InterpolationTable extends LookupTable {
     /**
      * A collection of InterpolationTableEntry objects.
      * 
-     * @var InterpolationTableEntryCollection
+     * @var \qtism\data\state\InterpolationTableEntryCollection
      * @qtism-bean-property
      */
 	private $interpolationTableEntries;
@@ -55,9 +53,9 @@ class InterpolationTable extends LookupTable {
 	/**
 	 * Create a new instance of InterpolationTable.
 	 * 
-	 * @param InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
+	 * @param \qtism\data\state\InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
 	 * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
-	 * @throws InvalidArgumentException If $interpolationTableEntries is an empty collection.
+	 * @throws \InvalidArgumentException If $interpolationTableEntries is an empty collection.
 	 */
 	public function __construct(InterpolationTableEntryCollection $interpolationTableEntries, $defaultValue = null) {
 		parent::__construct($defaultValue);
@@ -67,7 +65,7 @@ class InterpolationTable extends LookupTable {
 	/**
 	 * Get the InterpolationTableEntry objects contained by the InterpolationTable.
 	 * 
-	 * @return InterpolationTableEntryCollection A collection of InterpolationTableEntry objects.
+	 * @return \qtism\data\state\InterpolationTableEntryCollection A collection of InterpolationTableEntry objects.
 	 */
 	public function getInterpolationTableEntries() {
 		return $this->interpolationTableEntries;
@@ -76,8 +74,8 @@ class InterpolationTable extends LookupTable {
 	/**
 	 * Set the InterpolationTableEntry objects contained by the current InterpolationTable.
 	 * 
-	 * @param InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
-	 * @throws InvalidArgumentException If $interpolationTableEntries is an empty collection.
+	 * @param \qtism\data\state\InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
+	 * @throws \InvalidArgumentException If $interpolationTableEntries is an empty collection.
 	 */
 	public function setInterpolationTableEntries(InterpolationTableEntryCollection $interpolationTableEntries) {
 		if (count($interpolationTableEntries) > 0) {
@@ -89,10 +87,16 @@ class InterpolationTable extends LookupTable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\state\LookupTable::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'interpolationTable';
 	}
 	
+	/**
+	 * @see \qtism\data\state\LookupTable::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array_merge(parent::getComponents()->getArrayCopy(), 
 							$this->getInterpolationTableEntries()->getArrayCopy());

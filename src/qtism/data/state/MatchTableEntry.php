@@ -28,6 +28,12 @@ use qtism\data\QtiComponent;
 use qtism\data\state\Value;
 use \InvalidArgumentException;
 
+/**
+ * The MatchTableEntry QTI class.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class MatchTableEntry extends QtiComponent {
 	
 	/**
@@ -75,7 +81,7 @@ class MatchTableEntry extends QtiComponent {
 	 * Set the source integer that must be matched exactly.
 	 * 
 	 * @param integer $sourceValue An integer value.
-	 * @throws InvalidArgumentException If $sourceValue is not an integer.
+	 * @throws \InvalidArgumentException If $sourceValue is not an integer.
 	 */
 	public function setSourceValue($sourceValue) {
 		if (is_int($sourceValue)) {
@@ -105,10 +111,16 @@ class MatchTableEntry extends QtiComponent {
 		$this->targetValue = $targetValue;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'matchTableEntry';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

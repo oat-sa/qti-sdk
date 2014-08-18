@@ -24,7 +24,7 @@
 namespace qtism\data\state;
 
 use qtism\data\QtiIdentifiableCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of TemplateDeclaration objects.
@@ -37,7 +37,7 @@ class TemplateDeclarationCollection extends QtiIdentifiableCollection {
 	/**
 	 * Check if a given $value is an instance of TemplateDeclaration.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of TemplateDeclaration.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of TemplateDeclaration.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof TemplateDeclaration) {

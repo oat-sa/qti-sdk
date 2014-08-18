@@ -94,7 +94,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * its default value varies depending on the type of item variable. If not set, will
 	 * contain the null value.
 	 * 
-	 * @var DefaultValue
+	 * @var \qtism\data\state\DefaultValue
 	 * @qtism-bean-property
 	 */
 	private $defaultValue = null;
@@ -102,7 +102,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * The observers of this object.
 	 * 
-	 * @var SplObjectStorage
+	 * @var \SplObjectStorage
 	 */
 	private $observers;
 	
@@ -112,7 +112,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * @param string $identifier The identifier of the VariableDeclaration.
 	 * @param int $baseType A value from the BaseType enumeration or -1 if no baseType.
 	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @param DefaultValue $defaultValue A DefaultValue object.
+	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
 	 */
 	public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null) {
 		
@@ -137,7 +137,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * Set the identifier of the VariableDeclaration.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -164,7 +164,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * Set the basetype of the VariableDeclaration;
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	public function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
@@ -190,7 +190,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * Get the default value of the variable declaration. If not set, returns the null
 	 * value.
 	 * 
-	 * @return DefaultValue A DefaultValue object.
+	 * @return \qtism\data\state\DefaultValue A DefaultValue object.
 	 */
 	public function getDefaultValue() {
 		return $this->defaultValue;
@@ -200,7 +200,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * Set the default value of the variable declaration. If not set, returns the null
 	 * value.
 	 * 
-	 * @param DefaultValue $defaultValue A DefaultValue object.
+	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
 	 */
 	public function setDefaultValue(DefaultValue $defaultValue = null) {
 		$this->defaultValue = $defaultValue;
@@ -228,7 +228,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	 * Set the cardinality of the variable.
 	 * 
 	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @throws InvalidArgumentException If $cardinality is not a value from the Cardinality enumeration.
+	 * @throws \InvalidArgumentException If $cardinality is not a value from the Cardinality enumeration.
 	 */
 	public function setCardinality($cardinality) {
 		if (in_array($cardinality, Cardinality::asArray())) {
@@ -240,10 +240,16 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'variableDeclaration';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = array();
 		
@@ -257,7 +263,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the observers of the object.
 	 *
-	 * @return SplObjectStorage An SplObjectStorage object.
+	 * @return \SplObjectStorage An SplObjectStorage object.
 	 */
 	protected function getObservers() {
 		return $this->observers;
@@ -266,7 +272,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the observers of the object.
 	 *
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 * @param \SplObjectStorage $observers An SplObjectStorage object.
 	 */
 	protected function setObservers(SplObjectStorage $observers) {
 		$this->observers = $observers;
@@ -275,7 +281,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::attach implementation.
 	 *
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -284,7 +290,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::detach implementation.
 	 *
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);

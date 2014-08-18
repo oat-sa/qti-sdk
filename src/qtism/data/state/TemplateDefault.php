@@ -55,7 +55,7 @@ class TemplateDefault extends QtiComponent {
 	 * An expression which must result in a value with baseType and cardinality matching
 	 * the declaration of the assossiated variable's templateDeclaration.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
 	private $expression;
@@ -64,8 +64,8 @@ class TemplateDefault extends QtiComponent {
 	 * Create a new instance of TemplateDefault.
 	 * 
 	 * @param string $templateIdentifier The identifier of the template variable affected.
-	 * @param Expression $expression The expression that produces the new template default.
-	 * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
+	 * @param \qtism\data\expressions\Expression $expression The expression that produces the new template default.
+	 * @throws \InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
 	 */
 	public function __construct($templateIdentifier, Expression $expression) {
 		$this->setTemplateIdentifier($templateIdentifier);
@@ -85,7 +85,7 @@ class TemplateDefault extends QtiComponent {
 	 * Set the identifier of the template variable affected.
 	 * 
 	 * @param string $templateIdentifier A QTI identifier.
-	 * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
 	 */
 	public function setTemplateIdentifier($templateIdentifier) {
 		if (Format::isIdentifier($templateIdentifier)) {
@@ -100,7 +100,7 @@ class TemplateDefault extends QtiComponent {
 	/**
 	 * Get the expression that produces the new template default.
 	 * 
-	 * @return Expression A QTI Expression.
+	 * @return \qtism\data\expressions\Expression A QTI Expression.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -109,16 +109,22 @@ class TemplateDefault extends QtiComponent {
 	/**
 	 * Set the expression that produces the new template defaul.
 	 * 
-	 * @param Expression $expression A QTI Expression.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Expression.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'templateDefault';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection(array($this->getExpression()));
 	}

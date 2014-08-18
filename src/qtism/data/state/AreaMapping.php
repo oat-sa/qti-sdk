@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
@@ -69,7 +67,7 @@ class AreaMapping extends QtiComponent {
 	/**
 	 * A collection of AreaMapEntry objects.
 	 * 
-	 * @var AreaMapEntry
+	 * @var \qtism\data\state\AreaMapEntry
 	 * @qtism-bean-property
 	 */
 	private $areaMapEntries;
@@ -77,11 +75,11 @@ class AreaMapping extends QtiComponent {
 	/**
 	 * Create a new AreaMapping object.
 	 * 
-	 * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+	 * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
 	 * @param float $defaultValue A default value. Default is 0.
 	 * @param boolean|float $lowerBound A lower bound. Give false if no lower bound.
 	 * @param boolan|float $upperBound An upper bound. Give false if no upper bound.
-	 * @throws InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
+	 * @throws \InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
 	 */
 	public function __construct(AreaMapEntryCollection $areaMapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false) {
 		$this->setLowerBound($lowerBound);
@@ -94,7 +92,7 @@ class AreaMapping extends QtiComponent {
 	 * Set the lower bound.
 	 * 
 	 * @param boolean|float $lowerBound A lower bound.
-	 * @throws InvalidArgumentException If $lowerBound is not a float value nor false.
+	 * @throws \InvalidArgumentException If $lowerBound is not a float value nor false.
 	 */
 	public function setLowerBound($lowerBound) {
 		if (is_float($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
@@ -119,7 +117,7 @@ class AreaMapping extends QtiComponent {
 	 * Set the upper bound.
 	 * 
 	 * @param boolean|float $upperBound An upper bound. 
-	 * @throws InvalidArgumentException If $upperBound is not a float value nor false.
+	 * @throws \InvalidArgumentException If $upperBound is not a float value nor false.
 	 */
 	public function setUpperBound($upperBound) {
 		if (is_float($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
@@ -144,7 +142,7 @@ class AreaMapping extends QtiComponent {
 	 * Set the default value.
 	 * 
 	 * @param float $defaultValue A default value.
-	 * @throws InvalidArgumentException If $defaultValue is not a float value.
+	 * @throws \InvalidArgumentException If $defaultValue is not a float value.
 	 */
 	public function setDefaultValue($defaultValue) {
 		if (is_float($defaultValue)) {
@@ -168,7 +166,7 @@ class AreaMapping extends QtiComponent {
 	/**
 	 * Set the collection of AreaMapEntry objects composing the AreaMapping.
 	 * 
-	 * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+	 * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
 	 */
 	public function setAreaMapEntries(AreaMapEntryCollection $areaMapEntries) {
 		if (count($areaMapEntries) >= 1) {
@@ -183,7 +181,7 @@ class AreaMapping extends QtiComponent {
 	/**
 	 * Get the collection of AreaMapEntry objects composing the AreaMapping.
 	 * 
-	 * @return AreaMapEntry A collection of AreaMapEntry objects.
+	 * @return \qtism\data\state\AreaMapEntry A collection of AreaMapEntry objects.
 	 */
 	public function getAreaMapEntries() {
 		return $this->areaMapEntries;
@@ -207,10 +205,16 @@ class AreaMapping extends QtiComponent {
 		return $this->getUpperBound() !== false;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'areaMapping';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		$comp = $this->getAreaMapEntries()->getArrayCopy();
 		return new QtiComponentCollection($comp);

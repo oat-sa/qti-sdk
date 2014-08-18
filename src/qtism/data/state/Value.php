@@ -94,7 +94,7 @@ class Value extends QtiComponent {
 	 * @param mixed $value An intrinsic value. Must be cast to the correct datatype, regarding to the baseType of the value.
 	 * @param int $baseType A value of the BaseType enumeration or -1 if no baseType (default).
 	 * @param string $fieldIdentifier A field identifier if the value is part of a record.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration or $fieldIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration or $fieldIdentifier is not a valid QTI Identifier.
 	 */
 	public function __construct($value, $baseType = -1, $fieldIdentifier = '') {
 		$this->setBaseType($baseType);
@@ -106,7 +106,7 @@ class Value extends QtiComponent {
 	 * Set wether or not the value is part of a record.
 	 * 
 	 * @param boolean $partOfRecord
-	 * @throws InvalidArgumentException If $partOfRecord is not a boolean.
+	 * @throws \InvalidArgumentException If $partOfRecord is not a boolean.
 	 */
 	public function setPartOfRecord($partOfRecord) {
 		if (is_bool($partOfRecord)) {
@@ -140,7 +140,7 @@ class Value extends QtiComponent {
 	 * Set the field identifier. An empty string means it is not specified.
 	 * 
 	 * @param string $fieldIdentifier A QTI identifier.
-	 * @throws InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
 	 */
 	public function setFieldIdentifier($fieldIdentifier) {
 		if ($fieldIdentifier == '' || Format::isIdentifier($fieldIdentifier)) {
@@ -174,7 +174,7 @@ class Value extends QtiComponent {
 	 * Set the BaseType of the value.
 	 * 
 	 * @param int $baseType A value of the BaseType enumeration. A negative value (< 0) means there is no baseType. 
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType operation.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType operation.
 	 */
 	public function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
@@ -214,10 +214,16 @@ class Value extends QtiComponent {
 		$this->value = $value;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'value';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}

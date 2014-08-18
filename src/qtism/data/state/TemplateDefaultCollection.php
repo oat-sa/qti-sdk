@@ -20,11 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\common\collections\AbstractCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of TemplateDefault objects.
@@ -37,7 +36,7 @@ class TemplateDefaultCollection extends AbstractCollection {
 	/**
 	 * Check if a given $value is an instance of TemplateDefault.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of TemplateDefault.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of TemplateDefault.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof TemplateDefault) {

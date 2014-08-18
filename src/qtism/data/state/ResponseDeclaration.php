@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -81,7 +80,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * from the candidate's own responses (which may be hidden completely 
 	 * if necessary).
 	 * 
-	 * @var CorrectResponse
+	 * @var \qtism\data\state\CorrectResponse
 	 * @qtism-bean-property
 	 */
 	private $correctResponse;
@@ -93,7 +92,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * numeric values for the purposes of response processing. See mapResponse 
 	 * for information on how to use the mapping.
 	 * 
-	 * @var Mapping
+	 * @var \qtism\data\state\Mapping
 	 * @qtism-bean-property
 	 */
 	private $mapping = null;
@@ -106,7 +105,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * areas of the coordinate space instead of mapping single values (i.e., 
 	 * single points).
 	 * 
-	 * @var AreaMapping
+	 * @var \qtism\data\state\AreaMapping
 	 * @qtism-bean-property
 	 */
 	private $areaMapping = null;
@@ -117,7 +116,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	 * @param string $identifier The identifier of the ResponseDeclaration.
 	 * @param int $baseType A value from the BaseType enumeration or -1 if no baseType.
 	 * @param int $cardinality A value from the Cardinality enumeration.
-	 * @param DefaultValue $defaultValue A DefaultValue object.
+	 * @param \qtism\data\state\DefaultValue $defaultValue A DefaultValue object.
 	 */
 	public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null) {
 		parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
@@ -126,7 +125,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Set the correct response. Give null if no correct response is specified.
 	 * 
-	 * @param CorrectResponse $correctResponse A CorrectResponse object or null.
+	 * @param \qtism\data\state\CorrectResponse $correctResponse A CorrectResponse object or null.
 	 */
 	public function setCorrectResponse(CorrectResponse $correctResponse = null) {
 		$this->correctResponse = $correctResponse;
@@ -135,7 +134,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Get the correct response.
 	 * 
-	 * @return CorrectResponse A CorrectResponse object or null if no correct response is specified.
+	 * @return \qtism\data\state\CorrectResponse A CorrectResponse object or null if no correct response is specified.
 	 */
 	public function getCorrectResponse() {
 		return $this->correctResponse;
@@ -144,7 +143,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Set the mapping.
 	 * 
-	 * @param Mapping $mapping A Mapping object or null if no mapping is specified.
+	 * @param \qtism\data\state\Mapping $mapping A Mapping object or null if no mapping is specified.
 	 */
 	public function setMapping(Mapping $mapping = null) {
 		$this->mapping = $mapping;
@@ -153,7 +152,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Get the mapping.
 	 * 
-	 * @return Mapping A Mapping object or null if no mapping specified.
+	 * @return \qtism\data\state\Mapping A Mapping object or null if no mapping specified.
 	 */
 	public function getMapping() {
 		return $this->mapping;
@@ -162,7 +161,7 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Set the area mapping.
 	 * 
-	 * @param AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
+	 * @param \qtism\data\state\AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
 	 */
 	public function setAreaMapping(AreaMapping $areaMapping = null) {
 		$this->areaMapping = $areaMapping;
@@ -171,16 +170,22 @@ class ResponseDeclaration extends VariableDeclaration {
 	/**
 	 * Get the area mapping
 	 * 
-	 * @return AreaMapping An AreaMapping object or null if not area mapping is specified.
+	 * @return \qtism\data\state\AreaMapping An AreaMapping object or null if not area mapping is specified.
 	 */
 	public function getAreaMapping() {
 		return $this->areaMapping;
 	}
 	
+	/**
+	 * @see \qtism\data\state\VariableDeclaration::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'responseDeclaration';
 	}
 	
+	/**
+	 * @see \qtism\data\state\VariableDeclaration::getComponents()
+	 */
 	public function getComponents() {
 		$comp = parent::getComponents()->getArrayCopy();
 		

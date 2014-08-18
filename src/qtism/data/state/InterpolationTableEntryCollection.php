@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\common\collections\AbstractCollection;
@@ -37,7 +36,7 @@ class InterpolationTableEntryCollection extends AbstractCollection {
 	/**
 	 * Check if a given $value is an instance of InterpolationTableEntry.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of InterpolationTableEntry.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of InterpolationTableEntry.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof InterpolationTableEntry) {

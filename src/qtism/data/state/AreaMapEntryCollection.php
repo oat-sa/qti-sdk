@@ -20,11 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection of AreaMapEntry objects.
@@ -37,7 +36,7 @@ class AreaMapEntryCollection extends QtiComponentCollection {
 	/**
 	 * Check if a given $value is an instance of AreaMapEntry.
 	 * 
-	 * @throws InvalidArgumentException If the given $value is not an instance of AreaMapEntry.
+	 * @throws \InvalidArgumentException If the given $value is not an instance of AreaMapEntry.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof AreaMapEntry) {

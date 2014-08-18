@@ -28,7 +28,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \SplObserver;
 use \SplObjectStorage;
-use \InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 use qtism\common\utils\Format as Format;
 
 /**
@@ -63,7 +63,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * The observers of this object.
 	 * 
-	 * @var SplObjectStorage
+	 * @var \SplObjectStorage
 	 */
 	private $observers;
 	
@@ -72,7 +72,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * @param string $identifier A QTI identifier.
 	 * @param int|float $value An integer/float value.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI identifier or if $value is not a float nor an integer.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier or if $value is not a float nor an integer.
 	 */
 	public function __construct($identifier, $value) {
 		$this->setObservers(new SplObjectStorage());
@@ -94,7 +94,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	 * Set the identifier of the Weight.
 	 * 
 	 * @param string $identifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
 	 */
 	public function setIdentifier($identifier) {
 		if (Format::isIdentifier($identifier, false)) {
@@ -121,7 +121,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	 * Set the value of the Weight.
 	 * 
 	 * @param int|float $value A in integer/float value.
-	 * @throws InvalidArgumentException If $value is not an integer nor a float.
+	 * @throws \InvalidArgumentException If $value is not an integer nor a float.
 	 */
 	public function setValue($value) {
 		if (is_int($value) || is_float($value)) {
@@ -133,10 +133,16 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'weight';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
@@ -144,7 +150,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Get the observers of the object.
 	 *
-	 * @return SplObjectStorage An SplObjectStorage object.
+	 * @return \SplObjectStorage An SplObjectStorage object.
 	 */
 	protected function getObservers() {
 		return $this->observers;
@@ -153,7 +159,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * Set the observers of the object.
 	 *
-	 * @param SplObjectStorage $observers An SplObjectStorage object.
+	 * @param \SplObjectStorage $observers An SplObjectStorage object.
 	 */
 	protected function setObservers(SplObjectStorage $observers) {
 		$this->observers = $observers;
@@ -162,7 +168,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::attach implementation.
 	 *
-	 * @param SplObserver An SplObserver object.
+	 * @param \SplObserver An SplObserver object.
 	 */
 	public function attach(SplObserver $observer) {
 		$this->getObservers()->attach($observer);
@@ -171,7 +177,7 @@ class Weight extends QtiComponent implements QtiIdentifiable {
 	/**
 	 * SplSubject::detach implementation.
 	 *
-	 * @param SplObserver $observer An SplObserver object.
+	 * @param \SplObserver $observer An SplObserver object.
 	 */
 	public function detach(SplObserver $observer) {
 		$this->getObservers()->detach($observer);

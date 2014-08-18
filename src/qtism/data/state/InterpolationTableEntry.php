@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
@@ -74,7 +73,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * @param float $sourceValue The lower bound for the source value to match this entry.
 	 * @param mixed $targetValue The target value that is used to set the outcome when a match is found.
 	 * @param boolean $includeBoundary Determines if an exact match of $sourceValue matches this entry.
-	 * @throws InvalidArgumentException If $sourceValue is not a float or $includeBoundary is not a boolean.
+	 * @throws \InvalidArgumentException If $sourceValue is not a float or $includeBoundary is not a boolean.
 	 */
 	public function __construct($sourceValue, $targetValue, $includeBoundary = true) {
 		$this->setSourceValue($sourceValue);
@@ -95,7 +94,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * Set the lower bound for the source value to match this entry.
 	 * 
 	 * @param float $sourceValue A float value.
-	 * @throws InvalidArgumentException If $sourceValue is not a float.
+	 * @throws \InvalidArgumentException If $sourceValue is not a float.
 	 */
 	public function setSourceValue($sourceValue) {
 		if (is_float($sourceValue)) {
@@ -129,7 +128,7 @@ class InterpolationTableEntry extends QtiComponent {
 	 * Set if an exact match of the sourceValue attribute matches this entry.
 	 * 
 	 * @param boolean $includeBoundary A boolean value.
-	 * @throws InvalidArgumentException If $includeBoundary is not a boolean.
+	 * @throws \InvalidArgumentException If $includeBoundary is not a boolean.
 	 */
 	public function setIncludeBoundary($includeBoundary) {
 		if (is_bool($includeBoundary)) {
@@ -150,10 +149,16 @@ class InterpolationTableEntry extends QtiComponent {
 		return $this->includeBoundary;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'interpolationTableEntry';
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getComponents()
+	 */
 	public function getComponents() {
 		return new QtiComponentCollection();
 	}
