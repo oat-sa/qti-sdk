@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -58,7 +57,7 @@ class Substring extends Operator {
 	 * 
 	 * @param ExpressionCollection $expressions A collection of Expression objects.
 	 * @param boolean $caseSensitive A boolean value.
-	 * @throws InvalidArgumentException If $caseSensitive is not a boolean or if the count of $expressions is not correct.
+	 * @throws \InvalidArgumentException If $caseSensitive is not a boolean or if the count of $expressions is not correct.
 	 */
 	public function __construct(ExpressionCollection $expressions, $caseSensitive = true) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::STRING));
@@ -69,7 +68,7 @@ class Substring extends Operator {
 	 * Set the caseSensitive attribute.
 	 * 
 	 * @param boolean $caseSensitive A boolean value.
-	 * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
+	 * @throws \InvalidArgumentException If $caseSensitive is not a boolean value.
 	 */
 	public function setCaseSensitive($caseSensitive) {
 		if (is_bool($caseSensitive)) {
@@ -90,6 +89,9 @@ class Substring extends Operator {
 		return $this->caseSensitive;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'substring';
 	}

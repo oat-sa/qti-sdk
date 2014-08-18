@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -65,10 +64,10 @@ class StringMatch extends Operator {
 	/**
 	 * Create a new instance of StringMatch.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expression\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param boolean $caseSensitive Whether or not the match to be carried out case sensitively.
 	 * @param boolean $substring Deprecated argument, use the substring operator instead.
-	 * @throws InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
+	 * @throws \InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
 	 */
 	public function __construct(ExpressionCollection $expressions, $caseSensitive, $substring = false) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::STRING));
@@ -80,7 +79,7 @@ class StringMatch extends Operator {
 	 * Set Wheter or not the match is to be carried out case sensitively.
 	 * 
 	 * @param boolean $caseSensitive Case sensitiveness.
-	 * @throws InvalidArgumentException If $caseSensitive is not a boolean.
+	 * @throws \InvalidArgumentException If $caseSensitive is not a boolean.
 	 */
 	public function setCaseSensitive($caseSensitive) {
 		if (is_bool($caseSensitive)) {
@@ -105,7 +104,7 @@ class StringMatch extends Operator {
 	 * Set the substring attribute.
 	 * 
 	 * @param boolean $substring A boolean value.
-	 * @throws InvalidArgumentException If $substring is not a boolean.
+	 * @throws \InvalidArgumentException If $substring is not a boolean.
 	 * @deprecated
 	 */
 	public function setSubstring($substring) {
@@ -128,6 +127,9 @@ class StringMatch extends Operator {
 		return $this->substring;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'stringMatch';
 	}

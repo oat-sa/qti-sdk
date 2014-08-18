@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\datatypes\Shape;
@@ -57,7 +56,7 @@ class Inside extends Operator {
 	 * 
 	 * The size and position of the area, interpreted in conjunction with the shape.
 	 * 
-	 * @var Coords
+	 * @var \qtism\common\datatypes\Coords
 	 * @qtism-bean-property
 	 */
 	private $coords;
@@ -65,10 +64,10 @@ class Inside extends Operator {
 	/**
 	 * Create a new Inside object.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param int $shape A value from the Shape enumeration
-	 * @param Coords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
-	 * @throws InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
+	 * @throws \InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
 	 */
 	public function __construct(ExpressionCollection $expressions, $shape, Coords $coords) {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::POINT));
@@ -80,7 +79,7 @@ class Inside extends Operator {
 	 * Set the shape.
 	 * 
 	 * @param int $shape A value from the Shape enumeration.
-	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
+	 * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
 		if (in_array($shape, Shape::asArray())) {
@@ -104,7 +103,7 @@ class Inside extends Operator {
 	/**
 	 * Set the coordinates.
 	 * 
-	 * @param Coords $coords A Coords object.
+	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
 	public function setCoords(Coords $coords) {
 		$this->coords = $coords;
@@ -113,12 +112,15 @@ class Inside extends Operator {
 	/**
 	 * Get the coordinates
 	 * 
-	 * @return Coords A Coords object.
+	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
 	public function getCoords() {
 		return $this->coords;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'inside';
 	}

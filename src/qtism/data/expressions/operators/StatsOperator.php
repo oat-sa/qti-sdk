@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -52,13 +51,12 @@ class StatsOperator extends Operator {
 	/**
 	 * Create a new instance of StatsOperator.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer $name A value from the Statistics enumeration.
-	 * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration or if the count of $expressions is greather than 1.
+	 * @throws \InvalidArgumentException If $name is not a value from the Statistics enumeration or if the count of $expressions is greather than 1.
 	 */
 	public function __construct(ExpressionCollection $expressions, $name) {
 		parent::__construct($expressions, 1, 1, array(Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
-
 		$this->setName($name);
 	}
 	
@@ -66,7 +64,7 @@ class StatsOperator extends Operator {
 	 * Set the statistics operator to use.
 	 * 
 	 * @param integer $name A value from the Statistics enumeration.
-	 * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration.
+	 * @throws \InvalidArgumentException If $name is not a value from the Statistics enumeration.
 	 */
 	public function setName($name) {
 		if (in_array($name, Statistics::asArray())) {
@@ -87,6 +85,9 @@ class StatsOperator extends Operator {
 		return $this->name;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'statsOperator';
 	}

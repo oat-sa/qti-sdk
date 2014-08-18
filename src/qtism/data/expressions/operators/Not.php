@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -38,10 +37,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Not extends Operator {
 	
+    /**
+     * Create a new Not object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE), array(OperatorBaseType::BOOLEAN));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'not';
 	}

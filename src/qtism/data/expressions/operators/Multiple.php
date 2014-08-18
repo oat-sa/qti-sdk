@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -45,10 +44,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Multiple extends Operator {
 	
+    /**
+     * Create a new Multiple object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 0, -1, array(Cardinality::SINGLE, Cardinality::MULTIPLE), array(OperatorBaseType::SAME));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'multiple';
 	}

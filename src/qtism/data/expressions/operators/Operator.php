@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -69,7 +68,7 @@ abstract class Operator extends Expression {
 	/**
 	 * The sub-expressions.
 	 * 
-	 * @var ExpressionCollection
+	 * @var \qtism\data\expressions\ExpressionCollection
 	 * @qtism-bean-property
 	 */
 	private $expressions;
@@ -77,12 +76,12 @@ abstract class Operator extends Expression {
 	/**
 	 * Create a new instance of Operator.
 	 * 
-	 * @param ExpressionCollection $expressions The sub-expressions that form the operator.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions The sub-expressions that form the operator.
 	 * @param integer $minOperands The minimum operands count (0 equals no min).
 	 * @param integer $maxOperands The maximum operands count (-1 equals no max).
 	 * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
 	 * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
-	 * @throws InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.
+	 * @throws \InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.
 	 */
 	public function __construct(ExpressionCollection $expressions, $minOperands = 0, $maxOperands = -1, $acceptedCardinalities = array(Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED), $acceptedBaseTypes = array(OperatorBaseType::ANY)) {
 		$this->setMinOperands($minOperands);
@@ -96,8 +95,8 @@ abstract class Operator extends Expression {
 	/**
 	 * Set the collection of expressions that compose the Operation object.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of $expressions that form the hierarchy of expressions.
-	 * @throws InvalidArgumentException If $expressions does not contain at least one Expression object.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of $expressions that form the hierarchy of expressions.
+	 * @throws \InvalidArgumentException If $expressions does not contain at least one Expression object.
 	 */
 	public function setExpressions(ExpressionCollection $expressions) {
 		$this->expressions = $expressions;
@@ -106,12 +105,15 @@ abstract class Operator extends Expression {
 	/**
 	 * Get the collection of expressions that compose the Operator object.
 	 * 
-	 * @return ExpressionCollection A collection of Expression objects.
+	 * @return \qtism\data\expressions\ExpressionCollection A collection of Expression objects.
 	 */
 	public function getExpressions() {
 		return $this->expressions;
 	}
 	
+	/**
+	 * @see \qtism\data\expressions\Expression::getComponents()
+	 */
 	public function getComponents() {
 		$comp = $this->getExpressions()->getArrayCopy();
 		return new QtiComponentCollection($comp);
@@ -121,7 +123,7 @@ abstract class Operator extends Expression {
 	 * Set the minimum operands count for this Operator.
 	 * 
 	 * @param int $minOperands An integer which is >= 0.
-	 * @throws InvalidArgumentException If $minOperands is not an integer >= 0.
+	 * @throws \InvalidArgumentException If $minOperands is not an integer >= 0.
 	 */
 	protected function setMinOperands($minOperands) {
 		if (is_int($minOperands) && $minOperands >= 0) {
@@ -147,7 +149,7 @@ abstract class Operator extends Expression {
 	 * is -1 if unlimited.
 	 * 
 	 * @param int $maxOperands
-	 * @throws InvalidArgumentException If $maxOperands is not an integer.
+	 * @throws \InvalidArgumentException If $maxOperands is not an integer.
 	 */
 	public function setMaxOperands($maxOperands) {
 		if (is_int($maxOperands)) {
@@ -182,7 +184,7 @@ abstract class Operator extends Expression {
 	 * Set the accepted operand cardinalities.
 	 * 
 	 * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
-	 * @throws InvalidArgumentException If a value from $acceptedCardinalities is not a value from the Cardinality enumeration.
+	 * @throws \InvalidArgumentException If a value from $acceptedCardinalities is not a value from the Cardinality enumeration.
 	 */
 	public function setAcceptedCardinalities(array $acceptedCardinalities) {
 		foreach ($acceptedCardinalities as $cardinality) {
@@ -208,7 +210,7 @@ abstract class Operator extends Expression {
 	 * Set the accepted operand accepted baseTypes.
 	 * 
 	 * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
-	 * @throws InvalidArgumentException If a value from the $acceptedBaseTypes is not a value from the OperatorBaseType.
+	 * @throws \InvalidArgumentException If a value from the $acceptedBaseTypes is not a value from the OperatorBaseType.
 	 */
 	public function setAcceptedBaseTypes(array $acceptedBaseTypes) {
 		foreach ($acceptedBaseTypes as $baseType) {

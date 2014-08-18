@@ -83,7 +83,7 @@ class RoundTo extends Operator {
 	/**
 	 * Create a new instance of RoundTo.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer|string $figures An integer or a variable reference. 
 	 * @param integer $roundingMode A value from the RoundingMode enumeration.
 	 */
@@ -98,7 +98,7 @@ class RoundTo extends Operator {
 	 * Set the figures attribute.
 	 * 
 	 * @param integer|string $figures An integer or a variable reference.
-	 * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $figures is not an integer nor a variable reference.
 	 */
 	public function setFigures($figures) {
 		if (is_int($figures) || (gettype($figures) === 'string' && Format::isVariableRef($figures))) {
@@ -123,7 +123,7 @@ class RoundTo extends Operator {
 	 * Set the roundingMode attribute.
 	 * 
 	 * @param integer $roundingMode A value from the RoundingMode enumeration.
-	 * @throws InvalidArgumentException If $rounding mode is not a value from the RoundingMode enumeration.
+	 * @throws \InvalidArgumentException If $rounding mode is not a value from the RoundingMode enumeration.
 	 */
 	public function setRoundingMode($roundingMode) {
 		if (in_array($roundingMode, RoundingMode::asArray())) {
@@ -144,6 +144,9 @@ class RoundTo extends Operator {
 		return $this->roundingMode;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'roundTo';
 	}

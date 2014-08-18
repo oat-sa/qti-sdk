@@ -20,11 +20,21 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
 
+/**
+ * An extension of the Cardinality enumeration.
+ * 
+ * This enumeration introduces two new constants about QTI cardinalites.
+ * 
+ * * SAME: Values must have the same cardinality.
+ * * ANY: Values can have any cardinality.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class OperatorCardinality extends Cardinality {
 	
 	/**

@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
-
 use qtism\data\expressions\ExpressionCollection;
 use \InvalidArgumentException;
 
@@ -86,7 +84,7 @@ class MathOperator extends Operator {
 	/**
 	 * Create a new instance of MathOperator.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer $name The math functions to use as a value from the MathFunctions enumeration.
 	 */
 	public function __construct(ExpressionCollection $expressions, $name) {
@@ -107,7 +105,7 @@ class MathOperator extends Operator {
 	 * Set the name of the math function to use.
 	 * 
 	 * @param integer $name A value from the MathFunctions enumeration.
-	 * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
+	 * @throws \InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
 	 */
 	public function setName($name) {
 		if (in_array($name, MathFunctions::asArray())) {
@@ -119,6 +117,9 @@ class MathOperator extends Operator {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'mathOperator';
 	}

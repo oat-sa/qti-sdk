@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -57,7 +56,7 @@ class Repeat extends Operator {
 	/**
 	 * Create a new instance of Repeat.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer $numberRepeats An integer or a QTI variable reference.
 	 */
 	public function __construct(ExpressionCollection $expressions, $numberRepeats) {
@@ -69,7 +68,7 @@ class Repeat extends Operator {
 	 * Set the numberRepeats attribute.
 	 * 
 	 * @param integer|string $numberRepeats An integer or a QTI variable reference.
-	 * @throws InvalidArgumentException If $numberRepeats is not an integer nor a valid QTI variable reference.
+	 * @throws \InvalidArgumentException If $numberRepeats is not an integer nor a valid QTI variable reference.
 	 */
 	public function setNumberRepeats($numberRepeats) {
 		if (is_int($numberRepeats) || (gettype($numberRepeats) === 'string' && Format::isVariableRef($numberRepeats))) {
@@ -90,6 +89,9 @@ class Repeat extends Operator {
 		return $this->numberRepeats;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'repeat';
 	}

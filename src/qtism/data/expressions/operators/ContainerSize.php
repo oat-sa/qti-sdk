@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -41,10 +40,18 @@ use qtism\common\enums\Cardinality;
  */
 class ContainerSize extends Operator {
 	
+    /**
+     * Create a new ContainerSize object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, 1, array(Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::ANY));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'containerSize';
 	}

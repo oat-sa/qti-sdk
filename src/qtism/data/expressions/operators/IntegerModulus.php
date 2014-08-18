@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -40,10 +39,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class IntegerModulus extends Operator {
 	
+    /**
+     * Create a new IntegerModulus object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'integerModulus';
 	}

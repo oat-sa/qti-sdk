@@ -42,10 +42,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Min extends Operator {
 	
+    /**
+     * Create a new Min object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, -1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'min';
 	}

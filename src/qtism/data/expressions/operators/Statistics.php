@@ -20,11 +20,16 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * The QTI Statistics enumeration.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class Statistics implements Enumeration {
 	
 	/**

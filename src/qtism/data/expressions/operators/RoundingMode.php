@@ -25,6 +25,12 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * The QTI roudingMode enumeration.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class RoundingMode implements Enumeration {
 	
 	const SIGNIFICANT_FIGURES = 0;

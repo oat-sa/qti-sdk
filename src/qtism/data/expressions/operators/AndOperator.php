@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -44,11 +43,19 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class AndOperator extends Operator {
 	
+    /**
+     * Create a new And object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		
 		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE), array(OperatorBaseType::BOOLEAN));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'and';
 	}

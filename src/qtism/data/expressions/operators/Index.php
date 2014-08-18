@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -56,7 +55,7 @@ class Index extends Operator {
 	 * 
 	 * @param ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer $n The index to lookup. It must be an integer or a variable reference.
-	 * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $n is not an integer nor a variable reference.
 	 */
 	public function __construct(ExpressionCollection $expressions, $n) {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::ORDERED), array(OperatorBaseType::ANY));
@@ -67,7 +66,7 @@ class Index extends Operator {
 	 * Set the n attribute.
 	 * 
 	 * @param integer|string $n The index to lookup. It must be an integer or a variable reference.
-	 * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $n is not an integer nor a variable reference.
 	 */
 	public function setN($n) {
 		if (is_int($n) || (gettype($n) === 'string' && Format::isVariableRef($n))) {
@@ -88,6 +87,9 @@ class Index extends Operator {
 		return $this->n;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'index';
 	}

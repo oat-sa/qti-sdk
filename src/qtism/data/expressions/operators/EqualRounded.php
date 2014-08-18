@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\utils\Format;
@@ -66,10 +65,10 @@ class EqualRounded extends Operator {
 	/**
 	 * Create a new EqualRounded object.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param string|integer $figures The number of figures to round to. It must be an integer or a variable reference. 
 	 * @param integer $roundingMode A value from the RoundingMode enumeration.
-	 * @throws InvalidArgumentException If $figures is not an integer nor a variable reference, if $roundingMode is not a value from the RoundingMode enumeration, or if the $expressions count exceeds 2.
+	 * @throws \InvalidArgumentException If $figures is not an integer nor a variable reference, if $roundingMode is not a value from the RoundingMode enumeration, or if the $expressions count exceeds 2.
 	 */
 	public function __construct(ExpressionCollection $expressions, $figures, $roundingMode = RoundingMode::SIGNIFICANT_FIGURES) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
@@ -81,7 +80,7 @@ class EqualRounded extends Operator {
 	 * Set the rounding mode.
 	 * 
 	 * @param integer $roundingMode A value from the RoundingMode enumeration.
-	 * @throws InvalidArgumentException If $roundingMode is not a value from the RoundingMode enumeration.
+	 * @throws \InvalidArgumentException If $roundingMode is not a value from the RoundingMode enumeration.
 	 */
 	public function setRoundingMode($roundingMode) {
 		if (in_array($roundingMode, RoundingMode::asArray())) {
@@ -106,7 +105,7 @@ class EqualRounded extends Operator {
 	 * Set the number of figures to round to.
 	 * 
 	 * @param integer|string $figures An integer value or a variable reference.
-	 * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $figures is not an integer nor a variable reference.
 	 */
 	public function setFigures($figures) {
 		if (is_int($figures) || (gettype($figures) === 'string' && Format::isVariableRef($figures))) {
@@ -127,6 +126,9 @@ class EqualRounded extends Operator {
 		return $this->figures;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'equalRounded';
 	}

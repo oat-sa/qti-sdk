@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -98,13 +97,13 @@ class Equal extends Operator {
 	/**
 	 * Create a new Equal object.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param integer $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
 	 * @param array $tolerance An array of 1 or 2 elements which are float or variableRef values.
 	 * @param boolean $includeLowerBound Whether or not to include the lower bound in the comparison. 
 	 * @param boolean $includeUpperBound Whether or not to include the upper bound in the comparison.
-	 * @throws UnexpectedValueException If The tolerance argument is ABSOLUTE or RELATIVE but no $tolerance array is given.
-	 * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode, if $tolerance is not a valid tolerance array, if $includeLowerBound/$includeUpperBound is not a boolean.
+	 * @throws \UnexpectedValueException If The tolerance argument is ABSOLUTE or RELATIVE but no $tolerance array is given.
+	 * @throws \InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode, if $tolerance is not a valid tolerance array, if $includeLowerBound/$includeUpperBound is not a boolean.
 	 */
 	public function __construct(ExpressionCollection $expressions, $toleranceMode = ToleranceMode::EXACT, $tolerance = array(), $includeLowerBound = true, $includeUpperBound = true) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SINGLE), array(OperatorBaseType::INTEGER, OperatorBaseType::FLOAT));
@@ -124,7 +123,7 @@ class Equal extends Operator {
 	 * Set the tolerance mode.
 	 * 
 	 * @param integer $toleranceMode A value from the ToleranceMode enumeration.
-	 * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode enumeration.
+	 * @throws \InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode enumeration.
 	 */
 	public function setToleranceMode($toleranceMode) {
 		if (in_array($toleranceMode, ToleranceMode::asArray())) {
@@ -151,7 +150,7 @@ class Equal extends Operator {
 	 * Please note that if there is no t1, t0 is used as t0 AND t1.
 	 * 
 	 * @param array $tolerance An array of float|variableRef.
-	 * @throws InvalidArgumentException If the $tolerance count is less than 1 or greather than 2.
+	 * @throws \InvalidArgumentException If the $tolerance count is less than 1 or greather than 2.
 	 */
 	public function setTolerance(array $tolerance) {
 		if (($this->getToleranceMode() == ToleranceMode::ABSOLUTE || $this->getToleranceMode() == ToleranceMode::RELATIVE) && count($tolerance) < 1) {
@@ -181,7 +180,7 @@ class Equal extends Operator {
 	 * Set whether or not the lower bound must be included in the comparison.
 	 * 
 	 * @param boolean $includeLowerBound
-	 * @throws InvalidArgumentException If $includedLowerBound is not a boolean value.
+	 * @throws \InvalidArgumentException If $includedLowerBound is not a boolean value.
 	 */
 	public function setIncludeLowerBound($includeLowerBound) {
 		if (is_bool($includeLowerBound)) {
@@ -206,7 +205,7 @@ class Equal extends Operator {
 	 * Set whether or not the upper bound must be included in the comparison.
 	 * 
 	 * @param boolean $includeUpperBound
-	 * @throws InvalidArgumentException If $includeUpperBound is not a boolean.
+	 * @throws \InvalidArgumentException If $includeUpperBound is not a boolean.
 	 */
 	public function setIncludeUpperBound($includeUpperBound) {
 		if (is_bool($includeUpperBound)) {
@@ -227,6 +226,9 @@ class Equal extends Operator {
 		return $this->includeUpperBound;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'equal';
 	}

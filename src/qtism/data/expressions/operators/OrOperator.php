@@ -26,8 +26,7 @@ namespace qtism\data\expressions\operators;
 use qtism\data\expressions\ExpressionCollection;
 
 /**
- * Please note that this class represents the QTI 'or' class.
- * We cannot use the 'Or' class name because it is a reserved word
+ * Please note that this class represents the QTI 'or' class. We cannot use the 'Or' class name because it is a reserved word
  * in PHP.
  * 
  * From IMS QTI:
@@ -43,10 +42,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class OrOperator extends Operator {
 	
+    /**
+     * Create a new OrOperator object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, -1, array(OperatorCardinality::SINGLE), array(OperatorBaseType::BOOLEAN));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'or';
 	}

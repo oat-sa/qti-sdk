@@ -25,6 +25,12 @@ namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * The QTI toleranceMode enumeration.
+ * 
+ * @author Jérôme Bogaerts
+ *
+ */
 class ToleranceMode implements Enumeration {
 	
 	const EXACT = 0;

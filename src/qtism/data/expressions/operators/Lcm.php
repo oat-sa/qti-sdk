@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -45,12 +44,15 @@ class Lcm extends Operator {
     /**
      * Create a new Lcm object.
      * 
-     * @param ExpressionCollection $expressions A collection of Expression objects.
+     * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
      */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, -1, array(Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED), array(OperatorBaseType::INTEGER));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'lcm';
 	}

@@ -51,10 +51,18 @@ use qtism\common\enums\Cardinality;
  */
 class Contains extends Operator {
 	
+    /**
+     * Create a new Contains object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 2, 2, array(OperatorCardinality::SAME), array(OperatorBaseType::SAME));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'contains';
 	}

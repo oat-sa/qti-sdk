@@ -39,10 +39,18 @@ use qtism\data\expressions\ExpressionCollection;
  */
 class Random extends Operator {
 	
+    /**
+     * Create a new Random object.
+     * 
+     * @param \qtism\data\expressions\ExpressionCollection $expressions
+     */
 	public function __construct(ExpressionCollection $expressions) {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::ANY));
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'random';
 	}

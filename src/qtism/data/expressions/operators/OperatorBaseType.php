@@ -20,18 +20,28 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\BaseType;
 
+/**
+ * An extension of the BaseType enumeration.
+ * 
+ * This enumeration introduces 2 new constants about QTI BaseTypes.
+ * 
+ * * ANY: Any kind of BaseType.
+ * * SAME: Same BaseTypes.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class OperatorBaseType extends BaseType {
 	
 	/**
 	 * Express that the operands can have any BaseType from the BaseType enumeration and
 	 * can be different.
 	 * 
-	 * @var int
+	 * @var integer
 	 */
 	const ANY = 12;
 	
@@ -39,7 +49,7 @@ class OperatorBaseType extends BaseType {
 	 * Express that all the operands must have the same
 	 * baseType.
 	 * 
-	 * @var int
+	 * @var integer
 	 */
 	const SAME = 13;
 	

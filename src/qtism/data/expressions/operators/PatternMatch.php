@@ -53,9 +53,9 @@ class PatternMatch extends Operator {
 	/**
 	 * Create a new PatternMatch object.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param string $pattern A pattern to match or a variable reference.
-	 * @throws InvalidArgumentException If $pattern is not a string value or if the $expressions count exceeds 1.
+	 * @throws \InvalidArgumentException If $pattern is not a string value or if the $expressions count exceeds 1.
 	 */
 	public function __construct(ExpressionCollection $expressions, $pattern) {
 		parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE), array(OperatorBaseType::STRING));
@@ -66,7 +66,7 @@ class PatternMatch extends Operator {
 	 * Set the pattern to match.
 	 * 
 	 * @param string $pattern A pattern or a variable reference.
-	 * @throws InvalidArgumentException If $pattern is not a string value.
+	 * @throws \InvalidArgumentException If $pattern is not a string value.
 	 */
 	public function setPattern($pattern) {
 		if (gettype($pattern) === 'string') {
@@ -87,6 +87,9 @@ class PatternMatch extends Operator {
 		return $this->pattern;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'patternMatch';
 	}

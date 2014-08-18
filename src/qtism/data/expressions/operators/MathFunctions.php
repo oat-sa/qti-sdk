@@ -20,11 +20,16 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Enumeration;
 
+/**
+ * The MathFunctions enumeration.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @see \qtism\data\expressions\operators\MathOperator
+ */
 class MathFunctions implements Enumeration {
 	
 	const SIN = 0;

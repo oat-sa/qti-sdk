@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\common\enums\Cardinality;
@@ -72,7 +71,7 @@ class AnyN extends Operator {
 	/**
 	 * Create a new instance of AnyN.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param string|integer $min An integer or a variable reference.
 	 * @param string|integer $max An integer or a variable reference.
 	 */
@@ -86,7 +85,7 @@ class AnyN extends Operator {
 	 * Set the min attribute.
 	 * 
 	 * @param string|integer $min An integer or a variable reference.
-	 * @throws InvalidArgumentException If $min is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $min is not an integer nor a variable reference.
 	 */
 	public function setMin($min) {
 		if (is_int($min) || (gettype($min) === 'string' && Format::isVariableRef($min))) {
@@ -111,7 +110,7 @@ class AnyN extends Operator {
 	 * Set the max attribute.
 	 * 
 	 * @param string|integer $max An integer or a variable reference.
-	 * @throws InvalidArgumentException If $max is not an integer nor a variable reference.
+	 * @throws \InvalidArgumentException If $max is not an integer nor a variable reference.
 	 */
 	public function setMax($max) {
 		if (is_int($max) || (gettype($max) === 'string' && Format::isVariableRef($max))) {
@@ -132,6 +131,9 @@ class AnyN extends Operator {
 		return $this->max;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'anyN';
 	}

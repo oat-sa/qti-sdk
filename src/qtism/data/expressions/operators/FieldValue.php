@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\expressions\operators;
 
 use qtism\data\expressions\ExpressionCollection;
@@ -48,7 +47,7 @@ class FieldValue extends Operator {
 	/**
 	 * Create a new instance of FieldValue.
 	 * 
-	 * @param ExpressionCollection $expressions A collection of Expression objects.
+	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of Expression objects.
 	 * @param string $fieldIdentifier A QTI Identifier.
 	 */
 	public function __construct(ExpressionCollection $expressions, $fieldIdentifier) {
@@ -60,7 +59,7 @@ class FieldValue extends Operator {
 	 * Set the fieldIdentifier attribute.
 	 * 
 	 * @param string $fieldIdentifier A QTI Identifier.
-	 * @throws InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
+	 * @throws \InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
 	 */
 	public function setFieldIdentifier($fieldIdentifier) {
 		if (Format::isIdentifier($fieldIdentifier)) {
@@ -81,6 +80,9 @@ class FieldValue extends Operator {
 		return $this->fieldIdentifier;
 	}
 	
+	/**
+	 * @see \qtism\data\QtiComponent::getQtiClassName()
+	 */
 	public function getQtiClassName() {
 		return 'fieldValue';
 	}
