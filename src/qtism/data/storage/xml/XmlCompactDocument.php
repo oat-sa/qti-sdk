@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml;
 
 use qtism\data\content\RubricBlockRef;
-
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
 use qtism\data\TestPart;
@@ -41,6 +39,12 @@ use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMElement;
 use \SplObjectStorage;
 
+/**
+ * The XmlCompactDocument class.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class XmlCompactDocument extends XmlDocument {
 	
     /**
@@ -85,7 +89,7 @@ class XmlCompactDocument extends XmlDocument {
 	 * Override of XmlDocument::createMarshallerFactory in order
 	 * to return an appropriate CompactMarshallerFactory.
 	 * 
-	 * @return CompactMarshallerFactory A CompactMarshallerFactory object.
+	 * @return \qtism\data\storage\xml\marshalling\CompactMarshallerFactory A CompactMarshallerFactory object.
 	 */
 	protected function createMarshallerFactory() {
 		return new CompactMarshallerFactory();
@@ -94,9 +98,9 @@ class XmlCompactDocument extends XmlDocument {
 	/**
 	 * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
 	 *
-	 * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
-	 * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
-	 * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
+	 * @param \qtism\data\storage\xml\XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
+	 * @return \qtism\data\storage\xml\XmlCompactDocument An XmlCompactAssessmentTestDocument object.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
 	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
 	    $compactAssessmentTest = new XmlCompactDocument();
@@ -214,9 +218,9 @@ class XmlCompactDocument extends XmlDocument {
 	 * Dereference the file referenced by an assessmentItemRef and add
 	 * outcome/responseDeclarations to the compact one.
 	 *
-	 * @param ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
-	 * @param FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
-	 * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
+	 * @param \qtism\data\ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
+	 * @param \qtism\data\storage\FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
 	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver) {
 	    try {
@@ -249,10 +253,10 @@ class XmlCompactDocument extends XmlDocument {
 	/**
 	 * Dereference the file referenced by an assessmentSectionRef.
 	 *
-	 * @param AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
-	 * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
-	 * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
-	 * @return XmlAssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
+	 * @param \qtism\data\AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
+	 * @param \qtism\data\storage\FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while dereferencing the referenced file.
+	 * @return \qtism\data\AssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
 	 */
 	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver) {
 	    try {
@@ -272,6 +276,9 @@ class XmlCompactDocument extends XmlDocument {
 	 * Validate the compact AssessmentTest XML document according to the relevant XSD schema.
 	 * If $filename is provided, the file pointed by $filename will be used instead
 	 * of the default schema.
+	 * 
+	 * @param string $filename An optional filename to force the validation against a particular schema.
+	 * @return boolean
 	 */
 	public function schemaValidate($filename = '') {
 	    if (empty($filename)) {
@@ -288,6 +295,8 @@ class XmlCompactDocument extends XmlDocument {
 	 * 
 	 * Specifices the correct XSD schema locations and main namespace
 	 * for the root element of a Compact XML document.
+	 * 
+	 * @param \DOMElement $rootElement The root element of a compact XML document.
 	 */
 	public function decorateRootElement(DOMElement $rootElement) {
 		$rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_v2p1");
@@ -295,6 +304,9 @@ class XmlCompactDocument extends XmlDocument {
 		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.taotesting.com/xsd/qticompact_v1p0.xsd");
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\XmlDocument::beforeSave()
+	 */
 	public function beforeSave(QtiComponent $documentComponent, $uri) {
 	    
 	    // Take care of rubricBlock explosion. Transform

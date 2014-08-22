@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml;
 
 use qtism\data\QtiDocument;
@@ -49,7 +48,7 @@ class XmlDocument extends QtiDocument {
 	 * The produced domDocument after a successful call to
 	 * XmlDocument::load or XmlDocument::save.
 	 * 
-	 * @var DOMDocument
+	 * @var \DOMDocument
 	 */
 	private $domDocument = null;
 	
@@ -57,7 +56,7 @@ class XmlDocument extends QtiDocument {
 	 * Create a new XmlDocument.
 	 * 
 	 * @param string $version The version of the QTI specfication to use in order to load or save an AssessmentTest.
-	 * @param QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
+	 * @param \qtism\data\QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
 	 */
 	public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
 		parent::__construct($version, $documentComponent);
@@ -66,7 +65,7 @@ class XmlDocument extends QtiDocument {
 	/**
 	 * Set the DOMDocument object in use.
 	 * 
-	 * @param DOMDocument $domDocument A DOMDocument object.
+	 * @param \DOMDocument $domDocument A DOMDocument object.
 	 */
 	protected function setDomDocument(DOMDocument $domDocument) {
 		$this->domDocument = $domDocument;
@@ -75,7 +74,7 @@ class XmlDocument extends QtiDocument {
 	/**
 	 * Get the DOMDocument object in use.
 	 * 
-	 * @return DOMDocument
+	 * @return \DOMDocument
 	 */
 	public function getDomDocument() {
 		return $this->domDocument;
@@ -87,7 +86,7 @@ class XmlDocument extends QtiDocument {
 	 *
 	 * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
 	 * @param boolean $validate XML Schema validation? Default is false.
-	 * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while loading the QTI-XML file.
 	 */
 	public function load($uri, $validate = false) {
 	    $this->loadImplementation($uri, $validate, false);
@@ -101,12 +100,20 @@ class XmlDocument extends QtiDocument {
 	 *
 	 * @param string $string The QTI-XML string.
 	 * @param boolean $validate XML Schema validation? Default is false.
-	 * @throws XmlStorageException If an error occurs while parsing $string.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while parsing $string.
 	 */
 	public function loadFromString($string, $validate = false) {
 	    $this->loadImplementation($string, $validate, true);
 	}
 	
+	/**
+	 * Implementation of load.
+	 * 
+	 * @param mixed $data
+	 * @param boolean $validate
+	 * @param boolean $fromString
+	 * @throws \qtism\data\storage\xml\XmlStorageException
+	 */
 	protected function loadImplementation($data, $validate = false, $fromString = false) {
 		try {
 			$this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
@@ -171,9 +178,9 @@ class XmlDocument extends QtiDocument {
 	 * This method can be overriden by subclasses in order to alter a last
 	 * time the data model prior to be saved.
 	 * 
-	 * @param QtiComponent $documentComponent The root component of the model that will be saved.
+	 * @param \qtism\data\QtiComponent $documentComponent The root component of the model that will be saved.
 	 * @param string $uri The URI where the saved file is supposed to be stored.
-	 * @throws XmlStorageException If something wrong occurs.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If something wrong occurs.
 	 */
 	protected function beforeSave(QtiComponent $documentComponent, $uri) {
 	    return;
@@ -185,7 +192,7 @@ class XmlDocument extends QtiDocument {
 	 *
 	 * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
-	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
 	 */
 	public function save($uri, $formatOutput = true) {
 	    $this->saveImplementation($uri, $formatOutput);
@@ -195,12 +202,20 @@ class XmlDocument extends QtiDocument {
 	 * Save the Assessment Document as an XML string.
 	 *
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
-	 * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
 	 */
 	public function saveToString($formatOutput = true) {
 	    return $this->saveImplementation('', $formatOutput);
 	}
 	
+	/**
+	 * Implementation of save.
+	 * 
+	 * @param string $uri
+	 * @param boolean $formatOutput
+	 * @throws \qtism\data\storage\xml\XmlStorageException
+	 * @return string|void
+	 */
 	protected function saveImplementation($uri = '', $formatOutput = true) {
 		$assessmentTest = $this->getDocumentComponent();
 		
@@ -263,6 +278,13 @@ class XmlDocument extends QtiDocument {
 		}
 	}
 	
+	/**
+	 * Validate the document against a schema.
+	 * 
+	 * @param string $filename An optional filename of a given schema the document should validate against.
+	 * @throws \qtism\data\storage\xml\XmlStorageException
+	 * @throws \InvalidArgumentException
+	 */
 	public function schemaValidate($filename = '') {
 		if (empty($filename)) {
 			$filename = XmlUtils::getSchemaLocation($this->getVersion());
@@ -295,7 +317,7 @@ class XmlDocument extends QtiDocument {
 	 * Decorate the root element of the XmlAssessmentDocument with the appropriate
 	 * namespaces and schema definition.
 	 *
-	 * @param DOMElement $rootElement The root DOMElement object of the document to decorate.
+	 * @param \DOMElement $rootElement The root DOMElement object of the document to decorate.
 	 */
 	protected function decorateRootElement(DOMElement $rootElement) {
 		$qtiSuffix = 'v2p1';
@@ -312,6 +334,12 @@ class XmlDocument extends QtiDocument {
 		$rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
 	}
 	
+	/**
+	 * Format some $libXmlErrors into an array of strings instead of an array of arrays.
+	 * 
+	 * @param \LibXMLError[] $libXmlErrors
+	 * @return string
+	 */
 	protected static function formatLibXmlErrors(array $libXmlErrors) {
 		$formattedErrors = array();
 			
@@ -338,7 +366,7 @@ class XmlDocument extends QtiDocument {
 	/**
 	 * MarshallerFactory factory method (see gang of four).
 	 * 
-	 * @return MarshallerFactory An appropriate MarshallerFactory object.
+	 * @return \qtism\data\storage\xml\marshalling\MarshallerFactory An appropriate MarshallerFactory object.
 	 */
 	protected function createMarshallerFactory() {
 		return new MarshallerFactory();

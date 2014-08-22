@@ -24,8 +24,8 @@
 namespace qtism\data\storage\xml;
 
 use qtism\common\collections\AbstractCollection;
-use InvalidArgumentException as InvalidArgumentException;
-use \LibXMLError as LibXMLError;
+use \InvalidArgumentException;
+use \LibXMLError;
 
 /**
  * A collection that aims at storing LibXMLError objects.
@@ -38,7 +38,7 @@ class LibXmlErrorCollection extends AbstractCollection {
 	/**
 	 * Check if $value is a LibXMLError object.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a LibXMLError object.
+	 * @throws \InvalidArgumentException If $value is not a LibXMLError object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof LibXMLError) {

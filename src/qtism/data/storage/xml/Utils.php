@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml;
 
 use \DOMDocument;
@@ -56,7 +55,7 @@ class Utils {
 	/**
 	 * Infer the QTI version of a given DOMDocument.
 	 * 
-	 * @param DOMDocument $document A DOMDocument object.
+	 * @param \DOMDocument $document A DOMDocument object.
 	 * @return string|boolean A QTI version (e.g. '2.1') or false if it could not be infered.
 	 */
 	public static function inferQTIVersion(DOMDocument $document) {
@@ -84,7 +83,7 @@ class Utils {
 	/**
 	 * Change the name of $element into $name.
 	 * 
-	 * @param DOMElement $element A DOMElement object you want to change the name.
+	 * @param \DOMElement $element A DOMElement object you want to change the name.
 	 * @param string $name The new name of $element.
 	 */
 	public static function changeElementName(DOMElement $element, $name) {
@@ -116,8 +115,8 @@ class Utils {
 	 * For instance, <m:math display="inline"><m:mi>x</m:mi></m:math> becomes
 	 * <math display="inline"><mi>x</mi></math>.
 	 * 
-	 * @param DOMElement $element The DOMElement to be anonimized.
-	 * @return DOMElement The anonimized DOMElement copy of $element.
+	 * @param \DOMElement $element The DOMElement to be anonimized.
+	 * @return \DOMElement The anonimized DOMElement copy of $element.
 	 */
 	public static function anonimizeElement(DOMElement $element) {
 	    
@@ -165,8 +164,8 @@ class Utils {
 	/**
 	 * Import all the child nodes of DOMElement $from to DOMElement $into.
 	 * 
-	 * @param DOMElement $from The source DOMElement.
-	 * @param DOMElement $into The target DOMElement.
+	 * @param \DOMElement $from The source DOMElement.
+	 * @param \DOMElement $into The target DOMElement.
 	 * @param boolean $deep Whether or not to import the whole node hierarchy.
 	 */
 	public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true) {
@@ -181,8 +180,8 @@ class Utils {
 	 * Import (gracefully i.e. by respecting namespaces) the attributes of DOMElement $from to
 	 * DOMElement $into.
 	 * 
-	 * @param DOMElement $from The source DOMElement.
-	 * @param DOMElement $into The target DOMElement.
+	 * @param \DOMElement $from The source DOMElement.
+	 * @param \DOMElement $into The target DOMElement.
 	 */
 	public static function importAttributes(DOMElement $from, DOMElement $into) {
 	    
