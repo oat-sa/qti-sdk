@@ -32,12 +32,18 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Coords;
 use qtism\common\datatypes\QtiDatatype;
 
+/**
+ * A PhpMarshaller implementation focusing on marshalling QTI Datatypes.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     
     /**
      * Marshall a QtiDatatype object into PHP source code.
      * 
-     * @throws PhpMarshallingException If an error occurs during marshalling.
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs during marshalling.
      */
     public function marshall() {
         $toMarshall = $this->getToMarshall();
@@ -82,7 +88,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     /**
      * Marshall a Coords QTI datatype object.
      * 
-     * @throws PhpMarshallingException
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
      */
     protected function marshallCoords() {
         // Retrieve the coordinates array.
@@ -128,7 +134,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     /**
      * Marshall a Pair QTI datatype object.
      * 
-     * @throws PhpMarshallingException
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
      */
     protected function marshallPair() {
         $pair = $this->getToMarshall();
@@ -154,7 +160,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     /**
      * Marshall a Duration QTI datatype object.
      * 
-     * @throws PhpMarshallingException
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
      */
     protected function marshallDuration() {
         $duration = $this->getToMarshall();
@@ -180,7 +186,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
     /**
      * Marshall a Point QTI datatype object.
      * 
-     * @throws PhpMarshallingException
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
      */
     protected function marshallPoint() {
         $point = $this->getToMarshall();

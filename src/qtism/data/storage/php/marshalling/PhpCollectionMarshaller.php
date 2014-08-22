@@ -40,7 +40,7 @@ class PhpCollectionMarshaller extends PhpMarshaller {
     /**
      * Marshall AbstractCollection objects into PHP source code.
      * 
-     * @throws PhpMarshallingException If something wrong happens during marshalling.
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If something wrong happens during marshalling.
      */
     public function marshall() {
         

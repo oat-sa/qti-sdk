@@ -60,7 +60,7 @@ class PhpMarshallingContext {
     /**
      * The stack of object variable names.
      * 
-     * @var SplStack
+     * @var \SplStack
      */
     private $variableStack;
     
@@ -74,14 +74,14 @@ class PhpMarshallingContext {
     /**
      * The stream where the output PHP source code must be written.
      * 
-     * @var PhpStreamAccess
+     * @var \qtism\data\storage\php\PhpStreamAccess
      */
     private $streamAccess;
     
     /**
      * Create a new MarshallingContext object.
      * 
-     * @param PhpStreamAccess An access to a PHP source code stream for output.
+     * @param \qtism\data\storage\php\PhpStreamAccess $streamAccess An access to a PHP source code stream for output.
      */
     public function __construct(PhpStreamAccess $streamAccess) {
         $this->setVariableStack(new SplStack());
@@ -130,7 +130,7 @@ class PhpMarshallingContext {
     /**
      * Set the variables name stack.
      * 
-     * @param SplStack $variableStack
+     * @param \SplStack $variableStack
      */
     protected function setVariableStack(SplStack $variableStack) {
         $this->variableStack = $variableStack;
@@ -139,7 +139,7 @@ class PhpMarshallingContext {
     /**
      * Get the variables name stack.
      * 
-     * @return SplStack
+     * @return \SplStack
      */
     protected function getVariableStack() {
         return $this->variableStack;
@@ -166,7 +166,7 @@ class PhpMarshallingContext {
     /**
      * Set the PHP source code stream access to be used at marshalling time.
      * 
-     * @param PhpStreamAccess $streamAccess An access to a PHP source code stream.
+     * @param \qtism\data\storage\php\PhpStreamAccess $streamAccess An access to a PHP source code stream.
      */
     protected function setStreamAccess(PhpStreamAccess $streamAccess) {
         $this->streamAccess = $streamAccess;
@@ -175,7 +175,7 @@ class PhpMarshallingContext {
     /**
      * Get the PHP source code stream access to be used at marshalling time for output.
      * 
-     * @return PhpStreamAccess An access to a PHP source code stream.
+     * @return \qtism\data\storage\php\PhpStreamAccess An access to a PHP source code stream.
      */
     public function getStreamAccess() {
         return $this->streamAccess;
@@ -185,7 +185,7 @@ class PhpMarshallingContext {
      * Push some value(s) on the variable names stack.
      * 
      * @param string|array $values A string or an array of strings to be pushed on the variable names stack.
-     * @throws InvalidArgumentException If $value or an item of $value is not a non-empty string.
+     * @throws \InvalidArgumentException If $value or an item of $value is not a non-empty string.
      */
     public function pushOnVariableStack($values) {
         if (is_array($values) === false) {
@@ -207,8 +207,8 @@ class PhpMarshallingContext {
      * 
      * @param integer $quantity
      * @return array An array of strings.
-     * @throws RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
-     * @throws InvalidArgumentException If $quantity < 1.
+     * @throws \RuntimeException If the the quantity of elements in the stack before popping is less than $quantity.
+     * @throws \InvalidArgumentException If $quantity < 1.
      */
     public function popFromVariableStack($quantity = 1) {
         

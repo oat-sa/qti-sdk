@@ -36,9 +36,9 @@ class PhpScalarMarshaller extends PhpMarshaller {
     /**
      * Create a new PhpScalarMarshaller objec.
      * 
-     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
      * @param mixed PHP scalar value (including null value) to be marshalled.
-     * @throws InvalidArgumentException If $toMarshall is not considered to be a marshallable PHP scalar value.
+     * @throws \InvalidArgumentException If $toMarshall is not considered to be a marshallable PHP scalar value.
      */
     public function __construct(PhpMarshallingContext $context, $toMarshall) {
         parent::__construct($context, $toMarshall);
@@ -56,7 +56,7 @@ class PhpScalarMarshaller extends PhpMarshaller {
     /**
      * Marshall the PHP scalar value to be marshalled into PHP source code.
      * 
-     * @throws PhpMarshallingException If an error occurs while marshalling.
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs while marshalling.
      */
     public function marshall() {
         $ctx = $this->getContext();

@@ -28,15 +28,24 @@ use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\common\beans\Bean;
 use qtism\data\QtiComponent;
 
+/**
+ * A PHP Marshaller implementation focusing on QtiComponent marshalling.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @see \qtism\data\QtiComponent
+ */
 class PhpQtiComponentMarshaller extends PhpMarshaller {
     
     /**
+     * The name of the variable the QtiComponent
+     * has to be set to.
      * 
      * @var string
      */
     private $variableName = '';
     
     /**
+     * Marshall the QtiComponent as an instance of...
      * 
      * @var string
      */
@@ -47,6 +56,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
     }
     
     /**
+     * The QtiComponent to be marshalled has to be an instance of...
      * 
      * @param string $asInstanceOf
      */
@@ -55,6 +65,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
     }
     
     /**
+     * The QtiComponent to be marshalled has to be an instance of...
      * 
      * @return string
      */
@@ -63,6 +74,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
     }
     
     /**
+     * Set the name of the variable the QtiComponent has to be set to.
      * 
      * @param string $variableName
      */
@@ -71,6 +83,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
     }
     
     /**
+     * Get the name of the variable the QtiComponent has to be set to.
      * 
      * @return string
      */
@@ -78,6 +91,9 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
         return $this->variableName;
     }
     
+    /**
+     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::marshall()
+     */
     public function marshall() {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
@@ -132,6 +148,9 @@ class PhpQtiComponentMarshaller extends PhpMarshaller {
         }
     }
     
+    /**
+     * @see \qtism\data\storage\php\marshalling\PhpMarshaller::isMarshallable()
+     */
     protected function isMarshallable($toMarshall) {
         return $toMarshall instanceof QtiComponent;
     }

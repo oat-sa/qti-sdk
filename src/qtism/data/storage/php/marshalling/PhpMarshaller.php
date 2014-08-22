@@ -24,12 +24,18 @@ namespace qtism\data\storage\php\marshalling;
 
 use \InvalidArgumentException;
 
+/**
+ * The base class for all PHP marshallers.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 abstract class PhpMarshaller {
     
     /**
      * Get the marshalling context.
      * 
-     * @var PhpMarshallingContext
+     * @var \qtism\data\storage\php\marshalling\PhpMarshallingContext
      */
     private $context;
     
@@ -43,9 +49,9 @@ abstract class PhpMarshaller {
     /**
      * Create a new PhpMarshaller object.
      * 
-     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
      * @param mixed The value to be marshalled.
-     * @throws InvalidArgumentException If $toMarshall cannot be handled by this PhpMarshaller implementation.
+     * @throws \InvalidArgumentException If $toMarshall cannot be handled by this PhpMarshaller implementation.
      */
     public function __construct(PhpMarshallingContext $context, $toMarshall) {
         $this->setContext($context);
@@ -56,7 +62,7 @@ abstract class PhpMarshaller {
      * Set the value that has to be marshalled.
      * 
      * @param mixed $toMarshall The value to be marshalled.
-     * @throws InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
+     * @throws \InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
      */
     public function setToMarshall($toMarshall) {
         if ($this->isMarshallable($toMarshall) === false) {
@@ -79,7 +85,7 @@ abstract class PhpMarshaller {
     /**
      * Set the marshalling context.
      * 
-     * @param PhpMarshallingContext $context A PhpMarshallingContext object.
+     * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
      */
     protected function setContext(PhpMarshallingContext $context) {
         $this->context = $context;
@@ -88,7 +94,7 @@ abstract class PhpMarshaller {
     /**
      * Get the marshalling context.
      * 
-     * @return PhpMarshallingContext A PhpMarshallingContext object.
+     * @return \qtism\data\storage\php\marshalling\PhpMarshallingContext A PhpMarshallingContext object.
      */
     protected function getContext() {
         return $this->context;
@@ -99,7 +105,7 @@ abstract class PhpMarshaller {
      * of the marshall method implementation to push all marshalled values on the
      * variable names stack.
      * 
-     * @throws PhpMarshallingException If an error occurs during the marshalling process.
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs during the marshalling process.
      */
     public abstract function marshall();
     

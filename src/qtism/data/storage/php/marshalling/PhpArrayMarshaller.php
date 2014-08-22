@@ -39,7 +39,7 @@ class PhpArrayMarshaller extends PhpMarshaller {
     /**
      * Marshall an array into PHP source code.
      * 
-     * @throws PhpMarshallingException If something wrong happens during marshalling.
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If something wrong happens during marshalling.
      */
     public function marshall() {
         $ctx = $this->getContext();
