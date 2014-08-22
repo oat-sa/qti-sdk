@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\DrawingInteraction;
@@ -39,9 +38,9 @@ class DrawingInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall a DrawingInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A DrawingInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A DrawingInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('drawingInteraction');
@@ -64,9 +63,9 @@ class DrawingInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a DrawingInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A DrawingInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A DrawingInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -104,6 +103,9 @@ class DrawingInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'drawingInteraction';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\datatypes\Shape;
@@ -42,8 +41,8 @@ class AreaMapEntryMarshaller extends Marshaller {
 	/**
 	 * Marshall an AreaMapEntry object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An AreaMapEntry object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An AreaMapEntry object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,9 +57,9 @@ class AreaMapEntryMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI areaMapEntry element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An AreaMapEntry object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An AreaMapEntry object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -106,6 +105,9 @@ class AreaMapEntryMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'areaMapEntry';
 	}

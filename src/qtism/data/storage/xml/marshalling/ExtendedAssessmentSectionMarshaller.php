@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -38,11 +37,7 @@ use \DOMElement;
 class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
     
     /**
-     * Marshall an ExtendedAssessmentSection object into its DOMElement representation.
-     *
-     * @param QtiComponent $component
-     * @param array $elements
-     * @return DOMElement The according DOMElement object.
+     * @see \qtism\data\storage\xml\marshalling\AssessmentSectionMarshaller::marshallChildrenKnown()
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         $element = parent::marshallChildrenKnown($component, $elements);
@@ -56,11 +51,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
     }
     
     /**
-     * Unmarshall an extendedAssessmentSection element into its QTI data model representation.
-     * 
-     * @param DOMElement $element
-     * @param QtiComponentCollection $children
-     * @return QtiComponent
+     * @see \qtism\data\storage\xml\marshalling\AssessmentSectionMarshaller::unmarshallChildrenKnown()
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);

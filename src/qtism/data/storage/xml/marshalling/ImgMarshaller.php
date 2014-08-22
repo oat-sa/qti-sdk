@@ -20,9 +20,7 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
-
 
 use qtism\data\content\xhtml\Img;
 use qtism\data\QtiComponent;
@@ -39,9 +37,9 @@ class ImgMarshaller extends Marshaller {
 	/**
 	 * Marshall an Img object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An Img object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component An Img object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('img');
@@ -73,9 +71,9 @@ class ImgMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML img element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent n Img object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent n Img object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -124,6 +122,9 @@ class ImgMarshaller extends Marshaller {
 	    }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'img';
 	}

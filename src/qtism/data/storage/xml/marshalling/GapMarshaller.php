@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\ShowHide;
@@ -39,9 +38,9 @@ class GapMarshaller extends Marshaller {
 	/**
 	 * Marshall a Gap object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Gap object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A Gap object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('gap');
@@ -70,9 +69,9 @@ class GapMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML gap element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Gap object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Gap object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -106,6 +105,9 @@ class GapMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'gap';
 	}

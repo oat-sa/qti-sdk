@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\TextOrVariableCollection;
@@ -39,6 +38,9 @@ use \InvalidArgumentException;
  */
 class GapChoiceMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -107,6 +109,9 @@ class GapChoiceMarshaller extends ContentMarshaller {
         
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -142,6 +147,9 @@ class GapChoiceMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }

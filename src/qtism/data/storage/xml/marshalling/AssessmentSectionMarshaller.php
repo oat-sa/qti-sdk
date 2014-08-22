@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -33,8 +32,17 @@ use \DOMNode;
 use \DOMXPath;
 use \ReflectionClass;
 
+/**
+ * Marshaller focusing on marshalling/unmarshalling AssessmentSection components.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class AssessmentSectionMarshaller extends RecursiveMarshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null) {
 		$baseMarshaller = new SectionPartMarshaller();
 		$baseComponent = $baseMarshaller->unmarshall($element);
@@ -109,6 +117,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$baseMarshaller = new SectionPartMarshaller();
 		$element = $baseMarshaller->marshall($component);
@@ -146,14 +157,23 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		return $element->localName != 'assessmentSection';
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return !$component instanceof AssessmentSection;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		if ($element->localName == 'assessmentSection') {
 			$doc = $element->ownerDocument;
@@ -178,6 +198,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		if ($component instanceof AssessmentSection) {
 			return $component->getSectionParts()->getArrayCopy();
@@ -187,10 +210,16 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		return new SectionPartCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

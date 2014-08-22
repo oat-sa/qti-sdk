@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\ModalFeedbackCollection;
-
 use qtism\data\content\StylesheetCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
@@ -44,8 +42,8 @@ class AssessmentItemMarshaller extends Marshaller {
 	/**
 	 * Marshall an AssessmentItem object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An AssessmentItem object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An AssessmentItem object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -121,10 +119,10 @@ class AssessmentItemMarshaller extends Marshaller {
 	 * If $assessmentItem is provided, it will be used as the unmarshalled component instead of creating
 	 * a new one.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @param AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
-	 * @return QtiComponent An AssessmentItem object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @param \qtism\data\AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
+	 * @return \qtism\data\QtiComponent An AssessmentItem object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null) {
 
@@ -263,6 +261,9 @@ class AssessmentItemMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'assessmentItem';
 	}

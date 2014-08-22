@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -41,9 +40,9 @@ class AssessmentTestMarshaller extends SectionPartMarshaller {
 	/**
 	 * Marshall an AssessmentTest object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An AssessmentTest object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component An AssessmentTest object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -96,8 +95,8 @@ class AssessmentTestMarshaller extends SectionPartMarshaller {
 	 * If $assessmentTest is provided, it will be decorated with the unmarshalled data and returned,
 	 * instead of creating a new AssessmentTest object.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @param AssessmentTest $assessmentTest An AssessmentTest object to decorate.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @param \qtism\data\AssessmentTest $assessmentTest An AssessmentTest object to decorate.
 	 * @return QtiComponent An OutcomeProcessing object.
 	 * @throws UnmarshallingException
 	 */
@@ -192,6 +191,9 @@ class AssessmentTestMarshaller extends SectionPartMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'assessmentTest';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -53,7 +52,7 @@ class MappingMarshaller extends Marshaller {
 	 * 'mapKey' attribute of mapEntry sub-elements.
 	 * 
 	 * @param int $baseType A baseType from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	protected function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray())) {
@@ -79,7 +78,7 @@ class MappingMarshaller extends Marshaller {
 	 * Create a new instance of MappingMarshaller.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
 	 */
 	public function __construct($baseType) {
 		$this->setBaseType($baseType);
@@ -88,8 +87,8 @@ class MappingMarshaller extends Marshaller {
 	/**
 	 * Marshall a Mapping object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Mapping object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A Mapping object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -115,9 +114,9 @@ class MappingMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI mapping element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Mapping object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Mapping object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 			
@@ -152,6 +151,9 @@ class MappingMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'mapping';
 	}

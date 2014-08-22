@@ -20,13 +20,22 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 
+/**
+ * A specialized marshaller factory focusing on components
+ * involved in CompactXml documents.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class CompactMarshallerFactory extends MarshallerFactory {
 	
+    /**
+     * Create a new CompactMarshallerFactory object.
+     */
 	public function __construct() {
 		parent::__construct();
 		

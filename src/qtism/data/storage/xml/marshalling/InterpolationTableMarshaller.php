@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -51,7 +50,7 @@ class InterpolationTableMarshaller extends Marshaller {
 	 * a $baseType can be passed as an argument for instantiation.
 	 * 
 	 * @param integer $baseType A value from the BaseType enumeration or -1.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
 	 */
 	public function __construct($baseType = -1) {
 		$this->setBaseType($baseType);
@@ -63,7 +62,7 @@ class InterpolationTableMarshaller extends Marshaller {
 	 * variableDeclaration.
 	 * 
 	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
 	 */
 	public function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -89,8 +88,8 @@ class InterpolationTableMarshaller extends Marshaller {
 	/**
 	 * Marshall an InterpolationTable object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An InterpolationTable object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An InterpolationTable object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -109,9 +108,9 @@ class InterpolationTableMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI InterpolationTable element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An InterpolationTable object.
-	 * @throws UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An InterpolationTable object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$interpolationTableEntryElements = $element->getElementsByTagName('interpolationTableEntry');
@@ -144,6 +143,9 @@ class InterpolationTableMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'interpolationTable';
 	}

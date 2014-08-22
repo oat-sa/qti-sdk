@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class BranchRuleMarshaller extends Marshaller {
 	/**
 	 * Marshall a BranchRule object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A BranchRule object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A BranchRule object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -53,9 +52,9 @@ class BranchRuleMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI branchRule element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A BranchRule object.
-	 * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A BranchRule object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -78,6 +77,9 @@ class BranchRuleMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'branchRule';
 	}

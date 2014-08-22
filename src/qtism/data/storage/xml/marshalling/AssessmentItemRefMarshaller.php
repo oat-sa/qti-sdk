@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -42,9 +41,9 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller {
 	/**
 	 * Marshall an AssessmentItemRef object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An assessmentItemRef object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component An assessmentItemRef object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -84,9 +83,9 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI assessmentItemRef element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An AssessmentItemRef object.
-	 * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An AssessmentItemRef object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'href' is missing.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -141,6 +140,9 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\SectionPartMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'assessmentItemRef';
 	}

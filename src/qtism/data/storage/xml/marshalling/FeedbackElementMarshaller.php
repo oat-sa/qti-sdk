@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\Flow;
@@ -40,6 +39,9 @@ use \InvalidArgumentException;
  */
 class FeedbackElementMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
         $fqClass = $this->lookupClass($element);
@@ -100,6 +102,9 @@ class FeedbackElementMarshaller extends ContentMarshaller {
         
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -119,6 +124,9 @@ class FeedbackElementMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content");
     }

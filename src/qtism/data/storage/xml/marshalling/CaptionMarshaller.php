@@ -38,6 +38,9 @@ use \InvalidArgumentException;
  */
 class CaptionMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
         $fqClass = $this->lookupClass($element);
@@ -50,6 +53,9 @@ class CaptionMarshaller extends ContentMarshaller {
         return $component;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -63,6 +69,9 @@ class CaptionMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml\\tables");
     }

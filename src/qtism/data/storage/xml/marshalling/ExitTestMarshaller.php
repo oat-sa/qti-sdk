@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\rules\ExitTest;
@@ -38,8 +37,8 @@ class ExitTestMarshaller extends Marshaller {
 	/**
 	 * Marshall an ExitTest object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An ExitTest object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An ExitTest object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -49,14 +48,17 @@ class ExitTestMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI exitTest element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An ExitTest object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An ExitTest object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$object = new ExitTest();
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'exitTest';
 	}

@@ -20,9 +20,7 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
-
 
 use qtism\data\content\xhtml\tables\ColCollection;
 use qtism\data\content\xhtml\tables\Colgroup;
@@ -40,9 +38,9 @@ class ColgroupMarshaller extends Marshaller {
 	/**
 	 * Marshall a Colgroup object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Colgroup object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A Colgroup object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('colgroup');
@@ -60,9 +58,9 @@ class ColgroupMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML colgroup table element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Colgroup object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Colgroup object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$component = new Colgroup();
@@ -82,6 +80,9 @@ class ColgroupMarshaller extends Marshaller {
 		return $component;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'colgroup';
 	}

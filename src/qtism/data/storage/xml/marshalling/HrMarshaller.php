@@ -20,9 +20,7 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
-
 
 use qtism\data\content\xhtml\presentation\Hr;
 use qtism\data\QtiComponent;
@@ -39,9 +37,9 @@ class HrMarshaller extends Marshaller {
 	/**
 	 * Marshall an Hr object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Hr object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A Hr object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('hr');
@@ -57,9 +55,9 @@ class HrMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML hr element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Hr object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Hr object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$component = new Hr();
@@ -72,6 +70,9 @@ class HrMarshaller extends Marshaller {
 		return $component;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'hr';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\GraphicGapMatchInteraction;
@@ -41,9 +40,9 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller {
     /**
 	 * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A GraphicGapMatchInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A GraphicGapMatchInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
             
@@ -116,9 +115,9 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller {
     /**
 	 * Marshall an GraphicGapMatchInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A GraphicGapMatchInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A GraphicGapMatchInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         
@@ -147,6 +146,9 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName() {
 		return 'graphicGapMatchInteraction';
 	}

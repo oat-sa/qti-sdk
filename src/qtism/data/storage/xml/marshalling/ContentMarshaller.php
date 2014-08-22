@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\InfoControl;
@@ -70,13 +69,24 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
+/**
+ * An abstract implementation of a marshaller/unmarshaller focusing
+ * on QTI components that belong to the QTI content model.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 abstract class ContentMarshaller extends RecursiveMarshaller {
     
+    /**
+     * Create a new ContentMarshaller object.
+     */
     public function __construct() {
         $this->setLookupClasses();
     }
     
     /**
+     * Classes to lookup for.
      * 
      * @var array
      */
@@ -94,18 +104,30 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'templateBlock',
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 'feedbackBlock');
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+     */
     protected function isElementFinal(DOMNode $element) {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->localName, self::$finals));
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+     */
     protected function isComponentFinal(QtiComponent $component) { 
         return in_array($component->getQtiClassName(), self::$finals);
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+     */
     protected function createCollection(DOMElement $currentNode) {
         return new QtiComponentCollection();
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+     */
     protected function getChildrenComponents(QtiComponent $component) {
         if ($component instanceof SimpleInline) {
             return $component->getContent()->getArrayCopy();
@@ -223,6 +245,9 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+     */
     protected function getChildrenElements(DOMElement $element) {
         if (in_array($element->localName, self::$simpleComposites) === true) {
             return self::getChildElements($element, true);
@@ -283,13 +308,20 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName() {
         return '';
     }
     
+    /**
+     * Set the classes to be looked up.
+     */
     protected abstract function setLookupClasses();
     
     /**
+     * Get the classes to be looked up.
      * 
      * @return array
      */
@@ -300,8 +332,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
     /**
      * Get the related PHP class name of a given $element.
      * 
-     * @param DOMElement $element The element you want to know the data model PHP class.
-     * @throws UnmarshallingException If no class can be found for $element.
+     * @param \DOMElement $element The element you want to know the data model PHP class.
+     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If no class can be found for $element.
      * @return string A fully qualified class name.
      */
     protected function lookupClass(DOMElement $element) {

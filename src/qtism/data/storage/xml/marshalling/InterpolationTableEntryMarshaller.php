@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -56,7 +55,7 @@ class InterpolationTableEntryMarshaller extends Marshaller {
 	 * the interpolationTableEntry to marshall.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
 	 */
 	public function setBaseType($baseType = -1) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -80,8 +79,8 @@ class InterpolationTableEntryMarshaller extends Marshaller {
 	/**
 	 * Marshall an InterpolationTableEntry object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An InterpolationTableEntry object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An InterpolationTableEntry object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -96,9 +95,9 @@ class InterpolationTableEntryMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI InterpolationEntry element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An InterpolationTableEntry object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An InterpolationTableEntry object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -120,6 +119,9 @@ class InterpolationTableEntryMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'interpolationTableEntry';
 	}

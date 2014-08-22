@@ -20,9 +20,7 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
-
 
 use qtism\data\storage\Utils;
 use qtism\data\content\interactions\HotspotChoice;
@@ -43,9 +41,9 @@ class HotspotMarshaller extends Marshaller {
 	/**
 	 * Marshall a HotspotChoice/AssociableHotspot object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A HotspotChoice/AssociableHotspot object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -84,9 +82,9 @@ class HotspotMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a hotspotChoice/associableHotspot element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A HotspotChoice/AssociableHotspot object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A HotspotChoice/AssociableHotspot object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -172,6 +170,9 @@ class HotspotMarshaller extends Marshaller {
 	    }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

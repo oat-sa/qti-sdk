@@ -20,18 +20,26 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\expressions\ItemSubset;
-
 use qtism\data\QtiComponent;
 use qtism\common\collections\IdentifierCollection;
 use \DOMElement;
 use \InvalidArgumentException;
 
+/**
+ * A complex Operator marshaller focusing on the marshalling/unmarshalling process
+ * of itemSubset QTI operators.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class ItemSubsetMarshaller extends Marshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     */
 	protected function marshall(QtiComponent $component) {
 		$element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
 		
@@ -53,6 +61,9 @@ class ItemSubsetMarshaller extends Marshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+	 */
 	protected function unmarshall(DOMElement $element) {
 		
 		$object = new ItemSubset();
@@ -74,6 +85,9 @@ class ItemSubsetMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'itemSubset';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -35,6 +34,9 @@ use \DOMElement;
  */
 class ItemSessionControlMarshaller extends Marshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
@@ -49,6 +51,9 @@ class ItemSessionControlMarshaller extends Marshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+	 */
 	protected function unmarshall(DOMElement $element) {
 		
 		$object = new ItemSessionControl();
@@ -84,6 +89,9 @@ class ItemSessionControlMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'itemSessionControl';
 	}

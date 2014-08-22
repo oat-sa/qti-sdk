@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\EndAttemptInteraction;
@@ -39,9 +38,9 @@ class EndAttemptInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall an EndAttemptInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An EndAttemptInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component An EndAttemptInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('endAttemptInteraction');
@@ -59,9 +58,9 @@ class EndAttemptInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an endAttemptInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An EndAttemptInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An EndAttemptInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -88,6 +87,9 @@ class EndAttemptInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'endAttemptInteraction';
 	}

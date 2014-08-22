@@ -38,8 +38,8 @@ class MapResponseMarshaller extends Marshaller {
 	/**
 	 * Marshall a MapResponse object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A MapResponse object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A MapResponse object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -52,9 +52,9 @@ class MapResponseMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI mapResponse element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A MapResponse object.
-	 * @throws UnmarshallingException If the mandatory attributes 'identifier' is missing.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A MapResponse object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes 'identifier' is missing.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		

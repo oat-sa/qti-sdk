@@ -40,6 +40,11 @@ use \InvalidArgumentException;
  */
 class CorrectResponseMarshaller extends Marshaller {
 	
+    /**
+     * The baseType of values.
+     * 
+     * @var integer
+     */
 	private $baseType = -1;
 	
 	public function setBaseType($baseType = -1) {
@@ -52,10 +57,20 @@ class CorrectResponseMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * Get the base type of inner values.
+	 * 
+	 * @return integer
+	 */
 	public function getBaseType() {
 		return $this->baseType;
 	}
 	
+	/**
+	 * Create a new CorrectResponseMarshaller object.
+	 * 
+	 * @param integer $baseType
+	 */
 	public function __construct($baseType = -1) {
 		$this->setBaseType($baseType);
 	}
@@ -63,8 +78,8 @@ class CorrectResponseMarshaller extends Marshaller {
 	/**
 	 * Marshall a CorrectResponse object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A CorrectResponse object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A CorrectResponse object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -87,9 +102,9 @@ class CorrectResponseMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI correctResponse element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A CorrectResponse object.
-	 * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid CorrectResponse object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A CorrectResponse object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid CorrectResponse object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -116,6 +131,9 @@ class CorrectResponseMarshaller extends Marshaller {
 		
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'correctResponse';
 	}

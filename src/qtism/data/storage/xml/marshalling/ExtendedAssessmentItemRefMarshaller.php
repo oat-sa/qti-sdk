@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -41,7 +40,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 	/**
 	 * Marshall a ExtendedAssessmentItemRef object into its DOMElement representation.
 	 * 
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent 
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -72,7 +72,8 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller {
 	 * Unmarshall an extended version of an assessmentItemRef DOMElement into 
 	 * a ExtendedAssessmentItemRef object.
 	 * 
-	 * @return ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
+	 * @param \DOMElement $element
+	 * @return  \qtism\data\ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);

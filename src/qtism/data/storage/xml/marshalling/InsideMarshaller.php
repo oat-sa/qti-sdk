@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -41,11 +40,7 @@ use \DOMElement;
 class InsideMarshaller extends OperatorMarshaller {
 	
 	/**
-	 * Unmarshall an Inside object into a QTI inside element.
-	 * 
-	 * @param QtiComponent The Inside object to marshall.
-	 * @param array An array of child DOMEelement objects.
-	 * @return DOMElement The marshalled QTI inside element.
+	 * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -60,12 +55,7 @@ class InsideMarshaller extends OperatorMarshaller {
 	}
 	
 	/**
-	 * Unmarshall a QTI inside operator element into an Inside object.
-	 *
-	 * @param DOMElement The inside element to unmarshall.
-	 * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return QtiComponent An Inside object.
-	 * @throws UnmarshallingException
+	 * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
 	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\rules\ExitTemplate;
@@ -38,8 +37,8 @@ class ExitTemplateMarshaller extends Marshaller {
 	/**
 	 * Marshall an ExitTemplate object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An ExitTemplate object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An ExitTemplate object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -49,13 +48,16 @@ class ExitTemplateMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI exitTemplate element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An ExitTemplate object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An ExitTemplate object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		return new ExitTemplate();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'exitTemplate';
 	}

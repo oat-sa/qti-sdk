@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -63,8 +62,8 @@ class DefaultValueMarshaller extends Marshaller {
 	/**
 	 * Marshall a DefaultValue object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A DefaultValue object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A DefaultValue object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -87,9 +86,9 @@ class DefaultValueMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI defaultValue element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A DefaultValue object.
-	 * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A DefaultValue object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -117,6 +116,9 @@ class DefaultValueMarshaller extends Marshaller {
 		
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'defaultValue';
 	}
