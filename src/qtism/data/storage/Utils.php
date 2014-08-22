@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage;
 
 use qtism\common\datatypes\Point;
@@ -50,8 +49,8 @@ class Utils {
 	 * @param string $string The QTI valueType value as a string.
 	 * @param integer $baseType The QTI baseType that defines the datatype of $string.
 	 * @return mixed A converted object/primitive type.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 * @throws UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
 	 */
 	public static function stringToDatatype($string, $baseType) {
 	if (in_array($baseType, BaseType::asArray())) {
@@ -191,9 +190,9 @@ class Utils {
 	 * 
 	 * @param string $string Coordinates as a string.
 	 * @param int $shape A value from the Shape enumeration.
-	 * @throws InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
-	 * @throws UnexpectedValueException If $string cannot be converted to a Coords object.
-	 * @return Coords A Coords object.
+	 * @throws \InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
+	 * @throws \UnexpectedValueException If $string cannot be converted to a Coords object.
+	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
 	public static function stringToCoords($string, $shape) {
 		if (Format::isCoords($string)) {
@@ -222,7 +221,7 @@ class Utils {
 	 * * If there is/are trailing slashe(s), they will be removed.
 	 * 
 	 * @param string $uri A Uniform Resource Identifier.
-	 * @throws InvalidArgumentException If $uri is not a string.
+	 * @throws \InvalidArgumentException If $uri is not a string.
 	 * @return string A sanitized Uniform Resource Identifier.
 	 */
 	public static function sanitizeUri($uri) {

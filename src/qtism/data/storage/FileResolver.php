@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage;
 
 use qtism\common\Resolver;
@@ -45,7 +44,7 @@ abstract class FileResolver implements Resolver {
      * Create a new FileResolver object.
      * 
      * @param string $basePath A base path.
-     * @throws InvalidArgumentException If $basePath is not a string value.
+     * @throws \InvalidArgumentException If $basePath is not a string value.
      */
     public function __construct($basePath = '') {
         $this->setBasePath($basePath);
@@ -55,7 +54,7 @@ abstract class FileResolver implements Resolver {
      * Set the basePath.
      * 
      * @param string $basePath A base path.
-     * @throws InvalidArgumentException If $basePath is not a string value.
+     * @throws \InvalidArgumentException If $basePath is not a string value.
      */
     public function setBasePath($basePath = '') {
 		if (gettype($basePath) === 'string') {

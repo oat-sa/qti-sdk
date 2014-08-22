@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage;
 
 use qtism\common\ResolutionException;
@@ -38,7 +37,7 @@ class LocalFileResolver extends FileResolver {
 	 * Create a new LocalFileResolver object.
 	 * 
 	 * @param string $basePath The base path from were the URLs will be resolved.
-	 * @throws InvalidArgumentException If $basePath is not a valid string value.
+	 * @throws \InvalidArgumentException If $basePath is not a valid string value.
 	 */
 	public function __construct($basePath = '') {
 		parent::__construct($basePath);
@@ -49,7 +48,7 @@ class LocalFileResolver extends FileResolver {
 	 * on the LocalFileResolver's base path.
 	 * 
 	 * @param string $url A URL to be resolved.
-	 * @throws ResolutionException If $url cannot be resolved.
+	 * @throws \qtism\common\ResolutionException If $url cannot be resolved.
 	 */
 	public function resolve($url) {
 		$baseUrl = Utils::sanitizeUri($this->getBasePath());
