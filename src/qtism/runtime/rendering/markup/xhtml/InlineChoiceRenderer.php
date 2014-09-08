@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -50,12 +48,20 @@ use \DOMDocumentFragment;
  */
 class InlineChoiceRenderer extends ChoiceRenderer {
     
+    /**
+     * Create a new InlineChoiceRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         // override 'div' transformation with a 'option' transformation.
         $this->transform('option');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         parent::appendAttributes($fragment, $component, $base);

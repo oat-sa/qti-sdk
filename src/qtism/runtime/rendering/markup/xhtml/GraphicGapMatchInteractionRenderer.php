@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -41,6 +39,9 @@ use \DOMDocumentFragment;
  */
 class GraphicGapMatchInteractionRenderer extends GraphicInteractionRenderer {
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-graphicGapMatchInteraction');

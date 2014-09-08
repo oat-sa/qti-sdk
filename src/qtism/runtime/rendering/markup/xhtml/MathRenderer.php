@@ -19,14 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\storage\xml\Utils;
-
 use qtism\runtime\rendering\RenderingException;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -40,6 +37,9 @@ use \RuntimeException;
  */
 class MathRenderer extends ExternalQtiComponentRenderer {
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         try {
             $dom = $component->getXml();

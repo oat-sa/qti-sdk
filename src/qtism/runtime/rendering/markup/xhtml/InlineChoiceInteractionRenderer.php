@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -46,11 +44,19 @@ use \DOMDocumentFragment;
  */
 class InlineChoiceInteractionRenderer extends InteractionRenderer {
     
+    /**
+     * Create a new InlineChoiceInteractionRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('select');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-inlineInteraction');
@@ -60,6 +66,9 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component, $base);
         

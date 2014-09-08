@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -53,17 +51,28 @@ use \DOMDocumentFragment;
  */
 class DrawingInteractionRenderer extends InteractionRenderer {
     
+    /**
+     * Create a new DrawingInteractionRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-drawingInteraction');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component, $base);
         

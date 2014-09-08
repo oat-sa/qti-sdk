@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -56,6 +54,11 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
      */
     private $additionalClasses = array();
     
+    /**
+     * Create a new AbstractXhtmlRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
     }
@@ -64,8 +67,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
      * Render a QtiComponent into a DOMDocumentFragment that will be registered
      * in the current rendering context.
      * 
-     * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
-     * @throws RenderingException If an error occurs while rendering $component.
+     * @return \DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
+     * @throws \qtism\runtime\rendering\RenderingException If an error occurs while rendering $component.
      */
     public function render($component, $base = '') {
         $renderingEngine = $this->getRenderingEngine();
@@ -95,6 +98,13 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
         return $fragment;
     }
     
+    /**
+     * A default rendering implementation focusing on a given $fragment and $component.
+     * 
+     * @param \DOMDocumentFragment $fragment
+     * @param \qtism\data\QtiComponent $component
+     * @param string $base An optional base path to be used for rendering.
+     */
     protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         $this->appendElement($fragment, $component, $base);
@@ -117,8 +127,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
      * Append a new DOMElement to the currently rendered $fragment which is suitable
      * to $component.
      * 
-     * @param DOMDocumentFragment $fragment
-     * @param QtiComponent $component
+     * @param \DOMDocumentFragment $fragment
+     * @param \qtism\data\QtiComponent $component
      */
     protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $tagName = ($this->hasReplacementTagName() === true) ? $this->getReplacementTagName() : $component->getQtiClassName();
@@ -128,8 +138,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
     /**
      * Append the children renderings of $components to the currently rendered $fragment.
      * 
-     * @param DOMDocumentFragment $fragment
-     * @param QtiComponent $component
+     * @param \DOMDocumentFragment $fragment
+     * @param \qtism\data\QtiComponent $component
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         foreach ($this->getRenderingEngine()->getChildrenRenderings($component) as $childrenRendering) {
@@ -140,8 +150,8 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer {
     /**
      * Append the necessary attributes of $component to the currently rendered $fragment.
      * 
-     * @param DOMDocumentFragment $fragment
-     * @param QtiComponent $component
+     * @param \DOMDocumentFragment $fragment
+     * @param \qtism\data\QtiComponent $component
      */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         $this->handleXmlBase($component, $fragment->firstChild);

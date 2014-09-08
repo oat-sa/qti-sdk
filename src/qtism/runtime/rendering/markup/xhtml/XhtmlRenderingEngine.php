@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -37,6 +35,10 @@ use \DOMDocumentFragment;
  */
 class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
     
+    /**
+     * Create a new XhtmlRenderingEngine object.
+     * 
+     */
     public function __construct() {
         parent::__construct();
         

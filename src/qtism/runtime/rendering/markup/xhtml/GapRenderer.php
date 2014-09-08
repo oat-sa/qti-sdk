@@ -49,11 +49,19 @@ use \DOMDocumentFragment;
  */
 class GapRenderer extends ChoiceRenderer {
 
+    /**
+     * Create a new GapRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gap');

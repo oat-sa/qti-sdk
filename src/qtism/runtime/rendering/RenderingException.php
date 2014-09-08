@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering;
@@ -66,7 +64,7 @@ class RenderingException extends Exception {
      * 
      * @param string $message A message describing the error.
      * @param integer $code A code for the client-code.
-     * @param Exception $previous An optional previous exception.
+     * @param \Exception $previous An optional previous exception.
      */
     public function __construct($message, $code, Exception $previous = null) {
         parent::__construct($message, $code, $previous);

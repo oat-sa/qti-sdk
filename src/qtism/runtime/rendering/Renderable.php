@@ -19,12 +19,16 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering;
 
+/**
+ * Interface to be implemented to claim to be renderable.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 interface Renderable {
     
     /**
@@ -32,8 +36,7 @@ interface Renderable {
      *
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
-     * @throws RenderingException If something goes wrong while rendering the component.
+     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rendering the component.
      */
     public function render($something);
-    
 }

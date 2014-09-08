@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -36,6 +34,9 @@ use \DOMDocumentFragment;
  */
 class ObjectRenderer extends BodyElementRenderer {
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('data', $this->transformUri($component->getData(), $base));
@@ -50,6 +51,9 @@ class ObjectRenderer extends BodyElementRenderer {
         }
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component, $base);
         

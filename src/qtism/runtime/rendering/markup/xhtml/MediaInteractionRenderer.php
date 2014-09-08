@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -125,6 +123,11 @@ class MediaInteractionRenderer extends InteractionRenderer {
         return $this->imageTypes;
     }
     
+    /**
+     * Create a new MediaInteractionRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->setVideoTypes(array('video/mp4', 'video/webm', 'video/ogg'));
@@ -133,6 +136,9 @@ class MediaInteractionRenderer extends InteractionRenderer {
         $this->transform('div');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
@@ -144,6 +150,9 @@ class MediaInteractionRenderer extends InteractionRenderer {
         $fragment->firstChild->setAttribute('data-loop', ($component->mustLoop() === true) ? 'true' : 'false');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendChildren($fragment, $component, $base);
         

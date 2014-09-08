@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -45,11 +43,19 @@ use \DOMDocumentFragment;
  */
 class FeedbackInlineRenderer extends FeedbackElementRenderer {
     
+    /**
+     * Create a new FeedbackInlineRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\FeedbackElementRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-feedbackInline');

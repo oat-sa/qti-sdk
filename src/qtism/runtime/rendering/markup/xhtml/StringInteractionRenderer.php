@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -46,6 +44,9 @@ use \DOMDocumentFragment;
  */
 abstract class StringInteractionRenderer extends InteractionRenderer {
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {  
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-stringInteraction');

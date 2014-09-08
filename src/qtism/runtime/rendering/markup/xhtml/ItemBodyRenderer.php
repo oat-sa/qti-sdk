@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -42,13 +40,16 @@ class ItemBodyRenderer extends BodyElementRenderer {
     /**
      * Create a new ItemBodyRenderer.
      * 
-     * @param AbstractRenderingContext $renderingContext
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-itemBody');

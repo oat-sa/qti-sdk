@@ -53,6 +53,9 @@ use \DOMDocumentFragment;
  */
 class GapImgRenderer extends GapChoiceRenderer {
 
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\GapChoiceRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapImg');

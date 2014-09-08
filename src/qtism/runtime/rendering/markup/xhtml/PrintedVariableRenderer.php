@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -53,13 +51,16 @@ class PrintedVariableRenderer extends BodyElementRenderer {
     /**
      * Create a new PrintedVariableRenderer object.
      *
-     * @param AbstractRenderingContext $renderingContext
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-printedVariable');
@@ -86,6 +87,9 @@ class PrintedVariableRenderer extends BodyElementRenderer {
         $fragment->firstChild->setAttribute('data-mapping-indicator', $component->getMappingIndicator());
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
+     */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         
         $renderingEngine = $this->getRenderingEngine();

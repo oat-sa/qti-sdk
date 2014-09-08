@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
@@ -42,13 +40,16 @@ class PromptRenderer extends BodyElementRenderer {
     /**
      * Create a new PromptRenderer.
      * 
-     * @param AbstractRenderingContext $renderingContext
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingContext
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
     
+    /**
+     * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-prompt');

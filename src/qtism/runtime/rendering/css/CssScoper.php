@@ -18,10 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
  * 
- *
  */
+
 namespace qtism\runtime\rendering\css;
 
 use qtism\runtime\rendering\RenderingException;
@@ -100,7 +99,7 @@ class CssScoper implements Renderable {
 	/**
 	 * The stream to read.
 	 * 
-	 * @var MemoryStream
+	 * @var \qtism\common\storage\MemoryStream
 	 */
 	private $stream;
 	
@@ -289,7 +288,7 @@ class CssScoper implements Renderable {
      * @param string $file The path to the file that has to be rescoped.
      * @param string $id The scope identifier. If not given, will be randomly generated.
      * @return string The rescoped content of $file.
-     * @throws RenderingException If something goes wrong while rescoping the content.
+     * @throws \qtism\runtime\rendering\RenderingException If something goes wrong while rescoping the content.
      */
     public function render($file, $id = '') {
     	
@@ -360,6 +359,9 @@ class CssScoper implements Renderable {
     
     /**
      * Initialize the object to be ready for a new rescoping.
+     * 
+     * @param string $id The identifier to be used for scoping.
+     * @param string $file The path to the CSS file to be scoped.
      */
     protected function init($id, $file) {
     	$this->setState(self::RUNNING);
@@ -418,7 +420,7 @@ class CssScoper implements Renderable {
     /**
      * Set the stream to be read.
      * 
-     * @param MemoryStream $stream
+     * @param \qtism\common\storage\MemoryStream $stream
      */
     protected function setStream(MemoryStream $stream) {
     	$this->stream = $stream;
@@ -427,16 +429,26 @@ class CssScoper implements Renderable {
     /**
      * Get the stream to be read.
      * 
-     * @return MemoryStream
+     * @return \qtism\common\storage\MemoryStream
      */
     protected function getStream() {
     	return $this->stream;
     }
     
+    /**
+     * Instructions to perform before any character read.
+     * 
+     * @param string $char
+     */
     protected function beforeCharReading($char) {
     	$this->setCurrentChar($char);
     }
     
+    /**
+     * Instructions to perform after any character read.
+     * 
+     * @param string $char
+     */
     protected function afterCharReading($char) {
         
         $this->setPreviousChar($char);
@@ -464,10 +476,20 @@ class CssScoper implements Renderable {
     	$this->previousSignificantChar = $char;
     }
     
+    /**
+     * Get the previously read character.
+     * 
+     * @return string
+     */
     protected function getPreviousChar() {
         return $this->previousChar;
     }
     
+    /**
+     * Set the previously read character.
+     * 
+     * @param string $char
+     */
     protected function setPreviousChar($char) {
         $this->previousChar = $char;
     }
@@ -503,6 +525,9 @@ class CssScoper implements Renderable {
         return self::$qtiClassMapping;
     }
     
+    /**
+     * Instructions to be performed in 'running' state.
+     */
     protected function runningState() {
     	$char = $this->getCurrentChar();
     	
@@ -527,6 +552,9 @@ class CssScoper implements Renderable {
     	}
     }
     
+    /**
+     * Instructions to be performed in 'atRule' state.
+     */
     protected function inAtRuleState() {
     	$char = $this->getCurrentChar();
     	
@@ -553,6 +581,9 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'atRuleString' state.
+     */
     protected function inAtRuleStringState() {
     	$char = $this->getCurrentChar();
     	
@@ -570,6 +601,9 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'atRuleBody' state.
+     */
     protected function inAtRuleBodyState() {
         $char = $this->getCurrentChar();
         
@@ -593,6 +627,9 @@ class CssScoper implements Renderable {
         $this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'selector' state.
+     */
     protected function inSelectorState() {
     	$char = $this->getCurrentChar();
     	
@@ -606,6 +643,9 @@ class CssScoper implements Renderable {
     	}
     }
     
+    /**
+     * Instructions to be performed in 'classBody' state.
+     */
     protected function inClassBodyState() {
     	$char = $this->getCurrentChar();
     	
@@ -622,6 +662,9 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'mainComment' state.
+     */
     protected function inMainCommentState() {
     	$char = $this->getCurrentChar();
     	
@@ -632,6 +675,9 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'classComment' state.
+     */
     protected function inClassCommentState() {
         $char = $this->getCurrentChar();
         
@@ -642,6 +688,9 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Instructions to be performed in 'classString' state.
+     */
     protected function inClassStringState() {
     	$char = $this->getCurrentChar();
     	
@@ -659,42 +708,86 @@ class CssScoper implements Renderable {
     	$this->output($char);
     }
     
+    /**
+     * Whether a given $char is considered to be white space.
+     * 
+     * @param string $char
+     * @return boolean
+     */
     static private function isWhiteSpace($char) {
     	return $char === self::CHAR_SPACE || $char === self::CHAR_CARRIAGERETURN || $char === self::CHAR_NEWLINE || $char === self::CHAR_TAB || $char === self::CHAR_VERTICALTAB;
     }
     
+    /**
+     * Get the read buffer.
+     * 
+     * @return array
+     */
     protected function getBuffer() {
     	return $this->buffer;
     }
     
+    /**
+     * Set the read buffer.
+     * 
+     * @param array $buffer
+     */
     protected function setBuffer(array $buffer) {
     	$this->buffer = $buffer;
     }
     
+    /**
+     * Clean the read buffer.
+     */
     protected function cleanBuffer() {
     	$this->setBuffer(array());
     }
     
+    /**
+     * Put a given $char in the read buffer.
+     * 
+     * @param string $char
+     */
     protected function bufferize($char) {
     	$buffer = $this->getBuffer();
     	$buffer[] = $char;
     	$this->setBuffer($buffer);
     }
     
+    /**
+     * Set the output.
+     * 
+     * @param string $output
+     */
     protected function setOutput($output) {
         $this->output = $output;
     }
     
+    /**
+     * Get the output.
+     * 
+     * @return string
+     */
     protected function getOutput() {
         return $this->output;
     }
     
+    /**
+     * Output a given $char as a scoping result.
+     * 
+     * @param string $char
+     */
     protected function output($char) {
         $output = $this->getOutput();
         $output .= $char;
         $this->setOutput($output);
     }
     
+    /**
+     * Wheter the current char is escaping something.
+     * 
+     * @return boolean
+     */
     protected function isEscaping() {
     	$count = count($this->getBuffer());
     	
@@ -705,6 +798,10 @@ class CssScoper implements Renderable {
     	return $count % 2 !== 0;
     }
     
+    /**
+     * Update the currently processed CSS selector by prefixing it
+     * with the appropriate id.
+     */
     protected function updateSelector() {
         $buffer = implode('', $this->getBuffer());
         
