@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\rules;
 
@@ -42,8 +40,8 @@ class ExitTestProcessor extends RuleProcessor {
 	/**
 	 * Set the ExitTest object to be processed.
 	 * 
-	 * @param Rule $rule An ExitTest object.
-	 * @throws InvalidArgumentException If $rule is not an ExitTest object.
+	 * @param \qtism\runtime\rules\Rule $rule An ExitTest object.
+	 * @throws \InvalidArgumentException If $rule is not an ExitTest object.
 	 */
 	public function setRule(Rule $rule) {
 		if ($rule instanceof ExitTest) {
@@ -59,7 +57,7 @@ class ExitTestProcessor extends RuleProcessor {
 	 * Process the ExitTest rule. It simply throws a RuleProcessingException with
 	 * the special code RuleProcessingException::EXIT_TEST to simulate the test termination.
 	 * 
-	 * @throws RuleProcessingException with code = RuleProcessingException::EXIT_TEST In any case.
+	 * @throws \qtism\runtime\rules\RuleProcessingException with code = RuleProcessingException::EXIT_TEST In any case.
 	 */
 	public function process() {
 		$msg = "Termination of Test.";

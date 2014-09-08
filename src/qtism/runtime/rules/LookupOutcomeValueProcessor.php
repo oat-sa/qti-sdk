@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\rules;
 
@@ -51,8 +49,8 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 	/**
 	 * Set the LookupOutcomeValue object to be processed.
 	 * 
-	 * @param Rule $rule A LookupOutcomeValue object.
-	 * @throws InvalidArgumentException If $rule is not a LookupOutcomeValue object.
+	 * @param \qtism\runtime\rules\Rule $rule A LookupOutcomeValue object.
+	 * @throws \InvalidArgumentException If $rule is not a LookupOutcomeValue object.
 	 */
 	public function setRule(Rule $rule) {
 		if ($rule instanceof LookupOutcomeValue) {
@@ -78,7 +76,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 	 * * There is no associated table in the variable's declaration.
 	 * * An error occurs during the processing of the related expression.
 	 * 
-	 * @throws RuleProcessingException If one of the error described above arise.
+	 * @throws \qtism\runtime\rules\RuleProcessingException If one of the error described above arise.
 	 */
 	public function process() {
 		$state = $this->getState();

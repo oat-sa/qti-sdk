@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\rules;
 
@@ -45,21 +43,21 @@ abstract class RuleProcessor implements Processable {
 	/**
 	 * The Rule object to be processed.
 	 * 
-	 * @var Rule
+	 * @var \qtism\data\rules\Rule
 	 */
 	private $rule;
 	
 	/**
 	 * The State object.
 	 * 
-	 * @var State
+	 * @var \qtism\runtime\common\State
 	 */
 	private $state;
 	
 	/**
 	 * Create a new RuleProcessor object aiming at processing the $rule Rule object.
 	 * 
-	 * @param Rule $rule A Rule object to be processed by the processor.
+	 * @param \qtism\data\rules\Rule $rule A Rule object to be processed by the processor.
 	 */
 	public function __construct(Rule $rule) {
 		$this->setRule($rule);
@@ -67,14 +65,19 @@ abstract class RuleProcessor implements Processable {
 	}
 	
 	/**
-	 * Set the QTI Data Model Rule object to be processed by the 
+	 * Set the QTI Data Model Rule object to be processed.
 	 * 
-	 * @param Rule $rule
+	 * @param \qtism\runtime\rules\Rule $rule
 	 */
 	public function setRule(Rule $rule) {
 		$this->rule = $rule;
 	}
 	
+	/**
+	 * Get the QTI Data Model Rule object to be processed.
+	 * 
+	 * @return \qtism\data\rules\Rule
+	 */
 	public function getRule() {
 		return $this->rule;
 	}
@@ -82,7 +85,7 @@ abstract class RuleProcessor implements Processable {
 	/**
 	 * Set the current State object.
 	 *
-	 * @param State $state A State object.
+	 * @param \qtism\runtime\common\State $state A State object.
 	 */
 	public function setState(State $state) {
 		$this->state = $state;
@@ -91,7 +94,7 @@ abstract class RuleProcessor implements Processable {
 	/**
 	 * Get the current State object.
 	 *
-	 * @return State
+	 * @return \qtism\runtime\common\State
 	 */
 	public function getState() {
 		return $this->state;

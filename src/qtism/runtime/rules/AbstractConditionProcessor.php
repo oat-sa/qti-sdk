@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 
 namespace qtism\runtime\rules;
@@ -54,15 +52,15 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	 * The RuleProcessorFactory object used to create
 	 * appropriate rule processors.
 	 * 
-	 * @var RuleProcessorFactory
+	 * @var \qtism\runtime\rules\RuleProcessorFactory
 	 */
 	private $ruleProcessorFactory;
 	
 	/**
 	 * Create a new OutcomeConditionProcessor.
 	 * 
-	 * @param QtiComponent $rule An OutcomeCondition/ResponseCondition rule object.
-	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
+	 * @param \qtism\data\QtiComponent $rule An OutcomeCondition/ResponseCondition rule object.
+	 * @throws \InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
 	 */
 	public function __construct(QtiComponent $rule) {
 		parent::__construct($rule);
@@ -72,8 +70,8 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Set the OutcomeCondition/ResponseCondition object to be processed.
 	 * 
-	 * @param Rule $rule An OutcomeCondition/ResponseCondition object.
-	 * @throws InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
+	 * @param \qtism\data\rules\Rule $rule An OutcomeCondition/ResponseCondition object.
+	 * @throws \InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
 	 */
 	public function setRule(Rule $rule) {
 		
@@ -118,7 +116,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Push some Rule objects on the trail stack.
 	 * 
-	 * @param QtiComponentCollection|QtiComponent $components A collection of Rule objects.
+	 * @param \qtism\data\QtiComponentCollection|\qtism\data\QtiComponent $components A collection of Rule objects.
 	 */
 	public function pushTrail($components) {
 		$i = count($components);
@@ -139,7 +137,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Pop a Rule object from the trail.
 	 * 
-	 * @return QtiComponent A Rule object.
+	 * @return \qtism\data\QtiComponent A Rule object.
 	 */
 	public function popTrail() {
 		$trail = &$this->getTrail();
@@ -149,7 +147,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Set the RuleProcessorFactory object used to create appropriate rule processors.
 	 * 
-	 * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
+	 * @param \qtism\runtime\rules\RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
 	 */
 	public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory) {
 		$this->ruleProcessorFactory = $ruleProcessorFactory;
@@ -158,7 +156,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Get the RuleProcessorFactory object used to create appropriate rule processors.
 	 * 
-	 * @return RuleProcessorFactory A RuleProcessorFactory object.
+	 * @return \qtism\runtime\rules\RuleProcessorFactory A RuleProcessorFactory object.
 	 */
 	public function getRuleProcessorFactory() {
 		return $this->ruleProcessorFactory;
@@ -167,7 +165,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor {
 	/**
 	 * Process the OutcomeCondition/ResponseCondition according to the current state.
 	 * 
-	 * @throws RuleProcessingException
+	 * @throws \qtism\runtime\rules\RuleProcessingException
 	 */
 	public function process() {
 		

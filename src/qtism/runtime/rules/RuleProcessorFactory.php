@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\rules;
 
 use qtism\data\QtiComponent;
@@ -51,9 +50,9 @@ class RuleProcessorFactory implements ProcessorFactory {
 	/**
 	 * Create the RuleProcessor object able to process the  given $rule.
 	 * 
-	 * @param QtiComponent $rule A Rule object you want to get the related processor.
-	 * @return Processable The related RuleProcessor object.
-	 * @throws RuntimeException If no RuleProcessor can be found for the given $rule.
+	 * @param \qtism\data\QtiComponent $rule A Rule object you want to get the related processor.
+	 * @return \qtism\runtime\common\Processable The related RuleProcessor object.
+	 * @throws \RuntimeException If no RuleProcessor can be found for the given $rule.
 	 */
 	public function createProcessor(QtiComponent $rule) {
 		$qtiClassName = ucfirst($rule->getQtiClassName());

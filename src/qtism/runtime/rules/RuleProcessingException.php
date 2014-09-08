@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\rules;
 
 use qtism\runtime\common\ProcessingException;
@@ -54,8 +53,8 @@ class RuleProcessingException extends ProcessingException {
 	/**
 	 * Set the source of the error.
 	 *
-	 * @param Processable $source The source of the error.
-	 * @throws InvalidArgumentException If $source is not an ExpressionProcessor object.
+	 * @param \qtism\runtime\common\Processable $source The source of the error.
+	 * @throws \InvalidArgumentException If $source is not an ExpressionProcessor object.
 	 */
 	public function setSource(Processable $source) {
 		if ($source instanceof RuleProcessor) {

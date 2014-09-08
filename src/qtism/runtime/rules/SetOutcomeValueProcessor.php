@@ -19,17 +19,13 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\rules;
 
 use qtism\common\enums\Cardinality;
-
 use qtism\common\datatypes\Integer;
-
 use qtism\common\datatypes\Float;
-
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
@@ -59,8 +55,8 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 	/**
 	 * Set the SetOutcomeValue object to be processed.
 	 * 
-	 * @param Rule $rule A SetOutcomeValue object.
-	 * @throws InvalidArgumentException If $rule is not a SetOutcomeValue object.
+	 * @param \qtism\data\rules\Rule $rule A SetOutcomeValue object.
+	 * @throws \InvalidArgumentException If $rule is not a SetOutcomeValue object.
 	 */
 	public function setRule(Rule $rule) {
 		if ($rule instanceof SetOutcomeValue) {
@@ -82,7 +78,7 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 	 * * The outcome variable's baseType does not match the baseType of the affected value.
 	 * * An error occurs while processing the related expression.
 	 * 
-	 * @throws RuleProcessingException If one of the error described above arise.
+	 * @throws \qtism\runtime\rules\RuleProcessingException If one of the error described above arise.
 	 */
 	public function process() {
 		$state = $this->getState();

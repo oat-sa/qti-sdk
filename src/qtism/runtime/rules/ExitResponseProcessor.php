@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\rules;
 
@@ -42,8 +40,8 @@ class ExitResponseProcessor extends RuleProcessor {
 	/**
 	 * Set the ExitResponse object to be processed.
 	 * 
-	 * @param Rule $rule An ExitResponse object.
-	 * @throws InvalidArgumentException If $rule is not an ExitResponse object.
+	 * @param \qtism\runtime\rules\Rule $rule An ExitResponse object.
+	 * @throws \InvalidArgumentException If $rule is not an ExitResponse object.
 	 */
 	public function setRule(Rule $rule) {
 		if ($rule instanceof ExitResponse) {
@@ -60,7 +58,7 @@ class ExitResponseProcessor extends RuleProcessor {
 	 * the special code RuleProcessingException::EXIT_RESPONSE to simulate the
 	 * response processing termination.
 	 * 
-	 * @throws RuleProcessingException with code = RuleProcessingException::EXIT_RESPONSE In any case.
+	 * @throws \qtism\runtime\rules\RuleProcessingException with code = RuleProcessingException::EXIT_RESPONSE In any case.
 	 */
 	public function process() {
 		$msg = "Termination of Response Processing.";

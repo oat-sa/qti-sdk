@@ -19,9 +19,9 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
- */namespace qtism\runtime\rules;
+ */
+
+namespace qtism\runtime\rules;
 
 /**
  * From IMS QTI:
@@ -40,6 +40,9 @@
  */
 class ResponseConditionProcessor extends AbstractConditionProcessor {
 	
+    /**
+     * @see \qtism\runtime\rules\AbstractConditionProcessor::getQtiNature()
+     */
 	public function getQtiNature() {
 		return 'response';
 	}
