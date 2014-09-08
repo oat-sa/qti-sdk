@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\data\rules\Selection;
@@ -47,22 +46,22 @@ abstract class AbstractSelection {
      * The AssessmentSection object on which the selection
      * must occur.
      * 
-     * @var AssessmentSection
+     * @var \qtism\data\AssessmentSection
      */
     private $assessmentSection;
     
     /**
      * The SelectableRoute objects that are selectable for the selection to be performed.
      * 
-     * @var SelectableRouteCollection
+     * @var \qtism\runtime\tests\SelectableRouteCollection
      */
     private $selectableRoutes;
     
     /**
      * Create a new AbstractSelector object.
      * 
-     * @param AssessmentSection $assessmentSection An AssessmentSection object which represents the QTI Data Model assessmentSection on which the selection occurs.
-     * @param SelectableRouteCollection $selectableRoutes The collection of Routes that are selectable for this selection.
+     * @param \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object which represents the QTI Data Model assessmentSection on which the selection occurs.
+     * @param \qtism\runtime\tests\SelectableRouteCollection $selectableRoutes The collection of Routes that are selectable for this selection.
      */
     public function __construct(AssessmentSection $assessmentSection, SelectableRouteCollection $selectableRoutes) {
         $this->setAssessmentSection($assessmentSection);
@@ -73,7 +72,7 @@ abstract class AbstractSelection {
      * Get the AssessmentSection object on which the selection
      * will occur.
      * 
-     * @return AssessmentSection An AssessmentSection object.
+     * @return \qtism\data\AssessmentSection An AssessmentSection object.
      */
     public function getAssessmentSection() {
         return $this->assessmentSection;
@@ -82,7 +81,7 @@ abstract class AbstractSelection {
     /**
      * Set the AssessmentSection object on which the selection will occur.
      * 
-     * @param AssessmentSection $assessmentSection An AssessmentSection object.
+     * @param \qtism\data\AssessmentSection $assessmentSection An AssessmentSection object.
      */
     public function setAssessmentSection(AssessmentSection $assessmentSection) {
         $this->assessmentSection = $assessmentSection;
@@ -91,7 +90,7 @@ abstract class AbstractSelection {
     /**
      * Get the collection of Route objects that are selectable for the selection to be performed.
      * 
-     * @return SelectableRouteCollection A collection of Route objects.
+     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of Route objects.
      */
     public function getSelectableRoutes() {
         return $this->selectableRoutes;
@@ -100,7 +99,7 @@ abstract class AbstractSelection {
     /**
      * Set the collection of Route objects that are selectable for the selection to be performed.
      * 
-     * @param SelectableRouteCollection $selectableRoutes
+     * @param \qtism\runtime\tests\SelectableRouteCollection $selectableRoutes
      */
     public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes) {
         $this->selectableRoutes = $selectableRoutes;
@@ -109,8 +108,8 @@ abstract class AbstractSelection {
     /**
      * Select the direct children components of the AssessmentSection on which the selection must be applied.
      * 
-     * @return SelectableRouteCollection A collection of selected SelectableRoute object describing the selection.
-     * @throws SelectionException
+     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of selected SelectableRoute object describing the selection.
+     * @throws \qtism\runtime\tests\SelectionException
      */
     abstract public function select();
 }

@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\tests;
 
@@ -39,9 +37,9 @@ class SessionManager extends AbstractSessionManager {
     /**
      * Instantiates an AssessmentTestSession with the default implementation.
      * 
-     * @param AssessmentTest $test
-     * @param Route An optional route to be set. If not provided, the default instantiation process occurs.
-     * @return AssessmentTestSession
+     * @param \qtism\data\AssessmentTest $test
+     * @param \qtism\runtime\tests\Route $route An optional route to be set. If not provided, the default instantiation process occurs.
+     * @return \qtism\runtime\tests\AssessmentTestSession
      */
     protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route) {
         return new AssessmentTestSession($test, $this, $route);
@@ -50,10 +48,10 @@ class SessionManager extends AbstractSessionManager {
     /**
      * Instantiates an AssessmentItemSession with the default implementation.
      * 
-     * @param IAssessmentItem $assessmentItem
+     * @param \qtism\data\IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
-     * @return AssessmentItemSession
+     * @return \qtism\runtime\tests\AssessmentItemSession
      */
     protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
         return new AssessmentItemSession($assessmentItem, $this, $navigationMode, $submissionMode);

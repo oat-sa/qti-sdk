@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
@@ -35,9 +34,7 @@ use qtism\common\collections\AbstractCollection;
 class JumpCollection extends AbstractCollection {
     
     /**
-     * Check the type of $value to ensure it has the correct datatype.
-     * 
-     * @throws InvalidArgumentException If $value is not a Jump object.
+     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value) {
         if (!$value instanceof Jump) {

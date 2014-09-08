@@ -19,13 +19,12 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 use \OutOfBoundsException;
 
 /**
@@ -39,7 +38,7 @@ class SelectableRouteCollection extends AbstractCollection {
 	/**
 	 * Check if $value is a Route object
 	 * 
-	 * @throws InvalidArgumentException If $value is not a Route object.
+	 * @throws \InvalidArgumentException If $value is not a Route object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof SelectableRoute) {
@@ -54,7 +53,7 @@ class SelectableRouteCollection extends AbstractCollection {
 	 *
 	 * @param int $position1 A RouteItem position.
 	 * @param int $position2 A RouteItem position.
-	 * @throws OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
+	 * @throws \OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
 	 */
 	public function swap($position1, $position2) {
 	    $routes = &$this->getDataPlaceHolder();
@@ -77,7 +76,7 @@ class SelectableRouteCollection extends AbstractCollection {
 	/**
 	 * Insert the SelectableRoute object $route at $position.
 	 *
-	 * @param SelectableRoute $route A SelectableRoute object.
+	 * @param \qtism\runtime\tests\SelectableRoute $route A SelectableRoute object.
 	 * @param integer $position An integer index where $route must be placed.
 	 */
 	public function insertAt(SelectableRoute $route, $position) {

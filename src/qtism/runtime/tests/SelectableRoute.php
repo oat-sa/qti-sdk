@@ -19,12 +19,9 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
-namespace qtism\runtime\tests;
 
-use \OutOfBoundsException;
+namespace qtism\runtime\tests;
 
 /**
  * The SelectableRoute class aims at representing a Route which is

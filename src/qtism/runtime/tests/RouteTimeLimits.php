@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\tests;
@@ -40,8 +38,8 @@ class RouteTimeLimits {
     /**
      * Create a new RouteTimeLimts object.
      * 
-     * @param TimeLimits $timeLimits
-     * @param QtiComponent $owner The owner component of the TimeLimits to be represented.
+     * @param \qtism\data\TimeLimits $timeLimits
+     * @param \qtism\data\QtiComponent $owner The owner component of the TimeLimits to be represented.
      */
     public function __construct(TimeLimits $timeLimits, QtiComponent $owner) {
         $this->setTimeLimits($timeLimits);
@@ -51,21 +49,21 @@ class RouteTimeLimits {
     /**
      * The owner component of the TimeLimits.
      *  
-     * @var QtiComponent
+     * @var \qtism\data\QtiComponent
      */
     private $owner;
     
     /**
      * The encapsulated TimeLimits object.
      * 
-     * @var TimeLimits
+     * @var \qtism\data\TimeLimits
      */
     private $timeLimits;
     
     /**
      * Get the owner component object of the TimeLimits.
      * 
-     * @return QtiComponent A QtiComponent object.
+     * @return \qtism\data\QtiComponent A QtiComponent object.
      */
     public function getOwner() {
         return $this->owner;
@@ -74,7 +72,7 @@ class RouteTimeLimits {
     /**
      * Set the owner component object of the TimeLimits.
      * 
-     * @param QtiComponent $owner A QtiComponent object.
+     * @param \qtism\data\QtiComponent $owner A QtiComponent object.
      */
     public function setOwner(QtiComponent $owner) {
         $this->owner = $owner;
@@ -83,7 +81,7 @@ class RouteTimeLimits {
     /**
      * Get the encapsulated TimeLimits object.
      * 
-     * @return TimeLimits
+     * @return \qtism\data\TimeLimits
      */
     public function getTimeLimits() {
         return $this->timeLimits;
@@ -92,7 +90,7 @@ class RouteTimeLimits {
     /**
      * Set the encapsulated TimeLimits object.
      * 
-     * @param TimeLimits $timeLimits
+     * @param \qtism\data\TimeLimits $timeLimits
      */
     public function setTimeLimits(TimeLimits $timeLimits) {
         $this->timeLimits = $timeLimits;
@@ -102,9 +100,9 @@ class RouteTimeLimits {
      * Create new RouteTimeLimits object from a base TimeLimits object
      * and its owner component.
      * 
-     * @param TimeLimits $timeLimits A TimeLimits object.
-     * @param QtiComponent $owner The owner component of $timeLimits.
-     * @return RouteTimeLimits A new RouteTimeLimits object.
+     * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
+     * @param \qtism\data\QtiComponent $owner The owner component of $timeLimits.
+     * @return \qtism\runtime\tests\RouteTimeLimits A new RouteTimeLimits object.
      */
     public static function createFromTimeLimits(TimeLimits $timeLimits, QtiComponent $owner) {
         return new static($timeLimits, $owner);

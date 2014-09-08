@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\tests;
@@ -37,9 +35,7 @@ use \InvalidArgumentException;
 class RouteTimeLimitsCollection extends AbstractCollection {
     
     /**
-     * Check if a given $value is an instance of RouteTimeLimits.
-     * 
-     * @throws InvalidArgumentException If $value is not an instance of RouteTimeLimit.
+     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value) {
         if (!$value instanceof RouteTimeLimits) {

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
@@ -36,9 +35,7 @@ use \InvalidArgumentException;
 class RouteItemCollection extends AbstractCollection {
     
     /**
-     * Check whether $value is an instance of RouteItem.
-     * 
-     * @throws InvalidArgumentException If $value is not an instance of RouteItem.
+     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value) {
         if (!$value instanceof RouteItem) {

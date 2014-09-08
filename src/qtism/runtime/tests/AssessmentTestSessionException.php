@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use \Exception;
@@ -185,10 +184,9 @@ class AssessmentTestSessionException extends Exception {
      * 
      * @param string $message A human-readable message describing the error.
      * @param integer $code A code to enable client-code to identify the error programatically.
-     * @param Exception $previous An optional previous exception.
+     * @param \Exception $previous An optional previous exception.
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
-    
 }

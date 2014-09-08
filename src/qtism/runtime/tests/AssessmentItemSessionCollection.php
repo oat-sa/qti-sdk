@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
@@ -36,6 +35,9 @@ use \InvalidArgumentException;
  */
 class AssessmentItemSessionCollection extends AbstractCollection {
     
+    /**
+     * @see \qtism\common\collections\AbstractCollection::checkType()
+     */
     protected function checkType($value) {
         if (!$value instanceof AssessmentItemSession) {
             $msg = "The AssessmentItemSessionCollection class only accepts to store AssessmentItemSession objects.";

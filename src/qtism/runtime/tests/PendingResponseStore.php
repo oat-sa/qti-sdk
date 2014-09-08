@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\data\AssessmentItemRef;
@@ -40,7 +39,7 @@ class PendingResponseStore {
     /**
      * A map of arrays indexed by AssessmentItemRef objects.
      * 
-     * @var SplObjectStorage
+     * @var \SplObjectStorage
      */
     private $assessmentItemRefMap;
     
@@ -51,7 +50,7 @@ class PendingResponseStore {
     /**
      * Get the AssessmentItemRef map.
      * 
-     * @return SplObjectStorage
+     * @return \SplObjectStorage
      */
     protected function getAssessmentItemRefMap() {
         return $this->assessmentItemRefMap;
@@ -60,7 +59,7 @@ class PendingResponseStore {
     /**
      * Set the AssessmentItemRef map.
      * 
-     * @param SplObjectStorage $assessmentItemRefMap
+     * @param \SplObjectStorage $assessmentItemRefMap
      */
     protected function setAssessmentItemRefMap(SplObjectStorage $assessmentItemRefMap) {
         $this->assessmentItemRefMap = $assessmentItemRefMap;
@@ -69,7 +68,7 @@ class PendingResponseStore {
     /**
      * Get all the PendingResponses objects held by the store.
      * 
-     * @return PendingResponsesCollection A collection of PendingResponses objects held by the store.
+     * @return \qtism\runtime\tests\PendingResponsesCollection A collection of PendingResponses objects held by the store.
      */
     public function getAllPendingResponses() {
         $collection = new PendingResponsesCollection();
@@ -86,7 +85,7 @@ class PendingResponseStore {
     /**
      * Add a PendingResponse object to the store.
      * 
-     * @param PendingResponses $pendingResponses
+     * @param \qtism\runtime\tests\PendingResponses $pendingResponses
      */
     public function addPendingResponses(PendingResponses $pendingResponses) {
         $map = $this->getAssessmentItemRefMap();
@@ -107,7 +106,7 @@ class PendingResponseStore {
      * Whether the store holds a PendingResponses object related to $assessmentItemRef and
      * $occurence.
      * 
-     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param integer $occurence An occurence number.
      */
     public function hasPendingResponses(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
@@ -118,9 +117,9 @@ class PendingResponseStore {
     /**
      * Get the PendingResponses object related to $assessmentItemRef.
      * 
-     * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param integer $occurence An occurence number.
-     * @return false|PendingResponses
+     * @return false|\qtism\runtime\tests\PendingResponses
      */
     public function getPendingResponses(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
         $returnValue = false;

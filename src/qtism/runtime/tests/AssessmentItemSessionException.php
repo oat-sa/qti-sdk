@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use \Exception;
@@ -111,9 +110,9 @@ class AssessmentItemSessionException extends Exception {
 	 * Create a new AssessmentItemSessionException object.
 	 * 
 	 * @param string $message A human-readable message describing the nature of the exception.
-	 * @param AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
+	 * @param \qtism\runtime\tests\AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
 	 * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class. 
-	 * @param Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
+	 * @param \Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
 	 */
 	public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null) {
 	    parent::__construct($message, $code, $previous);
@@ -123,7 +122,7 @@ class AssessmentItemSessionException extends Exception {
 	/**
 	 * Set the AssessmentItemSource object the exception comes from.
 	 * 
-	 * @param AssessmentItemSession $source An AssessmentItemSession object.
+	 * @param \qtism\runtime\tests\AssessmentItemSession $source An AssessmentItemSession object.
 	 */
 	public function setSource(AssessmentItemSession $source) {
 	    $this->source = $source;
@@ -132,7 +131,7 @@ class AssessmentItemSessionException extends Exception {
 	/**
 	 * Get the AssessmentItemSource object the exception comes from.
 	 * 
-	 * @return AssessmentItemSession An AssessmentItemSession object.
+	 * @return \qtism\runtime\tests\AssessmentItemSession An AssessmentItemSession object.
 	 */
 	public function getSource() {
 	    return $this->source;

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\data\SubmissionMode;
@@ -78,7 +77,7 @@ abstract class AbstractSessionManager {
     /**
      * Create a new AssessmentTestSession object.
      * 
-     * @return AssessmentTestSession An AssessmentTestSession object.
+     * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
      */
     public function createAssessmentTestSession(AssessmentTest $test, Route $route = null) {
         $session = $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route));
@@ -89,29 +88,30 @@ abstract class AbstractSessionManager {
     /**
      * Contains the logic of instantiating the appropriate AssessmentTestSession implementation.
      * 
-     * @param AssessmentTest $assessmentTest
-     * @param Route $route
-     * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
+     * @param \qtism\data\AssessmentTest $assessmentTest
+     * @param \qtism\runtime\tests\Route $route
+     * @return \qtism\runtime\tests\AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
     abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route);
     
     /**
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
      * 
-     * @param IAssessmentItem $assessmentItem
+     * @param \qtism\data\IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
-     * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
+     * @return \qtism\runtime\tests\AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
     
     /**
+     * Create an AssessmentItemSession object.
      * 
-     * @param IAssessmentItem $assessmentItem
+     * @param \qtism\data\IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param A value from the SubmissionMode enumeration $submissionMode.
+     * @param integer $submissionMode A value from the SubmissionMode enumeration $submissionMode.
      * 
-     * @return AssessmentItemSession
+     * @return \qtism\runtime\tests\AssessmentItemSession
      */
     public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
         $session = $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
@@ -123,9 +123,9 @@ abstract class AbstractSessionManager {
      * Contains the Route create logic depending on whether or not
      * an optional Route to be used is given or not.
      * 
-     * @param AssessmentTest $test
-     * @param Route $route
-     * @return Route
+     * @param \qtism\data\AssessmentTest $test
+     * @param \qtism\runtime\tests\Route $route
+     * @return \qtism\runtime\tests\Route
      */
     protected function getRoute(AssessmentTest $test, Route $route = null) {
         return (is_null($route) === true) ? $this->createRoute($test) : $route;
@@ -135,7 +135,7 @@ abstract class AbstractSessionManager {
      * Contains the logic of configuring a newly instantiated AssessmentTestSession object
      * with additional configuration values held by the factory.
      * 
-     * @param AssessmentTestSession $assessmentTestSession
+     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession
      */
     protected function configureAssessmentTestSession(AssessmentTestSession $assessmentTestSession) {
         return;
@@ -145,7 +145,7 @@ abstract class AbstractSessionManager {
      * Contains the logic of configuring a newly instantiated AssessmentItemSession object
      * with additional configuration values held by the factory.
      * 
-     * @param AssessmentItemSession $assessmentItemSession
+     * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession
      */
     protected function configureAssessmentItemSession(AssessmentItemSession $assessmentItemSession) {
         return;
@@ -155,8 +155,8 @@ abstract class AbstractSessionManager {
      * Contains the logic of creating the Route of a brand new AssessmentTestSession object.
      * The resulting Route object will be injected in the created AssessmentTestSession.
      *
-     * @param AssessmentTest $test
-     * @return Route A newly instantiated Route object.
+     * @param \qtism\data\AssessmentTest $test
+     * @return \qtism\runtime\tests\Route A newly instantiated Route object.
      */
     protected function createRoute(AssessmentTest $test) {
         $routeStack = array();

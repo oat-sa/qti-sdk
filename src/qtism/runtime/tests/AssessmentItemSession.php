@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\utils\Time;
@@ -232,7 +231,7 @@ class AssessmentItemSession extends State {
 	
 	/**
 	 * 
-	 * @var AbstractSessionManager
+	 * @var \qtism\runtime\tests\AbstractSessionManager
 	 */
 	private $sessionManager;
 	
@@ -244,11 +243,11 @@ class AssessmentItemSession extends State {
 	 * 
 	 * * The AssessmentItemSession object is set up with a default ItemSessionControl object. If you want a specific ItemSessionControl object to rule the session, use the setItemSessionControl() method.
 	 * 
-	 * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
-	 * @param AbstractSessionManager $sessionManager
+	 * @param \qtism\data\IAssessmentItem $assessmentItem The description of the item that the session handles.
+	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager
 	 * @param integer $navigationMode The current navigation mode. Default is LINEAR.
 	 * @param integer $submissionMode The current submission mode. Default is INDIVIDUAL.
-	 * @throws InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
+	 * @throws \InvalidArgumentException If $navigationMode is not a value from the NavigationMode enumeration.
 	 */
 	public function __construct(IAssessmentItem $assessmentItem, AbstractSessionManager $sessionManager, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		parent::__construct();
@@ -291,7 +290,7 @@ class AssessmentItemSession extends State {
 	 * mode context, the maxAttempt attribute of $itemSessionControl is
 	 * automatically set to 1.
 	 * 
-	 * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
+	 * @param \qtism\data\ItemSessionControl $itemSessionControl An ItemSessionControl object.
 	 */
 	public function setItemSessionControl(ItemSessionControl $itemSessionControl) {
 		$this->itemSessionControl = $itemSessionControl;
@@ -300,7 +299,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Get the ItemSessionControl object which describes the way to control the item session.
 	 * 
-	 * @return ItemSessionControl An ItemSessionControl object.
+	 * @return \qtism\data\ItemSessionControl An ItemSessionControl object.
 	 */
 	public function getItemSessionControl() {
 		return $this->itemSessionControl;
@@ -309,7 +308,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Set the TimeLimits to be applied to the session.
 	 * 
-	 * @param TimeLimits $timeLimits A TimeLimits object or null if no time limits must be applied.
+	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object or null if no time limits must be applied.
 	 */
 	public function setTimeLimits(TimeLimits $timeLimits = null) {
 	    $this->timeLimits = $timeLimits;
@@ -318,7 +317,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Get the TimeLimits to be applied to the session.
 	 * 
-	 * @return TimeLimits A TimLimits object or null if no time limits must be applied.
+	 * @return \qtism\data\TimeLimits A TimLimits object or null if no time limits must be applied.
 	 */
 	public function getTimeLimits() {
 	    return $this->timeLimits;
@@ -327,7 +326,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Set the timing reference.
 	 * 
-	 * @param DateTime $timeReference A DateTime object.
+	 * @param \DateTime $timeReference A DateTime object.
 	 */
 	public function setTimeReference(DateTime $timeReference) {
 	    $this->timeReference = $timeReference;
@@ -336,7 +335,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Get the timing reference.
 	 * 
-	 * @return DateTime A DateTime object.
+	 * @return \DateTime A DateTime object.
 	 */
 	public function getTimeReference() {
 	    return $this->timeReference;
@@ -432,7 +431,7 @@ class AssessmentItemSession extends State {
 	 * Set the IAssessmentItem object which describes the item to be handled
 	 * by the session.
 	 * 
-	 * @param IAssessmentItem $assessmentItem An IAssessmentItem object.
+	 * @param \qtism\data\IAssessmentItem $assessmentItem An IAssessmentItem object.
 	 */
 	public function setAssessmentItem(IAssessmentItem $assessmentItem) {
 	    $this->assessmentItem = $assessmentItem;
@@ -442,7 +441,7 @@ class AssessmentItemSession extends State {
 	 * Get the IAssessmentItem object which describes the item to be handled by the
 	 * session.
 	 * 
-	 * @return IAssessmentItem An IAssessmentItem object.
+	 * @return \qtism\data\IAssessmentItem An IAssessmentItem object.
 	 */
 	public function getAssessmentItem() {
 	    return $this->assessmentItem;
@@ -452,7 +451,7 @@ class AssessmentItemSession extends State {
 	 * Set whether a candidate is currently performing an attempt.
 	 * 
 	 * @param boolean $attempting
-	 * @throws InvalidArgumentException If $attempting is not a boolean value.
+	 * @throws \InvalidArgumentException If $attempting is not a boolean value.
 	 */
 	public function setAttempting($attempting) {
         $this->attempting = $attempting;
@@ -470,7 +469,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Get the session manager.
 	 * 
-	 * @return AbstractSessionManager
+	 * @return \qtism\runtime\tests\AbstractSessionManager
 	 */
 	protected function getSessionManager() {
 	    return $this->sessionManager;
@@ -479,12 +478,17 @@ class AssessmentItemSession extends State {
 	/**
 	 * Set the session manager.
 	 * 
-	 * @param AbstractSessionManager $sessionManager
+	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager
 	 */
 	protected function setSessionManager(AbstractSessionManager $sessionManager) {
 	    $this->sessionManager = $sessionManager;
 	}
 	
+	/**
+	 * Set the current time of the running assessment item session.
+	 * 
+	 * @param \DateTime $time
+	 */
 	public function setTime(DateTime $time) {
 	    
 	    // Force time to be UTC.
@@ -565,7 +569,7 @@ class AssessmentItemSession extends State {
 	 * If the attempt to begin is the first one of the session, response variables are 
 	 * applied their default value.
 	 *
-	 * @throws AssessmentItemSessionException
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException
 	 */
 	public function beginAttempt() {
 	    
@@ -630,10 +634,10 @@ class AssessmentItemSession extends State {
 	 * * If the item is non-adaptive, and the number of attempts is exceeded, the item session ends and the completionStatus is set to 'completed'.
 	 * * Otherwise, the item session goes to the SUSPENDED state, waiting for a next attempt.
 	 * 
-	 * @param State $responses (optional) A State composed by the candidate's responses to the item.
+	 * @param \qtism\runtime\common\State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
 	 * @param boolean $forceLateSubmission
-	 * @throws AssessmentItemSessionException
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException
 	 */
 	public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false) {
 	    
@@ -797,7 +801,7 @@ class AssessmentItemSession extends State {
 	 * Suspend the item session. The state will switch to SUSPENDED and the
 	 * 'duration' built-in variable is updated.
 	 * 
-	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
 	 */
 	public function suspend() {
 	    
@@ -815,7 +819,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Set the item session in INTERACTING state.
 	 * 
-	 * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INITIAL nor SUSPENDED nor MODAL_FEEDBACK nor INTERACTING.
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INITIAL nor SUSPENDED nor MODAL_FEEDBACK nor INTERACTING.
 	 */
 	public function interact() {
 	    
@@ -835,7 +839,7 @@ class AssessmentItemSession extends State {
 	/**
 	 * Get the time that remains to the candidate to submit its responses.
 	 * 
-	 * @return false|Duration A Duration object or false if there is no time limit.
+	 * @return false|\qtism\common\datatypes\Duration A Duration object or false if there is no time limit.
 	 */
 	public function getRemainingTime() {
 	    
@@ -878,7 +882,7 @@ class AssessmentItemSession extends State {
 	 * Skip the item of the current item session. All response variables involved in the item session
 	 * will be set to their default value or NULL and submitted.
 	 * 
-	 * @throws AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
 	 */
 	public function skip() {
 	    // allowSkipping is taken into account only if submission mode is INDIVIDUAL.
@@ -944,7 +948,7 @@ class AssessmentItemSession extends State {
 	 * it is certain that there is no correct response yet in the session.
 	 * 
 	 * @return boolean
-	 * @throws AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
 	 */
 	public function isCorrect() {
 	    
@@ -1075,7 +1079,7 @@ class AssessmentItemSession extends State {
 	 * Get the ResponseVariable objects contained in the AssessmentItemSession.
 	 * 
 	 * @param boolean $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
-	 * @return State A State object composed exclusively with ResponseVariable objects.
+	 * @return \qtism\runtime\common\State A State object composed exclusively with ResponseVariable objects.
 	 */
 	public function getResponseVariables($builtIn = true) {
 	    
@@ -1095,7 +1099,7 @@ class AssessmentItemSession extends State {
 	 * Get the OutcomeVariable objects contained in the AssessmentItemSession.
 	 * 
 	 * @param boolean $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
-	 * @return State A State object composed exclusively with OutcomeVariable objects.
+	 * @return \qtism\runtime\common\State A State object composed exclusively with OutcomeVariable objects.
 	 */
 	public function getOutcomeVariables($builtIn = true) {
 	    
@@ -1114,17 +1118,26 @@ class AssessmentItemSession extends State {
 	/**
 	 * This protected method contains the logic of creating a new ResponseProcessingEngine object.
 	 * 
-	 * @param ResponseProcessing $responseProcessing
-	 * @return ResponseProcessingEngine
+	 * @param \qtism\data\processing\ResponseProcessing $responseProcessing
+	 * @return \qtism\runtime\processing\ResponseProcessingEngine
 	 */
 	protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing) {
 	    return new ResponseProcessingEngine($responseProcessing, $this);
 	}
 	
+	/**
+	 * Event triggered on duration update. The $callback function will
+	 * be executed.
+	 * 
+	 * @param array $callback
+	 */
 	public function onDurationUpdate(array $callback) {
 	    $this->onDurationUpdate[] = $callback;
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::__clone()
+	 */
 	public function __clone() {
 	    $newData = array();
 	    $oldData = $this->getDataPlaceHolder();

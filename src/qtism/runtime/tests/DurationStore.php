@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\enums\Cardinality;
-
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
@@ -46,7 +44,7 @@ class DurationStore extends State {
      * * has a 'duration' QTI baseType.
      * * has 'single' QTI cardinality.
      * 
-     * @throws InvalidArgumentException If one or more of the conditions above are not respected.
+     * @throws \InvalidArgumentException If one or more of the conditions above are not respected.
      */
     protected function checkType($value) {
         parent::checkType($value);
@@ -78,6 +76,5 @@ class DurationStore extends State {
             
             throw new InvalidArgumentException($msg);
         }
-        
     }
 }

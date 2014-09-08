@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\tests;
 
@@ -56,7 +54,7 @@ class OrderingException extends Exception {
      * 
      * @param string $message A human-readable message describing the error while ordering child elements of an AssessmentSection.
      * @param integer $code The code that enables client-code to identify the nature of the error efficiently.
-     * @param Exception $previous An optional previous Exception object.
+     * @param \Exception $previous An optional previous Exception object.
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);

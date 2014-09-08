@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\data\SectionPart;
@@ -44,8 +43,8 @@ class BasicSelection extends AbstractSelection {
      * Select the child elements of the AssessmentSection object
      * held by the Selection object.
      * 
-     * @return SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
-     * @throws SelectionException If the select attribute of the Selection exceeds the number of child elements but the withReplacement attribute is set to true.
+     * @return \qtism\runtime\tests\SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
+     * @throws \qtism\runtime\tests\SelectionException If the select attribute of the Selection exceeds the number of child elements but the withReplacement attribute is set to true.
      */
     public function select() {
         $assessmentSection = $this->getAssessmentSection();

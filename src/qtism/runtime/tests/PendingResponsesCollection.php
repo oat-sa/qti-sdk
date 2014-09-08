@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\tests;
 
@@ -35,6 +33,9 @@ use \InvalidArgumentException;
  */
 class PendingResponsesCollection extends AbstractCollection {
     
+    /**
+     * @see \qtism\common\collections\AbstractCollection::checkType()
+     */
     protected function checkType($value) {
         if (!$value instanceof PendingResponses) {
             $msg = "PendingResponsesCollection objects only accept to store PendingResponses objects.";

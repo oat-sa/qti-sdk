@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
+
 namespace qtism\runtime\tests;
 
 use qtism\common\collections\AbstractCollection;
@@ -38,9 +35,7 @@ use \InvalidArgumentException;
 class TimeConstraintCollection extends AbstractCollection {
     
     /**
-     * Checks whether or not $value is an instance of TimeConstraint.
-     * 
-     * @throws InvalidArgumentException If $value is not an instance of TimeConstraint.
+     * @see \qtism\common\collections\AbstractCollection::checkType()
      */
     protected function checkType($value) {
         if (!$value instanceof TimeConstraint) {

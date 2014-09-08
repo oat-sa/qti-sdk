@@ -19,13 +19,20 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\tests;
 
+/**
+ * A basic implementation of QTI ordering.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class BasicOrdering extends AbstractOrdering {
     
+    /**
+     * @see \qtism\runtime\tests\AbstractOrdering::order()
+     */
     public function order() {
         
         if (($ordering = $this->getAssessmentSection()->getOrdering()) !== null && $ordering->getShuffle() === true) {
