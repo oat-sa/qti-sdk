@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\processing;
 
 use qtism\runtime\common\Processable;
@@ -55,8 +54,8 @@ class ResponseProcessingException extends ProcessingException {
 	/**
 	 * Set the source of the error.
 	 * 
-	 * @param Processable $source The source of the error.
-	 * @throws InvalidArgumentException If $source is not a ResponseProcessingEngine object.
+	 * @param \qtism\runtime\common\Processable $source The source of the error.
+	 * @throws \InvalidArgumentException If $source is not a ResponseProcessingEngine object.
 	 */
 	public function setSource(Processable $source) {
 		if ($source instanceof ResponseProcessingEngine) {

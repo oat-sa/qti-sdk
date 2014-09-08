@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\processing;
 
@@ -49,9 +47,9 @@ class ResponseProcessingEngine extends AbstractEngine {
 	/**
 	 * Create a new ResponseProcessingEngine object.
 	 * 
-	 * @param QtiComponent $responseProcessing
-	 * @param State $context
-	 * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
+	 * @param \qtism\data\QtiComponent $responseProcessing
+	 * @param \qtism\runtime\common\State $context
+	 * @throws \InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
 	 */
 	public function __construct(QtiComponent $responseProcessing, State $context = null) {
 		parent::__construct($responseProcessing, $context);
@@ -68,8 +66,8 @@ class ResponseProcessingEngine extends AbstractEngine {
 	/**
 	 * Set the ResponseProcessing object to be executed.
 	 * 
-	 * @param QtiComponent A ResponseProcessing object.
-	 * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
+	 * @param \qtism\data\QtiComponent $responseProcessing A ResponseProcessing object.
+	 * @throws \InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
 	 */
 	public function setComponent(QtiComponent $responseProcessing) {
 		if ($responseProcessing instanceof ResponseProcessing) {
@@ -86,7 +84,7 @@ class ResponseProcessingEngine extends AbstractEngine {
 	 * 
 	 * @param string $uri The template URI (Uniform Resource Identifier).
 	 * @param string $url The actual template URL, i.e. where to find the file containing the template markup.
-	 * @throws InvalidArgumentException If $uri or $url are not strings.
+	 * @throws \InvalidArgumentException If $uri or $url are not strings.
 	 */
 	public function addTemplateMapping($uri, $url) {
 		
@@ -109,7 +107,7 @@ class ResponseProcessingEngine extends AbstractEngine {
 	 * is found for $uri, nothing happens.
 	 * 
 	 * @param string $uri The $uri you want to remove the mapping.
-	 * @throws InvalidArgumentException If $uri is not a string.
+	 * @throws \InvalidArgumentException If $uri is not a string.
 	 */
 	public function removeTemplateMapping($uri) {
 		
@@ -143,7 +141,7 @@ class ResponseProcessingEngine extends AbstractEngine {
 	 * * ExpressionProcessingException: If an Expression within a ResponseRule produces an error.
 	 * * ResponseProcessingException: If there is a problem with the response processing template processing bound to the ResponseProcessing.
 	 * 
-	 * @throws ProcessingException
+	 * @throws \qtism\runtime\common\ProcessingException
 	 */
 	public function process() {
 		// @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.

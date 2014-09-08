@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\processing;
 
 use qtism\runtime\common\Processable;
@@ -39,8 +38,8 @@ class PrintedVariableProcessingException extends ProcessingException {
 	/**
 	 * Set the source of the error.
 	 * 
-	 * @param Processable $source The source of the error.
-	 * @throws InvalidArgumentException If $source is not a PrintedVariableEngine object.
+	 * @param \qtism\runtime\common\Processable $source The source of the error.
+	 * @throws \InvalidArgumentException If $source is not a PrintedVariableEngine object.
 	 */
 	public function setSource(Processable $source) {
 		if ($source instanceof PrintedVariableEngine) {

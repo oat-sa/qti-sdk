@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
+
 namespace qtism\runtime\processing;
 
 use qtism\common\datatypes\Integer;
@@ -87,8 +86,8 @@ class PrintedVariableEngine extends AbstractEngine {
      * Set the PrintedVariable object to be executed by the engine depending
      * on the current context.
      *
-     * @param QtiComponent $printedVariable A PrintedVariable object.
-     * @throws InvalidArgumentException If $printedVariable is not a PrintedVariable object.
+     * @param \qtism\data\QtiComponent $printedVariable A PrintedVariable object.
+     * @throws \InvalidArgumentException If $printedVariable is not a PrintedVariable object.
      */
     public function setComponent(QtiComponent $printedVariable) {
         if ($printedVariable instanceof PrintedVariable) {
@@ -107,8 +106,8 @@ class PrintedVariableEngine extends AbstractEngine {
      * * If the value to format is an OrderedContainer, and no 'index' attribue value is given, the whole container is displayed.
      * * If no specific precision is given for a float display, the precision will be by default 6.
      * 
-     * @return TextRun A processed PrintedVariable as a TextRun object or the NULL value if the variable's value is NULL.
-     * @throws PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
+     * @return \qtism\data\content\TextRun A processed PrintedVariable as a TextRun object or the NULL value if the variable's value is NULL.
+     * @throws \qtism\runtime\processing\PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
     public function process() {
         
@@ -180,7 +179,7 @@ class PrintedVariableEngine extends AbstractEngine {
      * Processes all values of an ordered/multiple container and merge
      * them into a single string.
      * 
-     * @param Variable $variable The ordered/multiple container Variable to process.
+     * @param \qtism\runtime\common\Variable $variable The ordered/multiple container Variable to process.
      * @return string All the values delimited by printedVariable->delimiter.
      */
     private function processOrderedMultiple(Variable $variable) {
@@ -198,7 +197,7 @@ class PrintedVariableEngine extends AbstractEngine {
      * Processes all values of a record container and merge them into
      * a single string.
      * 
-     * @param RecordContainer $variable The record to process.
+     * @param \qtism\runtime\common\RecordContainer $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
     private function processRecord(Variable $variable) {
@@ -218,7 +217,7 @@ class PrintedVariableEngine extends AbstractEngine {
      * 
      * @param integer $baseType The baseType of the value to process.
      * @param mixed $value A QTI Runtime compliant value.
-     * @throws PrintedVariableProcessingException If the baseType is unknown.
+     * @throws \qtism\runtime\processing\PrintedVariableProcessingException If the baseType is unknown.
      * @return string
      */
     private function processValue($baseType, $value) {
