@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an NumberSelected object in its DOMElement equivalent.
 	 * 
-	 * @param QtiComponent A NumberSelected object.
-	 * @return DOMElement The corresponding numberSelected QTI element.
+	 * @param \qtism\data\QtiComponent $component A NumberSelected object.
+	 * @return \DOMElement The corresponding numberSelected QTI element.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -49,8 +48,8 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an numberSelected QTI element in its NumberSelected object equivalent.
 	 * 
-	 * @param DOMElement A DOMElement object.
-	 * @return QtiComponent The corresponding NumberSelected object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent The corresponding NumberSelected object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);
@@ -62,6 +61,9 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'numberSelected';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,7 +37,7 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an NumberIncorrect object in its DOMElement equivalent.
 	 * 
-	 * @param QtiComponent A NumberIncorrect object.
+	 * @param \qtism\data\QtiComponent $component A NumberIncorrect object.
 	 * @return DOMElement The corresponding numberIncorrect QTI element.
 	 */
 	protected function marshall(QtiComponent $component) {
@@ -49,8 +48,8 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an numberIncorrect QTI element in its NumberIncorrect object equivalent.
 	 * 
-	 * @param DOMElement A DOMElement object.
-	 * @return QtiComponent The corresponding NumberIncorrect object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent The corresponding NumberIncorrect object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);
@@ -62,6 +61,9 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'numberIncorrect';
 	}

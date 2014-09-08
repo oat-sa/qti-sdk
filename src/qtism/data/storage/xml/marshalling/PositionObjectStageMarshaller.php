@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\PositionObjectInteractionCollection;
@@ -39,9 +38,9 @@ class PositionObjectStageMarshaller extends Marshaller {
 	/**
 	 * Marshall an PositionObjectStage object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A PositionObjectStage object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A PositionObjectStage object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('positionObjectStage');
@@ -58,9 +57,9 @@ class PositionObjectStageMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an positionObjectStage element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A PositionObjectStage object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A PositionObjectStage object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -91,6 +90,9 @@ class PositionObjectStageMarshaller extends Marshaller {
 	    }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'positionObjectStage';
 	}

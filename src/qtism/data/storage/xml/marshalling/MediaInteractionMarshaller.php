@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\MediaInteraction;
@@ -39,9 +38,9 @@ class MediaInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall a MediaInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A MediaInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A MediaInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('mediaInteraction');
@@ -77,9 +76,9 @@ class MediaInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a MediaInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A MediaInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A MediaInteraction object.
+	 * @throws \UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -136,6 +135,9 @@ class MediaInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'mediaInteraction';
 	}

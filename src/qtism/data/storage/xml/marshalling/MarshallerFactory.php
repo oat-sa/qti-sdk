@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
@@ -224,11 +223,11 @@ class MarshallerFactory {
 	 * The newly created marshaller will be set up with the MarshallerFactory itself as its MarshallerFactory
 	 * object (yes, we know, this is highly recursive but necessary x)).
 	 * 
-	 * @param DOMElement|QtiComponent $object A QtiComponent or DOMElement object you want to get the corresponding Marshaller object.
+	 * @param \DOMElement|\qtism\data\QtiComponent $object A QtiComponent or DOMElement object you want to get the corresponding Marshaller object.
 	 * @param array $args An optional array of arguments to be passed to the Marshaller constructor.
-	 * @throws InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
-	 * @throws RuntimeException If no Marshaller object can be created for the given $object.
-	 * @return Marshaller The corresponding Marshaller object.
+	 * @throws \InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
+	 * @throws \RuntimeException If no Marshaller object can be created for the given $object.
+	 * @return \qtism\data\storage\xml\marshalling\Marshaller The corresponding Marshaller object.
 	 */
 	public function createMarshaller($object, array $args = array()) {
 		

@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\enums\BaseType;
-
 use qtism\data\QtiComponent;
 use qtism\data\TimeLimits;
 use qtism\data\storage\Utils as StorageUtils;
@@ -42,8 +40,8 @@ class TimeLimitsMarshaller extends Marshaller {
 	/**
 	 * Marshall a TimeLimits object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TimeLimits object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A TimeLimits object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -64,9 +62,9 @@ class TimeLimitsMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI timeLimits element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TimeLimits object.
-	 * @throws UnmarshallingException If the attribute 'allowLateSubmission' is not a valid boolean value.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TimeLimits object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the attribute 'allowLateSubmission' is not a valid boolean value.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -87,6 +85,9 @@ class TimeLimitsMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'timeLimits';
 	}

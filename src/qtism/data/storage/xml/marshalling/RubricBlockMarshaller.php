@@ -20,13 +20,10 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\FlowStaticCollection;
-
 use qtism\data\content\FlowStatic;
-
 use qtism\data\content\Block;
 use qtism\data\content\Stylesheet;
 use qtism\data\content\BlockCollection;
@@ -49,8 +46,8 @@ class RubricBlockMarshaller extends Marshaller {
 	/**
 	 * Marshall a RubricBlock object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A RubricBlock object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A RubricBlock object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -91,9 +88,9 @@ class RubricBlockMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI rubrickBlock element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return RubricBlock A RubricBlock object.
-	 * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\content\RubricBlock A RubricBlock object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'href' is missing from $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -156,6 +153,9 @@ class RubricBlockMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'rubricBlock';
 	}

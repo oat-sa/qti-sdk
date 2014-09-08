@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,8 +38,8 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an OutcomeMinimum object in its DOMElement equivalent.
 	 * 
-	 * @param QtiComponent A OutcomeMinimum object.
-	 * @return DOMElement The corresponding outcomeMinimum QTI element.
+	 * @param \qtism\data\QtiComponent A OutcomeMinimum object.
+	 * @return \DOMElement The corresponding outcomeMinimum QTI element.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -57,8 +56,8 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall a outcomeMinimum QTI element in its OutcomeMinimum object equivalent.
 	 * 
-	 * @param DOMElement A DOMElement object.
-	 * @return QtiComponent The corresponding OutcomeMinimum object.
+	 * @param \DOMElement A DOMElement object.
+	 * @return \qtism\data\QtiComponent The corresponding OutcomeMinimum object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);

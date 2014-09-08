@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\xhtml\tables\TrCollection;
@@ -38,9 +37,9 @@ class TablePartMarshaller extends Marshaller {
 	/**
 	 * Marshall a Tbody/Thead/Tfoot object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TBody/Thead/Tfoot object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A TBody/Thead/Tfoot object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -57,9 +56,9 @@ class TablePartMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML tbody/thead/tfoot element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Tbody/Thead/Tfoot object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Tbody/Thead/Tfoot object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    $trs = new TrCollection();
@@ -82,6 +81,9 @@ class TablePartMarshaller extends Marshaller {
 		return $component;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -42,9 +41,9 @@ class RoundToMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a RoundTo object into a QTI roundTo element.
 	 * 
-	 * @param QtiComponent The RoundTo object to marshall.
-	 * @param array An array of child DOMEelement objects.
-	 * @return DOMElement The marshalled QTI roundTo element.
+	 * @param \qtism\data\QtiComponent $component The RoundTo object to marshall.
+	 * @param array $elements An array of child DOMEelement objects.
+	 * @return \DOMElement The marshalled QTI roundTo element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -62,10 +61,10 @@ class RoundToMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a QTI roundTo operator element into a RoundTo object.
 	 *
-	 * @param DOMElement The roundTo element to unmarshall.
-	 * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return QtiComponent A RoundTo object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element The roundTo element to unmarshall.
+	 * @param \qtism\data\QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+	 * @return \qtism\data\QtiComponent A RoundTo object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (($figures = static::getDOMElementAttributeAs($element, 'figures', 'string')) !== null) {

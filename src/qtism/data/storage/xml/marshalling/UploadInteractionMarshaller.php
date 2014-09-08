@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\UploadInteraction;
-
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 use \DOMElement;
@@ -40,9 +38,9 @@ class UploadInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall an UploadInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An UploadInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component An UploadInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('uploadInteraction');
@@ -67,9 +65,9 @@ class UploadInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an uploadInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An UploadInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An UploadInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -102,6 +100,9 @@ class UploadInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'uploadInteraction';
 	}

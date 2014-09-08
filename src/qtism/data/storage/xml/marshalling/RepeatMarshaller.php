@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -41,9 +40,9 @@ class RepeatMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a Repeat object into a QTI repeat element.
 	 * 
-	 * @param QtiComponent The Repeat object to marshall.
+	 * @param \qtism\data\QtiComponent The Repeat object to marshall.
 	 * @param array An array of child DOMEelement objects.
-	 * @return DOMElement The marshalled QTI repeat element.
+	 * @return \DOMElement The marshalled QTI repeat element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -59,10 +58,10 @@ class RepeatMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a QTI repeat operator element into a Repeat object.
 	 *
-	 * @param DOMElement The repeat element to unmarshall.
-	 * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return QtiComponent A Repeat object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element The repeat element to unmarshall.
+	 * @param \qtism\data\QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
+	 * @return \qtism\data\QtiComponent A Repeat object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (($numberRepeats = static::getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {

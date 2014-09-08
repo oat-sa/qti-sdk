@@ -39,9 +39,9 @@ class TemplateProcessingMarshaller extends Marshaller {
 	/**
 	 * Marshall a TemplateProcessing object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TemplateProcessing object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A TemplateProcessing object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = self::getDOMCradle()->createElement('templateProcessing');
@@ -56,9 +56,9 @@ class TemplateProcessingMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI templateProcessing element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TemplateProcessing object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TemplateProcessing object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    $childrenTagNames = array('exitTemplate', 'setCorrectResponse', 'setDefaultValue', 'setTemplateValue', 'templateCondition', 'templateConstraint');
@@ -78,6 +78,9 @@ class TemplateProcessingMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'templateProcessing';
 	}

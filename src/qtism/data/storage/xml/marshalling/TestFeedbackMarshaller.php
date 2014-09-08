@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -41,8 +40,8 @@ class TestFeedbackMarshaller extends Marshaller {
 	/**
 	 * Marshall a TestFeedback object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TestFeedback object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A TestFeedback object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -69,9 +68,9 @@ class TestFeedbackMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI testFeedback element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TestFeedback object.
-	 * @throws UnmarshallingException 
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TestFeedback object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException 
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -127,9 +126,9 @@ class TestFeedbackMarshaller extends Marshaller {
 	/**
 	 * Extract the content (direct children) of a testFeedback element. 
 	 * 
-	 * @param DOMElement $element The testFeedback element you want to extract the content.
+	 * @param \DOMElement $element The testFeedback element you want to extract the content.
 	 * @return string The content of the feedback element as a string. If there is no extractable content, an empty string is returned.
-	 * @throws InvalidArgumentException If $element is not a testFeedback element.
+	 * @throws \InvalidArgumentException If $element is not a testFeedback element.
 	 */
 	protected static function extractContent(DOMElement $element) {
 		if ($element->localName == 'testFeedback') {

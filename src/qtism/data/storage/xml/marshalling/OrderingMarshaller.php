@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class OrderingMarshaller extends Marshaller {
 	/**
 	 * Marshall an Ordering object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An Ordering object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An Ordering object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -52,8 +51,8 @@ class OrderingMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI Ordering element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An Ordering object.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An Ordering object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$object = new Ordering();
@@ -65,6 +64,9 @@ class OrderingMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'ordering';
 	}

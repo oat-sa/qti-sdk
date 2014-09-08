@@ -20,9 +20,7 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
-
 
 use qtism\data\content\xhtml\tables\ColgroupCollection;
 use qtism\data\content\xhtml\tables\ColCollection;
@@ -42,9 +40,9 @@ class TableMarshaller extends Marshaller {
 	/**
 	 * Marshall a Table object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Table object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A Table object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('table');
@@ -103,9 +101,9 @@ class TableMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to an XHTML table element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Table object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Table object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -177,6 +175,9 @@ class TableMarshaller extends Marshaller {
 	    }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'table';
 	}

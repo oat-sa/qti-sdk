@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,8 +38,8 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Marshall a ResponseDeclaration object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A ResponseDeclaration object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A ResponseDeclaration object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -67,9 +66,9 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI responseDeclaration element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A ResponseDeclaration object.
-	 * @throws UnmarshallingException 
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A ResponseDeclaration object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException 
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -109,6 +108,9 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'responseDeclaration';
 	}

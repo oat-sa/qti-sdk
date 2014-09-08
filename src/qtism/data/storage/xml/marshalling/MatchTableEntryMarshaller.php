@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -62,7 +61,7 @@ class MatchTableEntryMarshaller extends Marshaller {
 	 * Set the base type of the expected targetValue. 
 	 * 
 	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	protected function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray())) {
@@ -80,7 +79,7 @@ class MatchTableEntryMarshaller extends Marshaller {
 	 * the baseType of its targetValue, which is defined by its parent variableDeclaration.
 	 * 
 	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException if $baseType is not a value from the BaseType enumeration.
 	 */
 	public function __construct($baseType) {
 		$this->setBaseType($baseType);
@@ -89,8 +88,8 @@ class MatchTableEntryMarshaller extends Marshaller {
 	/**
 	 * Marshall a MatchTableEntry object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A MatchTableEntry object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A MatchTableEntry object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -104,9 +103,9 @@ class MatchTableEntryMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI MatchTableEntry element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A MatchTableEntry object.
-	 * @throws UnmarshallingException If the mandatory attributes 'sourceValue' or 'targetValue' are missing from $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A MatchTableEntry object.
+	 * @throws \UnmarshallingException If the mandatory attributes 'sourceValue' or 'targetValue' are missing from $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
@@ -126,6 +125,9 @@ class MatchTableEntryMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'matchTableEntry';
 	}

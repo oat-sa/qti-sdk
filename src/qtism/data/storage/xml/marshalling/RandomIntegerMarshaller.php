@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,8 +38,8 @@ class RandomIntegerMarshaller extends Marshaller {
 	/**
 	 * Marshall a RandomInteger object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A RandomInteger object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A RandomInteger object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,9 +57,9 @@ class RandomIntegerMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI randomInteger element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A RandomInteger object.
-	 * @throws UnmarshallingException If the mandatory attributes 'min' or 'max' are missing from $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A RandomInteger object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attributes 'min' or 'max' are missing from $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -85,6 +84,9 @@ class RandomIntegerMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'randomInteger';
 	}

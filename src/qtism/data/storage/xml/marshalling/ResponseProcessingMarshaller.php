@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,9 +38,9 @@ class ResponseProcessingMarshaller extends Marshaller {
 	/**
 	 * Marshall a ResponseProcessing object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A ResponseProcessing object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A ResponseProcessing object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -65,9 +64,9 @@ class ResponseProcessingMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI responseProcessing element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A ResponseProcessing object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A ResponseProcessing object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null) {
 		$responseRuleElts = self::getChildElements($element);
@@ -97,6 +96,9 @@ class ResponseProcessingMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'responseProcessing';
 	}

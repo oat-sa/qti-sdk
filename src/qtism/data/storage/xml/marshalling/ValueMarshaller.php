@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -51,7 +50,7 @@ class ValueMarshaller extends Marshaller {
 	 * value of the value. Set to -1 if there is no forced baseType.
 	 * 
 	 * @param int $baseType A baseType from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	protected function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -77,7 +76,7 @@ class ValueMarshaller extends Marshaller {
 	 * Create a new instance of ValueMarshaller.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
+	 * @throws \InvalidArgumentException if $baseType is not a value from the BaseType enumeration nor -1.
 	 */
 	public function __construct($baseType = -1) {
 		$this->setBaseType($baseType);
@@ -86,8 +85,8 @@ class ValueMarshaller extends Marshaller {
 	/**
 	 * Marshall a Value object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Value object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A Value object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -111,9 +110,9 @@ class ValueMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI Value element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Value object.
-	 * @throws UnmarshallingException If the 'baseType' attribute is not a valid QTI baseType.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Value object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the 'baseType' attribute is not a valid QTI baseType.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -158,6 +157,9 @@ class ValueMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'value';
 	}

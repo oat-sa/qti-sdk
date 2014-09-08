@@ -38,7 +38,7 @@ class UnmarshallingException extends Exception {
 	/**
 	 * The DOMElement object that caused the exception to be thrown.
 	 * 
-	 * @var DOMElement
+	 * @var \DOMElement
 	 */
 	private $DOMElement;
 	
@@ -46,8 +46,8 @@ class UnmarshallingException extends Exception {
 	 * Create a new instance of UnmarshallingException.
 	 * 
 	 * @param string $message A human-readable message which describe the exception.
-	 * @param DOMElement $element The DOMElement object that caused the exception to be thrown.
-	 * @param Exception $previous A previous Exception that caused the exception to be thrown.
+	 * @param \DOMElement $element The DOMElement object that caused the exception to be thrown.
+	 * @param \Exception $previous A previous Exception that caused the exception to be thrown.
 	 */
 	public function __construct($message, DOMElement $element, Exception $previous = null) {
 		parent::__construct($message, 0, $previous);
@@ -57,7 +57,7 @@ class UnmarshallingException extends Exception {
 	/**
 	 * Get the DOMElement object that caused the exception to be thrown.
 	 * 
-	 * @return DOMElement A DOMElement object.
+	 * @return \DOMElement A DOMElement object.
 	 */
 	public function getDOMElement() {
 		return $this->DOMElement;
@@ -66,7 +66,7 @@ class UnmarshallingException extends Exception {
 	/**
 	 * Set the DOMElement object that caused the exception to be thrown.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
+	 * @param \DOMElement $element A DOMElement object.
 	 */
 	protected function setDOMElement(DOMElement $element) {
 		$this->DOMElement = $element;

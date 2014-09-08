@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\FlowStaticCollection;
@@ -37,44 +36,50 @@ use \InvalidArgumentException;
  */
 class PromptMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
             
-            $fqClass = $this->lookupClass($element);
-            $component = new $fqClass();
+        $fqClass = $this->lookupClass($element);
+        $component = new $fqClass();
+        
+        $content = new FlowStaticCollection();
+        $error = false;
+        $exclusion = array('pre', 'hottext', 'printedVariable', 'templateBlock', 'templateInline', 'infoControl', 'feedbackBlock', 'rubricBlock', 'a', 'feedbackInline');
+        
+        foreach ($children as $c) {
             
-            $content = new FlowStaticCollection();
-            $error = false;
-            $exclusion = array('pre', 'hottext', 'printedVariable', 'templateBlock', 'templateInline', 'infoControl', 'feedbackBlock', 'rubricBlock', 'a', 'feedbackInline');
-            
-            foreach ($children as $c) {
-                
-                if (in_array($c->getQtiClassName(), $exclusion) === true) {
-                    $error = true;
-                    break;
-                }
-                
-                try {
-                    $content[] = $c;
-                }
-                catch (InvalidArgumentException $e) {
-                    $error = true;
-                    break;
-                }
+            if (in_array($c->getQtiClassName(), $exclusion) === true) {
+                $error = true;
+                break;
             }
             
-            if ($error === true) {
-                $qtiClass = $c->getQtiClassName();
-                $msg = "A 'prompt' cannot contain '${qtiClass}' elements.";
-                throw new UnmarshallingException($msg, $element);
+            try {
+                $content[] = $c;
             }
-            
-            $component->setContent($content);
-            
-            self::fillBodyElement($component, $element);
-            
-            return $component;
+            catch (InvalidArgumentException $e) {
+                $error = true;
+                break;
+            }
+        }
+        
+        if ($error === true) {
+            $qtiClass = $c->getQtiClassName();
+            $msg = "A 'prompt' cannot contain '${qtiClass}' elements.";
+            throw new UnmarshallingException($msg, $element);
+        }
+        
+        $component->setContent($content);
+        
+        self::fillBodyElement($component, $element);
+        
+        return $component;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -87,6 +92,9 @@ class PromptMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }

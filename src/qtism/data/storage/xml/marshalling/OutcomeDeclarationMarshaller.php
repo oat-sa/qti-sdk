@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -43,8 +42,8 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Marshall an OutcomeDeclaration object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component An OutcomeDeclaration object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component An OutcomeDeclaration object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -101,9 +100,9 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI outcomeDeclaration element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent An OutcomeDeclaration object.
-	 * @throws UnmarshallingException 
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent An OutcomeDeclaration object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException 
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -177,6 +176,9 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'outcomeDeclaration';
 	}

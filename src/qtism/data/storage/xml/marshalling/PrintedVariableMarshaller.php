@@ -23,7 +23,6 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-
 use qtism\common\utils\Format;
 use qtism\data\content\PrintedVariable;
 use qtism\data\QtiComponent;
@@ -40,9 +39,9 @@ class PrintedVariableMarshaller extends Marshaller {
 	/**
 	 * Marshall a PrintedVariable object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A PrintedVariable object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A PrintedVariable object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement('printedVariable');
@@ -75,9 +74,9 @@ class PrintedVariableMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a printedVariable element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A PrintedVariable object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A PrintedVariable object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 
@@ -123,10 +122,11 @@ class PrintedVariableMarshaller extends Marshaller {
 		    $msg = "The mandatory 'identifier' attribute is missing from the 'printedVariable' element.";
 		    throw new UnmarshallingException($msg, $element);
 		}
-		
-		
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'printedVariable';
 	}

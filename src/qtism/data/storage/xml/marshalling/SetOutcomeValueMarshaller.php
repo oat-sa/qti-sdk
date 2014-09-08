@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class SetOutcomeValueMarshaller extends Marshaller {
 	/**
 	 * Marshall a SetOutcomeValue object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A SetOutcomeValue object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A SetOutcomeValue object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -54,9 +53,9 @@ class SetOutcomeValueMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI SetOutcomeValue element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A SetOutcomeValue object.
-	 * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A SetOutcomeValue object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -79,6 +78,9 @@ class SetOutcomeValueMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'setOutcomeValue';
 	}

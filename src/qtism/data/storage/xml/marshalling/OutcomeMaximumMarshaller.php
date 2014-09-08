@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,8 +38,8 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an outcomeMaximum object in its DOMElement equivalent.
 	 * 
-	 * @param QtiComponent A OutcomeMaximum object.
-	 * @return DOMElement The corresponding outcomeMaximum QTI element.
+	 * @param \qtism\data\QtiComponent A OutcomeMaximum object.
+	 * @return \DOMElement The corresponding outcomeMaximum QTI element.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -57,8 +56,8 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an outcomeMaximum QTI element in its OutcomeMaximum object equivalent.
 	 * 
-	 * @param DOMElement A DOMElement object.
-	 * @return QtiComponent The corresponding OutcomeMaximum object.
+	 * @param \DOMElement A DOMElement object.
+	 * @return \qtism\data\QtiComponent The corresponding OutcomeMaximum object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);
@@ -81,6 +80,9 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'outcomeMaximum';
 	}

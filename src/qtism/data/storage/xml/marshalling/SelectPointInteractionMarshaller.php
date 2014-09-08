@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\SelectPointInteraction;
@@ -38,9 +37,9 @@ class SelectPointInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall a SelectPointInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A SelectPointInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A SelectPointInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
 	    
@@ -69,9 +68,9 @@ class SelectPointInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a selectPointInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A SelectPointInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A SelectPointInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -121,6 +120,9 @@ class SelectPointInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'selectPointInteraction';
 	}

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class VariableMarshaller extends Marshaller {
 	/**
 	 * Marshall a Variable object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Variable object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A Variable object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -57,9 +56,9 @@ class VariableMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI Variable element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Variable object.
-	 * @throws UnmarshallingException If the mandatory attribute 'identifier' is not set in $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Variable object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'identifier' is not set in $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -78,6 +77,9 @@ class VariableMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'variable';
 	}

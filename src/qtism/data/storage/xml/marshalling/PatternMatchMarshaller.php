@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -40,9 +39,9 @@ class PatternMatchMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a PatternMatch object into a QTI patternMatch element.
 	 * 
-	 * @param QtiComponent The PatternMatch object to marshall.
-	 * @param array An array of child DOMEelement objects.
-	 * @return DOMElement The marshalled QTI patternMatch element.
+	 * @param \qtism\data\QtiComponent $component The PatternMatch object to marshall.
+	 * @param array $elements An array of child DOMEelement objects.
+	 * @return \DOMElement The marshalled QTI patternMatch element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,10 +57,10 @@ class PatternMatchMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a QTI patternMatch operator element into an PatternMatch object.
 	 *
-	 * @param DOMElement The patternMatch element to unmarshall.
-	 * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return QtiComponent A PatternMatch object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement The patternMatch element to unmarshall.
+	 * @param \qtism\data\QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+	 * @return \qtism\data\QtiComponent A PatternMatch object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (($pattern = static::getDOMElementAttributeAs($element, 'pattern')) !== null) {

@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\TextRun;
@@ -32,6 +31,14 @@ use \DOMText;
 use \DOMNode;
 use \DOMNodeList;
 
+/**
+ * An abstract recursive implementation of Marshaller. By "recursive" we mean
+ * a Marshaller which works with an access to already marshalled/unmarshalled
+ * children QTI components/DOM elements.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 abstract class RecursiveMarshaller extends Marshaller {
 	
 	/**
@@ -182,9 +189,9 @@ abstract class RecursiveMarshaller extends Marshaller {
 	/**
 	 * Marshall a QtiComponent that might contain instances of the same class as itself.
 	 * 
-	 * @param QtiComponent The QtiComponent object to marshall.
-	 * @return DOMElement A DOMElement corresponding to the QtiComponent to marshall.
-	 * @throws MarshallingException If an error occurs during the marshalling process.
+	 * @param \qtism\data\QtiComponent $component The QtiComponent object to marshall.
+	 * @return \DOMElement A DOMElement corresponding to the QtiComponent to marshall.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException If an error occurs during the marshalling process.
 	 */
 	protected function marshall(QtiComponent $component) {
 		
@@ -243,10 +250,9 @@ abstract class RecursiveMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement that might contain elements of the same QTI class as itself.
 	 * 
-	 * 
-	 * @param DOMElement The DOMElement object to unmarshall.
-	 * @param QtiComponent $rootComponent An optional already instantiated QtiComponent to use as the root component.
-	 * @return QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
+	 * @param \DOMElement $element The DOMElement object to unmarshall.
+	 * @param \qtism\data\QtiComponent $rootComponent An optional already instantiated QtiComponent to use as the root component.
+	 * @return \qtism\data\QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
 	 */
 	protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null) {
 		
@@ -330,44 +336,60 @@ abstract class RecursiveMarshaller extends Marshaller {
 	}
 
 	/**
+	 * Unmarshall a given DOMElement object into a QtiComponent object while
+	 * receiving the already unmarshalled children components.
 	 * 
-	 * @param DOMElement $element
-	 * @param QtiComponentCollection $children
-	 * @return QtiComponent
+	 * @param \DOMElement $element The actual element to unmarshall.
+	 * @param \qtism\data\QtiComponentCollection $children The already unmarshalled children QTI components.
+	 * @return \qtism\data\QtiComponent $element as a QtiComponent object.
 	 */
 	abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children);
 	
+	/**
+	 * Whether a given $element is final. In other words, wheter the $element
+	 * has child elements.
+	 * 
+	 * @param \DOMNode $element
+	 */
 	abstract protected function isElementFinal(DOMNode $element);
 	
 	/**
+	 * Get the children elements of a given $element.
 	 * 
 	 * @param DOMElement $element
-	 * @return array
+	 * @return array An array of DOMNode objects.
 	 */
 	abstract protected function getChildrenElements(DOMElement $element);
 	
 	/**
 	 * 
-	 * Enter detscription here ..
+	 * Create a collection from DOMElement objects.
 	 * 
 	 * @return AbstractCollecton
 	 */
 	abstract protected function createCollection(DOMElement $currentNode);
 	
 	/**
+	 * Marshall a given QTI $component while receiving the already marshalled
+	 * children components.
 	 * 
-	 * Enter description here ...
-	 * @param QtiComponent $component
+	 * @param QtiComponent $component A QtiComponent object to be marshalled into a DOMElement object.
 	 * @param array $elements An array of DOMElement objectss.
-	 * @return DOMElement 
+	 * @return DOMElement The marshalled $component.
 	 */
 	abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements);
 	
+	/**
+	 * Wheter or not a QtiComponent object is final. In other words, whether $component
+	 * contains child QtiComponent objects.
+	 * 
+	 * @param QtiComponent $component
+	 */
 	abstract protected function isComponentFinal(QtiComponent $component);
 	
 	/**
+	 * Get the children components of the given $component.
 	 * 
-	 * Enter description here ...
 	 * @param QtiComponent $component
 	 * @return array An array of QtiComponent objects.
 	 */

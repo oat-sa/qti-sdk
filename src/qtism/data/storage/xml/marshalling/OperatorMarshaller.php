@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\storage\xml\Utils;
@@ -131,6 +130,9 @@ class OperatorMarshaller extends RecursiveMarshaller {
 	    return self::$expressions;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		
 		// Some exceptions applies on instanciation e.g. the And operator is named
@@ -172,6 +174,9 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -205,18 +210,30 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		return !in_array($element->localName, static::getOperators());
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return !$component instanceof Operator;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		return self::getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		if ($component instanceof Operator) {
 			return $component->getExpressions()->getArrayCopy();
@@ -226,10 +243,16 @@ class OperatorMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		return new ExpressionCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

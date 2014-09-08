@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -43,6 +42,9 @@ use \DOMElement;
  */
 class TestPartMarshaller extends Marshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::marshall()
+     */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
 		
@@ -85,6 +87,9 @@ class TestPartMarshaller extends Marshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::unmarshall()
+	 */
 	protected function unmarshall(DOMElement $element) {
 		
 		if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -175,6 +180,9 @@ class TestPartMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'testPart';
 	}

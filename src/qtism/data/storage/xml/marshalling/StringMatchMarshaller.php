@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponentCollection;
@@ -41,9 +40,9 @@ class StringMatchMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a StringMatch object into a QTI stringMatch element.
 	 * 
-	 * @param QtiComponent The StringMatch object to marshall.
-	 * @param array An array of child DOMEelement objects.
-	 * @return DOMElement The marshalled QTI stringMatch element.
+	 * @param \qtism\data\QtiComponent The StringMatch object to marshall.
+	 * @param array $elements An array of child DOMEelement objects.
+	 * @return \DOMElement The marshalled QTI stringMatch element.
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -60,10 +59,10 @@ class StringMatchMarshaller extends OperatorMarshaller {
 	/**
 	 * Unmarshall a QTI stringMatch operator element into an StringMatch object.
 	 *
-	 * @param DOMElement The stringMatch element to unmarshall.
-	 * @param QtiComponentCollection A collection containing the child Expression objects composing the Operator.
-	 * @return QtiComponent An StringMatch object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement The stringMatch element to unmarshall.
+	 * @param \qtism\data\QtiComponentCollection A collection containing the child Expression objects composing the Operator.
+	 * @return \qtism\data\QtiComponent An StringMatch object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {

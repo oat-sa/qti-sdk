@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\TextRun;
@@ -38,8 +37,8 @@ class TextRunMarshaller extends Marshaller {
 	/**
 	 * Marshall a TextRun object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TextRun object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A TextRun object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createTextNode($component->getContent());
@@ -49,9 +48,9 @@ class TextRunMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI textRun element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TextRun object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TextRun object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -59,6 +58,9 @@ class TextRunMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'randomInteger';
 	}

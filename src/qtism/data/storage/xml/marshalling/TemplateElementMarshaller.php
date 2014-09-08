@@ -20,11 +20,9 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\FlowStatic;
-
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\ShowHide;
@@ -41,6 +39,9 @@ use \InvalidArgumentException;
  */
 class TemplateElementMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
         
         $fqClass = $this->lookupClass($element);
@@ -103,6 +104,9 @@ class TemplateElementMarshaller extends ContentMarshaller {
         
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -122,6 +126,9 @@ class TemplateElementMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content");
     }

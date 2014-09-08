@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class SelectionMarshaller extends Marshaller {
 	/**
 	 * Marshall a Selection object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Selection object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A Selection object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -53,9 +52,9 @@ class SelectionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI Selection object.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Selection object.
-	 * @throws UnmarshallingException If the mandatory 'select' attribute is missing from $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Selection object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory 'select' attribute is missing from $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -75,6 +74,9 @@ class SelectionMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'selection';
 	}

@@ -41,9 +41,9 @@ class TextInteractionMarshaller extends Marshaller {
 	/**
 	 * Marshall a TextEntryInteraction/ExtendedTextInteraction object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A TextEntryInteraction/ExtendedTextInteraction object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -103,9 +103,9 @@ class TextInteractionMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a textEntryInteraction/extendedTextInteraction element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TextEntryInteraction/ExtendedTextInteraction object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    
@@ -177,6 +177,9 @@ class TextInteractionMarshaller extends Marshaller {
         }
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

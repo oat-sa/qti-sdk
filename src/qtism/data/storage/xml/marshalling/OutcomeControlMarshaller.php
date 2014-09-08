@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
@@ -37,8 +36,18 @@ use \ReflectionClass;
 use \DOMElement;
 use \DOMNode;
 
+/**
+ * Marshalling/Unmarshalling implementation for the abstract OutcomeControl QTI
+ * component.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class OutcomeControlMarshaller extends RecursiveMarshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		
 		$expressionElts = self::getChildElementsByTagName($element, Expression::getExpressionClassNames());
@@ -66,6 +75,9 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
@@ -81,6 +93,9 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		return in_array($element->localName, array_merge(array(
 					'exitTest',
@@ -89,12 +104,18 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 				)));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return ($component instanceof ExitTest || 
 				$component instanceof LookupOutcomeValue || 
 				$component instanceof SetOutcomeValue);
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		return self::getChildElementsByTagName($element, array(
 					'exitTest',
@@ -104,14 +125,23 @@ class OutcomeControlMarshaller extends RecursiveMarshaller {
 				));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		return $component->getOutcomeRules()->getArrayCopy();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		return new OutcomeRuleCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

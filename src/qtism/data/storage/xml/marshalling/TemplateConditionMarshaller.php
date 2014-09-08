@@ -35,8 +35,18 @@ use qtism\data\rules\TemplateElse;
 use \DOMElement;
 use \DOMNode;
 
+/**
+ * Marshalling/Unmarshalling implementation focusing on TemplateCondition
+ * QTI components.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class TemplateConditionMarshaller extends RecursiveMarshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (count($children) > 0) {
 			// The first element of $children must be a templateIf.
@@ -71,6 +81,9 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
@@ -81,10 +94,16 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		return !in_array($element->localName, array('templateIf', 'templateElseIf', 'templateElse', 'templateCondition'));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return (!$component instanceof TemplateIf &&
 				 !$component instanceof TemplateElseIf &&
@@ -92,6 +111,9 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 				 !$component instanceof TemplateCondition);
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		return self::getChildElementsByTagName($element, array(
 				'templateIf',
@@ -106,6 +128,9 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 		));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		if ($component instanceof TemplateIf || $component instanceof TemplateElseIf || $component instanceof TemplateElse) {
 			// TemplateControl
@@ -127,6 +152,9 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		if ($currentNode->localName != 'templateCondition') {
 			return new TemplateRuleCollection();
@@ -134,9 +162,11 @@ class TemplateConditionMarshaller extends RecursiveMarshaller {
 		else {
 			return new QtiComponentCollection();
 		}
-		
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

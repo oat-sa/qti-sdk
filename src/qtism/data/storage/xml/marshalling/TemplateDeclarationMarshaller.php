@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -39,8 +38,8 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Marshall a TemplateDeclaration object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TemplateDeclaration object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A TemplateDeclaration object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -59,9 +58,9 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI templateDeclaration element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A TemplateDeclaration object.
-	 * @throws UnmarshallingException 
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A TemplateDeclaration object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException 
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -88,6 +87,9 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\VariableDeclarationMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'templateDeclaration';
 	}

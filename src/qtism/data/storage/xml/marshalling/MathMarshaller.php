@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\Math;
@@ -40,9 +39,9 @@ class MathMarshaller extends Marshaller {
 	/**
 	 * Marshall a Math object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Math object.
-	 * @return DOMElement The according DOMElement object.
-	 * @throws MarshallingException
+	 * @param \qtism\data\QtiComponent $component A Math object.
+	 * @return \DOMElement The according DOMElement object.
+	 * @throws \MarshallingException
 	 */
 	protected function marshall(QtiComponent $component) {
         return self::getDOMCradle()->importNode($component->getXml()->documentElement, true);
@@ -51,15 +50,18 @@ class MathMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a math element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Math object.
-	 * @throws UnmarshallingException
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Math object.
+	 * @throws \UnmarshallingException
 	 */
 	protected function unmarshall(DOMElement $element) {
 	    $node = $element->cloneNode(true);
 	    return new Math($element->ownerDocument->saveXML($node));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'math';
 	}

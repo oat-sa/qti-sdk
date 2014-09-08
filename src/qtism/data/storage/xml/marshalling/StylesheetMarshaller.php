@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class StylesheetMarshaller extends Marshaller {
 	/**
 	 * Marshall a Stylesheet object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A Stylesheet object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A Stylesheet object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,9 +57,9 @@ class StylesheetMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI stylesheet element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A Stylesheet object.
-	 * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A Stylesheet object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'href' is missing from $element.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -88,6 +87,9 @@ class StylesheetMarshaller extends Marshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'stylesheet';
 	}

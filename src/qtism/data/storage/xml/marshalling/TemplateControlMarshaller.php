@@ -38,8 +38,18 @@ use \ReflectionClass;
 use \DOMElement;
 use \DOMNode;
 
+/**
+ * Unmarshalling/Marshalling implementation focusing on the components composing
+ * TemplateCondition QTI components e.g. TemplateIf, TemplateElseIf, ...
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class TemplateControlMarshaller extends RecursiveMarshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		
 		$expressionElts = self::getChildElementsByTagName($element, Expression::getExpressionClassNames());
@@ -67,6 +77,9 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
@@ -82,6 +95,9 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		return in_array($element->localName, array_merge(array(
 					'setDefaultValue',
@@ -92,6 +108,9 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 				)));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return ($component instanceof ExitTemplate || 
 				$component instanceof SetDefaultValue || 
@@ -100,6 +119,9 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 		        $component instanceof TemplateConstraint);
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		return self::getChildElementsByTagName($element, array(
 					'exitTemplate',
@@ -111,14 +133,23 @@ class TemplateControlMarshaller extends RecursiveMarshaller {
 				));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		return $component->getTemplateRules()->getArrayCopy();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		return new TemplateRuleCollection();
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

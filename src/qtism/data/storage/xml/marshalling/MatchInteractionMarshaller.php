@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\interactions\SimpleMatchSetCollection;
@@ -37,52 +36,58 @@ use \InvalidArgumentException;
  */
 class MatchInteractionMarshaller extends ContentMarshaller {
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
             
-            if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-                
-                $fqClass = $this->lookupClass($element);
-                
-                try {
-                    $component = new $fqClass($responseIdentifier, new SimpleMatchSetCollection($children->getArrayCopy()));
-                }
-                catch (InvalidArgumentException $msg) {
-                    $msg = "A matchInteraction element must contain exactly 2 simpleMatchSet elements, " . count($children) . "' given.";
-                    throw new UnmarshallingException($msg, $element, $e);
-                }
-                
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
-                    $component->setShuffle($shuffle);
-                }
-                
-                if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
-                    $component->setMaxAssociations($maxAssociations);
-                }
-                
-                if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
-                    $component->setMinAssociations($minAssociations);
-                }
-                
-                if (($xmlBase = self::getXmlBase($element)) !== false) {
-                    $component->setXmlBase($xmlBase);
-                }
-                
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
-                if (count($promptElts) > 0) {
-                    $promptElt = $promptElts[0];
-                    $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                    $component->setPrompt($prompt);
-                }
-                
-                self::fillBodyElement($component, $element);
-                return $component;
+        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+            
+            $fqClass = $this->lookupClass($element);
+            
+            try {
+                $component = new $fqClass($responseIdentifier, new SimpleMatchSetCollection($children->getArrayCopy()));
             }
-            else {
-                $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.";
-                throw new UnmarshallingException($msg, $element);
+            catch (InvalidArgumentException $msg) {
+                $msg = "A matchInteraction element must contain exactly 2 simpleMatchSet elements, " . count($children) . "' given.";
+                throw new UnmarshallingException($msg, $element, $e);
             }
+            
+            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                $component->setShuffle($shuffle);
+            }
+            
+            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+                $component->setMaxAssociations($maxAssociations);
+            }
+            
+            if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+                $component->setMinAssociations($minAssociations);
+            }
+            
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
+            }
+            
+            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            if (count($promptElts) > 0) {
+                $promptElt = $promptElts[0];
+                $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+                $component->setPrompt($prompt);
+            }
+            
+            self::fillBodyElement($component, $element);
+            return $component;
+        }
+        else {
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+     */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
@@ -116,6 +121,9 @@ class MatchInteractionMarshaller extends ContentMarshaller {
         return $element;
     }
     
+    /**
+     * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
+     */
     protected function setLookupClasses() {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }

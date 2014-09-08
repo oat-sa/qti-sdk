@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class TemplateDefaultMarshaller extends Marshaller {
 	/**
 	 * Marshall a TemplateDefault object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A TemplateDefault object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A TemplateDefault object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -58,9 +57,9 @@ class TemplateDefaultMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI templateDefault element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A templateDefault object.
-	 * @throws UnmarshallingException If the mandatory attribute 'templateIdentifier' is missing or has an unexpected number of expressions.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A templateDefault object.
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the mandatory attribute 'templateIdentifier' is missing or has an unexpected number of expressions.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		
@@ -86,6 +85,9 @@ class TemplateDefaultMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'templateDefault';
 	}

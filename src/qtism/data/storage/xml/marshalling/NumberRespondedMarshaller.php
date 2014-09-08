@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an NumberResponded object in its DOMElement equivalent.
 	 * 
-	 * @param QtiComponent A NumberResponded object.
-	 * @return DOMElement The corresponding numberResponded QTI element.
+	 * @param \qtism\data\QtiComponent $component A NumberResponded object.
+	 * @return \DOMElement The corresponding numberResponded QTI element.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = parent::marshall($component);
@@ -49,8 +48,8 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller {
 	/**
 	 * Marshall an numberResponded QTI element in its NumberResponded object equivalent.
 	 * 
-	 * @param DOMElement A DOMElement object.
-	 * @return QtiComponent The corresponding NumberResponded object.
+	 * @param \DOMElement A DOMElement object.
+	 * @return \qtism\data\QtiComponent The corresponding NumberResponded object.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$baseComponent = parent::unmarshall($element);
@@ -62,6 +61,9 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller {
 		return $object;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\ItemSubsetMarshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'numberResponded';
 	}

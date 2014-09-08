@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\expressions\Expression;
@@ -38,8 +37,17 @@ use qtism\data\rules\OutcomeElse;
 use \DOMElement;
 use \DOMNode;
 
+/**
+ * Marshalling/Unmarshalling implementation for OutcomeCondition QTI components.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class OutcomeConditionMarshaller extends RecursiveMarshaller {
 	
+    /**
+     * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
+     */
 	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
 		if (count($children) > 0) {
 			// The first element of $children must be an outcomeIf.
@@ -74,6 +82,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
+	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
 		
@@ -84,11 +95,17 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		return $element;
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
+	 */
 	protected function isElementFinal(DOMNode $element) {
 		$exclusion = array('outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition');
 		return !in_array($element->localName, $exclusion);
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isComponentFinal()
+	 */
 	protected function isComponentFinal(QtiComponent $component) {
 		return (!$component instanceof OutcomeIf &&
 				 !$component instanceof OutcomeElseIf &&
@@ -96,6 +113,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 				 !$component instanceof OutcomeCondition);
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenElements()
+	 */
 	protected function getChildrenElements(DOMElement $element) {
 		return self::getChildElementsByTagName($element, array(
 				'outcomeIf',
@@ -108,6 +128,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		));
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::getChildrenComponents()
+	 */
 	protected function getChildrenComponents(QtiComponent $component) {
 		if ($component instanceof OutcomeIf || $component instanceof OutcomeElseIf || $component instanceof OutcomeElse) {
 			// OutcomeControl
@@ -129,6 +152,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::createCollection()
+	 */
 	protected function createCollection(DOMElement $currentNode) {
 		if ($currentNode->localName != 'outcomeCondition') {
 			return new OutcomeRuleCollection();
@@ -139,6 +165,9 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller {
 		
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return '';
 	}

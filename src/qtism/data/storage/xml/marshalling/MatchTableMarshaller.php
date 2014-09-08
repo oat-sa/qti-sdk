@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -62,7 +61,7 @@ class MatchTableMarshaller extends Marshaller {
 	 * Pass -1 to set there is no particular baseType (record case).
 	 * 
 	 * @param integer $baseType A value from the BaseType enumeration or -1 to state there is no particular baseType.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
 	 */
 	public function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
@@ -78,7 +77,7 @@ class MatchTableMarshaller extends Marshaller {
 	 * Create a new instance of MatchTableMarshaller.
 	 * 
 	 * @param integer $baseType The baseType of the variableDeclaration the MatchTable belongs to.
-	 * @throws InvalidArgumentException If $baseType is an invalid value.
+	 * @throws \InvalidArgumentException If $baseType is an invalid value.
 	 */
 	public function __construct($baseType = -1) {
 		$this->setBaseType($baseType);
@@ -87,8 +86,8 @@ class MatchTableMarshaller extends Marshaller {
 	/**
 	 * Marshall a MatchTable object into a DOMElement object.
 	 * 
-	 * @param QtiComponent $component A MatchTable object.
-	 * @return DOMElement The according DOMElement object.
+	 * @param \qtism\data\QtiComponent $component A MatchTable object.
+	 * @return \DOMElement The according DOMElement object.
 	 */
 	protected function marshall(QtiComponent $component) {
 		$element = static::getDOMCradle()->createElement($component->getQtiClassName());
@@ -108,9 +107,9 @@ class MatchTableMarshaller extends Marshaller {
 	/**
 	 * Unmarshall a DOMElement object corresponding to a QTI MatchTable element.
 	 * 
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A MatchTable object.
-	 * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
+	 * @param \DOMElement $element A DOMElement object.
+	 * @return \qtism\data\QtiComponent A MatchTable object.
+	 * @throws \UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
 	 */
 	protected function unmarshall(DOMElement $element) {
 		$matchTableEntryElements = $element->getElementsByTagName('matchTableEntry');
@@ -144,6 +143,9 @@ class MatchTableMarshaller extends Marshaller {
 		}
 	}
 	
+	/**
+	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+	 */
 	public function getExpectedQtiClassName() {
 		return 'matchTable';
 	}
