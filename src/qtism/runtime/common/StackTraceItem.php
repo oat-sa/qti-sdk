@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\data\QtiComponent;
@@ -41,7 +40,7 @@ class StackTraceItem {
 	/**
 	 * A traced QtiComponent object.
 	 * 
-	 * @var QtiComponent
+	 * @var \qtism\data\QtiComponent
 	 */
 	private $component;
 	
@@ -55,9 +54,9 @@ class StackTraceItem {
 	/**
 	 * Create a new StackTraceItem object.
 	 * 
-	 * @param QtiComponent $component The QtiComponent object which is the subject of $traceMessage.
+	 * @param \qtism\data\QtiComponent $component The QtiComponent object which is the subject of $traceMessage.
 	 * @param string $traceMessage A human-readable message about what happened whith $component.
-	 * @throws InvalidArgumentException If $traceMessage is not a string.
+	 * @throws \InvalidArgumentException If $traceMessage is not a string.
 	 */
 	public function __construct(QtiComponent $component, $traceMessage) {
 		$this->setComponent($component);
@@ -67,7 +66,7 @@ class StackTraceItem {
 	/**
 	 * Set the traced QtiComponent object.
 	 * 
-	 * @param QtiComponent $component A traced QtiComponent object.
+	 * @param \qtism\data\QtiComponent $component A traced QtiComponent object.
 	 */
 	public function setComponent(QtiComponent $component) {
 		$this->component = $component;
@@ -76,7 +75,7 @@ class StackTraceItem {
 	/**
 	 * Get the traced QtiComponent object.
 	 * 
-	 * @return QtiComponent A traced QtiComponent object.
+	 * @return \qtism\data\QtiComponent A traced QtiComponent object.
 	 */
 	public function getComponent() {
 		return $this->component;
@@ -95,7 +94,7 @@ class StackTraceItem {
 	 * Get the message about the traced QtiComponent object.
 	 * 
 	 * @param string $traceMessage A human-readable message.
-	 * @throws InvalidArgumentException If $traceMessage is not a string.
+	 * @throws \InvalidArgumentException If $traceMessage is not a string.
 	 */
 	public function setTraceMessage($traceMessage) {
 		if (gettype($traceMessage) === 'string') {

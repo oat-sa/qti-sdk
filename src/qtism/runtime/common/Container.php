@@ -19,12 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\File;
-
 use qtism\common\datatypes\Boolean;
-
 use qtism\common\datatypes\String;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
@@ -90,6 +89,9 @@ class Container extends AbstractCollection implements Comparable {
 		parent::__construct($array);
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::checkType()
+	 */
 	protected function checkType($value) {
 		if (!Utils::isRuntimeCompliant($value)) {
 			Utils::throwTypingError($value);
@@ -190,9 +192,9 @@ class Container extends AbstractCollection implements Comparable {
 	/**
 	 * Create a Container object from a Data Model ValueCollection object.
 	 * 
-	 * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-	 * @return Container A Container object populated with the values found in $valueCollection.
-	 * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
+	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+	 * @return \qtism\runtime\common\Container A Container object populated with the values found in $valueCollection.
+	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
 	 */
 	public static function createFromDataModel(ValueCollection $valueCollection) {
 		$container = new static();
@@ -215,6 +217,11 @@ class Container extends AbstractCollection implements Comparable {
 		return array('[', ']');
 	}
 	
+	/**
+	 * Obtain a string representation of the container.
+	 * 
+	 * @return string
+	 */
 	public function __toString() {
 		$bounds = $this->getToStringBounds();
 		$data = &$this->getDataPlaceHolder();

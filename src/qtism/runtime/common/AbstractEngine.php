@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\data\QtiComponent;
@@ -39,7 +38,7 @@ abstract class AbstractEngine implements Processable {
 	 * The QtiComponent that will be the object of the
 	 * processing.
 	 * 
-	 * @var QtiComponent
+	 * @var \qtism\data\QtiComponent
 	 */
 	private $component;
 	
@@ -47,22 +46,22 @@ abstract class AbstractEngine implements Processable {
 	 * The StackTrace of the processing, giving some
 	 * information about the running processing.
 	 * 
-	 * @var StackTrace
+	 * @var \qtism\runtime\common\StackTrace
 	 */
 	private $stackTrace;
 	
 	/**
 	 * A Context for the ExpressionEngine.
 	 *
-	 * @var State
+	 * @var \qtism\runtime\common\State
 	 */
 	private $context;
 	
 	/**
 	 * Create a new AbstractEngine object.
 	 *
-	 * @param QtiComponent $component A QtiComponent object to process.
-	 * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
+	 * @param \qtism\data\QtiComponent $component A QtiComponent object to process.
+	 * @param \qtism\runtime\common\State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
 	 */
 	public function __construct(QtiComponent $component, State $context = null) {
 		$this->setComponent($component);
@@ -73,7 +72,7 @@ abstract class AbstractEngine implements Processable {
 	/**
 	 * Set the QtiComponent object to be processed by the Engine.
 	 * 
-	 * @param QtiComponent $component A QtiComponent object.
+	 * @param \qtism\data\QtiComponent $component A QtiComponent object.
 	 */
 	public function setComponent(QtiComponent $component) {
 		$this->component = $component;
@@ -82,7 +81,7 @@ abstract class AbstractEngine implements Processable {
 	/**
 	 * Get the QtiComponent object to be processed by the Engine.
 	 * 
-	 * @return QtiComponent A QtiComponent object.
+	 * @return \qtism\data\QtiComponent A QtiComponent object.
 	 */
 	public function getComponent() {
 		return $this->component;
@@ -91,7 +90,7 @@ abstract class AbstractEngine implements Processable {
 	/**
 	 * Set the execution context of the ExpressionEngine.
 	 *
-	 * @param State $context A State object representing the execution context.
+	 * @param \qtism\runtime\common\State $context A State object representing the execution context.
 	 */
 	public function setContext(State $context) {
 		$this->context = $context;
@@ -100,7 +99,7 @@ abstract class AbstractEngine implements Processable {
 	/**
 	 * Get the execution context of the ExpressionEngine.
 	 *
-	 * @return State A State object representing the execution context.
+	 * @return \qtism\runtime\common\State A State object representing the execution context.
 	 */
 	public function getContext() {
 		return $this->context;
@@ -110,7 +109,7 @@ abstract class AbstractEngine implements Processable {
 	 * Set the StackTrace object that will hold information
 	 * about the running processing.
 	 * 
-	 * @param StackTrace $stackTrace A StackTrace object.
+	 * @param \qtism\runtime\common\StackTrace $stackTrace A StackTrace object.
 	 */
 	protected function setStackTrace(StackTrace $stackTrace) {
 		$this->stackTrace = $stackTrace;
@@ -120,7 +119,7 @@ abstract class AbstractEngine implements Processable {
 	 * Get the StackTrace object that will hold information
 	 * about the running processing.
 	 * 
-	 * @return StackTrace A StackTrace object.
+	 * @return \qtism\runtime\common\StackTrace A StackTrace object.
 	 */
 	public function getStackTrace() {
 		return $this->stackTrace;

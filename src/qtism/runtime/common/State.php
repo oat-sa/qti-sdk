@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\runtime\common\VariableCollection;
@@ -37,7 +36,7 @@ use \InvalidArgumentException;
  * qtism\common\collections\AbstractCollection. 
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @see qtism\runtime\common\Variable For a description of the Variable class.
+ * @see \qtism\runtime\common\Variable For a description of the Variable class.
  * @see \OutOfRangeException For a description of the SPL OutOfRangeException class.
  * @see \OutOfBoundsException For a description of the SPL OutOfRangeException class.
  * @see \InvalidArgumentException For a description of the SPL InvalidArgumentException class.
@@ -48,7 +47,7 @@ class State extends AbstractCollection {
 	 * Create a new State object.
 	 * 
 	 * @param array $array An optional array of Variable objects.
-	 * @throws InvalidArgumentException If an object of $array is not a Variable object.
+	 * @throws \InvalidArgumentException If an object of $array is not a Variable object.
 	 */
 	public function __construct(array $array = array()) {
 		parent::__construct();
@@ -58,6 +57,11 @@ class State extends AbstractCollection {
 		}
 	}
 	
+	/**
+	 * Set a variable to the state. It will be accessible by it's variable name.
+	 * 
+	 * @param \qtism\runtime\common\Variable $variable
+	 */
 	public function setVariable(Variable $variable) {
 	    $this->checkType($variable);
 		$data = &$this->getDataPlaceHolder();
@@ -68,7 +72,7 @@ class State extends AbstractCollection {
 	 * Get a variable with the identifier $variableIdentifier.
 	 * 
 	 * @param string $variableIdentifier A QTI identifier.
-	 * @return Variable A Variable object or null if the $variableIdentifier does not match any Variable object stored in the State.
+	 * @return \qtism\runtime\common\Variable A Variable object or null if the $variableIdentifier does not match any Variable object stored in the State.
 	 */
 	public function getVariable($variableIdentifier) {
 		$data = &$this->getDataPlaceHolder();
@@ -83,7 +87,7 @@ class State extends AbstractCollection {
 	/**
 	 * Get all the Variable objects that compose the State.
 	 * 
-	 * @return VariableCollection A collection of Variable objects.
+	 * @return \qtism\runtime\common\VariableCollection A collection of Variable objects.
 	 */
 	public function getAllVariables() {
 	    return new VariableCollection($this->getDataPlaceHolder());
@@ -94,8 +98,8 @@ class State extends AbstractCollection {
 	 * the relevant Variable object is removed from the state. 
 	 * 
 	 * @param string|Variable $variable The identifier of the variable or a Variable object to unset.
-	 * @throws InvalidArgumentException If $variable is not a string nor a Variable object.
-	 * @throws OutOfBoundsException If no variable in the current state matches $variable.
+	 * @throws \InvalidArgumentException If $variable is not a string nor a Variable object.
+	 * @throws \OutOfBoundsException If no variable in the current state matches $variable.
 	 */
 	public function unsetVariable($variable) {
 		$data = &$this->getDataPlaceHolder();
@@ -120,6 +124,9 @@ class State extends AbstractCollection {
 		}
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::offsetSet()
+	 */
 	public function offsetSet($offset, $value) {
 		if (gettype($offset) === 'string' && empty($offset) === false) {
 			$placeholder = &$this->getDataPlaceHolder();
@@ -138,6 +145,9 @@ class State extends AbstractCollection {
 		}
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::offsetGet()
+	 */
 	public function offsetGet($offset) {
 		if (is_string($offset) === true && $offset !== '') {
 			$data = &$this->getDataPlaceHolder();
@@ -174,6 +184,9 @@ class State extends AbstractCollection {
 	    }
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::checkType()
+	 */
 	protected function checkType($value) {
 		if (!$value instanceof Variable) {
 			$msg = "A State object stores Variable objects only.";

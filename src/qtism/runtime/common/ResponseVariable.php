@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\Comparable;
@@ -62,14 +61,14 @@ class ResponseVariable extends Variable {
 	/**
 	 * The mapping from the QTI Data Model.
 	 * 
-	 * @var Mapping
+	 * @var \qtism\data\state\Mapping
 	 */
 	private $mapping = null;
 	
 	/**
 	 * The AreaMapping from the QTI Data Model.
 	 * 
-	 * @var AreaMapping
+	 * @var \qtism\data\state\AreaMapping
 	 */
 	private $areaMapping = null;
 	
@@ -81,7 +80,7 @@ class ResponseVariable extends Variable {
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
+	 * @throws \InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
 	 */
 	public function __construct($identifier, $cardinality, $baseType = -1, $value = null) {
 		parent::__construct($identifier, $cardinality, $baseType, $value);
@@ -148,7 +147,7 @@ class ResponseVariable extends Variable {
 	/**
 	 * Set the mapping.
 	 * 
-	 * @param Mapping $mapping A Mapping object from the QTI Data Model.
+	 * @param \qtism\data\state\Mapping $mapping A Mapping object from the QTI Data Model.
 	 */
 	public function setMapping(Mapping $mapping = null) {
 		$this->mapping = $mapping;
@@ -157,7 +156,7 @@ class ResponseVariable extends Variable {
 	/**
 	 * Get the mapping.
 	 * 
-	 * @return Mapping A mapping object from the QTI Data Model.
+	 * @return \qtism\data\state\Mapping A mapping object from the QTI Data Model.
 	 */
 	public function getMapping() {
 		return $this->mapping;
@@ -166,7 +165,7 @@ class ResponseVariable extends Variable {
 	/**
 	 * Set the area mapping.
 	 * 
-	 * @param AreaMapping $areaMapping An AreaMapping object from the QTI Data Model.
+	 * @param \qtism\data\state\AreaMapping $areaMapping An AreaMapping object from the QTI Data Model.
 	 */
 	public function setAreaMapping(AreaMapping $areaMapping = null) {
 		$this->areaMapping = $areaMapping;
@@ -175,7 +174,7 @@ class ResponseVariable extends Variable {
 	/**
 	 * Get the area mapping.
 	 * 
-	 * @return AreaMapping An AreaMapping object from the QTI Data Model.
+	 * @return \qtism\data\state\AreaMapping An AreaMapping object from the QTI Data Model.
 	 */
 	public function getAreaMapping() {
 		return $this->areaMapping;
@@ -202,6 +201,13 @@ class ResponseVariable extends Variable {
 	    return false;
 	}
 	
+	/**
+	 * Create a ResponseVariable object from its data model representation.
+	 * 
+	 * @param \qtism\data\state\VariableDeclaration $variableDeclaration
+	 * @throws \InvalidArgumentException
+	 * @return \qtism\runtime\common\ResponseVariable
+	 */
 	public static function createFromDataModel(VariableDeclaration $variableDeclaration) {
 		$variable = parent::createFromDataModel($variableDeclaration);
 	
@@ -228,6 +234,9 @@ class ResponseVariable extends Variable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Variable::__clone()
+	 */
 	public function __clone() {
 	    parent::__clone();
 	}

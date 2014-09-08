@@ -18,14 +18,12 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\data;
 
 use qtism\runtime\common\OutcomeVariable;
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection that aims at storing runtime OutcomeVariable objects.
@@ -38,7 +36,7 @@ class OutcomeVariableCollection extends VariableCollection {
 	/**
 	 * Check if $value is a valid OutcomeVariable object.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a OutcomeVariable object.
+	 * @throws \InvalidArgumentException If $value is not a OutcomeVariable object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof Variable) {

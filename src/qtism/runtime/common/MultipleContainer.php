@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\enums\Cardinality;
@@ -60,7 +59,7 @@ class MultipleContainer extends Container implements QtiDatatype {
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
 	 * @param array $array An array of data to insert in the container.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration or if data in $array are not compliant with the given $baseType.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration or if data in $array are not compliant with the given $baseType.
 	 */
 	public function __construct($baseType, array $array = array()) {
 		$this->setBaseType($baseType);
@@ -72,7 +71,7 @@ class MultipleContainer extends Container implements QtiDatatype {
 	 * container.
 	 * 
 	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
 	 */
 	protected function setBaseType($baseType) {
 		if (in_array($baseType, BaseType::asArray(), true)) {
@@ -93,6 +92,9 @@ class MultipleContainer extends Container implements QtiDatatype {
 		return $this->baseType;
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Container::checkType()
+	 */
 	protected function checkType($value) {
 		parent::checkType($value);
 		
@@ -104,10 +106,10 @@ class MultipleContainer extends Container implements QtiDatatype {
 	/**
 	 * Create a MultipleContainer object from a Data Model ValueCollection object.
 	 *
-	 * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
 	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @return MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
-	 * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
+	 * @return \qtism\runtime\common\MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
+	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
 	 */
 	public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER) {
 		$container = new static($baseType);
@@ -117,10 +119,16 @@ class MultipleContainer extends Container implements QtiDatatype {
 		return $container;
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Container::getToStringBounds()
+	 */
 	protected function getToStringBounds() {
 		return array('[', ']');
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Container::getCardinality()
+	 */
 	public function getCardinality() {
 	    return Cardinality::MULTIPLE;
 	}

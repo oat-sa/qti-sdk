@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\enums\BaseType;
@@ -66,7 +65,7 @@ class TemplateVariable extends Variable {
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
+	 * @throws \InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
 	 */
 	public function __construct($identifier, $cardinality, $baseType = -1, $value = null) {
 		parent::__construct($identifier, $cardinality, $baseType, $value);
@@ -76,8 +75,8 @@ class TemplateVariable extends Variable {
 	 * Set whether or not the template's value should be substituted for object
 	 * parameter values.
 	 * 
-	 * @param ParamVariable $paramVariable
-	 * @throws InvalidArgumentException
+	 * @param boolean $paramVariable
+	 * @throws \InvalidArgumentException
 	 */
 	public function setParamVariable($paramVariable) {
 	    if (is_bool($paramVariable) === true) {
@@ -104,7 +103,7 @@ class TemplateVariable extends Variable {
 	 * its name in MathML expressions.
 	 * 
 	 * @param boolean $mathVariable
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function setMathVariable($mathVariable) {
 	    if (is_bool($mathVariable) === true) {
@@ -126,6 +125,13 @@ class TemplateVariable extends Variable {
 	    return $this->mathVariable;
 	}
 	
+	/**
+	 * Create a TemplateVariable object from its data model representation.
+	 * 
+	 * @param \qtism\data\state\VariableDeclaration $variableDeclaration
+	 * @throws \InvalidArgumentException
+	 * @return \qtism\runtime\common\TemplateVariable
+	 */
 	public static function createFromDataModel(VariableDeclaration $variableDeclaration) {
 		$variable = parent::createFromDataModel($variableDeclaration);
 		
@@ -142,6 +148,9 @@ class TemplateVariable extends Variable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Variable::__clone()
+	 */
 	public function __clone() {
 	    parent::__clone();
 	}

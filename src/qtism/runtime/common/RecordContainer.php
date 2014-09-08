@@ -50,7 +50,7 @@ class RecordContainer extends Container implements QtiDatatype {
 	 * Create a new RecordContainer object.
 	 * 
 	 * @param array $array An associative array.
-	 * @throws InvalidArgumentException If the given $array is not associative.
+	 * @throws \InvalidArgumentException If the given $array is not associative.
 	 */
 	public function __construct(array $array = array()) {
 		if (Arrays::isAssoc($array)) {
@@ -69,6 +69,9 @@ class RecordContainer extends Container implements QtiDatatype {
 		}
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Container::getCardinality()
+	 */
 	public function getCardinality() {
 		return Cardinality::RECORD;
 	}
@@ -80,7 +83,7 @@ class RecordContainer extends Container implements QtiDatatype {
 	 * @param string $offset A string offset.
 	 * @param mixed $value A value.
 	 *
-	 * @throws RuntimeException If $offset is not a string.
+	 * @throws \RuntimeException If $offset is not a string.
 	 */
 	public function offsetSet($offset, $value) {
 		if (gettype($offset) === 'string') {
@@ -97,9 +100,9 @@ class RecordContainer extends Container implements QtiDatatype {
 	/**
 	 * Create a RecordContainer object from a Data Model ValueCollection object.
 	 *
-	 * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-	 * @return RecordContainer A Container object populated with the values found in $valueCollection.
-	 * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
+	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+	 * @return \qtism\runtime\common\RecordContainer A Container object populated with the values found in $valueCollection.
+	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
 	 */
 	public static function createFromDataModel(ValueCollection $valueCollection) {
 		$container = new static();
@@ -118,10 +121,16 @@ class RecordContainer extends Container implements QtiDatatype {
 		return $container;
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Container::getToStringBounds()
+	 */
 	protected function getToStringBounds() {
 		return array('{', '}');
 	}
 	
+	/**
+	 * @see \qtism\common\datatypes\QtiDatatype::getBaseType()
+	 */
 	public function getBaseType() {
 	    return -1;
 	}

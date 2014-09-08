@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\Float;
@@ -46,7 +45,7 @@ class OutcomeVariable extends Variable {
 	/**
 	 * The intended audiance of the OutcomeVariable.
 	 * 
-	 * @var ViewCollection
+	 * @var \qtism\data\ViewCollection
 	 */
 	private $views;
 	
@@ -74,7 +73,7 @@ class OutcomeVariable extends Variable {
 	/**
 	 * The QTI Data Model lookupTable bound to the OutcomeVariable.
 	 * 
-	 * @var LookupTable
+	 * @var \qtism\data\state\LookupTable
 	 */
 	private $lookupTable = null;
 	
@@ -86,16 +85,26 @@ class OutcomeVariable extends Variable {
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
+	 * @throws \InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
 	 */
 	public function __construct($identifier, $cardinality, $baseType = -1, $value = null) {
 		parent::__construct($identifier, $cardinality, $baseType, $value);
 	}
 	
+	/**
+	 * Get the value of the views attribute.
+	 * 
+	 * @return \qtism\data\ViewCollection
+	 */
 	public function getViews() {
 		return $this->views;
 	}
 	
+	/**
+	 * Set the value of the views attribute.
+	 * 
+	 * @param \qtism\data\ViewCollection $views
+	 */
 	public function setViews(ViewCollection $views) {
 		$this->views = $views;
 	}
@@ -104,7 +113,7 @@ class OutcomeVariable extends Variable {
 	 * Set the normal maximum.
 	 * 
 	 * @param float|double|boolean $normalMaximum The normal maximum or false if not defined.
-	 * @throws InvalidArgumentException If $normalMaximum is not false nor a floating point value.
+	 * @throws \InvalidArgumentException If $normalMaximum is not false nor a floating point value.
 	 */
 	public function setNormalMaximum($normalMaximum) {
 		if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum) || is_double($normalMaximum)) {
@@ -129,7 +138,7 @@ class OutcomeVariable extends Variable {
 	 * Set the normal minimum.
 	 *
 	 * @param float|double|boolean $normalMinimum The normal minimum or false if not defined.
-	 * @throws InvalidArgumentException If $normalMinimum is not false nor a floating point value.
+	 * @throws \InvalidArgumentException If $normalMinimum is not false nor a floating point value.
 	 */
 	public function setNormalMinimum($normalMinimum) {
 		if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum) || is_double($normalMinimum)) {
@@ -154,7 +163,7 @@ class OutcomeVariable extends Variable {
 	 * Set the mastery value.
 	 * 
 	 * @param float|double|boolean $masteryValue A floating point value or false if not defined.
-	 * @throws InvalidArgumentException If $masteryValue is not a floating point value nor false.
+	 * @throws \InvalidArgumentException If $masteryValue is not a floating point value nor false.
 	 */
 	public function setMasteryValue($masteryValue) {
 		if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue) || is_double($masteryValue)) {
@@ -178,7 +187,7 @@ class OutcomeVariable extends Variable {
 	/**
 	 * Set the lookup table.
 	 * 
-	 * @param LookupTable $lookupTable A QTI Data Model LookupTable object or null if not specified.
+	 * @param \qtism\data\state\LookupTable $lookupTable A QTI Data Model LookupTable object or null if not specified.
 	 */
 	public function setLookupTable(LookupTable $lookupTable = null) {
 		$this->lookupTable = $lookupTable;
@@ -187,12 +196,19 @@ class OutcomeVariable extends Variable {
 	/**
 	 * Get the lookup table.
 	 * 
-	 * @return LookupTable A QTI Data Model LookupTable object or null if not defined.
+	 * @return \qtism\data\state\LookupTable A QTI Data Model LookupTable object or null if not defined.
 	 */
 	public function getLookupTable() {
 		return $this->lookupTable;
 	}
 	
+	/**
+	 * Create an OutcomeVariable object from a data model VariableDeclaration object.
+	 * 
+	 * @param \qtism\data\state\VariableDeclaration $variableDeclaration
+	 * @throws \InvalidArgumentException
+	 * @return \qtism\runtime\common\OutcomeVariable
+	 */
 	public static function createFromDataModel(VariableDeclaration $variableDeclaration) {
 		$variable = parent::createFromDataModel($variableDeclaration);
 		
@@ -232,6 +248,9 @@ class OutcomeVariable extends Variable {
 		}
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\Variable::__clone()
+	 */
 	public function __clone() {
 	    parent::__clone();
 	}

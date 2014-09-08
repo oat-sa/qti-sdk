@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use \InvalidArgumentException;
@@ -82,7 +81,7 @@ class VariableIdentifier {
 	 * Create a new VariableIdentifier object.
 	 * 
 	 * @param string $identifier A prefixed identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid variable identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid variable identifier.
 	 * 
 	 */
 	public function __construct($identifier) {
@@ -119,7 +118,7 @@ class VariableIdentifier {
 	 * Set the identifier string.
 	 * 
 	 * @param string $identifier A prefixed identifier.
-	 * @throws InvalidArgumentException If $identifier is not a valid prefixed identifier.
+	 * @throws \InvalidArgumentException If $identifier is not a valid prefixed identifier.
 	 */
 	protected function setIdentifier($identifier) {
 		if (Utils::isValidVariableIdentifier($identifier)) {
@@ -144,7 +143,7 @@ class VariableIdentifier {
 	 * Set the detected sequence number.
 	 * 
 	 * @param integer $sequenceNumber A integer sequence number.
-	 * @throws InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
+	 * @throws \InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
 	 */
 	protected function setSequenceNumber($sequenceNumber) {
 		if (gettype($sequenceNumber) === 'integer') {
@@ -185,7 +184,7 @@ class VariableIdentifier {
 	 * Set the variable name found in the identifier.
 	 * 
 	 * @param string $variableName A variable name.
-	 * @throws InvalidArgumentException If $variableName is not a string or is empty.
+	 * @throws \InvalidArgumentException If $variableName is not a string or is empty.
 	 */
 	protected function setVariableName($variableName) {
 		if (gettype($variableName) === 'string' && empty($variableName) === false) {
@@ -209,8 +208,8 @@ class VariableIdentifier {
 	/**
 	 * Set the prefix part of the identifier.
 	 * 
-	 * @param unknown_type $prefix The prefix of the variable identifier.
-	 * @throws InvalidArgumentException If $prefix is not a string or is empty.
+	 * @param string $prefix The prefix of the variable identifier.
+	 * @throws \InvalidArgumentException If $prefix is not a string or is empty.
 	 */
 	protected function setPrefix($prefix) {
 		if (gettype($prefix) === 'string' && empty($prefix) === false) {

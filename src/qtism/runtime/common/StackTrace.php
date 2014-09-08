@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\common;
 
@@ -39,7 +37,7 @@ class StackTrace extends AbstractCollection implements Stack {
 	/**
 	 * Pop a StackTraceItem object from the StackTrace.
 	 * 
-	 * @return StackTraceItem|null A StackTraceItem object or null if there is nothing to pop.
+	 * @return \qtism\runtime\common\StackTraceItem|null A StackTraceItem object or null if there is nothing to pop.
 	 */
 	public function pop() {
 		$data = &$this->getDataPlaceHolder();
@@ -50,8 +48,8 @@ class StackTrace extends AbstractCollection implements Stack {
 	/**
 	 * Push a given StackTraceItem object on the StackTrace.
 	 * 
-	 * @param StackTraceItem $value A StackTraceItem object.
-	 * @throws InvalidArgumentException If $value is not a StackTraceItem object.
+	 * @param \qtism\runtime\common\StackTraceItem $value A StackTraceItem object.
+	 * @throws \InvalidArgumentException If $value is not a StackTraceItem object.
 	 */
 	public function push($value) {
 		$this->checkType($value);
@@ -59,6 +57,9 @@ class StackTrace extends AbstractCollection implements Stack {
 		array_push($data, $value);
 	}
 	
+	/**
+	 * @see \qtism\common\collections\AbstractCollection::checkType()
+	 */
 	public function checkType($value) {
 		if (!$value instanceof StackTraceItem) {
 			$msg = "The StackTrace class only accepts to store StackTraceItem objects.";
@@ -66,6 +67,11 @@ class StackTrace extends AbstractCollection implements Stack {
 		}
 	}
 	
+	/**
+	 * Get a string representation of the stack trace.
+	 * 
+	 * @return string
+	 */
 	public function __toString() {
 		$str = '';
 		$data = &$this->getDataPlaceHolder();

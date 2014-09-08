@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\QtiDatatype;
@@ -85,7 +84,7 @@ abstract class Variable {
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
+	 * @throws \InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
 	 */
 	public function __construct($identifier, $cardinality, $baseType = -1, $value = null) {
 		$this->setIdentifier($identifier);
@@ -174,7 +173,7 @@ abstract class Variable {
 	 * Set the baseType of the Variable.
 	 * 
 	 * @param integer $baseType A value from the Cardinality enumeration or -1 if there is no baseType in a Cardinality::RECORD context.
-	 * @throws InvalidArgumentException If -1 is passed but Cardinality::RECORD is not set.
+	 * @throws \InvalidArgumentException If -1 is passed but Cardinality::RECORD is not set.
 	 */
 	public function setBaseType($baseType) {
 		if ($baseType === -1 && $this->isRecord() === false) {
@@ -198,7 +197,7 @@ abstract class Variable {
 	 * Set the value of the Variable.
 	 * 
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $value A value compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
+	 * @throws \InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
 	 */
 	public function setValue(QtiDatatype $value = null) {
 		
@@ -223,7 +222,7 @@ abstract class Variable {
 	 * Set the default value of the Variable.
 	 * 
 	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $defaultValue A value compliant with the QTI Runtime Model.
-	 * @throws InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
+	 * @throws \InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
 	 */
 	public function setDefaultValue($defaultValue) {
 		if (Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) && Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
@@ -238,9 +237,9 @@ abstract class Variable {
 	/**
 	 * Create a runtime Variable object from its Data Model representation.
 	 * 
-	 * @param VariableDeclaration $variableDeclaration A VariableDeclaration object from the QTI Data Model.
-	 * @return Variable A Variable object.
-	 * @throws UnexpectedValueException If $variableDeclaration is not consistent.
+	 * @param \qtism\data\state\VariableDeclaration $variableDeclaration A VariableDeclaration object from the QTI Data Model.
+	 * @return \qtism\runtime\common\Variable A Variable object.
+	 * @throws \UnexpectedValueException If $variableDeclaration is not consistent.
 	 */
 	static public function createFromDataModel(VariableDeclaration $variableDeclaration) {
 		$identifier = $variableDeclaration->getIdentifier();
@@ -264,10 +263,10 @@ abstract class Variable {
 	/**
 	 * Create a QTI Runtime value from Data Model ValueCollection
 	 * 
-	 * @param ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
 	 * @param integer $baseType The baseType the Value objects in the ValueCollection must respect.
 	 * @param integer $cardinality The cardinality the Value objects in the ValueCollection must respect.
-	 * @throws UnexpectedValueException If $baseType or/and $cardinality are not respected by the Value objects in the ValueCollection.
+	 * @throws \UnexpectedValueException If $baseType or/and $cardinality are not respected by the Value objects in the ValueCollection.
 	 * @return mixed The resulting QTI Runtime value (primitive or container depending on baseType/cardinality).
 	 */
 	protected static function dataModelValuesToRuntime(ValueCollection $valueCollection, $baseType, $cardinality) {
@@ -502,6 +501,9 @@ abstract class Variable {
 		$this->setValue($this->getDefaultValue());
 	}
 	
+	/**
+	 * Clone a Variable object.
+	 */
 	public function __clone() {
 	    if (($v = $this->value) !== null) {
 	        $this->value = clone $v;

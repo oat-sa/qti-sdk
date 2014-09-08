@@ -26,7 +26,7 @@ namespace qtism\runtime\common;
 
 use qtism\common\collections\AbstractCollection;
 use qtism\runtime\common\Variable;
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection that aims at storing runtime Variable objects.
@@ -44,7 +44,7 @@ class VariableCollection extends AbstractCollection {
 	protected function checkType($value) {
 		if (!$value instanceof Variable) {
 			$msg = "The VariableCollection class only accept Variable objects, '${value}' given.";
-			throw new InvalidArgumentException($msg);
+			throw new \InvalidArgumentException($msg);
 		}
 	}
 }

@@ -34,6 +34,8 @@ interface Processable {
 	
 	/**
 	 * Trigger the processing of the Processable object.
+	 * 
+	 * @throws \qtism\runtime\common\ProcessingException If an error occurs while processing something.
 	 */
 	public function process();
 }

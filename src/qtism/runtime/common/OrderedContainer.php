@@ -19,17 +19,27 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\Comparable;
 
+/**
+ * A more concrete type of Container, which has cardinality qti:ordered
+ * and drawn from the same value set. In this type of container, the order
+ * is important.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class OrderedContainer extends MultipleContainer implements QtiDatatype {
 	
+    /**
+     * @see \qtism\runtime\common\Container::equals()
+     */
 	public function equals($obj) {
 		$countA = count($this);
 		$countB = count($obj);
@@ -62,10 +72,16 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype {
 		return false;
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\MultipleContainer::getCardinality()
+	 */
 	public function getCardinality() {
 		return Cardinality::ORDERED;
 	}
 	
+	/**
+	 * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
+	 */
 	protected function getToStringBounds() {
 		return array('<', '>');
 	}

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use \RuntimeException;
@@ -48,7 +47,7 @@ class ProcessingException extends \RuntimeException {
 	 * 
 	 * e.g. When a division by zero occurs, an overflow, ...
 	 * 
-	 * @var unknown_type
+	 * @var integer
 	 */
 	const RUNTIME_ERROR = 1;
 	
@@ -104,9 +103,9 @@ class ProcessingException extends \RuntimeException {
 	 * Create a new ProcessingException.
 	 * 
 	 * @param string $msg A human-readable message describing the error.
-	 * @param Processable $source A Processable object where the error occured.
+	 * @param \qtism\runtime\common\Processable $source A Processable object where the error occured.
 	 * @param integer A code to characterize the error.
-	 * @param Exception $previous An optional Exception object that caused the error.
+	 * @param \Exception $previous An optional Exception object that caused the error.
 	 */
 	public function __construct($msg, Processable $source, $code = 0, Exception $previous = null) {
 		
@@ -117,7 +116,7 @@ class ProcessingException extends \RuntimeException {
 	/**
 	 * Set the source of the exception.
 	 * 
-	 * @param Processable $source The Processable object whithin the error occured.
+	 * @param \qtism\runtime\common\Processable $source The Processable object whithin the error occured.
 	 */
 	protected function setSource(Processable $source) {
 		$this->source = $source;
@@ -126,7 +125,7 @@ class ProcessingException extends \RuntimeException {
 	/**
 	 * Get the source of the exception.
 	 * 
-	 * @return Processable The Processable object within the error occured.
+	 * @return \qtism\runtime\common\Processable The Processable object within the error occured.
 	 */
 	public function getSource() {
 		return $this->source;

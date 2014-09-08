@@ -18,7 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
+ * 
  */
+
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\Identifier;
@@ -42,6 +44,13 @@ use \RuntimeException;
 
 // @todo write an isNull method that applies on both scalar and container values.
 
+/**
+ * Utility class gathering utility methods for the \qtism\runtime\common
+ * namespace.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class Utils {
 	
 	/**
@@ -82,6 +91,13 @@ class Utils {
 		}
 	}
 	
+	/**
+	 * Whether a given $cardinality is compliant with a given $value.
+	 * 
+	 * @param integer $cardinality
+	 * @param mixed $value
+	 * @return boolean
+	 */
 	public static function isCardinalityCompliant($cardinality, $value) {
 	    if ($value === null) {
 	        return true;
@@ -98,7 +114,7 @@ class Utils {
 	 * Throw an InvalidArgumentException depending on a PHP in-memory value.
 	 *
 	 * @param mixed $value A given PHP primitive value.
-	 * @throws InvalidArgumentException In any case.
+	 * @throws \InvalidArgumentException In any case.
 	 */
 	public static function throwTypingError($value) {
 		$givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value);
@@ -114,7 +130,7 @@ class Utils {
 	 *
 	 * @param int $baseType A value from the BaseType enumeration.
 	 * @param mixed $value A given PHP primitive value.
-	 * @throws InvalidArgumentException In any case.
+	 * @throws \InvalidArgumentException In any case.
 	 */
 	public static function throwBaseTypeTypingError($baseType, $value) {
 		$givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value) . ':' . $value;
@@ -328,6 +344,13 @@ class Utils {
 	    return $floatArray;
 	}
 	
+	/**
+	 * Transform a given PHP runtime value to a QtiDatatype object.
+	 * 
+	 * @param mixed|null $v
+	 * @param integer $baseType A value from the BaseType enumeration.
+	 * @return \qtism\common\datatypes\Integer|\qtism\common\datatypes\IntOrIdentifier|\qtism\common\datatypes\Identifier|\qtism\common\datatypes\String|\qtism\common\datatypes\Uri|\qtism\common\datatypes\Float|\qtism\common\datatypes\Boolean|null
+	 */
 	public static function valueToRuntime($v, $baseType) {
 	    
 	    if ($v !== null) {

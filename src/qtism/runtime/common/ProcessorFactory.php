@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\common;
 
 use qtism\data\QtiComponent;
@@ -38,8 +37,8 @@ interface ProcessorFactory {
 	/**
 	 * Create a Processable object able to process $component.
 	 * 
-	 * @param QtiComponent $component A QtiComponent object that the returned Processable object is able to process.
-	 * @return Processable A Processable object able to process $component.
+	 * @param \qtism\data\QtiComponent $component A QtiComponent object that the returned Processable object is able to process.
+	 * @return \qtism\runtime\common\Processable A Processable object able to process $component.
 	 */
 	public function createProcessor(QtiComponent $component);
 }

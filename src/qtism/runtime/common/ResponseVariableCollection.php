@@ -19,13 +19,12 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\data;
 
 use qtism\runtime\common\ResponseVariable;
-use InvalidArgumentException as InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * A collection that aims at storing runtime ResponseVariable objects.
@@ -38,7 +37,7 @@ class ResponseVariableCollection extends VariableCollection {
 	/**
 	 * Check if $value is a valid ResponseVariable object.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a ResponseVariable object.
+	 * @throws \InvalidArgumentException If $value is not a ResponseVariable object.
 	 */
 	protected function checkType($value) {
 		if (!$value instanceof Variable) {
