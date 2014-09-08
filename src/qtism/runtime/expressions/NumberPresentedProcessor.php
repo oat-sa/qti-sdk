@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Integer;
-
 use qtism\data\expressions\NumberPresented;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -46,6 +44,9 @@ use \InvalidArgumentException;
  */
 class NumberPresentedProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof NumberPresented) {
 			parent::setExpression($expression);
@@ -60,7 +61,7 @@ class NumberPresentedProcessor extends ItemSubsetProcessor {
 	 * Process the related NumberPresented expression.
 	 * 
 	 * @return integer The number of items in the given item sub-set that have been attempted (at least once).
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $testSession = $this->getState();

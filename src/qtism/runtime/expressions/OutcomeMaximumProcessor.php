@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Float;
-
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -49,6 +47,9 @@ use \InvalidArgumentException;
  */
 class OutcomeMaximumProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof OutcomeMaximum) {
 			parent::setExpression($expression);
@@ -62,8 +63,8 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor {
 	/**
 	 * Process the related OutcomeMaximum expression.
 	 * 
-	 * @return MultipleContainer|null A MultipleContainer object with baseType float containing all the retrieved normalMaximum values or NULL if no declared maximum in the sub-set. 
-	 * @throws ExpressionProcessingException
+	 * @return \qtism\runtime\common\MultipleContainer|null A MultipleContainer object with baseType float containing all the retrieved normalMaximum values or NULL if no declared maximum in the sub-set. 
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $itemSubset = $this->getItemSubset();

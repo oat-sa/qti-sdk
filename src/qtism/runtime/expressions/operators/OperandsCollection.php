@@ -19,15 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
-
 use qtism\common\datatypes\String;
-
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\collections\Stack;
@@ -54,7 +50,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 	/**
 	 * Check if $value is a QTI Runtime compliant value.
 	 * 
-	 * @throws InvalidArgumentException If $value is not a QTI Runtime compliant value.
+	 * @throws \InvalidArgumentException If $value is not a QTI Runtime compliant value.
 	 */
 	protected function checkType($value) {
 		if (RuntimeUtils::isRuntimeCompliant($value)) {
@@ -489,6 +485,9 @@ class OperandsCollection extends AbstractCollection implements Stack {
 		return true;
 	}
 	
+	/**
+	 * @see \qtism\common\collections\Stack::push()
+	 */
 	public function push($value) {
 		$this->checkType($value);
 		
@@ -496,6 +495,9 @@ class OperandsCollection extends AbstractCollection implements Stack {
 		array_push($data, $value);
 	}
 	
+	/**
+	 * @see \qtism\common\collections\Stack::pop()
+	 */
 	public function pop($count = 1) {
 		
 		$data = &$this->getDataPlaceHolder();

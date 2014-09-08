@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Float;
@@ -42,6 +41,9 @@ use \InvalidArgumentException;
  */
 class MathConstantProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof MathConstant) {
 			parent::setExpression($expression);

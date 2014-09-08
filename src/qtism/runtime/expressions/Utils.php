@@ -18,16 +18,12 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions;
 
 use qtism\common\utils\Reflection;
-
 use qtism\data\expressions\Expression;
-
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -61,7 +57,7 @@ class Utils {
 	 * 
 	 * [ExpressionClassName] My message...
 	 * 
-	 * @param Expression $expression A given expression that failed to be processed.
+	 * @param \qtism\data\expressions\Expression $expression A given expression that failed to be processed.
 	 * @param string $message A formatted error reporting message.
 	 * @return string
 	 */

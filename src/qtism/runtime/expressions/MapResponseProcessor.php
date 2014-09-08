@@ -57,6 +57,9 @@ use \InvalidArgumentException;
  */
 class MapResponseProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof MapResponse) {
 			parent::setExpression($expression);
@@ -76,7 +79,7 @@ class MapResponseProcessor extends ExpressionProcessor {
 	 * * An ExpressionProcessingException is thrown if the cardinality of the variable is RECORD.
 	 * 
 	 * @return a QTI float value.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();

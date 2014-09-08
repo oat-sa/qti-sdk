@@ -19,8 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
  */
+
 namespace qtism\runtime\expressions\operators\custom;
 
 use qtism\common\enums\Cardinality;
@@ -46,7 +46,7 @@ class Implode extends CustomOperatorProcessor {
 	 * Process the expression by implementing PHP core's implode function.
 	 * 
 	 * @return String The split value of the second sub-expression given as a parameter.
-	 * @throws OperatorProcessingException If something goes wrong.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
 	 */
 	public function process() {
 	    $operands = $this->getOperands();

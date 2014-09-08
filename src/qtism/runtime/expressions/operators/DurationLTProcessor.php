@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -54,6 +52,9 @@ use \InvalidArgumentException;
  */
 class DurationLTProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof DurationLT) {
 			parent::setExpression($expression);
@@ -68,7 +69,7 @@ class DurationLTProcessor extends OperatorProcessor {
 	 * Process the DurationLT operator.
 	 * 
 	 * @return boolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions;
 
@@ -66,7 +64,10 @@ use \InvalidArgumentException;
  *
  */
 class TestVariablesProcessor extends ItemSubsetProcessor {
-	
+
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof TestVariables) {
 			parent::setExpression($expression);
@@ -80,8 +81,8 @@ class TestVariablesProcessor extends ItemSubsetProcessor {
 	/**
 	 * Process the related TestVariables expression.
 	 * 
-	 * @return 
-	 * @throws ExpressionProcessingException
+	 * @return \qtism\runtime\common\MultipleContainer
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $testSession = $this->getState();

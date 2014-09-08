@@ -18,10 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\runtime\common\ResponseVariable;
@@ -45,6 +44,9 @@ use \InvalidArgumentException;
  */
 class CorrectProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Correct) {
 			parent::setExpression($expression);
@@ -66,7 +68,7 @@ class CorrectProcessor extends ExpressionProcessor {
 	 * * The targeted variable is not a ResponseVariable.
 	 * 
 	 * @return mixed A QTI Runtime compliant value or null.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();

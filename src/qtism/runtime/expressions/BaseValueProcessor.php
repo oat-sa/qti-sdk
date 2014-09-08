@@ -18,10 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\data\state\Value;
@@ -42,6 +41,9 @@ use \InvalidArgumentException;
  */
 class BaseValueProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof BaseValue) {
 			parent::setExpression($expression);
@@ -53,9 +55,7 @@ class BaseValueProcessor extends ExpressionProcessor {
 	}
 	
 	/**
-	 * Process the BaseValue.
-	 * 
-	 * @return mixed A QTI Runtime compliant scalar value.
+	 * @see \qtism\runtime\common\Processable::process()
 	 */
 	public function process() {
 	    $expression = $this->getExpression();

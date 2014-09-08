@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -45,10 +44,7 @@ use \InvalidArgumentException;
 class IsNullProcessor extends OperatorProcessor {
 	
 	/**
-	 * Set the Expression object to be processed.
-	 * 
-	 * @param Expression An IsNull object.
-	 * @throws InvalidArgumentException If the $expression is not an IsNull QTI Data Model Expression object.
+	 * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
 	 */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof IsNull) {
@@ -64,7 +60,7 @@ class IsNullProcessor extends OperatorProcessor {
 	 * Process the IsNullExpression object from the QTI Data Model.
 	 * 
 	 * @return boolean Whether the sub-expression is considered to be NULL.
-	 * @throws OperatorProcessingException If something goes wrong.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -72,5 +68,4 @@ class IsNullProcessor extends OperatorProcessor {
 		
 		return new Boolean($operands->containsNull());
 	}
-	
 }

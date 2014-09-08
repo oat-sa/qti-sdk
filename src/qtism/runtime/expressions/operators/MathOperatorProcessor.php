@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -80,6 +78,9 @@ use \InvalidArgumentException;
  */
 class MathOperatorProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof MathOperator) {
 			parent::setExpression($expression);
@@ -126,21 +127,37 @@ class MathOperatorProcessor extends OperatorProcessor {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processSin() {
 		$operands = $this->getOperands();
 		return new Float(sin($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processCos() {
 		$operands = $this->getOperands();
 		return new Float(cos($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processTan() {
 		$operands = $this->getOperands();
 		return new Float(tan($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processSec() {
 		$operands = $this->getOperands();
 		$cos = cos($operands[0]->getValue());
@@ -152,6 +169,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processCsc() {
 		$operands = $this->getOperands();
 		$sin = sin($operands[0]->getValue());
@@ -163,6 +184,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float|null
+	 */
 	protected function processCot() {
 		$operands = $this->getOperands();
 		$tan = tan($operands[0]->getValue());
@@ -177,21 +202,38 @@ class MathOperatorProcessor extends OperatorProcessor {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processAsin() {
 		$operands = $this->getOperands();
 		return new Float(asin($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processAcos() {
 		$operands = $this->getOperands();
 		return new Float(acos($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processAtan() {
 		$operands = $this->getOperands();
 		return new Float(atan($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processAtan2() {
 		$operands = $this->getOperands();
 		
@@ -210,6 +252,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(atan2($operand1->getValue(), $operand2->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processAsec() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -221,6 +267,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(acos(1 / $operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processAcsc() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -232,6 +282,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(asin(1 / $operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processAcot() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -243,21 +297,37 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(atan(1 / $operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processSinh() {
 		$operands = $this->getOperands();
 		return new Float(sinh($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processCosh() {
 		$operands = $this->getOperands();
 		return new Float(cosh($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return \qtism\common\datatypes\Float
+	 */
 	protected function processTanh() {
 		$operands = $this->getOperands();
 		return new Float(tanh($operands[0]->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processSech() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -269,6 +339,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(1 / cosh($operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processCsch() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -280,6 +354,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(1 / sinh($operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processCoth() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -294,6 +372,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(1 / tanh($operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processLog() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -308,6 +390,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(log($operand->getValue(), 10));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processLn() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -322,6 +408,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(log($operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processExp() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -339,6 +429,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(exp($operand->getValue()));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processAbs() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -373,6 +467,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float|\qtism\common\datatypes\Integer
+	 */
 	protected function processFloor() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -390,6 +488,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Integer(intval(floor($operand->getValue())));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float|\qtism\common\datatypes\Integer
+	 */
 	protected function processCeil() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -407,6 +509,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Integer(intval(ceil($operand->getValue())));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processToDegrees() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -424,6 +530,10 @@ class MathOperatorProcessor extends OperatorProcessor {
 		return new Float(floatval(rad2deg($operand->getValue())));
 	}
 	
+	/**
+	 * 
+	 * @return null|\qtism\common\datatypes\Float
+	 */
 	protected function processToRadians() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];

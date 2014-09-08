@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
@@ -60,6 +59,9 @@ use \InvalidArgumentException;
  */
 class StatsOperatorProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof StatsOperator) {
 			parent::setExpression($expression);
@@ -74,7 +76,7 @@ class StatsOperatorProcessor extends OperatorProcessor {
 	 * Process the StatsOperator.
 	 * 
 	 * @return float A single float or NULL if the sub-expression or any value contained therein is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -99,6 +101,10 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		return call_user_func_array(array($this, $methodName), array());
 	}
 	
+	/**
+	 * 
+	 * @return null|qtism\common\datatypes\Float
+	 */
 	protected function processMean() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -107,6 +113,10 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
+	/**
+	 * 
+	 * @return null, \qtism\common\datatypes\Float
+	 */
 	protected function processSampleVariance() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -115,6 +125,10 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
+	/**
+	 * 
+	 * @return null, \qtism\common\datatypes\Float
+	 */
 	protected function processSampleSD() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -123,6 +137,10 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
+	/**
+	 * 
+	 * @return null, \qtism\common\datatypes\Float
+	 */
 	protected function processPopVariance() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];
@@ -131,6 +149,10 @@ class StatsOperatorProcessor extends OperatorProcessor {
 		return ($result !== false) ? new Float(floatval($result)) : null;
 	}
 	
+	/**
+	 * 
+	 * @return null, \qtism\common\datatypes\Float
+	 */
 	protected function processPopSD() {
 		$operands = $this->getOperands();
 		$operand = $operands[0];

@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Float;
-
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -52,6 +50,9 @@ use \InvalidArgumentException;
  */
 class MapResponsePointProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof MapResponsePoint) {
 			parent::setExpression($expression);
@@ -73,7 +74,7 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 	 * * The target variable has the RECORD cardinality.
 	 * 
 	 * @return float A transformed float value according to the areaMapping of the target variable.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		

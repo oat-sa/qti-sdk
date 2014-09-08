@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -54,6 +53,9 @@ use \InvalidArgumentException;
  */
 class AnyNProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof AnyN) {
 			parent::setExpression($expression);
@@ -68,7 +70,7 @@ class AnyNProcessor extends OperatorProcessor {
 	 * Process the AnyN processor.
 	 * 
 	 * @return boolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

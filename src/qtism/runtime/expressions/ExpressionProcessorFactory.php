@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\data\QtiComponent;
@@ -53,9 +52,9 @@ class ExpressionProcessorFactory implements ProcessorFactory {
 	 * Create the ExpressionProcessor object able to process the 
 	 * given $expression.
 	 * 
-	 * @param QtiComponent $expression An Expression object you want to get the related processor.
-	 * @return Processable The related ExpressionProcessor object.
-	 * @throws RuntimeException If no ExpressionProcessor can be found for the given $expression.
+	 * @param \qtism\data\QtiComponent $expression An Expression object you want to get the related processor.
+	 * @return \qtism\runtime\common\Processable The related ExpressionProcessor object.
+	 * @throws \RuntimeException If no ExpressionProcessor can be found for the given $expression.
 	 */
 	public function createProcessor(QtiComponent $expression) {
 		$qtiClassName = ucfirst($expression->getQtiClassName());

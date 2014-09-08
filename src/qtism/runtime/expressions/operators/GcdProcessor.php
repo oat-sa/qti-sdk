@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -52,6 +51,9 @@ use \InvalidArgumentException;
  */
 class GcdProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Gcd) {
 			parent::setExpression($expression);
@@ -66,7 +68,7 @@ class GcdProcessor extends OperatorProcessor {
 	 * Process the Gcd operator.
 	 * 
 	 * @return integer The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

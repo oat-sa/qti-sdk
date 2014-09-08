@@ -18,10 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\data\expressions\Expression;
@@ -40,6 +39,9 @@ use qtism\data\expressions\NullValue;
  */
 class NullProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof NullValue) {
 			parent::setExpression($expression);

@@ -19,13 +19,10 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
 use qtism\runtime\common\Container;
-
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
@@ -49,6 +46,9 @@ use \InvalidArgumentException;
  */
 class OrProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof OrOperator) {
 			parent::setExpression($expression);
@@ -63,7 +63,7 @@ class OrProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return boolean True if the expression is true, false otherwise.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

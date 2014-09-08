@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\Comparable;
@@ -53,6 +52,9 @@ use \InvalidArgumentException;
  */
 class DeleteProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Delete) {
 			parent::setExpression($expression);
@@ -66,8 +68,8 @@ class DeleteProcessor extends OperatorProcessor {
 	/**
 	 * Process the Delete operator.
 	 * 
-	 * @return A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
-	 * @throws OperatorProcessingException 
+	 * @return \qtism\runtime\common\Container A new container derived from the second sub-expression with all instances of the first sub-expression removed, or NULL if either sub-expression is considered to be NULL.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException 
 	 */
 	public function process() {
 		$operands = $this->getOperands();

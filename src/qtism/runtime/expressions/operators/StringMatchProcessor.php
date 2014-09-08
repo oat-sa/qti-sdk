@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -48,6 +47,9 @@ use \InvalidArgumentException;
  */
 class StringMatchProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof StringMatch) {
 			parent::setExpression($expression);
@@ -62,7 +64,7 @@ class StringMatchProcessor extends OperatorProcessor {
 	 * Process the StringMatch operator.
 	 * 
 	 * @return boolean Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

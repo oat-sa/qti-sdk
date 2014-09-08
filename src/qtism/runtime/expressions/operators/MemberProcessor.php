@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -49,6 +48,9 @@ use \InvalidArgumentException;
  */
 class MemberProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Member) {
 			parent::setExpression($expression);
@@ -63,7 +65,7 @@ class MemberProcessor extends OperatorProcessor {
 	 * Process the Member operator.
 	 * 
 	 * @return boolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

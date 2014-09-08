@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions;
 
@@ -45,6 +43,9 @@ use \InvalidArgumentException;
  */
 class NumberCorrectProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof NumberCorrect) {
 			parent::setExpression($expression);
@@ -59,7 +60,7 @@ class NumberCorrectProcessor extends ItemSubsetProcessor {
 	 * Process the related NumberCorrect expression.
 	 * 
 	 * @return integer The number of items of the given sub-set for which all the response variables match their associated correct response.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $testSession = $this->getState();

@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
-
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Not;
 
@@ -44,6 +42,9 @@ use qtism\data\expressions\operators\Not;
  */
 class NotProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Not) {
 			parent::setExpression($expression);
@@ -58,7 +59,7 @@ class NotProcessor extends OperatorProcessor {
 	 * Returns the logical negation of the sub-expressions.
 	 * 
 	 * @return boolean
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

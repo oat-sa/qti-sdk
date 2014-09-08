@@ -19,13 +19,10 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
-
 use qtism\common\datatypes\Integer;
-
 use qtism\data\expressions\NumberSelected;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -46,6 +43,9 @@ use \InvalidArgumentException;
  */
 class NumberSelectedProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof NumberSelected) {
 			parent::setExpression($expression);
@@ -60,7 +60,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor {
 	 * Process the related NumberSelected expression.
 	 * 
 	 * @return integer The number of items in the given sub-set that have been selected for presentation to the candidate.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $testSession = $this->getState();

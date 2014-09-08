@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -47,6 +46,9 @@ use \InvalidArgumentException;
  */
 class DurationGTEProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof DurationGTE) {
 			parent::setExpression($expression);
@@ -61,7 +63,7 @@ class DurationGTEProcessor extends OperatorProcessor {
 	 * Process the DurationGTE operator.
 	 * 
 	 * @return boolean|null A boolean with a value of true if the first duration is longer or equal to the second, otherwise false. If either sub-expression is NULL, the result of the operator is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

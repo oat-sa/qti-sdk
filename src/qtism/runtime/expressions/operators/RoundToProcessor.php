@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
@@ -61,6 +60,9 @@ use \InvalidArgumentException;
  */
 class RoundToProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof RoundTo) {
 			parent::setExpression($expression);
@@ -81,7 +83,7 @@ class RoundToProcessor extends OperatorProcessor {
 	 * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
 	 * 
 	 * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

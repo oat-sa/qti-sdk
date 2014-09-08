@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Integer;
@@ -43,6 +42,9 @@ use \OutOfRangeException;
  */
 class RandomIntegerProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof RandomInteger) {
 			parent::setExpression($expression);
@@ -61,7 +63,7 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 	 * * Throws an ExpressionProcessingException if a variable reference's value is not an integer.
 	 * 
 	 * @return integer A random integer value.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();

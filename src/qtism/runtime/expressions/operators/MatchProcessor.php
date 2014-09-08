@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -50,10 +49,7 @@ use \InvalidArgumentException;
 class MatchProcessor extends OperatorProcessor {
 	
 	/**
-	 * Set the Expression object to be processed.
-	 * 
-	 * @param Expression $expression An Expression object to be processed.
-	 * @throws InvalidArgumentException If $expression is not a Match QTI Data Model Expression object.
+	 * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
 	 */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Match) {
@@ -69,7 +65,7 @@ class MatchProcessor extends OperatorProcessor {
 	 * Process the Match Expression object.
 	 * 
 	 * @return boolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

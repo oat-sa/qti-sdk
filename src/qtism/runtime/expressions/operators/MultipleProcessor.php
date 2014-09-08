@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\runtime\common\Utils as CommonUtils;
@@ -47,6 +46,9 @@ use \InvalidArgumentException;
  */
 class MultipleProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Multiple) {
 			parent::setExpression($expression);
@@ -60,8 +62,8 @@ class MultipleProcessor extends OperatorProcessor {
 	/**
 	 * Process the current expression.
 	 * 
-	 * @return MultipleContainer|null A MultipleContainer object or NULL.
-	 * @throws OperatorProcessingException
+	 * @return \qtism\runtime\common\MultipleContainer|null A MultipleContainer object or NULL.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -112,8 +114,8 @@ class MultipleProcessor extends OperatorProcessor {
 	/**
 	 * Append a value (A MultipleContainer or a primitive datatype) to a given $container.
 	 * 
-	 * @param MultipleContainer $container A MultipleContainer object you want to append something to.
-	 * @param scalar|MultipleContainer $value A value to append to the $container.
+	 * @param \qtism\runtime\common\MultipleContainer $container A MultipleContainer object you want to append something to.
+	 * @param scalar|\qtism\runtime\common\MultipleContainer $value A value to append to the $container.
 	 */
 	protected static function appendValue(MultipleContainer $container, $value) {
 		if ($value instanceof MultipleContainer) {

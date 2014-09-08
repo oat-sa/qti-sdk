@@ -18,10 +18,10 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
- */namespace qtism\runtime\expressions;
+ * 
+ */
+
+namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberIncorrect;
@@ -45,6 +45,9 @@ use \InvalidArgumentException;
  */
 class NumberIncorrectProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof NumberIncorrect) {
 			parent::setExpression($expression);
@@ -59,7 +62,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor {
 	 * Process the related NumberIncorrect expression.
 	 * 
 	 * @return integer The number of items in the given sub-set for which at least one of the defined response does not match its associated correct response.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $testSession = $this->getState();

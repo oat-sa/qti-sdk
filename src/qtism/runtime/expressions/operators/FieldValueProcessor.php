@@ -42,6 +42,9 @@ use \InvalidArgumentException;
  */
 class FieldValueProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof FieldValue) {
 			parent::setExpression($expression);
@@ -56,7 +59,7 @@ class FieldValueProcessor extends OperatorProcessor {
 	 * Process the FieldValue object.
 	 * 
 	 * @return mixed|null A QTI Runtime compliant value or null if there is no field with that identifier.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

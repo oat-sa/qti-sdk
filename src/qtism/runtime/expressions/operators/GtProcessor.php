@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -45,6 +44,9 @@ use \InvalidArgumentException;
  */
 class GtProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Gt) {
 			parent::setExpression($expression);
@@ -59,7 +61,7 @@ class GtProcessor extends OperatorProcessor {
 	 * Process the Gt operator.
 	 * 
 	 * @return boolean|null Whether the first sub-expression is numerically greather than the second or NULL if either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

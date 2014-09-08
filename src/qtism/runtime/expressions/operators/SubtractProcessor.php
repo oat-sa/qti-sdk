@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -46,6 +44,9 @@ use \InvalidArgumentException;
  */
 class SubtractProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Subtract) {
 			parent::setExpression($expression);
@@ -60,7 +61,7 @@ class SubtractProcessor extends OperatorProcessor {
 	 * Process the Subtract operator.
 	 * 
 	 * @return float|integer|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -47,6 +45,9 @@ use \InvalidArgumentException;
  */
 class PowerProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Power) {
 			parent::setExpression($expression);
@@ -61,7 +62,7 @@ class PowerProcessor extends OperatorProcessor {
 	 * Process the Power operator.
 	 * 
 	 * @return float|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

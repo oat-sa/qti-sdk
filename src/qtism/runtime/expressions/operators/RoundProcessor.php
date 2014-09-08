@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -48,6 +46,9 @@ use \InvalidArgumentException;
  */
 class RoundProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Round) {
 			parent::setExpression($expression);
@@ -62,7 +63,7 @@ class RoundProcessor extends OperatorProcessor {
 	 * Process the Round operator.
 	 * 
 	 * @return integer|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -44,6 +43,9 @@ use \InvalidArgumentException;
  */
 class ContainerSizeProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof ContainerSize) {
 			parent::setExpression($expression);
@@ -58,7 +60,7 @@ class ContainerSizeProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return integer|null The size of the container or null if it contains NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

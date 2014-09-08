@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -45,6 +43,9 @@ use \InvalidArgumentException;
  */
 class SubstringProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Substring) {
 			parent::setExpression($expression);
@@ -59,7 +60,7 @@ class SubstringProcessor extends OperatorProcessor {
 	 * Process the Substring operator.
 	 * 
 	 * @return boolean|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

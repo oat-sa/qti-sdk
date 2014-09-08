@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -57,6 +55,9 @@ use \InvalidArgumentException;
  */
 class RepeatProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Repeat) {
 			parent::setExpression($expression);
@@ -73,8 +74,8 @@ class RepeatProcessor extends OperatorProcessor {
 	 * Note: NULL values are simply ignored. If all sub-expressions are NULL, NULL is
 	 * returned.
 	 * 
-	 * @return OrderedContainer An ordered container filled sequentially by evaluating each sub-expressions, repeated a 'numberRepeats' of times. NULL is returned if all sub-expressions are NULL or numberRepeats < 1.
-	 * @throws OperatorProcessingException
+	 * @return \qtism\runtime\common\OrderedContainer An ordered container filled sequentially by evaluating each sub-expressions, repeated a 'numberRepeats' of times. NULL is returned if all sub-expressions are NULL or numberRepeats < 1.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

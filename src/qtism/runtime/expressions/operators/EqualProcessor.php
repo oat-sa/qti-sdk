@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -67,6 +65,9 @@ use \InvalidArgumentException;
  */
 class EqualProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Equal) {
 			parent::setExpression($expression);
@@ -81,7 +82,7 @@ class EqualProcessor extends OperatorProcessor {
 	 * Process the Equal operator.
 	 * 
 	 * @return boolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

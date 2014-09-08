@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -52,8 +50,8 @@ class ProductProcessor extends OperatorProcessor {
 	/**
 	 * Set the Product Expression object to be processed.
 	 * 
-	 * @param Expression $expression A Product object.
-	 * @throws InvalidArgumentException If $expression is not an instance of Product.
+	 * @param \qtism\data\expressions\Expression $expression A Product object.
+	 * @throws \InvalidArgumentException If $expression is not an instance of Product.
 	 */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Product) {
@@ -68,7 +66,7 @@ class ProductProcessor extends OperatorProcessor {
 	/**
 	 * Process the Product operator.
 	 * 
-	 * @throws OperatorProcessingException If invalid operands are given.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If invalid operands are given.
 	 */
 	public function process() {
 		

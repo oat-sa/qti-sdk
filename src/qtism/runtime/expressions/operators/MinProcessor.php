@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -53,6 +52,9 @@ use \InvalidArgumentException;
  */
 class MinProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Min) {
 			parent::setExpression($expression);
@@ -67,7 +69,7 @@ class MinProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return float|integer|null The smallest of the operand values or NULL if any of the operand values is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

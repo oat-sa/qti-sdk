@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\runtime\expressions\ExpressionProcessor;
@@ -41,22 +40,25 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 	/**
 	 * A collection of QTI Runtime compliant values.
 	 * 
-	 * @var OperandsCollection
+	 * @var \qtism\runtime\expressions\operators\OperandsCollection
 	 */
 	private $operands;
 	
 	/**
 	 * Create a new OperatorProcessor object.
 	 * 
-	 * @param Expression $expression A QTI Data Model Operator object.
-	 * @param OperandsCollection $operands A collection of QTI Runtime compliant values.
-	 * @throws InvalidArgumentException If $expression is not a QTI Data Model Operator object.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Operator object.
+	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands A collection of QTI Runtime compliant values.
+	 * @throws \InvalidArgumentException If $expression is not a QTI Data Model Operator object.
 	 */
 	public function __construct(Expression $expression, OperandsCollection $operands) {
 		parent::__construct($expression);
 		$this->setOperands($operands);
 	}
 	
+	/**
+	 * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+	 */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Operator) {
 			parent::setExpression($expression);
@@ -71,8 +73,8 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 	 * Set the collection of QTI Runtime compliant values
 	 * to be used as the operands of the Operator to be processed.
 	 * 
-	 * @param OperandsCollection $operands A collection of QTI Runtime compliant values.
-	 * @throws OperatorProcessingException If The operands are not compliant with minimum or maximum amount of operands the operator can take.
+	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands A collection of QTI Runtime compliant values.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If The operands are not compliant with minimum or maximum amount of operands the operator can take.
 	 */
 	public function setOperands(OperandsCollection $operands) {
 		// Check minimal operand count.
@@ -102,7 +104,7 @@ abstract class OperatorProcessor extends ExpressionProcessor {
 	 * Get the collection of QTI Runtime compliant values to be used
 	 * as the operands of the Operator to be processed.
 	 * 
-	 * @return OperandsCollection A collection of QTI Runtime compliant values.
+	 * @return \qtism\runtime\expressions\operators\OperandsCollection A collection of QTI Runtime compliant values.
 	 */
 	public function getOperands() {
 		return $this->operands;

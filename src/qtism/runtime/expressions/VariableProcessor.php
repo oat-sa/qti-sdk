@@ -18,18 +18,13 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions;
 
 use qtism\runtime\common\OrderedContainer;
-
 use qtism\runtime\common\MultipleContainer;
-
 use qtism\common\datatypes\Float;
-
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
@@ -80,6 +75,9 @@ use \InvalidArgumentException;
  */
 class VariableProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Variable) {
 			parent::setExpression($expression);
@@ -97,7 +95,7 @@ class VariableProcessor extends ExpressionProcessor {
 	 * * In a test context, if the requested weight does not exist, the raw value of the variable is returned.
 	 * 
 	 * @returns null|mixed The value of the target variable or NULL if the variable does not exist.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		$state = $this->getState();

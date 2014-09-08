@@ -18,10 +18,9 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
@@ -49,6 +48,9 @@ use \InvalidArgumentException;
  */
 class DivideProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Divide) {
 			parent::setExpression($expression);
@@ -63,7 +65,7 @@ class DivideProcessor extends OperatorProcessor {
 	 * Process the Divide operator.
 	 * 
 	 * @return float|null A float value that corresponds to the first expression divided by the second or NULL if either of the sub-expressions is NULL or the result is outside the value set defined by float.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

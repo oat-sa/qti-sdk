@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Float;
@@ -41,6 +40,9 @@ use \InvalidArgumentException;
  */
 class RandomFloatProcessor extends ExpressionProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof RandomFloat) {
 			parent::setExpression($expression);
@@ -57,7 +59,7 @@ class RandomFloatProcessor extends ExpressionProcessor {
 	 * * Throws an ExpressionProcessingException if 'min' is greater than 'max'.
 	 * 
 	 * @return float A Random float value.
-	 * @throws ExpressionProcessingException
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 		$expr = $this->getExpression();

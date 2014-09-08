@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
@@ -44,6 +43,9 @@ use \InvalidArgumentException;
  */
 class IntegerToFloatProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof IntegerToFloat) {
 			parent::setExpression($expression);
@@ -58,7 +60,7 @@ class IntegerToFloatProcessor extends OperatorProcessor {
 	 * Process the IntegerToFloat operator.
 	 * 
 	 * @return float|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -52,6 +51,9 @@ use \InvalidArgumentException;
  */
 class MaxProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Max) {
 			parent::setExpression($expression);
@@ -66,7 +68,7 @@ class MaxProcessor extends OperatorProcessor {
 	 * Process the current expression.
 	 * 
 	 * @return float|integer|null The greatest of the operand values or NULL if any of the operand values is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

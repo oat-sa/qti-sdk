@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\runtime\common\Processable;
@@ -40,21 +39,21 @@ abstract class ExpressionProcessor implements Processable {
 	/**
 	 * The QTI Data Model expression to be Processed.
 	 * 
-	 * @var Expression
+	 * @var \qtism\data\expressions\Expression
 	 */
 	private $expression = null;
 	
 	/**
 	 * A state.
 	 * 
-	 * @var State
+	 * @var \qtism\runtime\common\State
 	 */
 	private $state = null;
 	
 	/**
 	 * Create a new ExpressionProcessor object.
 	 * 
-	 * @param Expression $expression The QTI Data Model Expression to be processed.
+	 * @param \qtism\data\expressions\Expression $expression The QTI Data Model Expression to be processed.
 	 */
 	public function __construct(Expression $expression) {
 		$this->setExpression($expression);
@@ -64,7 +63,7 @@ abstract class ExpressionProcessor implements Processable {
 	/**
 	 * Set the QTI Data Model Expression to be processed.
 	 * 
-	 * @param Expression $expression A QTI Data Model Expression object.
+	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Expression object.
 	 */
 	public function setExpression(Expression $expression) {
 		$this->expression = $expression;
@@ -73,7 +72,7 @@ abstract class ExpressionProcessor implements Processable {
 	/**
 	 * Get the QTI Data Model Expression to be processed.
 	 * 
-	 * @return Expression A QTI Data Model Expression object.
+	 * @return \qtism\data\expressions\Expression A QTI Data Model Expression object.
 	 */
 	public function getExpression() {
 		return $this->expression;
@@ -82,7 +81,7 @@ abstract class ExpressionProcessor implements Processable {
 	/**
 	 * Set the current State object.
 	 * 
-	 * @param State $state A State object.
+	 * @param \qtism\runtime\common\State $state A State object.
 	 */
 	public function setState(State $state) {
 		$this->state = $state;
@@ -91,7 +90,7 @@ abstract class ExpressionProcessor implements Processable {
 	/**
 	 * Get the current State object.
 	 * 
-	 * @return State
+	 * @return \qtism\runtime\common\State
 	 */
 	public function getState() {
 		return $this->state;

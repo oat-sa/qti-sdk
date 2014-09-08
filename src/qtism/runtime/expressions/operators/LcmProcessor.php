@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -48,6 +47,9 @@ use \InvalidArgumentException;
  */
 class LcmProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Lcm) {
 			parent::setExpression($expression);
@@ -62,7 +64,7 @@ class LcmProcessor extends OperatorProcessor {
 	 * Process the Lcm operator.
 	 * 
 	 * @return integer|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

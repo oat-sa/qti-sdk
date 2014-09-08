@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -52,6 +50,9 @@ use \InvalidArgumentException;
  */
 class OrderedProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Ordered) {
 			parent::setExpression($expression);
@@ -65,8 +66,8 @@ class OrderedProcessor extends OperatorProcessor {
 	/**
 	 * Process the current expression.
 	 * 
-	 * @return OrderedContainer|null An OrderedContainer object or NULL.
-	 * @throws OperatorProcessingException
+	 * @return \qtism\runtime\common\OrderedContainer|null An OrderedContainer object or NULL.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
@@ -117,8 +118,8 @@ class OrderedProcessor extends OperatorProcessor {
 	/**
 	 * Append a value (An orderedContainer or a primitive datatype) to a given $container.
 	 * 
-	 * @param OrderedContainer $container An OrderedContainer object you want to append something to.
-	 * @param scalar|OrderedContainer $value A value to append to the $container. 
+	 * @param \qtism\runtime\common\OrderedContainer $container An OrderedContainer object you want to append something to.
+	 * @param scalar|\qtism\runtime\common\OrderedContainer $value A value to append to the $container. 
 	 */
 	protected static function appendValue(OrderedContainer $container, $value) {
 		if ($value instanceof OrderedContainer) {

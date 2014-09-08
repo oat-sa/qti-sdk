@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -52,6 +50,9 @@ use \InvalidArgumentException;
  */
 class PatternMatchProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof PatternMatch) {
 			parent::setExpression($expression);
@@ -66,7 +67,7 @@ class PatternMatchProcessor extends OperatorProcessor {
 	 * Process the PatternMatch.
 	 * 
 	 * @return boolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

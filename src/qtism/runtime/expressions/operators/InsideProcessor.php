@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
@@ -45,6 +44,9 @@ use \InvalidArgumentException;
  */
 class InsideProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Inside) {
 			parent::setExpression($expression);
@@ -59,7 +61,7 @@ class InsideProcessor extends OperatorProcessor {
 	 * Process the Inside operator.
 	 * 
 	 * @return boolean|null Whether the given point is inside the area defined by shape and coords or NULL if the sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

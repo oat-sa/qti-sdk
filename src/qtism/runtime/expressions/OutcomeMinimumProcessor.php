@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Float;
@@ -48,6 +47,9 @@ use \InvalidArgumentException;
  */
 class OutcomeMinimumProcessor extends ItemSubsetProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof OutcomeMinimum) {
 			parent::setExpression($expression);
@@ -61,8 +63,8 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor {
 	/**
 	 * Process the related OutcomeMinimum expression.
 	 * 
-	 * @return MultipleContainer|null A MultipleContainer object with baseType float containing all the retrieved normalMinimum values or NULL if no declared minimum in the sub-set. 
-	 * @throws ExpressionProcessingException
+	 * @return \qtism\runtime\common\MultipleContainer|null A MultipleContainer object with baseType float containing all the retrieved normalMinimum values or NULL if no declared minimum in the sub-set. 
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
 	 */
 	public function process() {
 	    $itemSubset = $this->getItemSubset();

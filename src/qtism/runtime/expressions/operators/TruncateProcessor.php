@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Integer;
@@ -49,6 +48,9 @@ use \InvalidArgumentException;
  */
 class TruncateProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Truncate) {
 			parent::setExpression($expression);
@@ -63,7 +65,7 @@ class TruncateProcessor extends OperatorProcessor {
 	 * Process the Truncate operator.
 	 * 
 	 * @return integer|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

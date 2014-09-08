@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\data\expressions\operators\CustomOperator;
@@ -60,13 +59,16 @@ abstract class CustomOperatorProcessor extends OperatorProcessor {
     /**
      * Create a new CustomOperatorProcessor object.
      * 
-     * @param Expression $expression The CustomOperator object to be processed.
-     * @param OperandsCollection $operands A collection of operands to be used as parameters for the CustomOperator implementation.
+     * @param \qtism\data\expressions\Expression $expression The CustomOperator object to be processed.
+     * @param \qtism\runtime\expressions\operators\OperandsCollection $operands A collection of operands to be used as parameters for the CustomOperator implementation.
      */
     public function __construct(Expression $expression, OperandsCollection $operands) {
         parent::__construct($expression, $operands);
     }
     
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
     public function setExpression(Expression $expression) {
         if ($expression instanceof CustomOperator) {
             parent::setExpression($expression);

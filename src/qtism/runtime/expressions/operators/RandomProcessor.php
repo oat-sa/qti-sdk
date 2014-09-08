@@ -18,9 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *  
- *
+ * 
  */
 namespace qtism\runtime\expressions\operators;
 
@@ -43,6 +41,9 @@ use \InvalidArgumentException;
  */
 class RandomProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Random) {
 			parent::setExpression($expression);
@@ -57,7 +58,7 @@ class RandomProcessor extends OperatorProcessor {
 	 * Process the Random operator.
 	 * 
 	 * @return mixed|null A single cardinality QTI runtime compliant value or NULL if the operand is considered to be NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

@@ -65,29 +65,29 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * The ExpressionProcessorFactory object.
 	 * 
-	 * @var ExpressionProcessorFactory
+	 * @var \qtism\runtime\expressions\ExpressionProcessorFactory
 	 */
 	private $expressionProcessorFactory;
 	
 	/**
 	 * The OperatorProcessorFactory object.
 	 * 
-	 * @var OperatorProcessingException
+	 * @var \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	private $operatorProcessorFactory;
 	
 	/**
 	 * The operands stack.
 	 * 
-	 * @var OperandsCollection
+	 * @var \qtism\runtime\expressions\operators\OperandsCollection
 	 */
 	private $operands;
 	
 	/**
 	 * Create a new ExpressionEngine object.
 	 * 
-	 * @param QtiComponent $expression The Expression object to be processed.
-	 * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
+	 * @param \qtism\data\QtiComponent $expression The Expression object to be processed.
+	 * @param \qtism\runtime\common\State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
 	 */
 	public function __construct(QtiComponent $expression, State $context = null) {
 		
@@ -102,8 +102,8 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Set the Expression object to be processed.
 	 * 
-	 * @param QtiComponent $expression An Expression object.
-	 * @throws InvalidArgumentException If $expression is not an Expression object.
+	 * @param \qtism\data\QtiComponent $expression An Expression object.
+	 * @throws \InvalidArgumentException If $expression is not an Expression object.
 	 */
 	public function setComponent(QtiComponent $expression) {
 		if ($expression instanceof Expression) {
@@ -118,7 +118,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Set the ExpressionProcessorFactory object to be used by the engine.
 	 * 
-	 * @param ExpressionProcessorFactory $expressionProcessorFactory An ExpressionProcessorFactory object.
+	 * @param \qtism\runtime\expressions\ExpressionProcessorFactory $expressionProcessorFactory An ExpressionProcessorFactory object.
 	 */
 	public function setExpressionProcessorFactory(ExpressionProcessorFactory $expressionProcessorFactory) {
 		$this->expressionProcessorFactory = $expressionProcessorFactory;
@@ -127,7 +127,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Get the ExpressionProcessorFactory currently in use.
 	 * 
-	 * @return ExpressionProcessorFactory An ExpressionProcessorFactory object.
+	 * @return \qtism\runtime\expressions\ExpressionProcessorFactory An ExpressionProcessorFactory object.
 	 */
 	public function getExpressionProcessorFactory() {
 		return $this->expressionProcessorFactory;
@@ -136,7 +136,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Set the OperatorProcessorFactory object to be used by the engine.
 	 * 
-	 * @param OperatorProcessorFactory $operatorProcessorFactory An OperatorProcessorFactory object.
+	 * @param \qtism\runtime\expressions\operators\OperatorProcessorFactory $operatorProcessorFactory An OperatorProcessorFactory object.
 	 */
 	public function setOperatorProcessorFactory(OperatorProcessorFactory $operatorProcessorFactory) {
 		$this->operatorProcessorFactory = $operatorProcessorFactory;
@@ -145,7 +145,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Get the OperatorProcessorFactory object currenlty in use.
 	 * 
-	 * @return OperatorProcessorFactory
+	 * @return \qtism\runtime\expressions\operators\OperatorProcessorFactory
 	 */
 	public function getOperatorProcessorFactory() {
 		return $this->operatorProcessorFactory;
@@ -154,7 +154,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Get the Operands stack.
 	 * 
-	 * @return OperandsCollection An OperandsCollection object.
+	 * @return \qtism\runtime\expressions\operators\OperandsCollection An OperandsCollection object.
 	 */
 	protected function getOperands() {
 		return $this->operands;
@@ -163,7 +163,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Set the Operands stack.
 	 * 
-	 * @param OperandsCollection $operands An OperandsCo
+	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands An OperandsCo
 	 */
 	protected function setOperands(OperandsCollection $operands) {
 		$this->operands = $operands;
@@ -172,7 +172,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Push an Expression object on the trail stack.
 	 * 
-	 * @param Expression|ExpressionCollection $expression An Expression/ExpressionCollection object to be pushed on top of the trail stack.
+	 * @param \qtism\data\expressions\Expression|\qtism\data\expressions\ExpressionCollection $expression An Expression/ExpressionCollection object to be pushed on top of the trail stack.
 	 */
 	protected function pushTrail($expression) {
 		
@@ -192,7 +192,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Pop an Expression object from the trail stack.
 	 * 
-	 * @return Expression $expression The Expression object at the top of the trail stack.
+	 * @return \qtism\data\expressions\Expression $expression The Expression object at the top of the trail stack.
 	 */
 	protected function popTrail() {
 		return array_pop($this->trail);
@@ -237,7 +237,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Mark a given $expression object as explored.
 	 * 
-	 * @param Expression $expression An explored Expression object.
+	 * @param \qtism\data\expressions\Expression $expression An explored Expression object.
 	 */
 	protected function mark(Expression $expression) {
 		array_push($this->marker, $expression);
@@ -246,7 +246,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Whether a given $expression object is already marked as explored.
 	 * 
-	 * @param Expression $expression An Expression object.
+	 * @param \qtism\data\expressions\Expression $expression An Expression object.
 	 * @return boolean Whether $expression is marked as explored.
 	 */
 	protected function isMarked(Expression $expression) {
@@ -257,7 +257,7 @@ class ExpressionEngine extends AbstractEngine {
 	 * Process the current Expression object according to the current
 	 * execution context.
 	 * 
-	 * @throws ExpressionProcessingException|OperatorProcessingException If an error occurs during the Expression processing.
+	 * @throws \qtism\runtime\expressions\ExpressionProcessingException|\qtism\runtime\expressions\operators\OperatorProcessingException If an error occurs during the Expression processing.
 	 */
 	public function process() {
 		$expression = $this->getComponent();
@@ -316,7 +316,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Trace a given Expression $processor execution.
 	 * 
-	 * @param ExpressionProcessor $processor The processor that undertook the processing.
+	 * @param \qtism\runtime\expressions\ExpressionProcessor $processor The processor that undertook the processing.
 	 * @param mixed $result The result of the processing.
 	 */
 	protected function traceExpression(ExpressionProcessor $processor, $result) {
@@ -327,7 +327,7 @@ class ExpressionEngine extends AbstractEngine {
 	/**
 	 * Trace a given Operator $processor execution.
 	 * 
-	 * @param OperatorProcessor $processor The processor that undertook the processing.
+	 * @param \qtism\runtime\expressions\operators\OperatorProcessor $processor The processor that undertook the processing.
 	 * @param mixed $result The result of the processing.
 	 */
 	protected function traceOperator(OperatorProcessor $processor, $result) {

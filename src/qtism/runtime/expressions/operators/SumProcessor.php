@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
@@ -51,8 +50,8 @@ class SumProcessor extends OperatorProcessor {
 	/**
 	 * Set the Sum Expression object to be processed.
 	 * 
-	 * @param Expression $expression A Sum object.
-	 * @throws InvalidArgumentException If $expressions is not an instance of Sum.
+	 * @param \qtism\data\expressions\Expression $expression A Sum object.
+	 * @throws \InvalidArgumentException If $expressions is not an instance of Sum.
 	 */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Sum) {
@@ -68,7 +67,7 @@ class SumProcessor extends OperatorProcessor {
 	 * Process the Sum operator.
 	 * 
 	 * @return integer|float|null A single integer/float that corresponds to the sum of the numerical values of the sub-expressions. If any of the sub-expressions are NULL, the operator results in NULL.
-	 * @throws OperatorProcessingException If invalid operands are given.
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If invalid operands are given.
 	 */
 	public function process() {
 		

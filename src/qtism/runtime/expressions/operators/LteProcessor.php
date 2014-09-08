@@ -45,6 +45,9 @@ use \InvalidArgumentException;
  */
 class LteProcessor extends OperatorProcessor {
 	
+    /**
+     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
+     */
 	public function setExpression(Expression $expression) {
 		if ($expression instanceof Lte) {
 			parent::setExpression($expression);
@@ -59,7 +62,7 @@ class LteProcessor extends OperatorProcessor {
 	 * Process the Lte operator.
 	 * 
 	 * @return boolean|null Whether the first sub-expression is numerically less than or equal to the second or NULL if either sub-expression is NULL.
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();

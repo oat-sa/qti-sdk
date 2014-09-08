@@ -59,7 +59,7 @@ class ContainsProcessor extends OperatorProcessor {
 	 * Returns the logical negation of the sub-expressions.
 	 * 
 	 * @return boolean
-	 * @throws OperatorProcessingException
+	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
 	public function process() {
 		$operands = $this->getOperands();
