@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
 
 namespace qtism\runtime\pci\json;
@@ -45,7 +43,7 @@ class MarshallingException extends Exception {
      * 
      * @param string $message A human-readable message describing the error.
      * @param integer $code A machine-understandable (see class constants) error code.
-     * @param Exception $previous An eventual previous Exception.
+     * @param \Exception $previous An eventual previous Exception.
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);

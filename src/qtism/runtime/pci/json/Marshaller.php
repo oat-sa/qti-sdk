@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 
 namespace qtism\runtime\pci\json;
@@ -82,11 +80,11 @@ class Marshaller {
     /**
      * Marshall some QTI data into JSON.
      * 
-     * @param State|QtiDatatype|null $data The data to be marshalled into JSON.
+     * @param \qtism\runtime\common\State|\qtism\common\datatypes\QtiDatatype|null $data The data to be marshalled into JSON.
      * @param integer How the output will be returned (see class constants). Default is plain JSON string.
      * @return string|array The JSONified data.
-     * @throws InvalidArgumentException If $data has not a compliant type.
-     * @throws MarshallingException If an error occurs while marshalling $data into JSON.
+     * @throws \InvalidArgumentException If $data has not a compliant type.
+     * @throws \qtism\runtime\pci\json\MarshallingException If an error occurs while marshalling $data into JSON.
      */
     public function marshall($data, $output = Marshaller::MARSHALL_JSON) {
         
@@ -126,7 +124,7 @@ class Marshaller {
     /**
      * Marshall a single unit of QTI data.
      * 
-     * @param State|QtiDatatype|null $unit
+     * @param \qtism\runtime\common\State|\qtism\common\datatypes\QtiDatatype|null $unit
      * @return array An array representing the JSON data to be encoded later on.
      */
     protected function marshallUnit($unit) {
@@ -178,9 +176,9 @@ class Marshaller {
      * Marshall a single scalar data into a PHP datatype (that can be transformed easilly in JSON
      * later on).
      * 
-     * @param null|QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
+     * @param null|\qtism\common\datatypes\QtiDatatype $scalar A scalar to be transformed into a PHP datatype for later JSON encoding.
      * @return array An array representing the JSON data to be encoded later on.
-     * @throws MarshallingException
+     * @throws \qtism\runtime\pci\json\MarshallingException
      */
     protected function marshallScalar($scalar) {
         if (is_null($scalar) === true) {
@@ -227,8 +225,8 @@ class Marshaller {
     /**
      * Marshall a single complex QtiDataType object.
      * 
-     * @param QtiDatatype $complex
-     * @throws MarshallingException
+     * @param \qtism\common\datatypes\QtiDatatype $complex
+     * @throws \qtism\runtime\pci\json\MarshallingException
      * @return array An array representing the JSON data to be encoded later on.
      */
     protected function marshallComplex(QtiDatatype $complex) {
@@ -268,7 +266,7 @@ class Marshaller {
     /**
      * Marshall a QTI boolean datatype into its PCI JSON Representation.
      * 
-     * @param Boolean $boolean
+     * @param \qtism\common\datatypes\Boolean $boolean
      * @return array
      */
     protected function marshallBoolean(Boolean $boolean) {
@@ -278,7 +276,7 @@ class Marshaller {
     /**
      * Marshall a QTI integer datatype into its PCI JSON Representation.
      *
-     * @param Integer $integer
+     * @param \qtism\common\datatypes\Integer $integer
      * @return array
      */
     protected function marshallInteger(Integer $integer) {
@@ -288,7 +286,7 @@ class Marshaller {
     /**
      * Marshall a QTI float datatype into its PCI JSON Representation.
      *
-     * @param Float $float
+     * @param \qtism\common\datatypes\Float $float
      * @return array
      */
     protected function marshallFloat(Float $float) {
@@ -298,7 +296,7 @@ class Marshaller {
     /**
      * Marshall a QTI identifier datatype into its PCI JSON Representation.
      *
-     * @param Identifier $identifier
+     * @param \qtism\common\datatypes\Identifier $identifier
      * @return array
      */
     protected function marshallIdentifier(Identifier $identifier) {
@@ -308,7 +306,7 @@ class Marshaller {
     /**
      * Marshall a QTI uri datatype into its PCI JSON Representation.
      *
-     * @param Uri $uri
+     * @param \qtism\common\datatypes\Uri $uri
      * @return array
      */
     protected function marshallUri(Uri $uri) {
@@ -318,7 +316,7 @@ class Marshaller {
     /**
      * Marshall a QTI string datatype into its PCI JSON Representation.
      *
-     * @param String $string
+     * @param \qtism\common\datatypes\String $string
      * @return array
      */
     protected function marshallString(String $string) {
@@ -328,7 +326,7 @@ class Marshaller {
     /**
      * Marshall a QTI intOrIdentifier datatype into its PCI JSON Representation.
      *
-     * @param IntOrIdentifier $intOrIdentifier
+     * @param \qtism\common\datatypes\IntOrIdentifier $intOrIdentifier
      * @return array
      */
     protected function marshallIntOrIdentifier(IntOrIdentifier $intOrIdentifier) {
@@ -338,7 +336,7 @@ class Marshaller {
     /**
      * Marshall a QTI point datatype into its PCI JSON Representation.
      *
-     * @param Point $point
+     * @param \qtism\common\datatypes\Point $point
      * @return array
      */
     protected function marshallPoint(Point $point) {
@@ -348,7 +346,7 @@ class Marshaller {
     /**
      * Marshall a QTI directedPair datatype into its PCI JSON Representation.
      *
-     * @param DirectedPair $directedPair
+     * @param \qtism\common\datatypes\DirectedPair $directedPair
      * @return array
      */
     protected function marshallDirectedPair(DirectedPair $directedPair) {
@@ -358,7 +356,7 @@ class Marshaller {
     /**
      * Marshall a QTI pair datatype into its PCI JSON Representation.
      *
-     * @param Pair $pair
+     * @param \qtism\common\datatypes\Pair $pair
      * @return array
      */
     protected function marshallPair(Pair $pair) {
@@ -368,7 +366,7 @@ class Marshaller {
     /**
      * Marshall a QTI duration datatype into its PCI JSON Representation.
      *
-     * @param Duration $duration
+     * @param \qtism\common\datatypes\Duration $duration
      * @return array
      */
     protected function marshallDuration(Duration $duration) {
@@ -378,7 +376,7 @@ class Marshaller {
     /**
      * Marshall a QTI file datatype into its PCI JSON Representation.
      *
-     * @param File $file
+     * @param \qtism\common\datatypes\File $file
      * @return array
      */
     protected function marshallFile(File $file) {
