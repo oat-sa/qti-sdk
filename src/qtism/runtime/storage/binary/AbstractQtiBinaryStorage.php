@@ -19,13 +19,11 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\storage\BinaryStreamAccess;
-
 use qtism\common\storage\IStream;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -57,16 +55,16 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * The AssessmentTestSeeker object used by this implementation.
      * 
-     * @var AssessmentTestSeeker
+     * @var \qtism\runtime\storage\common\AssessmentTestSeeker
      */
     private $seeker;
     
     /**
      * Create a new AbstractQtiBinaryStorage.
      * 
-     * @param AbstractSessionManager $factory
-     * @param BinaryAssessmentTestSeeker $seeker
-     * @throws InvalidArgumentException If $assessmentTest does not implement the Document interface.
+     * @param \qtism\runtime\tests\AbstractSessionManager $factory
+     * @param \qtism\runtime\storage\binary\BinaryAssessmentTestSeeker $seeker
+     * @throws \InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
     public function __construct(AbstractSessionManager $manager, BinaryAssessmentTestSeeker $seeker) {
         parent::__construct($manager);
@@ -76,7 +74,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Get the AssessmentTestSeeker object used by this implementation.
      * 
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object.
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object.
      */
     protected function setSeeker(AssessmentTestSeeker $seeker) {
         $this->seeker = $seeker;
@@ -85,7 +83,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Set the AssessmentTestSeeker object used by this implementation.
      * 
-     * @return AssessmentTestSeeker An AssessmentTestSeeker object.
+     * @return \qtism\runtime\storage\common\AssessmentTestSeeker An AssessmentTestSeeker object.
      */
     protected function getSeeker() {
         return $this->seeker;
@@ -94,9 +92,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Instantiate a new AssessmentTestSession.
      * 
-     * @param AssessmentTest $test
+     * @param \qtism\data\AssessmentTest $test
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
-     * @return AssessmentTestSession An AssessmentTestSession object.  
+     * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.  
      */
     public function instantiate(AssessmentTest $test, $sessionId = '') {
         
@@ -123,8 +121,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * The QTI Binary Storage Version that will be used to persist the AssessmentTestSession
      * will be systematically the one defined in QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION. 
      * 
-     * @param AssessmentTestSession $assessmentTestSession
-     * @throws StorageException
+     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession
+     * @throws \qtism\runtime\storage\common\StorageException
      */
     public function persist(AssessmentTestSession $assessmentTestSession) {
         
@@ -213,10 +211,10 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
     /**
      * Retrieve an AssessmentTestSession object from storage by $sessionId.
      * 
-     * @param AssessmentTest $test
+     * @param \qtism\data\AssessmentTest $test
      * @param string $sessionId
-     * @return AssessmentTestSession An AssessmentTestSession object.
-     * @throws StorageException If the AssessmentTestSession could not be retrieved from storage.
+     * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
+     * @throws \qtism\runtime\storage\common\StorageException If the AssessmentTestSession could not be retrieved from storage.
      */
     public function retrieve(AssessmentTest $test, $sessionId) {
         
@@ -321,8 +319,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * Be careful, the implementation of this method must not open the given $stream.
      * 
      * @param string $sessionId A test session identifier.
-     * @throws RuntimeException If an error occurs.
-     * @return MemoryStream A MemoryStream object.
+     * @throws \RuntimeException If an error occurs.
+     * @return \qtism\common\storage\MemoryStream A MemoryStream object.
      */
     abstract protected function getRetrievalStream($sessionId);
     
@@ -332,15 +330,15 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
      * 
      * Be careful, the implementation of this method must not close the given $stream.
      * 
-     * @param AssessmentTestSession $assessmentTestSession An AssessmentTestSession object.
-     * @param MemoryStream $stream An open MemoryStream object.
+     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession An AssessmentTestSession object.
+     * @param \qtism\common\storage\MemoryStream $stream An open MemoryStream object.
      */
     abstract protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream);
     
     /**
      * 
-     * @param IStream $stream
-     * @return BinaryStreamAccess
+     * @param \qtism\common\storage\IStream $stream
+     * @return \qtism\common\storage\BinaryStreamAccess
      */
     abstract protected function createBinaryStreamAccess(IStream $stream);
 }

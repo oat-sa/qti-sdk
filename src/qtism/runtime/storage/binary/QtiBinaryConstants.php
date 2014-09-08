@@ -19,11 +19,16 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
+/**
+ * Container for constants related to QTI binary data.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class QtiBinaryConstants {
     
     /**

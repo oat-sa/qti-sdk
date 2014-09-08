@@ -19,16 +19,25 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\File;
 
+/**
+ * An implementation of AbstractQtiBinaryStreamAccess working with file system
+ * files for QTI File Datatype handling.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class QtiBinaryStreamAccessFsFile extends AbstractQtiBinaryStreamAccess {
     
+    /**
+     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess::writeFile()
+     */
     public function writeFile(File $file) {
         try {
             $this->writeString($file->getPath());
@@ -39,6 +48,9 @@ class QtiBinaryStreamAccessFsFile extends AbstractQtiBinaryStreamAccess {
         }
     }
     
+    /**
+     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess::readFile()
+     */
     public function readFile() {
         try {
             $path = $this->readString();

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\runtime\tests\AbstractSessionManager;
@@ -70,8 +69,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Create a new QtiBinaryStreamAccess object.
      * 
-     * @param IStream $stream The IStream object to be accessed.
-     * @throws BinaryStreamAccessException If $stream is not open yet.
+     * @param \qtism\common\storage\IStream $stream The IStream object to be accessed.
+     * @throws \qtism\common\storage\BinaryStreamAccessException If $stream is not open yet.
      */
     public function __construct(IStream $stream) {
         parent::__construct($stream);
@@ -81,8 +80,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * Read and fill the Variable $variable with its value contained
      * in the current stream.
      * 
-     * @param Variable $variable A QTI Runtime Variable object.
-     * @throws BinaryStreamAccessException If an error occurs at the binary level.
+     * @param \qtism\runtime\common\Variable $variable A QTI Runtime Variable object.
+     * @throws \qtism\common\storage\BinaryStreamAccessException If an error occurs at the binary level.
      */
     public function readVariableValue(Variable $variable) {
         try {
@@ -143,8 +142,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write the value of $variable in the current binary stream.
      * 
-     * @param Variable $variable A QTI Runtime Variable object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\common\Variable $variable A QTI Runtime Variable object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeVariableValue(Variable $variable) {
         try {
@@ -213,7 +212,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * composed of a key string and a value.
      * 
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function readRecordField($isNull = false) {
         try {
@@ -241,7 +240,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * Write a record field value in the current binary stream. A record field is composed of a key string and a value.
      * 
      * @param array $recordField An array where index 0 is the key string, and the index 1 is the value.
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeRecordField(array $recordField, $isNull = false) {
         try {
@@ -268,7 +267,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read an identifier from the current binary stream.
      * 
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      * @return string An identifier.
      */
     public function readIdentifier() {
@@ -285,7 +284,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * Write an identifier in the current binary stream.
      * 
      * @param string $identifier A QTI Identifier.
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeIdentifier($identifier) {
         try {
@@ -300,8 +299,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a Point from the current binary stream.
      * 
-     * @throws QtiBinaryStreamAccessException
-     * @return Point A Point object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\common\datatypes\Point A Point object.
      */
     public function readPoint() {
         try {
@@ -316,8 +315,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a Point in the current binary stream.
      * 
-     * @param Point $point A Point object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\common\datatypes\Point $point A Point object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writePoint(Point $point) {
        try {
@@ -333,8 +332,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a Pair from the current binary stream.
      * 
-     * @throws QtiBinaryStreamAccessException
-     * @return Pair A Pair object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\common\datatypes\Pair A Pair object.
      */
     public function readPair() {
         try {
@@ -349,8 +348,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a Pair in the current binary stream.
      * 
-     * @param Pair $pair A Pair object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\common\datatypes\Pair $pair A Pair object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writePair(Pair $pair) {
         try {
@@ -366,8 +365,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a DirectedPair from the current binary stream.
      *
-     * @throws QtiBinaryStreamAccessException
-     * @return Pair A DirectedPair object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\common\datatypes\DirectedPair A DirectedPair object.
      */
     public function readDirectedPair() {
         try {
@@ -382,8 +381,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a DirectedPair in the current binary stream.
      * 
-     * @param DirectedPair $directedPair A DirectedPair object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\common\datatypes\DirectedPair $directedPair A DirectedPair object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeDirectedPair(DirectedPair $directedPair) {
         try {
@@ -399,8 +398,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a Duration from the current binary stream.
      * 
-     * @throws QtiBinaryStreamAccessException
-     * @return Duration A Duration object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\common\datatypes\Duration A Duration object.
      */
     public function readDuration() {
         try {
@@ -415,8 +414,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a Duration in the current binary stream.
      * 
-     * @param Duration $duration A Duration object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\common\datatypes\Duration $duration A Duration object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeDuration(Duration $duration) {
         try {
@@ -431,7 +430,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a URI (Uniform Resource Identifier) from the current binary stream.
      * 
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      * @return string A URI.
      */
     public function readUri() {
@@ -448,7 +447,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * Write a URI (Uniform Resource Identifier) in the current binary stream.
      * 
      * @param string $uri A URI.
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeUri($uri) {
         try {
@@ -463,16 +462,16 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a File from the current binary stream.
      *
-     * @throws QtiBinaryStreamAccessException
-     * @return File A File object
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\common\datatypes\File A File object
      */
     abstract public function readFile();
     
     /**
      * Write A file composed by some $binaryContent into the current binary stream.
      * 
-     * @param File $file A File object
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\common\datatypes\File $file A File object
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     abstract public function writeFile(File $file);
     
@@ -496,7 +495,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * Write an intOrIdentifier in the current binary stream.
      * 
      * @param integer|string $intOrIdentifier An integer or a string value.
-     * @throws QtiBinaryStreamAccessException
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeIntOrIdentifier($intOrIdentifier) {
         try {
@@ -522,9 +521,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read an AssessmentItemSession from the current binary stream.
      * 
-     * @param AbstractSessionManager $manager
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\tests\AbstractSessionManager $manager
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function readAssessmentItemSession(AbstractSessionManager $manager, AssessmentTestSeeker $seeker) {
         try {
@@ -602,9 +601,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write an AssessmetnItemSession from the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker The AssessmentTestSeeker object from where the position of components will be pulled out.
-     * @param AssessmentItemSession $session An AssessmentItemSession object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker The AssessmentTestSeeker object from where the position of components will be pulled out.
+     * @param \qtism\runtime\tests\AssessmentItemSession $session An AssessmentItemSession object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeAssessmentItemSession(AssessmentTestSeeker $seeker, AssessmentItemSession $session) {
         try {
@@ -681,9 +680,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a route item from the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components will be pulled out by position.
-     * @throws QtiBinaryStreamAccessException
-     * @return RouteItem
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components will be pulled out by position.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
+     * @return \qtism\runtime\tests\RouteItem
      */
     public function readRouteItem(AssessmentTestSeeker $seeker) {
         
@@ -744,9 +743,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a route item in the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
-     * @param RouteItem $routeItem A RouteItem object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writeRouteItem(AssessmentTestSeeker $seeker, RouteItem $routeItem) {
         
@@ -801,9 +800,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a PendingResponse object from the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
-     * @return PendingResponses A PendingResponses object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @return \qtism\runtime\tests\PendingResponses A PendingResponses object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function readPendingResponses(AssessmentTestSeeker $seeker) {
     	try {
@@ -839,9 +838,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a PendingResponses object in the current binary stream.
      * 
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where positions in the assessmentTest tree will be pulled out.
-     * @param PendingResponses $pendingResponses The read PendingResponses object.
-     * @throws QtiBinaryStreamAccessException
+     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where positions in the assessmentTest tree will be pulled out.
+     * @param \qtism\runtime\tests\PendingResponses $pendingResponses The read PendingResponses object.
+     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
     public function writePendingResponses(AssessmentTestSeeker $seeker, PendingResponses $pendingResponses) {
     	try {

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\common;
 
 use \Exception;
@@ -73,10 +72,9 @@ class StorageException extends Exception {
      * 
      * @param string $message A human-readable message describing the encountered error.
      * @param integer $code A code enabling client-code to identify the cause of the error.
-     * @param Exception $previous An optional previous Exception that was thrown and catched.
+     * @param \Exception $previous An optional previous Exception that was thrown and catched.
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
-    
 }

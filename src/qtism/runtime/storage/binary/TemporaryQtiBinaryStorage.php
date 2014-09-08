@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\storage\IStream;
@@ -46,9 +45,9 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      * Persist the binary stream $stream which contains the binary equivalent of $assessmentTestSession in
      * the temporary directory of the file system.
      * 
-     * @param AssessmentTestSession The AssessmentTestSession to be persisted.
-     * @param MemoryStream The MemoryStream to be stored in the temporary directory of the host file system.
-     * @throws RuntimeException If the binary stream cannot be persisted.
+     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession The AssessmentTestSession to be persisted.
+     * @param \qtism\common\storage\MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
+     * @throws \RuntimeException If the binary stream cannot be persisted.
      */
     protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream) {
         
@@ -68,8 +67,8 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
      * instantiated from $assessmentTest from the temporary directory of the file system.
      * 
      * @param string $sessionId The session ID of the AssessmentTestSession to retrieve.
-     * @return MemoryStream A MemoryStream object.
-     * @throws RuntimeException If the binary stream cannot be persisted.
+     * @return \qtism\common\storage\MemoryStream A MemoryStream object.
+     * @throws \RuntimeException If the binary stream cannot be persisted.
      */
     protected function getRetrievalStream($sessionId) {
         
@@ -85,6 +84,9 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage {
         return new MemoryStream($read);
     }
     
+    /**
+     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStorage::createBinaryStreamAccess()
+     */
     protected function createBinaryStreamAccess(IStream $stream) {
         return new QtiBinaryStreamAccessFsFile($stream);
     }

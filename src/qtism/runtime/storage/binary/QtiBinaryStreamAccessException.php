@@ -19,16 +19,20 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
-
 use \Exception;
 
+/**
+ * A BinaryStreamAccessException extension dedicated to QTI binary data.
+ * 
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
+ *
+ */
 class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
     
     /**
@@ -126,9 +130,9 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
-     * @param BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
+     * @param \qtism\common\storage\BinaryStreamAccess $source The BinaryStreamAccess object that caused the error.
      * @param integer $code An exception code. See class constants.
-     * @param Exception $previous An optional previously thrown exception.
+     * @param \Exception $previous An optional previously thrown exception.
      */
     public function __construct($message, BinaryStreamAccess $source, $code = 0, Exception $previous = null) {
         parent::__construct($message, $source, $code, $previous);

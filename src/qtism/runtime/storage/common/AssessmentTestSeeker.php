@@ -19,8 +19,6 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
- *
  */
 namespace qtism\runtime\storage\common;
 
@@ -56,7 +54,7 @@ class AssessmentTestSeeker {
     /**
      * A QtiComponent iterator.
      * 
-     * @var QtiComponentIterator
+     * @var \qtism\data\QtiComponentIterator
      */
     private $iterator;
     
@@ -65,7 +63,7 @@ class AssessmentTestSeeker {
      * for QTIComponent objects in an AssessmentTest that matches the QTI class
      * names described by $classes.
      * 
-     * @param AssessmentTest $test An AssessmentTest object.
+     * @param \qtism\data\AssessmentTest $test An AssessmentTest object.
      * @param array $classes An array of strings that are QTI class names to be seeked. An empty array means all the QTI classes are seekable.
      */
     public function __construct(AssessmentTest $test, array $classes) {
@@ -95,7 +93,7 @@ class AssessmentTestSeeker {
     /**
      * Get the QtiComponentIterator that explores the test.
      * 
-     * @param QtiComponentIterator $iterator
+     * @param \qtism\data\QtiComponentIterator $iterator
      */
     protected function setIterator(QtiComponentIterator $iterator) {
         $this->iterator = $iterator;
@@ -104,7 +102,7 @@ class AssessmentTestSeeker {
     /**
      * Set the QtiComponentIterator that explores the test.
      * 
-     * @return QtiComponentIterator
+     * @return \qtism\data\QtiComponentIterator
      */
     protected function getIterator() {
         return $this->iterator;
@@ -135,7 +133,7 @@ class AssessmentTestSeeker {
     /**
      * Add the component in the ComponentStore.
      * 
-     * @param QtiComponent $component A QTI Component.
+     * @param \qtism\data\QtiComponent $component A QTI Component.
      * @return integer The position in the AssessmentTest tree the component was found.
      */
     protected function addToComponentStore(QtiComponent $component) {
@@ -158,7 +156,7 @@ class AssessmentTestSeeker {
      * 
      * @param string $class A QTI class name.
      * @param integer $position A position in the AssessmentTest tree.
-     * @return boolean|QtiComponent A QtiComponent object or false if it is not found.
+     * @return boolean|\qtism\data\QtiComponent A QtiComponent object or false if it is not found.
      */
     protected function getComponentFromComponentStore($class, $position) {
         
@@ -174,7 +172,7 @@ class AssessmentTestSeeker {
     /**
      * Get the position in the AssessmentTest tree for $component.
      * 
-     * @param QtiComponent $component
+     * @param \qtism\data\QtiComponent $component
      * @return false|integer The position of $component in the AssessmentTest tree ir false if it could not be found.
      */
     protected function getPositionFromComponentStore(QtiComponent $component) {
@@ -197,8 +195,8 @@ class AssessmentTestSeeker {
      * 
      * @param string $class A QTI class name.
      * @param integer $position A position in the AssessmentTest tree.
-     * @return QtiComponent The QtiComponent object that corresponds to $class and $position.
-     * @throws OutOfBoundsException If no such QtiComponent could be found in the AssessmentTest tree.
+     * @return \qtism\data\QtiComponent The QtiComponent object that corresponds to $class and $position.
+     * @throws \OutOfBoundsException If no such QtiComponent could be found in the AssessmentTest tree.
      */
     public function seekComponent($class, $position) {
         
@@ -227,9 +225,9 @@ class AssessmentTestSeeker {
     /**
      * Seek for the position of $component in the AssessmentTest tree.
      * 
-     * @param QtiComponent $component A QtiComponent object which is supposed to be in the AssessmentTest tree.
+     * @param \qtism\data\QtiComponent $component A QtiComponent object which is supposed to be in the AssessmentTest tree.
      * @return integer The position of $component in the AssessmentTest tree.
-     * @throws OutOfBoundsException If no such $component could be found in the AssessmentTest tree.
+     * @throws \OutOfBoundsException If no such $component could be found in the AssessmentTest tree.
      */
     public function seekPosition(QtiComponent $component) {
         
@@ -259,7 +257,7 @@ class AssessmentTestSeeker {
      * Increment the number of explored components by class name thanks
      * to a given $component.
      * 
-     * @param QtiComponent $component A QtiComponent object.
+     * @param \qtism\data\QtiComponent $component A QtiComponent object.
      */
     protected function incrementClassCount(QtiComponent $component) {
         $class = $component->getQtiClassName();
@@ -291,7 +289,7 @@ class AssessmentTestSeeker {
      * Get the AssessmentTest object on which the AssessmentTestSeeker
      * is iterating.
      * 
-     * @return AssessmentTest An AssessmentTest object.
+     * @return \qtism\data\AssessmentTest An AssessmentTest object.
      */
     public function getAssessmentTest() {
         return $this->getIterator()->getRootComponent();
