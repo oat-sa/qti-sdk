@@ -1,4 +1,4 @@
-https://travis-ci.org/oat-sa/qti-sdk.svg?branch=master
+[![Build Status](https://travis-ci.org/oat-sa/qti-sdk.svg?branch=master)](https://travis-ci.org/oat-sa/qti-sdk)
 
 QTI Software Modules
 =======
