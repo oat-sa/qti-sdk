@@ -1,3 +1,5 @@
+https://travis-ci.org/oat-sa/qti-sdk.svg?branch=master
+
 QTI Software Modules
 =======
 
