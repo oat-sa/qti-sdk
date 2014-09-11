@@ -14,7 +14,7 @@ use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
 use qtism\data\storage\php\PhpDocument;
 
-require_once(dirname(__FILE__) . '/../../src/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 date_default_timezone_set('UTC');
 

@@ -6,10 +6,10 @@ use qtism\data\ViewCollection;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../src/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/rubricblock_4.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/rubricblock_4.xml');
 
 $renderer = new XhtmlRenderingEngine();
 $renderer->setViewPolicy(XhtmlRenderingEngine::TEMPLATE_ORIENTED);

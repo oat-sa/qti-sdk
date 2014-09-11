@@ -4,10 +4,10 @@ use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../src/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/xmlbase_2.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/xmlbase_2.xml');
 
 $renderer = new XhtmlRenderingEngine();
 

@@ -3,7 +3,7 @@
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
-require_once(dirname(__FILE__) . '/../../src/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 function spentTime($start, $end) {
     $startTime = explode(' ', $start);

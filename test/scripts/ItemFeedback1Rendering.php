@@ -9,10 +9,10 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Identifier;
 
-require_once(dirname(__FILE__) . '/../../src/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load('../samples/rendering/itemfeedback_1.xml');
+$doc->load(dirname(__FILE__) . '/../samples/rendering/itemfeedback_1.xml');
 
 $outcome1 = new OutcomeVariable('FEEDBACK', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(''));
 $renderer = new XhtmlRenderingEngine();
