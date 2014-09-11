@@ -34,5 +34,10 @@
 		"psr-0": {
 			"qtism": "src"
 		}
+	},
+	"autoload-dev": {
+		"psr-0": {
+			"qtismtest": "test"
+		}
 	}
 }
