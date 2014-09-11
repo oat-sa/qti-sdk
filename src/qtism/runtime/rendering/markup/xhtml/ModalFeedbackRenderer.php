@@ -32,39 +32,41 @@ use \DOMDocumentFragment;
  * The renderer for ModalFeedback elements. Rendered elements
  * will get a 'qti-modalFeedback' additional CSS class and will be
  * transformed as 'div' elements.
- * 
+ *
  * It also takes care of producing the following x-data attributes.
- * 
+ *
  * * data-outcome-identifier = qti:modalFeedback->outcomeIdentifier
  * * data-show-hide = qti:modalFeedback->showHide
  * * data-identifier = qti:modalFeedback->identifier
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackRenderer extends AbstractXhtmlRenderer {
-    
+class ModalFeedbackRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new ModalFeedbackRenderer object.
-     * 
+     *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-modalFeedback');
-        
+
         $fragment->firstChild->setAttribute('data-outcome-identifier', $component->getOutcomeIdentifier());
         $fragment->firstChild->setAttribute('data-show-hide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
-        
+
         if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_STATIC) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
         }

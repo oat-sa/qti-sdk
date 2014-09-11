@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of the QtiComponentCollection class aiming at restricting
  * the storage to Inline objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineCollection extends QtiComponentCollection {
-    
+class InlineCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of Inline.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an Inline object.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Inline) {
             $msg = "InlineCollection objects only accept to store Inline objects.";
             throw new InvalidArgumentException($msg);

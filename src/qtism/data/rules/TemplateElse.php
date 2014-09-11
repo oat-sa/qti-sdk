@@ -26,57 +26,62 @@ use qtism\data\QtiComponent;
 
 /**
  * The QTI templateElse class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateElse extends QtiComponent {
-    
+class TemplateElse extends QtiComponent
+{
     /**
      * The collection of TemplateRule objects to be evaluated.
-     * 
+     *
      * @var \qtism\data\rules\TemplateRuleCollection
      */
     private $templateRules;
-    
+
     /**
      * Create a new TemplateElse object.
-     * 
+     *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
-    public function __construct(TemplateRuleCollection $templateRules) {
+    public function __construct(TemplateRuleCollection $templateRules)
+    {
         $this->setTemplateRules($templateRules);
     }
-    
+
     /**
      * Set the TemplateRule objects to be evaluated.
-     * 
+     *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules) {
+    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    {
         $this->templateRules = $templateRules;
     }
-    
+
     /**
      * Get the TemplateRule objects to be evaluated.
-     * 
+     *
      * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
      */
-    public function getTemplateRules() {
+    public function getTemplateRules()
+    {
         return $this->templateRules;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new $this->getTemplateRules();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'templateElse';
     }
 }

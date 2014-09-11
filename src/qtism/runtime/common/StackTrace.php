@@ -18,7 +18,7 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * 
+ *
  */
 namespace qtism\runtime\common;
 
@@ -28,59 +28,64 @@ use \InvalidArgumentException;
 
 /**
  * The StackTrace class is a Stack of StackTraceItem objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StackTrace extends AbstractCollection implements Stack {
-	
-	/**
+class StackTrace extends AbstractCollection implements Stack
+{
+    /**
 	 * Pop a StackTraceItem object from the StackTrace.
-	 * 
+	 *
 	 * @return \qtism\runtime\common\StackTraceItem|null A StackTraceItem object or null if there is nothing to pop.
 	 */
-	public function pop() {
-		$data = &$this->getDataPlaceHolder();
-		$val = array_pop($data);
-		return $val;
-	}
-	
-	/**
+    public function pop()
+    {
+        $data = &$this->getDataPlaceHolder();
+        $val = array_pop($data);
+
+        return $val;
+    }
+
+    /**
 	 * Push a given StackTraceItem object on the StackTrace.
-	 * 
+	 *
 	 * @param \qtism\runtime\common\StackTraceItem $value A StackTraceItem object.
 	 * @throws \InvalidArgumentException If $value is not a StackTraceItem object.
 	 */
-	public function push($value) {
-		$this->checkType($value);
-		$data = &$this->getDataPlaceHolder();
-		array_push($data, $value);
-	}
-	
-	/**
+    public function push($value)
+    {
+        $this->checkType($value);
+        $data = &$this->getDataPlaceHolder();
+        array_push($data, $value);
+    }
+
+    /**
 	 * @see \qtism\common\collections\AbstractCollection::checkType()
 	 */
-	public function checkType($value) {
-		if (!$value instanceof StackTraceItem) {
-			$msg = "The StackTrace class only accepts to store StackTraceItem objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function checkType($value)
+    {
+        if (!$value instanceof StackTraceItem) {
+            $msg = "The StackTrace class only accepts to store StackTraceItem objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get a string representation of the stack trace.
-	 * 
+	 *
 	 * @return string
 	 */
-	public function __toString() {
-		$str = '';
-		$data = &$this->getDataPlaceHolder();
-		
-		foreach (array_keys($data) as $k) {
-			$item = $data[$k];
-			$str .= $item->getTraceMessage() . "\n";
-		}
-		
-		return $str;
-	}
+    public function __toString()
+    {
+        $str = '';
+        $data = &$this->getDataPlaceHolder();
+
+        foreach (array_keys($data) as $k) {
+            $item = $data[$k];
+            $str .= $item->getTraceMessage() . "\n";
+        }
+
+        return $str;
+    }
 }

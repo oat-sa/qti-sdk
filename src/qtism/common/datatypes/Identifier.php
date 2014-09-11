@@ -28,45 +28,49 @@ use \InvalidArgumentException;
 
 /**
  * Represents the Identifier QTI datatype.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Identifier extends String {
-    
+class Identifier extends String
+{
     /**
      * Checks whether or not $value is a string value.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not a string value.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (is_string($value) !== true) {
             $msg = "The Identifier Datatype only accepts to store identifier values.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the baseType of the value. This method systematically returns
      * the BaseType::IDENTIFIER value.
-     * 
+     *
      * @return integer A value from the BaseType enumeration.
      */
-    public function getBaseType() {
+    public function getBaseType()
+    {
         return BaseType::IDENTIFIER;
     }
-    
+
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
-     * 
+     *
      * @return integer A value from the Cardinality enumeration.
      */
-    public function getCardinality() {
+    public function getCardinality()
+    {
         return Cardinality::SINGLE;
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return $this->getValue();
     }
 }

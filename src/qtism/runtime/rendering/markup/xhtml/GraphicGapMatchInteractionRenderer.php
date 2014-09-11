@@ -27,22 +27,23 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * GraphicGapMatchInteraction renderer. Rendered components will be transformed as 
+ * GraphicGapMatchInteraction renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-GraphiGapMatchInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GraphicGapMatchInteractionRenderer extends GraphicInteractionRenderer {
-    
+class GraphicGapMatchInteractionRenderer extends GraphicInteractionRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-graphicGapMatchInteraction');
     }

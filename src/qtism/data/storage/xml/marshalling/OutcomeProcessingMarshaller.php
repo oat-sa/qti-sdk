@@ -4,18 +4,18 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- *   
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
@@ -29,54 +29,58 @@ use \DOMElement;
 
 /**
  * Marshalling/Unmarshalling implementation for outcomeProcessing.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeProcessingMarshaller extends Marshaller {
-	
-	/**
+class OutcomeProcessingMarshaller extends Marshaller
+{
+    /**
 	 * Marshall an OutcomeProcessing object into a DOMElement object.
-	 * 
+	 *
 	 * @param \qtism\data\QtiComponent $component An OutcomeProcessing object.
 	 * @return \DOMElement The according DOMElement object.
 	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
 	 */
-	protected function marshall(QtiComponent $component) {
-		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
-		
-		foreach ($component->getOutcomeRules() as $outcomeRule) {
-			$marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeRule);
-			$element->appendChild($marshaller->marshall($outcomeRule));
-		}
-		
-		return $element;
-	}
-	
-	/**
+    protected function marshall(QtiComponent $component)
+    {
+        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+
+        foreach ($component->getOutcomeRules() as $outcomeRule) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeRule);
+            $element->appendChild($marshaller->marshall($outcomeRule));
+        }
+
+        return $element;
+    }
+
+    /**
 	 * Unmarshall a DOMElement object corresponding to a QTI outcomeProcessing element.
-	 * 
+	 *
 	 * @param \DOMElement $element A DOMElement object.
 	 * @return \qtism\data\QtiComponent An OutcomeProcessing object.
 	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
-	protected function unmarshall(DOMElement $element) {
-		$outcomeRuleElts = self::getChildElements($element);
-		
-		$outcomeRules = new OutcomeRuleCollection();
-		for ($i = 0; $i < count($outcomeRuleElts); $i++) {
-			$marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeRuleElts[$i]);
-			$outcomeRules[] = $marshaller->unmarshall($outcomeRuleElts[$i]);
-		}
-		
-		$object = new OutcomeProcessing($outcomeRules);
-		return $object;
-	}
-	
-	/**
+    protected function unmarshall(DOMElement $element)
+    {
+        $outcomeRuleElts = self::getChildElements($element);
+
+        $outcomeRules = new OutcomeRuleCollection();
+        for ($i = 0; $i < count($outcomeRuleElts); $i++) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeRuleElts[$i]);
+            $outcomeRules[] = $marshaller->unmarshall($outcomeRuleElts[$i]);
+        }
+
+        $object = new OutcomeProcessing($outcomeRules);
+
+        return $object;
+    }
+
+    /**
 	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
 	 */
-	public function getExpectedQtiClassName() {
-		return 'outcomeProcessing';
-	}
+    public function getExpectedQtiClassName()
+    {
+        return 'outcomeProcessing';
+    }
 }

@@ -4,18 +4,18 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- *   
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
@@ -31,32 +31,33 @@ use \DOMElement;
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of mathOperator QTI operators.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MathOperatorMarshaller extends OperatorMarshaller {
-	
-	/**
+class MathOperatorMarshaller extends OperatorMarshaller
+{
+    /**
 	 * Unmarshall a MathOperator object into a QTI mathOperator element.
-	 * 
+	 *
 	 * @param \qtism\data\QtiComponent The MathOperator object to marshall.
 	 * @param array An array of child DOMEelement objects.
 	 * @return \DOMElement The marshalled QTI mathOperator element.
 	 */
-	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
-		
-		self::setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
-		
-		foreach ($elements as $elt) {
-			$element->appendChild($elt);
-		}
-		
-		return $element;
-	}
-	
-	/**
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
+        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+
+        self::setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
+
+        foreach ($elements as $elt) {
+            $element->appendChild($elt);
+        }
+
+        return $element;
+    }
+
+    /**
 	 * Unmarshall a QTI mathOperator operator element into a MathsOperator object.
 	 *
 	 * @param \DOMElement $element The mathOperator element to unmarshall.
@@ -64,15 +65,16 @@ class MathOperatorMarshaller extends OperatorMarshaller {
 	 * @return \qtism\data\QtiComponent A MathOperator object.
 	 * @throws \UnmarshallingException
 	 */
-	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-		if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
-			
-			$object = new MathOperator($children, MathFunctions::getConstantByName($name));
-			return $object;
-		}
-		else {
-			$msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
-			throw new UnmarshallingException($msg, $element);
-		}
-	}
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
+        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+
+            $object = new MathOperator($children, MathFunctions::getConstantByName($name));
+
+            return $object;
+        } else {
+            $msg = "The mandatory attribute 'name' is missing from element '" . $element->localName . "'.";
+            throw new UnmarshallingException($msg, $element);
+        }
+    }
 }

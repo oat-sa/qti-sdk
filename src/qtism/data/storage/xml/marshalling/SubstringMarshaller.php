@@ -4,18 +4,18 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- *   
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
@@ -30,31 +30,32 @@ use \DOMElement;
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of substring QTI operators.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SubstringMarshaller extends OperatorMarshaller {
-	
-	/**
+class SubstringMarshaller extends OperatorMarshaller
+{
+    /**
 	 * Unmarshall a Substring object into a QTI substring element.
-	 * 
+	 *
 	 * @param \qtism\data\QtiComponent $component The Substring object to marshall.
 	 * @param array $elements An array of child DOMEelement objects.
 	 * @return \DOMElement The marshalled QTI substring element.
 	 */
-	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
-		self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
-		
-		foreach ($elements as $elt) {
-			$element->appendChild($elt);
-		}
-		
-		return $element;
-	}
-	
-	/**
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
+        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
+
+        foreach ($elements as $elt) {
+            $element->appendChild($elt);
+        }
+
+        return $element;
+    }
+
+    /**
 	 * Unmarshall a QTI substring operator element into a Substring object.
 	 *
 	 * @param \DOMElement The substring element to unmarshall.
@@ -62,13 +63,14 @@ class SubstringMarshaller extends OperatorMarshaller {
 	 * @return \qtism\data\QtiComponent A Substring object.
 	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
-	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-		$object = new Substring($children);
-		
-		if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
-			$object->setCaseSensitive($caseSensitive);
-		}
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
+        $object = new Substring($children);
 
-		return $object;
-	}
+        if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+            $object->setCaseSensitive($caseSensitive);
+        }
+
+        return $object;
+    }
 }

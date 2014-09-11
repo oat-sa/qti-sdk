@@ -28,65 +28,70 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML li class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Li extends BodyElement {
-    
+class Li extends BodyElement
+{
     /**
      * The Flow objects composing the Li.
-     * 
+     *
      * @var \qtism\data\content\FlowCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Li object.
-     * 
+     *
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new FlowCollection());
     }
-    
+
     /**
      * Get the Flow objects composing the Li.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the Flow objects composing the Li.
-     * 
+     *
      * @param \qtism\data\content\FlowCollection $content
      */
-    public function setContent(FlowCollection $content) {
+    public function setContent(FlowCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the Flow objects composing the Li.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'li';
     }
 }

@@ -29,35 +29,37 @@ use \DOMDocumentFragment;
 
 /**
  * Stylesheet renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StylesheetRenderer extends AbstractXhtmlRenderer {
-    
+class StylesheetRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new StylesheetRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('link');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('rel', 'stylesheet');
         $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
         $fragment->firstChild->setAttribute('type', $component->getType());
-        
+
         if ($component->hasMedia() === true) {
             $fragment->firstChild->setAttribute('media', $component->getMedia());
         }
-        
+
         if ($component->hasTitle() === true) {
             $fragment->firstChild->setAttribute('title', $component->getTitle());
         }

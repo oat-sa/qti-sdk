@@ -30,42 +30,43 @@ use \InvalidArgumentException;
 
 /**
  * The IsNullProcessor class aims at processing IsNull QTI Data Model Expression objects.
- * 
+ *
  * From IMS QTI:
- * 
- * The isNull operator takes a sub-expression with any base-type and cardinality. 
- * The result is a single boolean with a value of true if the sub-expression is NULL 
- * and false otherwise. Note that empty containers and empty strings are both 
+ *
+ * The isNull operator takes a sub-expression with any base-type and cardinality.
+ * The result is a single boolean with a value of true if the sub-expression is NULL
+ * and false otherwise. Note that empty containers and empty strings are both
  * treated as NULL.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IsNullProcessor extends OperatorProcessor {
-	
-	/**
+class IsNullProcessor extends OperatorProcessor
+{
+    /**
 	 * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
 	 */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof IsNull) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
-			throw new InvalidArgumentException($expression);
-		}
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof IsNull) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
+            throw new InvalidArgumentException($expression);
+        }
+    }
+
+    /**
 	 * Process the IsNullExpression object from the QTI Data Model.
-	 * 
+	 *
 	 * @return boolean Whether the sub-expression is considered to be NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
 	 */
-	public function process() {
-		$operands = $this->getOperands();
-		$expression = $this->getExpression();
-		
-		return new Boolean($operands->containsNull());
-	}
+    public function process()
+    {
+        $operands = $this->getOperands();
+        $expression = $this->getExpression();
+
+        return new Boolean($operands->containsNull());
+    }
 }

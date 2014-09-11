@@ -26,16 +26,17 @@ use qtism\data\content\AtomicInline;
 
 /**
  * The XHTML br class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Br extends AtomicInline {
-    
+class Br extends AtomicInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'br';
     }
 }

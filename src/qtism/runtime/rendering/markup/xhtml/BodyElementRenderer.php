@@ -25,46 +25,46 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
-use qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer;
 use \DOMDocumentFragment;
 
 /**
  * BodyElement renderer.
- * 
+ *
  * This rendered will add the 'qti-bodyElement' class to the rendered
  * elements.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BodyElementRenderer extends AbstractXhtmlRenderer {
-    
+class BodyElementRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new BodyElementRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-bodyElement');
         $this->additionalClass('qti-' . $component->getQtiClassName());
-        
+
         if ($component->hasId() === true) {
             $fragment->firstChild->setAttribute('id', $component->getId());
         }
-        
+
         if ($component->hasClass() === true) {
             $fragment->firstChild->setAttribute('class', $component->getClass());
         }
-        
+
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('lang', $component->getLang());
         }

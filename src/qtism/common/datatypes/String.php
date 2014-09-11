@@ -28,45 +28,49 @@ use \InvalidArgumentException;
 
 /**
  * Represents the String QTI datatype.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class String extends Scalar implements QtiDatatype {
-    
+class String extends Scalar implements QtiDatatype
+{
     /**
      * Checks whether or not $value is a valid string.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not a valid string.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (is_string($value) !== true) {
             $msg = "The String Datatype only accepts to store string values.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the baseType of the value. This method systematically returns
      * the BaseType::STRING value.
-     * 
+     *
      * @return A value from the BaseType enumeration.
      */
-    public function getBaseType() {
+    public function getBaseType()
+    {
         return BaseType::STRING;
     }
-    
+
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
-     * 
+     *
      * @return A value from the Cardinality enumeration.
      */
-    public function getCardinality() {
+    public function getCardinality()
+    {
         return Cardinality::SINGLE;
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return $this->getValue();
     }
 }

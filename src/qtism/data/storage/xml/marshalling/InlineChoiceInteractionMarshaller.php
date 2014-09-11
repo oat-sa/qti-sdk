@@ -30,88 +30,88 @@ use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for InlineChoiceInteraction elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineChoiceInteractionMarshaller extends ContentMarshaller {
-    
+class InlineChoiceInteractionMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-            
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
             if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-                
+
                 $fqClass = $this->lookupClass($element);
-                
+
                 $choices = new InlineChoiceCollection($children->getArrayCopy());
                 if (count($choices) === 0) {
                     $msg = "An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.";
                     throw new UnmarshallingException($message, $element);
                 }
-                
+
                 try {
                     $component = new $fqClass($responseIdentifier, $choices);
-                }
-                catch (InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     $msg = "The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
-                
+
                 if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                     $component->setShuffle($shuffle);
                 }
-                
+
                 if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                     $component->setRequired($required);
                 }
-                
+
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
-                
+
                 self::fillBodyElement($component, $element);
+
                 return $component;
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element.";
                 throw new UnmarshallingException($msg, $element);
             }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->mustShuffle() !== false) {
             self::setDOMElementAttribute($element, 'shuffle', true);
         }
-        
+
         if ($component->isRequired() !== false) {
             self::setDOMElementAttribute($element, 'required', true);
         }
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }
 }

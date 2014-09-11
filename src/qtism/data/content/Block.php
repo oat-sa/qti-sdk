@@ -24,15 +24,15 @@ namespace qtism\data\content;
 
 /**
  * From IMS QTI:
- * 
+ *
  * Elements that provide structure to the text, such as paragraphs, tables etc.
  * Most elements are either inline or block elements.
- * 
+ *
  * This interface is a marker one.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  */
-interface Block {
-    
+interface Block
+{
 }

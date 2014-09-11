@@ -28,35 +28,37 @@ use \DOMDocumentFragment;
 
 /**
  * Object renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ObjectRenderer extends BodyElementRenderer {
-    
+class ObjectRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('data', $this->transformUri($component->getData(), $base));
         $fragment->firstChild->setAttribute('type', $component->getType());
-        
+
         if ($component->hasWidth() === true) {
             $fragment->firstChild->setAttribute('width', $component->getWidth());
         }
-        
+
         if ($component->hasHeight() === true) {
             $fragment->firstChild->setAttribute('height', $component->getHeight());
         }
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendChildren($fragment, $component, $base);
-        
+
         // For browser compatibility, we do not want self-closing object elements.
         if ($fragment->firstChild->childNodes->length === 0) {
             $fragment->firstChild->appendChild($fragment->ownerDocument->createTextNode(''));

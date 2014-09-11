@@ -28,18 +28,19 @@ use \DOMDocumentFragment;
 
 /**
  * Table renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TableRenderer extends BodyElementRenderer {
-    
+class TableRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
-        
+
         if ($component->hasSummary() === true) {
             $fragment->firstChild->setAttribute('summary', $component->getSummary());
         }

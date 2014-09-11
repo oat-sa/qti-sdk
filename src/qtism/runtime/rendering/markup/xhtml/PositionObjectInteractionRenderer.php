@@ -28,45 +28,46 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * PositionObjectInteraction renderer. Rendered components will be transformed as 
+ * PositionObjectInteraction renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-positionObjectInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-max-choices = qti:positionObjectInteraction->maxChoices
  * * data-min-choices = qti:positionObjectInteraction->minChoices (Rendered only if a value is present for the attribute)
- * * data-center-point = qti:positionObjectInteraction->centerPoint (Rendered only if a value is present for the attribute) 
- * 
+ * * data-center-point = qti:positionObjectInteraction->centerPoint (Rendered only if a value is present for the attribute)
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PositionObjectInteractionRenderer extends InteractionRenderer {
-    
+class PositionObjectInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new PositionObjectInteractionRenderer object.
-     * 
+     *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine= null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine= null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-positionObjectInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
-        
+
         if ($component->hasMinChoices() === true) {
             $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
-        
+
         if ($component->hasCenterPoint() === true) {
             $fragment->firstChild->setAttribute('data-center-point', $component->getCenterPoint()->getX() . " " . $component->getCenterPoint()->getY());
         }

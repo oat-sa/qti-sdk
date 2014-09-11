@@ -28,21 +28,22 @@ use \Exception;
 /**
  * The Exception class to use when an error occurs while loading/saving
  * QTI data as PHP source code.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PhpStorageException extends StorageException {
-    
+class PhpStorageException extends StorageException
+{
     /**
      * Create a new PhpStorageException object.
-     * 
+     *
      * @param string $message A human-readable message.
      * @param integer $code An error code.
      * @param Exception $previous A previously thrown and catched exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
-    
+
 }

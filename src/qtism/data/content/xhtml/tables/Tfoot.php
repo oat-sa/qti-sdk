@@ -27,23 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * The Tfoot XHTML class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Tfoot extends BodyElement {
-    
+class Tfoot extends BodyElement
+{
     /**
      * The Tr objects composing the Tfoot.
-     * 
+     *
      * @var \qtism\data\content\xhtml\tables\TrCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Tfoot object.
-     * 
+     *
      * @param \qtism\data\content\xhtml\tables\TrCollection $content A collection of Tr objects with at least one Tr object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -51,47 +51,51 @@ class Tfoot extends BodyElement {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any of the arguments above is invalid.
      */
-    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent($content);
     }
-    
+
     /**
      * Set the Tr objects composing the Tfoot.
-     * 
+     *
      * @param \qtism\data\content\xhtml\tables\TrCollection $content A collection of Tfoot object.
      * @throws \InvalidArgumentException If $content is empty.
      */
-    public function setContent(TrCollection $content) {
+    public function setContent(TrCollection $content)
+    {
         if (count($content) > 0) {
             $this->content = $content;
-        }
-        else {
+        } else {
             $msg = "A Tfoot object must be composed of at least 1 Tr object, none given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the Tr objects composing the Tfoot.
-     * 
+     *
      * @return \qtism\data\content\xhtml\tables\TrCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'tfoot';
     }
 }

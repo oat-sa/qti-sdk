@@ -31,9 +31,9 @@ use \InvalidArgumentException;
 
 /**
  * The IndexProcessor class aims at processing Index operators.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * The index operator takes a sub-expression with an ordered container value and any
  * base-type. The result is the nth value of the container. The result has the same
  * base-type as the sub-expression but single cardinality. The first value of a container
@@ -41,74 +41,73 @@ use \InvalidArgumentException;
  * number of values in the container (or the sub-expression is NULL) then the result
  * of the index operator is NULL. If n is an identifier, it is the value of n at
  * runtime that is used.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IndexProcessor extends OperatorProcessor {
-	
+class IndexProcessor extends OperatorProcessor
+{
     /**
      * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
      */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof Index) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The IndexProcessor class only processes Index QTI Data Model objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof Index) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The IndexProcessor class only processes Index QTI Data Model objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Process the Index operator.
-	 * 
+	 *
 	 * @return mixed|null A QTIRuntime compliant scalar value. NULL is returned if expression->n exceeds the number of values in the container or the sub-expression is NULL.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
-	public function process() {
-		$operands = $this->getOperands();
-		
-		if ($operands->containsNull()) {
-			return null;
-		}
-		
-		if ($operands->exclusivelyOrdered() === false) {
-			$msg = "The Index operator only accepts values with a cardinality of ordered.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-		}
-		
-		$n = $this->getExpression()->getN();
-		if (gettype($n) === 'string') {
-			// The value of $n comes from the state.
-			$state = $this->getState();
-			if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
-				if ($index instanceof Integer) {
-					$n = $index->getValue();
-				}
-				else {
-					$msg = "The value '${index}' is not an integer. Ordered containers can be only accessed by integers.";
-					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
-				}
-			}
-			else {
-				$msg = "Unknown variable reference '${n}'.";
-				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
-			}
-		}
-		
-		if ($n < 1) {
-			$msg = "The value of 'n' must be a non-zero postive integer, '${n}' given.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
-		}
-		
-		$n = $n - 1; // QTI indexes begin at 1...
-		if ($n > count($operands[0]) - 1) {
-			// As per specs, if n exceeds the number of values in the container,
-			// the result of the index operator is NULL.
-			return null;
-		}
-		
-		return $operands[0][$n];
-	}
+    public function process()
+    {
+        $operands = $this->getOperands();
+
+        if ($operands->containsNull()) {
+            return null;
+        }
+
+        if ($operands->exclusivelyOrdered() === false) {
+            $msg = "The Index operator only accepts values with a cardinality of ordered.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+        }
+
+        $n = $this->getExpression()->getN();
+        if (gettype($n) === 'string') {
+            // The value of $n comes from the state.
+            $state = $this->getState();
+            if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
+                if ($index instanceof Integer) {
+                    $n = $index->getValue();
+                } else {
+                    $msg = "The value '${index}' is not an integer. Ordered containers can be only accessed by integers.";
+                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
+                }
+            } else {
+                $msg = "Unknown variable reference '${n}'.";
+                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
+            }
+        }
+
+        if ($n < 1) {
+            $msg = "The value of 'n' must be a non-zero postive integer, '${n}' given.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
+        }
+
+        $n = $n - 1; // QTI indexes begin at 1...
+        if ($n > count($operands[0]) - 1) {
+            // As per specs, if n exceeds the number of values in the container,
+            // the result of the index operator is NULL.
+            return null;
+        }
+
+        return $operands[0][$n];
+    }
 }

@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing
  * Tbody objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TbodyCollection extends QtiComponentCollection {
-    
+class TbodyCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of Tbody.
-     * 
+     *
      * @throws \InvalidArgumentException if $value is not an instance of Tbody.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Tbody) {
             $msg = "TbodyCollection objects only accept to store Tbody objects.";
             throw new InvalidArgumentException($msg);

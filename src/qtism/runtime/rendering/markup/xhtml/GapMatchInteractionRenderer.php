@@ -29,47 +29,49 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * GapMatchInteraction renderer. Rendered components will be transformed as 
+ * GapMatchInteraction renderer. Rendered components will be transformed as
  * 'div' elements with the 'qti-blockInteraction' and 'qti-gapMatchInteraction' additional CSS classes.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:gapMatchInteraction->shuffle
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapMatchInteractionRenderer extends InteractionRenderer {
-    
+class GapMatchInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new GapMatchInteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-gapMatchInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendChildren($fragment, $component, $base);
-        
+
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getGapChoices()->getArrayCopy()));
         }

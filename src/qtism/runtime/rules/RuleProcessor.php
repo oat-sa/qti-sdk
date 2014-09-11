@@ -28,75 +28,80 @@ use qtism\runtime\common\Processable;
 
 /**
  * The RuleProcessor class aims at processing QTI Data Model Rule objects which are:
- * 
+ *
  * * responseCondition
  * * outcomeCondition
  * * setOutcomeValue
  * * lookupOutcomeValue
  * * branchRule
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class RuleProcessor implements Processable {
-	
-	/**
+abstract class RuleProcessor implements Processable
+{
+    /**
 	 * The Rule object to be processed.
-	 * 
+	 *
 	 * @var \qtism\data\rules\Rule
 	 */
-	private $rule;
-	
-	/**
+    private $rule;
+
+    /**
 	 * The State object.
-	 * 
+	 *
 	 * @var \qtism\runtime\common\State
 	 */
-	private $state;
-	
-	/**
+    private $state;
+
+    /**
 	 * Create a new RuleProcessor object aiming at processing the $rule Rule object.
-	 * 
+	 *
 	 * @param \qtism\data\rules\Rule $rule A Rule object to be processed by the processor.
 	 */
-	public function __construct(Rule $rule) {
-		$this->setRule($rule);
-		$this->setState(new State());
-	}
-	
-	/**
+    public function __construct(Rule $rule)
+    {
+        $this->setRule($rule);
+        $this->setState(new State());
+    }
+
+    /**
 	 * Set the QTI Data Model Rule object to be processed.
-	 * 
+	 *
 	 * @param \qtism\runtime\rules\Rule $rule
 	 */
-	public function setRule(Rule $rule) {
-		$this->rule = $rule;
-	}
-	
-	/**
+    public function setRule(Rule $rule)
+    {
+        $this->rule = $rule;
+    }
+
+    /**
 	 * Get the QTI Data Model Rule object to be processed.
-	 * 
+	 *
 	 * @return \qtism\data\rules\Rule
 	 */
-	public function getRule() {
-		return $this->rule;
-	}
-	
-	/**
+    public function getRule()
+    {
+        return $this->rule;
+    }
+
+    /**
 	 * Set the current State object.
 	 *
 	 * @param \qtism\runtime\common\State $state A State object.
 	 */
-	public function setState(State $state) {
-		$this->state = $state;
-	}
-	
-	/**
+    public function setState(State $state)
+    {
+        $this->state = $state;
+    }
+
+    /**
 	 * Get the current State object.
 	 *
 	 * @return \qtism\runtime\common\State
 	 */
-	public function getState() {
-		return $this->state;
-	}
+    public function getState()
+    {
+        return $this->state;
+    }
 }

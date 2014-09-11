@@ -32,85 +32,88 @@ use qtism\common\enums\Enumeration;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentTestPlace implements Enumeration {
-    
+class AssessmentTestPlace implements Enumeration
+{
     /**
      * Represents the concept of TestPart in an AssessmentTest.
-     * 
+     *
      * @var integer
      */
     const TEST_PART = 1;
-    
+
     /**
      * Represents the concept of AssessmentSection in an AssessmentTest.
-     * 
+     *
      * @var integer
      */
     const ASSESSMENT_SECTION = 2;
-    
+
     /**
      * Represents the concept of AssessmentItem in an AssessmentTest.
-     * 
+     *
      * @var integer
      */
     const ASSESSMENT_ITEM = 4;
-    
+
     /**
      * Represents the concept of AssessmentTest (in an AssessmentTest).
-     * 
+     *
      * @var integer
      */
     const ASSESSMENT_TEST = 8;
-    
-    static public function asArray() {
+
+    public static function asArray()
+    {
         return array('TEST_PART' => self::TEST_PART,
                        'ASSESSMENT_SECTION' => self::ASSESSMENT_SECTION,
                        'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM,
                        'ASSESSMENT_TEST' => self::ASSESSMENT_TEST);
     }
-    
-    static public function getConstantByName($name) {
+
+    public static function getConstantByName($name)
+    {
         switch (strtolower($name)) {
             case 'testpart':
-                return self::TEST_PART;    
+                return self::TEST_PART;
             break;
-            
+
             case 'assessmentsection':
                 return self::ASSESSMENT_SECTION;
             break;
-            
+
             case 'assessmentitem':
                 return self::ASSESSMENT_ITEM;
             break;
-            
+
             case 'assessmenttest':
                 return self::ASSESSMENT_TEST;
             break;
-            
+
             default:
                 return false;
             break;
         }
     }
-    
-    static public function getNameByConstant($constant) {
+
+    public static function getNameByConstant($constant)
+    {
         switch ($constant) {
             case self::TEST_PART:
                 return 'testPart';
             break;
-            
+
             case self::ASSESSMENT_SECTION:
                 return 'assessmentSection';
             break;
-            
+
             case self::ASSESSMENT_ITEM:
                 return 'assessmentItem';
             break;
-            
+
             case self::ASSESSMENT_TEST:
                 return 'assessmentTest';
             break;
-            
+
             default:
                 return false;
             break;

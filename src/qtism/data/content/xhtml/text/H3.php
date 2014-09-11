@@ -24,19 +24,19 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\AtomicBlock;
 
-
 /**
  * The XHTML h3 class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class H3 extends AtomicBlock {
-    
+class H3 extends AtomicBlock
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'h3';
     }
 }

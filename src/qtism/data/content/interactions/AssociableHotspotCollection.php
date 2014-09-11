@@ -27,22 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * A specialization of AbstractCollection aiming at storing AssociableHotspot
- * objects only. 
- * 
+ * objects only.
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssociableHotspotCollection extends QtiComponentCollection {
-    
+class AssociableHotspotCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of AssociableHotspot.
-     * 
+     *
      * @throws InvalidArgumentException If $value is not an instance of AssociableHotspot.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof AssociableHotspot) {
             $msg = "AssociableHotspotCollection objects only accepts to store AssociableHotspot objects.";
             throw new InvalidArgumentException($msg);
         }
-    }    
+    }
 }

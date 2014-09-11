@@ -23,55 +23,56 @@
 namespace qtism\data\storage\php\marshalling;
 
 use qtism\data\storage\php\Utils as PhpUtils;
-use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 
 /**
  * Implements the logic of marshalling PHP arrays into
  * PHP source code.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PhpArrayMarshaller extends PhpMarshaller {
-    
+class PhpArrayMarshaller extends PhpMarshaller
+{
     /**
      * Marshall an array into PHP source code.
-     * 
+     *
      * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If something wrong happens during marshalling.
      */
-    public function marshall() {
+    public function marshall()
+    {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
         $array = $this->getToMarshall();
         $args = new PhpArgumentCollection();
-        
+
         foreach ($array as $a) {
             if (PhpUtils::isScalar($a) === false) {
                 $msg = "The PhpArrayMarshaller class only deals with PHP scalar values, object or resource given.";
                 throw new PhpMarshallingException($msg);
             }
-            
+
             $args[] = new PhpArgument($a);
         }
-        
+
         $arrayVarName = $ctx->generateVariableName($array);
         $access->writeVariable($arrayVarName);
         $access->writeEquals($ctx->mustFormatOutput());
         $access->writeFunctionCall('array', $args);
         $access->writeSemicolon($ctx->mustFormatOutput());
-        
+
         $ctx->pushOnVariableStack($arrayVarName);
     }
-    
+
     /**
      * Whether the $toMarshall value is marshallable by this implementation which
      * only supports arrays to be marshalled.
-     * 
+     *
      * @return boolean
      */
-    protected function isMarshallable($toMarshall) {
+    protected function isMarshallable($toMarshall)
+    {
         return is_array($toMarshall);
     }
 }

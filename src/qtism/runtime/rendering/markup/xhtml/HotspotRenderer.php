@@ -31,22 +31,23 @@ use \DOMDocumentFragment;
 /**
  * Hotspot renderer, the base class of all renderers that render subclasses of
  * qti:hotspot. It adds to rendered element an additional 'qti-hotspot' CSS class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class HotspotRenderer extends ChoiceRenderer {
-    
+abstract class HotspotRenderer extends ChoiceRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-hotspot');
-        
+
         $fragment->firstChild->setAttribute('data-shape', Shape::getNameByConstant($component->getShape()));
         $fragment->firstChild->setAttribute('data-coords', $component->getCoords()->__toString());
-        
+
         if ($component->hasHotspotLabel() === true) {
             $fragment->firstChild->setAttribute('data-hotspot-label', $component->getHotspotLabel());
         }

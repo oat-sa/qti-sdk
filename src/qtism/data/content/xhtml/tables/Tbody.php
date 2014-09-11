@@ -27,23 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * The tbody XHTML class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Tbody extends BodyElement {
-    
+class Tbody extends BodyElement
+{
     /**
      * The Tr objects composing the Tbody.
-     * 
+     *
      * @var \qtism\data\content\xhtml\tables\TrCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Tbody object.
-     * 
+     *
      * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -51,47 +51,51 @@ class Tbody extends BodyElement {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TrCollection $content, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent($content);
     }
-    
+
     /**
      * Set the collection of Tr objects composing the Tbody.
-     * 
+     *
      * @param \qtism\data\content\xhtml\tables\TrCollection $content A non-empty TrCollection object.
      * @throws \InvalidArgumentException If $components is empty.
      */
-    public function setContent(TrCollection $content) {
+    public function setContent(TrCollection $content)
+    {
         if (count($content) > 0) {
             $this->content = $content;
-        }
-        else {
+        } else {
             $msg = "A Tbody object must be composed of at least 1 Tr object, none given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the content of the object as a collection of Tr objects.
-     * 
+     *
      * @return \qtism\data\content\xhtml\tables\TrCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'tbody';
     }
 }

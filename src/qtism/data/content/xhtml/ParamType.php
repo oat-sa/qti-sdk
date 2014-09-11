@@ -26,59 +26,62 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The paramType enumeration.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ParamType implements Enumeration {
-    
+class ParamType implements Enumeration
+{
     /**
      * DATA
-     * 
+     *
      * @var integer
      */
     const DATA = 0;
-    
+
     /**
      * REF
-     * 
+     *
      * @var integer
      */
     const REF = 1;
-    
-    public static function asArray() {
+
+    public static function asArray()
+    {
         return array(
             'DATA' => self::DATA,
-            'REF' => self::REF        
+            'REF' => self::REF
         );
     }
-    
-    public static function getConstantByName($name) {
+
+    public static function getConstantByName($name)
+    {
         switch (strtolower($name)) {
             case 'data':
                 return self::DATA;
             break;
-            
+
             case 'ref':
                 return self::REF;
             break;
-            
+
             default:
                 return false;
             break;
         }
     }
-    
-    public static function getNameByConstant($constant) {
+
+    public static function getNameByConstant($constant)
+    {
         switch ($constant) {
             case self::DATA:
                 return 'DATA';
             break;
-            
+
             case self::REF:
                 return 'REF';
             break;
-            
+
             default:
                 return false;
             break;

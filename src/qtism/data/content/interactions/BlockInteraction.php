@@ -29,36 +29,36 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
+ *
  * An interaction that behaves like a block in the content model.
  * Most interactions are of this type.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class BlockInteraction extends Interaction implements Block, Flow {
-	
-	/**
+abstract class BlockInteraction extends Interaction implements Block, Flow
+{
+    /**
      * The base URI of the BlockInteraction.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $xmlBase = '';
-	
-	/**
+
+    /**
 	 * From IMS QTI:
-	 * 
+	 *
 	 * An optional prompt for the interaction.
-	 * 
+	 *
 	 * @var Prompt
 	 * @qtism-bean-property
 	 */
-	private $prompt = null;
-	
-	/**
+    private $prompt = null;
+
+    /**
 	 * Create a new BlockInteraction object.
-	 * 
+	 *
 	 * @param string $responseIdentifier The identifier of the associated response.
 	 * @param string $id The id of the bodyElement.
 	 * @param string $class The class of the bodyElement.
@@ -66,79 +66,85 @@ abstract class BlockInteraction extends Interaction implements Block, Flow {
 	 * @param string $label The label of the bodyElement.
 	 * @throws \InvalidArgumentException If one of the argument is invalid.
 	 */
-	public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
-	    parent::__construct($responseIdentifier, $id, $class, $lang, $label);
-	}
-	
-	/**
+    public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
+    {
+        parent::__construct($responseIdentifier, $id, $class, $lang, $label);
+    }
+
+    /**
 	 * Get the prompt for the interaction.
-	 * 
+	 *
 	 * @return \qtism\data\content\interactions\Prompt
 	 */
-	public function getPrompt() {
-		return $this->prompt;
-	}
-	
-	/**
+    public function getPrompt()
+    {
+        return $this->prompt;
+    }
+
+    /**
 	 * Set the prompt for the interaction.
-	 * 
+	 *
 	 * @param \qtism\data\content\interactions\Prompt $prompt
 	 */
-	public function setPrompt($prompt = null) {
-		$this->prompt = $prompt;
-	}
-	
-	/**
+    public function setPrompt($prompt = null)
+    {
+        $this->prompt = $prompt;
+    }
+
+    /**
 	 * Whether the BlockInteraction has a prompt.
-	 * 
+	 *
 	 * @return boolean
 	 */
-	public function hasPrompt() {
-	    return $this->getPrompt() !== null;
-	}
-	
+    public function hasPrompt()
+    {
+        return $this->getPrompt() !== null;
+    }
+
     /**
      * Set the base URI of the BlockInteraction.
      *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the BlockInteraction.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
+
     /**
      * @see \qtism\data\content\Flow::hasXmlBase()
      */
-    public function hasXmlBase() {
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
-        
+    public function getComponents()
+    {
         $array = array();
         if ($this->hasPrompt() === true) {
             $array[] = $this->getPrompt();
         }
-        
+
         return new QtiComponentCollection($array);
     }
 }

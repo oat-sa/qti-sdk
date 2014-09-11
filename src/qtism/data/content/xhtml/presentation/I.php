@@ -27,29 +27,31 @@ use \InvalidArgumentException;
 
 /**
  * The i XHTML class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class I extends SimpleInline {
-    
+class I extends SimpleInline
+{
     /**
      * Create a new I object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'i';
     }
 }

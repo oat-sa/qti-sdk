@@ -30,58 +30,59 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * OrderInteraction renderer. Rendered components will be transformed as 
+ * OrderInteraction renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-orderInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-shuffle = qti:orderInteraction->shuffle
  * * data-max-choices = qti:orderInteraction->maxChoices (only if specified in QTI-XML representation)
  * * data-min-choices = qti:orderInteraction->minChoices (only if specified in QTI-XML representation)
  * * data-orientation = qti:orderInteraction->orientation
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OrderInteractionRenderer extends InteractionRenderer {
-    
+class OrderInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new OrderInteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-orderInteraction');
         $this->additionalClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
-        
+
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        
+
         if ($component->hasMaxChoices() === true) {
             $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
-        }
-        else {
+        } else {
             $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
-        
+
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendChildren($fragment, $component, $base);
-        
+
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }

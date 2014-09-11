@@ -21,70 +21,68 @@
  */
 namespace qtism\common\storage;
 
-use \Exception;
-
 /**
  * The BinaryStreamAccessException class represents the error
  * that could occur while reading/extracting data from a BinaryStream
  * object.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryStreamAccessException extends StreamAccessException {
-    
+class BinaryStreamAccessException extends StreamAccessException
+{
     /**
      * An error occured while reading|writing a tinyint.
-     * 
+     *
      * @var integer
      */
     const TINYINT = 2;
-    
+
     /**
      * An error occured while reading|writing a short int.
-     * 
+     *
      * @var integer
      */
     const SHORT = 3;
-    
+
     /**
      * An error occured while reading|writing an int.
-     * 
+     *
      * @var integer
      */
     const INT = 4;
-    
+
     /**
      * An error occured while reading|writing a float.
-     * 
+     *
      * @var integer
      */
     const FLOAT = 5;
-    
+
     /**
      * An error occured while reading|writing a boolean.
-     * 
+     *
      * @var integer
      */
     const BOOLEAN = 6;
-    
+
     /**
      * An error occured while reading|writing a string.
-     * 
+     *
      * @var integer
      */
     const STRING = 7;
-    
+
     /**
      * An error occured while reading|writing binary data.
-     * 
+     *
      * @var integer
      */
     const BINARY = 8;
-    
+
     /**
      * An error occured while reading|writing a DateTime.
-     * 
+     *
      * @var integer
      */
     const DATETIME = 9;

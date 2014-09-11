@@ -26,31 +26,31 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
+ *
  * The upload interaction allows the candidate to upload a pre-prepared file representing
- * their response. It must be bound to a response variable with base-type file and single 
+ * their response. It must be bound to a response variable with base-type file and single
  * cardinality.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class UploadInteraction extends BlockInteraction {
-    
+class UploadInteraction extends BlockInteraction
+{
     /**
      * From IMS QTI:
-     * 
+     *
      * The upload interaction allows the candidate to upload a pre-prepared
-     * file representing their response. It must be bound to a response 
+     * file representing their response. It must be bound to a response
      * variable with base-type file and single cardinality.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $type = '';
-    
+
     /**
      * Create a new UploadInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -58,56 +58,61 @@ class UploadInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
     }
-    
+
     /**
      * Set the expected mime-type of the uploaded file.
-     * 
+     *
      * @param string $type A mime-type.
      * @throws \InvalidArgumentException If $type is not a string value.
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         if (is_string($type) === true) {
             $this->type = $type;
-        }
-        else {
+        } else {
             $msg = "The 'type' argument must be a string value, '" . gettype($type) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the expected mime-type of the uploaded file.
-     * 
+     *
      * @return string A mime-type.
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
-    
+
     /**
      * Whether or not a value is defined for the 'type'
      * attribute.
-     * 
+     *
      * @return boolean
      */
-    public function hasType() {
+    public function hasType()
+    {
         return $this->getType() !== '';
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return parent::getComponents();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'uploadInteraction';
     }
 }

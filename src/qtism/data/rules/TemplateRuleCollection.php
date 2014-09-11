@@ -30,18 +30,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing
  * TemplateRule objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateRuleCollection extends QtiComponentCollection {
-    
+class TemplateRuleCollection extends QtiComponentCollection
+{
     /**
      * Check whether or not $value is an instance of TemplateRule.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of TemplateRule.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof TemplateRule) {
             $msg = "A TemplateRuleCollection only accepts to store TemplateRule objects.";
             throw new InvalidArgumentException($msg);

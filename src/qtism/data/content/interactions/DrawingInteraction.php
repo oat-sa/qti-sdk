@@ -28,32 +28,32 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
+ *
  * The drawing interaction allows the candidate to use a common set of drawing tools
- * to modify a given graphical image (the canvas). It must be bound to a response 
- * variable with base-type file and single cardinality. The result is a file in the 
+ * to modify a given graphical image (the canvas). It must be bound to a response
+ * variable with base-type file and single cardinality. The result is a file in the
  * same format as the original image.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DrawingInteraction extends BlockInteraction {
-    
+class DrawingInteraction extends BlockInteraction
+{
     /**
      * From IMS QTI:
-     * 
-     * The image that acts as the canvas on which the drawing takes 
-     * place is given as an object which must be of an image type, as 
+     *
+     * The image that acts as the canvas on which the drawing takes
+     * place is given as an object which must be of an image type, as
      * specified by the type attribute.
-     * 
+     *
      * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
-    
+
     /**
      * Create a new DrawingInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the associated response variable.
      * @param Object $object The image that acts as a canvas for drawing.
      * @param string $id The id of the bodyElement.
@@ -62,41 +62,47 @@ class DrawingInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setObject($object);
     }
-    
+
     /**
      * Set the image that acts as a canvas for drawing.
-     * 
+     *
      * @param \qtism\data\content\xhtml\Object $object An Object object representing an image.
      */
-    public function setObject(Object $object) {
+    public function setObject(Object $object)
+    {
         $this->object = $object;
     }
-    
+
     /**
      * Get the image that acts as a canvas for drawing.
-     * 
+     *
      * @return \qtism\data\content\xhtml\Object An Object object representing an image.
      */
-    public function getObject() {
+    public function getObject()
+    {
         return $this->object;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         $parentComponents = parent::getComponents();
+
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), array($this->getObject())));
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'drawingInteraction';
     }
 }

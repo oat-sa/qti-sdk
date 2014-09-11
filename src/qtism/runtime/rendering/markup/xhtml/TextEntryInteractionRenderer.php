@@ -31,35 +31,37 @@ use \DOMDocumentFragment;
  * TextEntryInteraction renderer. Will render components
  * as 'input' elements with type 'text' and an additional classes
  * of 'qti-textEntryInteraction' and 'qti-inlineInteraction'.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-base = qti:stringInteraction->base
  * * data-string-identifier = qti:stringInteraction->stringIdentifier (only if set in QTI-XML counter-part).
  * * data-expected-length = qti:stringInteraction->expectedLength (only if set in QTI-XML counter-part).
  * * data-pattern-mask = qti:stringInteraction->patternMask (only if set in QTI-XML counter-part).
  * * data-placeholder-text = qti:stringInteraction->placeholderText (only if set in QTI-XML counter-part).
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextEntryInteractionRenderer extends StringInteractionRenderer {
-    
+class TextEntryInteractionRenderer extends StringInteractionRenderer
+{
     /**
      * Create a new TextEntryInteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('input');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\StringInteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-inlineInteraction');
         $this->additionalClass('qti-textEntryInteraction');

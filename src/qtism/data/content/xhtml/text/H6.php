@@ -24,19 +24,19 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\AtomicBlock;
 
-
 /**
  * The XHTML h6 class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class H6 extends AtomicBlock {
-    
+class H6 extends AtomicBlock
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'h6';
     }
 }

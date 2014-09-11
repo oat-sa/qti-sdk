@@ -28,7 +28,7 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * Gap renderer. This renderer will transform the gapChoice into a 'span' 
+ * Gap renderer. This renderer will transform the gapChoice into a 'span'
  * element with an additional 'qti-gap' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
@@ -47,22 +47,24 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapRenderer extends ChoiceRenderer {
-
+class GapRenderer extends ChoiceRenderer
+{
     /**
      * Create a new GapRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gap');
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');

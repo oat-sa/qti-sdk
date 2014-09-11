@@ -24,19 +24,19 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML em class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Em extends SimpleInline {
-    
+class Em extends SimpleInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'em';
     }
 }

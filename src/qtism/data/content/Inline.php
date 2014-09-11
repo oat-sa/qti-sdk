@@ -24,14 +24,14 @@ namespace qtism\data\content;
 
 /**
  * From IMS QTI:
- * 
+ *
  * Elements that behave as spans of text, such as the contents of paragraphs.
- * 
+ *
  * This interface is a marker one.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  */
-interface Inline {
-    
+interface Inline
+{
 }

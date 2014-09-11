@@ -28,12 +28,12 @@ use \DateTimeZone;
 
 /**
  * The Time class provides utility methods for time management.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Time {
-    
+class Time
+{
     /**
      * Get the time difference between two DateTime object in seconds.
      *
@@ -41,39 +41,44 @@ class Time {
      * @param \DateTime $time2
      * @return integer a number of seconds.
      */
-    public static function timeDiffSeconds(DateTime $time1, DateTime $time2) {
+    public static function timeDiffSeconds(DateTime $time1, DateTime $time2)
+    {
         $interval = $time1->diff($time2);
+
         return self::totalSeconds($interval);
     }
-    
+
     /**
      * Get the total number of seconds a given date $interval represents.
-     * 
+     *
      * @param \DateInterval $interval
      * @return integer
      */
-    public static function totalSeconds(DateInterval $interval) {
+    public static function totalSeconds(DateInterval $interval)
+    {
         $sYears = 31536000 * $interval->y;
         $sMonths = 30 * 24 * 3600 * $interval->m;
         $sDays = 24 * 3600 * $interval->d;
         $sHours = 3600 * $interval->h;
         $sMinutes = 60 * $interval->i;
         $sSeconds = $interval->s;
-        
+
         $total = $sYears + $sMonths + $sDays + $sHours + $sMinutes + $sSeconds;
-         
+
         return ($interval->invert === 1) ? $total * -1 : $total;
     }
-    
+
     /**
      * Clone a given $time into its UTC equivalent.
-     * 
+     *
      * @param \DateTime $time
      * @return \DateTime
      */
-    public static function toUtc(DateTime $time) {
+    public static function toUtc(DateTime $time)
+    {
         $newTime = clone $time;
         $newTime->setTimezone(new DateTimeZone('UTC'));
+
         return $newTime;
     }
 }

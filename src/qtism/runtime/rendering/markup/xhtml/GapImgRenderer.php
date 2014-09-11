@@ -23,12 +23,11 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * GapImg renderer. This renderer will transform the gapChoice into a 'div' 
+ * GapImg renderer. This renderer will transform the gapChoice into a 'div'
  * element with an additional 'qti-gapImg' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
@@ -44,22 +43,23 @@ use \DOMDocumentFragment;
  * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * * data-match-max = qti:gapChoice->matchMax
  * * data-match-min = qti:gapChoice->matchMin
- * 
+ *
  * Finally, depending of the presence of the qti:gapImg->objectLabel attribute,
  * a title attribute with the value of qti:gapImg->objectLabel will be present, or not.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapImgRenderer extends GapChoiceRenderer {
-
+class GapImgRenderer extends GapChoiceRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\GapChoiceRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapImg');
-        
+
         if ($component->hasObjectLabel() === true) {
             $fragment->firstChild->setAttribute('title', $component->getObjectLabel());
         }

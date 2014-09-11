@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialization of QtiComponentCollection aiming at storing InlineChoice objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineChoiceCollection extends QtiComponentCollection {
-    
+class InlineChoiceCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of InlineChoice.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of InlineChoice.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof InlineChoice) {
             $msg = "InlineChoiceCollection objects only accept InlineChoice objects to be stored.";
             throw new InvalidArgumentException($msg);

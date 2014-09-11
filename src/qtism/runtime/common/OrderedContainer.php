@@ -31,58 +31,59 @@ use qtism\common\Comparable;
  * A more concrete type of Container, which has cardinality qti:ordered
  * and drawn from the same value set. In this type of container, the order
  * is important.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OrderedContainer extends MultipleContainer implements QtiDatatype {
-	
+class OrderedContainer extends MultipleContainer implements QtiDatatype
+{
     /**
      * @see \qtism\runtime\common\Container::equals()
      */
-	public function equals($obj) {
-		$countA = count($this);
-		$countB = count($obj);
-		
-		if (gettype($obj) === 'object' && $obj instanceof self && $countA === $countB) {
-			for ($i = 0; $i < $countA; $i++) {
-				$objA = $this[$i];
-				$objB = $obj[$i];
-				
-				if (gettype($objA) === 'object' && $obj instanceof Comparable) {
-					if ($objA->equals($objB) === false) {
-						return false;
-					}
-				}
-				else if (gettype($objB) === 'object' && $obj instanceof Comparable) {
-					if ($objB->equals($objA) === false) {
-						return false;
-					}
-				}
-				else {
-					if ($objA !== $objB) {
-						return false;
-					}
-				}
-			}
-			
-			return true;
-		}
+    public function equals($obj)
+    {
+        $countA = count($this);
+        $countB = count($obj);
 
-		return false;
-	}
-	
-	/**
+        if (gettype($obj) === 'object' && $obj instanceof self && $countA === $countB) {
+            for ($i = 0; $i < $countA; $i++) {
+                $objA = $this[$i];
+                $objB = $obj[$i];
+
+                if (gettype($objA) === 'object' && $obj instanceof Comparable) {
+                    if ($objA->equals($objB) === false) {
+                        return false;
+                    }
+                } elseif (gettype($objB) === 'object' && $obj instanceof Comparable) {
+                    if ($objB->equals($objA) === false) {
+                        return false;
+                    }
+                } else {
+                    if ($objA !== $objB) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
 	 * @see \qtism\runtime\common\MultipleContainer::getCardinality()
 	 */
-	public function getCardinality() {
-		return Cardinality::ORDERED;
-	}
-	
-	/**
+    public function getCardinality()
+    {
+        return Cardinality::ORDERED;
+    }
+
+    /**
 	 * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
 	 */
-	protected function getToStringBounds() {
-		return array('<', '>');
-	}
+    protected function getToStringBounds()
+    {
+        return array('<', '>');
+    }
 }

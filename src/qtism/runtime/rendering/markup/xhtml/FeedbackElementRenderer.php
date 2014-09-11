@@ -30,29 +30,30 @@ use \DOMDocumentFragment;
 /**
  * The base class for FeedbackElement renderers. Rendered
  * elements will get the 'qti-feedbackElement' additional CSS class.
- * 
+ *
  * It takes care of producing the following x-data attributes.
- * 
+ *
  * * data-outcome-identifier = qti:feedbackElement->outcomeIdentifier
  * * data-show-hide = qti:feedbackElement->showHide
  * * data-identifier = qti:feedbackElement->identifier
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class FeedbackElementRenderer extends BodyElementRenderer {
-    
+abstract class FeedbackElementRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-feedbackElement');
-        
+
         $fragment->firstChild->setAttribute('data-outcome-identifier', $component->getOutcomeIdentifier());
         $fragment->firstChild->setAttribute('data-show-hide', ShowHide::getNameByConstant($component->getShowHide()));
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
-        
+
         if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === XhtmlRenderingEngine::CONTEXT_STATIC) {
             $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
         }

@@ -24,68 +24,75 @@ namespace qtism\data;
 
 use qtism\data\storage\StorageException;
 
-abstract class QtiDocument {
-    
+abstract class QtiDocument
+{
     /**
-     * 
+     *
      * @var string
      */
     private $version = '2.1';
-    
+
     /**
-     * 
+     *
      * @var QtiComponent
      */
     private $documentComponent;
-    
+
     /**
-     * 
+     *
      * @var string
      */
     private $url;
-    
-    public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
+
+    public function __construct($version = '2.1', QtiComponent $documentComponent = null)
+    {
         $this->setVersion($version);
         $this->setDocumentComponent($documentComponent);
     }
-    
-    public function setVersion($version) {
+
+    public function setVersion($version)
+    {
         $this->version = $version;
     }
-    
-    public function getVersion() {
+
+    public function getVersion()
+    {
         return $this->version;
     }
-    
-    public function setDocumentComponent(QtiComponent $documentComponent = null) {
+
+    public function setDocumentComponent(QtiComponent $documentComponent = null)
+    {
         $this->documentComponent = $documentComponent;
     }
-    
+
     /**
-     * 
+     *
      * @return \qtism\data\QtiComponent
      */
-    public function getDocumentComponent() {
+    public function getDocumentComponent()
+    {
         return $this->documentComponent;
     }
-    
-    protected function setUrl($url) {
+
+    protected function setUrl($url)
+    {
         $this->url = $url;
     }
-    
-    public function getUrl() {
+
+    public function getUrl()
+    {
         return $this->url;
     }
-    
+
     /**
-     * 
+     *
      * @param string $url
-     * @throws \qtism\data\storage\StorageException 
+     * @throws \qtism\data\storage\StorageException
      */
     abstract public function load($url);
-    
+
     /**
-     * 
+     *
      * @param string $url
      * @throws \qtism\data\storage\StorageException
      */

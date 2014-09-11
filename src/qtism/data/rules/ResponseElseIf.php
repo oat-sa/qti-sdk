@@ -4,18 +4,18 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- *   
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
@@ -29,100 +29,110 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
+ *
  * responseElseIf is defined in an identical way to responseIf.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseElseIf extends QtiComponent {
-	
-	/**
+class ResponseElseIf extends QtiComponent
+{
+    /**
 	 * The expression to be evaluated with the Else If statement.
-	 * 
+	 *
 	 * @var \qtism\data\expressions\Expression
 	 * @qtism-bean-property
 	 */
-	private $expression;
-	
-	/**
+    private $expression;
+
+    /**
 	 * The collection of ResponseRule objects to be evaluated as sub expressions
 	 * if the expression bound to the Else If statement is evaluated to true.
-	 * 
+	 *
 	 * @var \qtism\data\rules\ResponseRuleCollection
 	 * @qtism-bean-property
 	 */
-	private $responseRules;
-	
-	/**
+    private $responseRules;
+
+    /**
 	 * Create a new instance of ResponseElseIf.
-	 * 
+	 *
 	 * @param \qtism\data\expressions\Expression $expression An expression to be evaluated with the Else If statement.
 	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
 	 * @throws \InvalidArgumentException If $responseRules is an empty collection.
 	 */
-	public function __construct(Expression $expression, ResponseRuleCollection $responseRules) {
-		$this->setExpression($expression);
-		$this->setResponseRules($responseRules);
-	}
-	
-	/**
+    public function __construct(Expression $expression, ResponseRuleCollection $responseRules)
+    {
+        $this->setExpression($expression);
+        $this->setResponseRules($responseRules);
+    }
+
+    /**
 	 * Get the expression to be evaluated with the Else If statement.
-	 * 
+	 *
 	 * @return \qtism\data\expressions\Expression An Expression object.
 	 */
-	public function getExpression() {
-		return $this->expression;
-	}
-	
-	/**
+    public function getExpression()
+    {
+        return $this->expression;
+    }
+
+    /**
 	 * Set the expression to be evaluated with the Else If statement.
-	 * 
+	 *
 	 * @param \qtism\data\expressions\Expression $expression An Expression object.
 	 */
-	public function setExpression(Expression $expression) {
-		$this->expression = $expression;
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        $this->expression = $expression;
+    }
+
+    /**
 	 * Get the ResponseRules to be evaluated as sub expressions if the expression bound
 	 * to the Else If statement returns true.
-	 * 
+	 *
 	 * @return \qtism\data\rules\ResponseRuleCollection A collection of OutcomeRule objects.
 	 */
-	public function getResponseRules() {
-		return $this->responseRules;
-	}
-	
-	/**
+    public function getResponseRules()
+    {
+        return $this->responseRules;
+    }
+
+    /**
 	 * Set the ResponseRules to be evaluated as sub expressions if the expression bound
 	 * to the Else If statement returns true.
-	 * 
+	 *
 	 * @param \qtism\data\rules\ResponseRuleCollection $responseRules A collection of ResponseRule objects.
 	 * @throws \InvalidArgumentException If $responseRules is an empty collection.
 	 */
-	public function setResponseRules(ResponseRuleCollection $responseRules) {
-		if (count($responseRules) > 0) {
-			$this->responseRules = $responseRules;
-		}
-		else {
-			$msg = "A ResponseElseIf object must be bound to at lease one ResponseRule object.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setResponseRules(ResponseRuleCollection $responseRules)
+    {
+        if (count($responseRules) > 0) {
+            $this->responseRules = $responseRules;
+        } else {
+            $msg = "A ResponseElseIf object must be bound to at lease one ResponseRule object.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * @see \qtism\data\QtiComponent::getQtiClassName()
 	 */
-	public function getQtiClassName() {
-		return 'responseElseIf';
-	}
-	
-	/**
+    public function getQtiClassName()
+    {
+        return 'responseElseIf';
+    }
+
+    /**
 	 * @see \qtism\data\QtiComponent::getComponents()
 	 */
-	public function getComponents() {
-		$comp = array_merge(array($this->getExpression()), $this->getResponseRules()->getArrayCopy());
-		return new QtiComponentCollection($comp);
-	}
+    public function getComponents()
+    {
+        $comp = array_merge(
+                    array($this->getExpression()),
+                    $this->getResponseRules()->getArrayCopy()
+                );
+
+        return new QtiComponentCollection($comp);
+    }
 }

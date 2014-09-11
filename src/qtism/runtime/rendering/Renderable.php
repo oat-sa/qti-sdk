@@ -25,12 +25,12 @@ namespace qtism\runtime\rendering;
 
 /**
  * Interface to be implemented to claim to be renderable.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Renderable {
-    
+interface Renderable
+{
     /**
      * Render a QtiComponent object into another constitution.
      *

@@ -24,19 +24,19 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML cite class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Cite extends SimpleInline {
-    
+class Cite extends SimpleInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'cite';
     }
 }

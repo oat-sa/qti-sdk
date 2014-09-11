@@ -27,7 +27,7 @@ use qtism\common\Comparable;
 /**
  * The base class for all Scalar QTI datatypes. The following QTI datatypes
  * are considered to be Scalar values:
- * 
+ *
  * * Boolean
  * * Float
  * * Identifier
@@ -35,78 +35,82 @@ use qtism\common\Comparable;
  * * IntOrIdentifier
  * * String
  * * Uri
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Scalar implements Comparable {
-    
+abstract class Scalar implements Comparable
+{
     /**
      * The value of the Scalar object.
-     * 
+     *
      * @var mixed
      */
     private $value;
-    
+
     /**
      * Create a new Scalar object with a given $value as its content.
-     * 
+     *
      * @param mixed $value
      * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
-    public function __construct($value) {
+    public function __construct($value)
+    {
         $this->setValue($value);
     }
-    
+
     /**
      * Set the PHP value to be encapsulated witin the Scalar object.
-     * 
+     *
      * @param mixed $value
      * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->checkType($value);
         $this->value = $value;
     }
-    
+
     /**
      * Get the encapsulated value from the Scalar object, representing its intrinsic value.
-     * 
+     *
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
-    
+
     /**
      * Whether or not the Scalar object holds a QTI NULL value.
-     * 
+     *
      * @return boolean
      */
-    public function isNull() {
+    public function isNull()
+    {
         return $this->getValue() === null;
     }
-    
+
     /**
      * Wheter or not $this is equal to $obj. Two Scalar
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
-     * 
+     *
      * @return boolean
      */
-    public function equals($obj) {
+    public function equals($obj)
+    {
         if ($obj instanceof Scalar) {
             return $obj->getValue() === $this->getValue();
-        }
-        else {
+        } else {
             return $this->getValue() === $obj;
         }
     }
-    
+
     /**
      * Checks if $value has the correct PHP datatype to
      * be encapsulated withing the Scalar object.
-     * 
+     *
      * @param mixed $value A value to be encapsulated whithin the Scalar object.
      * @throws \InvalidArgumentException If $value has a not compliant PHP datatype.
      */

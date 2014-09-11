@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of AbstractCollection that restricts the object storage
  * to BeanParameter objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BeanParameterCollection extends AbstractCollection {
-    
+class BeanParameterCollection extends AbstractCollection
+{
     /**
      * Checks whether $value is an instance of BeanParameter.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of BeanParameter.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof BeanParameter) {
             $msg = "The BeanParameterCollection class only accepts BeanParameter objects to be stored.";
             throw new InvalidArgumentException($msg);

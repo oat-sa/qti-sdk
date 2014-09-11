@@ -28,16 +28,17 @@ use \InvalidArgumentException;
 
 /**
  * A specialized collection aiming at storing RouteTimeLimits objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteTimeLimitsCollection extends AbstractCollection {
-    
+class RouteTimeLimitsCollection extends AbstractCollection
+{
     /**
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof RouteTimeLimits) {
             $msg = "A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.";
             throw new InvalidArgumentException($msg);

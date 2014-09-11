@@ -28,16 +28,16 @@ use qtism\data\QtiComponent;
 
 /**
  * From IMS QTI:
- * 
- * A text run is simply a run of characters. Unlike all other elements in the 
- * content model it is not a sub-class of bodyElement. To assign attributes to a 
+ *
+ * A text run is simply a run of characters. Unlike all other elements in the
+ * content model it is not a sub-class of bodyElement. To assign attributes to a
  * run of text you must use the span element instead.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVariable {
-    
+class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVariable
+{
     /**
      * The base URI.
      *
@@ -45,80 +45,87 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * The characters contained in the TextRun.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new TextRun object.
-     * 
+     *
      * @param string $content The characters to be contained by the TextRun.
      */
-    public function __construct($content) {
+    public function __construct($content)
+    {
         $this->setContent($content);
     }
-    
+
     /**
      * Set the characters to be contained by the TextRun.
-     * 
+     *
      * @param string $content A string value.
      */
-    public function setContent($content) {
+    public function setContent($content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the characters contained by the TextRun.
-     * 
+     *
      * @return string A string value.
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Set the base URI.
      *
      * @param string $base A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
-    public function hasXmlBase() {
+
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
+
     /**
-     * 
+     *
      * @return \qtism\data\QtiComponentCollection
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
-    
-    public function getQtiClassName() {
+
+    public function getQtiClassName()
+    {
         return 'textRun';
     }
 }

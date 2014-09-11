@@ -4,18 +4,18 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- *   
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
@@ -33,49 +33,50 @@ use \DOMElement;
 /**
  * A complex Operator marshaller focusing on the marshalling/unmarshalling process
  * of inside QTI operators.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InsideMarshaller extends OperatorMarshaller {
-	
-	/**
+class InsideMarshaller extends OperatorMarshaller
+{
+    /**
 	 * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::marshallChildrenKnown()
 	 */
-	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
-		self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
-		self::setDOMElementAttribute($element, 'coords', $component->getCoords());
-		
-		foreach ($elements as $elt) {
-			$element->appendChild($elt);
-		}
-		
-		return $element;
-	}
-	
-	/**
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
+        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
+        self::setDOMElementAttribute($element, 'coords', $component->getCoords());
+
+        foreach ($elements as $elt) {
+            $element->appendChild($elt);
+        }
+
+        return $element;
+    }
+
+    /**
 	 * @see \qtism\data\storage\xml\marshalling\OperatorMarshaller::unmarshallChildrenKnown()
 	 */
-	protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-		if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
-			
-			if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null ) {
-				
-				$shape = Shape::getConstantByName($shape);
-				$coords = Utils::stringToCoords($coords, $shape);
-				
-				$object = new Inside($children, $shape, $coords);
-				return $object;
-			}
-			else {
-				$msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
-				throw new UnmarshallingException($msg, $element);
-			}
-		}
-		else {
-			$msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
-			throw new UnmarshallingException($msg, $element);
-		}
-	}
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
+        if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
+
+            if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null ) {
+
+                $shape = Shape::getConstantByName($shape);
+                $coords = Utils::stringToCoords($coords, $shape);
+
+                $object = new Inside($children, $shape, $coords);
+
+                return $object;
+            } else {
+                $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
+                throw new UnmarshallingException($msg, $element);
+            }
+        } else {
+            $msg = "The mandatory attribute 'shape' is missing from element '" . $element->localName . "'.";
+            throw new UnmarshallingException($msg, $element);
+        }
+    }
 }

@@ -29,25 +29,25 @@ use \InvalidArgumentException;
 
 /**
  * An Exception to be thrown in a PrintedVariable processing context.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PrintedVariableProcessingException extends ProcessingException {
-	
-	/**
+class PrintedVariableProcessingException extends ProcessingException
+{
+    /**
 	 * Set the source of the error.
-	 * 
+	 *
 	 * @param \qtism\runtime\common\Processable $source The source of the error.
 	 * @throws \InvalidArgumentException If $source is not a PrintedVariableEngine object.
 	 */
-	public function setSource(Processable $source) {
-		if ($source instanceof PrintedVariableEngine) {
-			parent::setSource($source);
-		}
-		else {
-			$msg = "PrintedVariableProcessingException::setSource only accepts PrintedVariableEngine objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+    public function setSource(Processable $source)
+    {
+        if ($source instanceof PrintedVariableEngine) {
+            parent::setSource($source);
+        } else {
+            $msg = "PrintedVariableProcessingException::setSource only accepts PrintedVariableEngine objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 }

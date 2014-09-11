@@ -31,49 +31,50 @@ use \InvalidArgumentException;
 
 /**
  * A specialized State implementation aiming at storing 'duration' OutcomeVariable objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DurationStore extends State {
-    
+class DurationStore extends State
+{
     /**
      * Checks whether or not $value:
-     * 
+     *
      * * is an instance of OutcomeVariable
      * * has a 'duration' QTI baseType.
      * * has 'single' QTI cardinality.
-     * 
+     *
      * @throws \InvalidArgumentException If one or more of the conditions above are not respected.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         parent::checkType($value);
-        
+
         if (!$value instanceof OutcomeVariable) {
             $className = get_class($value);
             $msg = "The DurationStore only aims at storing OutcomeVariable objects, ${className} object given.";
             throw new InvalidArgumentException($msg);
         }
-        
+
         if (($bt = $value->getBaseType()) !== BaseType::DURATION) {
             $baseTypeName = BaseType::getNameByConstant($bt);
             $msg = "The DurationStore only aims at storing OutcomeVariable objects with a 'duration' baseType, ";
             $msg .= "'${baseTypeName}' baseType given ";
-            
+
             $id = $value->getIdentifier();
             $msg .= "for variable '${id}'.";
-            
+
             throw new InvalidArgumentException($msg);
         }
-        
+
         if (($bt = $value->getCardinality()) !== Cardinality::SINGLE) {
             $cardinalityName = Cardinality::getNameByConstant($bt);
             $msg = "The DurationStore only aims at storing OutcomeVariable objects with a 'single' cardinality, ";
             $msg .= "'${cardinalityName}' cardinality given ";
-            
+
             $id = $value->getIdentifier();
             $msg .= "for variable '${id}'.";
-            
+
             throw new InvalidArgumentException($msg);
         }
     }

@@ -27,22 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * A specialized AbstractCollection aiming at storing ObjectFlow objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ObjectFlowCollection extends QtiComponentCollection {
-	
-	/**
+class ObjectFlowCollection extends QtiComponentCollection
+{
+    /**
 	 * Check whether $value is an ObjectFlow object.
-	 * 
+	 *
 	 * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not an ObjectFlow object.
 	 */
-	protected function checkType($value) {
-		if (!$value instanceof ObjectFlow) {
-			$msg = "ObjectFlowCollection objects only accepts ObjectFlow objects to be stored.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+    protected function checkType($value)
+    {
+        if (!$value instanceof ObjectFlow) {
+            $msg = "ObjectFlowCollection objects only accepts ObjectFlow objects to be stored.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 }

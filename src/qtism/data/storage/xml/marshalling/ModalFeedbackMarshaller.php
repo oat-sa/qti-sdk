@@ -31,90 +31,86 @@ use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for ModalFeedback elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackMarshaller extends ContentMarshaller {
-    
+class ModalFeedbackMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
-        
+
         if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
 
             if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-                
+
                 $component = new $fqClass($outcomeIdentifier, $identifier);
-                
+
                 if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
-                    
+
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
-                    }
-                    catch (InvalidArgumentException $e) {
+                    } catch (InvalidArgumentException $e) {
                         $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element 'modalFeedback'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
-                    
+
                     try {
                         $content = new FlowStaticCollection($children->getArrayCopy());
                         $component->setContent($content);
-                    }
-                    catch (InvalidArgumentException $e) {
+                    } catch (InvalidArgumentException $e) {
                         $msg = "The content of the 'modalFeedback' is invalid. It must only contain 'flowStatic' elements.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
-                    
+
                     if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
                         $component->setTitle($title);
                     }
-                    
+
                     return $component;
-                }
-                else {
+                } else {
                     $msg = "The mandatory 'showHide' attribute is missing from element 'modalFeedback'.";
                 }
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'identifier' attribute is missing from element 'modalFeedback'.";
                 throw new UnmarshallingException($msg, $element);
             }
-        }
-        else {
+        } else {
             $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element 'modalFeedback'.";
             throw new UnmarshallingException($msg, $element);
         }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
-        
+
         if ($component->hasTitle() === true) {
             self::setDOMElementAttribute($element, 'title', $component->getTitle());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content");
     }
 }

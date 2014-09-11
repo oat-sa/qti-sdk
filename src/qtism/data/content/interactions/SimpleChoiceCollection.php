@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of AbstractCollection aiming at storing SimpleChoice
  * objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceCollection extends QtiComponentCollection {
-    
+class SimpleChoiceCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of SimpleChoice.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of SimpleChoice.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof SimpleChoice) {
             $msg = "A SimpleChoiceCollection object only accepts to store SimpleChoice objects.";
             throw new InvalidArgumentException($msg);

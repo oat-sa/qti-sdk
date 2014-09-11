@@ -30,61 +30,63 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * ChoiceInteraction renderer. Rendered components will be transformed as 
+ * ChoiceInteraction renderer. Rendered components will be transformed as
  * 'div' elements with 'qti-choiceInteraction' and 'qti-blockInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:choiceInteraction->shuffle
  * * data-max-choices = qti:choiceInteraction->maxChoices
  * * data-min-choices = qti:choiceInteraction->minChoices
  * * data-orientation = qti:choiceInteraction->orientation
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ChoiceInteractionRenderer extends InteractionRenderer {
-    
+class ChoiceInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new ChoiceInteractionRenderer object.
-     * 
+     *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-choiceInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendChildren($fragment, $component, $base);
-        
+
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
-        
+
         // Get back the 'qti-simpleChoice' elements.
         $elts = $fragment->firstChild->childNodes;
         $choices = array();
-        
+
         for ($i = 0; $i < $elts->length; $i++) {
             if ($elts->item($i)->nodeType === XML_ELEMENT_NODE) {
                 $classes = $elts->item($i)->getAttribute('class');
@@ -92,17 +94,16 @@ class ChoiceInteractionRenderer extends InteractionRenderer {
                     $choices[] = $elts->item($i);
                 }
             }
-            
+
         }
-        
+
         if ($component->getMaxChoices() === 0 || $component->getMaxChoices() > 1) {
             foreach ($choices as $c) {
                 $checkbox = $fragment->ownerDocument->createElement('input');
                 $checkbox->setAttribute('type', 'checkbox');
                 $c->insertBefore($checkbox, $c->firstChild);
             }
-        }
-        else {
+        } else {
             foreach ($choices as $c) {
                 $radio = $fragment->ownerDocument->createElement('input');
                 $radio->setAttribute('type', 'radio');

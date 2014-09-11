@@ -30,73 +30,73 @@ use \DOMElement;
 
 /**
  * The Marshaller implementation for Blockquote elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BlockquoteMarshaller extends ContentMarshaller {
-    
+class BlockquoteMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
-        
+
         $blockCollection = new BlockCollection();
         foreach ($children as $c) {
             try {
                 $blockCollection[] = $c;
-            }
-            catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 $msg = "A 'blockquote' element cannot contain '" . $c->getQtiClassName() . "' elements.";
                 throw new UnmarshallingException($msg, $element);
             }
         }
         $component->setContent($blockCollection);
-        
-        
+
         if ($component->hasCite() === true) {
             self::setDOMElementAttribute($element, 'cite', $component->getCite());
         }
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         self::fillBodyElement($component, $element);
-        
+
         return $component;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        
+
         if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
             $component->setCite($cite);
         }
-        
+
         if (($xmlBase = self::getXmlBase($element)) !== false) {
             $component->setXmlBase($xmlBase);
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         self::fillElement($element, $component);
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml\\text");
     }
 }

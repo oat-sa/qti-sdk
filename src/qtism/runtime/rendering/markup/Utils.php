@@ -19,7 +19,7 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
+ *
  *
  */
 
@@ -28,24 +28,22 @@ namespace qtism\runtime\rendering\markup;
 use qtism\data\content\PrintedVariable;
 use qtism\runtime\processing\PrintedVariableEngine;
 use qtism\runtime\common\State;
-use \InvalidArgumentException;
-use \RuntimeException;
 use \Exception;
 
 /**
  * Utility class for the markup package.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-    
+class Utils
+{
     /**
      * Helper method to be used in QTI template oriented rendering to produce the final
      * value of a qti:printedVariable component.
-     * 
+     *
      * If an error occurs while printing the variable, the return value will contain the error message.
-     * 
+     *
      * @param State $context A State object from where values will be retrieved prior to formatting, depending on the $identifier argument.
      * @param string $identifier The identifier of the variable to be printed.
      * @param string $format The ISO 9899 format string (see printf).
@@ -57,8 +55,8 @@ class Utils {
      * @param string $mappingIndicator The mapping indicator to use between field name and field value when displaying record cardinality variables.
      * @return string The formatted variable or an error message.
      */
-    static public function printVariable(State $context, $identifier, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=') {
-        
+    public static function printVariable(State $context, $identifier, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
+    {
         try {
             $printedVariable = new PrintedVariable($identifier);
             $printedVariable->setFormat($format);
@@ -68,15 +66,16 @@ class Utils {
             $printedVariable->setDelimiter($delimiter);
             $printedVariable->setField($field);
             $printedVariable->setMappingIndicator($mappingIndicator);
-            
+
             $engine = new PrintedVariableEngine($printedVariable);
             $engine->setContext($context);
+
             return $engine->process();
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $previous = $e->getMessage();
+
             return "qtism\\runtime\\rendering\\markup\\Utils::printVariable() method threw an unexpected exception:\n${previous}.";
         }
     }
-    
+
 }

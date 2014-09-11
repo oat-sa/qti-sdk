@@ -26,35 +26,35 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * Elements that can appear inside list items, table cells, etc. 
+ *
+ * Elements that can appear inside list items, table cells, etc.
  * which includes block-type and inline-type elements.
- * 
+ *
  * @authorJérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Flow extends ObjectFlow {
-    
+interface Flow extends ObjectFlow
+{
     /**
      * Set the URI to change the base for resolving relative
      * URIs for the scope of this object.
-     * 
+     *
      * @param string $base A URI or an empty string if the there is no base set.
      * @throws \InvalidArgumentException If $base is not a valid URI nor an empty string.
      */
     public function setXmlBase($base = '');
-    
+
     /**
      * Get the URI that changes the base for resolving relative URIs
      * for the scope of this object.
-     * 
+     *
      * @return string A URI or an empty string if no base is set.
      */
     public function getXmlBase();
-    
+
     /**
      * Whether or not a value is defined for the xml:base attribute.
-     * 
+     *
      * @return boolean
      */
     public function hasXmlBase();

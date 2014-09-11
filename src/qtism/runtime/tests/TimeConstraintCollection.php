@@ -28,16 +28,17 @@ use \InvalidArgumentException;
 
 /**
  * A collection aiming at storing TimeConstraint objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TimeConstraintCollection extends AbstractCollection {
-    
+class TimeConstraintCollection extends AbstractCollection
+{
     /**
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof TimeConstraint) {
             $msg = "TimeConstraintCollection objects only accept to store TimeConstraint objects.";
             throw new InvalidArgumentException($msg);

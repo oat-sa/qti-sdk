@@ -26,61 +26,64 @@ use \ReflectionParameter;
 
 /**
  * Represents a Bean method parameter.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BeanParameter {
-
+class BeanParameter
+{
     /**
      * The wrapped ReflectionParameter.
-     * 
+     *
      * @var \ReflectionParameter
      */
     private $parameter;
-    
+
     /**
      * Create a new ReflectionParameter object.
-     * 
+     *
      * @param string $class The class name.
      * @param string $method The method name.
      * @param string $name The parameter name.
      * @throws \qtism\common\beans\BeanException If no such parameter exists in $class::$method.
      */
-    public function __construct($class, $method, $name) {
+    public function __construct($class, $method, $name)
+    {
         try {
             $this->setParameter(new ReflectionParameter(array($class, $method), $name));
-        }
-        catch (ReflectionException $e) {
+        } catch (ReflectionException $e) {
             $msg = "No such parameter '${parameter}' for method '${method}' of class '${class}'.";
             throw new BeanException($msg, BeanException::NO_PARAMETER, $e);
         }
     }
-    
+
     /**
      * Set the wrapped ReflectionParameter object.
-     * 
+     *
      * @param \qtism\common\beans\ReflectionParameter $parameter A ReflectionParameter object.
      */
-    protected function setParameter(ReflectionParameter $parameter) {
+    protected function setParameter(ReflectionParameter $parameter)
+    {
         $this->parameter = $parameter;
     }
-    
+
     /**
      * Get the wrapped ReflectionParameter object.
-     * 
+     *
      * @return \qtism\common\beans\ReflectionParameter A ReflectionParameter object.
      */
-    public function getParameter() {
+    public function getParameter()
+    {
         return $this->parameter;
     }
-    
+
     /**
      * Get the name of the bean parameter.
-     * 
+     *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->getParameter()->getName();
     }
 }

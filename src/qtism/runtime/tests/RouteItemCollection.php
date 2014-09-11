@@ -28,16 +28,17 @@ use \InvalidArgumentException;
 
 /**
  * A collection implementation aiming at storing RouteItem objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteItemCollection extends AbstractCollection {
-    
+class RouteItemCollection extends AbstractCollection
+{
     /**
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof RouteItem) {
             $msg = "RoutItemCollection objects only accept to store RouteItem objects.";
             throw new InvalidArgumentException($msg);

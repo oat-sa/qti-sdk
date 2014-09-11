@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\content;
 
 use qtism\data\QtiIdentifiableCollection;
@@ -29,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiIdentifiableCollection aiming at storing
  * RubricBlockRef objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RubricBlockRefCollection extends QtiIdentifiableCollection {
-    
+class RubricBlockRefCollection extends QtiIdentifiableCollection
+{
     /**
      * Checks whether $value is an instance of RubricBlockRef.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of RubricBlockRef.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof RubricBlockRef) {
             $msg = "A RubricBlockRefCollection object only accepts to store RubricBlockRef objects.";
             throw new InvalidArgumentException($msg);

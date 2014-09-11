@@ -24,17 +24,17 @@ namespace qtism\data\content;
 
 /**
  * A marker interface for the textOrVariable QTI abstract class.
- * 
+ *
  * From IMS QTI:
- * 
- * An abstract class used to enable variable value substitution in 
- * contexts were only plain text is alllowed, such as the text of 
+ *
+ * An abstract class used to enable variable value substitution in
+ * contexts were only plain text is alllowed, such as the text of
  * an inlineChoice.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  *
  */
-interface TextOrVariable {
-    
+interface TextOrVariable
+{
 }

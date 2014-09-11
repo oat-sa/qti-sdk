@@ -28,24 +28,25 @@ use \Exception;
 /**
  * Exception to be thrown when a Marshalling error occurs while
  * dealing with JSON Data.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MarshallingException extends Exception {
-    
+class MarshallingException extends Exception
+{
     const UNKNOWN = 0;
-    
+
     const NOT_SUPPORTED = 1;
-    
+
     /**
      * Create a new MarshallingException object.
-     * 
+     *
      * @param string $message A human-readable message describing the error.
      * @param integer $code A machine-understandable (see class constants) error code.
      * @param \Exception $previous An eventual previous Exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 }

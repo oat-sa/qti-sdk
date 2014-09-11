@@ -27,16 +27,17 @@ use qtism\common\collections\AbstractCollection;
 
 /**
  * A collection implementation aiming at storing Jump objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class JumpCollection extends AbstractCollection {
-    
+class JumpCollection extends AbstractCollection
+{
     /**
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Jump) {
             $msg = "JumpCollection objects only accept to store Jump objects.";
             throw new InvalidArgumentException($msg);

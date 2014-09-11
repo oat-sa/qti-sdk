@@ -28,45 +28,46 @@ use \Exception;
 /**
  * Exception to be thrown when an error occurs during a Rendering
  * process.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RenderingException extends Exception {
-    
+class RenderingException extends Exception
+{
     /**
      * Error code to use when the nature of the error
      * is unknown.
-     * 
+     *
      * (Should never be used)
-     * 
+     *
      * @var integer
      */
     const UNKNOWN = 0;
-    
+
     /**
      * Error code to use when no renderer is found
      * for a given component.
-     * 
+     *
      * @var integer
      */
     const NO_RENDERER = 1;
-    
+
     /**
      * Error code to use for exception only occuring/detectable at runtime.
-     * 
+     *
      * @var integer
      */
     const RUNTIME = 2;
-    
+
     /**
      * Create a new RenderingException object.
-     * 
+     *
      * @param string $message A message describing the error.
      * @param integer $code A code for the client-code.
      * @param \Exception $previous An optional previous exception.
      */
-    public function __construct($message, $code, Exception $previous = null) {
+    public function __construct($message, $code, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 }

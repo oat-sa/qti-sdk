@@ -29,72 +29,73 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * RubricBlock renderer. Rendered components will be transformed as 
+ * RubricBlock renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-rubricBlock' additional CSS class.
- * 
+ *
  * Moreover, if the view information will be added ass CSS additional classes.
  * For instance, if qti:rubricBlock->view = 'proctor candidate', the resulting
  * element will be '<div class="qti-rubricBlock qti-view-candidate qti-view-proctor>...</div>".
- * 
+ *
  * More over, the following data-x attributes will be set:
- * 
+ *
  * * data-view = qti:rubricBlock->view
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RubricBlockRenderer extends BodyElementRenderer {
-    
+class RubricBlockRenderer extends BodyElementRenderer
+{
     /**
      * Create a new RubricBlockRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-rubricBlock');
-        
+
         $dataView = array();
-        
+
         if ($component->getViews()->contains(View::AUTHOR)) {
             $this->additionalClass('qti-view-author');
             $dataView[] = 'author';
         }
-        
+
         if ($component->getViews()->contains(View::CANDIDATE)) {
             $this->additionalClass('qti-view-candidate');
             $dataView[] = 'candidate';
         }
-        
+
         if ($component->getViews()->contains(View::PROCTOR)) {
             $this->additionalClass('qti-view-proctor');
             $dataView[] = 'proctor';
         }
-        
+
         if ($component->getViews()->contains(View::SCORER)) {
             $this->additionalClass('qti-view-scorer');
             $dataView[] = 'scorer';
         }
-        
+
         if ($component->getViews()->contains(View::TEST_CONSTRUCTOR)) {
             $this->additionClass('qti-view-testConstructor');
             $dataView[] = 'testConstructor';
         }
-        
+
         if ($component->getViews()->contains(View::TUTOR)) {
             $this->additionalClass('qti-view-tutor');
             $dataView[] = 'tutor';
         }
-        
+
         $fragment->firstChild->setAttribute('data-view', implode("\x20", $dataView));
     }
 }

@@ -26,49 +26,52 @@ use qtism\common\enums\Enumeration;
 
 /**
  * The QTI orientation enumeration.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Orientation implements Enumeration {
-    
+class Orientation implements Enumeration
+{
     const VERTICAL = 0;
-    
+
     const HORIZONTAL = 1;
-    
-    public static function asArray() {
+
+    public static function asArray()
+    {
         return array(
             'VERTICAL' => 0,
-            'HORIZONTAL' => 1                
+            'HORIZONTAL' => 1
         );
     }
 
-    public static function getConstantByName($name) {
+    public static function getConstantByName($name)
+    {
         switch (strtolower($name)) {
             case 'vertical':
                 return self::VERTICAL;
             break;
-            
+
             case 'horizontal':
                 return self::HORIZONTAL;
             break;
-            
+
             default:
                 return false;
             break;
         }
     }
-    
-    public static function getNameByConstant($constant) {
+
+    public static function getNameByConstant($constant)
+    {
         switch ($constant) {
             case self::VERTICAL:
                 return 'vertical';
             break;
-            
+
             case self::HORIZONTAL:
                 return 'horizontal';
             break;
-            
+
             default:
                 return false;
             break;

@@ -27,28 +27,28 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * HotspotInteraction renderer. Rendered components will be transformed as 
+ * HotspotInteraction renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-hotspotInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-max-choices = qti:hotspotInteraction->maxChoices
  * * data-min-choices = qti:hotspotInteraction->minChoices
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HotspotInteractionRenderer extends GraphicInteractionRenderer {
-    
+class HotspotInteractionRenderer extends GraphicInteractionRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-hotspotInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }

@@ -27,64 +27,64 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * Some of the graphic interactions involve images with 
+ *
+ * Some of the graphic interactions involve images with
  * specially defined areas or hotspots.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Hotspot {
-	
-	/**
+interface Hotspot
+{
+    /**
 	 * Set the shape of the hotspot.
-	 * 
+	 *
 	 * @param integer $shape A value from the Shape enumeration.
 	 * @throws \InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
-	public function setShape($shape);
-	
-	/**
+    public function setShape($shape);
+
+    /**
 	 * Get the shape of the hotspot.
-	 * 
+	 *
 	 * @return integer A Shape object.
 	 */
-	public function getShape();
-	
-	/**
+    public function getShape();
+
+    /**
 	 * Set the coords of the hotspot.
-	 * 
+	 *
 	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
-	public function setCoords(Coords $coords);
-	
-	/**
+    public function setCoords(Coords $coords);
+
+    /**
 	 * Get the coords of the hotspot.
-	 * 
+	 *
 	 * @return \qtism\common\datatypes\Coords A Coords object.
 	 */
-	public function getCoords();
-	
-	/**
+    public function getCoords();
+
+    /**
 	 * Set the alternative text for this hotspot.
-	 * 
+	 *
 	 * @param string $hotspotLabel A string with a maximum of 256 characters.
 	 * @throws \InvalidArgumentException If $hotspotLabel is larger than 256 characters.
 	 */
-	public function setHotspotLabel($hotspotLabel);
-	
-	/**
+    public function setHotspotLabel($hotspotLabel);
+
+    /**
 	 * Get the alternative text for this hotspot.
-	 * 
+	 *
 	 * @return A string with a maximum of 256 characters.
 	 */
-	public function getHotspotLabel();
-	
-	/**
+    public function getHotspotLabel();
+
+    /**
 	 * Whether or not a value is defined for the hotspotLabel
 	 * attribute.
-	 * 
+	 *
 	 * @return boolean
 	 */
-	public function hasHotspotLabel();
+    public function hasHotspotLabel();
 }

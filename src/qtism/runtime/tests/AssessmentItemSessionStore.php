@@ -31,144 +31,151 @@ use \UnexpectedValueException;
 /**
  * An AssessmentItemSessionStore store AssessmentItemSession objects
  * by AssessmentItemRef objects.
- * 
+ *
  * In other words, it store the item sessions for a given AssessmentItemRef
  * involved in an AssessmentTestSession.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentItemSessionStore {
-    
+class AssessmentItemSessionStore
+{
     /**
      * Each shelve of the store contains a collection
      * of AssessmentItemSession related to a same
      * AssessmentItemRef object.
-     * 
+     *
      * @var \SplObjectStorage
      */
     private $shelves;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->setShelves(new SplObjectStorage());
     }
-    
+
     /**
      * Set the SplObjectStorage object that will store AssessmentItemSessionCollection objects
      * by AssessmentItemRef.
-     * 
+     *
      * @param \SplObjectStorage $shelves An SplObjectStorage object that will store AssessmentItemSessionCollection objects.
      */
-    protected function setShelves(SplObjectStorage $shelves) {
+    protected function setShelves(SplObjectStorage $shelves)
+    {
         $this->shelves = $shelves;
     }
-    
+
     /**
      * Get the SplObjectStorage object that will store AssessmentItemSessionCollection objects
      * by AssessmentItemRef.
-     * 
+     *
      * @return \SplObjectStorage An SplObjectStorage object that will store AssessmentItemSessionCollection objects.
      */
-    protected function getShelves() {
-        return $this->shelves;    
+    protected function getShelves()
+    {
+        return $this->shelves;
     }
-    
+
     /**
      * Add an AssessmentItemSession to the store, for a given $occurence number.
-     * 
+     *
      * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession
      * @param integer $occurence The occurence number of the session.
      */
-    public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0) {
+    public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0)
+    {
         $assessmentItemRef = $assessmentItemSession->getAssessmentItem();
-        
+
         if (isset($this->shelves[$assessmentItemRef]) === false) {
             $this->shelves[$assessmentItemRef] = new AssessmentItemSessionCollection();
         }
-        
+
         $this->shelves[$assessmentItemRef][$occurence] = $assessmentItemSession;
     }
-    
+
     /**
      * Get an AssessmentItemSession by $assessmentItemRef and $occurence number.
-     * 
+     *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param integer $occurence An occurence number.
      * @return \qtism\runtime\tests\AssessmentItemSession An AssessmentItemSession object.
      * @throws \OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
-    public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
+    public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    {
         if (isset($this->shelves[$assessmentItemRef]) && isset($this->shelves[$assessmentItemRef][$occurence]) === true) {
             return $this->shelves[$assessmentItemRef][$occurence];
-        }
-        else {
+        } else {
             $itemId = $assessmentItemRef->getIdentifier();
             $msg = "No AssessmentItemSession object bound to '${itemId}.${occurence}'.";
             throw new OutOfBoundsException($msg);
         }
     }
-    
+
     /**
      * Whether the store contains an item session for $assessmentItemRef, $occurence.
-     * 
+     *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param integer $occurence An occurence number.
      */
-    public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
+    public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    {
         try {
             isset($this->shelves[$assessmentItemRef][$occurence]);
+
             return true;
-        }
-        catch (UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             return false;
         }
     }
-    
+
     /**
      * Get the item sessions related to $assessmentItemRef.
-     * 
+     *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @throws \OutOfBoundsException If no item sessions related to $assessmentItemRef are found.
      * @return \qtism\runtime\tests\AssessmentItemSessionCollection A collection of AssessmentItemSession objects related to $assessmentItemRef.
      */
-    public function getAssessmentItemSessions(AssessmentItemRef $assessmentItemRef) {
+    public function getAssessmentItemSessions(AssessmentItemRef $assessmentItemRef)
+    {
         if (isset($this->shelves[$assessmentItemRef]) === true) {
             return $this->shelves[$assessmentItemRef];
-        }
-        else {
+        } else {
             $itemId = $assessmentItemRef->getIdentifier();
             $msg = "No AssessmentItemSession objects bound to '${itemId}'.";
             throw new OutOfBoundsException($msg);
         }
     }
-    
+
     /**
      * Whether the given $assessmentItemRef has multiple sessions registered in the store.
-     * 
+     *
      * * If $assessmentItemRef is unknown by the store or there is a single session for this $assessmentItemRef, true is returned.
      * * If $assessmentItemRef is known by the store and there are more than a single session for this $assessmentItemRef, false is returned.
-     * 
+     *
      * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @return boolean
      */
-    public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef) {
+    public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef)
+    {
         return isset($this->shelves[$assessmentItemRef]) && count($this->shelves[$assessmentItemRef]) > 1;
     }
-    
+
     /**
      * Get all the AssessmentItemSession objects held by the store.
-     * 
+     *
      * @return \qtism\runtime\tests\AssessmentItemSessionCollection A collection of AssessmentItemSession objects.
      */
-    public function getAllAssessmentItemSessions() {
+    public function getAllAssessmentItemSessions()
+    {
         $collection = new AssessmentItemSessionCollection();
-        
+
         foreach ($this->shelves as $itemRef) {
             foreach ($this->shelves[$itemRef] as $session) {
                 $collection[] = $session;
             }
         }
-        
+
         return $collection;
     }
 }

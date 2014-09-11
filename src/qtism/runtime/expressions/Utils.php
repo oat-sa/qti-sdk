@@ -18,51 +18,50 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * 
+ *
  */
 namespace qtism\runtime\expressions;
 
 use qtism\common\utils\Reflection;
 use qtism\data\expressions\Expression;
-use qtism\common\enums\BaseType;
-use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\common\OrderedContainer;
 use \InvalidArgumentException;
 
 /**
  * Utility class for Processors.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-	
-	/**
+class Utils
+{
+    /**
 	 * Removes trailing and ending braces ('{' and '}') from a variableRef.
-	 * 
+	 *
 	 * @return string A sanitized variableRef.
 	 */
-	public static function sanitizeVariableRef($variableRef) {
-		if (gettype($variableRef) === 'string') {
-			return trim($variableRef, '{}');
-		}
-		else {
-			$msg = "The Utils::sanitizeVariableRef method only accepts a string argument, '" . gettype($variableRef) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public static function sanitizeVariableRef($variableRef)
+    {
+        if (gettype($variableRef) === 'string') {
+            return trim($variableRef, '{}');
+        } else {
+            $msg = "The Utils::sanitizeVariableRef method only accepts a string argument, '" . gettype($variableRef) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Returns a processing error reporting message in the following format:
-	 * 
+	 *
 	 * [ExpressionClassName] My message...
-	 * 
+	 *
 	 * @param \qtism\data\expressions\Expression $expression A given expression that failed to be processed.
 	 * @param string $message A formatted error reporting message.
 	 * @return string
 	 */
-	public static function errorReporting(Expression $expression, $message) {
-	    $shortClassName = Reflection::shortClassName($expression);
-	    return "[${shortClassName}] ${message}";
-	}
+    public static function errorReporting(Expression $expression, $message)
+    {
+        $shortClassName = Reflection::shortClassName($expression);
+
+        return "[${shortClassName}] ${message}";
+    }
 }

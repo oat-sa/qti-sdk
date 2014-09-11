@@ -30,26 +30,28 @@ use \DOMDocumentFragment;
 /**
  * PositionObjectStage renderer. Will render elements as 'div' elements
  * with an additional 'qti-positionObjectStage' CSS class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PositionObjectStageRenderer extends AbstractXhtmlRenderer {
-    
+class PositionObjectStageRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new PositionObjectStageRenderer object.
-     * 
+     *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-positionObjectStage');
     }

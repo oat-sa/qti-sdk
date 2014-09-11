@@ -24,14 +24,14 @@ namespace qtism\data\content\interactions;
 
 /**
  * From IMS QTI:
- * 
+ *
  * Other interactions involve associating pairs of predefined choices.
- * 
+ *
  * This is a marker interface.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://en.wikipedia.org/wiki/Marker_interface_pattern
  */
-interface AssociableChoice {
-	
+interface AssociableChoice
+{
 }

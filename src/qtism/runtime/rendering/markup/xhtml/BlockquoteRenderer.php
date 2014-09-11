@@ -28,18 +28,19 @@ use \DOMDocumentFragment;
 
 /**
  * Blockquote renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BlockquoteRenderer extends BodyElementRenderer {
-    
+class BlockquoteRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
-        
+
         if ($component->hasCite() === true) {
             $fragment->firstChild->setAttribute('cite', $this->transformUri($component->getCite(), $base));
         }

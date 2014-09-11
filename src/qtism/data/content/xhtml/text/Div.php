@@ -32,89 +32,95 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML div class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Div extends BodyElement implements BlockStatic, FlowStatic {
-    
+class Div extends BodyElement implements BlockStatic, FlowStatic
+{
     /**
      * A base URI.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * The Flow objects composing the Div.
-     * 
+     *
      * @var \qtism\data\content\FlowCollection A collection of Flow objects.
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Get the collection of Flow objects composing the Div.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the collection of Flow objects composing the Div.
-     * 
+     *
      * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content) {
+    public function setContent(FlowCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the collection of Flow objects composing the Div.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Set the base URI of the Div.
-     * 
+     *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * @see \qtism\data\content\Flow::getXmlBase()
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
+
     /**
      * @see \qtism\data\content\Flow::hasXmlBase()
      */
-    public function hasXmlBase() {
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'div';
     }
 }

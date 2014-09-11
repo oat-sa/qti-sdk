@@ -26,47 +26,50 @@ use qtism\common\enums\BaseType;
 
 /**
  * From IMS QTI:
- * 
- * A directedPair value represents a pair of identifiers corresponding to a directed 
- * association between two objects. The two identifiers correspond to the source and 
+ *
+ * A directedPair value represents a pair of identifiers corresponding to a directed
+ * association between two objects. The two identifiers correspond to the source and
  * destination objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DirectedPair extends Pair {
-	
-	/**
+class DirectedPair extends Pair
+{
+    /**
 	 * Whether or not $obj is equal to $this. Two DirectedPair objects
 	 * are considered to be equal if their first and second values are the same.
-	 * 
+	 *
 	 * @return boolean
 	 */
-	public function equals($obj) {
-		if (gettype($obj) === 'object' && $obj instanceof self) {
-			return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
-		}
-		
-		return false;
-	}
-	
-	/**
+    public function equals($obj)
+    {
+        if (gettype($obj) === 'object' && $obj instanceof self) {
+            return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
+        }
+
+        return false;
+    }
+
+    /**
 	 * Get the baseType of the value. This method systematically returns the
 	 * BaseType::DIRECTED_PAIR value.
-	 * 
+	 *
 	 * @return A value from the BaseType enumeration.
 	 */
-	public function getBaseType() {
-	    return BaseType::DIRECTED_PAIR;
-	}
-	
-	/**
+    public function getBaseType()
+    {
+        return BaseType::DIRECTED_PAIR;
+    }
+
+    /**
 	 * Get the cardinality of the value. This method systematically returns the
 	 * Cardinality::SINGLE value.
-	 * 
+	 *
 	 * @return integer A value from the Cardinality enumeration.
 	 */
-	public function getCardinality() {
-	    return Cardinality::SINGLE;
-	}
+    public function getCardinality()
+    {
+        return Cardinality::SINGLE;
+    }
 }

@@ -31,41 +31,41 @@ use \InvalidArgumentException;
 
 /**
  * The MathConstant processor aims at processing QTI Data Model MathConstant expressions.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * The result is a mathematical constant returned as a single float, e.g. π and e.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MathConstantProcessor extends ExpressionProcessor {
-	
+class MathConstantProcessor extends ExpressionProcessor
+{
     /**
      * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
      */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof MathConstant) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The MathConstantProcessor class only processes MathConstant QTI Data Model objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
-	 * Process the MathConstant Expression. 
-	 * 
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof MathConstant) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The MathConstantProcessor class only processes MathConstant QTI Data Model objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+	 * Process the MathConstant Expression.
+	 *
 	 * @return float A float value (e or pi).
 	 */
-	public function process() {
-		$expr = $this->getExpression();
-		if ($expr->getName() === MathEnumeration::E) {
-			return new Float(M_E);
-		}
-		else {
-			return new Float(M_PI);
-		}
-	}
+    public function process()
+    {
+        $expr = $this->getExpression();
+        if ($expr->getName() === MathEnumeration::E) {
+            return new Float(M_E);
+        } else {
+            return new Float(M_PI);
+        }
+    }
 }

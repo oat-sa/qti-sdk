@@ -24,94 +24,100 @@ namespace qtism\data\content;
 
 /**
  * The simpleBlock QTI abstract class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStatic {
-    
+abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStatic
+{
     /**
      * The base URI.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * The Block components composing the SimpleBlock object.
-     * 
+     *
      * @var \qtism\data\content\BlockCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new SimpleBlock object.
-     * 
+     *
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new BlockCollection());
     }
-    
+
     /**
      * Get the collection of Block objects composing the Simpleblock.
-     * 
+     *
      * @return \qtism\data\content\BlockCollection A collection of Block objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the collection of Block objects composing the SimpleBlock.
-     * 
+     *
      * @param \qtism\data\content\BlockCollection $content A collection of Block objects.
      */
-    public function setContent(BlockCollection $content) {
+    public function setContent(BlockCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the content of Block objects composing the Simpleblock.
-     * 
+     *
      * @return \qtism\data\content\BlockCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Set the base URI of the SimpleBlock.
      *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'base' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the SimpleBlock.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
-    public function hasXmlBase() {
+
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
 }

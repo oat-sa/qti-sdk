@@ -29,183 +29,187 @@ use \InvalidArgumentException;
 
 /**
  * Represents the QTI Coords Datatype.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Coords extends IntegerCollection implements QtiDatatype, Comparable {
-	
+class Coords extends IntegerCollection implements QtiDatatype, Comparable
+{
     /**
      * A value from the Shape enumeration.
-     * 
+     *
      * @var integer
      */
-	private $shape;
-	
-	/**
+    private $shape;
+
+    /**
 	 * Create a new Coords object.
-	 * 
+	 *
 	 * @param integer $shape A value from the Shape enumeration.
 	 * @param array $coords An array of number values.
 	 * @throws \InvalidArgumentException If an error occurs while creating the Coords object.
 	 */
-	public function __construct($shape, array $coords = array()) {
-		parent::__construct($coords);
-		$this->setShape($shape);
-		
-		switch ($this->getShape()) {
-			case Shape::DEF:
-				if (count($this->getDataPlaceHolder()) > 0) {
-					$msg = "No coordinates should be given when the default shape is used.";
-					throw new InvalidArgumentException($msg);
-				}
-			break;
-			
-			case Shape::RECT:
-				if (count($this->getDataPlaceHolder()) != 4) {
-					$msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
-					throw new InvalidArgumentException($msg);
-				}
-			break;
-			
-			case Shape::CIRCLE:
-				if (count($this->getDataPlaceHolder()) != 3) {
-					$msg = "The circle coordinates must be composed by 3 values (x, y, r).";
-					throw new InvalidArgumentException($msg);
-				}
-			break;
-			
-			case Shape::POLY:
-				if (count($this->getDataPlaceHolder()) % 2 > 0) {
-					$msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
-					throw new InvalidArgumentException($msg);
-				}
-			break;
-		}
-	}
-	
-	/**
+    public function __construct($shape, array $coords = array())
+    {
+        parent::__construct($coords);
+        $this->setShape($shape);
+
+        switch ($this->getShape()) {
+            case Shape::DEF:
+                if (count($this->getDataPlaceHolder()) > 0) {
+                    $msg = "No coordinates should be given when the default shape is used.";
+                    throw new InvalidArgumentException($msg);
+                }
+            break;
+
+            case Shape::RECT:
+                if (count($this->getDataPlaceHolder()) != 4) {
+                    $msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
+                    throw new InvalidArgumentException($msg);
+                }
+            break;
+
+            case Shape::CIRCLE:
+                if (count($this->getDataPlaceHolder()) != 3) {
+                    $msg = "The circle coordinates must be composed by 3 values (x, y, r).";
+                    throw new InvalidArgumentException($msg);
+                }
+            break;
+
+            case Shape::POLY:
+                if (count($this->getDataPlaceHolder()) % 2 > 0) {
+                    $msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
+                    throw new InvalidArgumentException($msg);
+                }
+            break;
+        }
+    }
+
+    /**
 	 * Set the $shape on which the coordinates apply.
-	 * 
+	 *
 	 * @param integer $shape A value from the Shape enumeration.
 	 * @throws \InvalidArgumentException
 	 */
-	protected function setShape($shape) {
-		if (in_array($shape, Shape::asArray())) {
-			$this->shape = $shape;
-		}
-		else {
-			$msg = "The shape argument must be a value from the Shape enumeration except 'default', '" . $shape . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    protected function setShape($shape)
+    {
+        if (in_array($shape, Shape::asArray())) {
+            $this->shape = $shape;
+        } else {
+            $msg = "The shape argument must be a value from the Shape enumeration except 'default', '" . $shape . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get the shape on which the coordinates apply.
-	 * 
+	 *
 	 * @return integer A value from the Shape enumeration.
-	 * 
+	 *
 	 */
-	public function getShape() {
-		return $this->shape;
-	}
-	
-	/**
+    public function getShape()
+    {
+        return $this->shape;
+    }
+
+    /**
 	 * Whether the given $point is inside the coordinates.
-	 * 
+	 *
 	 * @param Point $point A Point object.
 	 * @return boolean
 	 */
-	public function inside(Point $point) {
-		if ($this->getShape() === Shape::DEF) {
-			return true;
-		}
-		else if ($this->getShape() === Shape::RECT) {
-			return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
-		}
-		else if ($this->getShape() === Shape::CIRCLE) {
-			return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
-		}
-		else {
-			// we consider it is a polygon.
-			// - Transform coordinates in vertices.
-			// -- Use of the "point in polygon" algorithm.
-			$vertices = array();
-			for ($i = 0; $i < count($this); $i++) {
-				$vertex = array();
-				$vertex[] = $this[$i]; //x
-				$i++;
-				$vertex[] = $this[$i]; //y
-				
-				$vertices[] = $vertex;
-			}
-			
-			$intersects = 0;
-			for ($i = 1; $i < count($vertices); $i++) {
-				$vertex1 = $vertices[$i -1];
-				$vertex2 = $vertices[$i];
-				
-				if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {
-					// we are on a boundary.
-					return true;
-				}
-				
-				if ($point->getY() > min($vertex1[1], $vertex2[1]) && $point->getY() <= max($vertex1[1], $vertex2[1]) && $point->getX() <= max($vertex1[0], $vertex2[0]) && $vertex1[1] !== $vertex2[1]) {
-					$xinters = ($point->getY() - $vertex1[1]) * ($vertex2[0] - $vertex1[0]) / ($vertex2[1] - $vertex1[1]) + $vertex1[0];
-					
-					if ($xinters === $point->getX()) {
-						// Again, we are on a boundary.
-						return true;
-					}
-					
-					if ($vertex1[0] === $vertex2[0] || $point->getX() <= $xinters) {
-						// We have a single intersection.
-						$intersects++;
-					}
-				}
-			}
-			
-			// If we passed through an odd number of edges, we are in the polygon!
-			return $intersects % 2 !== 0;
-		}
-	}
-	
-	/**
+    public function inside(Point $point)
+    {
+        if ($this->getShape() === Shape::DEF) {
+            return true;
+        } elseif ($this->getShape() === Shape::RECT) {
+            return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
+        } elseif ($this->getShape() === Shape::CIRCLE) {
+            return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
+        } else {
+            // we consider it is a polygon.
+            // - Transform coordinates in vertices.
+            // -- Use of the "point in polygon" algorithm.
+            $vertices = array();
+            for ($i = 0; $i < count($this); $i++) {
+                $vertex = array();
+                $vertex[] = $this[$i]; //x
+                $i++;
+                $vertex[] = $this[$i]; //y
+
+                $vertices[] = $vertex;
+            }
+
+            $intersects = 0;
+            for ($i = 1; $i < count($vertices); $i++) {
+                $vertex1 = $vertices[$i -1];
+                $vertex2 = $vertices[$i];
+
+                if ($vertex1[1] === $vertex2[1] && $vertex1[1] === $point->getY() && $point->getX() > min($vertex1[0], $vertex2[0]) && $point->getX() < max($vertex1[0], $vertex2[0])) {
+                    // we are on a boundary.
+                    return true;
+                }
+
+                if ($point->getY() > min($vertex1[1], $vertex2[1]) && $point->getY() <= max($vertex1[1], $vertex2[1]) && $point->getX() <= max($vertex1[0], $vertex2[0]) && $vertex1[1] !== $vertex2[1]) {
+                    $xinters = ($point->getY() - $vertex1[1]) * ($vertex2[0] - $vertex1[0]) / ($vertex2[1] - $vertex1[1]) + $vertex1[0];
+
+                    if ($xinters === $point->getX()) {
+                        // Again, we are on a boundary.
+                        return true;
+                    }
+
+                    if ($vertex1[0] === $vertex2[0] || $point->getX() <= $xinters) {
+                        // We have a single intersection.
+                        $intersects++;
+                    }
+                }
+            }
+
+            // If we passed through an odd number of edges, we are in the polygon!
+            return $intersects % 2 !== 0;
+        }
+    }
+
+    /**
 	 * Return all the points of the coordinates, separated by commas (,).
-	 * 
+	 *
 	 * @return string
 	 */
-	public function __toString() {
-		return implode(",", $this->getDataPlaceHolder());
-	}
-	
-	/**
+    public function __toString()
+    {
+        return implode(",", $this->getDataPlaceHolder());
+    }
+
+    /**
 	 * Whether or not $obj is equals to $this. Two Coords objects are
 	 * considered to be equal if they have the same coordinates and shape.
-	 * 
+	 *
 	 * return boolean
 	 */
-	public function equals($obj) {
-	    return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
-	}
-	
-	/**
+    public function equals($obj)
+    {
+        return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+    }
+
+    /**
 	 * Get the baseType of the value. This method systematically returns
 	 * BaseType::COORDS.
-	 * 
+	 *
 	 * @return integer A value from the BaseType enumeration.
 	 */
-	public function getBaseType() {
-	    return BaseType::COORDS;
-	}
-	
-	/**
+    public function getBaseType()
+    {
+        return BaseType::COORDS;
+    }
+
+    /**
 	 * Get the cardinality of the value. This method systematically returns
 	 * Cardinality::SINGLE.
-	 * 
+	 *
 	 * @return integer A value from the Cardinality enumeration.
 	 */
-	public function getCardinality() {
-	    return Cardinality::SINGLE;
-	}
+    public function getCardinality()
+    {
+        return Cardinality::SINGLE;
+    }
 }

@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of the QtiComponentCollection class aiming at restricting
  * the storage to Flow objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FlowCollection extends QtiComponentCollection {
-    
+class FlowCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of Flow.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not a Flow object.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Flow) {
             $msg = "FlowCollection objects only accept to store Flow objects.";
             throw new InvalidArgumentException($msg);

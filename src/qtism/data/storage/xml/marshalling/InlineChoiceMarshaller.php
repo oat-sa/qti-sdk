@@ -31,92 +31,90 @@ use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for InlineChoice elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineChoiceMarshaller extends ContentMarshaller {
-    
+class InlineChoiceMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-         
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            
+
             $fqClass = $this->lookupClass($element);
-            
+
             try {
                 $component = new $fqClass($identifier);
-            }
-            catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 $msg = "'${identifier}' is not a valid identifier for an 'inlineChoice' element.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
-            
+
             try {
                 $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
-            }
-            catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 $msg = "'inlineChoice' elements must only contain text or 'printedVariable' elements.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
-            
+
             if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $component->setFixed($fixed);
             }
-            
+
             if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
-            
+
             if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
-            
+
             self::fillBodyElement($component, $element);
-            
+
             return $component;
-            
-        }
-        else {
+
+        } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.";
             throw new UnmarshallingException($msg, $element);
         }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        
+
         if ($component->isFixed() === true) {
             self::setDOMElementAttribute($element, 'fixed', true);
         }
-        
+
         if ($component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
-        
+
         if ($component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }
 }

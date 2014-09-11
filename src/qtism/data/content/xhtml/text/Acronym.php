@@ -24,23 +24,23 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML acronym class.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * Note that the title attribute defined by XHTML is not supported.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Acronym extends SimpleInline {
-    
+class Acronym extends SimpleInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'accronym';
     }
 }

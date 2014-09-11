@@ -28,82 +28,88 @@ use qtism\data\ItemSessionControl;
 
 /**
  * Represents the ItemSessionControl in force in the context of a RouteItem.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RouteItemSessionControl {
-    
+class RouteItemSessionControl
+{
     /**
      * The owner of the ItemSessionControl component.
-     * 
+     *
      * @var \qtism\data\QtiComponent
      */
     private $owner;
-    
+
     /**
      * The encapsulated ItemSessionControl object.
-     * 
+     *
      * @var \qtism\data\ItemSessionControl
      */
     private $itemSessionControl;
-    
+
     /**
      * Create a new RouteItemSessionControl object.
-     * 
+     *
      * @param \qtism\data\ItemSessionControl $itemSessionControl The encapsulated ItemSessionControl object.
      * @param \qtism\data\QtiComponent $owner The owner of the ItemSessionControl component.
      */
-    public function __construct(ItemSessionControl $itemSessionControl, QtiComponent $owner) {
+    public function __construct(ItemSessionControl $itemSessionControl, QtiComponent $owner)
+    {
         $this->setItemSessionControl($itemSessionControl);
         $this->setOwner($owner);
     }
-    
+
     /**
      * Get the owner component of the ItemSessionControl.
-     * 
+     *
      * @return \qtism\data\QtiComponent A QtiComponent object.
      */
-    public function getOwner() {
+    public function getOwner()
+    {
         return $this->owner;
     }
-    
+
     /**
      * Set the owner component of the ItemSessionControl.
-     * 
+     *
      * @param \qtism\data\QtiComponent $owner A QtiComponent object.
      */
-    public function setOwner(QtiComponent $owner) {
+    public function setOwner(QtiComponent $owner)
+    {
         $this->owner = $owner;
     }
-    
+
     /**
      * Get the encapsulated ItemSessionControl object.
-     * 
+     *
      * @return \qtism\data\ItemSessionControl
      */
-    public function getItemSessionControl() {
+    public function getItemSessionControl()
+    {
         return $this->itemSessionControl;
     }
-    
+
     /**
      * Set the encapsulated ItemSessionControl object.
-     * 
+     *
      * @param \qtism\data\ItemSessionControl $itemSessionControl
      */
-    public function setItemSessionControl(ItemSessionControl $itemSessionControl) {
+    public function setItemSessionControl(ItemSessionControl $itemSessionControl)
+    {
         $this->itemSessionControl = $itemSessionControl;
     }
-    
+
     /**
      * Create a new RouteItemSessionControl object from an existing $itemSessionControl object with a given
      * $owner.
-     * 
+     *
      * @param \qtism\data\ItemSessionControl $itemSessionControl An existing ItemSessionControl object.
      * @param \qtism\data\QtiComponent $owner The owner of the ItemSessionControl object.
      * @return \qtism\runtime\tests\RouteItemSessionControl A new RouteItemSessionControl object.
      */
-    public static function createFromItemSessionControl(ItemSessionControl $itemSessionControl, QtiComponent $owner) {
+    public static function createFromItemSessionControl(ItemSessionControl $itemSessionControl, QtiComponent $owner)
+    {
         return new static($itemSessionControl, $owner);
     }
 }

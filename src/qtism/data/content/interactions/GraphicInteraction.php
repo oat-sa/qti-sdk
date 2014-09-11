@@ -27,27 +27,26 @@ use \InvalidArgumentException;
 
 /**
  * The QTI graphicInteraction class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class GraphicInteraction extends BlockInteraction {
-    
+abstract class GraphicInteraction extends BlockInteraction
+{
     /**
      * From IMS QTI:
-     * 
-     * Each graphical interaction has an associated image which is given as an 
+     *
+     * Each graphical interaction has an associated image which is given as an
      * object that must be of an image type, as specified by the type attribute.
-     * 
+     *
      * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
-    
-    
+
     /**
      * Create a GraphicInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the associated response.
      * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
      * @param string $id The id of the bodyElement.
@@ -56,26 +55,29 @@ abstract class GraphicInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
-        $this->setObject($object);    
+        $this->setObject($object);
     }
-    
+
     /**
      * Set the associated image given as an object.
-     * 
+     *
      * @param \qtism\data\content\xhtml\Object $object An Object object.
      */
-    public function setObject(Object $object) {
+    public function setObject(Object $object)
+    {
         $this->object = $object;
     }
-    
+
     /**
      * Get the associated image given as an object.
-     * 
+     *
      * @return \qtism\data\content\xhtml\Object An Object object.
      */
-    public function getObject() {
+    public function getObject()
+    {
         return $this->object;
     }
 }

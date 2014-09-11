@@ -27,33 +27,33 @@ use \Exception;
  * The StreamAccessException class represents the error
  * that could occur while reading/extracting data from an IStream object
  * object.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class StreamAccessException extends Exception {
-    
+class StreamAccessException extends Exception
+{
     /**
      * Unknown error.
      *
      * @var integer
      */
     const UNKNOWN = 0;
-    
+
     /**
      * A closed IStream object is given as the stream to be read.
      *
      * @var integer
      */
     const NOT_OPEN = 1;
-    
+
     /**
      * The AbstractStreamAccess object that caused the error.
      *
      * @var AbstractStreamAccess
      */
     private $source;
-    
+
     /**
      * Create a new StreamAccessException object.
      *
@@ -62,26 +62,29 @@ class StreamAccessException extends Exception {
      * @param integer $code An exception code. See class constants.
      * @param \Exception $previous An optional previously thrown exception.
      */
-    public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null) {
+    public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
         $this->setSource($source);
     }
-    
+
     /**
      * Get the AbstractStreamAccess object that caused the error.
      *
      * @param \qtism\common\storage\AbstractStreamAccess $source An AbstractStreamAccess object.
      */
-    protected function setSource(AbstractStreamAccess $source) {
+    protected function setSource(AbstractStreamAccess $source)
+    {
         $this->source = $source;
     }
-    
+
     /**
      * Set the AbstractStreamAccess object that caused the error.
      *
      * @return \qtism\common\storage\AbstractStreamAccess An AbstractStreamAccess object.
      */
-    public function getSource() {
+    public function getSource()
+    {
         return $this->source;
     }
 }

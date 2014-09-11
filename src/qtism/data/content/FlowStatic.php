@@ -24,15 +24,15 @@ namespace qtism\data\content;
 
 /**
  * From IMS QTI:
- * 
+ *
  * A sub-class of flow that excludes interactions.
- * 
+ *
  * This is a simple marker interface.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  *
  */
-interface FlowStatic extends Flow {
-    
+interface FlowStatic extends Flow
+{
 }

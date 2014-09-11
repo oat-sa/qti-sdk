@@ -19,7 +19,7 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
+ *
  *
  */
 
@@ -32,14 +32,14 @@ use \DOMDocumentFragment;
 /**
  * AssociableHotspot renderer. This renderer will transform the choice into a 'div' element
  * with additional 'qti-associableHotspot' and 'qti-associableChoice' CSS classes.
- * 
- * Depending on the value of the qti:choice->showHide attribute and only if 
+ *
+ * Depending on the value of the qti:choice->showHide attribute and only if
  * a value for qti:choice->templateIdentifier is defined, an additional CSS class with
  * a value of 'qti-show' or 'qti-hide' will be set.
- * 
+ *
  * Moreover, the following data will be set to the data set of the element
  * with the help of the data-X attributes:
- * 
+ *
  * * data-identifier = qti:choice->identifier
  * * data-fixed = qti:choice->fixed
  * * data-templateIdentifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
@@ -49,30 +49,32 @@ use \DOMDocumentFragment;
  * * data-hotspot-label = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
  * * data-match-max = qti:associableHotspot->matchMax
  * * data-match-min = qti:associableHotspot->matchMin
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssociableHotspotRenderer extends HotspotRenderer {
-    
+class AssociableHotspotRenderer extends HotspotRenderer
+{
     /**
      * Create a new AssociableHotspotRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\HotspotRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-associableHotspot');
         $this->additionalClass('qti-associableChoice');
-        
+
         $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
         $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
     }

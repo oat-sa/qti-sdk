@@ -23,12 +23,11 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * GapText renderer. This renderer will transform the gapChoice into a 'div' 
+ * GapText renderer. This renderer will transform the gapChoice into a 'div'
  * element with an additional 'qti-gapText' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
@@ -48,12 +47,13 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapTextRenderer extends GapChoiceRenderer {
-
+class GapTextRenderer extends GapChoiceRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\GapChoiceRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapText');
     }

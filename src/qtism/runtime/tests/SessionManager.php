@@ -28,32 +28,34 @@ use qtism\data\IAssessmentItem;
 /**
  * An SessionManager implementation that creates default AssessmentTestSession and
  * AssessmentItemSession objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SessionManager extends AbstractSessionManager {
-    
+class SessionManager extends AbstractSessionManager
+{
     /**
      * Instantiates an AssessmentTestSession with the default implementation.
-     * 
+     *
      * @param \qtism\data\AssessmentTest $test
      * @param \qtism\runtime\tests\Route $route An optional route to be set. If not provided, the default instantiation process occurs.
      * @return \qtism\runtime\tests\AssessmentTestSession
      */
-    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route) {
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route)
+    {
         return new AssessmentTestSession($test, $this, $route);
     }
-    
+
     /**
      * Instantiates an AssessmentItemSession with the default implementation.
-     * 
+     *
      * @param \qtism\data\IAssessmentItem $assessmentItem
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
      * @return \qtism\runtime\tests\AssessmentItemSession
      */
-    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode) {
+    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
+    {
         return new AssessmentItemSession($assessmentItem, $this, $navigationMode, $submissionMode);
     }
 }

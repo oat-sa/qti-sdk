@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing
  * Tr objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TrCollection extends QtiComponentCollection {
-    
+class TrCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instanceof Tr.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instanceof Tr.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Tr) {
             $msg = "TrCollection objects only accept to store Tr objects.";
             throw new InvalidArgumentException($msg);

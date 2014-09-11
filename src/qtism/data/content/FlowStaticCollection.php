@@ -27,22 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * A specialized AbstractCollection aiming at storing FlowStatic objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FlowStaticCollection extends QtiComponentCollection {
-	
-	/**
+class FlowStaticCollection extends QtiComponentCollection
+{
+    /**
 	 * Check whether $value is a FlowStatic object.
-	 * 
+	 *
 	 * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a FlowStatic object.
 	 */
-	protected function checkType($value) {
-		if (!$value instanceof FlowStatic) {
-			$msg = "FlowStaticCollection objects only accept to store FlowStatic objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+    protected function checkType($value)
+    {
+        if (!$value instanceof FlowStatic) {
+            $msg = "FlowStaticCollection objects only accept to store FlowStatic objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 }

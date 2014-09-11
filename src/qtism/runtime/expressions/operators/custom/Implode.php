@@ -30,53 +30,50 @@ use qtism\runtime\expressions\operators\CustomOperatorProcessor;
 
 /**
  * A custom operator implementing PHP core's implode function.
- * 
+ *
  * The implode operator takes two sub-expressions. The first sub-expression must have a single cardinality
  * and a string base-type. It acts as the "glue" for imploding the second sub-expression. The later must
  * have a multiple or ordered cardinality, and a string base-type.
- * 
+ *
  * If either sub-expressions is NULL, then the result of this operator is NULL.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see http://www.php.net/manual/en/function.implode.php PHP implode manual
  */
-class Implode extends CustomOperatorProcessor {
-	
-	/**
+class Implode extends CustomOperatorProcessor
+{
+    /**
 	 * Process the expression by implementing PHP core's implode function.
-	 * 
+	 *
 	 * @return String The split value of the second sub-expression given as a parameter.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If something goes wrong.
 	 */
-	public function process() {
-	    $operands = $this->getOperands();
-	    
-	    if (($c = count($operands)) < 2) {
-	        $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator takes 2 sub-expressions as parameters, ${c} given.";
-	        throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
-	    }
-	    else if ($operands->containsNull() === true) {
-	        return null;
-	    }
-	    else if ($operands->exclusivelyString() === false) {
-	        $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts operands with a string baseType.";
-	        throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-	    }
-	    else if ($operands[0]->getCardinality() !== Cardinality::SINGLE) {
-	        $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a first operand with single cardinality.";
-	        throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-	    }
-	    else if ($operands[1]->getCardinality() !== Cardinality::MULTIPLE && $operands[1]->getCardinality() !== Cardinality::ORDERED) {
-	        $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a second operand with multiple or ordered cardinality.";
-	        throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-	    }
-	    
-	    $glue = $operands[0]->getValue();
-	    $pieces = $operands[1];
-	    
-	    // Note: implode() is binary-safe \0/!
-	    $string = implode($glue, $pieces->getArrayCopy());
-	    
-	    return new String($string);
-	}
+    public function process()
+    {
+        $operands = $this->getOperands();
+
+        if (($c = count($operands)) < 2) {
+            $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator takes 2 sub-expressions as parameters, ${c} given.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
+        } elseif ($operands->containsNull() === true) {
+            return null;
+        } elseif ($operands->exclusivelyString() === false) {
+            $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts operands with a string baseType.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+        } elseif ($operands[0]->getCardinality() !== Cardinality::SINGLE) {
+            $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a first operand with single cardinality.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+        } elseif ($operands[1]->getCardinality() !== Cardinality::MULTIPLE && $operands[1]->getCardinality() !== Cardinality::ORDERED) {
+            $msg = "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a second operand with multiple or ordered cardinality.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+        }
+
+        $glue = $operands[0]->getValue();
+        $pieces = $operands[1];
+
+        // Note: implode() is binary-safe \0/!
+        $string = implode($glue, $pieces->getArrayCopy());
+
+        return new String($string);
+    }
 }

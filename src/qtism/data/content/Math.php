@@ -23,26 +23,25 @@
 namespace qtism\data\content;
 
 use qtism\data\ExternalQtiComponent;
-use qtism\data\QtiComponentCollection;
-use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * MathML defines a Markup Language for describing mathematical notation using XML. The 
- * primary purpose of MathML is to provide a language for embedding mathematical 
+ *
+ * MathML defines a Markup Language for describing mathematical notation using XML. The
+ * primary purpose of MathML is to provide a language for embedding mathematical
  * expressions into other documents, in particular into HTML documents.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic {
-    
-    public function __construct($xmlString) {
+class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic
+{
+    public function __construct($xmlString)
+    {
         parent::__construct($xmlString);
     }
-    
+
     /**
      * A base URI.
      *
@@ -50,46 +49,50 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * Set the base URI of the Math.
      *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the Math.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
+
     /**
      * Whether or not a value is defined for the xmlBase attribute.
-     * 
+     *
      * @return boolean
      */
-    public function hasXmlBase() {
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
-    public function getQtiClassName() {
+
+    public function getQtiClassName()
+    {
         return 'math';
     }
-    
-    protected function buildTargetNamespace() {
+
+    protected function buildTargetNamespace()
+    {
         $this->setTargetNamespace('http://www.w3.org/1998/Math/MathML');
     }
 }

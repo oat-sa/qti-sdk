@@ -27,26 +27,26 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * A simple run of text to be displayed to the user, may be subject to 
+ *
+ * A simple run of text to be displayed to the user, may be subject to
  * variable value substitution with printedVariable.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineChoice extends Choice {
-    
+class InlineChoice extends Choice
+{
     /**
      * A collection of TextOrVariable objects.
-     * 
+     *
      * @var \qtism\data\content\TextOrVariableCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new InlineChoice object.
-     * 
+     *
      * @param string $identifier The identifier of the InlineChoice.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -54,39 +54,44 @@ class InlineChoice extends Choice {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
-    public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($identifier, $id, $class, $lang, $label);
     }
-    
+
     /**
      * Set the content of the InlineChoice.
-     * 
+     *
      * @param \qtism\data\content\TextOrVariableCollection $content A collection of TextOrVariable objects.
      */
-    public function setContent(TextOrVariableCollection $content) {
+    public function setContent(TextOrVariableCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the content of the InlineChoice.
-     * 
+     *
      * @return \qtism\data\content\TextOrVariableCollection A collection of TextOrVariable objects.
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'inlineChoice';
     }
 }

@@ -24,22 +24,22 @@ namespace qtism\data\rules;
 
 /**
  * From IMS QTI:
- * 
- * A template rule is either a templateCondition or a simple action. Template rules 
+ *
+ * A template rule is either a templateCondition or a simple action. Template rules
  * define the light-weight programming language necessary for creating cloned items.
- * Note that this programming language contains a minimal number of control structures, 
+ * Note that this programming language contains a minimal number of control structures,
  * more complex cloning rules are outside the scope of this specification.
- * 
- * An expression used in a templateRule must not refer to the value of a response 
- * variable or outcome variable. It may only refer to the values of the template 
+ *
+ * An expression used in a templateRule must not refer to the value of a response
+ * variable or outcome variable. It may only refer to the values of the template
  * variables.
- * 
- * Template rules are follwed in the order given. Variables updated by a rule take 
+ *
+ * Template rules are follwed in the order given. Variables updated by a rule take
  * their new value when evaluated as part of any following rules.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface TemplateRule extends Rule {
-    
+interface TemplateRule extends Rule
+{
 }

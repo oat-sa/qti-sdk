@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialized AbstractCollection aiming at storing GapImg objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapImgCollection extends QtiComponentCollection {
-    
+class GapImgCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instanceof GapImg.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of GapImg.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof GapImg) {
             $msg = "GapImgCollection objects only accept to store GapImg objects.";
             throw new InvalidArgumentException($msg);

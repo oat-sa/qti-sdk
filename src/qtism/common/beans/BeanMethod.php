@@ -27,59 +27,62 @@ use \ReflectionException;
 
 /**
  * Represents a Bean method such as a  bean getter or setter.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BeanMethod {
-    
+class BeanMethod
+{
     /**
      * The wrapped ReflectionObject representing the BeanMethod.
-     * 
+     *
      * @var \ReflectionMethod
      */
     private $method;
-    
+
     /**
      * Create a new Method object.
-     * 
+     *
      * @param mixed $class Name of the class or instance of this class containing the method.
      * @param string $name Name of the method.
      */
-    public function __construct($class, $name) {
+    public function __construct($class, $name)
+    {
         try {
             $this->setMethod(new ReflectionMethod($class, $name));
-        }
-        catch (ReflectionException $e) {
+        } catch (ReflectionException $e) {
             $msg = "The method '${name}' does not exist.";
             throw new BeanException($msg, BeanException::NO_METHOD, $e);
         }
     }
-    
+
     /**
      * Get the name of the bean method.
-     * 
+     *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->getMethod()->getName();
     }
-    
+
     /**
      * Set the wrapper object representing the BeanMethod.
-     * 
+     *
      * @param \ReflectionMethod $method A ReflectionMethod object.
      */
-    protected function setMethod(ReflectionMethod $method) {
+    protected function setMethod(ReflectionMethod $method)
+    {
         $this->method = $method;
     }
-    
+
     /**
      * Get the wrapper object representing the BeanMethod.
-     * 
+     *
      * @return \ReflectionMethod A ReflectionMethod object.
      */
-    public function getMethod() {
+    public function getMethod()
+    {
         return $this->method;
     }
 }

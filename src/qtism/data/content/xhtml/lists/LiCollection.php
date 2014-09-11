@@ -26,20 +26,21 @@ use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
- * A specialized QtiComponentCollection aiming at storing 
+ * A specialized QtiComponentCollection aiming at storing
  * Li objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class LiCollection extends QtiComponentCollection {
-    
+class LiCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of Li.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of Li.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Li) {
             $msg = "LiCollection objects only accept to store Li objects.";
             throw new InvalidArgumentException($msg);

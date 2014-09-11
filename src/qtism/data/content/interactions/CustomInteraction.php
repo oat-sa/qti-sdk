@@ -30,15 +30,15 @@ use qtism\data\IExternal;
 
 /**
  * From IMS QTI:
- * 
- * The custom interaction provides an opportunity for extensibility of this 
+ *
+ * The custom interaction provides an opportunity for extensibility of this
  * specification to include support for interactions not currently documented.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CustomInteraction extends Interaction implements IExternal, Block, Flow {
-    
+class CustomInteraction extends Interaction implements IExternal, Block, Flow
+{
     /**
      * The base URI of the CustomInteraction.
      *
@@ -46,24 +46,24 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * The xml string content of the custom interaction.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $xmlString;
-    
+
     /**
-     * 
+     *
      * @var \qtism\data\ExternalQtiComponent
      */
     private $externalComponent = null;
-    
+
     /**
      * Create a new CustomInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the Response Variable bound to the interaction.
      * @param string $xmlString The xml data representing the whole customInteraction component and its content.
      * @param string $id The id of the bodyElement.
@@ -72,106 +72,116 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $xmlString, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, $xmlString, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setXmlString($xmlString);
         $this->setExternalComponent(new ExternalQtiComponent($xmlString));
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'customInteraction';
     }
-    
+
     /**
      * Get the complete XML String representing the customInteraction.
-     * 
+     *
      * @return string
      */
-    public function getXmlString() {
+    public function getXmlString()
+    {
         return $this->xmlString;
     }
-    
+
     /**
      * Set the complete XML String representing the customInteraction.
-     * 
+     *
      * @param string $xmlString
      */
-    public function setXmlString($xmlString) {
+    public function setXmlString($xmlString)
+    {
         $this->xmlString = $xmlString;
         if ($this->externalComponent !== null) {
             $this->getExternalComponent()->setXmlString($xmlString);
         }
     }
-    
+
     /**
      * Get the XML content of the custom interaction itself and its content.
      *
      * @return \DOMDocument A DOMDocument object representing the custom interaction.
      * @throws \RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
      */
-    public function getXml() {
+    public function getXml()
+    {
         return $this->getExternalComponent()->getXml();
     }
-    
+
     /**
      * Set the encapsulated external component.
      *
      * @param \qtism\data\ExternalQtiComponent $externalComponent
      */
-    private function setExternalComponent(ExternalQtiComponent $externalComponent) {
+    private function setExternalComponent(ExternalQtiComponent $externalComponent)
+    {
         $this->externalComponent = $externalComponent;
     }
-    
+
     /**
      * Get the encapsulated external component.
      *
      * @return \qtism\data\ExternalQtiComponent
      */
-    private function getExternalComponent() {
+    private function getExternalComponent()
+    {
         return $this->externalComponent;
     }
-    
+
     /**
      * Set the base URI of the CustomInteraction.
      *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the CustomInteraction.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
+
     /**
      * Whether or not a base URI is defined for the CustomInteraction.
-     * 
+     *
      * @return boolean
      */
-    public function hasXmlBase() {
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
 }

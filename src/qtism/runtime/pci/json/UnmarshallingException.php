@@ -32,14 +32,14 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class UnmarshallingException extends Exception {
-
+class UnmarshallingException extends Exception
+{
     const UNKNOWN = 0;
-    
+
     const NOT_SUPPORTED = 1;
-    
+
     const JSON_DECODE = 2;
-    
+
     const NOT_PCI = 3;
 
     /**
@@ -49,7 +49,8 @@ class UnmarshallingException extends Exception {
      * @param integer $code A machine-understandable (see class constants) error code.
      * @param \Exception $previous An eventual previous Exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 }

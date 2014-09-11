@@ -29,49 +29,52 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * InlineChoiceInteraction renderer. Rendered components will be transformed as 
- * 'select' elements with 'qti-inlineChoiceInteraction' and 'qti-inlineInteraction' additional 
+ * InlineChoiceInteraction renderer. Rendered components will be transformed as
+ * 'select' elements with 'qti-inlineChoiceInteraction' and 'qti-inlineInteraction' additional
  * CSS classes.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-shuffle = qti:inlineChoiceInteraction->shuffle
  * * data-required = qti:inlineChoiceInteraction->required
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineChoiceInteractionRenderer extends InteractionRenderer {
-    
+class InlineChoiceInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new InlineChoiceInteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('select');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-inlineInteraction');
         $this->additionalClass('qti-inlineChoiceInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendChildren($fragment, $component, $base);
-        
+
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getContent()->getArrayCopy()));
         }

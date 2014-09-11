@@ -24,24 +24,23 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
-use \DOMDocument;
-use \DOMDocumentFragment;
 
 /**
  * The QTI XHTML Rendering Engine.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
-    
+class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
+{
     /**
      * Create a new XhtmlRenderingEngine object.
-     * 
+     *
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        
+
         // QTI Components the rendering engine will
         // not take into account.
         $ignoreClasses = array('responseDeclaration',
@@ -49,9 +48,9 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
                                 'templateDeclaration',
                                 'templateProcessing',
                                 'responseProcessing');
-        
+
         $this->ignoreQtiClasses($ignoreClasses);
-    
+
         // The following QTI classes can be rendered
         // with the BodyElementRenderer.
         $bodyElementRenderer = new BodyElementRenderer();
@@ -96,19 +95,19 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('tfoot', $bodyElementRenderer);
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
-    
+
         // Both col and components elements can be rendered
         // by the ColRenderer.
         $colRenderer = new ColRenderer();
         $this->registerRenderer('col', $colRenderer);
         $this->registerRenderer('colgroup', $colRenderer);
-    
+
         // Both td and th components can be rendered by the
         // TableCellRenderer.
         $tableCellRenderer = new TableCellRenderer();
         $this->registerRenderer('td', $tableCellRenderer);
         $this->registerRenderer('th', $tableCellRenderer);
-    
+
         // Other bindings...
         $this->registerRenderer('textRun', new TextRunRenderer());
         $this->registerRenderer('a', new ARenderer());
@@ -157,7 +156,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine {
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
         $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
-        
+
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());
     }

@@ -19,7 +19,7 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
+ *
  *
  */
 namespace qtism\runtime\common;
@@ -28,55 +28,55 @@ use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ValueCollection;
 use qtism\common\utils\Arrays;
-use qtism\common\enums\BaseType;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 use \RuntimeException;
 
 /**
  * Implementation of the qti:record cardinality. It behaves as an associative
- * array. There is no information in the QTI standard about how the equality of 
+ * array. There is no information in the QTI standard about how the equality of
  * two records can be established. In this implementation, it is implemented as
  * if it was a bag, and the keys are not taken into account.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RecordContainer extends Container implements QtiDatatype {
-	
-	/**
+class RecordContainer extends Container implements QtiDatatype
+{
+    /**
 	 * Create a new RecordContainer object.
-	 * 
+	 *
 	 * @param array $array An associative array.
 	 * @throws \InvalidArgumentException If the given $array is not associative.
 	 */
-	public function __construct(array $array = array()) {
-		if (Arrays::isAssoc($array)) {
-			$dataPlaceHolder = &$this->getDataPlaceHolder();
-		
-			foreach ($array as $k => $v) {
-				$this->checkType($v);
-				$dataPlaceHolder[$k] = $v;
-			}
-		
-			reset($dataPlaceHolder);
-		}
-		else {
-			$msg = "The array argument must be an associative array.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function __construct(array $array = array())
+    {
+        if (Arrays::isAssoc($array)) {
+            $dataPlaceHolder = &$this->getDataPlaceHolder();
+
+            foreach ($array as $k => $v) {
+                $this->checkType($v);
+                $dataPlaceHolder[$k] = $v;
+            }
+
+            reset($dataPlaceHolder);
+        } else {
+            $msg = "The array argument must be an associative array.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * @see \qtism\runtime\common\Container::getCardinality()
 	 */
-	public function getCardinality() {
-		return Cardinality::RECORD;
-	}
-	
-	/**
+    public function getCardinality()
+    {
+        return Cardinality::RECORD;
+    }
+
+    /**
 	 * Overloading of offsetSet that makes sure that the $offset
 	 * is a string.
 	 *
@@ -85,53 +85,56 @@ class RecordContainer extends Container implements QtiDatatype {
 	 *
 	 * @throws \RuntimeException If $offset is not a string.
 	 */
-	public function offsetSet($offset, $value) {
-		if (gettype($offset) === 'string') {
-			$this->checkType($value);
-			$placeholder = &$this->getDataPlaceHolder();
-			$placeholder[$offset] = $value;
-		}
-		else {
-			$msg = "The offset of a value in a RecordContainer must be a string.";
-			throw new RuntimeException($msg);
-		}
-	}
-	
-	/**
+    public function offsetSet($offset, $value)
+    {
+        if (gettype($offset) === 'string') {
+            $this->checkType($value);
+            $placeholder = &$this->getDataPlaceHolder();
+            $placeholder[$offset] = $value;
+        } else {
+            $msg = "The offset of a value in a RecordContainer must be a string.";
+            throw new RuntimeException($msg);
+        }
+    }
+
+    /**
 	 * Create a RecordContainer object from a Data Model ValueCollection object.
 	 *
 	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
 	 * @return \qtism\runtime\common\RecordContainer A Container object populated with the values found in $valueCollection.
 	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
 	 */
-	public static function createFromDataModel(ValueCollection $valueCollection) {
-		$container = new static();
-		foreach ($valueCollection as $value) {
-			$fieldIdentifier = $value->getFieldIdentifier();
-			
-			if (!empty($fieldIdentifier)) {
-				$container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
-			}
-			else {
-				$msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
-				$msg .= "because it has no fieldIdentifier specified.";
-				throw new InvalidArgumentException($msg);
-			}
-		}
-		return $container;
-	}
-	
-	/**
+    public static function createFromDataModel(ValueCollection $valueCollection)
+    {
+        $container = new static();
+        foreach ($valueCollection as $value) {
+            $fieldIdentifier = $value->getFieldIdentifier();
+
+            if (!empty($fieldIdentifier)) {
+                $container[$value->getFieldIdentifier()] = RuntimeUtils::valueToRuntime($value->getValue(), $value->getBaseType());
+            } else {
+                $msg = "Cannot include qtism\\data\\state\\Value '" . $value->getValue() . "' in the RecordContainer ";
+                $msg .= "because it has no fieldIdentifier specified.";
+                throw new InvalidArgumentException($msg);
+            }
+        }
+
+        return $container;
+    }
+
+    /**
 	 * @see \qtism\runtime\common\Container::getToStringBounds()
 	 */
-	protected function getToStringBounds() {
-		return array('{', '}');
-	}
-	
-	/**
+    protected function getToStringBounds()
+    {
+        return array('{', '}');
+    }
+
+    /**
 	 * @see \qtism\common\datatypes\QtiDatatype::getBaseType()
 	 */
-	public function getBaseType() {
-	    return -1;
-	}
+    public function getBaseType()
+    {
+        return -1;
+    }
 }

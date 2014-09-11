@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing SimpleMatchSet objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleMatchSetCollection extends QtiComponentCollection {
-    
+class SimpleMatchSetCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of SimpleMatchSet.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of SimpleMatchSet.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof SimpleMatchSet) {
             $msg = "SimpleMatchSetCollection objects only accept to store SimpleMatchSet collection objects.";
             throw new InvalidArgumentException($msg);

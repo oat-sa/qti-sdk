@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of the QtiComponentCollection class aiming at restricting
  * the storage to Block objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BlockCollection extends QtiComponentCollection {
-    
+class BlockCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of lock.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an Block object.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Block) {
             $msg = "BlockCollection objects only accept to store Block objects.";
             throw new InvalidArgumentException($msg);

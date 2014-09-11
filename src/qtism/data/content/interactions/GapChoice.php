@@ -26,43 +26,43 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * The choices that are used to fill the gaps in a gapMatchInteraction 
- * are either simple runs of text or single image objects, both derived 
+ *
+ * The choices that are used to fill the gaps in a gapMatchInteraction
+ * are either simple runs of text or single image objects, both derived
  * from gapChoice.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class GapChoice extends Choice implements AssociableChoice {
-	
-	/**
+abstract class GapChoice extends Choice implements AssociableChoice
+{
+    /**
 	 * From IMS QTI:
-	 * 
+	 *
 	 * The maximum number of choices this choice may be associated with.
 	 * If matchMax is 0 there is no restriction.
-	 * 
+	 *
 	 * @var integer
 	 * @qtism-bean-property
 	 */
-	private $matchMax;
-	
-	/**
+    private $matchMax;
+
+    /**
 	 * From IMS QTI:
-	 * 
-	 * The minimum number of gaps this choice must be associated with to 
-	 * form a valid response. If matchMin is 0 then the candidate is not 
-	 * required to associate this choice with any gaps at all. matchMin 
+	 *
+	 * The minimum number of gaps this choice must be associated with to
+	 * form a valid response. If matchMin is 0 then the candidate is not
+	 * required to associate this choice with any gaps at all. matchMin
 	 * must be less than or equal to the limit imposed by matchMax.
-	 * 
+	 *
 	 * @var integer
 	 * @qtism-bean-property
 	 */
-	private $matchMin = 0;
-	
-	/**
+    private $matchMin = 0;
+
+    /**
 	 * Create a new GapChoice object.
-	 * 
+	 *
 	 * @param string $identifier The identifier of the GapChoice.
 	 * @param integer $matchMax The matchMax attribute of the GapChoice.
 	 * @param string $id The id of the bodyElement.
@@ -71,59 +71,62 @@ abstract class GapChoice extends Choice implements AssociableChoice {
 	 * @param string $label The label of the bodyElement.
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
-		parent::__construct($identifier, $id, $class, $lang, $label);
-		$this->setMatchMax($matchMax);
-		$this->setMatchMin(0);
-	}
-	
-	/**
+    public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '')
+    {
+        parent::__construct($identifier, $id, $class, $lang, $label);
+        $this->setMatchMax($matchMax);
+        $this->setMatchMin(0);
+    }
+
+    /**
 	 * Set the matchMax attribute of the gapChoice.
-	 * 
+	 *
 	 * @param integer $matchMax A postive (>= 0) integer.
 	 * @throws \InvalidArgumentException If $matchMax is not a positive integer.
 	 */
-	public function setMatchMax($matchMax) {
-		if (is_int($matchMax) === true && $matchMax >= 0) {
-			$this->matchMax = $matchMax;
-		}
-		else {
-			$msg = "The 'matchMax' argument must be a positive integer, '" . gettype($matchMax) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setMatchMax($matchMax)
+    {
+        if (is_int($matchMax) === true && $matchMax >= 0) {
+            $this->matchMax = $matchMax;
+        } else {
+            $msg = "The 'matchMax' argument must be a positive integer, '" . gettype($matchMax) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get the matchMax attribute of the gapChoice.
-	 * 
+	 *
 	 * @return integer A positive (>= 0) integer.
 	 */
-	public function getMatchMax() {
-		return $this->matchMax;
-	}
-	
-	/**
+    public function getMatchMax()
+    {
+        return $this->matchMax;
+    }
+
+    /**
 	 * Set the matchMin attribute of the gapChoice.
-	 * 
+	 *
 	 * @param integer $matchMin A positive (>= 0) integer.
 	 * @throws \InvalidArgumentException If $matchMin is not a positive integer.
 	 */
-	public function setMatchMin($matchMin) {
-		if (is_int($matchMin) === true && $matchMin >= 0) {
-			$this->matchMin = $matchMin;
-		}
-		else {
-			$msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";
-			throw InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setMatchMin($matchMin)
+    {
+        if (is_int($matchMin) === true && $matchMin >= 0) {
+            $this->matchMin = $matchMin;
+        } else {
+            $msg = "The 'matchMin' argument must be a positive integer, '" . gettype($matchMin) . "' given.";
+            throw InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get the matchMin attribute of the gapChoice.
-	 * 
+	 *
 	 * @return integer A positive (>= 0) integer.
 	 */
-	public function getMatchMin() {
-		return $this->matchMin;
-	}
+    public function getMatchMin()
+    {
+        return $this->matchMin;
+    }
 }

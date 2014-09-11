@@ -25,37 +25,39 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use \DOMDocumentFragment;
 
 /**
  * TextRun renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextRunRenderer extends AbstractXhtmlRenderer {
-    
+class TextRunRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new TextRunRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendElement()
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createTextNode($component->getContent()));
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         return;
     }
 }

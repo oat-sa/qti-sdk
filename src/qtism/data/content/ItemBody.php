@@ -26,79 +26,84 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * The item body contains the text, graphics, media objects and interactions that 
- * describe the item's content and information about how it is structured. The body 
- * is presented by combining it with stylesheet information, either explicitly or 
+ *
+ * The item body contains the text, graphics, media objects and interactions that
+ * describe the item's content and information about how it is structured. The body
+ * is presented by combining it with stylesheet information, either explicitly or
  * implicitly using the default style rules of the delivery or authoring system.
- * 
- * The body must be presented to the candidate when the associated item session 
- * is in the interacting state. In this state, the candidate must be able to 
- * interact with each of the visible interactions and therefore set or update 
- * the values of the associated response variables. The body may be presented 
- * to the candidate when the item session is in the closed or review state. 
- * In these states, although the candidate's responses should be visible, 
- * the interactions must be disabled so as to prevent the candidate from 
- * setting or updating the values of the associated response variables. 
- * Finally, the body may be presented to the candidate in the solution 
- * state, in which case the correct values of the response variables must 
+ *
+ * The body must be presented to the candidate when the associated item session
+ * is in the interacting state. In this state, the candidate must be able to
+ * interact with each of the visible interactions and therefore set or update
+ * the values of the associated response variables. The body may be presented
+ * to the candidate when the item session is in the closed or review state.
+ * In these states, although the candidate's responses should be visible,
+ * the interactions must be disabled so as to prevent the candidate from
+ * setting or updating the values of the associated response variables.
+ * Finally, the body may be presented to the candidate in the solution
+ * state, in which case the correct values of the response variables must
  * be visible and the associated interactions disabled.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemBody extends BodyElement {
-    
+class ItemBody extends BodyElement
+{
     /**
      * The blocks composing the itemBody.
-     * 
+     *
      * @var \qtism\data\content\BlockCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new ItemBody object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new BlockCollection());
     }
-    
+
     /**
      * Set the Block objects composing the ItemBody.
-     * 
+     *
      * @param \qtism\data\content\BlockCollection $content The collection of blocks composing the itemBody.
      */
-    public function setContent(BlockCollection $content) {
+    public function setContent(BlockCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the Block objects the ItemBody.
-     * 
+     *
      * @return \qtism\data\content\BlockCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Get the Block objects composing the ItemBody.
-     * 
+     *
      * @return \qtism\data\content\BlockCollection A collection of Block objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
-    public function getQtiClassName() {
+
+    public function getQtiClassName()
+    {
         return 'itemBody';
     }
 }

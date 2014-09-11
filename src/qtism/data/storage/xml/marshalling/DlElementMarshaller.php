@@ -31,45 +31,48 @@ use \DOMElement;
 
 /**
  * The Marshaller implementation for dlElement elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DlElementMarshaller extends ContentMarshaller {
-    
+class DlElementMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
         $childrenArray = $children->getArrayCopy();
         $component->setContent(($component instanceof Dt) ? new InlineCollection($childrenArray) : new FlowCollection($childrenArray));
-        
+
         self::fillBodyElement($component, $element);
+
         return $component;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        
+
         foreach ($elements as $elt) {
             $element->appendChild($elt);
         }
-        
+
         self::fillElement($element, $component);
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml\\lists");
     }
 }

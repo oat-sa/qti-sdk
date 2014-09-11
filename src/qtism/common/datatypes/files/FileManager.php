@@ -29,19 +29,19 @@ use qtism\common\datatypes\File;
  * of AbstractFactory. In addition to focusing on the creation of various
  * implementations of the File interface, it also provides a way to delete
  * created Files.
- * 
- * This interface represents the AbstractFactory interface of the 
+ *
+ * This interface represents the AbstractFactory interface of the
  * AbstractFactory Design Pattern.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesing.com>
  * @see http://en.wikipedia.org/wiki/Abstract_factory_pattern The Abstract Factory Design Pattern.
  */
-interface FileManager {
-    
+interface FileManager
+{
     /**
      * Instantiate an implementation of File which focuses
      * on keeping a file on the file system from an existing file.
-     * 
+     *
      * @param string $path The path to the file containing the data of the returned File object.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
@@ -49,11 +49,11 @@ interface FileManager {
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function createFromFile($path, $mimeType, $filename = '');
-    
+
     /**
      * Instantiate an implementation of File which focuses
      * on keeping a file on the file system from a $data binary string.
-     * 
+     *
      * @param string $data A binary string representing the data.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
@@ -61,18 +61,18 @@ interface FileManager {
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function createFromData($data, $mimeType, $filename = '');
-    
+
     /**
      * Retrieve a previously created instance by $identifier.
-     * 
+     *
      * @param string $identifier
      * @throws \qtism\common\datatypes\files\FileManagerException
      */
     public function retrieve($identifier);
-    
+
     /**
      * Delete a given AbstractPersistentFile from its storage.
-     * 
+     *
      * @param \qtism\common\datatypes\File $file A persistent file to be deleted gracefully.
      * @throws \qtism\common\datatypes\files\FileManagerException
      */

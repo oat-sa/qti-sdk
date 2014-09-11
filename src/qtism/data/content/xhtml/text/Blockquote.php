@@ -28,23 +28,23 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML blockquote class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Blockquote extends SimpleBlock {
-    
+class Blockquote extends SimpleBlock
+{
     /**
      * The cite attribute.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $cite = '';
-    
+
     /**
      * Create a new Blockquote object.
-     * 
+     *
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
@@ -52,49 +52,53 @@ class Blockquote extends SimpleBlock {
      * @param string $cite The cite attribute value (URI).
      * @throws \InvalidArgumentException If any of the argument is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '', $cite = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setCite($cite);
     }
-    
+
     /**
      * Get the cite attribute's value.
-     * 
+     *
      * @return string A URI.
      */
-    public function getCite() {
+    public function getCite()
+    {
         return $this->cite;
     }
-    
+
     /**
      * Set the cite attribute's value.
-     * 
+     *
      * @param string $cite
      * @throws InvalidArgumentException If $cite is not a valid URI.
      */
-    public function setCite($cite) {
+    public function setCite($cite)
+    {
         if (Format::isUri($cite) === true) {
             $this->cite = $cite;
-        }
-        else {
+        } else {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Whether or not a value is defined for the cite attribute.
-     * 
+     *
      * @return boolean
      */
-    public function hasCite() {
+    public function hasCite()
+    {
         return $this->getCite() !== '';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'blockquote';
     }
 }

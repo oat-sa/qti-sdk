@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing DlElement
  * objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DlElementCollection extends QtiComponentCollection {
-    
+class DlElementCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of DlElement.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of DlElement.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof DlElement) {
             $msg = "DlElementCollection objects only accept to store DlElement objects.";
             throw new InvalidArgumentException($msg);

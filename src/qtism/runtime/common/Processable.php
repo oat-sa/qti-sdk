@@ -19,23 +19,23 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *  
+ *
  *
  */
 namespace qtism\runtime\common;
 
 /**
  * Any "processable" class must implement this interface.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Processable {
-	
-	/**
+interface Processable
+{
+    /**
 	 * Trigger the processing of the Processable object.
-	 * 
+	 *
 	 * @throws \qtism\runtime\common\ProcessingException If an error occurs while processing something.
 	 */
-	public function process();
+    public function process();
 }

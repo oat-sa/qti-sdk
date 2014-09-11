@@ -30,46 +30,48 @@ use \DOMElement;
 
 /**
  * Marshalling implementation for the ExtendedAssessmentSection class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller {
-    
+class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\AssessmentSectionMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = parent::marshallChildrenKnown($component, $elements);
-        
+
         foreach ($component->getRubricBlockRefs() as $rubricBlockRef) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($rubricBlockRef);
             $element->appendChild($marshaller->marshall($rubricBlockRef));
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\AssessmentSectionMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
-        
+
         $rubricBlockRefElts = self::getChildElementsByTagName($element, 'rubricBlockRef');
         if (count($rubricBlockRefElts) > 0) {
-            
+
             $rubricBlockRefs = new RubricBlockRefCollection();
-            
+
             foreach ($rubricBlockRefElts as $rubricBlockRefElt) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($rubricBlockRefElt);
                 $rubricBlockRefs[] = $marshaller->unmarshall($rubricBlockRefElt);
             }
-            
+
             $component->setRubricBlockRefs($rubricBlockRefs);
         }
-        
+
         return $component;
     }
 }

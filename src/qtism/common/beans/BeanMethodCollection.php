@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialized collection aiming at storing BeanMethod objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BeanMethodCollection extends AbstractCollection {
-    
+class BeanMethodCollection extends AbstractCollection
+{
     /**
      * Checks whether $value is an instance of BeanMethod.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of BeanMethod.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof BeanMethod) {
             $msg = "The BeanMethodCollection class only accepts to store BeanMethod objects.";
             throw new InvalidArgumentException($msg);

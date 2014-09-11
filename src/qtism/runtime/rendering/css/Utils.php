@@ -25,28 +25,29 @@ namespace qtism\runtime\rendering\css;
 
 /**
  * A collection of utility methods focusing on Cascading Style Sheets.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-    
+class Utils
+{
     /**
      * Remap a given CSS selector following the $map array.
-     * 
+     *
      * Example:
-     * 
+     *
      * <code>
      * $map = array('prompt' => 'qti-prompt', 'div' => 'qti-div');
      * $selector = 'div > prompt';
      * echo Utils::mapSelector($selector, $map);
      * // .qti-div > .qti-prompt
-     * </code> 
-     * 
+     * </code>
+     *
      * @param string $selector A Cascading Style Sheet selector.
      * @param array $map A QTI to XHTML CSS class map.
      */
-    static public function mapSelector($selector, array $map) {
+    public static function mapSelector($selector, array $map)
+    {
         foreach ($map as $k => $v) {
             $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";
             $count = 1;
@@ -54,7 +55,7 @@ class Utils {
                 $selector = preg_replace($pattern, '$1.' . $v . '$3', $selector, -1, $count);
             }
         }
-        
+
         return $selector;
     }
 }

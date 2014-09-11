@@ -32,37 +32,37 @@ use qtism\runtime\common\Processable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RuleProcessingException extends ProcessingException {
-	
-	/**
+class RuleProcessingException extends ProcessingException
+{
+    /**
 	 * The error code to use when the exitResponse rule is invoked
 	 * during rule processing.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const EXIT_RESPONSE = 10;
-	
-	/**
+    const EXIT_RESPONSE = 10;
+
+    /**
 	 * The error code to use when the exitTest rule is invoked
 	 * during rule processing.
 	 *
 	 * @var integer
 	 */
-	const EXIT_TEST = 11;
-	
-	/**
+    const EXIT_TEST = 11;
+
+    /**
 	 * Set the source of the error.
 	 *
 	 * @param \qtism\runtime\common\Processable $source The source of the error.
 	 * @throws \InvalidArgumentException If $source is not an ExpressionProcessor object.
 	 */
-	public function setSource(Processable $source) {
-		if ($source instanceof RuleProcessor) {
-			parent::setSource($source);
-		}
-		else {
-			$msg = "RuleProcessingException::setSource only accept RuleProcessor objects.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
+    public function setSource(Processable $source)
+    {
+        if ($source instanceof RuleProcessor) {
+            parent::setSource($source);
+        } else {
+            $msg = "RuleProcessingException::setSource only accept RuleProcessor objects.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
 }

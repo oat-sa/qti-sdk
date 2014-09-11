@@ -25,19 +25,19 @@ namespace qtism\data\content\interactions;
 use qtism\data\content\FlowStaticCollection;
 use \InvalidArgumentException;
 
-class SimpleChoice extends Choice {
-    
+class SimpleChoice extends Choice
+{
     /**
      * The components composing the simpleChoice.
-     * 
+     *
      * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new SimpleChoice object.
-     * 
+     *
      * @param string $identifier The identifier of the choice.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -45,42 +45,47 @@ class SimpleChoice extends Choice {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($identifier, $id, $class, $lang, $label);
         $this->setContent(new FlowStaticCollection());
     }
-    
+
     /**
      * Get the components composing the simpleChoice.
-     * 
+     *
      * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the components composing the simpleChoice.
-     * 
+     *
      * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content) {
+    public function setContent(FlowStaticCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the components composing the simpleChoice.
-     * 
+     *
      * @return \qtism\data\content\FlowStaticCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'simpleChoice';
     }
 }

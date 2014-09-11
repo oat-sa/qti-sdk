@@ -25,25 +25,26 @@ namespace qtism\runtime\rules;
 
 /**
  * From IMS QTI:
- * 
- * If the expression given in the outcomeIf or outcomeElseIf evaluates to true then 
- * the sub-rules contained within it are followed and any following outcomeElseIf or 
+ *
+ * If the expression given in the outcomeIf or outcomeElseIf evaluates to true then
+ * the sub-rules contained within it are followed and any following outcomeElseIf or
  * outcomeElse parts are ignored for this outcome condition.
- * 
- * If the expression given in the outcomeIf or outcomeElseIf does not evaluate to true 
- * then consideration passes to the next outcomeElseIf or, if there are no more 
- * outcomeElseIf parts then the sub-rules of the outcomeElse are followed 
+ *
+ * If the expression given in the outcomeIf or outcomeElseIf does not evaluate to true
+ * then consideration passes to the next outcomeElseIf or, if there are no more
+ * outcomeElseIf parts then the sub-rules of the outcomeElse are followed
  * (if specified).
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OutcomeConditionProcessor extends AbstractConditionProcessor {
-	
+class OutcomeConditionProcessor extends AbstractConditionProcessor
+{
     /**
      * @see \qtism\runtime\rules\AbstractConditionProcessor::getQtiNature()
      */
-	public function getQtiNature() {
-		return 'outcome';
-	}
+    public function getQtiNature()
+    {
+        return 'outcome';
+    }
 }

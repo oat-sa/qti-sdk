@@ -28,65 +28,70 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML caption class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Caption extends BodyElement {
-    
+class Caption extends BodyElement
+{
     /**
      * The components composing the caption.
-     * 
+     *
      * @var InlineCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Caption object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement;
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new InlineCollection());
     }
-    
+
     /**
      * Get the components composing the caption.
-     * 
+     *
      * @return \qtism\data\content\InlineCollection A collection of Inline objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the components composing the caption.
-     * 
+     *
      * @param \qtism\data\content\InlineCollection $content A collection of Inline objects.
      */
-    public function setContent(InlineCollection $content) {
+    public function setContent(InlineCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the components composing the caption.
-     * 
+     *
      * @return \qtism\data\content\InlineCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'caption';
     }
 }

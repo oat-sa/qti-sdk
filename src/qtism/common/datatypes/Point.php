@@ -28,137 +28,144 @@ use qtism\common\Comparable;
 
 /**
  * Represents the QTI Point datatype.
- * 
+ *
  * From IMS QTI:
- * 
- * A point value represents an integer tuple corresponding to a 
- * graphic point. The two integers correspond to the horizontal (x-axis) 
- * and vertical (y-axis) positions respectively. The up/down and 
+ *
+ * A point value represents an integer tuple corresponding to a
+ * graphic point. The two integers correspond to the horizontal (x-axis)
+ * and vertical (y-axis) positions respectively. The up/down and
  * left/right senses of the axes are context dependent.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Point implements Comparable, QtiDatatype {
-	
-	/**
+class Point implements Comparable, QtiDatatype
+{
+    /**
 	 * The position on the x-axis.
-	 * 
+	 *
 	 * @var int
 	 */
-	private $x;
-	
-	/**
+    private $x;
+
+    /**
 	 * The position on the y-axis.
-	 * 
+	 *
 	 * @var int
 	 */
-	private $y;
-	
-	/**
+    private $y;
+
+    /**
 	 * Create a new Point object.
-	 * 
+	 *
 	 * @param int $x A position on the x-axis.
 	 * @param int $y A position on the y-axis.
 	 * @throws \InvalidArgumentException If $x or $y are not integer values.
 	 */
-	public function __construct($x, $y) {
-		$this->setX($x);
-		$this->setY($y);
-	}
-	
-	/**
+    public function __construct($x, $y)
+    {
+        $this->setX($x);
+        $this->setY($y);
+    }
+
+    /**
 	 * Set the position on the x-axis.
-	 * 
+	 *
 	 * @param int $x A position on the x-axis.
 	 * @throws \InvalidArgumentException If $x is nto an integer value.
 	 */
-	public function setX($x) {
-		if (is_int($x)) {
-			$this->x = $x;
-		}
-		else {
-			$msg = "The X argument must be an integer value, '" . gettype($x) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setX($x)
+    {
+        if (is_int($x)) {
+            $this->x = $x;
+        } else {
+            $msg = "The X argument must be an integer value, '" . gettype($x) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get the position on the x-axis.
-	 * 
+	 *
 	 * @return int A position on the x-axis.
 	 */
-	public function getX() {
-		return $this->x;
-	}
-	
-	/**
+    public function getX()
+    {
+        return $this->x;
+    }
+
+    /**
 	 * Set the position on y-axis.
-	 * 
+	 *
 	 * @param int $y A position on the y-axis.
 	 * @throws \InvalidArgumentException If $y is not an integer value.
 	 */
-	public function setY($y) {
-		if (is_int($y)) {
-			$this->y = $y;
-		}
-		else {
-			$msg = "The Y argument must be an integer value, '" . gettype($x) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setY($y)
+    {
+        if (is_int($y)) {
+            $this->y = $y;
+        } else {
+            $msg = "The Y argument must be an integer value, '" . gettype($x) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Get the position on the y-axis.
-	 * 
+	 *
 	 * @return int A position on the y-axis.
 	 */
-	public function getY() {
-		return $this->y;
-	}
-	
-	/**
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    /**
 	 * Wheter a given $obj is equal to $this Point object. Two Point objects
 	 * are considered to be the same if they have the same coordinates.
-	 * 
+	 *
 	 * @param mixed $obj An object.
 	 * @return boolean Whether or not the equality is established.
 	 */
-	public function equals($obj) {
-		return (gettype($obj) === 'object' &&
-			$obj instanceof self &&
-			$obj->getX() === $this->getX() &&
-			$obj->getY() === $this->getY());
-	}
-	
-	/**
+    public function equals($obj)
+    {
+        return (gettype($obj) === 'object' &&
+            $obj instanceof self &&
+            $obj->getX() === $this->getX() &&
+            $obj->getY() === $this->getY());
+    }
+
+    /**
 	 * Returns a string representation of the Point object
 	 * e.g. "20 30" for a Point object where 20 is the value
 	 * of X and 30 is the value of Y.
-	 * 
+	 *
 	 * @return string
 	 */
-	public function __toString() {
-		return $this->getX() . ' ' . $this->getY();
-	}
-	
-	/**
+    public function __toString()
+    {
+        return $this->getX() . ' ' . $this->getY();
+    }
+
+    /**
 	 * Get the BaseType of the value. This method systematically returns
 	 * the BaseType::POINT value.
-	 * 
+	 *
 	 * @return A value from the BaseType enumeration.
 	 */
-	public function getBaseType() {
-	    return BaseType::POINT;
-	}
-	
-	/**
+    public function getBaseType()
+    {
+        return BaseType::POINT;
+    }
+
+    /**
 	 * Get the Cardinality of the value. This method systematically returns
 	 * the Cardinality::SINGLE value.
-	 * 
+	 *
 	 * @return A value from the Cardinality enumeration.
 	 */
-	public function getCardinality() {
-	    return Cardinality::SINGLE;
-	}
+    public function getCardinality()
+    {
+        return Cardinality::SINGLE;
+    }
 }

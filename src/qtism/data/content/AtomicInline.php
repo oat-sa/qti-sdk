@@ -27,68 +27,72 @@ use \InvalidArgumentException;
 
 /**
  * The atomicInline QTI abstract class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AtomicInline extends BodyElement implements FlowStatic, InlineStatic {
-    
+abstract class AtomicInline extends BodyElement implements FlowStatic, InlineStatic
+{
     /**
      * The base URI of the AtomicInline.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * Create a new AtomicInline object.
-     * 
+     *
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
     }
-    
+
     /**
      * An atomicInline component does not contain any other component. As
      * a result, this method always returns an empty QtiComponentCollection object.
-     * 
+     *
      * @return \qtism\data\QtiComponentCollection An empty QtiComponentCollection.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
-    
+
     /**
      * Set the base URI of the AtomicInline.
      *
      * @param string $XmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the AtomicInline.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
-    public function hasXmlBase() {
+
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
 }

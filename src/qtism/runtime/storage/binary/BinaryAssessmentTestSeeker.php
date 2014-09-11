@@ -28,18 +28,19 @@ use qtism\runtime\storage\common\AssessmentTestSeeker;
 
 /**
  * A implementation of AssessmentTestSeeker dedicated to binary data.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BinaryAssessmentTestSeeker extends AssessmentTestSeeker {
-    
+class BinaryAssessmentTestSeeker extends AssessmentTestSeeker
+{
     /**
      * Create a new BinaryAssessmentTestSeeker object.
-     * 
+     *
      * @param \qtism\data\AssessmentTest $test
      */
-    public function __construct(AssessmentTest $test) {
+    public function __construct(AssessmentTest $test)
+    {
         $classes = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition', 'itemSessionControl');
         parent::__construct($test, $classes);
     }

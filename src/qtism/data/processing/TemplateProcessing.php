@@ -28,74 +28,78 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * Template processing consists of one or more templateRules that are followed by 
- * the cloning engine or delivery system in order to assign values to the template 
- * variables. Template processing is identical in form to responseProcessing except 
+ *
+ * Template processing consists of one or more templateRules that are followed by
+ * the cloning engine or delivery system in order to assign values to the template
+ * variables. Template processing is identical in form to responseProcessing except
  * that the purpose is to assign values to template variables, not outcome variables.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateProcessing extends QtiComponent {
-    
+class TemplateProcessing extends QtiComponent
+{
     /**
      * The collection of TemplateRule objects composing
      * the template processing.
-     * 
+     *
      * @var \qtism\data\rules\TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templateRules;
-    
+
     /**
      * Create a new TemplateProcessing object.
-     * 
+     *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
      * @throws \InvalidArgumentException If $templateRules is an empty collection.
      */
-    public function __construct(TemplateRuleCollection $templateRules) {
+    public function __construct(TemplateRuleCollection $templateRules)
+    {
         $this->setTemplateRules($templateRules);
     }
-    
+
     /**
      * Set the collection of TemplateRule objects composing
      * the template processing.
-     * 
+     *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
      * @throws \InvalidArgumentException If $templateRules is an empty collection.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules) {
+    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    {
         if (count($templateRules) > 0) {
             $this->templateRules = $templateRules;
-        }
-        else {
+        } else {
             $msg = "A 'templateProcessing' element must contain at lease one 'templateRule' element, none given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the collection of TemplatRule objects composing
      * the template processing.
-     * 
+     *
      * @return \qtism\data\rules\TemplateRuleCollection A collection of at least one TemplateRule object.
      */
-    public function getTemplateRules() {
+    public function getTemplateRules()
+    {
         return $this->templateRules;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getTemplateRules();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'templateProcessing';
     }
 }

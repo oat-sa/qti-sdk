@@ -24,27 +24,27 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\xhtml\ParamType;
-use qtism\runtime\rendering\markup\AbstractMarkupRenderer;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
  * Param renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ParamRenderer extends AbstractXhtmlRenderer {
-    
+class ParamRenderer extends AbstractXhtmlRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('name', $component->getName());
         $fragment->firstChild->setAttribute('value', $component->getValue());
         $fragment->firstChild->setAttribute('valuetype', ParamType::getNameByConstant($component->getValueType()));
-        
+
         if ($component->hasType() === true) {
             $fragment->firstChild->setAttribute('type', $component->hasType());
         }

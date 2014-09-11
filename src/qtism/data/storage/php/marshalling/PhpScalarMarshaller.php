@@ -27,53 +27,55 @@ use qtism\data\storage\php\Utils as PhpUtils;
 /**
  * This implementation of PhpMarshaller focuses on marshalling PHP scalar
  * values (including the null value) into PHP source code.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PhpScalarMarshaller extends PhpMarshaller {
-    
+class PhpScalarMarshaller extends PhpMarshaller
+{
     /**
      * Create a new PhpScalarMarshaller objec.
-     * 
+     *
      * @param \qtism\data\storage\php\marshalling\PhpMarshallingContext $context A PhpMarshallingContext object.
      * @param mixed PHP scalar value (including null value) to be marshalled.
      * @throws \InvalidArgumentException If $toMarshall is not considered to be a marshallable PHP scalar value.
      */
-    public function __construct(PhpMarshallingContext $context, $toMarshall) {
+    public function __construct(PhpMarshallingContext $context, $toMarshall)
+    {
         parent::__construct($context, $toMarshall);
     }
-    
+
     /**
      * Checks whether or not the given value is marshallable by this implementation.
-     * 
+     *
      * @return boolean
      */
-    protected function isMarshallable($toMarshall) {
+    protected function isMarshallable($toMarshall)
+    {
         return PhpUtils::isScalar($toMarshall);
     }
-    
+
     /**
      * Marshall the PHP scalar value to be marshalled into PHP source code.
-     * 
+     *
      * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException If an error occurs while marshalling.
      */
-    public function marshall() {
+    public function marshall()
+    {
         $ctx = $this->getContext();
         $streamAccess = $ctx->getStreamAccess();
-        
+
         try {
             $scalar = $this->getToMarshall();
             $varName = $this->getContext()->generateVariableName($scalar);
-            
+
             $streamAccess->writeVariable($varName);
             $streamAccess->writeEquals($ctx->mustFormatOutput());
             $streamAccess->writeScalar($scalar);
             $streamAccess->writeSemicolon($ctx->mustFormatOutput());
-            
+
             $ctx->pushOnVariableStack($varName);
-        }
-        catch (StreamAccessException $e) {
+        } catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling the scalar value '${scalar}'.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }

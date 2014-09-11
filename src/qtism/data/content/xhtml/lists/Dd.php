@@ -27,65 +27,70 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML dd class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Dd extends DlElement {
-    
+class Dd extends DlElement
+{
     /**
      * The Flow objects composing the Dd.
-     * 
+     *
      * @var \qtism\data\content\FlowCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Dd object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new FlowCollection());
-    } 
-    
+    }
+
     /**
      * Set the Flow objects composing the Dd.
-     * 
+     *
      * @param \qtism\data\content\FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content) {
+    public function setContent(FlowCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Set the Flow objects composing the Dd.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * Get the Flow objects composing the Dd.
-     * 
+     *
      * @return \qtism\data\content\FlowCollection A collection of Flow objects.
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'dd';
     }
 }

@@ -29,52 +29,54 @@ use \DOMElement;
 
 /**
  * The Marshaller implementation for AtomicBlock elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AtomicBlockMarshaller extends ContentMarshaller {
-    
+class AtomicBlockMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
         $component->setContent(new InlineCollection($children->getArrayCopy()));
         self::fillBodyElement($component, $element);
-        
+
         if (($xmlBase = self::getXmlBase($element)) !== false) {
             $component->setXmlBase($xmlBase);
         }
-        
+
         return $component;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         self::fillElement($element, $component);
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml\\text");
     }
 }

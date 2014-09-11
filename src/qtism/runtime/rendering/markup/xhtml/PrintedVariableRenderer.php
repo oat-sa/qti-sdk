@@ -31,9 +31,9 @@ use \DOMDocumentFragment;
 
 /**
  * PrintedVariable Renderer.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-identifier = qti:printedVariable->identifier
  * * data-format = qti:printedVariable->format
  * * data-power-form = qti:printedVariable->powerForm
@@ -42,58 +42,60 @@ use \DOMDocumentFragment;
  * * data-delimiter = qti:printedVariable->delimiter
  * * data-field = qti:printedVariable->field
  * * data-mapping-indicator = qti:printedVariable->mappingIndicator
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PrintedVariableRenderer extends BodyElementRenderer {
-    
+class PrintedVariableRenderer extends BodyElementRenderer
+{
     /**
      * Create a new PrintedVariableRenderer object.
      *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('span');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-printedVariable');
-        
+
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
-        
+
         if ($component->hasFormat() === true) {
             $fragment->firstChild->setAttribute('data-format', $component->getFormat());
         }
-        
+
         $fragment->firstChild->setAttribute('data-power-form', ($component->mustPowerForm() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-base', $component->getBase());
-        
+
         if ($component->hasIndex() === true) {
             $fragment->firstChild->setAttribute('data-index', $component->getIndex());
         }
-        
+
         $fragment->firstChild->setAttribute('data-delimiter', $component->getDelimiter());
-        
+
         if ($component->hasField() === true) {
             $fragment->firstChild->setAttribute('data-field', $component->getField());
         }
-        
+
         $fragment->firstChild->setAttribute('data-mapping-indicator', $component->getMappingIndicator());
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         $renderingEngine = $this->getRenderingEngine();
-        
+
         if ($renderingEngine !== null) {
             switch ($renderingEngine->getPrintedVariablePolicy()) {
                 case AbstractMarkupRenderingEngine::CONTEXT_AWARE:
@@ -108,11 +110,11 @@ class PrintedVariableRenderer extends BodyElementRenderer {
                                                   $component->getMappingIndicator());
                     $fragment->firstChild->appendChild($fragment->ownerDocument->createTextNode($value));
                 break;
-                
+
                 case AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED:
                     $base = $component->getBase();
                     $index = $component->getIndex();
-                    
+
                     $params = array('$' . $renderingEngine->getStateName(),
                                      PhpUtils::doubleQuotedPhpString($component->getIdentifier()),
                                      PhpUtils::doubleQuotedPhpString($component->getFormat()),
@@ -122,7 +124,7 @@ class PrintedVariableRenderer extends BodyElementRenderer {
                                      PhpUtils::doubleQuotedPhpString($component->getDelimiter()),
                                      PhpUtils::doubleQuotedPhpString($component->getField()),
                                      PhpUtils::doubleQuotedPhpString($component->getMappingIndicator()));
-                    
+
                     $value = " qtism-printVariable(" . implode(', ', $params) . ") ";
                     $fragment->firstChild->appendChild($fragment->ownerDocument->createComment($value));
                 break;

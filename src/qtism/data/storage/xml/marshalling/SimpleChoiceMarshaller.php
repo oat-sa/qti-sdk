@@ -27,83 +27,82 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for SimpleChoice elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleChoiceMarshaller extends ContentMarshaller {
-    
+class SimpleChoiceMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
-            
+
             $fqClass = $this->lookupClass($element);
             $component = new $fqClass($identifier);
-            
+
             if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $component->setFixed($fixed);
             }
-            
+
             if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
-            
+
             if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
-            
+
             $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
             self::fillBodyElement($component, $element);
-            
+
             return $component;
-            
-        }
-        else {
+
+        } else {
             $msg = "The mandatory 'identifier' attribute is missing from the 'simpleChoice' element.";
             throw new UnmarshallingException($msg, $element);
         }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
-        
+
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        
+
         if ($component->isFixed() === true) {
             self::setDOMElementAttribute($element, 'fixed', true);
         }
-        
+
         if ($component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
-        
+
         if ($component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }
 }

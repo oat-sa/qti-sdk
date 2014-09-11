@@ -27,28 +27,29 @@ use \Exception;
 /**
  * The exception class to be used when error occurs while dealing
  * with FileManager objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FileManagerException extends Exception {
-    
+class FileManagerException extends Exception
+{
     /**
      * Error code to use when the constitution of the error
      * is unknown.
-     * 
+     *
      * @var integer
      */
     const UNKNOWN = 0;
-    
+
     /**
      * Create a new FileManagerException object.
-     * 
+     *
      * @param string $message A human-readable error message.
      * @param integer $code A machine understandable error code (see class constants).
      * @param \Exception $previous A possible previous Exception object.
      */
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 }

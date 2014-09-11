@@ -28,19 +28,20 @@ use \DOMDocumentFragment;
 
 /**
  * A renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ARenderer extends BodyElementRenderer {
-    
+class ARenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('href', $this->transformUri($component->getHref(), $base));
-        
+
         if ($component->hasType() === true) {
             $fragment->firstChild->setAttribute('type', $component->getType());
         }

@@ -28,62 +28,60 @@ use \InvalidArgumentException;
 /**
  * Utility class aiming at providing utility methods for the PHP Marshalling
  * package.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-    
+class Utils
+{
     /**
-     * Generate a variable name for a given object. 
-     * 
-     * 
+     * Generate a variable name for a given object.
+     *
+     *
      * * If $value is an object, the generated variable name
      * will be [$object-class-short-name]_$occurence in lower case e.g. 'point_0',
-     * 'assessmenttest_3', ... 
-     * 
+     * 'assessmenttest_3', ...
+     *
      * * If $value is a PHP scalar value (not including the null value), the generated
      * variable name will be [gettype($value)]_$occurence e.g. 'string_1', 'boolean_0', ...
-     * 
+     *
      * * If $value is an array, the generated variable name will be array_$occurence such as
      * 'array_0', 'array_2', ...
-     * 
+     *
      * * If $value is the null value, the generated variable name will be nullvalue_$occurence
      * such as 'nullvalue_3'.
-     * 
+     *
      * * Finally, if the $value cannot be handled by this method, an InvalidArgumentException
      * is thrown.
-     * 
+     *
      * @param mixed $value A value.
      * @param integer $occurence An occurence number.
      * @return string A variable name.
      * @throws \InvalidArgumentException If $occurence is not a positive integer or if $value cannot be handled by this method.
      */
-    public static function variableName($value, $occurence = 0) {
-        
+    public static function variableName($value, $occurence = 0)
+    {
         if (is_int($occurence) === false || $occurence < 0) {
             $msg = "The 'occurence' argument must be a positive integer (>= 0).";
             throw new InvalidArgumentException($msg);
         }
-        
+
         if (is_object($value) === true) {
             $object = new ReflectionObject($value);
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
+
             return "${className}_${occurence}";
-        }
-        else {
+        } else {
             // Is it a PHP scalar value?
             if (is_scalar($value) === true) {
                 return gettype($value) . '_' . $occurence;
-            }
-            else if (is_array($value) === true) {
+            } elseif (is_array($value) === true) {
                 return 'array_' . $occurence;
             }
             // null value?
-            else if (is_null($value) === true) {
+            elseif (is_null($value) === true) {
                 return 'nullvalue_' . $occurence;
-            }
-            else {
+            } else {
                 $msg = "Cannot handle the given value.";
                 throw new InvalidArgumentException($msg);
             }

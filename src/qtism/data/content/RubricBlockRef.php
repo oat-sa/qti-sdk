@@ -34,147 +34,157 @@ use \InvalidArgumentException;
  * An extension of QTI that represents a reference
  * to an external QTI rubricBlock. It works in a similar
  * way than QTI's assessmentSectionRef.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RubricBlockRef extends QtiComponent implements QtiIdentifiable {
-    
+class RubricBlockRef extends QtiComponent implements QtiIdentifiable
+{
     /**
      * A collection of SplObservers.
      *
      * @var \SplObjectStorage
      */
     private $observers = null;
-    
+
     /**
      * The identifier of the rubricBlockRef.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $identifier;
-    
+
     /**
      * The URI referencing the file containing
      * the definition of the external rubricBlock.
-     * 
+     *
      * @var string
      * @qtism-bean-property
      */
     private $href;
-    
+
     /**
      * Create a new RubricBlockRef object.
-     * 
+     *
      * @param string $identifier A QTI identifier.
      * @param string $href A URI locating the external rubrickBlock definition.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($identifier, $href) {
+    public function __construct($identifier, $href)
+    {
         $this->setIdentifier($identifier);
         $this->setHref($href);
-        $this->setObservers(new SplObjectStorage()); 
+        $this->setObservers(new SplObjectStorage());
     }
-    
+
     /**
      * Set the identifier of the rubricBlockRef.
-     * 
+     *
      * @param string $identifier A QTI identifier.
      * @throws \InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier) {
+    public function setIdentifier($identifier)
+    {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
-        }
-        else {
+        } else {
             $msg = "The 'identifier' argument must be a valid QTI identifier, '" . $identifier . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the identifier of the rubricBlockRef.
-     * 
+     *
      * @return string A QTI identifier.
      */
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->identifier;
     }
-    
+
     /**
      * Set the URI locating the external rubricBlock definition.
-     * 
+     *
      * @param string $href A URI.
      * @throws \InvalidArgumentException If $href is not a valid URI.
      */
-    public function setHref($href) {
+    public function setHref($href)
+    {
         if (Format::isUri($href) === true) {
             $this->href = $href;
-        }
-        else {
+        } else {
             $msg = "The 'href' argument must be a valid URI, '" . $href . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the URI locating the external rubrickBlock definition.
-     * 
+     *
      * @return string A URI.
      */
-    public function getHref() {
+    public function getHref()
+    {
         return $this->href;
     }
-    
+
     /**
      * Get the observers of the object.
      *
      * @return \SplObjectStorage An SplObjectStorage object.
      */
-    protected function getObservers() {
+    protected function getObservers()
+    {
         return $this->observers;
     }
-    
+
     /**
      * Set the observers of the object.
      *
      * @param \SplObjectStorage $observers An SplObjectStorage object.
      */
-    protected function setObservers(SplObjectStorage $observers) {
+    protected function setObservers(SplObjectStorage $observers)
+    {
         $this->observers = $observers;
     }
-    
-    public function getComponents() {
+
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
-    
-    public function getQtiClassName() {
+
+    public function getQtiClassName()
+    {
         return 'rubricBlockRef';
     }
-    
+
     /**
      * SplSubject::attach implementation.
      *
      * @param \SplObserver An SplObserver object.
      */
-    public function attach(SplObserver $observer) {
+    public function attach(SplObserver $observer)
+    {
         $this->getObservers()->attach($observer);
     }
-    
+
     /**
      * SplSubject::detach implementation.
      *
      * @param \SplObserver $observer An SplObserver object.
      */
-    public function detach(SplObserver $observer) {
+    public function detach(SplObserver $observer)
+    {
         $this->getObservers()->detach($observer);
     }
-    
+
     /**
      * SplSubject::notify implementation.
      */
-    public function notify() {
+    public function notify()
+    {
         foreach ($this->getObservers() as $observer) {
             $observer->update($this);
         }

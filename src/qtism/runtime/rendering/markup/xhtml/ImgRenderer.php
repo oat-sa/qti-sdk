@@ -28,28 +28,29 @@ use \DOMDocumentFragment;
 
 /**
  * Img renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ImgRenderer extends BodyElementRenderer {
-    
+class ImgRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('src', $this->transformUri($component->getSrc(), $base));
         $fragment->firstChild->setAttribute('alt', $component->getAlt());
-        
+
         if ($component->hasLongdesc() === true) {
             $fragment->firstChild->setAttribute('longdesc', $this->transformUri($component->getLongdesc(), $base));
         }
-        
+
         if ($component->hasHeight() === true) {
             $fragment->firstChild->setAttribute('height', $component->getHeight());
         }
-        
+
         if ($component->hasWidth() === true) {
             $fragment->firstChild->setAttribute('width', $component->getWidth());
         }

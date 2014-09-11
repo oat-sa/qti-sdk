@@ -19,7 +19,7 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- * 
+ *
  *
  */
 
@@ -33,26 +33,28 @@ use \DOMDocumentFragment;
  * ChoiceInteraction renderer. The base class for all concrete
  * GraphicInteraction renderers. The rendered elements
  * will be applied a 'qti-graphicInteraction' additional CSS class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class GraphicInteractionRenderer extends InteractionRenderer {
-    
+abstract class GraphicInteractionRenderer extends InteractionRenderer
+{
     /**
      * Create a new GraphicInteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-graphicInteraction');
     }

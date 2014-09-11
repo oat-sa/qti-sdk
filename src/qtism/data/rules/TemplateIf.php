@@ -29,96 +29,103 @@ use qtism\data\QtiComponent;
 
 /**
  * From IMS QTI:
- * 
- * A templateIf part consists of an expression which must have an effective 
- * baseType of boolean and single cardinality. For more information about the 
- * runtime data model employed see Expressions. It also contains a set of 
- * sub-rules. If the expression is true then the sub-rules are processed, 
+ *
+ * A templateIf part consists of an expression which must have an effective
+ * baseType of boolean and single cardinality. For more information about the
+ * runtime data model employed see Expressions. It also contains a set of
+ * sub-rules. If the expression is true then the sub-rules are processed,
  * otherwise they are skipped (including if the expression is NULL) and the
  * following templateElseIf or templateElse parts (if any) are considered instead.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateIf extends QtiComponent {
-    
+class TemplateIf extends QtiComponent
+{
     /**
      * The expression to be evaluated.
-     * 
+     *
      * @var \qtism\data\expressions\Expression
      * @qtism-bean-property
      */
     private $expression;
-    
+
     /**
      * The template rules to be evaluated if the expression
      * returns true.
-     * 
+     *
      * @var \qtism\data\rules\TemplateRuleCollection
      * @qtism-bean-property
      */
     private $templateRules;
-    
+
     /**
      * Create a new TemplateIf object.
-     * 
+     *
      * @param \qtism\data\expressions\Expression $expression The Expression to be evaluated.
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules The TemplateRule objects to be evaluated if the expression returns true.
      */
-    public function __construct(Expression $expression, TemplateRuleCollection $templateRules) {
+    public function __construct(Expression $expression, TemplateRuleCollection $templateRules)
+    {
         $this->setExpression($expression);
         $this->setTemplateRules($templateRules);
     }
-    
+
     /**
      * Set the Expression object to be evaluated.
-     * 
+     *
      * @param \qtism\data\expressions\Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression) {
+    public function setExpression(Expression $expression)
+    {
         $this->expression = $expression;
     }
-    
+
     /**
      * Get the Expression object to be evaluated.
-     * 
+     *
      * @return \qtism\data\expressions\Expression An Expression object.
      */
-    public function getExpression() {
+    public function getExpression()
+    {
         return $this->expression;
     }
-    
+
     /**
      * Set the collection of TemplateRule objects to be evaluated if the
      * expression returns true.
-     * 
+     *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules) {
+    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    {
         $this->templateRules = $templateRules;
     }
-    
+
     /**
      * Get the collection of TemplateRule objects to be evaluated if the expression
      * returns true.
-     * 
+     *
      * @return \qtism\data\rules\TemplateRuleCollection A collection of TemplateRule objects.
      */
-    public function getTemplateRules() {
+    public function getTemplateRules()
+    {
         return $this->templateRules;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection(array_merge(array($this->getExpression()), $this->getTemplateRules()->getArrayCopy()));
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'templateIf';
     }
 }

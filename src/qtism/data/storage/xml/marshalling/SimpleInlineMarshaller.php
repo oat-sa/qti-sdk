@@ -32,94 +32,91 @@ use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for SimpleInline elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleInlineMarshaller extends ContentMarshaller {
-    
+class SimpleInlineMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
-                
-        if ($element->localName === 'a')  {
-            
+
+        if ($element->localName === 'a') {
+
             if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
-                
+
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
-                
+
                 if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
                     $component->setType($type);
                 }
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'href' attribute of the 'a' element is missing.";
                 throw new UnmarshallingException($msg, $element);
             }
-            
-        }
-        else {
+
+        } else {
             $component = new $fqClass();
         }
-        
+
         $component->setContent(new InlineCollection($children->getArrayCopy()));
         self::fillBodyElement($component, $element);
-        
+
         // The q class has a specific cite (URI) attribute.
         if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
-            
+
             try {
                 $component->setCite($cite);
-            }
-            catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 $msg = "The 'cite' attribute of a 'q' element must be a valid URI, '" . $cite . "' given.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
         }
-        
+
         return $component;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         if ($element->localName === 'a') {
             $element->setAttribute('href', $component->getHref());
-            
+
             if (($type = $component->getType()) !== '') {
                 $element->setAttribute('type', $type);
             }
-        }
-        else if ($element->localName === 'q' && ($cite = $component->getCite()) !== '') {
+        } elseif ($element->localName === 'q' && ($cite = $component->getCite()) !== '') {
             $element->setAttribute('cite', $cite);
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml",
                                       "qtism\\data\\content\\xhtml\\text",
                                       "qtism\\data\\content\\xhtml\\presentation");

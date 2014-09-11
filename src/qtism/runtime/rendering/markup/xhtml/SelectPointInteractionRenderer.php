@@ -23,33 +23,32 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SelectPointInteraction renderer. Rendered components will be transformed as 
+ * SelectPointInteraction renderer. Rendered components will be transformed as
  * 'div' elements with a 'qti-selectPointInteraction' additional CSS class.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
  * * data-max-choices = qti:selectPointInteraction->maxChoices
  * * data-min-choices = qti:selectPointInteraction->minChoices
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SelectPointInteractionRenderer extends GraphicInteractionRenderer {
-    
+class SelectPointInteractionRenderer extends GraphicInteractionRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\GraphicInteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-selectPointInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }

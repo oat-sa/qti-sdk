@@ -24,23 +24,23 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML abbr class.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * Note that the title attribute defined by XHTML is not supported.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Abbr extends SimpleInline {
-    
+class Abbr extends SimpleInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'abbr';
     }
 }

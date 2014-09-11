@@ -27,16 +27,17 @@ use \InvalidArgumentException;
 
 /**
  * A Collection aiming at storing PendingResponses objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PendingResponsesCollection extends AbstractCollection {
-    
+class PendingResponsesCollection extends AbstractCollection
+{
     /**
      * @see \qtism\common\collections\AbstractCollection::checkType()
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof PendingResponses) {
             $msg = "PendingResponsesCollection objects only accept to store PendingResponses objects.";
             throw new InvalidArgumentException($msg);

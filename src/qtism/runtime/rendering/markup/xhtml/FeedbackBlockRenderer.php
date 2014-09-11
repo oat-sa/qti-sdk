@@ -31,32 +31,34 @@ use \DOMDocumentFragment;
  * The renderer for FeedbackBlock elements. Rendered elements
  * will get a 'qti-feedbackBlock' additional CSS class and will be
  * transformed as 'div' elements.
- * 
+ *
  * It also takes care of producing the following x-data attributes.
- * 
+ *
  * * data-outcome-identifier = qti:feedbackElement->outcomeIdentifier
  * * data-show-hide = qti:feedbackElement->showHide
  * * data-identifier = qti:feedbackElement->identifier
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FeedbackBlockRenderer extends FeedbackElementRenderer {
-    
+class FeedbackBlockRenderer extends FeedbackElementRenderer
+{
     /**
      * Create a new FeedbackBlockRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\FeedbackElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-feedbackBlock');
     }

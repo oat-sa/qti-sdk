@@ -24,15 +24,15 @@ namespace qtism\data\content;
 
 /**
  * From IMS QTI:
- * 
+ *
  * A sub-class of block that excludes interactions.
- * 
+ *
  * This is a marker interface.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  *
  */
-interface BlockStatic extends Block {
-    
+interface BlockStatic extends Block
+{
 }

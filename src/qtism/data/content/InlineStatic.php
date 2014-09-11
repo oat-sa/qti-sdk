@@ -24,15 +24,15 @@ namespace qtism\data\content;
 
 /**
  * From IMS QTI:
- * 
+ *
  * A sub-class of inline that excludes interactions.
- * 
+ *
  * This is a marker interface.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  *
  */
-interface InlineStatic extends Inline {
-    
+interface InlineStatic extends Inline
+{
 }

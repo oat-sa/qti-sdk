@@ -23,19 +23,19 @@ namespace qtism\common;
 
 /**
  * An interface describing how to resolve a URL into a different one.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Resolver {
-	
-	/**
+interface Resolver
+{
+    /**
 	 * Resolve a given URL (Uniform Resource Locator).
-	 * 
+	 *
 	 * @param string $url A URL to resolve.
 	 * @return string A resolved URL.
 	 * @throws \qtism\common\ResolutionException If an error occurs during the resolution of $url.
 	 */
-	public function resolve($url);
-	
+    public function resolve($url);
+
 }

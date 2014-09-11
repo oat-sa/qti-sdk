@@ -25,31 +25,29 @@ namespace qtism\common\datatypes;
 /**
  * A class focusing on providing utility methods
  * for QTI Datatypes handling.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Utils {
-    
+class Utils
+{
     /**
      * Whether a given $integer value is a QTI compliant
      * integer in the [-2147483647, 2147483647] range.
-     * 
+     *
      * @param mixed $integer
      * @return boolean
      */
-    static public function isQtiInteger($integer) {
+    public static function isQtiInteger($integer)
+    {
         // QTI integers are twos-complement 32-bits integers.
         if (is_int($integer) === false) {
             return false;
-        }
-        else if ($integer > 2147483647) {
+        } elseif ($integer > 2147483647) {
             return false;
-        }
-        else if ($integer < -2147483647) {
+        } elseif ($integer < -2147483647) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

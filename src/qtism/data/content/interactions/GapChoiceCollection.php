@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of QtiComponentCollection which focuses on storing GapChoice
  * objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapChoiceCollection extends QtiComponentCollection {
-    
+class GapChoiceCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of GapChoice.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of GapChoice.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof GapChoice) {
             $msg = "GapChoiceCollection objects only accept to store GapChoice objects.";
             throw new InvalidArgumentException($msg);

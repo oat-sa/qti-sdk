@@ -30,101 +30,99 @@ use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for HottextInteraction elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HottextInteractionMarshaller extends ContentMarshaller {
-    
+class HottextInteractionMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-            
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
             if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-                
+
                 $fqClass = $this->lookupClass($element);
                 try {
                     $content = new BlockStaticCollection($children->getArrayCopy());
-                }
-                catch (InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     $msg = "The content of the 'hottextInteraction' element is invalid.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
-                
+
                 try {
                     $component = new $fqClass($responseIdentifier, $content);
-                }
-                catch (InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     $msg = "The value '${responseIdentifier}' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
-                
+
                 if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     $component->setMaxChoices($maxChoices);
                 }
-                
+
                 if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
-                
+
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
-                
+
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
                     $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                     $component->setPrompt($prompt);
                 }
-                
+
                 self::fillBodyElement($component, $element);
-                
+
                 return $component;
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . " element.";
                 throw new UnmarshallingException($msg, $element);
             }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
-        
+
         if ($component->getMaxChoices() !== 1) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
-        
+
         if ($component->getMinChoices() !== 0) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
-        
+
         if ($component->hasXmlBase() !== false) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }
 }

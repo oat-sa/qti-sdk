@@ -28,18 +28,19 @@ use \DOMDocumentFragment;
 
 /**
  * Col renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ColRenderer extends BodyElementRenderer {
-    
+class ColRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
-        
+
         $fragment->firstChild->setAttribute('span', $component->getSpan());
     }
 }

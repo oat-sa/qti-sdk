@@ -24,15 +24,15 @@ namespace qtism\data\content;
 
 /**
  * A marker interface for the QTI objectFlow abstract class.
- * 
+ *
  * From IMS QTI:
- * 
+ *
  * Elements that can appear within an object.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @see https://en.wikipedia.org/wiki/Marker_interface_pattern
  *
  */
-interface ObjectFlow {
-    
+interface ObjectFlow
+{
 }

@@ -24,21 +24,21 @@ namespace qtism\data\content\xhtml\text;
 
 use qtism\data\content\SimpleInline;
 
-
 /**
  * The XHTML var class.
- * 
+ *
  * Dev's note: var is unfortunately a PHP reserved word.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class VarElement extends SimpleInline {
-    
+class VarElement extends SimpleInline
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'var';
     }
 }

@@ -27,22 +27,23 @@ use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing BlockStatic objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BlockStaticCollection extends QtiComponentCollection {
-    
+class BlockStaticCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of BlockStatic.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of BlockStatic.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof BlockStatic) {
             $msg = "BlockStaticCollection objects only accept BlockStatic objects to be stored.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
 }

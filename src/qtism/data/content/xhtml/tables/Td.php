@@ -24,16 +24,17 @@ namespace qtism\data\content\xhtml\tables;
 
 /**
  * The XHTML td class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Td extends TableCell {
-    
+class Td extends TableCell
+{
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'td';
     }
 }

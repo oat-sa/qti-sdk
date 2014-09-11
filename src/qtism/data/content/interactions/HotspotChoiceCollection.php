@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized AbstractCollection aiming at storing HotspotChoice objects
  * only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HotspotChoiceCollection extends QtiComponentCollection {
-    
+class HotspotChoiceCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is an instance of HotspotChoice.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of HotspotChoice.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof HotspotChoice) {
             $msg = "HotspotChoiceCollection objects only accept to store HotspotChoice objects.";
             throw new InvalidArgumentException($msg);

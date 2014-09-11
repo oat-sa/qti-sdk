@@ -27,29 +27,30 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * HottextInteraction renderer. Rendered components will be transformed as 
+ * HottextInteraction renderer. Rendered components will be transformed as
  * 'div' elements with the 'qti-hottextInteraction' and 'qti-blockInteraction'
  * additional CSS classes.
- * 
+ *
  * The following data-X attributes will be rendered:
- * 
+ *
  * * data-responseIdentifier = qti:interaction->responseIdentifier
  * * data-maxChoices = qti:hottextInteraction
  * * data-minChoices = qti:hottextInteraction
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class HottextInteractionRenderer extends InteractionRenderer {
-    
+class HottextInteractionRenderer extends InteractionRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\InteractionRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-hottextInteraction');
-        
+
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
     }

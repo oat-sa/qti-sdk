@@ -18,18 +18,17 @@
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- * 
+ *
  */
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\runtime\rendering\AbstractRenderingContext;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
  * GapChoice renderer, the base class of all renderers that render subclasses of
- * qti:gapChoice (in other words qti:gapText and qti:gapImg). This renderer will 
+ * qti:gapChoice (in other words qti:gapText and qti:gapImg). This renderer will
  * transform the gapChoice into a 'div' element. Rendered elements will also receive
  * the additional 'qti-gapChoice' CSS class.
  *
@@ -50,15 +49,16 @@ use \DOMDocumentFragment;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class GapChoiceRenderer extends ChoiceRenderer {
-
+abstract class GapChoiceRenderer extends ChoiceRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapChoice');
-        
+
         $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
         $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
     }

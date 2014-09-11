@@ -30,76 +30,74 @@ use \InvalidArgumentException;
 
 /**
  * The OrProcessor class aims at processing OrOperator QTI Data Model Expression objects.
- * 
+ *
  * Developer's note: IMS does not explain what happens when one or more sub-expressions are NULL
  * but not all sub-expressions are false. In this implementation, we consider that NULL is returned
  * if one ore more sub-expressions are NULL.
- * 
+ *
  * From IMS QTI:
- * 
- * The or operator takes one or more sub-expressions each with a base-type of boolean and single cardinality. 
- * The result is a single boolean which is true if any of the sub-expressions are true and false if all of them are 
+ *
+ * The or operator takes one or more sub-expressions each with a base-type of boolean and single cardinality.
+ * The result is a single boolean which is true if any of the sub-expressions are true and false if all of them are
  * false. If one or more sub-expressions are NULL and all the others are false then the operator also results in NULL.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class OrProcessor extends OperatorProcessor {
-	
+class OrProcessor extends OperatorProcessor
+{
     /**
      * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
      */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof OrOperator) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof OrOperator) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Process the current expression.
-	 * 
+	 *
 	 * @return boolean True if the expression is true, false otherwise.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
-	public function process() {
-		$operands = $this->getOperands();
-	    $allFalse = true;
-	    
-	    foreach ($operands as $op) {
-	        if ($op instanceof Container) {
-	            $msg = "The Or Expression only accept operands with single cardinality.";
-	            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-	        }
-	        else if ($op === null) {
-	            continue;
-	        }
-	        else {
-	            if (!$op instanceof Boolean) {
-	                $msg = "The Or Expression only accept operands with boolean baseType.";
-	                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-	            }
-	            else {
-	                if ($op->getValue() !== false) {
-	                    $allFalse = false;
-	                } 
-	            }
-	        }
-	    }
-	    
-	    if ($allFalse === true && $operands->containsNull() === true) {
-	        return null;
-	    }
-		
-		foreach ($operands as $operand) {
-			if ($operand !== null && $operand->getValue() === true) {
-				return new Boolean(true);
-			}
-		}
-		
-		return new Boolean(false);
-	}
+    public function process()
+    {
+        $operands = $this->getOperands();
+        $allFalse = true;
+
+        foreach ($operands as $op) {
+            if ($op instanceof Container) {
+                $msg = "The Or Expression only accept operands with single cardinality.";
+                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+            } elseif ($op === null) {
+                continue;
+            } else {
+                if (!$op instanceof Boolean) {
+                    $msg = "The Or Expression only accept operands with boolean baseType.";
+                    throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+                } else {
+                    if ($op->getValue() !== false) {
+                        $allFalse = false;
+                    }
+                }
+            }
+        }
+
+        if ($allFalse === true && $operands->containsNull() === true) {
+            return null;
+        }
+
+        foreach ($operands as $operand) {
+            if ($operand !== null && $operand->getValue() === true) {
+                return new Boolean(true);
+            }
+        }
+
+        return new Boolean(false);
+    }
 }

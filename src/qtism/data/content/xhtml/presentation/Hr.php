@@ -30,12 +30,12 @@ use \InvalidArgumentException;
 
 /**
  * The hr XHTML class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Hr extends BodyElement implements BlockStatic, FlowStatic {
-    
+class Hr extends BodyElement implements BlockStatic, FlowStatic
+{
     /**
      * The base URI of the Hr.
      *
@@ -43,63 +43,68 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic {
      * @qtism-bean-property
      */
     private $xmlBase = '';
-    
+
     /**
      * Create a new Hr object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
     }
-    
+
     /**
      * Set the base URI of the Hr.
      *
      * @param string $xmlBase A URI.
      * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '') {
+    public function setXmlBase($xmlBase = '')
+    {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
-        }
-        else {
+        } else {
             $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the base URI of the Hr.
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase() {
+    public function getXmlBase()
+    {
         return $this->xmlBase;
     }
-    
+
     /**
      * @see \qtism\data\content\Flow::hasXmlBase()
      */
-    public function hasXmlBase() {
+    public function hasXmlBase()
+    {
         return $this->getXmlBase() !== '';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'hr';
     }
 }

@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing
  * TemplateElseIf objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemplateElseIfCollection extends QtiComponentCollection {
-    
+class TemplateElseIfCollection extends QtiComponentCollection
+{
     /**
      * Check whether or not $value is an instance of TemplateElseIf.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of TemplateElseIf.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof TemplateElseIf) {
             $msg = "A TemplateElseIfCollection aims at storing TemplateElseIf objects only.";
             throw new InvalidArgumentException($msg);

@@ -30,28 +30,31 @@ use \DOMDocumentFragment;
 /**
  * SimpleMatchSet renderer. Will render the element with an additional
  * CSS class 'qti-simpleMatchSet'.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleMatchSetRenderer extends AbstractXhtmlRenderer {
-    
+class SimpleMatchSetRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new SimpleMatchSetRenderer object
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-simpleMatchSet');
+
         return;
     }
 }

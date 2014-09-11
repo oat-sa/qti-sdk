@@ -28,28 +28,28 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
+ *
  * gap is an inlineStatic element that must only appear within a gapMatchInteraction.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Gap extends Choice implements AssociableChoice, InlineStatic {
-	
-	/**
+class Gap extends Choice implements AssociableChoice, InlineStatic
+{
+    /**
 	 * From IMS QTI:
-	 * 
-	 * If true then this gap must be filled by the candidate inorder to form a 
+	 *
+	 * If true then this gap must be filled by the candidate inorder to form a
 	 * valid response to the interaction.
-	 * 
+	 *
 	 * @var boolean
 	 * @qtism-bean-property
 	 */
-	private $required = false;
-	
-	/**
+    private $required = false;
+
+    /**
 	 * Create a new Gap object.
-	 * 
+	 *
 	 * @param string $identifier The identifier of the gap.
 	 * @param boolean $required Whether or not the Gap is required to be filled to form a valid response.
 	 * @param string $id The identifier of the bodyElement.
@@ -58,47 +58,51 @@ class Gap extends Choice implements AssociableChoice, InlineStatic {
 	 * @param string $label The label of the bodyElement.
 	 * @throws \InvalidArgumentException If one of the constructor's argument is invalid.
 	 */
-	public function __construct($identifier, $required = false, $id = '', $class = '', $lang = '', $label = '') {
-		parent::__construct($identifier, $id, $class, $lang, $label);
-		$this->setRequired($required);
-	}
-	
-	/**
+    public function __construct($identifier, $required = false, $id = '', $class = '', $lang = '', $label = '')
+    {
+        parent::__construct($identifier, $id, $class, $lang, $label);
+        $this->setRequired($required);
+    }
+
+    /**
 	 * Set whether the gap must be filled by the candidate or not.
-	 * 
+	 *
 	 * @param boolean $required
 	 * @throws \InvalidArgumentException If $required is not a boolean value.
 	 */
-	public function setRequired($required) {
-		if (is_bool($required) === true) {
-			$this->required = $required;
-		}
-		else {
-			$msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setRequired($required)
+    {
+        if (is_bool($required) === true) {
+            $this->required = $required;
+        } else {
+            $msg = "The 'required' argument must be a boolean value, '" . gettype($required) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Whether the gap must be filled by the candidate.
-	 * 
+	 *
 	 * @return boolean.
 	 */
-	public function isRequired() {
-		return $this->required;
-	}
-	
-	/**
+    public function isRequired()
+    {
+        return $this->required;
+    }
+
+    /**
 	 * @see \qtism\data\QtiComponent::getComponents()
 	 */
-	public function getComponents() {
-		return new QtiComponentCollection();
-	}
-	
-	/**
+    public function getComponents()
+    {
+        return new QtiComponentCollection();
+    }
+
+    /**
 	 * @see \qtism\data\QtiComponent::getQtiClassName()
 	 */
-	public function getQtiClassName() {
-		return 'gap';
-	}
+    public function getQtiClassName()
+    {
+        return 'gap';
+    }
 }

@@ -25,7 +25,7 @@ namespace qtism\common\datatypes;
 /**
  * A simple interface aiming at implementatin QTI datatypes. The following
  * QTI datatypes are implemented.
- * 
+ *
  * * Boolean
  * * Coords
  * * DirectedPair
@@ -39,21 +39,21 @@ namespace qtism\common\datatypes;
  * * Point
  * * String
  * * Uri
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  */
-interface QtiDatatype {
-    
+interface QtiDatatype
+{
     /**
      * Get the QTI baseType of the datatype instance.
-     * 
+     *
      * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType();
-    
+
     /**
      * Get the QTI cardinality of the datatype instance.
-     * 
+     *
      * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality();

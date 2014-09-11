@@ -29,103 +29,110 @@ use \InvalidArgumentException;
  * The Jump class represents the a possible location in an AssessmentTestSession
  * a candidate can "jump" to. Indeed, when the NONLINEAR navigation mode is in force,
  * the candidate has the ability to "jump" to a given RouteItem
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Jump {
-    
+class Jump
+{
     /**
      * The position in the route the jump
      * leads to.
-     * 
+     *
      * @var integer
      */
     private $position;
-    
+
     /**
      * The AssessmentItemRef the candidate can jump to.
-     * 
+     *
      * @var \qtism\runtime\tests\RouteItem
      */
     private $target;
-    
+
     /**
      * The AssessmentItemSession related to the $assessmentItemRef.$occurence
      * the Jump targets.
-     * 
+     *
      * @var \qtism\runtime\tests\AssessmentItemSession
      */
     private $itemSession;
-    
+
     /**
      * Create a new Jump object.
-     * 
+     *
      * @param integer $position The position in the assessment test session's route the jump leads to.
      * @param \qtism\runtime\tests\RouteItem $target The RouteItem to go when following the jump.
      * @param \qtism\runtime\tests\AssessmentItemSession $itemSession The AssessmentItemSession related to the RouteItem.
      * @throws \InvalidArgumentException If $occurence is not an integer value or $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
-    public function __construct($position, RouteItem $target, AssessmentItemSession $itemSession) {
+    public function __construct($position, RouteItem $target, AssessmentItemSession $itemSession)
+    {
         $this->setPosition($position);
         $this->setTarget($target);
         $this->setItemSession($itemSession);
     }
-    
+
     /**
      * Set the position in the assessment test session's route the
      * jump leads to.
-     * 
+     *
      * @param integer $position
      */
-    protected function setPosition($position) {
+    protected function setPosition($position)
+    {
         $this->position = $position;
     }
-    
+
     /**
      * Get the position in the assessment test session's route the
      * jump leads to.
-     * 
+     *
      * @return integer
      */
-    public function getPosition() {
+    public function getPosition()
+    {
         return $this->position;
     }
-    
+
     /**
      * Set the RouteItem the candidate can jump to.
-     * 
+     *
      * @param \qtism\runtime\tests\RouteItem $routeItem A RouteItem object.
      */
-    protected function setTarget(RouteItem $target) {
+    protected function setTarget(RouteItem $target)
+    {
         $this->target = $target;
     }
-    
+
     /**
      * Get the RouteItem the candidate can jump to.
-     * 
+     *
      * @return \qtism\runtime\tests\RouteItem A RouteItem object.
      */
-    public function getTarget() {
+    public function getTarget()
+    {
         return $this->target;
     }
-    
+
     /**
      * Set the AssessmentItemSession related to AssessmentItemRef.occurence.
-     * 
+     *
      * @param \qtism\runtime\tests\AssessmentItemSession $itemSession An AssessmentItemSession object.
      * @throws \InvalidArgumentException If $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
-    protected function setItemSession(AssessmentItemSession $itemSession) {
+    protected function setItemSession(AssessmentItemSession $itemSession)
+    {
         $this->itemSession = $itemSession;
     }
-    
+
     /**
      * Get the AssessmentItemSession related to AssessmentItemRef.occurence.
-     * 
+     *
      * @return \qtism\runtime\tests\AssessmentItemSession An AssessmentItemSession object.
      */
-    public function getItemSession() {
+    public function getItemSession()
+    {
         return $this->itemSession;
     }
 }

@@ -28,65 +28,70 @@ use \InvalidArgumentException;
 
 /**
  * The prompt QTI class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Prompt extends BodyElement {
-    
+class Prompt extends BodyElement
+{
     /**
      * From IMS QTI:
-     * 
+     *
      * A prompt must not contain any nested interactions.
-     * 
+     *
      * @var \qtism\data\content\FlowStaticCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Prompt object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent(new FlowStaticCollection());
-    } 
-    
+    }
+
     /**
      * Set the content of the prompt.
-     * 
+     *
      * @param \qtism\data\content\FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content) {
+    public function setContent(FlowStaticCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the content of the prompt.
-     * 
+     *
      * @return \qtism\data\content\FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'prompt';
     }
 }

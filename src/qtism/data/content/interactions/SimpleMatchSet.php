@@ -26,60 +26,65 @@ use qtism\data\QtiComponent;
 
 /**
  * The simpleMatchSet QTI class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SimpleMatchSet extends QtiComponent {
-    
+class SimpleMatchSet extends QtiComponent
+{
     /**
      * From IMS QTI:
-     * 
+     *
      * An ordered set of choices for the set.
-     * 
+     *
      * @var \qtism\data\content\interactions\SimpleAssociableChoiceCollection
      * @qtism-bean-property
      */
     private $simpleAssociableChoices;
-    
+
     /**
      * Create a new SimpleMatchSet object.
-     * 
+     *
      * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices The ordered set of choices for the set.
      */
-    public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null) {
+    public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null)
+    {
         $this->setSimpleAssociableChoices((is_null($simpleAssociableChoices) === true) ? new SimpleAssociableChoiceCollection() : $simpleAssociableChoices);
     }
-    
+
     /**
      * Set the ordered set of choices for the set.
-     * 
+     *
      * @param \qtism\data\content\interactions\SimpleAssociableChoiceCollection $simpleAssociableChoices
      */
-    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices) {
+    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices)
+    {
         $this->simpleAssociableChoices = $simpleAssociableChoices;
     }
-    
+
     /**
      * Get the ordered set of choices for the set.
-     * 
+     *
      * @return \qtism\data\content\interactions\SimpleAssociableChoiceCollection
      */
-    public function getSimpleAssociableChoices() {
+    public function getSimpleAssociableChoices()
+    {
         return $this->simpleAssociableChoices;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getSimpleAssociableChoices();
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'simpleMatchSet';
     }
 }

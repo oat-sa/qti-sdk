@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialized QtiComponentCollection aiming at storing TextOrVariable objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TextOrVariableCollection extends QtiComponentCollection {
-    
+class TextOrVariableCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of TextOrVariable.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of TextOrVariable.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof TextOrVariable) {
             $msg = "TextOrVariableCollection objects only accept to store TextOrVariable objects.";
             throw new InvalidArgumentException($msg);

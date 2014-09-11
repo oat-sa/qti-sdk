@@ -27,26 +27,26 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * A simple run of text to be inserted into a gap by the user, may be subject 
+ *
+ * A simple run of text to be inserted into a gap by the user, may be subject
  * to variable value substitution with printedVariable.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class GapText extends GapChoice {
-    
+class GapText extends GapChoice
+{
     /**
      * The textOrVariable objects composing the GapText.
-     * 
+     *
      * @var \qtism\data\content\TextOrVariableCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new GapText object.
-     * 
+     *
      * @param string $identifier The identifier of the GapText.
      * @param integer $matchMax The matchMax attribute.
      * @param string $id The id of the bodyElement.
@@ -55,42 +55,47 @@ class GapText extends GapChoice {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $matchMax, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($identifier, $matchMax, $id, $class, $lang, $label);
         $this->setContent(new TextOrVariableCollection());
     }
-    
+
     /**
      * Get the textOrVariable objects composing the GapText.
-     * 
+     *
      * @return \qtism\data\content\TextOrVariableCollection
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the textOrVariable objects composing the GapText.
-     * 
+     *
      * @param \qtism\data\content\TextOrVariableCollection $content
      */
-    public function setContent(TextOrVariableCollection $content) {
+    public function setContent(TextOrVariableCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the textOrVariable objects composing the GapText.
-     * 
+     *
      * @return \qtism\data\content\TextOrVariableCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'gapText';
     }
 }

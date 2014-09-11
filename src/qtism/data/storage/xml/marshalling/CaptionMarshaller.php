@@ -20,7 +20,6 @@
  * @license GPLv2
  */
 
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\InlineCollection;
@@ -28,51 +27,53 @@ use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for Caption elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CaptionMarshaller extends ContentMarshaller {
-    
+class CaptionMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-        
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
-        
+
         $inlines = new InlineCollection($children->getArrayCopy());
         $component->setContent($inlines);
-        
+
         self::fillBodyElement($component, $element);
+
         return $component;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        
+
         foreach ($component->getContent() as $c) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($c);
             $element->appendChild($marshaller->marshall($c));
         }
-        
+
         self::fillElement($element, $component);
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\xhtml\\tables");
     }
 }

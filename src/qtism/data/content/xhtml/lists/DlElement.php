@@ -23,13 +23,12 @@
 namespace qtism\data\content\xhtml\lists;
 
 use qtism\data\content\BodyElement;
-use \InvalidArgumentException;
 
 /**
  * The dlElement QTI class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  */
-abstract class DlElement extends BodyElement {
-    
+abstract class DlElement extends BodyElement
+{
 }

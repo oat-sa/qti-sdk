@@ -31,109 +31,112 @@ use \Exception;
  * of the error is indicated in the exception code. Please see related
  * class constants for more information about the error codes and their
  * signification.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentItemSessionException extends Exception {
-	
+class AssessmentItemSessionException extends Exception
+{
     /**
      * Error code to use when the nature of the error is unknown.
-     * 
+     *
      * @var integer
      */
-	const UNKNOWN = 0;
-	
-	/**
+    const UNKNOWN = 0;
+
+    /**
 	 * Error code to use when timelimits are in force and the
 	 * maximum duration is exceeded at 'endAttempt' time.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const DURATION_OVERFLOW = 1;
-	
-	/**
+    const DURATION_OVERFLOW = 1;
+
+    /**
 	 * Error code to use when timelimits are in force and
 	 * the minimum duration is not exceeded at 'endAttempt' time.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const DURATION_UNDERFLOW = 2;
-	
-	/**
+    const DURATION_UNDERFLOW = 2;
+
+    /**
 	 * Error code to use when the maximum amount attempts for a non-adaptive
 	 * item is exceeded.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const ATTEMPTS_OVERFLOW = 3;
-	
-	/**
+    const ATTEMPTS_OVERFLOW = 3;
+
+    /**
 	 * Error code to use when a runtime error that could not be corrected
 	 * occurs during the assessment item session lifecycle.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const RUNTIME_ERROR = 4;
-	
-	/**
+    const RUNTIME_ERROR = 4;
+
+    /**
 	 * Error code to return when itemSessionControl.validateResponses is in force
 	 * but a provided response is incorrect.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const INVALID_RESPONSE = 5;
-	
-	/**
+    const INVALID_RESPONSE = 5;
+
+    /**
 	 * Error code to use when itemSessionControl.allowSkipping is not in force
 	 * but a request to skip the item is performed.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const SKIPPING_FORBIDDEN = 6;
-	
-	/**
+    const SKIPPING_FORBIDDEN = 6;
+
+    /**
 	 * Error code to use when a sequence of states is violated.
-	 * 
+	 *
 	 * @var integer
 	 */
-	const STATE_VIOLATION = 7;
-	
-	/**
+    const STATE_VIOLATION = 7;
+
+    /**
 	 * The AssessmentItemSession object which threw the error.
-	 * 
+	 *
 	 * @var AssessmentItemSession
 	 */
-	private $source;
-	
-	/**
+    private $source;
+
+    /**
 	 * Create a new AssessmentItemSessionException object.
-	 * 
+	 *
 	 * @param string $message A human-readable message describing the nature of the exception.
 	 * @param \qtism\runtime\tests\AssessmentItemSession $source The AssessmentItemSession object from where the error occured.
-	 * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class. 
+	 * @param integer $code A numeric error code. The accepted error codes are described in the constants of this class.
 	 * @param \Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
 	 */
-	public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null) {
-	    parent::__construct($message, $code, $previous);
-	    $this->setSource($source);
-	}
-	
-	/**
+    public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+        $this->setSource($source);
+    }
+
+    /**
 	 * Set the AssessmentItemSource object the exception comes from.
-	 * 
+	 *
 	 * @param \qtism\runtime\tests\AssessmentItemSession $source An AssessmentItemSession object.
 	 */
-	public function setSource(AssessmentItemSession $source) {
-	    $this->source = $source;
-	}
-	
-	/**
+    public function setSource(AssessmentItemSession $source)
+    {
+        $this->source = $source;
+    }
+
+    /**
 	 * Get the AssessmentItemSource object the exception comes from.
-	 * 
+	 *
 	 * @return \qtism\runtime\tests\AssessmentItemSession An AssessmentItemSession object.
 	 */
-	public function getSource() {
-	    return $this->source;
-	}
+    public function getSource()
+    {
+        return $this->source;
+    }
 }

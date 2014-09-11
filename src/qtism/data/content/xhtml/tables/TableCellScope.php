@@ -23,91 +23,93 @@
 namespace qtism\data\content\xhtml\tables;
 
 use qtism\common\enums\Enumeration;
-use qtism\data\content\BodyElement;
 
 /**
  * The QTI tableCellScope class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TableCellScope implements Enumeration {
-    
+class TableCellScope implements Enumeration
+{
     /**
-     * 
+     *
      * @var integer
      */
     const ROW = 0;
-    
+
     /**
-     * 
+     *
      * @var integer
      */
     const COL = 1;
-    
+
     /**
-     * 
+     *
      * @var integer
      */
     const ROWGROUP = 2;
-    
+
     /**
-     * 
+     *
      * @var integer
      */
     const COLGROUP = 3;
-   
-    public static function asArray() {
+
+    public static function asArray()
+    {
         return array(
             'ROW' => self::ROW,
             'COL' => self::COL,
             'ROWGROUP' => self::ROWGROUP,
-            'COLGROUP' => self::COLGROUP                
+            'COLGROUP' => self::COLGROUP
         );
     }
-    
-    public static function getConstantByName($name) {
+
+    public static function getConstantByName($name)
+    {
         switch (strtolower($name)) {
             case 'row':
                 return self::ROW;
             break;
-            
+
             case 'col':
                 return self::COL;
             break;
-            
+
             case 'rowgroup':
                 return self::ROWGROUP;
             break;
-            
+
             case 'colgroup':
                 return self::COLGROUP;
             break;
-            
+
             default:
                 return false;
             break;
         }
     }
-    
-    public static function getNameByConstant($constant) {
+
+    public static function getNameByConstant($constant)
+    {
         switch ($constant) {
             case self::ROW:
                 return 'row';
             break;
-            
+
             case self::COL:
                 return 'col';
             break;
-            
+
             case self::ROWGROUP:
                 return 'rowgroup';
             break;
-            
+
             case self::COLGROUP:
                 return 'colgroup';
             break;
-            
+
             default:
                 return false;
             break;

@@ -28,79 +28,79 @@ use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
- * 
- * The media interaction allows more control over the way the candidate interacts with a 
- * time-based media object and allows the number of times the media object was experienced 
- * to be reported in the value of the associated response variable, which must be of 
+ *
+ * The media interaction allows more control over the way the candidate interacts with a
+ * time-based media object and allows the number of times the media object was experienced
+ * to be reported in the value of the associated response variable, which must be of
  * base-type integer and single cardinality.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MediaInteraction extends BlockInteraction {
-    
+class MediaInteraction extends BlockInteraction
+{
     /**
      * From IMS QTI:
-     * 
-     * The autostart attribute determines if the media object should begin as soon as the 
-     * candidate starts the attempt (true) or if the media object should be started under 
+     *
+     * The autostart attribute determines if the media object should begin as soon as the
+     * candidate starts the attempt (true) or if the media object should be started under
      * the control of the candidate (false).
-     * 
+     *
      * @var boolean
      * @qtism-bean-property
      */
     private $autostart;
-    
+
     /**
      * From IMS QTI:
-     * 
-     * The minPlays attribute indicates that the media object should be played a minimum 
-     * number of times by the candidate. The techniques required to enforce this will vary 
-     * from system to system, in some systems it may not be possible at all. By default 
-     * there is no minimum. Failure to play the media object the minimum number of 
+     *
+     * The minPlays attribute indicates that the media object should be played a minimum
+     * number of times by the candidate. The techniques required to enforce this will vary
+     * from system to system, in some systems it may not be possible at all. By default
+     * there is no minimum. Failure to play the media object the minimum number of
      * times constitutes an invalid response.
-     * 
+     *
      * @var integer
      * @qtism-bean-property
      */
     private $minPlays = 0;
-    
+
     /**
      * From IMS QTI:
-     * 
-     * The maxPlays attribute indicates that the media object can be played at most maxPlays 
-     * times - it must not be possible for the candidate to play the media object more than 
+     *
+     * The maxPlays attribute indicates that the media object can be played at most maxPlays
+     * times - it must not be possible for the candidate to play the media object more than
      * maxPlay times. A value of 0 (the default) indicates that there is no limit.
-     * 
+     *
      * @var integer
      * @qtism-bean-property
      */
     private $maxPlays = 0;
-    
+
     /**
      * From IMS QTI:
-     * 
-     * The loop attribute is used to set continuous play mode. In continuous play mode, 
+     *
+     * The loop attribute is used to set continuous play mode. In continuous play mode,
      * once the media object has started to play it should play continuously (subject to maxPlays).
-     * 
+     *
      * @var boolean
      * @qtism-bean-property
      */
     private $loop = false;
-    
+
     /**
      * From IMS QTI:
-     * 
+     *
      * The media object itself.
-     * 
+     *
      * @var \qtism\data\content\xhtml\Object
      * @qtism-bean-property
      */
     private $object;
-    
+
     /**
      * Create a new MediaInteraction object.
-     * 
+     *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param boolean $autostart Whether the media has to be played immediately after the begining of the attempt.
      * @param \qtism\data\content\xhtml\Object $object The media object itself.
@@ -110,160 +110,172 @@ class MediaInteraction extends BlockInteraction {
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($responseIdentifier, $autostart, Object $object, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
         $this->setObject($object);
     }
-    
+
     /**
      * Set whether or not the media must start as soon as the candidate starts the attempt.
-     * 
+     *
      * @param boolean $autostart
      * @throws \InvalidArgumentException If $autostart is not a boolean value.
      */
-    public function setAutostart($autostart) {
+    public function setAutostart($autostart)
+    {
         if (is_bool($autostart) === true) {
             $this->autostart = $autostart;
-        }
-        else {
+        } else {
             $msg = "The 'autostart' argument must be a boolean value, '" . gettype($autostart) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Whether the media must start as soon as the candidate starts the attempt.
-     * 
+     *
      * @return boolean
      */
-    public function mustAutostart() {
+    public function mustAutostart()
+    {
         return $this->autostart;
     }
-    
+
     /**
      * Set the minimum number of times the media must be played.
-     * 
+     *
      * @param integer $minPlays A positive (>= 0) integer.
      * @throws \InvalidArgumentException If $minPlays is not a positive integer.
      */
-    public function setMinPlays($minPlays) {
+    public function setMinPlays($minPlays)
+    {
         if (is_int($minPlays) === true && $minPlays >= 0) {
             $this->minPlays = $minPlays;
-        }
-        else {
+        } else {
             $msg = "The 'minPlays' argument must be a positive (>= 0) integer, '" . gettype($minPlays) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the minimum number of times the media must be played.
-     * 
+     *
      * @return integer A positive (> 0) integer.
      */
-    public function getMinPlays() {
+    public function getMinPlays()
+    {
         return $this->minPlays;
     }
-    
+
     /**
      * Whether a value is defined for the minPlays argument.
-     * 
+     *
      * @return boolean
      */
-    public function hasMinPlays() {
+    public function hasMinPlays()
+    {
         return $this->getMinPlays() !== 0;
     }
-    
+
     /**
      * Set the maximum number of times the media can be played.
-     * 
+     *
      * @param integer $maxPlays A positive (>= 0) integer.
      * @throws \InvalidArgumentException If $maxPlays is not a positive integer.
      */
-    public function setMaxPlays($maxPlays) {
+    public function setMaxPlays($maxPlays)
+    {
         if (is_int($maxPlays) && $maxPlays >= 0) {
             $this->maxPlays = $maxPlays;
-        }
-        else {
+        } else {
             $msg = "The 'maxPlays' argument must be a positive (>= 0) integer, '" . gettype($maxPlays) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Get the maximum number of times the media can be played.
-     * 
-     * @return integer A positive (>= 0) integer. 
+     *
+     * @return integer A positive (>= 0) integer.
      */
-    public function getMaxPlays() {
+    public function getMaxPlays()
+    {
         return $this->maxPlays;
     }
-    
+
     /**
      * Whether a value is defined for the maxPlays argument.
-     * 
+     *
      * @return boolean
      */
-    public function hasMaxPlays() {
+    public function hasMaxPlays()
+    {
         return $this->getMaxPlays() !== 0;
     }
-    
+
     /**
      * Set whether or not the continuous play (subject to maxPlays) of the media is in force.
-     * 
+     *
      * @param boolean $loop
      * @throws \InvalidArgumentException If $loop is not a boolean value.
      */
-    public function setLoop($loop) {
+    public function setLoop($loop)
+    {
         if (is_bool($loop) === true) {
             $this->loop = $loop;
-        }
-        else {
+        } else {
             $msg = "The 'loop' argument must be a boolean value, '" . gettype($loop) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
-    
+
     /**
      * Whether the conitnuous play (subject to maxPlays) is in force.
-     * 
+     *
      * @return boolean
      */
-    public function mustLoop() {
+    public function mustLoop()
+    {
         return $this->loop;
     }
-    
+
     /**
      * Set the media object itself.
-     * 
+     *
      * @param \qtism\data\content\xhtml\Object $object
      */
-    public function setObject(Object $object) {
+    public function setObject(Object $object)
+    {
         $this->object = $object;
     }
-    
+
     /**
      * Get the media object itself.
-     * 
+     *
      * @return \qtism\data\content\xhtml\Object
      */
-    public function getObject() {
+    public function getObject()
+    {
         return $this->object;
     }
-    
+
     /**
      * @see \qtism\data\content\interactions\BlockInteraction::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         $parentComponent = parent::getComponents();
+
         return new QtiComponentCollection(array_merge($parentComponent->getArrayCopy(), array($this->getObject())));
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'mediaInteraction';
     }
 }

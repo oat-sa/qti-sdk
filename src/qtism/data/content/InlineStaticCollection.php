@@ -30,19 +30,20 @@ use \InvalidArgumentException;
 /**
  * A specialized AbstractCollection aiming at storing InlineStatic objects
  * only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class InlineStaticCollection extends QtiComponentCollection {
-    
+class InlineStaticCollection extends QtiComponentCollection
+{
     /**
      * Throws an InvalidArgumentException if $value is not an instance of
      * InlineStatic.
-     * 
+     *
      * @throws \InvalidArgumentException.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof InlineStatic) {
             $msg = "InlineStaticCollection objects only accept to store InlineStatic objects.";
             throw new InvalidArgumentException($msg);

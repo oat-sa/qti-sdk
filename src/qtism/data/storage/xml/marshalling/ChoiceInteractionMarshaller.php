@@ -29,132 +29,129 @@ use qtism\data\content\interactions\SimpleChoiceCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
-use \InvalidArgumentException;
 
 /**
  * The Marshaller implementation for ChoiceInteraction/OrderInteraction elements of the content model.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ChoiceInteractionMarshaller extends ContentMarshaller {
-    
+class ChoiceInteractionMarshaller extends ContentMarshaller
+{
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::unmarshallChildrenKnown()
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children) {
-            
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    {
             if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
-                
+
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($responseIdentifier, new SimpleChoiceCollection($children->getArrayCopy()));
-                
+
                 if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                     $component->setShuffle($shuffle);
                 }
-                
+
                 if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     if ($element->localName === 'orderInteraction') {
-                        
+
                         if ($maxChoices !== 0) {
                             $component->setMaxChoices($maxChoices);
                         }
-                    }
-                    else {
+                    } else {
                         $component->setMaxChoices($maxChoices);
                     }
                 }
-                
+
                 if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     if ($element->localName === 'orderInteraction') {
                         /*
                          * Lots of QTI implementations output minChoices = 0 while
                          * dealing with orderInteraction unmarshalling. However, regarding
                          * the IMS QTI Specification, it is invalid.
-                         * 
-                         * "If specified, minChoices must be 1 or greater but must not exceed the 
+                         *
+                         * "If specified, minChoices must be 1 or greater but must not exceed the
                          * number of choices available."
-                         * 
+                         *
                          * See http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10283
                          */
                         if ($minChoices !== 0) {
                             $component->setMinChoices($minChoices);
                         }
-                    }
-                    else {
+                    } else {
                         $component->setMinChoices($minChoices);
                     }
                 }
-                
+
                 if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
                     $component->setOrientation(Orientation::getConstantByName($orientation));
                 }
-                
+
                 if (($xmlBase = self::getXmlBase($element)) !== false) {
                     $component->setXmlBase($xmlBase);
                 }
-                
+
                 $promptElts = self::getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
                     $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                     $component->setPrompt($prompt);
                 }
-                
+
                 self::fillBodyElement($component, $element);
-                
+
                 return $component;
-            }
-            else {
+            } else {
                 $msg = "The mandatory 'responseIdentifier' attribute is missing from the " . $element->localName . " element.";
                 throw new UnmarshallingException($msg, $element);
             }
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::marshallChildrenKnown()
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
-        
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        
+
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
-        
+
         if ($component->mustShuffle() !== false) {
             self::setDOMElementAttribute($element, 'shuffle', true);
         }
-        
+
         if (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
-        
+
         if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
-        
+
         if ($component->getOrientation() !== Orientation::VERTICAL) {
             self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
         }
-        
+
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
-        
+
         foreach ($elements as $e) {
             $element->appendChild($e);
         }
-        
+
         return $element;
     }
-    
+
     /**
      * @see \qtism\data\storage\xml\marshalling\ContentMarshaller::setLookupClasses()
      */
-    protected function setLookupClasses() {
+    protected function setLookupClasses()
+    {
         $this->lookupClasses = array("qtism\\data\\content\\interactions");
     }
 }

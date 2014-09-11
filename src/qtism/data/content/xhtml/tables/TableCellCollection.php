@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing TableCell
  * objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TableCellCollection extends QtiComponentCollection {
-    
+class TableCellCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of TableCell.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of TableCell.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof TableCell) {
             $msg = "TableCellCollection objects only accept to store TableCell objects.";
             throw new InvalidArgumentException($msg);

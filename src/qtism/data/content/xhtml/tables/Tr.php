@@ -27,63 +27,68 @@ use \InvalidArgumentException;
 
 /**
  * The XHTML tr class.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Tr extends BodyElement {
-    
+class Tr extends BodyElement
+{
     /**
      * The TableCell objects composing the tr.
-     * 
+     *
      * @var \qtism\data\content\xhtml\tables\TableCellCollection
      * @qtism-bean-property
      */
     private $content;
-    
+
     /**
      * Create a new Tr object.
-     * 
+     *
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct(TableCellCollection $content, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct(TableCellCollection $content, $id = '', $class = '', $lang = '', $label = '')
+    {
         parent::__construct($id, $class, $lang, $label);
         $this->setContent($content);
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return $this->getContent();
     }
-    
+
     /**
      * Set the TableCell objects composing the tr.
-     * 
+     *
      * @param \qtism\data\content\xhtml\tables\TableCellCollection $content A collection of TableCell objects.
      */
-    public function setContent(TableCellCollection $content) {
+    public function setContent(TableCellCollection $content)
+    {
         $this->content = $content;
     }
-    
+
     /**
      * Get the TableCell objects composing the tr.
-     * 
+     *
      * @return \qtism\data\content\xhtml\tables\TableCellCollection
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'tr';
     }
 }

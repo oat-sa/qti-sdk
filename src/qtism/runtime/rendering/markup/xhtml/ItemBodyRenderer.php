@@ -30,27 +30,29 @@ use \DOMDocumentFragment;
 /**
  * ItemBody renderer. This renderer will transform
  * the itemBody into a 'div' element with an
- * additional 'qti-itemBody' CSS class. 
- * 
+ * additional 'qti-itemBody' CSS class.
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ItemBodyRenderer extends BodyElementRenderer {
-    
+class ItemBodyRenderer extends BodyElementRenderer
+{
     /**
      * Create a new ItemBodyRenderer.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-itemBody');
     }

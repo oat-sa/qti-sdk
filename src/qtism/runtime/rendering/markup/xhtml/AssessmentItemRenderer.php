@@ -31,49 +31,51 @@ use \DOMDocumentFragment;
  * The renderer for AssessmentItem elements. Rendered elements
  * will get a 'qti-assessmentItem' additional CSS class and will be
  * transformed as 'div' elements.
- * 
+ *
  * It also takes care of producing the following x-data attributes.
- * 
+ *
  * * data-identifier = qti:assessmentItem->identifier
  * * data-title = qti:assessmentItem->title
  * * data-label = qti:assessmentItem->label (Only if present in QTI-XML)
  * * data-lang = qti:assessmentItem->lang (Only if present in QTI-XML)
  * * data-adaptive = qti:assessmentItem->adaptive
  * * data-time-dependent = qti:assessmentItem->timeDependent
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentItemRenderer extends AbstractXhtmlRenderer {
-    
+class AssessmentItemRenderer extends AbstractXhtmlRenderer
+{
     /**
      * Create a new AssessmentItemRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\AbstractXhtmlRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-assessmentItem');
-        
+
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
         $fragment->firstChild->setAttribute('data-title', $component->getTitle());
-        
+
         if ($component->hasLabel() === true) {
             $fragment->firstChild->setAttribute('data-label', $component->getLabel());
         }
-        
+
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('data-lang', $component->getLang());
         }
-        
+
         $fragment->firstChild->setAttribute('data-adaptive', ($component->isAdaptive() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-time-dependent', ($component->isTimeDependent() === true) ? 'true' : 'false');
     }

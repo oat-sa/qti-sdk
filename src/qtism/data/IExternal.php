@@ -24,15 +24,15 @@ namespace qtism\data;
 
 /**
  * Represents a gateway to external data.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface IExternal {
-    
+interface IExternal
+{
     /**
      * Get the external XML content.
-     * 
+     *
      * @return \DOMDocument
      */
     public function getXml();

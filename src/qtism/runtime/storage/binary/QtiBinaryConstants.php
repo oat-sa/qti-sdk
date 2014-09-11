@@ -25,15 +25,15 @@ namespace qtism\runtime\storage\binary;
 
 /**
  * Container for constants related to QTI binary data.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class QtiBinaryConstants {
-    
+class QtiBinaryConstants
+{
     /**
      * The QTI binary data version number.
-     * 
+     *
      * @var integer
      */
     const QTI_BINARY_STORAGE_VERSION = 6;

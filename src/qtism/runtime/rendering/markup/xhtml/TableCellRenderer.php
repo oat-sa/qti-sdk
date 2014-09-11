@@ -29,38 +29,39 @@ use \DOMDocumentFragment;
 
 /**
  * TableCell renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TableCellRenderer extends BodyElementRenderer {
-    
+class TableCellRenderer extends BodyElementRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
-        
+
         if ($component->hasHeaders() === true) {
             $fragment->firstChild->setAttribute('headers', implode("\x20", $component->getHeaders()->getArrayCopy()));
         }
-        
+
         if ($component->hasScope() === true) {
             $fragment->firstChild->setAttribute('scope', TableCellScope::getNameByConstant($component->getScope()));
         }
-        
+
         if ($component->hasAbbr() === true) {
             $fragment->firstChild->setAttribute('abbr', $component->getAbbr());
         }
-        
+
         if ($component->hasAxis() === true) {
             $fragment->firstChild->setAttribute('axis', $component->getAxis());
         }
-        
+
         if ($component->hasRowspan() === true) {
             $fragment->firstChild->setAttribute('rowspan', $component->getRowspan());
         }
-        
+
         if ($component->hasColspan() === true) {
             $fragment->firstChild->setAttribute('colspan', $component->getColspan());
         }

@@ -30,65 +30,66 @@ use \InvalidArgumentException;
 
 /**
  * The AndProcessor class aims at processing AndOperator QTI Data Model Expression objects.
- * 
+ *
  * Developer's note: IMS does not explain what happens when one or more sub-expressions are NULL
  * but not all sub-expressions are true. In this implementation, we consider that NULL is returned
  * if one ore more sub-expressions are NULL.
- * 
+ *
  * From IMS QTI:
- * 
- * The and operator takes one or more sub-expressions each with a base-type of boolean and single 
+ *
+ * The and operator takes one or more sub-expressions each with a base-type of boolean and single
  * cardinality. The result is a single boolean which is true if all sub-expressions are true and
  * false if any of them are false. If one or more sub-expressions are NULL and all others are true
  * then the operator also results in NULL.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AndProcessor extends OperatorProcessor {
-	
+class AndProcessor extends OperatorProcessor
+{
     /**
      * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
      */
-	public function setExpression(Expression $expression) {
-		if ($expression instanceof AndOperator) {
-			parent::setExpression($expression);
-		}
-		else {
-			$msg = "The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.";
-			throw new InvalidArgumentException($msg);
-		}
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        if ($expression instanceof AndOperator) {
+            parent::setExpression($expression);
+        } else {
+            $msg = "The AndProcessor class only accepts AndOperator QTI Data Model Expression objects to be processed.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
 	 * Process the current expression.
-	 * 
+	 *
 	 * @return boolean True if the expression is true, false otherwise.
 	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
 	 */
-	public function process() {
-		$operands = $this->getOperands();
-		
-		if ($operands->containsNull() === true) {
-			return null;
-		}
-		
-		if ($operands->exclusivelySingle() === false) {
-			$msg = "The And Expression only accept operands with single cardinality.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
-		}
-		
-		if ($operands->exclusivelyBoolean() === false) {
-			$msg = "The And Expression only accept operands with boolean baseType.";
-			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
-		}
-		
-		foreach ($operands as $operand) {
-			if ($operand->getValue() === false) {
-				return new Boolean(false);
-			}
-		}
-		
-		return new Boolean(true);
-	}
+    public function process()
+    {
+        $operands = $this->getOperands();
+
+        if ($operands->containsNull() === true) {
+            return null;
+        }
+
+        if ($operands->exclusivelySingle() === false) {
+            $msg = "The And Expression only accept operands with single cardinality.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
+        }
+
+        if ($operands->exclusivelyBoolean() === false) {
+            $msg = "The And Expression only accept operands with boolean baseType.";
+            throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
+        }
+
+        foreach ($operands as $operand) {
+            if ($operand->getValue() === false) {
+                return new Boolean(false);
+            }
+        }
+
+        return new Boolean(true);
+    }
 }

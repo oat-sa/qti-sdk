@@ -30,69 +30,74 @@ use qtism\data\expressions\Expression;
 /**
  * The ExpressionProcessor class aims at processing QTI Data Model
  * Expressions.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class ExpressionProcessor implements Processable {
-	
-	/**
+abstract class ExpressionProcessor implements Processable
+{
+    /**
 	 * The QTI Data Model expression to be Processed.
-	 * 
+	 *
 	 * @var \qtism\data\expressions\Expression
 	 */
-	private $expression = null;
-	
-	/**
+    private $expression = null;
+
+    /**
 	 * A state.
-	 * 
+	 *
 	 * @var \qtism\runtime\common\State
 	 */
-	private $state = null;
-	
-	/**
+    private $state = null;
+
+    /**
 	 * Create a new ExpressionProcessor object.
-	 * 
+	 *
 	 * @param \qtism\data\expressions\Expression $expression The QTI Data Model Expression to be processed.
 	 */
-	public function __construct(Expression $expression) {
-		$this->setExpression($expression);
-		$this->setState(new State());
-	}
-	
-	/**
+    public function __construct(Expression $expression)
+    {
+        $this->setExpression($expression);
+        $this->setState(new State());
+    }
+
+    /**
 	 * Set the QTI Data Model Expression to be processed.
-	 * 
+	 *
 	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Expression object.
 	 */
-	public function setExpression(Expression $expression) {
-		$this->expression = $expression;
-	}
-	
-	/**
+    public function setExpression(Expression $expression)
+    {
+        $this->expression = $expression;
+    }
+
+    /**
 	 * Get the QTI Data Model Expression to be processed.
-	 * 
+	 *
 	 * @return \qtism\data\expressions\Expression A QTI Data Model Expression object.
 	 */
-	public function getExpression() {
-		return $this->expression;
-	}
-	
-	/**
+    public function getExpression()
+    {
+        return $this->expression;
+    }
+
+    /**
 	 * Set the current State object.
-	 * 
+	 *
 	 * @param \qtism\runtime\common\State $state A State object.
 	 */
-	public function setState(State $state) {
-		$this->state = $state;
-	}
-	
-	/**
+    public function setState(State $state)
+    {
+        $this->state = $state;
+    }
+
+    /**
 	 * Get the current State object.
-	 * 
+	 *
 	 * @return \qtism\runtime\common\State
 	 */
-	public function getState() {
-		return $this->state;
-	}
+    public function getState()
+    {
+        return $this->state;
+    }
 }

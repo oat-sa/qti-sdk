@@ -27,33 +27,35 @@ use qtism\data\QtiComponent;
 
 /**
  * From IMS QTI:
- * 
+ *
  * The exit template rule terminates template processing immediately.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ExitTemplate extends QtiComponent implements TemplateRule {
-    
+class ExitTemplate extends QtiComponent implements TemplateRule
+{
     /**
      * Create a new ExitTemplate object.
-     * 
+     *
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function getQtiClassName() {
+    public function getQtiClassName()
+    {
         return 'exitTemplate';
     }
-    
+
     /**
      * @see \qtism\data\QtiComponent::getComponents()
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return new QtiComponentCollection();
     }
 }

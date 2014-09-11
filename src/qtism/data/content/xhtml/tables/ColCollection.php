@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialized QtiComponentCollection aiming at storing Col
  * objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ColCollection extends QtiComponentCollection {
-    
+class ColCollection extends QtiComponentCollection
+{
     /**
      * Check if $value is an instance of Col.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of Col.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof Col) {
             $msg = "ColCollection objects only accept to store Col objects.";
             throw new InvalidArgumentException($msg);

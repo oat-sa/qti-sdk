@@ -28,18 +28,19 @@ use \InvalidArgumentException;
 /**
  * A specialization of AbstractCollection aiming at storing PositionObjectInteraction
  * objects only.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class PositionObjectInteractionCollection extends QtiComponentCollection {
-    
+class PositionObjectInteractionCollection extends QtiComponentCollection
+{
     /**
      * Check whether $value is a PositionObjectInteraction.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not a PositionObjectInteraction object.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof PositionObjectInteraction) {
             $msg = "PositionObjectInteractionCollection objects only accept to store PositionObjectInteraction objects.";
             throw new InvalidArgumentException($msg);

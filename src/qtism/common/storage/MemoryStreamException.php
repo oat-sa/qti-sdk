@@ -21,19 +21,17 @@
  */
 namespace qtism\common\storage;
 
-use qtism\common\storage\IStream;
-use qtism\common\storage\StreamException;
 use \Exception;
 
 /**
  * The MemoryStreamException represents errors that might occur while
  * dealing with a MemoryStream object.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MemoryStreamException extends StreamException {
-    
+class MemoryStreamException extends StreamException
+{
     /**
      * Create a new MemoryStreamException.
      *
@@ -42,7 +40,8 @@ class MemoryStreamException extends StreamException {
      * @param integer $code A code describing the error.
      * @param \Exception $previous An optional previous exception.
      */
-    public function __construct($message, IStream $source,  $code = 0, Exception $previous = null) {
+    public function __construct($message, IStream $source,  $code = 0, Exception $previous = null)
+    {
         parent::__construct($message, $source, $code, $previous);
     }
 }

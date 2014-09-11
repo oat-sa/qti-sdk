@@ -27,18 +27,19 @@ use \InvalidArgumentException;
 
 /**
  * A specialized collection aiming at storing ModalFeedback objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackCollection extends QtiComponentCollection {
-    
+class ModalFeedbackCollection extends QtiComponentCollection
+{
     /**
      * Checks whether or not $value is an instance of ModalFeedback.
-     * 
+     *
      * @throws \InvalidArgumentException If $value is not an instance of ModalFeedback.
      */
-    protected function checkType($value) {
+    protected function checkType($value)
+    {
         if (!$value instanceof ModalFeedback) {
             $msg = "ModalFeedbackCollection only accept to store ModalFeedback objects.";
             throw new InvalidArgumentException($msg);

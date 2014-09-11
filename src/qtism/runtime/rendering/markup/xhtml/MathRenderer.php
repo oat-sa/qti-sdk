@@ -31,24 +31,24 @@ use \RuntimeException;
 
 /**
  * Math Renderer.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MathRenderer extends ExternalQtiComponentRenderer {
-    
+class MathRenderer extends ExternalQtiComponentRenderer
+{
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         try {
             $dom = $component->getXml();
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
             $node = Utils::anonimizeElement($node);
             $node->setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
             $fragment->appendChild($node);
-        }
-        catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $msg = "An error occured while rendering the XML content of the 'MathML' external component.";
             throw new RenderingException($msg, RenderingException::UNKNOWN, $e);
         }

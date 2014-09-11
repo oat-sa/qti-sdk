@@ -25,17 +25,17 @@ namespace qtism\data;
 /**
  * Depicts objects that can be involved in a shuffling
  * algorithm.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface Shufflable {
-    
+interface Shufflable
+{
     /**
      * Whether the Shufflable component is fixed.
-     * 
+     *
      * @return boolean
      */
     public function isFixed();
-    
+
 }

@@ -28,17 +28,17 @@ use qtism\data\QtiComponent;
 /**
  * The ProcessorFactory must be implemented by any factory class that produces
  * Processable objects.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface ProcessorFactory {
-	
-	/**
+interface ProcessorFactory
+{
+    /**
 	 * Create a Processable object able to process $component.
-	 * 
+	 *
 	 * @param \qtism\data\QtiComponent $component A QtiComponent object that the returned Processable object is able to process.
 	 * @return \qtism\runtime\common\Processable A Processable object able to process $component.
 	 */
-	public function createProcessor(QtiComponent $component);
+    public function createProcessor(QtiComponent $component);
 }

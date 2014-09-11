@@ -28,71 +28,72 @@ use \ReflectionException;
 /**
  * Represents a Bean property. In other words, a class property
  * annotated with @qtism-bean-property.
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class BeanProperty {
-    
+class BeanProperty
+{
     /**
      * The wrapped ReflectionProperty object.
-     * 
+     *
      * @var \ReflectionProperty
      */
     private $property;
-    
+
     /**
      * Create a new BeanProperty object.
-     * 
+     *
      * @param string $class The name of the class the property belongs to.
      * @param string $name The name of the property.
      * @throws \qtism\common\beans\BeanException If such a property does not exist or is not correctly annotated.
      */
-    public function __construct($class, $name) {
+    public function __construct($class, $name)
+    {
         try {
             $this->setProperty(new ReflectionProperty($class, $name));
-        }
-        catch (ReflectionException $e) {
+        } catch (ReflectionException $e) {
             $msg = "The class property with name '${name}' does not exist in class '${class}'.";
             throw new BeanException($msg, BeanException::NO_PROPERTY, $e);
-        }
-        catch (BeanException $e) {
+        } catch (BeanException $e) {
             $msg = "The property with name '${name}' for class '${class}' is not annotated.";
             throw new BeanException($msg, BeanException::NO_PROPERTY, $e);
         }
     }
-    
+
     /**
      * Get the name of the bean property.
-     * 
+     *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->getProperty()->getName();
     }
-    
+
     /**
      * Set the wrapped ReflectionProperty object.
-     * 
+     *
      * @param \ReflectionProperty $property A ReflectionProperty object.
      * @throws \qtism\common\beans\BeanException If the given $property is not annotated with @qtism-bean-property.
      */
-    protected function setProperty(ReflectionProperty $property) {
+    protected function setProperty(ReflectionProperty $property)
+    {
         if (mb_strpos($property->getDocComment(), Bean::ANNOTATION_PROPERTY, 0, 'UTF-8') !== false) {
             $this->property = $property;
-        }
-        else {
+        } else {
             $msg = "The property must be annotated with '@qtism-bean-property'.";
             throw new BeanException($msg, BeanException::NO_ANNOTATION);
         }
     }
-    
+
     /**
      * Get the wrapped ReflectionProperty.
-     * 
+     *
      * @return \qtism\common\beans\ReflectionProperty A ReflectionProperty object.
      */
-    public function getProperty() {
+    public function getProperty()
+    {
         return $this->property;
     }
 }

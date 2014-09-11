@@ -31,32 +31,33 @@ use \DOMDocumentFragment;
  * Base class for all Renderers that will render subclasses
  * of qti:interaction. It also adds a 'qti-interaction' additional
  * CSS class to rendered elements.
- * 
+ *
  * This rendering implementation will add the following data-X attributes:
- * 
+ *
  * * data-response-identifier = qti:interaction->responseIdentifier
- * 
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class InteractionRenderer extends BodyElementRenderer {
-    
+abstract class InteractionRenderer extends BodyElementRenderer
+{
     /**
      * Create a new InteractionRenderer object.
-     * 
+     *
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null) {
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
         parent::__construct($renderingEngine);
         $this->transform('div');
         $this->additionalClass('qti-interaction');
     }
-    
+
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\BodyElementRenderer::appendAttributes()
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '') {
-        
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    {
         parent::appendAttributes($fragment, $component, $base);
         $fragment->firstChild->setAttribute('data-response-identifier', $component->getResponseIdentifier());
     }
