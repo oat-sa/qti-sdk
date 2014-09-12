@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
@@ -83,10 +84,10 @@ class OutcomeVariable extends Variable
 	 * @param string $identifier An identifier for the variable.
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value which is compliant with the QTI Runtime Model.
+	 * @param \qtism\common\datatypes\QtiDatatype|null $value A QtiDatatype object or null.
 	 * @throws \InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
 	 */
-    public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
     {
         parent::__construct($identifier, $cardinality, $baseType, $value);
     }
@@ -114,7 +115,7 @@ class OutcomeVariable extends Variable
     /**
 	 * Set the normal maximum.
 	 *
-	 * @param float|double|boolean $normalMaximum The normal maximum or false if not defined.
+	 * @param floatboolean $normalMaximum The normal maximum or false if not defined.
 	 * @throws \InvalidArgumentException If $normalMaximum is not false nor a floating point value.
 	 */
     public function setNormalMaximum($normalMaximum)
@@ -130,7 +131,7 @@ class OutcomeVariable extends Variable
     /**
 	 * Get the normal maximum.
 	 *
-	 * @return boolean|float|double False if not defined, otherwise a floating point value.
+	 * @return boolean|float False if not defined, otherwise a floating point value.
 	 */
     public function getNormalMaximum()
     {
@@ -140,7 +141,7 @@ class OutcomeVariable extends Variable
     /**
 	 * Set the normal minimum.
 	 *
-	 * @param float|double|boolean $normalMinimum The normal minimum or false if not defined.
+	 * @param float|boolean $normalMinimum The normal minimum or false if not defined.
 	 * @throws \InvalidArgumentException If $normalMinimum is not false nor a floating point value.
 	 */
     public function setNormalMinimum($normalMinimum)

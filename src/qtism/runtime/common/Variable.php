@@ -83,10 +83,10 @@ abstract class Variable
 	 * @param string $identifier An identifier.
 	 * @param integer $cardinality A value from the Cardinality enumeration.
 	 * @param integer $baseType A value from the BaseType enumeration. -1 can be given to state there is no particular baseType if $cardinality is Cardinality::RECORD.
-	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
+	 * @param \qtism\common\datatypes\QtiDatatype|null $value A QtiDatatype object or null.
 	 * @throws \InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
 	 */
-    public function __construct($identifier, $cardinality, $baseType = -1, $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
     {
         $this->setIdentifier($identifier);
         $this->setCardinality($cardinality);
@@ -192,7 +192,7 @@ abstract class Variable
     /**
 	 * Get the value of the Variable.
 	 *
-	 * @return int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container A value compliant with the QTI Runtime Model.
+	 * @return QtiDatatype A QtiDatatype object or null.
 	 */
     public function getValue()
     {
@@ -202,7 +202,7 @@ abstract class Variable
     /**
 	 * Set the value of the Variable.
 	 *
-	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $value A value compliant with the QTI Runtime Model.
+	 * @param \qtism\common\datatypes\QtiDatatype|null $value A QtiDatatype object or null.
 	 * @throws \InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
 	 */
     public function setValue(QtiDatatype $value = null)
@@ -217,7 +217,7 @@ abstract class Variable
     /**
 	 * Get the default value of the Variable.
 	 *
-	 * @return int|float|double|boolean|string|Duration|Point|Pair|DirectedPair $value A value compliant with the QTI Runtime Model.
+	 * @return \qtism\common\datatypes\QtiDatatype|null A QtiDatatype object or null.
 	 */
     public function getDefaultValue()
     {
@@ -227,10 +227,10 @@ abstract class Variable
     /**
 	 * Set the default value of the Variable.
 	 *
-	 * @param int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container $defaultValue A value compliant with the QTI Runtime Model.
+	 * @param \qtism\common\datatypes\QtiDatatype|null $defaultValue A QtiDatatype object or null.
 	 * @throws \InvalidArgumentException If $defaultValue's type is not compliant with the qti:baseType of the Variable.
 	 */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue(QtiDatatype $defaultValue = null)
     {
         if (Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) && Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
             $this->defaultValue = $defaultValue;
