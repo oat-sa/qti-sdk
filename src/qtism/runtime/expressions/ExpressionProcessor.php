@@ -26,6 +26,7 @@ namespace qtism\runtime\expressions;
 use qtism\runtime\common\Processable;
 use qtism\runtime\common\State;
 use qtism\data\expressions\Expression;
+use qtism\common\utils\Reflection as ReflectionUtils;
 use \InvalidArgumentException;
 
 /**
@@ -70,13 +71,13 @@ abstract class ExpressionProcessor implements Processable
 	 */
     public function setExpression(Expression $expression)
     {
-        $givenType = get_class($expression);
         $expectedType = $this->getExpressionType();
         
-        if ($givenType === $expectedType || is_subclass_of($givenType, $expectedType) === true || in_array($expectedType, class_implements($givenType)) === true) {
+        if (ReflectionUtils::isInstanceOf($expression, $expectedType) === true) {
             $this->expression = $expression;
         } else {
             $procClass = get_class($this);
+            $givenType = get_class($expression);
             $msg = "The ${procClass} Expression Processor only processes ${expectedType} Expression objects, ${givenType} given.";
             throw new InvalidArgumentException($msg);
         }

@@ -44,7 +44,7 @@ class Reflection
      * @throws \ReflectionException
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
-    public static function newInstance(ReflectionClass $class, $args = array())
+    static public function newInstance(ReflectionClass $class, $args = array())
     {
         if (empty($args) === true) {
             $fqName = $class->getName();
@@ -69,7 +69,7 @@ class Reflection
      * @param mixed $object An object or a fully qualified class name.
      * @return boolean|string A short class name or false if $object is not an object nor a string.
      */
-    public static function shortClassName($object)
+    static public function shortClassName($object)
     {
         $shortClassName = false;
 
@@ -83,5 +83,21 @@ class Reflection
         }
 
         return empty($shortClassName) ? false : $shortClassName;
+    }
+    
+    /**
+     * Whether or not a given $object is an instance of $className. This method
+     * exists because is_sublcass_of() does not take into account interfaces
+     * in PHP 5.3.
+     * 
+     * @param mixed $object The object you want to know it is an instance of $className.
+     * @param string $className A class name. It can be fully qualified.
+     * @return boolean
+     */
+    static public function isInstanceOf($object, $className)
+    {
+        $givenType = get_class($object);
+        
+        return $givenType === $className || is_subclass_of($givenType, $className) === true || in_array($className, class_implements($givenType)) === true;
     }
 }
