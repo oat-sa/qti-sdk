@@ -47,4 +47,12 @@ class OutcomeConditionProcessor extends AbstractConditionProcessor
     {
         return 'outcome';
     }
+    
+    /**
+     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     */
+    protected function getRuleType()
+    {
+        return 'qtism\\data\\rules\\OutcomeCondition';
+    }
 }

@@ -47,4 +47,12 @@ class ResponseConditionProcessor extends AbstractConditionProcessor
     {
         return 'response';
     }
+    
+    /**
+     * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
+     */
+    protected function getRuleType()
+    {
+        return 'qtism\\data\\rules\\ResponseCondition';
+    }
 }

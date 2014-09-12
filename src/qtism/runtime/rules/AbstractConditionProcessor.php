@@ -29,7 +29,6 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\rules\OutcomeCondition;
 use qtism\data\rules\Rule;
-use \InvalidArgumentException;
 
 /**
  * The AbstractConditionProcessor implements the common logic
@@ -65,24 +64,6 @@ abstract class AbstractConditionProcessor extends RuleProcessor
     {
         parent::__construct($rule);
         $this->setRuleProcessorFactory(new RuleProcessorFactory());
-    }
-
-    /**
-	 * Set the OutcomeCondition/ResponseCondition object to be processed.
-	 *
-	 * @param \qtism\data\rules\Rule $rule An OutcomeCondition/ResponseCondition object.
-	 * @throws \InvalidArgumentException If $rule is not an OutcomeCondition nor a ResponseCondition object.
-	 */
-    public function setRule(Rule $rule)
-    {
-        $className = ucfirst($this->getQtiNature()) . 'Condition';
-
-        if (get_class($rule) === 'qtism\\data\\rules\\' . $className) {
-            parent::setRule($rule);
-        } else {
-            $msg = "The ${className}Processor only accepts ${className} objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
     }
 
     /**

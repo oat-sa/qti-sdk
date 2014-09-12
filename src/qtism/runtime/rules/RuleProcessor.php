@@ -22,9 +22,11 @@
  */
 namespace qtism\runtime\rules;
 
+use qtism\common\utils\Reflection;
 use qtism\runtime\common\State;
 use qtism\data\rules\Rule;
 use qtism\runtime\common\Processable;
+use \InvalidArgumentException;
 
 /**
  * The RuleProcessor class aims at processing QTI Data Model Rule objects which are:
@@ -58,6 +60,7 @@ abstract class RuleProcessor implements Processable
 	 * Create a new RuleProcessor object aiming at processing the $rule Rule object.
 	 *
 	 * @param \qtism\data\rules\Rule $rule A Rule object to be processed by the processor.
+	 * @throws \InvalidArgumentException If $rule is not compliant with the rule processor implementation.
 	 */
     public function __construct(Rule $rule)
     {
@@ -69,10 +72,20 @@ abstract class RuleProcessor implements Processable
 	 * Set the QTI Data Model Rule object to be processed.
 	 *
 	 * @param \qtism\runtime\rules\Rule $rule
+	 * @throws \InvalidArgumentException If $rule is not compliant with the rule processor implementation.
 	 */
     public function setRule(Rule $rule)
     {
-        $this->rule = $rule;
+        $expectedType = $this->getRuleType();
+        
+        if (Reflection::isInstanceOf($rule, $expectedType) === true) {
+            $this->rule = $rule;
+        } else {
+            $procClass = get_class($this);
+            $givenType = get_class($rule);
+            $msg = "The ${procClass} Rule Processor only processes ${expectedType} Rule objects, ${givenType} given.";
+            throw new InvalidArgumentException($msg);
+        }
     }
 
     /**
@@ -104,4 +117,12 @@ abstract class RuleProcessor implements Processable
     {
         return $this->state;
     }
+    
+    /**
+     * Get the expected type (fully qualifed class name) of the Rule objects that can be processed
+     * by the actual implementation.
+     * 
+     * @return string A Fully Qualified PHP Class Name (FQCN).
+     */
+    abstract protected function getRuleType();
 }
