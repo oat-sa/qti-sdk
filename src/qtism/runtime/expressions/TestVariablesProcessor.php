@@ -29,7 +29,6 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\TestVariables;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The TestVariablesProcessor aims at processing TestVariables
@@ -65,19 +64,6 @@ use \InvalidArgumentException;
  */
 class TestVariablesProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof TestVariables) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The TestVariablesProcessor class only accepts TestVariables expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related TestVariables expression.
 	 *
@@ -162,5 +148,13 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         }
 
         return $result;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\TestVariables';
     }
 }

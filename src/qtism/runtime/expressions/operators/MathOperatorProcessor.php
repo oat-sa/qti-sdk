@@ -27,7 +27,6 @@ use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The MathOperatorProcessor class aims at processing MathOperator operators.
@@ -78,19 +77,6 @@ use \InvalidArgumentException;
  */
 class MathOperatorProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof MathOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MathOperatorProcessor class only processes MathOperator QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the MathOperator operator.
 	 *
@@ -564,5 +550,13 @@ class MathOperatorProcessor extends OperatorProcessor
         }
 
         return new Float(floatval(deg2rad($operand->getValue())));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\MathOperator';
     }
 }

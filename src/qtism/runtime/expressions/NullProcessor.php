@@ -40,19 +40,6 @@ use qtism\data\expressions\NullValue;
 class NullProcessor extends ExpressionProcessor
 {
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NullValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NullProcessor class only processes NullValue QTI Data Model objects.";
-            throw new InvalidArgumentException();
-        }
-    }
-
-    /**
 	 * Returns NULL.
 	 *
 	 * @return null The null value.
@@ -60,5 +47,13 @@ class NullProcessor extends ExpressionProcessor
     public function process()
     {
         return null;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\NullValue';
     }
 }

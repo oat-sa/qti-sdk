@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\IntegerToFloat;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The IntegerToFloatProcessor class aims at processing IntegerToFloat operators.
@@ -43,19 +42,6 @@ use \InvalidArgumentException;
  */
 class IntegerToFloatProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerToFloat) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerToFloatProcessor class only processes IntegerToFloat QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the IntegerToFloat operator.
 	 *
@@ -83,5 +69,13 @@ class IntegerToFloatProcessor extends OperatorProcessor
         $operand = $operands[0];
 
         return new Float(floatval($operand->getValue()));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\IntegerToFloat';
     }
 }

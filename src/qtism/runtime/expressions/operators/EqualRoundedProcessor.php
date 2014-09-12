@@ -32,7 +32,6 @@ use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\data\expressions\operators\EqualRounded;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils;
-use \InvalidArgumentException;
 
 /**
  * The EqualRoundedProcessor class aims at processing EqualRounded operators.
@@ -61,19 +60,6 @@ use \InvalidArgumentException;
  */
 class EqualRoundedProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof EqualRounded) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The EqualRoundedProcessor class only processes EqualRounded QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the EqualRounded operator.
 	 *
@@ -137,5 +123,13 @@ class EqualRoundedProcessor extends OperatorProcessor
         }
 
         return new Boolean($rounded[0]->getValue() == $rounded[1]->getValue());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\EqualRounded';
     }
 }

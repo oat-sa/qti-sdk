@@ -43,19 +43,6 @@ use qtism\data\expressions\operators\Not;
 class NotProcessor extends OperatorProcessor
 {
     /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Not) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NotProcessor class only processes Not QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
 	 * Returns the logical negation of the sub-expressions.
 	 *
 	 * @return boolean
@@ -82,5 +69,13 @@ class NotProcessor extends OperatorProcessor
         $operand = $operands[0];
 
         return new Boolean(!$operand->getValue());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Not';
     }
 }

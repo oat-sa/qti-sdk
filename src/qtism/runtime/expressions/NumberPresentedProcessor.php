@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberPresented;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The NumberPresentedProcessor aims at processing NumberPresented
@@ -44,19 +43,6 @@ use \InvalidArgumentException;
  */
 class NumberPresentedProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberPresented) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberPresentedProcessor class only accepts NumberPresented expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related NumberPresented expression.
 	 *
@@ -83,5 +69,13 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
         }
 
         return new Integer($numberPresented);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\NumberPresented';
     }
 }

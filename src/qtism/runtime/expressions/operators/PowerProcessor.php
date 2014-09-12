@@ -25,7 +25,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Power;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The PowerProcessor class aims at processing PowerValue expressions.
@@ -45,19 +44,6 @@ use \InvalidArgumentException;
  */
 class PowerProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Power) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The PowerProcessor class only processes Power QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Power operator.
 	 *
@@ -115,5 +101,13 @@ class PowerProcessor extends OperatorProcessor
         } else {
             return new Float($floatval);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Power';
     }
 }

@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\IntegerDivide;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The IntegerDivideProcessor class aims at processing IntegerDivide operators.
@@ -44,19 +43,6 @@ use \InvalidArgumentException;
  */
 class IntegerDivideProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerDivide) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerDivideProcessor class only processes IntegerDivide QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the IntegerDivide operator.
 	 *
@@ -89,5 +75,13 @@ class IntegerDivideProcessor extends OperatorProcessor
         }
 
         return new Integer(intval(floor($operand1->getValue() / $operand2->getValue())));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\IntegerDivide';
     }
 }

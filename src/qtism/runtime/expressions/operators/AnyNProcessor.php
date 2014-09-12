@@ -28,7 +28,6 @@ use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\AnyN;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils;
-use \InvalidArgumentException;
 
 /**
  * The AnyNProcessor class aims at processing AnyN expressions.
@@ -53,19 +52,6 @@ use \InvalidArgumentException;
  */
 class AnyNProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof AnyN) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The AnyNProcessor class only processes AnyN QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the AnyN processor.
 	 *
@@ -145,5 +131,13 @@ class AnyNProcessor extends OperatorProcessor
                 return new Boolean(false);
             }
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\AnyN';
     }
 }

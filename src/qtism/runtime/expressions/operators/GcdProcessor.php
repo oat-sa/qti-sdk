@@ -29,7 +29,6 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Gcd;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The GcdProcessor class aims at processing Gcd operators.
@@ -51,19 +50,6 @@ use \InvalidArgumentException;
  */
 class GcdProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Gcd) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The GcdProcessor class only processes Gcd QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Gcd operator.
 	 *
@@ -135,5 +121,13 @@ class GcdProcessor extends OperatorProcessor
 
             return $g;
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Gcd';
     }
 }

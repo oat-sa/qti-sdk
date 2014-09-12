@@ -29,7 +29,6 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\OutcomeMaximum;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The OutcomeMaximumProcessor aims at processing OutcomeMaximum
@@ -47,19 +46,6 @@ use \InvalidArgumentException;
  */
 class OutcomeMaximumProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof OutcomeMaximum) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The OutcomeMaximumProcessor class only accepts OutcomeMaximum expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related OutcomeMaximum expression.
 	 *
@@ -119,5 +105,13 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
         }
 
         return $result;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\OutcomeMaximum';
     }
 }

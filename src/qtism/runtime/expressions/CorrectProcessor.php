@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\Correct;
-use \InvalidArgumentException;
 
 /**
  * The CorrectProcessor class aims at processing Correct Expression objects from the
@@ -44,19 +43,6 @@ use \InvalidArgumentException;
  */
 class CorrectProcessor extends ExpressionProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Correct) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The CorrectProcessor can only process Correct Expression objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Returns the related correstResponse as a QTI Runtime compliant value.
 	 *
@@ -86,5 +72,13 @@ class CorrectProcessor extends ExpressionProcessor
             $msg = "The variable with identifier '${identifier}' is not a ResponseVariable object.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\Correct';
     }
 }

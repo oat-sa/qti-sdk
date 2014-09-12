@@ -31,7 +31,6 @@ use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OrderedContainer;
 use qtism\data\expressions\operators\Repeat;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The RepeatProcessor class aims at processing Repeat operators.
@@ -55,19 +54,6 @@ use \InvalidArgumentException;
  */
 class RepeatProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Repeat) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The RepeatProcessor class only processes Repeat QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Repeat operator.
 	 *
@@ -151,5 +137,13 @@ class RepeatProcessor extends OperatorProcessor
         } else {
             return null;
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Repeat';
     }
 }

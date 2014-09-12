@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\runtime\expressions\ExpressionProcessor;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 abstract class OperatorProcessor extends ExpressionProcessor
 {
@@ -48,19 +47,6 @@ abstract class OperatorProcessor extends ExpressionProcessor
     {
         parent::__construct($expression);
         $this->setOperands($operands);
-    }
-
-    /**
-	 * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-	 */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Operator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The OperatorProcessor class only accepts QTI Data Model Operators to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
     }
 
     /**

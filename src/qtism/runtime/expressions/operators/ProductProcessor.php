@@ -28,7 +28,6 @@ use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Product;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The ProductProcessor class aims at processing Product QTI Data Model Operators.
@@ -46,22 +45,6 @@ use \InvalidArgumentException;
  */
 class ProductProcessor extends OperatorProcessor
 {
-    /**
-	 * Set the Product Expression object to be processed.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression A Product object.
-	 * @throws \InvalidArgumentException If $expression is not an instance of Product.
-	 */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Product) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ProductProcessor class only accepts a Product Operator to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Product operator.
 	 *
@@ -94,5 +77,13 @@ class ProductProcessor extends OperatorProcessor
         }
 
         return (is_int($returnValue)) ? new Integer($returnValue) : new Float($returnValue);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Product';
     }
 }

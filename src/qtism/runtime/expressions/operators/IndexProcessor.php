@@ -27,7 +27,6 @@ use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils as ProcessingUtils;
-use \InvalidArgumentException;
 
 /**
  * The IndexProcessor class aims at processing Index operators.
@@ -47,19 +46,6 @@ use \InvalidArgumentException;
  */
 class IndexProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Index) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IndexProcessor class only processes Index QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Index operator.
 	 *
@@ -109,5 +95,13 @@ class IndexProcessor extends OperatorProcessor
         }
 
         return $operands[0][$n];
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Index';
     }
 }

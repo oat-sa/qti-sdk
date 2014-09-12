@@ -26,7 +26,6 @@ use qtism\runtime\common\Container;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
-use \InvalidArgumentException;
 
 /**
  * The OrProcessor class aims at processing OrOperator QTI Data Model Expression objects.
@@ -46,19 +45,6 @@ use \InvalidArgumentException;
  */
 class OrProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof OrOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The AndProcessor class only accepts OrOperator QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the current expression.
 	 *
@@ -99,5 +85,13 @@ class OrProcessor extends OperatorProcessor
         }
 
         return new Boolean(false);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\OrOperator';
     }
 }

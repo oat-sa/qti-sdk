@@ -27,7 +27,6 @@ use qtism\common\datatypes\Float;
 use qtism\data\expressions\MathEnumeration;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\MathConstant;
-use \InvalidArgumentException;
 
 /**
  * The MathConstant processor aims at processing QTI Data Model MathConstant expressions.
@@ -42,19 +41,6 @@ use \InvalidArgumentException;
 class MathConstantProcessor extends ExpressionProcessor
 {
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof MathConstant) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MathConstantProcessor class only processes MathConstant QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
 	 * Process the MathConstant Expression.
 	 *
 	 * @return float A float value (e or pi).
@@ -67,5 +53,13 @@ class MathConstantProcessor extends ExpressionProcessor
         } else {
             return new Float(M_PI);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\MathConstant';
     }
 }

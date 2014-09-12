@@ -30,7 +30,6 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\Container;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Max;
-use \InvalidArgumentException;
 
 /**
  * The MaxProcessor class aims at processing Max QTI Data Model Expression
@@ -51,19 +50,6 @@ use \InvalidArgumentException;
  */
 class MaxProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Max) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MaxProcessor class only accepts Max QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the current expression.
 	 *
@@ -118,5 +104,13 @@ class MaxProcessor extends OperatorProcessor
         }
 
         return ($integerCount === $valueCount) ? new Integer(intval($max)) : new Float(floatval($max));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Max';
     }
 }

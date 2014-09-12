@@ -27,7 +27,6 @@ use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Truncate;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The TruncateProcessor class aims at processing Truncate expressions.
@@ -48,19 +47,6 @@ use \InvalidArgumentException;
  */
 class TruncateProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Truncate) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The TruncateProcessor class only processes Truncate QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Truncate operator.
 	 *
@@ -94,5 +80,13 @@ class TruncateProcessor extends OperatorProcessor
         } else {
             return new Integer(intval($operand->getValue()));
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Truncate';
     }
 }

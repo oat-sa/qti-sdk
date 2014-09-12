@@ -20,13 +20,13 @@
  * @license GPLv2
  *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\Subtract;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The SubtractProcessor class aims at processing Subtract expressions.
@@ -44,19 +44,6 @@ use \InvalidArgumentException;
  */
 class SubtractProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Subtract) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The SubtractProcessor class only processes Subtract QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Subtract operator.
 	 *
@@ -87,5 +74,13 @@ class SubtractProcessor extends OperatorProcessor
         $subtract = $operand1->getValue() - $operand2->getValue();
 
         return (is_int($subtract) === true) ? new Integer($subtract) : new Float($subtract);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Subtract';
     }
 }

@@ -19,9 +19,8 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *
- *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\String;
@@ -30,7 +29,6 @@ use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\MapResponse;
-use \InvalidArgumentException;
 
 /**
  * The MapResponseProcessor class aims at processing MapResponse Expression objects.
@@ -56,19 +54,6 @@ use \InvalidArgumentException;
  */
 class MapResponseProcessor extends ExpressionProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof MapResponse) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MapResponseProcessor only accepts MapResponse Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the MapResponse expression.
 	 *
@@ -184,5 +169,13 @@ class MapResponseProcessor extends ExpressionProcessor
             $msg = "No variable with identifier '${identifier}' could be found while processing MapResponse.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\MapResponse';
     }
 }

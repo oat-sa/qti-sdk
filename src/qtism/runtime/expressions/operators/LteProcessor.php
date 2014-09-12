@@ -27,7 +27,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Lte;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The LteProcessor class aims at processing Lte operators.
@@ -45,19 +44,6 @@ use \InvalidArgumentException;
  */
 class LteProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Lte) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The LteProcessor class only processes Lte QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Lte operator.
 	 *
@@ -83,5 +69,13 @@ class LteProcessor extends OperatorProcessor
         }
 
         return new Boolean($operands[0]->getValue() <= $operands[1]->getValue());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Lte';
     }
 }

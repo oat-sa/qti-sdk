@@ -19,15 +19,13 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Lt;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The LtProcessor class aims at processing Lt operators.
@@ -45,19 +43,6 @@ use \InvalidArgumentException;
  */
 class LtProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Lt) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The LtProcessor class only processes Lt QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Lt operator.
 	 *
@@ -83,5 +68,13 @@ class LtProcessor extends OperatorProcessor
         }
 
         return new Boolean($operands[0]->getValue() < $operands[1]->getValue());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Lt';
     }
 }

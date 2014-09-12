@@ -26,6 +26,7 @@ namespace qtism\runtime\expressions;
 use qtism\runtime\common\Processable;
 use qtism\runtime\common\State;
 use qtism\data\expressions\Expression;
+use \InvalidArgumentException;
 
 /**
  * The ExpressionProcessor class aims at processing QTI Data Model
@@ -65,9 +66,21 @@ abstract class ExpressionProcessor implements Processable
 	 * Set the QTI Data Model Expression to be processed.
 	 *
 	 * @param \qtism\data\expressions\Expression $expression A QTI Data Model Expression object.
+	 * @throws \InvalidArgumentException If $expression is not a subclass nor implements the Expression type returned by the getExpressionType method.
 	 */
     public function setExpression(Expression $expression)
     {
+        $givenType = get_class($expression);
+        $expectedType = $this->getExpressionType();
+        
+        if ($givenType === $expectedType || is_subclass_of($givenType, $expectedType) === true || in_array($expectedType, class_implements($givenType)) === true) {
+            $this->expression = $expression;
+        } else {
+            $procClass = get_class($this);
+            $msg = "The ${procClass} Expression Processor only processes ${expectedType} Expression objects, ${givenType} given.";
+            throw new InvalidArgumentException($msg);
+        }
+        
         $this->expression = $expression;
     }
 
@@ -100,4 +113,12 @@ abstract class ExpressionProcessor implements Processable
     {
         return $this->state;
     }
+    
+    /**
+     * Get the expected type (fully qualifed class name) of the Expression objects that can be processed
+     * by the actual implementation.
+     * 
+     * @return string A Fully Qualified PHP Class Name (FQCN).
+     */
+    abstract protected function getExpressionType();
 }

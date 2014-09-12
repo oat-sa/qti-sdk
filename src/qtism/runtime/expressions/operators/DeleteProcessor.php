@@ -30,7 +30,6 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\data\expressions\operators\Delete;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The DeleteProcessor class aims at processing Delete operators.
@@ -52,19 +51,6 @@ use \InvalidArgumentException;
  */
 class DeleteProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Delete) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DeleteProcessor class only processes Delete QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Delete operator.
 	 *
@@ -110,5 +96,13 @@ class DeleteProcessor extends OperatorProcessor
         }
 
         return $returnValue;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Delete';
     }
 }

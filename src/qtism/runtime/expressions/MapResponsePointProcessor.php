@@ -30,7 +30,6 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\MapResponsePoint;
-use \InvalidArgumentException;
 
 /**
  * The MapResponsePointProcessor class aims at processing QTI Data Model MapResponsePoint
@@ -50,19 +49,6 @@ use \InvalidArgumentException;
  */
 class MapResponsePointProcessor extends ExpressionProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof MapResponsePoint) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MapResponsePoint processor can only process MapResponsePoint Expression objects.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the MapResponsePoint Expression.
 	 *
@@ -155,5 +141,13 @@ class MapResponsePointProcessor extends ExpressionProcessor
             $msg = "No variable with identifier '${identifier}' could be found in the current State object.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\MapResponsePoint';
     }
 }

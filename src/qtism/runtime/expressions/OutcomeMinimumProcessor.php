@@ -29,7 +29,6 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\OutcomeMinimum;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The OutcomeMinimumProcessor aims at processing OutcomeMinimum
@@ -47,19 +46,6 @@ use \InvalidArgumentException;
  */
 class OutcomeMinimumProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof OutcomeMinimum) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The OutcomeMinimumProcessor class only accepts OutcomeMinimum expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related OutcomeMinimum expression.
 	 *
@@ -109,5 +95,13 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
         }
 
         return $result;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\OutcomeMinimum';
     }
 }

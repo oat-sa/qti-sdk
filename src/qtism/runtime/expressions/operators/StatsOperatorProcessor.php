@@ -28,7 +28,6 @@ use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 use qtism\data\expressions\operators\StatsOperator;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The StatsOperatorProcessor class aims at processing StatsOperator operators.
@@ -59,19 +58,6 @@ use \InvalidArgumentException;
  */
 class StatsOperatorProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof StatsOperator) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The StatsOperatorProcessor class only processes StatsOperator QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the StatsOperator.
 	 *
@@ -191,5 +177,13 @@ class StatsOperatorProcessor extends OperatorProcessor
         }
 
         return $returnValue;
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\StatsOperator';
     }
 }

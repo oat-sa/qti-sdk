@@ -20,11 +20,11 @@
  * @license GPLv2
  *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\data\expressions\operators\Random;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The RandomProcessor class aims at processing Random operators.
@@ -41,19 +41,6 @@ use \InvalidArgumentException;
  */
 class RandomProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Random) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The RandomProcessor class only processes Random QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Random operator.
 	 *
@@ -77,5 +64,13 @@ class RandomProcessor extends OperatorProcessor
         $maxIndex = count($operand) - 1;
 
         return $operand[mt_rand(0, $maxIndex)];
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Random';
     }
 }

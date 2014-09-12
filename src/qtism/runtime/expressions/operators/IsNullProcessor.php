@@ -44,19 +44,6 @@ use \InvalidArgumentException;
 class IsNullProcessor extends OperatorProcessor
 {
     /**
-	 * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-	 */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IsNull) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IsNullProcessor class only accept IsNull Operator objects to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
-    /**
 	 * Process the IsNullExpression object from the QTI Data Model.
 	 *
 	 * @return boolean Whether the sub-expression is considered to be NULL.
@@ -68,5 +55,13 @@ class IsNullProcessor extends OperatorProcessor
         $expression = $this->getExpression();
 
         return new Boolean($operands->containsNull());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\IsNull';
     }
 }

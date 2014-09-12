@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Float;
 use qtism\data\expressions\operators\Divide;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The DivideProcessor class aims at processing Divide operators.
@@ -48,19 +47,6 @@ use \InvalidArgumentException;
  */
 class DivideProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Divide) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DivideProcessor class only processes Divide QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Divide operator.
 	 *
@@ -95,5 +81,13 @@ class DivideProcessor extends OperatorProcessor
         $divide = floatval($operand1->getValue() / $operand2->getValue());
 
         return is_nan($divide) ? null : new Float($divide);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Divide';
     }
 }

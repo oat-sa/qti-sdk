@@ -28,7 +28,6 @@ use qtism\data\AssessmentItemRefCollection;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\ItemSubset;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The ItemSubsetProcessor class is the base class of Outcome Processing only
@@ -62,19 +61,6 @@ use \InvalidArgumentException;
  */
 abstract class ItemSubsetProcessor extends ExpressionProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof ItemSubset) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ItemSubsetProcessor class only accepts ItemSubset expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * A convenience method enabling you to get the sectionIdentifier attribute value
 	 * of the ItemSubset expression to be processed.

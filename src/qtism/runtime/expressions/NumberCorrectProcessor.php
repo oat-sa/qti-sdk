@@ -20,12 +20,12 @@
  * @license GPLv2
  *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberCorrect;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The NumberCorrectProcessor aims at processing NumberCorrect
@@ -43,19 +43,6 @@ use \InvalidArgumentException;
  */
 class NumberCorrectProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberCorrect) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberCorrectProcessor class only accepts NumberCorrect expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related NumberCorrect expression.
 	 *
@@ -79,5 +66,13 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
         }
 
         return new Integer($numberCorrect);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\NumberCorrect';
     }
 }

@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\DurationGTE;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The DurationGTEProcessor class aims at processing DurationGTE operators.
@@ -46,19 +45,6 @@ use \InvalidArgumentException;
  */
 class DurationGTEProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof DurationGTE) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DurationGTEProcessor class only processes DurationGTE QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the DurationGTE operator.
 	 *
@@ -84,5 +70,13 @@ class DurationGTEProcessor extends OperatorProcessor
         }
 
         return new Boolean($operands[0]->longerThanOrEquals($operands[1]));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\DurationGTE';
     }
 }

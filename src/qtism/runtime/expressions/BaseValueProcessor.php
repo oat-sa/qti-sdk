@@ -42,19 +42,6 @@ use \InvalidArgumentException;
 class BaseValueProcessor extends ExpressionProcessor
 {
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof BaseValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The BaseValueProcessor class only processes BaseValue QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
 	 * @see \qtism\runtime\common\Processable::process()
 	 */
     public function process()
@@ -62,5 +49,13 @@ class BaseValueProcessor extends ExpressionProcessor
         $expression = $this->getExpression();
 
         return RuntimeUtils::valueToRuntime($expression->getValue(), $expression->getBaseType());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\BaseValue';
     }
 }

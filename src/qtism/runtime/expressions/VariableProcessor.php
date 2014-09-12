@@ -20,6 +20,7 @@
  * @license GPLv2
  *
  */
+
 namespace qtism\runtime\expressions;
 
 use qtism\runtime\common\OrderedContainer;
@@ -74,19 +75,6 @@ use \InvalidArgumentException;
  */
 class VariableProcessor extends ExpressionProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Variable) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The VariableProcessor class only accepts Variable expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the Variable expression.
 	 *
@@ -160,5 +148,13 @@ class VariableProcessor extends ExpressionProcessor
         } else {
             return $variableValue;
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\Variable';
     }
 }

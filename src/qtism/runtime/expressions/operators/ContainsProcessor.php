@@ -45,16 +45,6 @@ use qtism\data\expressions\operators\Contains;
  */
 class ContainsProcessor extends OperatorProcessor
 {
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Contains) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ContainsProcessor class only processes Contains QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Returns the logical negation of the sub-expressions.
 	 *
@@ -127,5 +117,13 @@ class ContainsProcessor extends OperatorProcessor
                 return new Boolean(false);
             }
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Contains';
     }
 }

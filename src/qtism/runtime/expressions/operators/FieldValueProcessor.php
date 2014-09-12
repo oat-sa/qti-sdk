@@ -19,14 +19,12 @@
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  *
- *
- *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\data\expressions\operators\FieldValue;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The FieldValueProcessor class aims at processing FieldValue expressions.
@@ -42,19 +40,6 @@ use \InvalidArgumentException;
  */
 class FieldValueProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof FieldValue) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The FieldValueProcessor class only processes FieldValue QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the FieldValue object.
 	 *
@@ -73,5 +58,13 @@ class FieldValueProcessor extends OperatorProcessor
         $fieldIdentifier = $this->getExpression()->getFieldIdentifier();
 
         return $operands[0][$fieldIdentifier];
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\FieldValue';
     }
 }

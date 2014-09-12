@@ -25,7 +25,6 @@ namespace qtism\runtime\expressions;
 
 use qtism\data\expressions\DefaultVal;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The DefaultProcessor class aims at processing Default QTI Data Model Expressions.
@@ -43,19 +42,6 @@ use \InvalidArgumentException;
 class DefaultProcessor extends ExpressionProcessor
 {
     /**
-     * @see \qtism\runtime\expressions\ExpressionProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof DefaultVal) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The DefaultProcessor class only accepts a Default Expression to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
 	 * Returns the defaultValue of the current Expression to be processed. If no Variable
 	 * with the given identifier is found, null is returned. If the Variable has no defaultValue,
 	 * null is returned.
@@ -70,5 +56,13 @@ class DefaultProcessor extends ExpressionProcessor
         $var = $state->getVariable($expr->getIdentifier());
 
         return ($var === null) ? null : $var->getDefaultValue();
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\DefaultVal';
     }
 }

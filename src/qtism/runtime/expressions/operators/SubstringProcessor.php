@@ -20,12 +20,12 @@
  * @license GPLv2
  *
  */
+
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Substring;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The SubstringProcessor class aims at processing Substring operator.
@@ -43,19 +43,6 @@ use \InvalidArgumentException;
  */
 class SubstringProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Substring) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The SubstringProcessor class only processes Substring QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Substring operator.
 	 *
@@ -86,5 +73,13 @@ class SubstringProcessor extends OperatorProcessor
         $call = ($this->getExpression()->isCaseSensitive() === true) ? 'mb_strpos' : 'mb_stripos';
 
         return new Boolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Substring';
     }
 }

@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\IntegerModulus;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The IntegerModulusProcessor class aims at processing IntegerModulus operators.
@@ -45,19 +44,6 @@ use \InvalidArgumentException;
  */
 class IntegerModulusProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof IntegerModulus) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The IntegerModulusProcessor class only processes IntegerModulus QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the IntegerModulus operator.
 	 *
@@ -91,5 +77,13 @@ class IntegerModulusProcessor extends OperatorProcessor
         }
 
         return new Integer(intval($operand1->getValue() % $operand2->getValue()));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\IntegerModulus';
     }
 }

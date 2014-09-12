@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Gt;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The GtProcessor class aims at processing Gt operators.
@@ -44,19 +43,6 @@ use \InvalidArgumentException;
  */
 class GtProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Gt) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The GtProcessor class only processes Gt QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Gt operator.
 	 *
@@ -82,5 +68,13 @@ class GtProcessor extends OperatorProcessor
         }
 
         return new Boolean($operands[0]->getValue() > $operands[1]->getValue());
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Gt';
     }
 }

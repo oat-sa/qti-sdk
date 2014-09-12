@@ -22,10 +22,10 @@
  */
 
 namespace qtism\runtime\expressions;
+
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberSelected;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The NumberSelectedProcessor aims at processing NumberSelected
@@ -43,19 +43,6 @@ use \InvalidArgumentException;
  */
 class NumberSelectedProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberSelected) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberSelectedProcessor class only accepts NumberSelected expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related NumberSelected expression.
 	 *
@@ -79,5 +66,13 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
         }
 
         return new Integer($numberSelected);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\NumberSelected';
     }
 }

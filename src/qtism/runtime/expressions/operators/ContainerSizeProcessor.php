@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\ContainerSize;
-use \InvalidArgumentException;
 
 /**
  * The ContainerSizeProcessor class aims at processing ContainerSize QTI Data Model Expression objects.
@@ -43,19 +42,6 @@ use \InvalidArgumentException;
  */
 class ContainerSizeProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof ContainerSize) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The ContainerSizeProcessor class only accepts ContainerSize QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the current expression.
 	 *
@@ -76,5 +62,13 @@ class ContainerSizeProcessor extends OperatorProcessor
         }
 
         return new Integer(count($operands[0]));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\ContainerSize';
     }
 }

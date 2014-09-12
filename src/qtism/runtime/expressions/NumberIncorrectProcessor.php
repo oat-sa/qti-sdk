@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\NumberIncorrect;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The NumberIncorrectProcessor aims at processing NumberIncorrect
@@ -45,19 +44,6 @@ use \InvalidArgumentException;
  */
 class NumberIncorrectProcessor extends ItemSubsetProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\ItemSubsetProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof NumberIncorrect) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The NumberIncorrectProcessor class only accepts NumberIncorrect expressions to be processed.";
-            throw new InvalidArgumentException($expression);
-        }
-    }
-
     /**
 	 * Process the related NumberIncorrect expression.
 	 *
@@ -81,5 +67,13 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
         }
 
         return new Integer($numberIncorrect);
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\NumberIncorrect';
     }
 }

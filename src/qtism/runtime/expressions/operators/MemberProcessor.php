@@ -28,7 +28,6 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Utils as CommonUtils;
 use qtism\data\expressions\operators\Member;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The MemberProcessor class aims at processing Member operators.
@@ -48,19 +47,6 @@ use \InvalidArgumentException;
  */
 class MemberProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Member) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MemberProcessor class only processes Member QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Member operator.
 	 *
@@ -97,5 +83,13 @@ class MemberProcessor extends OperatorProcessor
         }
 
         return new Boolean($operand2->contains($operand1));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Member';
     }
 }

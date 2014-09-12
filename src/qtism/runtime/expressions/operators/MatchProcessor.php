@@ -27,7 +27,6 @@ use qtism\common\datatypes\Boolean;
 use qtism\common\Comparable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Match;
-use \InvalidArgumentException;
 
 /**
  * The MatchProcessor class aims at processing Match QTI Data Model Expression objects.
@@ -48,19 +47,6 @@ use \InvalidArgumentException;
  */
 class MatchProcessor extends OperatorProcessor
 {
-    /**
-	 * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-	 */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Match) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The MatchProcessor only accepts Match QTI Data Model Expression objects to be processed.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Match Expression object.
 	 *
@@ -95,5 +81,13 @@ class MatchProcessor extends OperatorProcessor
         } else {
             return new Boolean($operands[0] === $operands[1]);
         }
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Match';
     }
 }

@@ -26,7 +26,6 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\Inside;
 use qtism\data\expressions\Expression;
-use \InvalidArgumentException;
 
 /**
  * The InsideProcessor class aims at processing Inside operators.
@@ -44,19 +43,6 @@ use \InvalidArgumentException;
  */
 class InsideProcessor extends OperatorProcessor
 {
-    /**
-     * @see \qtism\runtime\expressions\operators\OperatorProcessor::setExpression()
-     */
-    public function setExpression(Expression $expression)
-    {
-        if ($expression instanceof Inside) {
-            parent::setExpression($expression);
-        } else {
-            $msg = "The InsideProcessor class only processes Inside QTI Data Model objects.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
     /**
 	 * Process the Inside operator.
 	 *
@@ -85,5 +71,13 @@ class InsideProcessor extends OperatorProcessor
         $coords = $this->getExpression()->getCoords();
 
         return new Boolean($coords->inside($operand));
+    }
+    
+    /**
+     * @see \qtism\runtime\expressions\ExpressionProcessor::getExpressionType()
+     */
+    protected function getExpressionType()
+    {
+        return 'qtism\\data\\expressions\\operators\\Inside';
     }
 }
