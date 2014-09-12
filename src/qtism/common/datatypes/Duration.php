@@ -370,8 +370,17 @@ class Duration implements QtiDatatype
     {
         // ... :'( ... https://bugs.php.net/bug.php?id=50559
         $tz = new DateTimeZone(self::TIMEZONE);
+        
+        // - This section is critical. Creating
+        // a new DateTime object as 'now' for $d2 is extremely
+        // dangerous. If the current PHP process goes to sleep
+        // right after $d1 instanciation, $d2 could be created
+        // n seconds later, where n is the time spent by the PHP
+        // process in sleep mode.
         $d1 = new DateTime('now', $tz);
-        $d2 = new DateTime('now', $tz);
+        $d2 = clone $d1;
+        // - End of the critical section.
+        
         $d2->add(new DateInterval($this->__toString()));
         $interval = $d2->diff($d1);
         $interval->invert = ($interval->invert === 1) ? 0 : 1;
