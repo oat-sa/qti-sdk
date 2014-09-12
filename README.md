@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/oat-sa/qti-sdk.svg?branch=master)](https://travis-ci.org/oat-sa/qti-sdk)
+[![Coverage Status](https://coveralls.io/repos/oat-sa/qti-sdk/badge.png)](https://coveralls.io/r/oat-sa/qti-sdk)
 
 QTI Software Modules
 =======
