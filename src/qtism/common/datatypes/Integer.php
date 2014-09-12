@@ -37,7 +37,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Integer extends Scalar implements QtiDatatype
+class Integer extends Scalar
 {
     /**
      * Checks whether or not $value is an integer compliant

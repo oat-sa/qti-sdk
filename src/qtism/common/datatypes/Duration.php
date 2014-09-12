@@ -23,7 +23,6 @@ namespace qtism\common\datatypes;
 
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\common\Comparable;
 use \DateInterval;
 use \DateTimeZone;
 use \DateTime;
@@ -39,7 +38,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Duration implements Comparable, QtiDatatype
+class Duration implements QtiDatatype
 {
     /**
      * Internally, the Duration class always

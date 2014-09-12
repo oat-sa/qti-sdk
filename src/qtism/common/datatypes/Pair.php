@@ -23,7 +23,6 @@ namespace qtism\common\datatypes;
 
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\common\Comparable;
 use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
@@ -38,7 +37,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Pair implements Comparable, QtiDatatype
+class Pair implements QtiDatatype
 {
     /**
 	 * The first identifier of the Pair.

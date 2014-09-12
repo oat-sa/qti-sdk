@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Boolean extends Scalar implements QtiDatatype
+class Boolean extends Scalar
 {
     /**
      * Check whether or not the intrinsic $value is a PHP boolean.

@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class String extends Scalar implements QtiDatatype
+class String extends Scalar
 {
     /**
      * Checks whether or not $value is a valid string.

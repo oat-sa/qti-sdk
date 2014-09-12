@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IntOrIdentifier extends Scalar implements QtiDatatype
+class IntOrIdentifier extends Scalar
 {
     /**
      * Checks whether or not $value is a valid integer or string to be

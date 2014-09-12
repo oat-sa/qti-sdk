@@ -23,7 +23,6 @@ namespace qtism\common\datatypes;
 
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\common\Comparable;
 use qtism\common\collections\IntegerCollection;
 use \InvalidArgumentException;
 
@@ -33,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Coords extends IntegerCollection implements QtiDatatype, Comparable
+class Coords extends IntegerCollection implements QtiDatatype
 {
     /**
      * A value from the Shape enumeration.

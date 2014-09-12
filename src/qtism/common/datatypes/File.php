@@ -22,8 +22,6 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\Comparable;
-
 /**
  * The interface to implement to create a new QTI File datatype
  * implementation.
@@ -39,7 +37,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface File extends QtiDatatype, Comparable
+interface File extends QtiDatatype
 {
     /**
      * Get the sequence of bytes composing the file.

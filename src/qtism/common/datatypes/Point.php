@@ -24,7 +24,6 @@ namespace qtism\common\datatypes;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
-use qtism\common\Comparable;
 
 /**
  * Represents the QTI Point datatype.
@@ -39,7 +38,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Point implements Comparable, QtiDatatype
+class Point implements QtiDatatype
 {
     /**
 	 * The position on the x-axis.

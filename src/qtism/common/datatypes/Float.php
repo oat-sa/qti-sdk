@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Float extends Scalar implements QtiDatatype
+class Float extends Scalar
 {
     /**
      * Check whether or not $value is a Float object.

@@ -22,8 +22,6 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\Comparable;
-
 /**
  * The base class for all Scalar QTI datatypes. The following QTI datatypes
  * are considered to be Scalar values:
@@ -39,7 +37,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Scalar implements Comparable
+abstract class Scalar implements QtiDatatype
 {
     /**
      * The value of the Scalar object.
