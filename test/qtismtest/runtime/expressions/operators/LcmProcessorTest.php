@@ -64,6 +64,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 	public function lcmProvider() {
 		return array(
 			array(array(new Integer(0)), 0),
+		    array(array(new Integer(0), new MultipleContainer(BaseType::INTEGER, array(new Integer(0)))), 0),
 			array(array(new Integer(0), new Integer(0)), 0),
 			array(array(new Integer(330), new Integer(0)), 0),
 			array(array(new Integer(0), new Integer(330)), 0),

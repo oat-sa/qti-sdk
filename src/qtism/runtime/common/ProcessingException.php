@@ -96,6 +96,13 @@ class ProcessingException extends \RuntimeException
 	 * @var integer
 	 */
     const LOGIC_ERROR = 6;
+    
+    /**
+     * Code to use when a variable has not the expected cardinality.
+     * 
+     * @var integer
+     */
+    const WRONG_VARIABLE_CARDINALITY = 7;
 
     private $source = null;
 

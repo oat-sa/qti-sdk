@@ -122,7 +122,7 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     } else {
                         if ($var->isRecord()) {
                             $msg = "The MapResponsePoint expression cannot be applied to RECORD variables.";
-                            throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
+                            throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
                         } else {
                             $strBaseType = BaseType::getNameByConstant($var->getBaseType());
                             $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
