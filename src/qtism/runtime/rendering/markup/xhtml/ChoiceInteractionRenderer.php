@@ -97,16 +97,21 @@ class ChoiceInteractionRenderer extends InteractionRenderer
 
         }
 
+        // Give a unique id for the input->name attribute.
+        $inputId = uniqid();
+        
         if ($component->getMaxChoices() === 0 || $component->getMaxChoices() > 1) {
             foreach ($choices as $c) {
                 $checkbox = $fragment->ownerDocument->createElement('input');
                 $checkbox->setAttribute('type', 'checkbox');
+                $checkbox->setAttribute('name', $inputId);
                 $c->insertBefore($checkbox, $c->firstChild);
             }
         } else {
             foreach ($choices as $c) {
                 $radio = $fragment->ownerDocument->createElement('input');
                 $radio->setAttribute('type', 'radio');
+                $radio->setAttribute('name', $inputId);
                 $c->insertBefore($radio, $c->firstChild);
             }
         }
