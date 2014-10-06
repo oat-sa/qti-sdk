@@ -290,6 +290,8 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q01 - Correct.
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    // The session must be suspended until the end of the test part.
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    
 	    // !!! The Response must be stored in the session, but no score must be computed.
@@ -301,6 +303,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q02 - Incorrect (but SCORE = 3)
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))))));
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))));
 	    $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
@@ -309,6 +312,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q03 - Skip.
 	    $session->beginAttempt();
 	    $session->skip();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    // When skipping, the pending responses consist of all response variable
 	    // with their default value applied.
@@ -317,24 +321,28 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q04 - Skip.
 	    $session->beginAttempt();
 	    $session->skip();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertEquals(4, count($session->getPendingResponses()));
 	    
 	    // Q05 - Skip.
 	    $session->beginAttempt();
 	    $session->skip();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertEquals(5, count($session->getPendingResponses()));
 	    
 	    // Q06 - Skip.
 	    $session->beginAttempt();
 	    $session->skip();
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertEquals(6, count($session->getPendingResponses()));
 	    
 	    // Q07.1 - Correct.
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
 	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.1.SCORE']);
@@ -344,6 +352,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q07.2 - Incorrect (but SCORE = 1).
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 113)))));
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 113)));
 	    $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
@@ -352,6 +361,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Q07.3 - Incorrect (and SCORE = 0).
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(50, 60)))));
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	    $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(50, 60)));
 	    $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
@@ -369,6 +379,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Did the test-level outcome processing take place?
 	    $this->assertEquals(9, $session['NPRESENTED']->getValue());
+	    
+	    // All item sessions now closed?
+	    foreach ($session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+	    }
 	}
 	
 	/**
@@ -396,6 +411,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    foreach ($responses as $resp) {
 	        $assessmentTestSession->beginAttempt();
 	        $assessmentTestSession->endAttempt($resp);
+	        
+	        // Only 1 attempt allowed by item. It means the session closes after the first attempt is completed.
+	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $assessmentTestSession->getCurrentAssessmentItemSession()->getState());
+	        
 	        $assessmentTestSession->moveNext();
 	    }
 	    
@@ -679,7 +698,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));
+	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
+	    
 	    $this->assertEquals(2.0, $session['Q03.SCORE']->getValue());
 	    
 	    // Come back at Q01.
@@ -689,14 +710,14 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->moveNext();
 	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
 	    
-	    // Autoforward enabled so we are at Q02.
+	    // Wwe are at Q02.
 	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
 	    $session->moveNext();
 	    $this->assertEquals(2.0, $session['Q02.SCORE']->getValue());
 	    
-	    // Q03 Again because of autoforward.
+	    // We are at Q03.
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    try {
 	        $session->beginAttempt();
@@ -756,6 +777,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->moveNext();
 	     
 	    // Come back at Q01.
@@ -764,24 +786,19 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
 	    $session->moveNext();
 	     
-	    // Autoforward enabled so we are at Q02.
+	    // We are at Q02.
 	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
 	    $session->moveNext();
 	     
-	    // Q03 Again because of autoforward.
+	    // We are at Q03.
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
-	    try {
-	        $session->beginAttempt();
-	        // Only a single attemp allowed.
-	        $this->assertFalse(true, 'Only a single attempt is allowed for Q03.');
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        // The assessment test session is closed.
-	        $this->assertEquals(AssessmentTestSessionException::STATE_VIOLATION, $e->getCode());
-	    }
 	    
+	    // Remember that in simulatenous submission mode, beginning an second attempt
+	    // will not raise an exception. Indeed, in this context, beginAttempt carry on
+	    // the current attempt.
+        $session->beginAttempt();
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
 	    

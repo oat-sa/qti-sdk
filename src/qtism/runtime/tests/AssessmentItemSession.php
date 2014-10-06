@@ -640,7 +640,11 @@ class AssessmentItemSession extends State
             $this['numAttempts'] = new Integer(0);
         }
 
-        $this['numAttempts']->setValue($this['numAttempts']->getValue() + 1);
+        $numAttempts = $this['numAttempts']->getValue();
+        
+        if ($this->submissionMode === SubmissionMode::INDIVIDUAL || ($this->submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts === 0)) {
+            $this['numAttempts']->setValue($numAttempts + 1);
+        }
 
         // The session get the INTERACTING STATE.
         $this->state = AssessmentItemSessionState::INTERACTING;
@@ -765,11 +769,11 @@ class AssessmentItemSession extends State
                 $this->resetOutcomeVariables();
             }
 
-            $responseProcessing = $this->assessmentItem->getResponseProcessing();
+            $rule = $this->assessmentItem->getResponseProcessing();
 
             // Some items (especially to collect information) have no response processing!
-            if ($responseProcessing !== null && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
-                $engine = $this->createResponseProcessingEngine($responseProcessing);
+            if ($rule !== null && ($rule->hasTemplate() === true || $rule->hasTemplateLocation() === true || count($rule->getResponseRules()) > 0)) {
+                $engine = $this->createResponseProcessingEngine($rule);
                 $engine->process();
             }
         }
@@ -791,7 +795,11 @@ class AssessmentItemSession extends State
         elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
 
             // Close only if $maxAttempts !== 0 because 0 means no limit!
-            if ($maxAttempts !== 0) {
+            //
+            // + Special case, no response processing requested && simulatenous navigation mode
+            // --> The session must not close prior to deferred response processing. The session goes
+            // then in suspended mode.
+            if ($maxAttempts !== 0 && $responseProcessing === true) {
                 $this->endItemSession();
             }
 

@@ -1421,8 +1421,7 @@ class AssessmentTestSession extends State
             // If the item has a processable response processing...
             if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
                 try {
-                    $engine = $this->createResponseProcessingEngine($responseProcessing, $itemSession);
-                    $engine->process();
+                    $itemSession->endAttempt(null, true, true);
                     $pendingResponsesProcessed++;
                     $this->submitItemResults($itemSession, $occurence);
                 } catch (ProcessingException $e) {

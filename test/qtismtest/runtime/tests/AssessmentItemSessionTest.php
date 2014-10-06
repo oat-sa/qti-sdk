@@ -337,14 +337,5 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->skip();
         
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        
-        // Another attempt must lead to an exception.
-        try {
-            $itemSession->beginAttempt();
-            $this->assertTrue(false, 'Nore more attempts should be allowed.');
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
-        }
     }
 }
