@@ -2234,7 +2234,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
             if ($itemSession->getState() === AssessmentItemSessionState::INTERACTING) {
-                $itemSession->suspend();
+                $itemSession->endCandidateSession();
             }
         } else {
             $msg = "Cannot retrieve the current item session.";
@@ -2257,7 +2257,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, $code);
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
             if ($itemSession->getState() === AssessmentItemSessionState::SUSPENDED && $itemSession->isAttempting()) {
-                $itemSession->interact();
+                $itemSession->beginCandidateSession();
             }
         } else {
             $msg = "Cannot retrieve the current item session.";

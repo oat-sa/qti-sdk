@@ -221,13 +221,6 @@ class AssessmentItemSession extends State
     private $attempting = false;
 
     /**
-	 * An array of callbacks to be executed on duration update.
-	 *
-	 * @var array
-	 */
-    private $onDurationUpdate = array();
-
-    /**
 	 *
 	 * @var \qtism\runtime\tests\AbstractSessionManager
 	 */
@@ -477,7 +470,10 @@ class AssessmentItemSession extends State
     }
 
     /**
-	 * Whether the candidate is currently performing an attempt.
+	 * Whether the candidate is currently performing an attempt. A candidate
+	 * can be performing an attempt, even if the session is closed. In this situation,
+	 * it means that the candidate was interacting with the item, but went in suspend
+	 * state by ending the candidate session rather than ending the attempt.
 	 *
 	 * @return boolean
 	 */
@@ -524,11 +520,6 @@ class AssessmentItemSession extends State
                 $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
                 $diffDuration = new Duration("PT${diffSeconds}S");
                 $this['duration']->add($diffDuration);
-
-                // Call all durationUpdate callbacks.
-                foreach ($this->onDurationUpdate as $callBack) {
-                    call_user_func_array($callBack, array($this, $diffDuration));
-                }
             }
 
             if ($this->isMaxTimeReached() === true) {
@@ -659,6 +650,8 @@ class AssessmentItemSession extends State
 	 * * If the item is adaptive and the completionStatus is indicated to be 'completed', the item session ends.
 	 * * If the item is non-adaptive, and the number of attempts is exceeded, the item session ends and the completionStatus is set to 'completed'.
 	 * * Otherwise, the item session goes to the SUSPENDED state, waiting for a next attempt.
+	 * 
+	 * Please note that if the $responseProcessing argument is false, the response processing will not take place.
 	 *
 	 * @param \qtism\runtime\common\State $responses (optional) A State composed by the candidate's responses to the item.
 	 * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
@@ -717,36 +710,7 @@ class AssessmentItemSession extends State
                 }
             }
         }
-
-        // As per specs, when validateResponses is turned on (true) then the candidates are not
-        // allowed to submit the item until they have provided valid responses for all
-        // interactions. When turned off (false) invalid responses may be accepted by the
-        // system.
-        if ($this->submissionMode === SubmissionMode::INDIVIDUAL && $this->itemSessionControl->mustValidateResponses() === true) {
-            // Use the correct expression to control if the responses
-            // are correct.
-            foreach ($responses as $response) {
-                // @todo Reconsider the 'valid' concept.
-                $correctExpression = new Correct($response->getIdentifier());
-                $correctProcessor = new CorrectProcessor($correctExpression);
-                $correctProcessor->setState($responses);
-
-                try {
-                    if ($correctProcessor->process() !== true) {
-                        $responseIdentifier = $response->getIdentifier();
-                        $msg = "The current itemSessionControl.validateResponses attribute is set to true but ";
-                        $msg.= "response '${responseIdentifier}' is incorrect.";
-                        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::INVALID_RESPONSE);
-                    }
-                } catch (ExpressionProcessingException $e) {
-                    $responseIdentifier = $response->getIdentifier();
-                    $msg = "The current itemSessionControl.validResponses attribute is set to true but an error ";
-                    $msg.= "occured while trying to detect if response '${responseIdentifier}' was correct.";
-                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
-                }
-            }
-        }
-
+        
         // Apply the responses (if provided) to the current state and deal with the responseProcessing.
         if ($responses !== null) {
             foreach ($responses as $identifier => $value) {
@@ -813,51 +777,81 @@ class AssessmentItemSession extends State
         // else...
         // Wait for the next attempt.
 
-        $this->attempting = false;
-
         // End of attempt, go in SUSPEND state.
         if ($this->getState() !== AssessmentItemSessionState::CLOSED) {
-            $this->suspend();
+            if ($responseProcessing === true) {
+                // Real end attempt.
+                $this->suspend();
+            } else {
+                // End attempt but no response processing, we consider
+                // the candidate can again interact if he wants to.
+                $this->endCandidateSession();
+            }
         }
-
     }
 
     /**
-	 * Suspend the item session. The state will switch to SUSPENDED and the
-	 * 'duration' built-in variable is updated.
+	 * Suspend the item session. The state will switch to SUSPENDED.
 	 *
 	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
 	 */
     public function suspend()
     {
-        if ($this->state !== AssessmentItemSessionState::SUSPENDED) {
-            if ($this->state !== AssessmentItemSessionState::INTERACTING && $this->state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
-                $msg = "Cannot switch from state '" . AssessmentItemSessionState::getNameByConstant($this->state) . "' to state 'suspended'.";
-                $code = AssessmentItemSessionException::STATE_VIOLATION;
-                throw new AssessmentItemSessionException($msg, $this, $code);
-            }
-
-            $this->state = AssessmentItemSessionState::SUSPENDED;
+        $state = $this->getState();
+        
+        if ($state !== AssessmentItemSessionState::INTERACTING && $state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
+            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state SUSPENDED.";
+            $code = AssessmentItemSessionException::STATE_VIOLATION;
+            throw new AssessmentItemSessionException($msg, $this, $code);
+        } else {
+            $this->setState(AssessmentItemSessionState::SUSPENDED);
+            $this->attempting = false;
         }
     }
 
     /**
-	 * Set the item session in INTERACTING state.
+	 * Indicate that the candidate is beginning the candidate session. In other words, the candidate makes
+	 * the item session go from the SUSPENDED state to the INTERACTING state. To successfuly call this method
+	 * without throwing an exception, the SUSPENDED state had to be set via a call to the endCandidateSession()
+	 * method.
 	 *
-	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INITIAL nor SUSPENDED nor MODAL_FEEDBACK nor INTERACTING.
+	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not SUSPENDED.
 	 */
-    public function interact()
+    public function beginCandidateSession()
     {
         $state = $this->getState();
 
-        if ($state !== AssessmentItemSessionState::INTERACTING) {
-            if ($state !== AssessmentItemSessionState::INITIAL && $state !== AssessmentItemSessionState::SUSPENDED && $state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
-                $msg = "Cannot switch from state '" . AssessmentItemSessionState::getNameByConstant($state) . "' to state 'interacting'.";
-                $code = AssessmentItemSessionException::STATE_VIOLATION;
-                throw new AssessmentItemSessionException($msg, $this, $code);
-            }
-
+        if ($state !== AssessmentItemSessionState::SUSPENDED) {
+            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state INTERACTING.";
+            $code = AssessmentItemSessionException::STATE_VIOLATION;
+            throw new AssessmentItemSessionException($msg, $this, $code);
+        } else if ($this->isAttempting() === false) {
+            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state INTERACTING while not currently attempting.";
+            $code = AssessmentItemSessionException::STATE_VIOLATION;
+            throw new AssessmentItemSessionException($msg, $this, $code);
+        } else {
             $this->setState(AssessmentItemSessionState::INTERACTING);
+        }
+    }
+    
+    
+    /**
+     * Indicate that the candidate is ending its candidate session. In other words, the candidate makes the item session
+     * go from the INTERACTING mode to the SUSPENDED mode, without ending the attempt. The attempt can be resumed by a
+     * call to the beginCandidateSession() method.
+     * 
+     * @throws AssessmentItemSessionException
+     */
+    public function endCandidateSession()
+    {
+        $state = $this->getState();
+        
+        if ($state !== AssessmentItemSessionState::INTERACTING) {
+            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state SUSPENDED.";
+            $code = AssessmentItemSessionException::STATE_VIOLATION;
+            throw new AssessmentItemSessionException($msg, $this, $code);
+        } else {
+            $this->setState(AssessmentItemSessionState::SUSPENDED);
         }
     }
 
@@ -1150,17 +1144,6 @@ class AssessmentItemSession extends State
     protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing)
     {
         return new ResponseProcessingEngine($responseProcessing, $this);
-    }
-
-    /**
-	 * Event triggered on duration update. The $callback function will
-	 * be executed.
-	 *
-	 * @param array $callback
-	 */
-    public function onDurationUpdate(array $callback)
-    {
-        $this->onDurationUpdate[] = $callback;
     }
 
     /**

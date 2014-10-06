@@ -196,32 +196,6 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testValidateResponsesInForce() {
-        $itemSession = self::instantiateBasicAssessmentItemSession();
-        $itemSessionControl = new ItemSessionControl();
-        $itemSessionControl->setValidateResponses(true);
-        $itemSession->setItemSessionControl($itemSessionControl);
-        
-        $itemSession->beginItemSession();
-        $itemSession->beginAttempt();
-        // Set an invalid response.
-        $responses = new State();
-        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')));
-        
-        try {
-            $this->assertFalse($itemSession->isAttemptable());
-            $itemSession->endAttempt($responses);
-            $this->assertTrue(false);
-        }
-        catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::INVALID_RESPONSE, $e->getCode());
-            
-            // The response must not be taken into account in the itemSession, because the mustValidateResponse attribute
-            // prevents the item TO BE SUBMITTED if not all valid responses.
-            $this->assertSame(null, $itemSession['RESPONSE']);
-        }
-    }
-    
     public function testSkippingForbidden() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
