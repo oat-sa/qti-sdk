@@ -609,6 +609,7 @@ class AssessmentItemSession extends State
     {
         $maxAttempts = $this->itemSessionControl->getMaxAttempts();
         $numAttempts = $this['numAttempts']->getValue();
+        $submissionMode = $this->getSubmissionMode();
         
         /* If the current submission mode is SIMULTANEOUS, only 1 attempt is allowed per item.
          *
@@ -622,24 +623,24 @@ class AssessmentItemSession extends State
          * of this specification. Simultaneous mode is typical of paper-based tests.
          *
          */
-        if ($this->submissionMode === SubmissionMode::SIMULTANEOUS) {
+        if ($submissionMode === SubmissionMode::SIMULTANEOUS) {
             $maxAttempts = 1;
         }
 
         // Check if we can perform a new attempt.
         if ($this->getState() === AssessmentItemSessionState::CLOSED) {
-            if ($this->submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts > 0) {
-                $identifier = $this->assessmentItem->getIdentifier();
+            if ($submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts > 0) {
+                $identifier = $this->getAssessmentItem()->getIdentifier();
                 $msg = "A new attempt for item '${identifier}' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             }
-            elseif ($this->submissionMode === SubmissionMode::INDIVIDUAL && $maxAttempts !== 0 && $numAttempts >= $maxAttempts) {
-                $identifier = $this->assessmentItem->getIdentifier();
+            elseif ($submissionMode === SubmissionMode::INDIVIDUAL && $maxAttempts !== 0 && $numAttempts >= $maxAttempts) {
+                $identifier = $this->getAssessmentItem()->getIdentifier();
                 $msg = "A new attempt for item '${identifier}' is not allowed. The maximum number of attempts (${maxAttempts}) is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             }
             elseif ($this->isMaxTimeReached() === true) {
-                $identifier = $this->assessmentItem->getIdentifier();
+                $identifier = $this->getAssessmentItem()->getIdentifier();
                 $msg = "A new attempt for item '${identifier}' is not allowed. The maximum time limit in force is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
             }
@@ -672,8 +673,8 @@ class AssessmentItemSession extends State
         $this['numAttempts']->setValue($numAttempts + 1);
         
         // The session get the INTERACTING state.
-        $this->state = AssessmentItemSessionState::INTERACTING;
-        $this->attempting = true;
+        $this->setState(AssessmentItemSessionState::INTERACTING);
+        $this->setAttempting(true);
     }
 
     /**
@@ -710,9 +711,9 @@ class AssessmentItemSession extends State
         if ($this->hasTimeLimits() === true) {
             // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
             // assessmentItems only when linear navigation mode is in effect.
-            if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
+            if ($this->isNavigationLinear() === true && $this->getTimeLimits()->hasMinTime() === true) {
 
-                if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
+                if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->getTimeLimits()->getMinTime()->getSeconds(true)) {
                     // An exception is thrown to prevent the numAttempts to be incremented.
                     // Suspend and wait for a next attempt.
                     $this->suspend();
@@ -738,11 +739,11 @@ class AssessmentItemSession extends State
         // deffered to the end of the current testPart.
         if ($responseProcessing === true) {
 
-            if ($this->assessmentItem->isAdaptive() === false) {
+            if ($this->getAssessmentItem()->isAdaptive() === false) {
                 $this->resetOutcomeVariables();
             }
 
-            $rule = $this->assessmentItem->getResponseProcessing();
+            $rule = $this->getAssessmentItem()->getResponseProcessing();
 
             // Some items (especially to collect information) have no response processing!
             if ($rule !== null && ($rule->hasTemplate() === true || $rule->hasTemplateLocation() === true || count($rule->getResponseRules()) > 0)) {
@@ -751,17 +752,17 @@ class AssessmentItemSession extends State
             }
         }
 
-        $maxAttempts = $this->itemSessionControl->getMaxAttempts();
-        if ($this->submissionMode === SubmissionMode::SIMULTANEOUS) {
+        $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
+        if ($this->getSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
             $maxAttempts = 1;
         }
 
         // -- Adaptive item.
-        if ($this->assessmentItem->isAdaptive() === true && $this->submissionMode === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+        if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
             $this->endItemSession();
         }
         // -- Non-adaptive item + maxAttempts reached.
-        elseif ($this->assessmentItem->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
+        elseif ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
 
             // Close only if $maxAttempts !== 0 because 0 means no limit!
             //
@@ -776,7 +777,7 @@ class AssessmentItemSession extends State
             $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
         }
         // -- Non-adaptive - remaining attempts.
-        elseif ($this->assessmentItem->isAdaptive() === false) {
+        elseif ($this->getAssessmentItem()->isAdaptive() === false) {
             // Wait for the next attempt...
             $this['completionStatus']->setValue(self::COMPLETION_STATUS_COMPLETED);
         }
@@ -817,7 +818,7 @@ class AssessmentItemSession extends State
             throw new AssessmentItemSessionException($msg, $this, $code);
         } else {
             $this->setState(AssessmentItemSessionState::SUSPENDED);
-            $this->attempting = false;
+            $this->setAttempting(false);
         }
     }
 
@@ -1090,9 +1091,9 @@ class AssessmentItemSession extends State
     {
         $reached = false;
 
-        if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
+        if ($this->hasTimeLimits() && $this->getTimeLimits()->hasMaxTime() === true) {
 
-            if ($this['duration']->getSeconds(true) >= $this->timeLimits->getMaxTime()->getSeconds(true)) {
+            if ($this['duration']->getSeconds(true) >= $this->getTimeLimits()->getMaxTime()->getSeconds(true)) {
                 $reached = true;
             }
         }
