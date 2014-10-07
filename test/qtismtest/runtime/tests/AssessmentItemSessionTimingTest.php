@@ -311,7 +311,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     

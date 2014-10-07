@@ -107,7 +107,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1, $itemSession['numAttempts']->getValue());
         $this->assertTrue($itemSession->isCorrect());
         
-        // If we now try to begin a new attempt, we get a logic exception.
+        // If we now try to begin a new attempt, we get an exception.
         try {
             $this->assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
@@ -116,7 +116,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
-            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     
@@ -160,14 +160,13 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         // reminder, the value of maxAttempts is ignored when dealing with
         // adaptive items.
         
-        // First attempt, just fail the item.
+        // First candidate session, just give an incorrect response.
         // We do not known how much attempts to complete.
         $this->assertTrue($itemSession->isAttemptable());
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
-        $itemSession['RESPONSE'] = new Identifier('ChoiceE');
-        $itemSession->endAttempt();
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceE')))));
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         
         $this->assertEquals(1, $itemSession['numAttempts']->getValue());
@@ -192,7 +191,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
         catch (AssessmentItemSessionException $e) {
             // The session is closed, you cannot begin another attempt.
-            $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
+            $this->assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
         }
     }
     

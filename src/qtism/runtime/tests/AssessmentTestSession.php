@@ -1215,6 +1215,10 @@ class AssessmentTestSession extends State
             $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
+        else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
+            $msg = "Cannot skip an item while the current submission mode is SIMULTANEOUS";
+            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+        }
 
         $this->checkTimeLimits(true);
 
@@ -1225,15 +1229,8 @@ class AssessmentTestSession extends State
         try {
             // Might throw an AssessmentItemSessionException.
             $session->skip();
-
-            if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-                // Store the responses for a later processing at the end of the test part.
-                $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
-                $this->addPendingResponses($pendingResponses);
-            } else {
-                $this->submitItemResults($session, $occurence);
-                $this->outcomeProcessing();
-            }
+            $this->submitItemResults($session, $occurence);
+            $this->outcomeProcessing();
         } catch (Exception $e) {
             throw $this->transformException($e);
         }
@@ -1243,8 +1240,6 @@ class AssessmentTestSession extends State
 	 * Begin an attempt for the current item in the route.
 	 *
 	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed or time limits are not respected.
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
 	 */
     public function beginAttempt()
     {
@@ -1258,10 +1253,21 @@ class AssessmentTestSession extends State
 
         // Time limits are OK! Let's try to begin the attempt.
         $routeItem = $this->getCurrentRouteItem();
-        $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+        $session = $this->getCurrentAssessmentItemSession();
 
         try {
-            $session->beginAttempt();
+            if ($this->getCurrentSubmissionMode() === SubmissionMode::INDIVIDUAL) {
+                $session->beginAttempt();
+            } else {
+                // In SIMULTANEOUS submission mode, we consider a begin attempt
+                // as a beginCandidate session if the first allowed attempt has
+                // already begun.
+                if ($session['numAttempts']->getValue() === 1 && $session->getState() === AssessmentItemSessionState::SUSPENDED && $session->isAttempting() === true) {
+                    $session->beginCandidateSession();
+                } else if ($session->getState() !== AssessmentItemSessionState::INTERACTING) {
+                    $session->beginAttempt();
+                }
+            }
         } catch (Exception $e) {
             throw $this->transformException($e);
         }
@@ -1303,7 +1309,7 @@ class AssessmentTestSession extends State
             $this->addPendingResponses(new PendingResponses($responses, $currentItem, $currentOccurence));
 
             try {
-                $session->endAttempt($responses, false, $allowLateSubmission);
+                $session->endCandidateSession();
             } catch (Exception $e) {
                 throw $this->transformException($e);
             }
@@ -1352,12 +1358,14 @@ class AssessmentTestSession extends State
         $oldPosition = $route->getPosition();
 
         try {
+            $this->suspendItemSession();
             $route->setPosition($position);
             $this->selectEligibleItems();
 
             // Check the time limits after the jump is trully performed.
             if ($allowTimeout === false) {
                 $this->checkTimeLimits(false, true);
+                $this->interactWithItemSession();
             }
         } catch (AssessmentTestSessionException $e) {
             // Rollback to previous position.
@@ -1411,17 +1419,17 @@ class AssessmentTestSession extends State
         $pendingResponses = $this->getPendingResponses();
         $pendingResponsesProcessed = 0;
 
-        foreach ($pendingResponses as $pendingResponses) {
+        foreach ($pendingResponses as $pendingResponse) {
 
-            $item = $pendingResponses->getAssessmentItemRef();
-            $occurence = $pendingResponses->getOccurence();
+            $item = $pendingResponse->getAssessmentItemRef();
+            $occurence = $pendingResponse->getOccurence();
             $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
             $responseProcessing = $item->getResponseProcessing();
 
             // If the item has a processable response processing...
             if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
                 try {
-                    $itemSession->endAttempt(null, true, true);
+                    $itemSession->endAttempt($pendingResponse->getState(), true, true);
                     $pendingResponsesProcessed++;
                     $this->submitItemResults($itemSession, $occurence);
                 } catch (ProcessingException $e) {
