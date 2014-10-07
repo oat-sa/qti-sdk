@@ -201,8 +201,31 @@ class QtiComponentIterator implements Iterator
 	 *
 	 * @return array An array of QTI class names.
 	 */
-    protected function &getClasses() {
+    protected function &getClasses() 
+    {
         return $this->classes;
+    }
+    
+    protected function getTrailCount()
+    {
+        return $this->trailCount;
+    }
+    
+    protected function setTrailCount($trailCount)
+    {
+        $this->trailCount = $trailCount;
+    }
+    
+    protected function incrementTrailCount()
+    {
+        $trailCount = $this->getTrailCount() + 1;
+        $this->setTrailCount($trailCount);
+    }
+    
+    protected function decrementTrailCount()
+    {
+        $trailCount = $this->getTrailCount() - 1;
+        $this->setTrailCount($trailCount);
     }
 
     /**
@@ -213,9 +236,11 @@ class QtiComponentIterator implements Iterator
 	 */
     protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components)
     {
+        $trail = &$this->getTrail();
+        
         foreach (array_reverse($components->getArrayCopy()) as $c) {
-            array_push($this->trail, array($source, $c));
-            $this->trailCount++;
+            array_push($trail, array($source, $c));
+            $this->incrementTrailCount();
         }
     }
 
@@ -226,9 +251,10 @@ class QtiComponentIterator implements Iterator
 	 */
     protected function popFromTrail()
     {
-        $this->trailCount--;
+        $this->decrementTrailCount();
+        $trail = &$this->getTrail();
 
-        return array_pop($this->trail);
+        return array_pop($trail);
     }
 
     /**
@@ -236,7 +262,8 @@ class QtiComponentIterator implements Iterator
 	 *
 	 * @return array An array of QtiComponent objects.
 	 */
-    protected function &getTrail() {
+    protected function &getTrail() 
+    {
         return $this->trail;
     }
 
@@ -248,7 +275,7 @@ class QtiComponentIterator implements Iterator
     protected function setTrail(array &$trail)
     {
         $this->trail = $trail;
-        $this->trailCount = count($trail);
+        $this->setTrailCount(count($trail));
     }
 
     /**
@@ -268,7 +295,8 @@ class QtiComponentIterator implements Iterator
 	 *
 	 * @return array An array of QtiComponent objects.
 	 */
-    protected function &getTraversed() {
+    protected function &getTraversed() 
+    {
         return $this->traversed;
     }
 
@@ -279,7 +307,8 @@ class QtiComponentIterator implements Iterator
 	 */
     protected function markTraversed(QtiComponent $component)
     {
-        array_push($this->traversed, $component);
+        $traversed = &$this->getTraversed();
+        array_push($traversed, $component);
     }
 
     /**
@@ -290,7 +319,8 @@ class QtiComponentIterator implements Iterator
 	 */
     protected function isTraversed(QtiComponent $component)
     {
-        return in_array($component, $this->traversed, true);
+        $traversed = &$this->getTraversed();
+        return in_array($component, $traversed, true);
     }
 
     /**
@@ -384,18 +414,18 @@ class QtiComponentIterator implements Iterator
 	 */
     public function next()
     {
-        if ($this->trailCount > 0) {
+        if ($this->getTrailCount() > 0) {
 
-            while ($this->trailCount > 0) {
+            while ($this->getTrailCount() > 0) {
                 $trailEntry = $this->popFromTrail();
                 $component = $trailEntry[1];
                 $source = $trailEntry[0];
 
                 if ($this->isTraversed($component) === false) {
-                    $this->currentComponent = $component;
-                    $this->currentContainer = $source;
+                    $this->setCurrentComponent($component);
+                    $this->setCurrentContainer($source);
                     $this->pushOnTrail($component, $this->currentComponent->getComponents());
-                    $this->markTraversed($this->currentComponent);
+                    $this->markTraversed($this->getCurrentComponent());
 
                     if (empty($this->classes) === true || in_array($component->getQTIClassName(), $this->classes) === true) {
                         // If all classes are seeked or the current component has a class name
@@ -405,11 +435,11 @@ class QtiComponentIterator implements Iterator
                 }
             }
 
-            $this->isValid = false;
-            $this->currentContainer = null;
+            $this->setValid(false);
+            $this->setCurrentContainer(null);
         } else {
-            $this->isValid = false;
-            $this->currentContainer = null;
+            $this->setValid(false);
+            $this->setCurrentContainer(null);
         }
     }
 
