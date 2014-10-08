@@ -241,6 +241,12 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     public function additionalClass($additionalClass)
     {
         $additionalClasses = $this->getAdditionalClasses();
+        
+        
+        if (($key = array_search($additionalClass, $additionalClasses)) !== false) {
+            unset($additionalClasses[$key]);
+        }
+        
         $additionalClasses[] = $additionalClass;
         $this->setAdditionalClasses(array_unique($additionalClasses));
     }
