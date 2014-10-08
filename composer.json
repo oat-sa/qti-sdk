@@ -1,7 +1,6 @@
 {
 	"name": "qtism/qtism",
 	"description": "OAT QTI Software Module Library",
-	"version": "1.0.0",
 	"type": "library",
 	"authors": [
 		{
