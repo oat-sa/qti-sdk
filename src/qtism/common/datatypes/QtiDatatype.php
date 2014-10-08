@@ -25,7 +25,7 @@ namespace qtism\common\datatypes;
 use qtism\common\Comparable;
 
 /**
- * A simple interface aiming at implementatin QTI datatypes. The following
+ * A simple interface aiming at implementing QTI datatypes. The following
  * QTI datatypes are implemented.
  *
  * * Boolean
