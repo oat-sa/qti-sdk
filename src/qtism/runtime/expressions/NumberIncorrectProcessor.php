@@ -58,10 +58,12 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
 
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
-
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
-                    $numberIncorrect++;
+            
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isAttempted() === true && $itemSession->isCorrect() === false) {
+                        $numberIncorrect++;
+                    }
                 }
             }
         }

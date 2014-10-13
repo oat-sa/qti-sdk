@@ -57,13 +57,14 @@ class NumberRespondedProcessor extends ItemSubsetProcessor
         $numberResponded = 0;
 
         foreach ($itemSubset as $item) {
-
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
-
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isResponded() === true) {
-                    $numberResponded++;
-                }
+            
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isResponded() === true) {
+                        $numberResponded++;
+                    }
+                }    
             }
         }
 

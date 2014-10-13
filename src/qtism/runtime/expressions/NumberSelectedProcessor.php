@@ -57,11 +57,13 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
 
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
-
-            foreach ($itemSessions as $itemSession) {
-                if ($itemSession->isSelected() === true) {
-                    $numberSelected++;
-                }
+            
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                    if ($itemSession->isSelected() === true) {
+                        $numberSelected++;
+                    }
+                }    
             }
         }
 

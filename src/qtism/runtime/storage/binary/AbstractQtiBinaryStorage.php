@@ -41,6 +41,7 @@ use qtism\runtime\storage\common\AbstractStorage;
 use qtism\common\storage\MemoryStream;
 use \SplObjectStorage;
 use \Exception;
+use \OutOfBoundsException;
 use \RuntimeException;
 use \InvalidArgumentException;
 
@@ -165,18 +166,26 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->writeRouteItem($this->getSeeker(), $routeItem);
 
                 // Deal with ItemSession related to the previously written RouteItem.
-                $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
-                $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
-
-                // Deal with last occurence update.
-                $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
-
-                // Deal with PendingResponses
-                if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
+                try {
+                    $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
                     $access->writeBoolean(true);
-                    $access->writePendingResponses($this->getSeeker(), $pendingResponses);
-                } else {
+                    $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
+                    
+                    // Deal with last occurence update.
+                    $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
+                    
+                    // Deal with PendingResponses
+                    if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
+                        $access->writeBoolean(true);
+                        $access->writePendingResponses($this->getSeeker(), $pendingResponses);
+                    } else {
+                        $access->writeBoolean(false);
+                    }
+                }
+                catch (OutOfBoundsException $e) {
                     $access->writeBoolean(false);
+                    // No assessmentItemSession for this route item.
+                    continue;
                 }
             }
 
@@ -202,7 +211,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
-            $msg = "An error occured while persisting AssessmentTestSession with ID '${sessionId}'.";
+            $msg = "An error occured while persisting AssessmentTestSession with ID '${sessionId}': " . $e->getMessage();
             throw new StorageException($msg, StorageException::PERSITANCE, $e);
         }
     }
@@ -248,20 +257,24 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             for ($i = 0; $i < $routeCount; $i++) {
                 $routeItem = $access->readRouteItem($this->getSeeker());
-                $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker());
-
-                // last-update
-                if ($access->readBoolean() === true) {
-                    $lastOccurenceUpdate[$routeItem->getAssessmentItemRef()] = $routeItem->getOccurence();
-                }
-
-                // pending-responses
-                if ($access->readBoolean() === true) {
-                    $pendingResponseStore->addPendingResponses($access->readPendingResponses($this->getSeeker()));
-                }
-
                 $route->addRouteItemObject($routeItem);
-                $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
+                
+                // An already instantiated session for this route item?
+                if ($access->readBoolean() === true) {
+                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker());
+                    
+                    // last-update
+                    if ($access->readBoolean() === true) {
+                        $lastOccurenceUpdate[$routeItem->getAssessmentItemRef()] = $routeItem->getOccurence();
+                    }
+                    
+                    // pending-responses
+                    if ($access->readBoolean() === true) {
+                        $pendingResponseStore->addPendingResponses($access->readPendingResponses($this->getSeeker()));
+                    }
+
+                    $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
+                }
             }
 
             $route->setPosition($currentPosition);
@@ -304,7 +317,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $assessmentTestSession;
         } catch (Exception $e) {
-            $msg = "An error occured while retrieving AssessmentTestSession.";
+            $msg = "An error occured while retrieving AssessmentTestSession. " . $e->getMessage();
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }

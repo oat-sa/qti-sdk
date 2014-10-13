@@ -1019,7 +1019,7 @@ class AssessmentItemSession extends State
 	 */
     public function isSelected()
     {
-        return $this->getState() !== AssessmentItemSessionState::NOT_SELECTED;
+        return true;
     }
 
     /**

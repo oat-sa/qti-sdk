@@ -519,6 +519,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $assessmentTestSession->beginTestSession();
 	    
 	    foreach (array('Q01', 'Q02', 'Q03') as $identifier) {
+	        $assessmentTestSession->beginAttempt();
+	        $assessmentTestSession->skip();
+	        $assessmentTestSession->moveNext();
 	        $sessions = $assessmentTestSession->getAssessmentItemSessions($identifier);
 	        $this->assertEquals(1, count($sessions));
 	        $this->assertEquals($identifier, $sessions[0]->getAssessmentItem()->getIdentifier());
@@ -543,6 +546,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $sessionManager = new SessionManager();
 	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
+	    
+	    for ($i = 0; $i < 3; $i++) {
+	        $assessmentTestSession->beginAttempt();
+	        $assessmentTestSession->skip();
+	        $assessmentTestSession->moveNext();
+	    }
 	    
 	    $sessions = $assessmentTestSession->getAssessmentItemSessions('Q01');
 	    $this->assertEquals(3, count($sessions));

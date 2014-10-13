@@ -130,11 +130,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $variableProcessor->setExpression($variableExpr);
 	    $session->beginTestSession();
 	    
-	    // Why not 0.0? Because when using a non sequenced variable identifier
-	    // for an item with multiple occurence, the very last instance submitted becomes
-	    // the item where the values will be pulled out. No instances were submitted yet
-	    // and NULL is returned.
-	    $this->assertSame(null, $variableProcessor->process());
+	    // Why not 0.0? Because we are in individual mode.
 	    $variableProcessor->setExpression($occurenceVariableExpression);
 	    
 	    // Why not NULL? Because we are in a linear test and Q01 is eligible for selection.
@@ -149,6 +145,10 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $variableProcessor->setExpression($variableExpr);
 	    $result = $variableProcessor->process();
 	    // Null because submission mode is individual...
+	    // From IMS QTI:
+	    // The value of an item variable taken from an item instantiated multiple times from the same 
+	    // assessmentItemRef (through the use of selection withReplacement) is taken from the last instance 
+	    // submitted if submission is simultaneous, otherwise it is undefined.
 	    $this->assertSame(null, $result);
 	    
 	    $variableProcessor->setExpression($occurenceVariableExpression);

@@ -669,7 +669,7 @@ class AssessmentTestSession extends State
                     // This item is known to be in the route.
                     if ($v->hasSequenceNumber() === true) {
                         $sequence = $v->getSequenceNumber() - 1;
-                    } elseif ($this->getAssessmentItemSessionStore()->hasMultipleOccurences($itemRef) === true) {
+                    } elseif (count($this->getRoute()->getRouteItemsByAssessmentItemRef($itemRef)) > 1) {
                         // No sequence number provided + multiple occurence of this item in the route.
                         $sequence = $this->whichLastOccurenceUpdate($itemRef);
 
@@ -826,41 +826,6 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Initialize the AssessmentItemSession for the whole route.
-	 *
-	 */
-    protected function initializeItemSessions()
-    {
-        $route = $this->getRoute();
-        $oldPosition = $route->getPosition();
-
-        foreach ($this->getRoute() as $routeItem) {
-            $itemRef = $routeItem->getAssessmentItemRef();
-            $testPart = $routeItem->getTestPart();
-
-            $navigationMode = $routeItem->getTestPart()->getNavigationMode();
-            $submissionMode = $routeItem->getTestPart()->getSubmissionMode();
-
-            $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
-
-            // Determine the item session control.
-            if (($control = $routeItem->getItemSessionControl()) !== null) {
-                $session->setItemSessionControl($control->getItemSessionControl());
-            }
-
-            // Determine the time limits.
-            if ($itemRef->hasTimeLimits() === true) {
-                $session->setTimeLimits($itemRef->getTimeLimits());
-            }
-            // else ... No time limits !
-
-            $this->addItemSession($session, $routeItem->getOccurence());
-        }
-
-        $route->setPosition($oldPosition);
-    }
-
-    /**
 	 * This protected method contains the logic of instantiating a new AssessmentItemSession object.
 	 *
 	 * @param \qtism\data\IAssessmentItem $assessmentItem
@@ -913,9 +878,6 @@ class AssessmentTestSession extends State
         // Initialize test-level durations.
         $this->initializeTestDurations();
 
-        // Initialize item sessions.
-        $this->initializeItemSessions();
-
         // Select the eligible items for the candidate.
         $this->selectEligibleItems();
 
@@ -938,11 +900,35 @@ class AssessmentTestSession extends State
 
         // In this loop, we select at least the first routeItem we find as eligible.
         while ($route->valid() === true) {
+            
             $routeItem = $route->current();
-            $session = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+            $itemRef = $routeItem->getAssessmentItemRef();
+            $occurence = $routeItem->getOccurence();
+            
+            $session = $this->getItemSession($itemRef, $occurence);
 
-            if ($session->getState() === AssessmentItemSessionState::NOT_SELECTED) {
+            // Does such a session exist for item + occurence?
+            if ($session === false) {
 
+                // Instantiate the item session...
+                $testPart = $routeItem->getTestPart();
+                $navigationMode = $testPart->getNavigationMode();
+                $submissionMode = $testPart->getSubmissionMode();
+                
+                $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
+                
+                // Determine the item session control.
+                if (($control = $routeItem->getItemSessionControl()) !== null) {
+                    $session->setItemSessionControl($control->getItemSessionControl());
+                }
+                
+                // Determine the time limits.
+                if ($itemRef->hasTimeLimits() === true) {
+                    $session->setTimeLimits($itemRef->getTimeLimits());
+                }
+                
+                $this->addItemSession($session, $occurence);
+                
                 // If we know "what time it is", we transmit
                 // that information to the eligible item.
                 if ($this->hasTimeReference() === true) {
@@ -954,7 +940,8 @@ class AssessmentTestSession extends State
 
             if ($route->isNavigationLinear() === true) {
                 // We cannot foresee more items to be selected for presentation
-                // because the rest of the sequence is linear.
+                // because the rest of the sequence is linear and might contain
+                // branching rules or preconditions.
                 break;
             } else {
                 // We continue to search for route items that are selectable for
@@ -1672,10 +1659,10 @@ class AssessmentTestSession extends State
             }
         }
 
-        $this->selectEligibleItems();
-
         if ($route->valid() === false && $this->isRunning() === true) {
             $this->endTestSession();
+        } else {
+            $this->selectEligibleItems();
         }
     }
 
@@ -2416,23 +2403,24 @@ class AssessmentTestSession extends State
 
         foreach ($this->getRoute() as $routeItem) {
 
-            $itemSession = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence());
+            if (($itemSession = $this->getItemSession($routeItem->getAssessmentItemRef(), $routeItem->getOccurence())) !== false) {
 
-            if ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
-                // In linear mode, we consider the item completed if it was presented.
-                if ($itemSession->isPresented() === true) {
-                    $numberCompleted++;
-                }
-            } else {
-                // In nonlinear mode we consider:
-                // - an adaptive item completed if it's completion status is 'completed'.
-                // - a non-adaptive item to be completed if it is responded.
-                $isAdaptive = $itemSession->getAssessmentItem()->isAdaptive();
-
-                if ($isAdaptive === true && $itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
-                    $numberCompleted++;
-                } elseif ($isAdaptive === false && $itemSession->isResponded() === true) {
-                    $numberCompleted++;
+                if ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) {
+                    // In linear mode, we consider the item completed if it was presented.
+                    if ($itemSession->isPresented() === true) {
+                        $numberCompleted++;
+                    }
+                } else {
+                    // In nonlinear mode we consider:
+                    // - an adaptive item completed if it's completion status is 'completed'.
+                    // - a non-adaptive item to be completed if it is responded.
+                    $isAdaptive = $itemSession->getAssessmentItem()->isAdaptive();
+    
+                    if ($isAdaptive === true && $itemSession['completionStatus']->getValue() === AssessmentItemSession::COMPLETION_STATUS_COMPLETED) {
+                        $numberCompleted++;
+                    } elseif ($isAdaptive === false && $itemSession->isResponded() === true) {
+                        $numberCompleted++;
+                    }
                 }
             }
         }

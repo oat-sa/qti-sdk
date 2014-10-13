@@ -93,34 +93,36 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         foreach ($itemSubset as $item) {
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
 
-            foreach ($itemSessions as $itemSession) {
-
-                // Variable mapping takes place.
-                $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItem(), $variableIdentifier);
-                if ($id === false) {
-                    // variable name conflict.
-                    continue;
-                }
-
-                // For each variable of the item session matching $outcomeIdentifier...
-                foreach ($itemSession->getKeys() as $identifier) {
-
-                    if ($identifier === $id) {
-                        $var = $itemSession->getVariable($id);
-
-                        // Single cardinality? Does it match the baseType?
-                        if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
-                            $val = clone($var->getValue());
-
-                            if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof Integer || $val instanceof Float)) {
-                                // A weight has to be applied.
-                                $val->setValue($val->getValue() * $weight->getValue());
-                            }
-
-                            $values[] = $val;
-
-                            if (gettype($val->getValue()) === 'integer') {
-                                $integerCount++;
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                
+                    // Variable mapping takes place.
+                    $id = self::getMappedVariableIdentifier($itemSession->getAssessmentItem(), $variableIdentifier);
+                    if ($id === false) {
+                        // variable name conflict.
+                        continue;
+                    }
+                
+                    // For each variable of the item session matching $outcomeIdentifier...
+                    foreach ($itemSession->getKeys() as $identifier) {
+                
+                        if ($identifier === $id) {
+                            $var = $itemSession->getVariable($id);
+                
+                            // Single cardinality? Does it match the baseType?
+                            if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
+                                $val = clone($var->getValue());
+                
+                                if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof Integer || $val instanceof Float)) {
+                                    // A weight has to be applied.
+                                    $val->setValue($val->getValue() * $weight->getValue());
+                                }
+                
+                                $values[] = $val;
+                
+                                if (gettype($val->getValue()) === 'integer') {
+                                    $integerCount++;
+                                }
                             }
                         }
                     }

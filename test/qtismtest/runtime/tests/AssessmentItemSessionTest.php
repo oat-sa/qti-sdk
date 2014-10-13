@@ -28,7 +28,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertFalse($itemSession->isPresented());
         $this->assertFalse($itemSession->isCorrect());
         $this->assertFalse($itemSession->isResponded());
-        $this->assertFalse($itemSession->isSelected());
+        $this->assertTrue($itemSession->isSelected());
         
         $itemSession->beginItemSession();
         // After beginItemSession...

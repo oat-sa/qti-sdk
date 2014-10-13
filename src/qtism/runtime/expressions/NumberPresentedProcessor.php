@@ -56,14 +56,15 @@ class NumberPresentedProcessor extends ItemSubsetProcessor
         $numberPresented = 0;
 
         foreach ($itemSubset as $item) {
-
             $itemSessions = $testSession->getAssessmentItemSessions($item->getIdentifier());
-
-            foreach ($itemSessions as $itemSession) {
-
-                if ($itemSession->isPresented() === true) {
-
-                    $numberPresented++;
+            
+            if ($itemSessions !== false) {
+                foreach ($itemSessions as $itemSession) {
+                
+                    if ($itemSession->isPresented() === true) {
+                
+                        $numberPresented++;
+                    }
                 }
             }
         }
