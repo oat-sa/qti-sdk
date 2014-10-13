@@ -159,4 +159,26 @@ abstract class QtiComponent
 
         return ($collision === true) ? new QtiComponentCollection($foundComponents) : new QtiIdentifiableCollection($foundComponents);
     }
+    
+    /**
+     * Whether the component contains child components with class $classNames.
+     * 
+     * @param string|array $classNames
+     * @param boolean $recursive Whether to search recursively in contained QtiComponent objects.
+     * @return boolean
+     */
+    public function containsComponentWithClassName($classNames, $recursive = true) {
+        if (is_array($classNames) === false) {
+            $classNames = array($classNames);
+        }
+        
+        $iterator = ($recursive === true) ? $this->getIterator($classNames) : $this->getComponents();
+        foreach ($iterator as $component) {
+            if (in_array($component->getQtiClassName(), $classNames)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
