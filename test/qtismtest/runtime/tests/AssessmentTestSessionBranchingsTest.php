@@ -1,7 +1,7 @@
 <?php
 namespace qtismtest\runtime\tests;
 
-use qtismtest\QtiSmTestCase;
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\Identifier;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\common\enums\BaseType;
@@ -12,7 +12,7 @@ use qtism\runtime\tests\SessionManager;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 
-class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
+class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTestCase {
 	
     public function testInstantiationSample1() {
         
@@ -172,5 +172,34 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
             array(new Identifier('goto23'), 'Q02', 2),
             array(null, 'Q02', 3)              
         );
+    }
+    
+    public function testBranchingOnPreconditon() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings_preconditions/branchings_preconditions_branchtopreconditionitem.xml');
+        $session->beginTestSession();
+        
+        // Only the first item session should be created.
+        $this->assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this->assertSame(null, $session['Q02.SCORE']);
+        $this->assertSame(null, $session['Q03.SCORE']);
+        $this->assertSame(null, $session['Q04.SCORE']);
+        
+        // Q01 - Incorrect
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $session->moveNext();
+        
+        // Q04 - We should be at Q04.
+        // -> because Q03 has a precondition which returns false.
+        $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+        $session->moveNext();
+        
+        // Only item sessions related to Q01 and Q04 should be instantiated.
+        $this->assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this->assertSame(null, $session['Q02.SCORE']);
+        $this->assertSame(null, $session['Q03.SCORE']);
+        $this->assertSame(1.0, $session['Q04.SCORE']->getValue());
     }
 }

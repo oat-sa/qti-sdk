@@ -897,6 +897,7 @@ class AssessmentTestSession extends State
     {
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
+        $adaptive = $this->getAssessmentTest()->containsComponentWithClassName(array('branchRule', 'preCondition'));
 
         // In this loop, we select at least the first routeItem we find as eligible.
         while ($route->valid() === true) {
@@ -938,7 +939,7 @@ class AssessmentTestSession extends State
                 $session->beginItemSession();
             }
 
-            if ($route->isNavigationLinear() === true) {
+            if ($adaptive === true) {
                 // We cannot foresee more items to be selected for presentation
                 // because the rest of the sequence is linear and might contain
                 // branching rules or preconditions.

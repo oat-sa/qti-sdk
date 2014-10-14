@@ -108,21 +108,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $sessionManager = new SessionManager();
 	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $assessmentTestSession->beginTestSession();
-	    // check Q01.1, Q01.2, Q01.3 item sessions are not all initialized.
+	    // check Q01.1, Q01.2, Q01.3 item sessions are all initialized.
 	    for ($i = 1; $i <= 3; $i++) {
-	        if ($i === 1) {
-	            $score = $assessmentTestSession["Q01.${i}.SCORE"];
-	            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-	            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $score);
-	            $this->assertEquals(0.0, $score->getValue());
-	            $this->assertSame(null, $response);
-	        }
-	        else {
-	            $score = $assessmentTestSession["Q01.${i}.SCORE"];
-	            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-	            $this->assertSame(null, $score);
-	            $this->assertSame(null, $response);
-	        }
+            $score = $assessmentTestSession["Q01.${i}.SCORE"];
+            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $score);
+            $this->assertEquals(0.0, $score->getValue());
+            $this->assertSame(null, $response);
 	    }
 	}
 	

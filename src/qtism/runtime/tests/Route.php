@@ -1103,9 +1103,15 @@ class Route implements Iterator
     /**
      * Perform a branching on a TestPart, AssessmentSection or AssessmentItemRef with
      * the given $identifier.
+     * 
+     * The target will be considered invalid if the following constraints are not fullfilled:
+     * 
+     * From IMS QTI:
+     * In the case of an item or section, the target must refer to an item or section in the same 
+     * testPart that has not yet been presented. For testParts, the target must refer to another testPart.
      *
      * @param string $identifier A QTI Identifier to be the target of the branching.
-     * @throws \OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route.
+     * @throws \OutOfBoundsException If an error occurs while branching e.g. the $identifier is not referenced in the route or the target is invalid.
      * @throws \OutOfRangeException If $identifier is not a valid branching identifier.
      */
     public function branch($identifier)
@@ -1140,7 +1146,7 @@ class Route implements Iterator
             return;
         }
 
-        // Check for a assessmentSection.
+        // Check for an assessmentSection.
         $assessmentSectionIdentifierMap = $this->getAssessmentSectionIdentifierMap();
         if (isset($assessmentSectionIdentifierMap[$id]) === true) {
 
