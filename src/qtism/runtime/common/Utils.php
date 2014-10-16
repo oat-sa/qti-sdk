@@ -57,7 +57,7 @@ class Utils
 	 * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
 	 * @return boolean
 	 */
-    public static function isRuntimeCompliant($value)
+    public static function isQtiDatatypeCompliant($value)
     {
         if ($value === null) {
             return true;
@@ -246,52 +246,6 @@ class Utils
         }
 
         return $value;
-    }
-
-    /**
-	 * Check whether or not $firstBaseType is compliant with $secondBaseType.
-	 *
-	 * The following associations of baseTypes are considered to be compliant:
-	 *
-	 * * identifier - string
-	 * * string - identifier
-	 * * uri - string
-	 * * string - uri
-	 * * uri - identifier
-	 * * identifier - uri
-	 * * string - intOrIdentifier
-	 * * integer - intOrIdentifier
-	 * * identifier - intOrIdentifier
-	 *
-	 * @param integer $firstBaseType A value from the baseType enumeration.
-	 * @param integer $secondBaseType A value from the baseType enumeration.
-	 * @return boolean
-	 */
-    public static function areBaseTypesCompliant($firstBaseType, $secondBaseType)
-    {
-        if ($firstBaseType === $secondBaseType) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::STRING) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::STRING) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::URI) {
-            return true;
-        } elseif ($firstBaseType === BaseType::URI && $secondBaseType === BaseType::IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::URI) {
-            return true;
-        } elseif ($firstBaseType === BaseType::STRING && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::INTEGER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        } elseif ($firstBaseType === BaseType::IDENTIFIER && $secondBaseType === BaseType::INT_OR_IDENTIFIER) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

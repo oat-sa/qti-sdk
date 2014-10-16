@@ -94,7 +94,7 @@ class Container extends AbstractCollection implements Comparable
 	 */
     protected function checkType($value)
     {
-        if (!Utils::isRuntimeCompliant($value)) {
+        if (!Utils::isQtiDatatypeCompliant($value)) {
             Utils::throwTypingError($value);
         }
     }
