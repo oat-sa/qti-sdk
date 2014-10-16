@@ -1,5 +1,5 @@
 <?php
-namespace qtismtest\runtime\common;
+namespace qtismtest\common\collections;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Boolean;
@@ -9,7 +9,7 @@ use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Point;
@@ -79,7 +79,7 @@ class ContainerTest extends QtiSmTestCase {
 	 */
 	public function testCreateFromDataModelValid(ValueCollection $valueCollection) {
 		$container = Container::createFromDataModel($valueCollection);
-		$this->assertInstanceOf('qtism\\runtime\\common\\Container', $container);
+		$this->assertInstanceOf('qtism\\common\\collections\\Container', $container);
 	}
 	
 	/**
@@ -257,7 +257,7 @@ class ContainerTest extends QtiSmTestCase {
 	        array('str', $msg . "'php:string' given."),
 	        array(true, $msg . "'php:boolean' given."),
 	        array(array(), $msg . "'php:array' given."),
-	        array(new Container(), $msg . "'qtism\\runtime\\common\\Container' given.")
+	        array(new Container(), $msg . "'qtism\\common\\collections\\Container' given.")
 	    );
 	}
 }

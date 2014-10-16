@@ -20,17 +20,13 @@
  * @license GPLv2
  */
 
-namespace qtism\runtime\common;
+namespace qtism\common\collections;
 
 use qtism\common\datatypes\File;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\String;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Duration;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\Comparable;
 use qtism\common\utils\Php as PhpUtils;
@@ -38,13 +34,8 @@ use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 
 /**
- * A Collection which is able to contain any PHP datatypes compliant
- * with the QTI Specification + QTIStateMachine equivalents which are:
- *
- * * Duration (qti:duration)
- * * Pair (qti:pair)
- * * DirectedPair (qti:directedPair)
- * * Point (qti:point)
+ * A generic Collection which is able to contain any QTI Scalar Datatype in
+ * addition with the null value.
  *
  * From IMS QTI:
  *
@@ -115,7 +106,6 @@ class Container extends AbstractCollection implements Comparable
     public function isNull()
     {
         $data = $this->getDataPlaceHolder();
-
         return empty($data);
     }
 
@@ -203,7 +193,7 @@ class Container extends AbstractCollection implements Comparable
 	 * Create a Container object from a Data Model ValueCollection object.
 	 *
 	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-	 * @return \qtism\runtime\common\Container A Container object populated with the values found in $valueCollection.
+	 * @return \qtism\common\collections\Container A Container object populated with the values found in $valueCollection.
 	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
 	 */
     public static function createFromDataModel(ValueCollection $valueCollection)

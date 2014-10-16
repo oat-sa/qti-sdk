@@ -25,7 +25,7 @@ namespace qtism\runtime\tests;
 
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
 use qtism\data\IAssessmentItem;

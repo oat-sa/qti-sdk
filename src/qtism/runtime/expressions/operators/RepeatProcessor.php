@@ -26,7 +26,7 @@ use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OrderedContainer;
 use qtism\data\expressions\operators\Repeat;

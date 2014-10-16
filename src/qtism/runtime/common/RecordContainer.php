@@ -26,6 +26,7 @@ namespace qtism\runtime\common;
 
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
+use qtism\common\collections\Container;
 use qtism\data\state\ValueCollection;
 use qtism\common\utils\Arrays;
 use qtism\runtime\common\Utils as RuntimeUtils;
@@ -69,7 +70,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * @see \qtism\runtime\common\Container::getCardinality()
+	 * @see \qtism\common\collections\Container::getCardinality()
 	 */
     public function getCardinality()
     {
@@ -123,7 +124,7 @@ class RecordContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * @see \qtism\runtime\common\Container::getToStringBounds()
+	 * @see \qtism\common\collections\Container::getToStringBounds()
 	 */
     protected function getToStringBounds()
     {

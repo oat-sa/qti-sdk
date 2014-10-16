@@ -38,7 +38,7 @@ use qtism\common\Comparable;
 class OrderedContainer extends MultipleContainer implements QtiDatatype
 {
     /**
-     * @see \qtism\runtime\common\Container::equals()
+     * @see \qtism\common\collections\Container::equals()
      */
     public function equals($obj)
     {

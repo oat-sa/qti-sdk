@@ -7,7 +7,7 @@ use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\String;
 use qtism\common\Comparable;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;

@@ -32,7 +32,7 @@ use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\runtime\common\Variable;
 use qtism\common\storage\MemoryStream;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessFsFile;

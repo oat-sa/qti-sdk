@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\expressions\operators\IsNull;
 use qtism\data\state\ValueCollection;

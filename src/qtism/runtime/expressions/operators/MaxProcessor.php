@@ -27,7 +27,7 @@ use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Float;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Max;
 

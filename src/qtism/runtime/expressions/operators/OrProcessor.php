@@ -22,7 +22,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;

@@ -7,7 +7,7 @@ use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\StatsOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;

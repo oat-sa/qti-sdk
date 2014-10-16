@@ -30,7 +30,7 @@ use qtism\common\utils\Format;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\enums\Cardinality;
 use qtism\data\content\TextRun;
 use qtism\data\content\PrintedVariable;

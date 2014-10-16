@@ -31,7 +31,7 @@ use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\common\collections\AbstractCollection;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;

@@ -26,7 +26,7 @@ namespace qtism\runtime\expressions\operators;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\Container;
+use qtism\common\collections\Container;
 use qtism\data\expressions\operators\Gcd;
 use qtism\data\expressions\Expression;
 
