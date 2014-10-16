@@ -33,6 +33,7 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Duration;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\Comparable;
+use qtism\common\utils\Php as PhpUtils;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 
@@ -94,8 +95,13 @@ class Container extends AbstractCollection implements Comparable
 	 */
     protected function checkType($value)
     {
-        if (!Utils::isQtiDatatypeCompliant($value)) {
-            Utils::throwTypingError($value);
+        if (!RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
+            $displayType = PhpUtils::displayType($value);
+            $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
+            $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
+            $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. '${displayType}' given.";
+            
+            throw new InvalidArgumentException($msg);
         }
     }
 

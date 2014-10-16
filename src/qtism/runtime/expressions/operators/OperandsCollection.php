@@ -54,7 +54,7 @@ class OperandsCollection extends AbstractCollection implements Stack
 	 */
     protected function checkType($value)
     {
-        if (RuntimeUtils::isQtiDatatypeCompliant($value)) {
+        if (RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
             return;
         } elseif ($value instanceof MultipleContainer || $value instanceof OrderedContainer || $value instanceof RecordContainer) {
             return;

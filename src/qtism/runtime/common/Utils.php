@@ -52,12 +52,13 @@ use \InvalidArgumentException;
 class Utils
 {
     /**
-	 * Whether a given primitive $value is compliant with the QTI runtime model.
+	 * Whether a given $value is compliant with the QTI runtime model. In other words,
+	 * if it is null or a QTI Scalar Datatype.
 	 *
 	 * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
 	 * @return boolean
 	 */
-    public static function isQtiDatatypeCompliant($value)
+    public static function isQtiScalarDatatypeCompliant($value)
     {
         if ($value === null) {
             return true;

@@ -234,4 +234,30 @@ class ContainerTest extends QtiSmTestCase {
 		
 		return $returnValue;
 	}
+	
+	/**
+	 * @dataProvider invalidDatatypeProvider
+	 * 
+	 * @param mixed $value
+	 * @param string $expectedMsg
+	 */
+	public function testInvalidDatatype($value, $expectedMsg) {
+	     $this->setExpectedException('\\InvalidArgumentException', $expectedMsg);
+	     $container = new Container(array($value));
+	}
+	
+	public function invalidDatatypeProvider() {
+	    $msg = "Cannot insert a non QTI Scalar Datatype into a QTI Container. The following Datatypes are accepted ";
+        $msg .= "null, QTI Identifier, QTI Boolean, QTI Integer, QTI Float, QTI String, QTI Point, QTI Pair, QTI DirectedPair, ";
+        $msg .= "QTI Duration, QTI File, QTI Uri, QTI IntOrIdentifier. ";
+	    
+	    return array(
+	        array(10, $msg . "'php:integer' given."),
+	        array(12.2, $msg . "'php:double' given."),
+	        array('str', $msg . "'php:string' given."),
+	        array(true, $msg . "'php:boolean' given."),
+	        array(array(), $msg . "'php:array' given."),
+	        array(new Container(), $msg . "'qtism\\runtime\\common\\Container' given.")
+	    );
+	}
 }
