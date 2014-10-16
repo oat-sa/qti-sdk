@@ -873,7 +873,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $identifier = $component->getIdentifier();
         $identifierType = 'qtism\\common\\datatypes\\Identifier';
         $scalarType = 'qtism\\common\\datatypes\\Scalar';
-        $containerType = 'qtism\\runtime\\common\\Container';
+        $containerType = 'qtism\\common\\collections\\Container';
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
         $valCheck = "(${scalarCheck} || ${containerCheck})";

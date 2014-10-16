@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\common;
 
-use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\Comparable;
 use qtism\data\state\CorrectResponse;
@@ -97,37 +96,14 @@ class ResponseVariable extends Variable
 	 */
     public function setCorrectResponse(QtiDatatype $correctResponse = null)
     {
-        if (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true) {
+        if ($correctResponse === null) {
+            $this->correctResponse = null;
+        } elseif (Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse) === true && Utils::isCardinalityCompliant($this->getCardinality(), $correctResponse) === true) {
             $this->correctResponse = $correctResponse;
-
-            return;
-        } elseif ($correctResponse instanceof Container) {
-            if ($correctResponse->getCardinality() === $this->getCardinality()) {
-
-                if (get_class($correctResponse) === 'qtism\\runtime\\common\\Container' ||
-                        $correctResponse->getBaseType() === $this->getBaseType()) {
-                    // This is a simple container with no baseType restriction
-                    // or a Multiple|Record|Ordered container with a compliant
-                    // baseType.
-                    $this->correctResponse = $correctResponse;
-
-                    return;
-                } else {
-                    $msg = "The baseType of the given container ('" . BaseType::getNameByConstant($correctResponse->getBaseType()) . "') ";
-                    $msg.= "is not compliant with ";
-                    $msg.= "the baseType of the variable ('" . BaseType::getNameByConstant($this->getBaseType()) . "').";
-                    throw new InvalidArgumentException($msg);
-                }
-            } else {
-                $msg = "The cardinality of the given container ('" . Cardinality::getNameByConstant($value->getCardinality()) . "') ";
-                $msg.= "is not compliant with ";
-                $msg.= "the cardinality of the variable ('" . Cardinality::getNameByConstant($this->getCardinality()) . "').";
-                throw new InvalidArgumentException($msg);
-            }
+        } else {
+            $msg = "The given correct response is not compliant with the associated response variable.";
+            throw new InvalidArgumentException($msg);
         }
-
-        $msg = "The provided value is not compliant with the baseType of the ResponseVariable.";
-        throw new InvalidArgumentException($msg);
     }
 
     /**
