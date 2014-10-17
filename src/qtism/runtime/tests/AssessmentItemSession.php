@@ -988,9 +988,10 @@ class AssessmentItemSession extends State
             $var = $data[$identifier];
 
             if ($var instanceof ResponseVariable && in_array($var->getIdentifier(), $excludedVariableIdentifiers) === false) {
-                $isCorrect = $var->isCorrect();
 
-                if ($isCorrect === false) {
+                // From IMS QTI:
+                // Only items for which all declared response variables have correct responses defined are considered.
+                if ($var->hasCorrectResponse() === false || $var->isCorrect() === false) {
                     return false;
                 }
             }
