@@ -50,8 +50,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    $manager = new SessionManager();
-	    return new AssessmentItemSession($itemRef, $manager);
+	    return new AssessmentItemSession($itemRef);
 	}
 	
 	/**
@@ -110,6 +109,6 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
         ');
 	
 	    $manager = new SessionManager();
-	    return new AssessmentItemSession($itemRef, $manager);
+	    return new AssessmentItemSession($itemRef);
 	}
 }

@@ -56,6 +56,6 @@ class SessionManager extends AbstractSessionManager
      */
     protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
     {
-        return new AssessmentItemSession($assessmentItem, $this, $navigationMode, $submissionMode);
+        return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
     }
 }

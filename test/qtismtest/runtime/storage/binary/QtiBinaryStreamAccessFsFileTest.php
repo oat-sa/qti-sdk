@@ -427,7 +427,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $stream->open();
         $access = new QtiBinaryStreamAccessFsFile($stream);
         
-        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'), new SessionManager());
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
         
         $access->writeAssessmentItemSession($seeker, $session);

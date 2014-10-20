@@ -221,12 +221,6 @@ class AssessmentItemSession extends State
     private $attempting = false;
 
     /**
-	 *
-	 * @var \qtism\runtime\tests\AbstractSessionManager
-	 */
-    private $sessionManager;
-
-    /**
 	 * Create a new AssessmentItemSession object. 
 	 * 
 	 * * The built-in response variables 'numAttempts' and 'duration' will be created and set up with appropriate default values, respectively Integer(0) and Duration('PT0S').
@@ -235,18 +229,20 @@ class AssessmentItemSession extends State
 	 * * The item session is set up with no TimeLimits object. If you want to set a a specfici TimeLimits object to rule the session, use the setTimeLimits() method.
 	 *
 	 * @param \qtism\data\IAssessmentItem $assessmentItem The description of the item that the session handles.
-	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager A SessionManager object.
+	 * @param integer $navigationMode (optional) A value from the NavigationMode enumeration.
+	 * @param integer $submissionMode (optional) A value from the SubmissionMode enumeration.
 	 * @throws \InvalidArgumentException If $navigationMode or $submission is not a value from the NavigationMode/SubmissionMode enumeration.
 	 * @see \qtism\runtime\tests\AssessmentItemSession::setItemSessionControl() The setItemSessionControl() method.
 	 * @see \qtism\runtime\tests\AssessmentItemSession::setTimeLimits() The setTimeLimits() method.
 	 */
-    public function __construct(IAssessmentItem $assessmentItem, AbstractSessionManager $sessionManager)
+    public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
         parent::__construct();
 
         $this->setAssessmentItem($assessmentItem);
         $this->setItemSessionControl(new ItemSessionControl());
-        $this->setSessionManager($sessionManager);
+        $this->setNavigationMode($navigationMode);
+        $this->setSubmissionMode($submissionMode);
 
         // -- Create the built-in response variables.
         $this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
@@ -480,26 +476,6 @@ class AssessmentItemSession extends State
     public function isAttempting()
     {
         return $this->attempting;
-    }
-
-    /**
-	 * Get the session manager.
-	 *
-	 * @return \qtism\runtime\tests\AbstractSessionManager
-	 */
-    protected function getSessionManager()
-    {
-        return $this->sessionManager;
-    }
-
-    /**
-	 * Set the session manager.
-	 *
-	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager
-	 */
-    protected function setSessionManager(AbstractSessionManager $sessionManager)
-    {
-        $this->sessionManager = $sessionManager;
     }
 
     /**
