@@ -323,31 +323,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertFalse($timeConstraints[0]->maxTimeInForce());
     }
     
-    public function testTimeConstraintsConsiderMinTime() {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml', false);
-        
-        $session->setTime(self::createDate('2014-07-14 13:00:00'));
-        $session->beginTestSession();
-        
-        // Q01 - timeLimits on assessmentItemRef - minTime = 1, maxTime = 3
-        try {
-            $session->setTime(self::createDate('2014-07-14 13:00:00'));
-            $session->beginAttempt();
-            
-            $session->setTime(self::createDate('2014-07-14 13:00:00'));
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
-            
-            // No exception should be thrown even if minTime = 1. Indeed, min time
-            // are not to be considered.
-            $this->assertTrue(true);
-        }
-        catch (AssessmentTestSessionException $e) {
-            $this->fail("No exception should be thrown because minTime must not be considered on Q01.");
-        }
-        
-        // On the other hand, if we go back to min time consideration...
-        unset($session);
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml', true);
+    public function testTimeConstraintsTwo() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml');
         
         $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginTestSession();

@@ -356,16 +356,6 @@ class AssessmentItemSession extends State
     }
 
     /**
-	 * Whether or not minimum time limits must be taken into account.
-	 *
-	 * @return boolean
-	 */
-    protected function mustConsiderMinTime()
-    {
-        return $this->getSessionManager()->mustConsiderMinTime();
-    }
-
-    /**
 	 * Whether the session is driven by a TimeLimits object
 	 * or not.
 	 *
@@ -713,7 +703,7 @@ class AssessmentItemSession extends State
             // assessmentItems only when linear navigation mode is in effect.
             if ($this->isNavigationLinear() === true && $this->getTimeLimits()->hasMinTime() === true) {
 
-                if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->getTimeLimits()->getMinTime()->getSeconds(true)) {
+                if ($this['duration']->getSeconds(true) <= $this->getTimeLimits()->getMinTime()->getSeconds(true)) {
                     // An exception is thrown to prevent the numAttempts to be incremented.
                     // Suspend and wait for a next attempt.
                     $this->suspend();

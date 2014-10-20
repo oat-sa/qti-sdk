@@ -41,23 +41,9 @@ class SessionManagerTest extends QtiSmTestCase {
     }
     
     public function testDefaultAssessmentTestSessionCreation() {
-        // default considerMinTime is true.
         $manager = new SessionManager();
         $session = $manager->createAssessmentTestSession($this->getTest());
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
-        $this->assertTrue($session->mustConsiderMinTime());
-    }
-    
-    public function testParametricAssessmentTestSessionCreation() {
-        $considerMinTime = false;
-        
-        $manager = new SessionManager();
-        $manager->setConsiderMinTime($considerMinTime);
-        
-        $session = $manager->createAssessmentTestSession($this->getTest());
-        
-        $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
-        $this->assertFalse($session->mustConsiderMinTime());
     }
 }

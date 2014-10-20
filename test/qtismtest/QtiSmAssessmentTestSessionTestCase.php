@@ -15,12 +15,11 @@ abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase {
 	    parent::tearDown();
 	}
 	
-	protected static function instantiate($url, $considerMinTime = true) {
+	protected static function instantiate($url) {
 	    $doc = new XmlCompactDocument();
 	    $doc->load($url);
 	     
 	    $manager = new SessionManager();
-	    $manager->setConsiderMinTime($considerMinTime);
 	    return $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	}
 }

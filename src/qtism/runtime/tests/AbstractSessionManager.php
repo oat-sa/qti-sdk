@@ -41,39 +41,9 @@ use qtism\data\AssessmentItemRef;
  */
 abstract class AbstractSessionManager
 {
-    /**
-     * Whether or not created AssessmentTestSession and AssessmentItemSession objects
-     * must consider the minimum time constraints.
-     *
-     * @var booolean
-     */
-    private $considerMinTime;
-
     public function __construct()
     {
-        $this->setConsiderMinTime(true);
-    }
-
-    /**
-     * Set whether or not created AssessmentTestSessions must consider
-     * minimum time limits.
-     *
-     * @param boolean $considerMinTime
-     */
-    public function setConsiderMinTime($considerMinTime)
-    {
-        $this->considerMinTime = $considerMinTime;
-    }
-
-    /**
-     * Whether or not created AssessmentTestSessions must consider
-     * minimum time limits.
-     *
-     * @return boolean
-     */
-    public function mustConsiderMinTime()
-    {
-        return $this->considerMinTime;
+        
     }
 
     /**
@@ -84,8 +54,21 @@ abstract class AbstractSessionManager
     public function createAssessmentTestSession(AssessmentTest $test, Route $route = null)
     {
         $session = $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route));
-        $this->configureAssessmentTestSession($session);
-
+        return $session;
+    }
+    
+    /**
+     * Create an AssessmentItemSession object.
+     *
+     * @param \qtism\data\IAssessmentItem $assessmentItem
+     * @param integer $navigationMode A value from the NavigationMode enumeration.
+     * @param integer $submissionMode A value from the SubmissionMode enumeration $submissionMode.
+     *
+     * @return \qtism\runtime\tests\AssessmentItemSession
+     */
+    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
+    {
+        $session = $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
         return $session;
     }
 
@@ -109,23 +92,6 @@ abstract class AbstractSessionManager
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
 
     /**
-     * Create an AssessmentItemSession object.
-     *
-     * @param \qtism\data\IAssessmentItem $assessmentItem
-     * @param integer $navigationMode A value from the NavigationMode enumeration.
-     * @param integer $submissionMode A value from the SubmissionMode enumeration $submissionMode.
-     *
-     * @return \qtism\runtime\tests\AssessmentItemSession
-     */
-    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
-    {
-        $session = $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
-        $this->configureAssessmentItemSession($session);
-
-        return $session;
-    }
-
-    /**
      * Contains the Route create logic depending on whether or not
      * an optional Route to be used is given or not.
      *
@@ -136,28 +102,6 @@ abstract class AbstractSessionManager
     protected function getRoute(AssessmentTest $test, Route $route = null)
     {
         return (is_null($route) === true) ? $this->createRoute($test) : $route;
-    }
-
-    /**
-     * Contains the logic of configuring a newly instantiated AssessmentTestSession object
-     * with additional configuration values held by the factory.
-     *
-     * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession
-     */
-    protected function configureAssessmentTestSession(AssessmentTestSession $assessmentTestSession)
-    {
-        return;
-    }
-
-    /**
-     * Contains the logic of configuring a newly instantiated AssessmentItemSession object
-     * with additional configuration values held by the factory.
-     *
-     * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession
-     */
-    protected function configureAssessmentItemSession(AssessmentItemSession $assessmentItemSession)
-    {
-        return;
     }
 
     /**
