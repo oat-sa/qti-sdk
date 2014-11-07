@@ -16,12 +16,12 @@ __This implementation of QTI is a beta software. The API might change at any tim
 * Custom Operator Hooks through PSR-0
 * Wilbert Kraan's Goldilocks Rendering
 * CSS Parser for direct QTI Information Model mapping
-* QTI Item Sessions (with binary persistence)
-* QTI Test Sessions (with binary persistence)
+* QTI Item Sessions (with lightning fast binary persistence)
+* QTI Test Sessions (with lightning fast binary persistence)
 * Nice and Clean API for QTI Document manipulation/traversal
 * PreConditions and Branching
 * Response/Outcome Processing
-* Unit Testing Driven
+* Unit Testing Driven from PHP 5.3 to 5.6
 
 ## Installation (developers)
 
