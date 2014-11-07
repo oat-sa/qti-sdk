@@ -3,8 +3,8 @@
 [![License GPL2](http://img.shields.io/badge/licence-gpl2-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/qtism/qtism.svg)](https://packagist.org/packages/qtism/qtism)
 
-QTI Software Modules
-====================
+QTI Software Development Kit
+============================
 
 A QTI 2.1 (Question &amp; Test Interoperability) SDK.
 
