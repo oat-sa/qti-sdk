@@ -3,15 +3,13 @@
 [![License GPL2](http://img.shields.io/badge/licence-gpl2-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/qtism/qtism.svg)](https://packagist.org/packages/qtism/qtism)
 
-QTI Software Development Kit
-============================
+# QTI Software Development Kit
 
 A QTI 2.1 (Question &amp; Test Interoperability) SDK.
 
 __This implementation of QTI is a beta software. The API might change at any time while the code is under constant enhancement.__
 
-Features
---------------------------
+## Features
 
 * Complete QTI Information Model
 * Complete QTI Rule Engine Support
@@ -25,16 +23,14 @@ Features
 * Response/Outcome Processing
 * Unit Testing Driven
 
-Installation (developers)
---------------------------
+## Installation (developers)
 
 1. Clone the repository.
 2. Make sure you know how [Composer](https://getcomposer.org/download/) works and it is installed on your system.
 3. php composer.phar install --dev
 4. You are ready!
 
-Unit Tests (developers)
-------------------------
+## Unit Tests (developers)
 
 Run Unit Tests by invoking the following shell command:
 
