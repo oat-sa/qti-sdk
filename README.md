@@ -15,6 +15,6 @@ Installation (developers)
 --------------------------
 
 1. Clone the repository.
-2. Make sure you know how [Composer]https://getcomposer.org/download/ works and it is installed on your system.
+2. Make sure you know how [Composer](https://getcomposer.org/download/) works and it is installed on your system.
 3. php composer.phar install --dev
 4. You are ready!
