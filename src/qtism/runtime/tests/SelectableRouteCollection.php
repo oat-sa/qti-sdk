@@ -91,5 +91,8 @@ class SelectableRouteCollection extends AbstractCollection
         } else {
             array_splice($data, $position, 0, array($route));
         }
+        
+        // Make sure indexes are rebased.
+        $data = array_values($data);
     }
 }
