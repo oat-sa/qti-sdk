@@ -49,6 +49,10 @@ class InfoControlMarshaller extends ContentMarshaller
         }
 
         self::fillBodyElement($component, $element);
+        
+        if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+            $component->setTitle($title);
+        }
 
         return $component;
     }
@@ -69,6 +73,7 @@ class InfoControlMarshaller extends ContentMarshaller
         }
 
         self::fillElement($element, $component);
+        self::setDOMElementAttribute($element, 'title', $component->getTitle());
 
         return $element;
     }

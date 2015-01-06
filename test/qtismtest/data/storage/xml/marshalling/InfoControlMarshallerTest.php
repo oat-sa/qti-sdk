@@ -23,6 +23,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('', $element->getAttribute('class'));
 		$this->assertEquals('', $element->getAttribute('lang'));
 		$this->assertEquals('', $element->getAttribute('label'));
+		$this->assertEquals('', $element->getAttribute('title'));
 	}
 	
 	public function testMarshallMinimalWithAttributes() {
@@ -39,7 +40,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	}
 	
 	public function testUnmarshallMinimal() {
-		$element = $this->createDOMElement('<infoControl/>');
+		$element = $this->createDOMElement('<infoControl title=""/>');
 		$component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\content\\InfoControl', $component);
@@ -51,7 +52,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	}
 	
 	public function testUnmarshallMinimalWithAttributes() {
-	    $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
+	    $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..." title=""/>');
 	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
 	
 	    $this->assertInstanceOf('qtism\\data\\content\\InfoControl', $component);
@@ -64,7 +65,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshallComplex() {
 	    $element = $this->createDOMElement('
-	        <infoControl id="controlMePlease">
+	        <infoControl id="controlMePlease" title="">
 	            This is <em>gooood</em> !
 	        </infoControl>
 	    ');
@@ -100,6 +101,6 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         
-        $this->assertEquals('<infoControl id="controlMePlease">This is <em>gooood</em> !</infoControl>', $dom->saveXML($element));
+        $this->assertEquals('<infoControl id="controlMePlease" title="">This is <em>gooood</em> !</infoControl>', $dom->saveXML($element));
 	}
 }

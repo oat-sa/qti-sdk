@@ -18,6 +18,7 @@ class XmlUtilsTest extends QtiSmTestCase {
 	
 	public function validInferQTIVersionProvider() {
 		return array(
+		    array(self::samplesDir() . 'ims/items/2_1_1/likert.xml', '2.1.1'),
 			array(self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1'),
 			array(self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0'),
 			array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1')		
@@ -97,6 +98,16 @@ class XmlUtilsTest extends QtiSmTestCase {
                 self::samplesDir() . 'custom/items/versiondetection_20_trailing.xml',
                 'http://www.imsglobal.org/xsd/imsqti_v2p0',
                 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+	        array(
+	            self::samplesDir() . 'ims/items/2_1_1/associate.xml',
+	            'http://www.imsglobal.org/xsd/imsqti_v2p1',
+	            'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd'                
+	        ),
+            array(
+                self::samplesDir() . 'ims/items/2_1/associate.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p1',
+                'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd'
             ),
 	                    
 	        // Invalid

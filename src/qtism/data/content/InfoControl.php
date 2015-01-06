@@ -54,6 +54,13 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      * @qtism-bean-property
      */
     private $content;
+    
+    /**
+     * The title of the InfoControl
+     * 
+     * @var string
+     */
+    private $title = '';
 
     /**
      * Create a new InfoControl object.
@@ -88,6 +95,32 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     public function getContent()
     {
         return $this->content;
+    }
+    
+    /**
+     * Set the title of the InfoControl.
+     * 
+     * @param string $title The title of the InfoControl.
+     * @throws InvalidArgumentException If $title is not a string.
+     */
+    public function setTitle($title)
+    {
+        if (is_string($title) === true) {
+            $this->title = $title;
+        } else {
+            $msg = "The 'title' argument must be a string, '" . gettype($title) . "' given.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Get the title of the InfoControl.
+     * 
+     * @return string The title of the InfoControl.
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**

@@ -45,6 +45,8 @@ class Utils
 
         if ($version === '2.1') {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
+        } elseif ($version === '2.1.1') {
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1p1.xsd';
         } else {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
         }
