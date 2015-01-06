@@ -39,7 +39,7 @@ class Utils
 	 *
 	 * @return string A filename pointing at an XML Schema file.
 	 */
-    public static function getSchemaLocation($version = '2.1')
+    static public function getSchemaLocation($version = '2.1')
     {
         $dS = DIRECTORY_SEPARATOR;
 
@@ -51,33 +51,67 @@ class Utils
 
         return $filename;
     }
-
-    /**
-	 * Infer the QTI version of a given DOMDocument.
-	 *
-	 * @param \DOMDocument $document A DOMDocument object.
-	 * @return string|boolean A QTI version (e.g. '2.1') or false if it could not be infered.
-	 */
-    public static function inferQTIVersion(DOMDocument $document)
+    
+    static public function inferVersion(DOMDocument $document)
     {
         $root = $document->documentElement;
-        if (empty($root)) {
-            return false;
-        } else {
-            switch ($root->namespaceURI) {
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
-                    return '2.1';
-                break;
-
-                case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
-                    return '2.0';
-                break;
-
-                default:
-                    return false;
-                break;
+        $version = false;
+        
+        if (empty($root) === false) {
+            $rootNs = $root->namespaceURI;
+            
+            if ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p0') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p0');
+                
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd') {
+                    $version = '2.0';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p1');
+                
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
+                    $version = '2.1';
+                } else if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
+                    $version = '2.1.1';
+                }
             }
         }
+        
+        return $version;
+    }
+    
+    /**
+     * Get the location of an XML Schema Definition file from a given namespace.
+     * 
+     * This utility method enables you to know what is the location of an XML Schema Definition
+     * file to be used to validate a $document for a given target namespace. 
+     * 
+     * @param DOMDocument $document A DOMDocument object.
+     * @param string $namespaceUri A Namespace URI you want to know the related XSD file location.
+     * @return boolean|string False if no location can be found for $namespaceUri, otherwise the location of the XSD file.
+     */
+    static public function getXsdLocation(DOMDocument $document, $namespaceUri)
+    {
+        $root = $document->documentElement;
+        $location = false;
+        
+        if (empty($root) === false) {
+            $schemaLocation = $root->getAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation');
+            if (empty($schemaLocation) === false) {
+                $parts = preg_split('/\s+/', $schemaLocation);
+                
+                // Look at pairs...
+                $partsCount = count($parts);
+                for ($i = 0; $i < $partsCount; $i += 2) {
+                    if (isset($parts[$i + 1]) && $parts[$i] === $namespaceUri) {
+                        $location = $parts[$i + 1];
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return $location;
     }
 
     /**
@@ -86,7 +120,7 @@ class Utils
 	 * @param \DOMElement $element A DOMElement object you want to change the name.
 	 * @param string $name The new name of $element.
 	 */
-    public static function changeElementName(DOMElement $element, $name)
+    static public function changeElementName(DOMElement $element, $name)
     {
         $newElement = $element->ownerDocument->createElement($name);
 
@@ -119,7 +153,7 @@ class Utils
 	 * @param \DOMElement $element The DOMElement to be anonimized.
 	 * @return \DOMElement The anonimized DOMElement copy of $element.
 	 */
-    public static function anonimizeElement(DOMElement $element)
+    static public function anonimizeElement(DOMElement $element)
     {
         $stack = new SplStack();
         $traversed = array();
@@ -167,7 +201,7 @@ class Utils
 	 * @param \DOMElement $into The target DOMElement.
 	 * @param boolean $deep Whether or not to import the whole node hierarchy.
 	 */
-    public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
+    static public function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
     {
         for ($i = 0; $i < $from->childNodes->length; $i++) {
             $node = $into->ownerDocument->importNode($from->childNodes->item($i), $deep);
@@ -182,7 +216,7 @@ class Utils
 	 * @param \DOMElement $from The source DOMElement.
 	 * @param \DOMElement $into The target DOMElement.
 	 */
-    public static function importAttributes(DOMElement $from, DOMElement $into)
+    static public function importAttributes(DOMElement $from, DOMElement $into)
     {
         for ($i = 0; $i < $from->attributes->length; $i++) {
             $attr = $from->attributes->item($i);

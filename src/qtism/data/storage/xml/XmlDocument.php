@@ -132,7 +132,7 @@ class XmlDocument extends QtiDocument
             if (call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
 
                 // Infer the QTI version.
-                if (($version = XmlUtils::inferQTIVersion($this->getDomDocument())) !== false) {
+                if (($version = $this->inferVersion()) !== false) {
                     $this->setVersion($version);
                 } else {
                     $msg = "Cannot infer QTI version. Is it well formed?";
@@ -373,5 +373,10 @@ class XmlDocument extends QtiDocument
     protected function createMarshallerFactory()
     {
         return new MarshallerFactory();
+    }
+    
+    protected function inferVersion()
+    {
+        return XmlUtils::inferVersion($this->getDomDocument());
     }
 }

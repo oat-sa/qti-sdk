@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file was created using: Onyx Editor, Version 3.4.1 (Full, licensed version), (c)2011 BPS Bildungsportal Sachsen GmbH-->
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 imsqti_v2p1.xsd" identifier="TextEntrysubset_806481421" title="textEntry (subset)" adaptive="false" timeDependent="false">
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="TextEntrysubset_806481421" title="textEntry (subset)" adaptive="false" timeDependent="false">
 	<responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string">
 		<mapping defaultValue="0.0">
 			<mapEntry mapKey="Dresden" mappedValue="1.0" caseSensitive="false" />

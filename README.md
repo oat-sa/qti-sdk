@@ -3,11 +3,13 @@
 [![License GPL2](http://img.shields.io/badge/licence-gpl2-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/qtism/qtism.svg)](https://packagist.org/packages/qtism/qtism)
 
-# QTI Software Development Kit
+# QTI Software Development Kit for PHP
 
-A QTI 2.1 (Question &amp; Test Interoperability) SDK.
+A QTI 2.1 (Question &amp; Test Interoperability) is a Software Development Kit (SDK) for PHP 5.3 and higher supporting a wide 
+range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
 
-__This implementation of QTI is a beta software. The API might change at any time while the code is under constant enhancement.__
+__This implementation of QTI is a beta software. The API might change at any time while the code is under constant enhancement. A stable
+version will be released "when it's done".__
 
 ## Features
 

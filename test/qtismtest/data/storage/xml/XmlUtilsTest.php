@@ -13,7 +13,7 @@ class XmlUtilsTest extends QtiSmTestCase {
 	public function testInferQTIVersionValid($file, $expectedVersion) {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->load($file);
-		$this->assertEquals($expectedVersion, Utils::inferQTIVersion($dom));
+		$this->assertEquals($expectedVersion, Utils::inferVersion($dom));
 	}
 	
 	public function validInferQTIVersionProvider() {
@@ -47,6 +47,74 @@ class XmlUtilsTest extends QtiSmTestCase {
 	                    
 	        array('<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn><![CDATA[1]]></mn><mo>+</mo><mn><![CDATA[2]]></mn><mo>=</mo><mn><![CDATA[3]]></mn></math>',
 	               '<math display="inline"><mn><![CDATA[1]]></mn><mo>+</mo><mn><![CDATA[2]]></mn><mo>=</mo><mn><![CDATA[3]]></mn></math>')
+	    );
+	}
+	
+	/**
+	 * @dataProvider getXsdLocationProvider
+	 * 
+	 * @param string $file
+	 * @param string $namespaceUri
+	 * @param boolean|string $expectedLocation
+	 */
+	public function testGetXsdLocation($file, $namespaceUri, $expectedLocation) {
+	    $document = new DOMDocument('1.0', 'UTF-8');
+	    $document->load($file);
+	    $location = Utils::getXsdLocation($document, $namespaceUri);
+	    
+	    $this->assertSame($expectedLocation, $location);
+	}
+	
+	public function getXsdLocationProvider() {
+	    return array(
+	        // Valid.
+	        array(
+	            self::samplesDir() . 'custom/items/versiondetection_20_singlespace.xml', 
+	            'http://www.imsglobal.org/xsd/imsqti_v2p0', 
+	            'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+	        ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_multispace.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_singletab.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_multitab.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_leading.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_trailing.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd'
+            ),
+	                    
+	        // Invalid
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_trailing.xml',
+                'wrong-ns',
+                false
+          ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_emptyschemalocation.xml',
+                'wrong-ns',
+                false
+          ),
+            array(
+                self::samplesDir() . 'custom/items/versiondetection_20_noschemalocationattribute.xml',
+                'http://www.imsglobal.org/xsd/imsqti_v2p0',
+                false
+          ),
 	    );
 	}
 }

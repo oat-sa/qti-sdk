@@ -355,4 +355,9 @@ class XmlCompactDocument extends XmlDocument
             }
         }
     }
+    
+    protected function inferVersion()
+    {
+        return '1.0';
+    }
 }

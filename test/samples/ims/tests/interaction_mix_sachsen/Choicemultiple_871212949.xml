@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file was created using: Onyx Editor, Version 3.4.1 (Full, licensed version), (c)2011 BPS Bildungsportal Sachsen GmbH-->
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 imsqti_v2p1.xsd" identifier="Choicemultiple_871212949" title="choice (multiple, point per answer)" adaptive="false" timeDependent="false">
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="Choicemultiple_871212949" title="choice (multiple, point per answer)" adaptive="false" timeDependent="false">
 	<responseDeclaration identifier="RESPONSE_27966883" cardinality="multiple" baseType="identifier">
 		<correctResponse>
 			<value>choice_934383202</value>
