@@ -22,23 +22,21 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Reflection;
+use \ReflectionClass;
+
 /**
- * A specialized marshaller factory focusing on components
- * involved in CompactXml documents.
- *
+ * A MarshallerFactory focusing on instantiating and configuring
+ * Marshallers for QTI 2.0.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class CompactMarshallerFactory extends Qti21MarshallerFactory
+class Qti20MarshallerFactory extends MarshallerFactory
 {
-    /**
-     * Create a new CompactMarshallerFactory object.
-     */
-    public function __construct()
+    protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        parent::__construct();
-
-        $this->addMappingEntry('assessmentItemRef', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentItemRefMarshaller');
-        $this->addMappingEntry('assessmentSection', 'qtism\\data\\storage\\xml\\marshalling\\ExtendedAssessmentSectionMarshaller');
+        array_unshift($args, '2.0');
+        return Reflection::newInstance($class, $args);
     }
 }

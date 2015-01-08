@@ -68,6 +68,16 @@ abstract class RecursiveMarshaller extends Marshaller
     private $processed = array();
 
     /**
+     * Create a new RecursiveMarshaller object.
+     * 
+     * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
+     */
+    public function __construct($version)
+    {
+        parent::__construct($version);
+    }
+    
+    /**
 	 * Push an object on the processed objects list.
 	 *
 	 * @param mixed $object An object value.

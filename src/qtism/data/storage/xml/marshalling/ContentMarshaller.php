@@ -78,9 +78,12 @@ abstract class ContentMarshaller extends RecursiveMarshaller
 {
     /**
      * Create a new ContentMarshaller object.
+     * 
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
      */
-    public function __construct()
+    public function __construct($version)
     {
+        parent::__construct($version);
         $this->setLookupClasses();
     }
 

@@ -39,7 +39,7 @@ use \ReflectionException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class MarshallerFactory
+abstract class MarshallerFactory
 {
     /**
 	 * An associative array where keys are QTI class names
@@ -260,7 +260,7 @@ class MarshallerFactory
                 throw new RuntimeException($msg, 0, $e);
             }
 
-            $marshaller = Reflection::newInstance($class, $args);
+            $marshaller = $this->instantiateMarshaller($class, $args);
             $marshaller->setMarshallerFactory($this);
 
             return $marshaller;
@@ -269,4 +269,6 @@ class MarshallerFactory
             throw new InvalidArgumentException($msg);
         }
     }
+    
+    abstract protected function instantiateMarshaller(ReflectionClass $class, array $args);
 }

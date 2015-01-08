@@ -2,7 +2,7 @@
 namespace qtismtest;
 
 use qtism\data\AssessmentTest;
-use qtism\data\storage\xml\marshalling\MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use \DOMElement;
 use \DOMDocument;
 use \DateTime;
@@ -14,7 +14,7 @@ abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 	    parent::setUp();
-		$this->marshallerFactory = new MarshallerFactory();
+		$this->marshallerFactory = new Qti21MarshallerFactory();
 	}
 	
 	public function tearDown() {

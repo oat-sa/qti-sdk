@@ -44,7 +44,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
     {
-        $baseMarshaller = new SectionPartMarshaller();
+        $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $baseComponent = $baseMarshaller->unmarshall($element);
 
         if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
@@ -118,7 +118,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
 	 */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $baseMarshaller = new SectionPartMarshaller();
+        $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $element = $baseMarshaller->marshall($component);
 
         self::setDOMElementAttribute($element, 'title', $component->getTitle());

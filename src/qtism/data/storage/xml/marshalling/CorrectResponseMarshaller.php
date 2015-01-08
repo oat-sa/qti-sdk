@@ -68,10 +68,12 @@ class CorrectResponseMarshaller extends Marshaller
     /**
 	 * Create a new CorrectResponseMarshaller object.
 	 *
-	 * @param integer $baseType
+	 * @param string $version The QTI version number on which the Marshaller operates e.g. '2.1'.
+	 * @param integer $baseType The base type of the Variable referencing this CorrectResponse.
 	 */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 

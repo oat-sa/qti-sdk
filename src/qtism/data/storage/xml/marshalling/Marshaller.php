@@ -49,6 +49,23 @@ abstract class Marshaller
     private $marshallerFactory = null;
 
     /**
+     * The version on which the Marshaller operates.
+     * 
+     * @var string
+     */
+    private $version;
+    
+    /**
+     * Create a new Marshaller object.
+     * 
+     * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
+     */
+    public function __construct($version)
+    {
+        $this->setVersion($version);
+    }
+    
+    /**
 	 * Get a DOMDocument to be used by marshaller implementations in order to create
 	 * new nodes to be imported in a currenlty exported document.
 	 *
@@ -83,10 +100,30 @@ abstract class Marshaller
     public function getMarshallerFactory()
     {
         if ($this->marshallerFactory === null) {
-            $this->setMarshallerFactory(new MarshallerFactory());
+            $this->setMarshallerFactory(new Qti21MarshallerFactory());
         }
 
         return $this->marshallerFactory;
+    }
+    
+    /**
+     * Set the version on which the Marshaller operates.
+     * 
+     * @param string $version A QTI version number e.g. '2.1'.
+     */
+    protected function setVersion($version)
+    {
+        $this->version = $version;
+    }
+    
+    /**
+     * Get the version on which the Marshaller operates.
+     * 
+     * @return string A QTI version number e.g. '2.1'.
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
     public function __call($method, $args)

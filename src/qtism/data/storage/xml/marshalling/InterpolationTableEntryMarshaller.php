@@ -71,10 +71,12 @@ class InterpolationTableEntryMarshaller extends Marshaller
     /**
 	 * Create a new instance of InterpolationTableEntryMarshaller.
 	 *
-	 * @param string $baseType The baseType of the variableDeclaration containing the InterpolationTableEntry to unmarshall.
+	 * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
+	 * @param integer $baseType The baseType of the variableDeclaration containing the InterpolationTableEntry to unmarshall.
 	 */
-    public function __construct($baseType = -1)
+    public function __construct($version, $baseType = -1)
     {
+        parent::__construct($version);
         $this->setBaseType($baseType);
     }
 
