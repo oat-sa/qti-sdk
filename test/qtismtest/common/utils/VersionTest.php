@@ -15,25 +15,25 @@ class VersionTest extends QtiSmTestCase {
      * @param mixed $expected
      */
     public function testVersionCompareValid($version1, $version2, $operator = null, $expected) {
-        $this->assertSame($expected, Version::versionCompare($version1, $version2, $operator));
+        $this->assertSame($expected, Version::compare($version1, $version2, $operator));
     }
     
     public function testVersionCompareInvalidVersion1() {
         $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
-        Version::versionCompare('2.1.4', '2.1.1', '>');
+        Version::compare('2.1.4', '2.1.1', '>');
     }
     
     public function testVersionCompareInvalidVersion2() {
         $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
-        Version::versionCompare('2.1.0', '2.1.4', '<');
+        Version::compare('2.1.0', '2.1.4', '<');
     }
     
     public function testUnknownOperator() {
         $msg = "Unknown operator '!=='. Known operators are '<, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
-        Version::versionCompare('2.1.1', '2.2.0', '!==');
+        Version::compare('2.1.1', '2.2.0', '!==');
     }
     
     public function versionCompareValidProvider() {

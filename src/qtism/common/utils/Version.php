@@ -58,7 +58,7 @@ class Version
      * @return mixed
      * @see http://semver.org Semantic Versioning
      */
-    static public function versionCompare($version1, $version2, $operator = null)
+    static public function compare($version1, $version2, $operator = null)
     {
         $version1 = trim($version1);
         $version2 = trim($version2);
