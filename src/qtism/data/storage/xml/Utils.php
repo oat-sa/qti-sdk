@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml;
 
+use \qtism\common\utils\Version;
 use \DOMDocument;
 use \DOMElement;
 use \SplStack;
@@ -42,8 +43,9 @@ class Utils
     static public function getSchemaLocation($version = '2.1')
     {
         $dS = DIRECTORY_SEPARATOR;
-
-        if ($version === '2.1') {
+        $version = Version::appendPatchVersion($version);
+        
+        if ($version === '2.1.0') {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
         } elseif ($version === '2.1.1') {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1p1.xsd';
@@ -66,13 +68,13 @@ class Utils
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p0');
                 
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd') {
-                    $version = '2.0';
+                    $version = '2.0.0';
                 }
             } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p1') {
                 $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p1');
                 
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd') {
-                    $version = '2.1';
+                    $version = '2.1.0';
                 } else if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
                     $version = '2.1.1';
                 }

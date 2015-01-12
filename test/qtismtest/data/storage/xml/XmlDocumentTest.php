@@ -181,4 +181,9 @@ class XmlDocumentTest extends QtiSmTestCase {
         $divText = $divContent[0];
         $this->assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
     }
+    
+    public function testWrongVersion() {
+        $this->setExpectedException('\\InvalidArgumentException');
+        $doc = new XMLDocument('2.2.3');
+    }
 }

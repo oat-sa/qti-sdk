@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,17 +23,21 @@
 namespace qtism\data;
 
 use qtism\data\storage\StorageException;
+use qtism\common\utils\Version;
+use \InvalidArgumentException;
 
 abstract class QtiDocument
 {
     /**
-     *
+     * The version of the document.
+     * 
      * @var string
      */
-    private $version = '2.1';
+    private $version = '2.1.0';
 
     /**
-     *
+     * The root QTI Component of the document.
+     * 
      * @var QtiComponent
      */
     private $documentComponent;
@@ -50,22 +54,44 @@ abstract class QtiDocument
         $this->setDocumentComponent($documentComponent);
     }
 
+    /**
+     * Set the QTI $version in use for this document.
+     * 
+     * @param string $version A QTI version number e.g. '2.1.1'.
+     * @throws \InvalidArgumentException If $version is unknown regarding existing QTI versions.
+     */
     public function setVersion($version)
     {
-        $this->version = $version;
+        if (Version::isKnown($version) === true) {
+            $this->version = Version::appendPatchVersion($version);
+        } else {
+            $msg = "Version '{$version}' is not a known QTI version. Known versions are '" . implode(', ', Version::knownVersions()) . "'";
+            throw new InvalidArgumentException($msg);
+        }
     }
 
+    /**
+     * The QTI version in use within the document.
+     * 
+     * @return string A Semantic Versioning version number with major, minor and patch version e.g. '2.1.0'.
+     */
     public function getVersion()
     {
         return $this->version;
     }
 
+    /**
+     * Set the root component of the document.
+     * 
+     * @param QtiComponent $documentComponent A QTI Component object.
+     */
     public function setDocumentComponent(QtiComponent $documentComponent = null)
     {
         $this->documentComponent = $documentComponent;
     }
 
     /**
+     * Get the root component of the document.
      *
      * @return \qtism\data\QtiComponent
      */

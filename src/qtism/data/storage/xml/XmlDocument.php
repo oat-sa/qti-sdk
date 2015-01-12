@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -54,9 +54,13 @@ class XmlDocument extends QtiDocument
 
     /**
 	 * Create a new XmlDocument.
+	 * 
+	 * If the given QTI $version number is given with no patch version (c.f. Semantic Versioning), 0 will be used as the patch
+	 * version.
 	 *
-	 * @param string $version The version of the QTI specfication to use in order to load or save an AssessmentTest.
+	 * @param string $version The version number of the QTI specfication to use in order to load or save an AssessmentTest.
 	 * @param \qtism\data\QtiComponent $documentComponent (optional) A QtiComponent object to be bound to the QTI XML document to save.
+	 * @throws \InvalidArgumentException If $version is not a known QTI version.
 	 */
     public function __construct($version = '2.1', QtiComponent $documentComponent = null)
     {
@@ -86,9 +90,13 @@ class XmlDocument extends QtiDocument
     /**
 	 * Load a QTI-XML assessment file. The file will be loaded and represented in
 	 * an AssessmentTest object.
+	 * 
+	 * If the XmlDocument object was previously with a QTI version which does not
+	 * correspond to version in use in the loaded file, the version found into
+	 * the file will supersede the version specified at instantiation time.
 	 *
 	 * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
-	 * @param boolean $validate XML Schema validation? Default is false.
+	 * @param boolean $validate Whether or not the file must be validated unsing XML Schema? Default is false.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while loading the QTI-XML file.
 	 */
     public function load($uri, $validate = false)
@@ -324,7 +332,7 @@ class XmlDocument extends QtiDocument
         $qtiSuffix = 'v2p1';
         $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
         switch (trim($this->getVersion())) {
-            case '2.0':
+            case '2.0.0':
                 $qtiSuffix = 'v2p0';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
             break;

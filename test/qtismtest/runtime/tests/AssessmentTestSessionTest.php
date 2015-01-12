@@ -44,7 +44,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	public function setUp() {
 		parent::setUp();
 		
-		$xml = new XmlCompactDocument('1.0');
+		$xml = new XmlCompactDocument('2.1');
 		$xml->load(self::samplesDir() . 'custom/runtime/assessmenttest_context.xml');
 		
 		$sessionManager = new SessionManager();
