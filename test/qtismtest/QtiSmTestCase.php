@@ -1,8 +1,11 @@
 <?php
 namespace qtismtest;
 
+use qtism\common\utils\Version;
 use qtism\data\AssessmentTest;
+use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use \DOMElement;
 use \DOMDocument;
 use \DateTime;
@@ -10,20 +13,22 @@ use \DateTimeZone;
 
 abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
 	
-	private $marshallerFactory;
-	
 	public function setUp() {
 	    parent::setUp();
-		$this->marshallerFactory = new Qti21MarshallerFactory();
 	}
 	
 	public function tearDown() {
 	    parent::tearDown();
-	    unset($this->marshallerFactory);
 	}
 	
-	public function getMarshallerFactory() {
-		return $this->marshallerFactory;
+	public function getMarshallerFactory($version = '2.1') {
+	    if (Version::compare($version, '2.0.0', '==') === true) {
+	        return new Qti20MarshallerFactory();
+	    } else if (Version::compare($version, '2.1.1') === true) {
+	        return new Qti211MarshallerFactory();
+	    } else {
+	        return new Qti21MarshallerFactory();
+	    }
 	}
 	
 	/**
