@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\TemplateDeclaration;
 use \DOMElement;
@@ -44,13 +45,18 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
-
+        $version = $this->getVersion();
+        
         if ($component->isParamVariable() === true) {
             self::setDOMElementAttribute($element, 'paramVariable', true);
+        } elseif (Version::compare($version, '2.0.0', '==') === true && $component->isParamVariable() === false) {
+            self::setDOMElementAttribute($element, 'paramVariable', false);
         }
 
         if ($component->isMathVariable() === true) {
             self::setDOMElementAttribute($element, 'mathVariable', true);
+        } elseif (Version::compare($version, '2.0.0', '==') === true && $component->isMathVariable() === false) {
+            self::setDOMElementAttribute($element, 'mathVariable', false);
         }
 
         return $element;
@@ -72,12 +78,20 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
+            $version = $this->getVersion();
+            
             if (($paramVariable = self::getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
                 $object->setParamVariable($paramVariable);
+            } elseif (Version::compare($version, '2.0.0', '==') === true) {
+                $msg = "The mandatory attribute 'paramVariable' is missing from element '" . $element->localName . "'.";
+                throw new UnmarshallingException($msg, $element);
             }
 
             if (($mathVariable = self::getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
                 $object->setMathVariable($mathVariable);
+            } elseif (Version::compare($version, '2.0.0', '==') === true) {
+                $msg = "The mandatory attribute 'mathVariable' is missing from element '" . $element->localName . "'.";
+                throw new UnmarshallingException($msg, $element);
             }
 
             return $object;
