@@ -72,7 +72,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element);
             }
 
-            if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                 if ($element->localName === 'orderInteraction') {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
@@ -140,12 +140,14 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
 
         if ($component instanceof ChoiceInteraction && Version::compare($version, '2.0.0', '==') === true) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
-        } elseif (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 1) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
+        } elseif (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
-        if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+        if (Version::compare($version, '2.1.0', '>=') === true) {
+            if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
+                self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            }    
         }
 
         if ($component->getOrientation() !== Orientation::VERTICAL) {

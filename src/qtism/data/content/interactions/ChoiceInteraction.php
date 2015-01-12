@@ -61,7 +61,7 @@ class ChoiceInteraction extends BlockInteraction
      * @var integer
      * @qtism-bean-property
      */
-    private $maxChoices = 1;
+    private $maxChoices = 0;
 
     /**
      * From IMS QTI:
@@ -112,7 +112,7 @@ class ChoiceInteraction extends BlockInteraction
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setSimpleChoices($simpleChoices);
-        $this->setMaxChoices(1);
+        $this->setMaxChoices(0);
         $this->setMinChoices(0);
         $this->setOrientation(Orientation::VERTICAL);
     }
