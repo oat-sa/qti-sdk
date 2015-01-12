@@ -27,16 +27,16 @@ use \ReflectionClass;
 
 /**
  * A MarshallerFactory focusing on instantiating and configuring
- * Marshallers for QTI 2.1.0.
+ * Marshallers for QTI 2.1.1.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Qti21MarshallerFactory extends MarshallerFactory
+class Qti211MarshallerFactory extends MarshallerFactory
 {
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        array_unshift($args, '2.1');
+        array_unshift($args, '2.1.1');
         return Reflection::newInstance($class, $args);
     }
 }

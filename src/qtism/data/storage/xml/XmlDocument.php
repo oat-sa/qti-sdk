@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -385,13 +386,21 @@ class XmlDocument extends QtiDocument
 	 */
     protected function createMarshallerFactory()
     {
-        if ($this->getVersion() === '2.0') {
+        $version = $this->getVersion();
+        if ($version === '2.0.0') {
             return new Qti20MarshallerFactory();
-        } else {
+        } else if ($version === '2.1.0') {
             return new Qti21MarshallerFactory();
+        } else {
+            return new Qti211MarshallerFactory();
         }
     }
     
+    /**
+     * Infer the QTI version of the document from its XML definition.
+     * 
+     * @return boolean|string false if cannot be infered otherwise a semantic version of the QTI version with major, minor and patch versions e.g. '2.1.0'.
+     */
     protected function inferVersion()
     {
         return XmlUtils::inferVersion($this->getDomDocument());
