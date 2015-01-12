@@ -13,7 +13,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase {
 
 		$component = new MapEntry(1337, 1.377, true);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component, array(BaseType::INTEGER));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::INTEGER));
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -28,7 +28,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<mapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" mapKey="1337" mappedValue="1.377" caseSensitive="true"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::INTEGER));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::INTEGER));
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\MapEntry', $component);

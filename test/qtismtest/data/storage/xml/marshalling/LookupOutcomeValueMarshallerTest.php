@@ -14,7 +14,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase {
 
 		$component = new LookupOutcomeValue('myVariable1', new BaseValue(BaseType::STRING, 'a value'));
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -36,7 +36,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\rules\\LookupOutcomeValue', $component);

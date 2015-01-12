@@ -15,7 +15,7 @@ class PromptMarshallerTest extends QtiSmTestCase {
         $component = new Prompt('my-prompt', 'qti-prompt');
         $component->setContent(new FlowStaticCollection(array(new TextRun('This is a prompt'))));
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -26,7 +26,7 @@ class PromptMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshall() {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>');
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
         
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\Prompt', $component);

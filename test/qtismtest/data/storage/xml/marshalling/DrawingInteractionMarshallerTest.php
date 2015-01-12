@@ -19,7 +19,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $drawingInteraction->setPrompt($prompt);
 	    
-        $element = $this->getMarshallerFactory()->createMarshaller($drawingInteraction)->marshall($drawingInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($drawingInteraction)->marshall($drawingInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -34,7 +34,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase {
             </drawingInteraction>
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\DrawingInteraction', $component);
         $this->assertEquals('my-drawings', $component->getId());
         $this->assertEquals('draw-it', $component->getClass());

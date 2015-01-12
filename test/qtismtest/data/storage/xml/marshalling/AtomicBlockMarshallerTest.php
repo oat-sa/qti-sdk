@@ -16,7 +16,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase {
 	    $em->setContent(new InlineCollection(array(new TextRun('simple'))));
 	    $p->setContent(new InlineCollection(array(new TextRun('This text is a '), $em , new TextRun(' test.'))));
 
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($p);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($p);
 	    $element = $marshaller->marshall($p);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');

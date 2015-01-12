@@ -73,7 +73,7 @@ class DlMarshallerTest extends QtiSmTestCase {
         $dl = new Dl('my-description-list');
         $dl->setContent(new DlElementCollection(array($dt1, $dd1, $dt2, $dd2)));
         
-        $element = $this->getMarshallerFactory()->createMarshaller($dl)->marshall($dl);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($dl)->marshall($dl);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         

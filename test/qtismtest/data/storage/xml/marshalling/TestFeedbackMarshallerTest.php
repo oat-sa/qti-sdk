@@ -24,7 +24,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase {
 		$component->setAccess($access);
 		$component->setShowHide($showHide);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -46,7 +46,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>');
 		$element = $dom->documentElement;
 
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 
 		$this->assertInstanceOf('qtism\\data\\testFeedback', $component);

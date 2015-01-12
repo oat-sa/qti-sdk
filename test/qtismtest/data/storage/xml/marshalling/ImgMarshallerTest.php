@@ -16,7 +16,7 @@ class ImgMarshallerTest extends QtiSmTestCase {
 	    $img->setLang('en-YO');
 	    $img->setLongdesc("A Long Description...");
 	    
- 	    $marshaller = $this->getMarshallerFactory()->createMarshaller($img);
+ 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($img);
  	    $element = $marshaller->marshall($img);
 	    
  	    $dom = new DOMDocument('1.0', 'UTF-8');
@@ -30,7 +30,7 @@ class ImgMarshallerTest extends QtiSmTestCase {
             <img src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." id="my-img" class="beautiful" xml:lang="en-YO"/>
 	    ');
 	    
- 	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+ 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
  	    $img = $marshaller->unmarshall($element);
  	    
  	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\Img', $img);

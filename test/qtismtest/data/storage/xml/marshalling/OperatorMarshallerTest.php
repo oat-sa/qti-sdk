@@ -29,7 +29,7 @@ class OperatorMarshallerTest extends QtiSmTestCase {
 			');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Sum', $component);
@@ -69,7 +69,7 @@ class OperatorMarshallerTest extends QtiSmTestCase {
 		
 		$sum = new Sum(new ExpressionCollection(array($sub1, $sub2)));
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($sum);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($sum);
 		$element = $marshaller->marshall($sum);
 		
 		$this->assertEquals('sum', $element->nodeName);

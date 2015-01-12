@@ -12,7 +12,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $object = new Object('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($gapImg);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
 	    $element = $marshaller->marshall($gapImg);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
@@ -25,7 +25,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>
 	    ');
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 	    $gapImg = $marshaller->unmarshall($element);
 	    
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\GapImg', $gapImg);

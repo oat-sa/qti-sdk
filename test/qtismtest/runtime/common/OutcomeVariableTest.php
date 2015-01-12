@@ -101,7 +101,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	}
 	
 	public function testCreateFromVariableDeclarationMinimal() {
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="integer" cardinality="single"/>');
 		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 		$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
@@ -113,7 +113,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	}
 	
 	public function testCreateFromVariableDeclarationDefaultValueSingleCardinality() {
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
 			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
 				<defaultValue>
@@ -129,7 +129,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	}
 	
 	public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality() {
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
 			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
 				<defaultValue>
@@ -150,7 +150,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	}
 	
 	public function testCreateFromVariableDeclarationDefaultValueRecordCardinality() {
-	    $factory = $this->getMarshallerFactory();
+	    $factory = $this->getMarshallerFactory('2.1.0');
 	    $element = $this->createDOMElement('
 			<outcomeDeclaration identifier="outcome1" cardinality="record">
 				<defaultValue>
@@ -171,7 +171,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	}
 	
 	public function testCreateFromVariableDeclarationExtended() {
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
 			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 

@@ -16,7 +16,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase {
 	    $feedback = new FeedbackInline('outcome1', 'please_hide_me', ShowHide::HIDE, 'my-feedback', 'super feedback');
 	    $feedback->setContent($content);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($feedback)->marshall($feedback);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($feedback)->marshall($feedback);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -28,7 +28,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase {
 	        <feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\content\\FeedbackInline', $component);
 	    $this->assertEquals('my-feedback', $component->getId());
 	    $this->assertEquals('super feedback', $component->getClass());

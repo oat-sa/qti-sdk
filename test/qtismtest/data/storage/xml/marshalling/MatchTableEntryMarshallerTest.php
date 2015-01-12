@@ -18,7 +18,7 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase {
 		$targetValue = 'http://www.rdfabout.com';
 		$component = new MatchTableEntry($sourceValue, $targetValue);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component, array(BaseType::URI));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::URI));
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -32,7 +32,7 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<matchTableEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceValue="2" targetValue="http://www.mysite.com"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::URI));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::URI));
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $component);

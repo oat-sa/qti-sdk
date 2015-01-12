@@ -18,7 +18,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 		$values = new ValueCollection();
 		$values[] = new Value($pair);
 		$component = new CorrectResponse($values, $interpretation);
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -44,7 +44,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::INTEGER));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::INTEGER));
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\CorrectResponse', $component);
@@ -69,7 +69,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 	
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element, array(BaseType::DIRECTED_PAIR));
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::DIRECTED_PAIR));
 		$component = $marshaller->unmarshall($element);
 	
 		$this->assertInstanceOf('qtism\\data\\state\\CorrectResponse', $component);

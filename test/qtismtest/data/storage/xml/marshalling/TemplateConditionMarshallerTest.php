@@ -30,7 +30,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
 	    $templateIf = new TemplateIf($true, new TemplateRuleCollection(array($setTemplateValue)));
 	    $templateCondition = new TemplateCondition($templateIf);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -49,7 +49,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
             </templateCondition>
 	    ');
 	    
-	    $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\TemplateCondition', $templateCondition);
 	    $this->assertEquals(0, count($templateCondition->getTemplateElseIfs()));
 	    $this->assertFalse($templateCondition->hasTemplateElse());
@@ -82,7 +82,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
 	    $templateElseIf = new TemplateElseIf($false, new TemplateRuleCollection(array($exitTemplate)));
 	    $templateCondition->setTemplateElseIfs(new TemplateElseIfCollection(array($templateElseIf)));
 	     
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 	     
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -105,9 +105,9 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
             </templateCondition>
 	    ');
 	     
-	    $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    
-	    $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\TemplateCondition', $templateCondition);
 	    $this->assertFalse($templateCondition->hasTemplateElse());
 	     
@@ -151,7 +151,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
 	    $templateElse = new TemplateElse(new TemplateRuleCollection(array($setCorrectResponse)));
 	    $templateCondition->setTemplateElse($templateElse);
 	     
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 	     
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -176,7 +176,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
             </templateCondition>
 	    ');
 	     
-	    $templateCondition = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\TemplateCondition', $templateCondition);
 	    $this->assertEquals(0, count($templateCondition->getTemplateElseIfs()));
 	     
@@ -300,7 +300,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
 	        </templateCondition>
 	    ');
 	    
-	    $root = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $root = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $templateCondition = $root;
 	    $this->assertInstanceOf('qtism\\data\\rules\\TemplateCondition', $templateCondition);
 	    
@@ -502,7 +502,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase {
 	    
 	    $templateCondition = new TemplateCondition($mainTemplateIf, new TemplateElseIfCollection(array($mainTemplateElseIf1, $mainTemplateElseIf2)), $mainTemplateElse);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateCondition)->marshall($templateCondition);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateCondition)->marshall($templateCondition);
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    $this->assertEquals('<templateCondition><templateIf><lte><variable identifier="var"/><baseValue baseType="integer">2</baseValue></lte><templateCondition><templateIf><match><variable identifier="var"/><baseValue baseType="integer">0</baseValue></match><setTemplateValue identifier="tpl"><baseValue baseType="string">var is 0</baseValue></setTemplateValue></templateIf><templateElseIf><match><variable identifier="var"/><baseValue baseType="integer">1</baseValue></match><setTemplateValue identifier="tpl"><baseValue baseType="string">var is 1</baseValue></setTemplateValue></templateElseIf><templateElse><exitTemplate/></templateElse></templateCondition></templateIf><templateElseIf><lte><variable identifier="var"/><baseValue baseType="integer">5</baseValue></lte><templateCondition><templateIf><match><variable identifier="var"/><baseValue baseType="integer">3</baseValue></match><setCorrectResponse identifier="RESPONSE"><baseValue baseType="string">jerome</baseValue></setCorrectResponse></templateIf><templateElseIf><match><variable identifier="var"/><baseValue baseType="integer">4</baseValue></match><setDefaultValue identifier="RESPONSE"><baseValue baseType="string">qtism</baseValue></setDefaultValue></templateElseIf><templateElseIf><match><variable identifier="var"/><baseValue baseType="integer">5</baseValue></match><templateConstraint><baseValue baseType="boolean">false</baseValue></templateConstraint><templateConstraint><baseValue baseType="boolean">true</baseValue></templateConstraint></templateElseIf></templateCondition><exitTemplate/></templateElseIf><templateElseIf><lte><variable identifier="var"/><baseValue baseType="integer">8</baseValue></lte><setCorrectResponse identifier="RESPONSE"><baseValue baseType="identifier">var is &lt;= 8</baseValue></setCorrectResponse></templateElseIf><templateElse><templateConstraint><baseValue baseType="boolean">true</baseValue></templateConstraint></templateElse></templateCondition>', $dom->saveXML($element));

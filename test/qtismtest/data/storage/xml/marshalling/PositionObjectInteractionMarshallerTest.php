@@ -27,7 +27,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 	    $positionObjectInteraction->setMaxChoices(2);
 	    $positionObjectInteraction->setMinChoices(1);
 	    
-        $element = $this->getMarshallerFactory()->createMarshaller($positionObjectInteraction)->marshall($positionObjectInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($positionObjectInteraction)->marshall($positionObjectInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -41,7 +41,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
             </positionObjectInteraction>
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\PositionObjectInteraction', $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMaxChoices());

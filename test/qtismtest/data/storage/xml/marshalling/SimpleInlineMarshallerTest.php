@@ -20,7 +20,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 		$em = new Em('sentence', 'introduction', 'en-US');
 		$em->setContent(new InlineCollection(array(new TextRun('He is '), $strong, new TextRun('.'))));
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($em);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($em);
 		$element = $marshaller->marshall($em);
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$element = $dom->importNode($element, true);
@@ -33,7 +33,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$em = $marshaller->unmarshall($element);
 		$this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Em', $em);
 		$this->assertEquals('sentence', $em->getId());
@@ -65,7 +65,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 	    $a->setContent(new InlineCollection(array(new TextRun('physicist'))));
 	    $q->setContent(new InlineCollection(array(new TextRun('Albert Einstein is a '), $a, new TextRun('.'))));
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($q);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($q);
 	    $element = $marshaller->marshall($q);
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);

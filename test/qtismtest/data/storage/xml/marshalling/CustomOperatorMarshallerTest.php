@@ -20,7 +20,7 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase {
 	    $equal = new Equal(new ExpressionCollection(array($int1, $int2)));
 	    
 	    $customOperator = new CustomOperator(new ExpressionCollection(array($equal)), '<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
-		$element = $this->getMarshallerFactory()->createMarshaller($customOperator)->marshall($customOperator);
+		$element = $this->getMarshallerFactory('2.1.0')->createMarshaller($customOperator)->marshall($customOperator);
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$element = $dom->importNode($element, true);
 		$this->assertEquals('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>', $dom->saveXML($element));
@@ -29,7 +29,7 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshall() {
  		$element = $this->createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
 		
- 		$component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+ 		$component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
  		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\CustomOperator', $component);
  		
  		$expressions = $component->getExpressions();

@@ -17,7 +17,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase {
 	    $values = new ValueCollection(array(new Value('tplx', BaseType::IDENTIFIER)));
 	    $defaultValue = new DefaultValue($values);
 	    $templateDeclaration = new TemplateDeclaration('tpl1', BaseType::IDENTIFIER, Cardinality::SINGLE, $defaultValue);
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateDeclaration)->marshall($templateDeclaration);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateDeclaration)->marshall($templateDeclaration);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -29,7 +29,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase {
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\state\\TemplateDeclaration', $component);
 	    $this->assertEquals('tpl1', $component->getIdentifier());
 	    $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());

@@ -29,7 +29,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase {
         $component->setMinChoices(1);
         $component->setMaxChoices(2);
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -42,7 +42,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase {
             <orderInteraction responseIdentifier="RESPONSE" maxChoices="2"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>
         ');
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
         
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\OrderInteraction', $component);

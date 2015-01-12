@@ -13,7 +13,7 @@ class GapMarshallerTest extends QtiSmTestCase {
 		$gap->setFixed(false);
 		$gap->setTemplateIdentifier('tpl-gap');
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($gap);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gap);
 	    $element = $marshaller->marshall($gap);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
@@ -26,7 +26,7 @@ class GapMarshallerTest extends QtiSmTestCase {
 	        <gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps" showHide="hide"/>
 	    ');
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 	    $gap = $marshaller->unmarshall($element);
 	    
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\Gap', $gap);

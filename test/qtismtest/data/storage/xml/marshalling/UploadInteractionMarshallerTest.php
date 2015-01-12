@@ -18,7 +18,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $uploadInteraction->setPrompt($prompt);
 	    
-        $element = $this->getMarshallerFactory()->createMarshaller($uploadInteraction)->marshall($uploadInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($uploadInteraction)->marshall($uploadInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -30,7 +30,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase {
             <uploadInteraction id="my-upload" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt></uploadInteraction>    
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\UploadInteraction', $component);
         $this->assertEquals('my-upload', $component->getId());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());

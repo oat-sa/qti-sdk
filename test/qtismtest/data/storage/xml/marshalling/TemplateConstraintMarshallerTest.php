@@ -18,7 +18,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase {
 	    
 	    $templateConstraint = new TemplateConstraint($match);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateConstraint)->marshall($templateConstraint);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateConstraint)->marshall($templateConstraint);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -36,7 +36,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase {
 	        </templateConstraint>
 	    ');
 	    
-	    $templateConstraint = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $templateConstraint = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\TemplateConstraint', $templateConstraint);
 	    $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $templateConstraint->getExpression());
 	}

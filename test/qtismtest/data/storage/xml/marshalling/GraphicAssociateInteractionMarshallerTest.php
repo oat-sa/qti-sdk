@@ -32,7 +32,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 	    $graphicAssociateInteraction = new GraphicAssociateInteraction('RESPONSE', $object, $choices, 'prout');
 	    $graphicAssociateInteraction->setPrompt($prompt);
 	    
-        $element = $this->getMarshallerFactory()->createMarshaller($graphicAssociateInteraction)->marshall($graphicAssociateInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($graphicAssociateInteraction)->marshall($graphicAssociateInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -45,7 +45,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicAssociateInteraction', $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('prout', $component->getId());

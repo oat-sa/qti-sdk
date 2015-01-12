@@ -9,7 +9,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshallMinimal() {
 	    $textEntryInteraction = new TextEntryInteraction('RESPONSE');
-        $element = $this->getMarshallerFactory()->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -23,7 +23,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 	    $textEntryInteraction->setExpectedLength(35);
 	    $textEntryInteraction->setPatternMask('[0-9]+');
 	    $textEntryInteraction->setPlaceholderText('input here...');
-	    $element = $this->getMarshallerFactory()->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -32,7 +32,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshallMinimal() {
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
-        $textEntryInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\TextEntryInteraction', $textEntryInteraction);
         $this->assertEquals('RESPONSE', $textEntryInteraction->getResponseIdentifier());
@@ -45,7 +45,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshallMaximal() {
 	    $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
-	    $textEntryInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\TextEntryInteraction', $textEntryInteraction);
 	    $this->assertEquals('RESPONSE', $textEntryInteraction->getResponseIdentifier());

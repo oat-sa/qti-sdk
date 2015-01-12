@@ -14,7 +14,7 @@ use qtism\runtime\common\OrderedContainer;
 class ResponseVariableTest extends QtiSmTestCase {
 	
 	public function testCreateFromVariableDeclarationExtended() {
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
 			<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 

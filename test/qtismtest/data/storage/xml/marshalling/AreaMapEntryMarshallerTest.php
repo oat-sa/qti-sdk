@@ -16,7 +16,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase {
 		$coords = new Coords($shape, array(0, 20, 100, 0));
 		$component = new AreaMapEntry($shape, $coords, $mappedValue);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -31,7 +31,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="0, 20, 100, 0" mappedValue="1.337"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapEntry', $component);

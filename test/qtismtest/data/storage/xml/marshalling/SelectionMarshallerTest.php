@@ -16,7 +16,7 @@ class SelectionMarshallerTest extends QtiSmTestCase {
 		$component = new Selection($select);
 		$component->setWithReplacement($withReplacement);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -30,7 +30,7 @@ class SelectionMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2" withReplacement="true"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\Rules\\Selection', $component);
@@ -44,7 +44,7 @@ class SelectionMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" withReplacement="true"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		
 		$this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException');
 		$component = $marshaller->unmarshall($element);

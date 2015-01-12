@@ -19,7 +19,7 @@ class NumberRespondedMarshallerTest extends QtiSmTestCase {
 		$component->setSectionIdentifier($sectionIdentifier);
 		$component->setIncludeCategories(new IdentifierCollection(explode("\x20", $includeCategory)));
 		$component->setExcludeCategories(new IdentifierCollection(explode("\x20", $excludeCategory)));
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -34,7 +34,7 @@ class NumberRespondedMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<numberResponded xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1" excludeCategory="cat2 cat3"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\expressions\\NumberResponded', $component);

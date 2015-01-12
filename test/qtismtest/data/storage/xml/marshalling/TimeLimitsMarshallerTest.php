@@ -15,7 +15,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 		$maxTime = new Duration('PT100S');
 		
 		$component = new TimeLimits($minTime, $maxTime);
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -30,7 +30,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<timeLimits xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" minTime="50" maxTime="100"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\TimeLimits', $component);
@@ -46,7 +46,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 	    $dom->loadXML('<timeLimits xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" minTime="0" maxTime="0"/>');
 	    $element = $dom->documentElement;
 	    
-	    $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 	    $component = $marshaller->unmarshall($element);
 	    
 	    $this->assertInstanceOf('qtism\\data\\TimeLimits', $component);

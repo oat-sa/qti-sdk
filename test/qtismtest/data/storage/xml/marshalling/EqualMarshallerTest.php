@@ -26,7 +26,7 @@ class EqualMarshallerTest extends QtiSmTestCase {
 		$component->setIncludeLowerBound($includeLowerBound);
 		$component->setIncludeUpperBound($includeUpperBound);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -49,7 +49,7 @@ class EqualMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $component);

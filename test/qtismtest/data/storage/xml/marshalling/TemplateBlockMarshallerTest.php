@@ -20,7 +20,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase {
 	    $div->setContent(new FlowCollection(array(new TextRun('Templatable...'))));
 	    $templateBlock->setContent(new FlowStaticCollection(array($div)));
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($templateBlock)->marshall($templateBlock);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateBlock)->marshall($templateBlock);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -32,7 +32,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase {
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><div>Templatable...</div></templateBlock>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\content\\TemplateBlock', $component);
 	    $this->assertEquals('tpl1', $component->getTemplateIdentifier());
 	    $this->assertEquals('block1', $component->getIdentifier());

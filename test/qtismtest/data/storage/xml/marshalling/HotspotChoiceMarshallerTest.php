@@ -21,7 +21,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $hotspotChoice->setShowHide(ShowHide::HIDE);
 	    $hotspotChoice->setHotspotLabel($hotspotLabel);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($hotspotChoice)->marshall($hotspotChoice);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($hotspotChoice)->marshall($hotspotChoice);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -33,7 +33,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	        <hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\Hotspot', $component);
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
@@ -56,7 +56,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128, 222  , 18.36"/>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
 	    $this->assertEquals('r_50', $component->getIdentifier());
 	    $this->assertFalse($component->isFixed());

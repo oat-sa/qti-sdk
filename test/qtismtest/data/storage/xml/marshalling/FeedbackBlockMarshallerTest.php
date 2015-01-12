@@ -20,7 +20,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase {
 	    $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);
 	    $feedback->setContent($content);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($feedback)->marshall($feedback);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($feedback)->marshall($feedback);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -32,7 +32,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase {
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>
 	    ');
 	    
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\content\\FeedbackBlock', $component);
 	    $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
 	    $this->assertEquals('please_show_me', $component->getIdentifier());

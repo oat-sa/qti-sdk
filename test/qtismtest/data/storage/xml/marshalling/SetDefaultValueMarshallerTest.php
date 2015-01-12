@@ -19,7 +19,7 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase {
 	    
 	    $setDefaultValue = new SetDefaultValue('tpl1', $matchExpr);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($setDefaultValue)->marshall($setDefaultValue);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($setDefaultValue)->marshall($setDefaultValue);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -36,7 +36,7 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase {
 	        </setDefaultValue>
 	    ');
 	    
-	    $setDefaultValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $setDefaultValue = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\SetDefaultValue', $setDefaultValue);
 	    $this->assertEquals('tpl1', $setDefaultValue->getIdentifier());
 	    $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setDefaultValue->getExpression());

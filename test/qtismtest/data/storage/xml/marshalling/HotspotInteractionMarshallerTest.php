@@ -28,7 +28,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
 	    $hotspotInteraction->setPrompt($prompt);
         
-        $element = $this->getMarshallerFactory()->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -41,7 +41,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotInteraction', $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-hotspot', $component->getId());

@@ -18,7 +18,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase {
 	    $choice->setTemplateIdentifier('tpl1');
 	    $choice->setShowHide(ShowHide::HIDE);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($choice)->marshall($choice);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($choice)->marshall($choice);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -27,7 +27,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshall() {
 	    $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
-	    $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoice', $component);
 	    $this->assertEquals('my-choice1', $component->getId());

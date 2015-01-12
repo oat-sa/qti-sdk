@@ -36,7 +36,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase {
         $matchInteraction->setPrompt($prompt);
         $matchInteraction->setShuffle(true);
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($matchInteraction);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($matchInteraction);
         $element = $marshaller->marshall($matchInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -50,7 +50,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase {
             <matchInteraction responseIdentifier="RESPONSE" shuffle="true"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>
         ');
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
         
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\MatchInteraction', $component);

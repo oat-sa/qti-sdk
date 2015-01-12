@@ -27,7 +27,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    $mediaInteraction->setPrompt($prompt);
 	    
-        $element = $this->getMarshallerFactory()->createMarshaller($mediaInteraction)->marshall($mediaInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($mediaInteraction)->marshall($mediaInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
@@ -39,7 +39,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
             <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
         ');
         
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\MediaInteraction', $component);
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals('my-media', $component->getId());

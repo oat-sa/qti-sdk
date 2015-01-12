@@ -27,7 +27,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
         $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         $component->setPrompt($prompt);
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -40,7 +40,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
             <choiceInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></choiceInteraction>
         ');
         
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
         
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\ChoiceInteraction', $component);

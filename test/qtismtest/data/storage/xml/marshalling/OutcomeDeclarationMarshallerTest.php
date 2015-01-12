@@ -25,7 +25,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$baseType = BaseType::INTEGER;
 		
 		$component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -42,7 +42,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$baseType = BaseType::DURATION;
 		
 		$component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		
 		$values = new ValueCollection();
 		$values[] = new Value('P2D', $baseType); // 2 days
@@ -90,7 +90,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$matchTable = new MatchTable($entries);
 		$component->setLookupTable($matchTable);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -123,7 +123,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer"/>');
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
@@ -146,7 +146,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
@@ -183,7 +183,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 	    $this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);
@@ -235,7 +235,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\OutcomeDeclaration', $component);

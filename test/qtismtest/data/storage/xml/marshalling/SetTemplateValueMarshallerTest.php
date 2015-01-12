@@ -19,7 +19,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase {
 	    
 	    $setTemplateValue = new SetTemplateValue('tpl1', $matchExpr);
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($setTemplateValue)->marshall($setTemplateValue);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($setTemplateValue)->marshall($setTemplateValue);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
@@ -36,7 +36,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase {
 	        </setTemplateValue>
 	    ');
 	    
-	    $setTemplateValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+	    $setTemplateValue = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertInstanceOf('qtism\\data\\rules\\SetTemplateValue', $setTemplateValue);
 	    $this->assertEquals('tpl1', $setTemplateValue->getIdentifier());
 	    $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Match', $setTemplateValue->getExpression());

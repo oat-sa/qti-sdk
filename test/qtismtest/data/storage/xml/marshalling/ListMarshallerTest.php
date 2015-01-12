@@ -102,7 +102,7 @@ class ListMarshallerTest extends QtiSmTestCase {
 	    $ul->setClass('my-qti-list');
 	    $ul->setContent(new LiCollection(array($li1, $li2)));
 	    
-	    $element = $this->getMarshallerFactory()->createMarshaller($ul)->marshall($ul);
+	    $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($ul)->marshall($ul);
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    

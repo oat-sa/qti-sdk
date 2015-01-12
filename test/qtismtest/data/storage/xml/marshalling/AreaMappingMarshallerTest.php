@@ -23,7 +23,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase {
 		
 		$component = new AreaMapping($areaMapEntries, $defaultValue);
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -41,7 +41,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase {
 		);
 		$element = $dom->documentElement;
 		
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $component);

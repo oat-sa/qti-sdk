@@ -21,14 +21,14 @@ class MarshallerTest extends QtiSmTestCase {
 	
 	public function testGetMarshaller() {
 		$component = new ItemSessionControl();
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
 	}
 	
 	public function testGetUnmarshaller() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML('<itemSessionControl xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" maxAttempts="1" validateResponses="true"/>');
-		$marshaller = $this->getMarshallerFactory()->createMarshaller($dom->documentElement);
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($dom->documentElement);
 		$this->assertInstanceOf('qtism\\data\\storage\\xml\\marshalling\\ItemSessionControlMarshaller', $marshaller);
 	}
 	

@@ -14,7 +14,7 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase {
 
     public function testMarshall() {
         $ref = new RubricBlockRef('R01', './R01.xml');
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($ref);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
         
         $this->assertEquals('rubricBlockRef', $elt->nodeName);
