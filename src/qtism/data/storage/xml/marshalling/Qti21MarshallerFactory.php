@@ -36,7 +36,7 @@ class Qti21MarshallerFactory extends MarshallerFactory
 {
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        array_unshift($args, '2.1');
+        array_unshift($args, '2.1.1');
         return Reflection::newInstance($class, $args);
     }
 }

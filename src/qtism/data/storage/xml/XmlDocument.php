@@ -142,12 +142,22 @@ class XmlDocument extends QtiDocument
             if (call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
 
                 // Infer the QTI version.
-                if (($version = $this->inferVersion()) !== false) {
-                    $this->setVersion($version);
+                if ($fromString === false) {
+                    // When loaded from a file, the version infered from
+                    // that filed always supersedes the one specified
+                    // when the XmlDocument object is instantiated.
+                    if (($version = $this->inferVersion()) !== false) {
+                        $this->setVersion($version);
+                    } else {
+                        $msg = "Cannot infer QTI version. Is it well formed?";
+                        throw new XmlStorageException($msg);
+                    }
                 } else {
-                    $msg = "Cannot infer QTI version. Is it well formed?";
-                    throw new XmlStorageException($msg);
+                    // When loaded from a string, the version to be used
+                    // is the one specified when the XmlDocument object
+                    // is instantiated.
                 }
+                
 
                 if ($validate === true) {
                     $this->schemaValidate();

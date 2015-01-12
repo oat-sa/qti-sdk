@@ -186,4 +186,22 @@ class XmlDocumentTest extends QtiSmTestCase {
         $this->setExpectedException('\\InvalidArgumentException');
         $doc = new XMLDocument('2.2.3');
     }
+    
+    public function testLoadFromString() {
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+        
+        $component = $doc->getDocumentComponent();
+        $this->assertInstanceOf('\\qtism\\data\\AssessmentItemRef', $component);
+        $this->assertEquals('Q01', $component->getIdentifier());
+        $this->assertEquals('./Q01.xml', $component->getHref());
+    }
+    
+    public function testVersionDoesNotChangeLoadFromString()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+        // Version always returned as MAJOR.MINOR.PATCH
+        $this->assertEquals('2.1.1', $doc->getVersion());
+    }
 }
