@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
+
 use qtism\common\utils\Format;
 use qtism\data\content\PrintedVariable;
 use qtism\data\QtiComponent;
@@ -45,11 +47,16 @@ class PrintedVariableMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('printedVariable');
+        $version = $this->getVersion();
+        
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'base', $component->getBase());
-        self::setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());
-        self::setDOMElementAttribute($element, 'delimiter', $component->getDelimiter());
-        self::setDOMElementAttribute($element, 'mappingIndicator', $component->getMappingIndicator());
+        
+        if (Version::compare($version, '2.1.0', '>=') === true) {
+            self::setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());
+            self::setDOMElementAttribute($element, 'delimiter', $component->getDelimiter());
+            self::setDOMElementAttribute($element, 'mappingIndicator', $component->getMappingIndicator());
+        }
 
         if ($component->hasFormat() === true) {
             self::setDOMElementAttribute($element, 'format', $component->getFormat());
@@ -81,6 +88,8 @@ class PrintedVariableMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
+        $version = $this->getVersion();
+        
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $component = new PrintedVariable($identifier);
 
@@ -88,7 +97,7 @@ class PrintedVariableMarshaller extends Marshaller
                 $component->setFormat($format);
             }
 
-            if (($powerForm = self::getDOMElementAttributeAs($element, 'powerForm', 'boolean')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($powerForm = self::getDOMElementAttributeAs($element, 'powerForm', 'boolean')) !== null) {
                 $component->setPowerForm($powerForm);
             }
 
@@ -100,7 +109,7 @@ class PrintedVariableMarshaller extends Marshaller
                 $component->setIndex((Format::isInteger($index) === true) ? intval($index) : $base);
             }
 
-            if (($delimiter = self::getDOMElementAttributeAs($element, 'delimiter')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($delimiter = self::getDOMElementAttributeAs($element, 'delimiter')) !== null) {
                 $component->setDelimiter($delimiter);
             }
 
@@ -108,7 +117,7 @@ class PrintedVariableMarshaller extends Marshaller
                 $component->setField($field);
             }
 
-            if (($mappingIndicator = self::getDOMElementAttributeAs($element, 'mappingIndicator'))) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($mappingIndicator = self::getDOMElementAttributeAs($element, 'mappingIndicator')) !== null) {
                 $component->setMappingIndicator($mappingIndicator);
             }
 
