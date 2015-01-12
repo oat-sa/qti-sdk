@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\content\interactions\GapChoiceCollection;
 use qtism\data\QtiComponentCollection;
@@ -85,12 +86,13 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
-        if ($component->mustShuffle() === true) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+        if ($component->mustShuffle() === true || Version::compare($version, '2.0.0', '==') === true) {
+            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         if ($component->hasXmlBase() === true) {
