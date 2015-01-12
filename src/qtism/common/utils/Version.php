@@ -64,21 +64,15 @@ class Version
         $version2 = trim($version2);
         
         // Because version_compare consider 2.1 < 2.1.0...
-        $shortKnownVersions = array('2.0', '2.1', '2.2');
-        if (in_array($version1, $shortKnownVersions) === true) {
-            $version1 = $version1 . '.0';
-        }
-        
-        if (in_array($version2, $shortKnownVersions) === true) {
-            $version2 = $version2 . '.0';
-        }
+        $version1 = self::appendPatchVersion($version1);
+        $version2 = self::appendPatchVersion($version2);
         
         // Check if the versions are known...
-        $knownVersions = array('2.0.0', '2.1.0', '2.1.1', '2.2.0');
-        if (in_array($version1, $knownVersions) === false) {
+        $knownVersions = self::knownVersions();
+        if (self::isKnown($version1) === false) {
             $msg = "Version '${version1}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
             throw new InvalidArgumentException($msg);
-        } elseif (in_array($version2, $knownVersions) === false) {
+        } elseif (self::isKnown($version2) === false) {
             $msg = "Version '${version2}' is not a known QTI version. Known versions are '" . implode(', ', $knownVersions) . "'.";
             throw new InvalidArgumentException($msg);
         }
@@ -91,5 +85,46 @@ class Version
             $msg = "Unknown operator '${operator}'. Known operators are '" . implode(', ', $knownOperators) . "'.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * Wether or not a $version containing a major, minor and patch
+     * version is a known QTI version.
+     * 
+     * @param string $version A version with major, minor and patch version e.g. '2.1.1'.
+     * @return boolean
+     */
+    static public function isKnown($version)
+    {
+        $version = self::appendPatchVersion($version);
+        return in_array($version, self::knownVersions());
+    }
+    
+    /**
+     * Get known QTI versions. Returned versions will contain
+     * major, minor and patch version.
+     * 
+     * @return array An array of QTI version numbers containing major, minor and patch version e.g. '2.1.1'.
+     */
+    static public function knownVersions()
+    {
+        return array('2.0.0', '2.1.0', '2.1.1', '2.2.0');
+    }
+    
+    /**
+     * Append patch version to $version if $version only contains
+     * major and minor versions.
+     * 
+     * @param string $version
+     * @return string
+     */
+    static private function appendPatchVersion($version)
+    {
+        $shortKnownVersions = array('2.0', '2.1', '2.2');
+        if (in_array($version, $shortKnownVersions) === true) {
+            $version = $version . '.0';
+        }
+        
+        return $version;
     }
 }
