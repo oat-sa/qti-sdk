@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\ShowHide;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponentCollection;
@@ -41,6 +42,8 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
+        $version = $this->getVersion();
+        
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
             if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
@@ -52,15 +55,15 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
                     $component->setFixed($fixed);
                 }
 
-                if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
-                if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
 
@@ -83,6 +86,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
 
@@ -93,15 +97,15 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'fixed', true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if ($component->hasTemplateIdentifier() === true && Version::compare($version, '2.1.0', '>=') === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() !== ShowHide::SHOW) {
+        if ($component->getShowHide() !== ShowHide::SHOW && Version::compare($version, '2.1.0', '>=') === true) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
-        if ($component->getMatchMin() !== 0) {
+        if ($component->getMatchMin() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
             self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
