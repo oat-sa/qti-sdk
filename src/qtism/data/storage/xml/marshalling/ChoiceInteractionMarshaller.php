@@ -45,7 +45,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
+        $isOrderInteraction = $element->localName === 'orderInteraction';
         
+        // responseIdentifier.
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $fqClass = $this->lookupClass($element);
@@ -58,9 +60,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element);
             }
 
+            // maxChoices.
             if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
-                if ($element->localName === 'orderInteraction') {
-
+                if ($isOrderInteraction === true) {
                     if ($maxChoices !== 0) {
                         $component->setMaxChoices($maxChoices);
                     }
@@ -72,8 +74,9 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element);
             }
 
+            // minChoices.
             if (Version::compare($version, '2.1.0', '>=') && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                if ($element->localName === 'orderInteraction') {
+                if ($isOrderInteraction === true) {
                     /*
                      * Lots of QTI implementations output minChoices = 0 while
                      * dealing with orderInteraction unmarshalling. However, regarding
@@ -92,7 +95,12 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 }
             }
 
-            if (($orientation = self::getDOMElementAttributeAs($element, 'orientation')) !== null) {
+            // orientation.
+            $qti20AndChoiceInteraction = Version::compare($version, '2.0.0', '==') && $isOrderInteraction === true;
+            $orientation = self::getDOMElementAttributeAs($element, 'orientation');
+            if ($qti20AndChoiceInteraction === true && $orientation !== null) {
+                $component->setOrientation(Orientation::getConstantByName($orientation));
+            } elseif (Version::compare($version, '2.1.0', '>=') && $orientation !== null) {
                 $component->setOrientation(Orientation::getConstantByName($orientation));
             }
 
@@ -122,38 +130,48 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
+        $isOrderInteraction = $component instanceof OrderInteraction;
+        $isChoiceInteraction = $component instanceof ChoiceInteraction;
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
+        // prompt.
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
 
-        if ($component instanceof ChoiceInteraction && Version::compare($version, '2.0.0', '==') === true) {
+        // shuffle.
+        if (Version::compare($version, '2.0.0', '==') === true) {
             self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
         elseif ($component->mustShuffle() !== false) {
             self::setDOMElementAttribute($element, 'shuffle', true);
         }
 
-        if ($component instanceof ChoiceInteraction && Version::compare($version, '2.0.0', '==') === true) {
+        // maxChoices.
+        if ($isChoiceInteraction && Version::compare($version, '2.0.0', '==') === true) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
-        } elseif (($component instanceof ChoiceInteraction && $component->getMaxChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMaxChoices() !== -1)) {
+        } elseif (($isChoiceInteraction && $component->getMaxChoices() !== 0) || ($isOrderInteraction && $component->getMaxChoices() !== -1)) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
+        // minChoices.
         if (Version::compare($version, '2.1.0', '>=') === true) {
-            if (($component instanceof ChoiceInteraction && $component->getMinChoices() !== 0) || ($component instanceof OrderInteraction && $component->getMinChoices() !== -1)) {
+            if (($isChoiceInteraction && $component->getMinChoices() !== 0) || ($isOrderInteraction && $component->getMinChoices() !== -1)) {
                 self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
             }    
         }
 
-        if ($component->getOrientation() !== Orientation::VERTICAL) {
+        // orientation.
+        if (Version::compare($version, '2.0.0', '==') === true && $isOrderInteraction && $component->getOrientation() !== Orientation::VERTICAL) {
+            self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
+        } elseif (Version::compare($version, '2.1.0', '>=') === true && $component->getOrientation() !== Orientation::VERTICAL) {
             self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::HORIZONTAL));
         }
 
+        // xml:base.
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
