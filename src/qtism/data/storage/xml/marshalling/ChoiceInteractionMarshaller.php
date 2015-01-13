@@ -46,6 +46,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $isOrderInteraction = $element->localName === 'orderInteraction';
+        $isChoiceInteraction = $element->localName === 'choiceInteraction';
         
         // responseIdentifier.
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
@@ -63,7 +64,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
             // maxChoices.
             if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                 if ($isOrderInteraction === true) {
-                    if ($maxChoices !== 0) {
+                    if ($maxChoices !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
                         $component->setMaxChoices($maxChoices);
                     }
                 } else {
@@ -153,7 +154,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         // maxChoices.
         if ($isChoiceInteraction && Version::compare($version, '2.0.0', '==') === true) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
-        } elseif (($isChoiceInteraction && $component->getMaxChoices() !== 0) || ($isOrderInteraction && $component->getMaxChoices() !== -1)) {
+        } elseif (($isChoiceInteraction && $component->getMaxChoices() !== 0) || ($isOrderInteraction && $component->getMaxChoices() !== -1 && Version::compare($version, '2.1.0', '>=') === true)) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
