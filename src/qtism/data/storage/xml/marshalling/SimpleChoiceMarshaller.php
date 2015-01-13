@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\ShowHide;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponentCollection;
@@ -41,6 +42,8 @@ class SimpleChoiceMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
+        $version = $this->getVersion();
+        
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
             $fqClass = $this->lookupClass($element);
@@ -50,11 +53,11 @@ class SimpleChoiceMarshaller extends ContentMarshaller
                 $component->setFixed($fixed);
             }
 
-            if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
 
-            if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
@@ -74,6 +77,7 @@ class SimpleChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
 
@@ -83,11 +87,11 @@ class SimpleChoiceMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'fixed', true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() !== ShowHide::SHOW) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
