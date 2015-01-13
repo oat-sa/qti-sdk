@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
 use qtism\data\ShowHide;
 use qtism\data\content\FlowStaticCollection;
@@ -66,6 +67,10 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
                 if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
+                
+                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                    $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
+                }
 
                 $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
                 self::fillBodyElement($component, $element);
@@ -107,6 +112,13 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
 
         if ($component->getMatchMin() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
             self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+        }
+        
+        if (Version::compare($version, '2.1.0', '<') === true) {
+            $matchGroup = $component->getMatchGroup();
+            if (count($matchGroup) > 0) {
+                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+            }
         }
 
         foreach ($elements as $e) {

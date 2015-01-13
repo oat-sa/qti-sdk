@@ -43,6 +43,7 @@ use \DOMDocumentFragment;
  * * data-template-identifier = qti:choice->templateIdentifier (only if qti:choice->templateIdentifier is set).
  * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * * data-required = qti:gap->required
+ * * data-match-group = qti:associableChoice->matchGroup (only if not empty).
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -68,5 +69,9 @@ class GapRenderer extends ChoiceRenderer
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gap');
         $fragment->firstChild->setAttribute('data-required', ($component->isRequired() === true) ? 'true' : 'false');
+        
+        if (count($component->getMatchGroup()) > 0) {
+            $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));
+        }
     }
 }

@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
+use qtism\common\utils\Version;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponentCollection;
@@ -42,6 +44,8 @@ class GapChoiceMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
+        $version = $this->getVersion();
+        
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
             if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
@@ -87,6 +91,10 @@ class GapChoiceMarshaller extends ContentMarshaller
                         $component->setObjectLabel($objectLabel);
                     }
                 }
+                
+                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                    $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
+                }
 
                 self::fillBodyElement($component, $element);
 
@@ -107,6 +115,7 @@ class GapChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
 
@@ -135,6 +144,13 @@ class GapChoiceMarshaller extends ContentMarshaller
 
         foreach ($elements as $e) {
             $element->appendChild($e);
+        }
+        
+        if (Version::compare($version, '2.1.0', '<') === true) {
+            $matchGroup = $component->getMatchGroup();
+            if (count($matchGroup) > 0) {
+                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+            }
         }
 
         return $element;

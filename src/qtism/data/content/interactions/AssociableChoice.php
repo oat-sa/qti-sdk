@@ -22,6 +22,8 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\common\collections\IdentifierCollection;
+
 /**
  * From IMS QTI:
  *
@@ -34,4 +36,17 @@ namespace qtism\data\content\interactions;
  */
 interface AssociableChoice
 {
+    /**
+     * Get the set of choices that this choice may be associated with.
+     * 
+     * @return \qtism\common\collections\IdentifierCollection
+     */
+    public function getMatchGroup();
+    
+    /**
+     * Set the set of choices that this choice may be associated with.
+     * 
+     * @param \qtism\common\collections\IdentifierCollection $matchGroup
+     */
+    public function setMatchGroup(IdentifierCollection $matchGroup);
 }

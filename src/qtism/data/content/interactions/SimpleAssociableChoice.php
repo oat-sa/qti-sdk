@@ -22,8 +22,9 @@
 
 namespace qtism\data\content\interactions;
 
-use \InvalidArgumentException;
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\FlowStaticCollection;
+use \InvalidArgumentException;
 
 /**
  * The simpleAssociableChoice QTI class.
@@ -68,6 +69,19 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
 	 * @qtism-bean-property
 	 */
     private $matchMin = 0;
+    
+    /**
+     * From IMS QTI:
+     * 
+     * A set of choices that this choice may be associated with, all others are 
+     * excluded. If no matchGroup is given, or if it is empty, then all other 
+     * choices may be associated with this one subject to their own matching 
+     * constraints.
+     * 
+     * @var \qtism\common\collections\IdentifierCollection
+     * @qtism-bean-property
+     */
+    private $matchGroup;
 
     /**
 	 * Create a new SimpleAssociableChoice object.
@@ -86,6 +100,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
         $this->setMatchMax($matchMax);
         $this->setMatchMin(0);
         $this->setContent(new FlowStaticCollection());
+        $this->setMatchGroup(new IdentifierCollection());
     }
 
     /**
@@ -166,6 +181,22 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     public function getMatchMin()
     {
         return $this->matchMin;
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
+     */
+    public function setMatchGroup(IdentifierCollection $matchGroup)
+    {
+        $this->matchGroup = $matchGroup;
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
+     */
+    public function getMatchGroup()
+    {
+        return $this->matchGroup;
     }
 
     /**

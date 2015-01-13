@@ -45,6 +45,7 @@ use \DOMDocumentFragment;
  * * data-show-hide = qti:choice->showHide (only if qti:choice->templateIdentifier is set).
  * * data-match-max = qti:gapChoice->matchMax
  * * data-match-min = qti:gapChoice->matchMin
+ * * data-match-group = qti:associablChoice->matchGroup (only if not empty).
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -61,5 +62,9 @@ abstract class GapChoiceRenderer extends ChoiceRenderer
 
         $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
         $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
+        
+        if (count($component->getMatchGroup()) > 0) {
+            $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));
+        }
     }
 }

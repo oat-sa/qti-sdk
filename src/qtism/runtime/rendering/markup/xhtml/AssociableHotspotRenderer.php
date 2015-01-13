@@ -49,6 +49,7 @@ use \DOMDocumentFragment;
  * * data-hotspot-label = qti:hotspot->hotspotLabel (only if qti:hotspotLabel is set).
  * * data-match-max = qti:associableHotspot->matchMax
  * * data-match-min = qti:associableHotspot->matchMin
+ * * data-match-group = qti:associableChoice->matchGroup (only if not empty).
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -77,5 +78,9 @@ class AssociableHotspotRenderer extends HotspotRenderer
 
         $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
         $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
+        
+        if (count($component->getMatchGroup()) > 0) {
+            $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));
+        }
     }
 }

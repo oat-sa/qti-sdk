@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Coords;
 use qtism\common\utils\Format;
@@ -91,6 +92,19 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
 	 * @qtism-bean-property
 	 */
     private $hotspotLabel = '';
+    
+    /**
+     * From IMS QTI:
+     * 
+     * A set of choices that this choice may be associated with, all others are 
+     * excluded. If no matchGroup is given, or if it is empty, then all other 
+     * choices may be associated with this one subject to their own matching 
+     * constraints.
+     * 
+     * @var \qtism\common\collections\IdentifierCollection
+     * @qtism-bean-property
+     */
+    private $matchGroup;
 
     /**
 	 * Create a new AssociableHotspot object.
@@ -111,6 +125,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
         $this->setMatchMax($matchMax);
         $this->setShape($shape);
         $this->setCoords($coords);
+        $this->setMatchGroup(new IdentifierCollection());
     }
 
     /**
@@ -244,6 +259,20 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     public function hasHotspotLabel()
     {
         return $this->getHotspotLabel() !== '';
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
+     */
+    public function setMatchGroup(IdentifierCollection $matchGroup) {
+        $this->matchGroup = $matchGroup;
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
+     */
+    public function getMatchGroup() {
+        return $this->matchGroup;
     }
 
     /**

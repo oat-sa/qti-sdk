@@ -22,6 +22,7 @@
 
 namespace qtism\data\content\interactions;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\InlineStatic;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
@@ -46,6 +47,19 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
 	 * @qtism-bean-property
 	 */
     private $required = false;
+    
+    /**
+     * From IMS QTI:
+     * 
+     * A set of choices that this choice may be associated with, all others are 
+     * excluded. If no matchGroup is given, or if it is empty, then all other 
+     * choices may be associated with this one subject to their own matching 
+     * constraints.
+     * 
+     * @var \qtism\common\collections\IdentifierCollection
+     * @qtism-bean-property
+     */
+    private $matchGroup;
 
     /**
 	 * Create a new Gap object.
@@ -62,6 +76,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
         $this->setRequired($required);
+        $this->setMatchGroup(new IdentifierCollection());
     }
 
     /**
@@ -88,6 +103,20 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     public function isRequired()
     {
         return $this->required;
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::setMatchGroup()
+     */
+    public function setMatchGroup(IdentifierCollection $matchGroup) {
+        $this->matchGroup = $matchGroup;
+    }
+    
+    /**
+     * @see \qtism\data\content\interactions\AssociableChoice::getMatchGroup()
+     */
+    public function getMatchGroup() {
+        return $this->matchGroup;
     }
 
     /**

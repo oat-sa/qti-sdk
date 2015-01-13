@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
+use qtism\common\utils\Version;
 use qtism\data\ShowHide;
 use qtism\data\content\interactions\Gap;
 use qtism\data\QtiComponent;
@@ -44,6 +46,7 @@ class GapMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement('gap');
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
@@ -62,6 +65,13 @@ class GapMarshaller extends Marshaller
         if ($component->isRequired() === true) {
             self::setDOMElementAttribute($element, 'required', true);
         }
+        
+        if (Version::compare($version, '2.1.0', '<') === true) {
+            $matchGroup = $component->getMatchGroup();
+            if (count($matchGroup) > 0) {
+                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+            }
+        }
 
         self::fillElement($element, $component);
 
@@ -77,6 +87,7 @@ class GapMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
+        $version = $this->getVersion();
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
             $component = new Gap($identifier);
@@ -95,6 +106,10 @@ class GapMarshaller extends Marshaller
 
             if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
+            }
+            
+            if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
             }
 
             self::fillBodyElement($component, $element);
