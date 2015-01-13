@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
@@ -40,41 +41,54 @@ class AssociateInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-            if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        // responseIdentifier.
+        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-                $fqClass = $this->lookupClass($element);
-                $component = new $fqClass($responseIdentifier, new SimpleAssociableChoiceCollection($children->getArrayCopy()));
+            $version = $this->getVersion();
+            
+            $fqClass = $this->lookupClass($element);
+            $component = new $fqClass($responseIdentifier, new SimpleAssociableChoiceCollection($children->getArrayCopy()));
 
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
-                    $component->setShuffle($shuffle);
-                }
-
-                if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
-                    $component->setMaxAssociations($maxAssociations);
-                }
-
-                if (($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
-                    $component->setMinAssociations($minAssociations);
-                }
-
-                if (($xmlBase = self::getXmlBase($element)) !== false) {
-                    $component->setXmlBase($xmlBase);
-                }
-
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
-                if (count($promptElts) > 0) {
-                    $promptElt = $promptElts[0];
-                    $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                    $component->setPrompt($prompt);
-                }
-
-                self::fillBodyElement($component, $element);
-
-                return $component;
-            } else {
-                $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'associateInteraction' element.";
+            // shuffle.
+            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                $component->setShuffle($shuffle);
+            } elseif (Version::compare($version, '2.0.0', '==') === true) {
+                $msg = "The mandatory attribute 'shuffle' is missing from the 'associateInteraction' element.";
                 throw new UnmarshallingException($msg, $element);
             }
+
+            // maxAssociations.
+            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+                $component->setMaxAssociations($maxAssociations);
+            } elseif (Version::compare($version, '2.0.0', '==') === true) {
+                $msg = "The mandatory attribute 'maxAssociations' is missing from the 'associateInteraction' element.";
+                throw new UnmarshallingException($msg, $element);
+            }
+
+            // minAssociations.
+            if (Version::compare($version, '2.1.0', '>=') && ($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+                $component->setMinAssociations($minAssociations);
+            }
+
+            // xml:base.
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
+            }
+
+            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            if (count($promptElts) > 0) {
+                $promptElt = $promptElts[0];
+                $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+                $component->setPrompt($prompt);
+            }
+
+            self::fillBodyElement($component, $element);
+
+            return $component;
+        } else {
+            $msg = "The mandatory 'responseIdentifier' attribute is missing from the 'associateInteraction' element.";
+            throw new UnmarshallingException($msg, $element);
+        }
     }
 
     /**
@@ -82,26 +96,36 @@ class AssociateInteractionMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
+        
+        // responseIdentifier.
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
+        // prompt.
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
 
-        if ($component->mustShuffle() !== false) {
+        // shuffle.
+        if (Version::compare($version, '2.1.0', '>=') && $component->mustShuffle() !== false) {
             self::setDOMElementAttribute($element, 'shuffle', true);
+        } else if (Version::compare($version, '2.0.0', '==') === true) {
+            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
-        if ($component->getMaxAssociations() !== 1) {
+        // maxAssociations.
+        if (Version::compare($version, '2.0.0', '==') === true || (Version::compare($version, '2.1.0', '>=') === true && $component->getMaxAssociations() !== 1)) {
             self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
-        if ($component->getMinAssociations() !== 0) {
+        // minAssociations.
+        if (Version::compare($version, '2.1.0', '>=') && $component->getMinAssociations() !== 0) {
             self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
+        // xml:base.
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
         }
