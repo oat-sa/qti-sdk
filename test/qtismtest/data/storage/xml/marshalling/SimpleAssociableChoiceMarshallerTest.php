@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\InlineCollection;
@@ -43,6 +44,25 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="3" matchMin="2">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
 	}
 	
+	/**
+	 * @depends testMarshall21
+	 */
+	public function testMarshallMatchGroup21() {
+	    // Aims at testing that matchGroup attribute is not
+	    // in the output in a QTI 2.1 context.
+	    $simpleChoice = new SimpleAssociableChoice('choice_1', 0);
+	    $simpleChoice->setContent(new FlowStaticCollection(array(new TextRun('Choice #1'))));
+	    $simpleChoice->setMatchGroup(new IdentifierCollection(array('identifier1', 'identifier2')));
+	    
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($simpleChoice);
+	    $element = $marshaller->marshall($simpleChoice);
+	    
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    // No matchGroup in the output!
+	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="0">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
+	}
+	
 	public function testUnmarshall21() {
 	    $element = $this->createDOMElement('
 	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMin="1" matchMax="2">This is ... <strong>strong</strong>!</simpleAssociableChoice>
@@ -60,6 +80,23 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    $content = $component->getContent();
 	    $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
 	    $this->assertEquals(3, count($content));
+	}
+	
+	/**
+	 * @depends testUnmarshall21
+	 */
+	public function testUnmarshallMatchGroup21() {
+	    // Aims at testing that matchGroup attribute
+	    // as no influence at unmarshalling time in a QTI 2.1 context.
+	    $element = $this->createDOMElement('
+	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMax="0" matchGroup="identifier1 identifier2">Choice #1</simpleAssociableChoice>
+	    ');
+	     
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $matchGroup = $component->getMatchGroup();
+	    $this->assertEquals(0, count($matchGroup));
 	}
 	
 	public function testMarshall20() {
@@ -92,6 +129,24 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="3">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
+	}
+	
+	/**
+	 * @depends testMarshall20
+	 */
+	public function testMarshallMatchGroup20() {
+	    // Aims at testing that matchGroup is in the output
+	    // in a QTI 2.0 context.
+	    $simpleChoice = new SimpleAssociableChoice('choice_1', 0);
+	    $simpleChoice->setContent(new FlowStaticCollection(array(new TextRun('Choice #1'))));
+	    $simpleChoice->setMatchGroup(new IdentifierCollection(array('identifier1', 'identifier2')));
+	     
+	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($simpleChoice);
+	    $element = $marshaller->marshall($simpleChoice);
+	     
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="0" matchGroup="identifier1 identifier2">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
 	}
 	
 	public function testUnmarshall20() {
