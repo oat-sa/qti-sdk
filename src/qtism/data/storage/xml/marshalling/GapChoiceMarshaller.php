@@ -63,7 +63,7 @@ class GapChoiceMarshaller extends ContentMarshaller
                     $component = new $fqClass($identifier, $matchMax);
                 }
 
-                if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
 
@@ -71,11 +71,11 @@ class GapChoiceMarshaller extends ContentMarshaller
                     $component->setFixed($fixed);
                 }
 
-                if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
@@ -122,7 +122,7 @@ class GapChoiceMarshaller extends ContentMarshaller
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
-        if ($component->getMatchMin() !== 0) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getMatchMin() !== 0) {
             self::setDOMElementAttribute($element, 'matchMin', $matchMin);
         }
 
@@ -130,11 +130,11 @@ class GapChoiceMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'fixed', true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() !== ShowHide::SHOW) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
