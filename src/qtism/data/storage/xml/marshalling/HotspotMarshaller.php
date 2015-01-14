@@ -59,11 +59,11 @@ class HotspotMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'fixed', true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() === ShowHide::HIDE) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() === ShowHide::HIDE) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         }
 
