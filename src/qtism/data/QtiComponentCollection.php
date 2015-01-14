@@ -49,6 +49,9 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
+    /**
+     * @see \qtism\common\collections\AbstractCollection::offsetSet()
+     */
     public function offsetSet($offset, $value)
     {
         if (empty($offset)) {
@@ -59,6 +62,9 @@ class QtiComponentCollection extends AbstractCollection
         }
     }
 
+    /**
+     * @see \qtism\common\collections\AbstractCollection::offsetUnset()
+     */
     public function offsetUnset($offset)
     {
         if (empty($offset)) {
@@ -67,5 +73,32 @@ class QtiComponentCollection extends AbstractCollection
             $msg = "QtiComponentCollection must be used as a bag (specific key '${offset}' given).";
             throw new RuntimeException($msg);
         }
+    }
+    
+    /**
+     * Whether the collection contains exclusively QtiComponent objects having a given $className.
+     * 
+     * @param string $className A QTI class name.
+     * @param boolean $recursive Wether to check children QtiComponent objects.
+     * @return boolean
+     */
+    public function exclusivelyContainsComponentsWithClassName($className, $recursive = true)
+    {
+        $data = $this->getDataPlaceHolder();
+        foreach ($data as $component) {
+            if ($component->getQtiClassName() !== $className) {
+                
+                return false;
+            } else if ($recursive === true) {
+                foreach ($component->getIterator() as $subComponent) {
+                    if ($component->getClassName() !== $className) {
+                        
+                        return false;
+                    }
+                }
+            }
+        }
+        
+        return true;
     }
 }

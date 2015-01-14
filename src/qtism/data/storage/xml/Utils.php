@@ -56,6 +56,13 @@ class Utils
         return $filename;
     }
     
+    /**
+     * Infer the QTI version from a given DOM $document in a Semantic Versioning
+     * format always containing a MAJOR, MINOR and PATCH version.
+     * 
+     * @param \DOMDocument $document
+     * @return string|boolean A QTI version number if it could be infered, false otherwise. 
+     */
     static public function inferVersion(DOMDocument $document)
     {
         $root = $document->documentElement;

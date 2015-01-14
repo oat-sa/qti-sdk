@@ -29,7 +29,9 @@ class GapTextMarshallerTest extends QtiSmTestCase {
 	
 	public function testMarshall20() {
 	    $gapText = new GapText('gapText1', 3);
-	    $gapText->setContent(new TextOrVariableCollection(array(new TextRun('Some text...'))));
+	    
+	    // Make sure that in QTI 2.0, printed variables are not taken into account at output time...
+	    $gapText->setContent(new TextOrVariableCollection(array(new TextRun('Some text...'), new PrintedVariable('id1'))));
 	    
 	    // Make sure there is no output for matchMin, templateIdentifier, showHide.
 	    $gapText->setMatchMin(1);
@@ -62,6 +64,13 @@ class GapTextMarshallerTest extends QtiSmTestCase {
 	    $this->assertFalse($gapText->isFixed());
 	    $this->assertFalse($gapText->hasTemplateIdentifier());
 	    $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
+	    
+	    $content = $gapText->getContent();
+	    $this->assertInstanceOf('\\qtism\\data\\content\\TextOrVariableCollection', $content);
+	    $this->assertInstanceOf('\\qtism\\data\\content\\TextRun', $content[0]);
+	    $this->assertInstanceOf('\\qtism\\data\\content\\PrintedVariable', $content[1]);
+	    $this->assertEquals('My var is ', $content[0]->getContent());
+	    $this->assertEquals('var1', $content[1]->getIdentifier());
 	}
 	
 	public function testUnmarshall20() {
@@ -80,6 +89,23 @@ class GapTextMarshallerTest extends QtiSmTestCase {
 	    $this->assertFalse($gapText->hasTemplateIdentifier());
 	    $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 	    $this->assertEquals(array('id1', 'id2'), $gapText->getMatchGroup()->getArrayCopy());
+	}
+	
+	/**
+	 * @depends testUnmarshall20
+	 */
+	public function testUnmarshall20NotOnlyTextContent() {
+	    // Aims at testing that an error is thrown when trying
+	    // to unmarshall a gapText containing other stuff than plain/text
+	    // in a QTI 2.0 context.
+	    $expectedMsg = "A 'gapText' element must only contain text. Children elements found.";
+	    $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+	    $element = $this->createDOMElement('
+	        <gapText identifier="gapText1" matchMax="0">Some text and a <printedVariable identifier="myVar"/></gapText>
+	    ');
+	    
+	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
+	    $gapText = $marshaller->unmarshall($element);
 	}
 	
 	public function testUnmarshallInvalid21() {

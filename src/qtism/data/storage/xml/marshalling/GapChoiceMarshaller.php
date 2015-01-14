@@ -29,6 +29,7 @@ use qtism\data\ShowHide;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
+use \DOMCharacterData;
 use \InvalidArgumentException;
 
 /**
@@ -80,6 +81,12 @@ class GapChoiceMarshaller extends ContentMarshaller
                 }
 
                 if ($element->localName === 'gapText') {
+                   
+                    if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun', true) === false) {
+                        $msg = "A 'gapText' element must only contain text. Children elements found.";
+                        throw new UnmarshallingException($msg, $element);
+                    }
+                    
                     try {
                         $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
                     } catch (InvalidArgumentException $e) {
@@ -143,7 +150,17 @@ class GapChoiceMarshaller extends ContentMarshaller
         }
 
         foreach ($elements as $e) {
-            $element->appendChild($e);
+            if ($element->localName === 'gapImg') {
+                $element->appendChild($e);
+            }
+            else {
+                // 'gapText'...   
+                if (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
+                    // In QTI 2.0, only plain text is allowed...
+                    $element->appendChild($e);
+                }
+                
+            }
         }
         
         if (Version::compare($version, '2.1.0', '<') === true) {
