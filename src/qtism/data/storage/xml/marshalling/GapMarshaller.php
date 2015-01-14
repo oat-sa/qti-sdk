@@ -54,15 +54,15 @@ class GapMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'fixed' , true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() === ShowHide::HIDE) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() === ShowHide::HIDE) {
+            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
-        if ($component->isRequired() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->isRequired() === true) {
             self::setDOMElementAttribute($element, 'required', true);
         }
         
@@ -96,15 +96,15 @@ class GapMarshaller extends Marshaller
                 $component->setFixed($fixed);
             }
 
-            if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
 
-            if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
-            if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
             }
             
