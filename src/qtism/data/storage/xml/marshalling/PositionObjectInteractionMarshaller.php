@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,6 +24,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\datatypes\Point;
 use qtism\common\utils\Format;
+use qtism\common\utils\Version;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -45,12 +46,13 @@ class PositionObjectInteractionMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement('positionObjectInteraction');
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
-        if ($component->hasMinChoices() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasMinChoices() === true) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
@@ -73,6 +75,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
+        $version = $this->getVersion();
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $objectElts = self::getChildElementsByTagName($element, 'object');
@@ -85,7 +88,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
                     $component->setMaxChoices($maxChoices);
                 }
 
-                if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
 
