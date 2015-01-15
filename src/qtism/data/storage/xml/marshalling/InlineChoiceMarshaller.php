@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,11 +22,13 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\ShowHide;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use \DOMElement;
+use \DOMCharacterData;
 use \InvalidArgumentException;
 
 /**
@@ -44,6 +46,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
     {
         if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
+            $version = $this->getVersion();
             $fqClass = $this->lookupClass($element);
 
             try {
@@ -53,6 +56,11 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
+            if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun') === false) {
+                $msg = "An 'inlineChoice' element must only contain text. Children elements found.";
+                throw new UnmarshallingException($msg, $element);
+            }
+            
             try {
                 $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
             } catch (InvalidArgumentException $e) {
@@ -64,11 +72,11 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 $component->setFixed($fixed);
             }
 
-            if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                 $component->setTemplateIdentifier($templateIdentifier);
             }
 
-            if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
@@ -87,6 +95,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
@@ -95,16 +104,18 @@ class InlineChoiceMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'fixed', true);
         }
 
-        if ($component->hasTemplateIdentifier() === true) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
             self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
-        if ($component->getShowHide() !== ShowHide::SHOW) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() !== ShowHide::SHOW) {
             self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         foreach ($elements as $e) {
-            $element->appendChild($e);
+            if (Version::compare($version, '2.1.0', '>=') || (Version::compare($version, '2.1.0', '<') && $e instanceof DOMCharacterData)) {
+                $element->appendChild($e);
+            }
         }
 
         return $element;

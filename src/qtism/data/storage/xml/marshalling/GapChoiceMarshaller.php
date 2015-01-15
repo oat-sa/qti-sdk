@@ -82,7 +82,7 @@ class GapChoiceMarshaller extends ContentMarshaller
 
                 if ($element->localName === 'gapText') {
                    
-                    if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun', true) === false) {
+                    if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun') === false) {
                         $msg = "A 'gapText' element must only contain text. Children elements found.";
                         throw new UnmarshallingException($msg, $element);
                     }
