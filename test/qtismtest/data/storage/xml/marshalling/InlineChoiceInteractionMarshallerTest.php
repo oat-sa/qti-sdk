@@ -11,7 +11,7 @@ use \DOMDocument;
 
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshall() {
+	public function testMarshall21() {
 		
 	    $inlineChoices = new InlineChoiceCollection();
 	    
@@ -39,7 +39,27 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice><inlineChoice identifier="inlineChoice2">Option2</inlineChoice><inlineChoice identifier="inlineChoice3">Option3</inlineChoice></inlineChoiceInteraction>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall() {
+	public function testMarshall20() {
+	    // check that suffled systematically out and no required attribute.
+	    $inlineChoices = new InlineChoiceCollection();
+	     
+	    $choice = new InlineChoice('inlineChoice1');
+	    $choice->setFixed(true);
+	    $choice->setContent(new TextOrVariableCollection(array(new TextRun('Option1'))));
+	    $inlineChoices[] = $choice;
+	     
+	    $inlineChoiceInteraction = new InlineChoiceInteraction('RESPONSE', $inlineChoices);
+	    $inlineChoiceInteraction->setShuffle(false);
+	    $inlineChoiceInteraction->setRequired(true);
+	     
+	    $element = $this->getMarshallerFactory('2.0.0')->createMarshaller($inlineChoiceInteraction)->marshall($inlineChoiceInteraction);
+	    
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    $this->assertEquals('<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice></inlineChoiceInteraction>', $dom->saveXML($element));
+	}
+	
+	public function testUnmarshall21() {
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
                 <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
@@ -54,5 +74,41 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertTrue($inlineChoiceInteraction->mustShuffle());
         $this->assertTrue($inlineChoiceInteraction->isRequired());
         $this->assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+	}
+	
+	public function testUnmarshall20() {
+	    // Check required is not taken into account.
+	    // Check shuffle is always in the output.
+	    $element = $this->createDOMElement('
+            <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
+                <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
+                <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>
+                <inlineChoice identifier="inlineChoice1">Option1</inlineChoice>
+            </inlineChoiceInteraction>
+        ');
+	    
+	    $inlineChoiceInteraction = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\InlineChoiceInteraction', $inlineChoiceInteraction);
+	    $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
+	    $this->assertTrue($inlineChoiceInteraction->mustShuffle());
+	    $this->assertFalse($inlineChoiceInteraction->isRequired());
+	    $this->assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+	}
+	
+	/**
+	 * @depends testUnmarshall20
+	 */
+	public function testUnmarshallErrorIfoShuffle20() {
+
+	    $expectedMsg = "The mandatory 'shuffle' attribute is missing from the 'inlineChoiceInteraction' element.";
+	    $this->setExpectedException('\\qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
+	    
+	    $element = $this->createDOMElement('
+            <inlineChoiceInteraction responseIdentifier="RESPONSE">
+                <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
+            </inlineChoiceInteraction>
+        ');
+	     
+	    $inlineChoiceInteraction = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 	}
 }

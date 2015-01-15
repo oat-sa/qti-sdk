@@ -44,6 +44,7 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
     {
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
+            $version = $this->getVersion();
             $fqClass = $this->lookupClass($element);
 
             $choices = new InlineChoiceCollection($children->getArrayCopy());
@@ -61,9 +62,12 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
 
             if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
+            } elseif (Version::compare($version, '2.1.0', '<') === true) {
+                $msg = "The mandatory 'shuffle' attribute is missing from the 'inlineChoiceInteraction' element.";
+                throw new UnmarshallingException($msg, $element);
             }
 
-            if (($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($required = self::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $component->setRequired($required);
             }
 
@@ -94,8 +98,8 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
-        if ($component->isRequired() !== false) {
-            self::setDOMElementAttribute($element, 'required', true);
+        if (Version::compare($version, '2.1.0', '>=') && $component->isRequired() !== false) {
+            self::setDOMElementAttribute($element, 'required', $component->isRequired());
         }
 
         if ($component->hasXmlBase() === true) {
