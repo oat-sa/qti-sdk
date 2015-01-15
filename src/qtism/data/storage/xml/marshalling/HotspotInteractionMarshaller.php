@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
@@ -41,6 +42,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
+        $version = $this->getVersion();
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $objectElts = self::getChildElementsByTagName($element, 'object');
@@ -62,7 +64,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
                         $fqClass = $this->lookupClass($element);
                         $component = new $fqClass($responseIdentifier, $object, $maxChoices, $choices);
 
-                        if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                        if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                             $component->setMinChoices($minChoices);
                         }
 
@@ -104,6 +106,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
@@ -115,9 +118,11 @@ class HotspotInteractionMarshaller extends ContentMarshaller
 
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
-        if ($component->getMinChoices() !== 0) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinChoices() !== 0) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
+        
+        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());

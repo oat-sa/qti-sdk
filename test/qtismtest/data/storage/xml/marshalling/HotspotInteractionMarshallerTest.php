@@ -16,7 +16,7 @@ use \DOMDocument;
 
 class HotspotInteractionMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshall() {
+	public function testMarshall21() {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         
@@ -27,16 +27,36 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $object = new Object('./img/img.png', 'image/png');
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
 	    $hotspotInteraction->setPrompt($prompt);
+	    $hotspotInteraction->setMinChoices(1);
         
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         
-        $this->assertEquals('<hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>', $dom->saveXML($element));
+        $this->assertEquals('<hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1" minChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall() {
+	/**
+	 * @depends testMarshall21
+	 */
+	public function testMarshall20() {
+	    // minChoices must be ignored.
+	    $choice1 = new HotspotChoice('hotspotchoice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(77, 115, 8)));
+	    
+	    $object = new Object('./img/img.png', 'image/png');
+	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1)));
+	    $hotspotInteraction->setMinChoices(1);
+	    
+	    $element = $this->getMarshallerFactory('2.0.0')->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
+	    
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    
+	    $this->assertEquals('<hotspotInteraction responseIdentifier="RESPONSE" maxChoices="1"><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/></hotspotInteraction>', $dom->saveXML($element));
+	}
+	
+	public function testUnmarshall21() {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
         ');
