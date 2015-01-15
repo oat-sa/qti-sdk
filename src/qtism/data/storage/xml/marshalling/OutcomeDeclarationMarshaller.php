@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\ViewCollection;
@@ -46,11 +47,12 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
+        $version = $this->getVersion();
 
         // deal with views.
         // !!! If $arrayViews contain all possible views, it means that the treated
         // !!! outcome is relevant to all views, as per QTI 2.1 spec.
-        if (!in_array($component->getViews()->getArrayCopy(), View::asArray())) {
+        if (Version::compare($version, '2.1.0', '>=') === true && !in_array($component->getViews()->getArrayCopy(), View::asArray())) {
             $arrayViews = array();
             foreach ($component->getViews() as $view) {
                 $arrayViews[] = View::getNameByConstant($view);
@@ -77,17 +79,17 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // Deal with normal minimum.
-        if ($component->getNormalMinimum() !== false) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getNormalMinimum() !== false) {
             static::setDOMElementAttribute($element, 'normalMinimum', $component->getNormalMinimum());
         }
 
         // Deal with mastery value.
-        if ($component->getMasteryValue() !== false) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getMasteryValue() !== false) {
             static::setDOMElementAttribute($element, 'masteryValue', $component->getMasteryValue());
         }
 
         // Deal with lookup table.
-        if ($component->getLookupTable() != null) {
+        if (Version::compare($version, '2.1.0', '>=') === true && $component->getLookupTable() != null) {
             $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
@@ -106,6 +108,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     {
         try {
 
+            $version = $this->getVersion();
             $baseComponent = parent::unmarshall($element);
             $object = new OutcomeDeclaration($baseComponent->getIdentifier());
             $object->setBaseType($baseComponent->getBaseType());
@@ -113,7 +116,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
             // deal with views.
-            if (($views = static::getDOMElementAttributeAs($element, 'view')) != null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($views = static::getDOMElementAttributeAs($element, 'view')) != null) {
                 $viewCollection = new ViewCollection();
                 foreach (explode("\x20", $views) as $viewName) {
                     $viewCollection[] = View::getConstantByName($viewName);
@@ -138,12 +141,12 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             // deal with normalMinimum.
-            if (($normalMinimum = static::getDOMElementAttributeAs($element, 'normalMinimum', 'float')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($normalMinimum = static::getDOMElementAttributeAs($element, 'normalMinimum', 'float')) !== null) {
                 $object->setNormalMinimum($normalMinimum);
             }
 
             // deal with matseryValue.
-            if (($masteryValue = static::getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($masteryValue = static::getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
                 $object->setMasteryValue($masteryValue);
             }
 
@@ -151,7 +154,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $interpolationTables = $element->getElementsByTagName('interpolationTable');
             $matchTable = $element->getElementsByTagName('matchTable');
 
-            if ($interpolationTables->length == 1 || $matchTable->length == 1) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($interpolationTables->length == 1 || $matchTable->length == 1)) {
                 // we have a lookupTable defined.
                 $lookupTable = null;
 

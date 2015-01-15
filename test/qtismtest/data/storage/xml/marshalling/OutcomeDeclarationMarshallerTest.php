@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\View;
+use qtism\data\ViewCollection;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Duration;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -17,7 +19,7 @@ use \DOMDocument;
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshallMinimal() {
+	public function testMarshallMinimal21() {
 
 		// Initialize a minimal outcomeDeclaration.
 		$identifier = "outcome1";
@@ -35,7 +37,37 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('outcome1', $element->getAttribute('identifier'));
 	}
 	
-	public function testMarshallDefaultValue() {
+	/**
+	 * @depends testMarshallMinimal21
+	 */
+	public function testMarshallNoOutputViewsNormalMinimumMasteryValueViewLookupTable() {
+	    $identifier = "outcome1";
+	    $cardinality = Cardinality::SINGLE;
+	    $baseType = BaseType::INTEGER;
+	    
+	    $component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
+	    $component->setViews(new ViewCollection(array(View::AUTHOR)));
+	    $component->setNormalMinimum(10.4);
+	    $component->setMasteryValue(10.3);
+	    
+	    $entries = new MatchTableEntryCollection();
+	    $entries[] = new MatchTableEntry(1, 1.5);
+	    $entries[] = new MatchTableEntry(2, 2.5);
+	    $matchTable = new MatchTable($entries);
+	    $component->setLookupTable($matchTable);
+	    
+	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+		$this->assertEquals('', $element->getAttribute('view'));
+		$this->assertEquals('', $element->getAttribute('normalMinimum'));
+		$this->assertEquals('', $element->getAttribute('masteryValue'));
+		
+		$lookupTableElts = $element->getElementsByTagName('matchTable');
+		$this->assertSame(0, $lookupTableElts->length);
+	}
+	
+	public function testMarshallDefaultValue21() {
 		
 		$identifier = "outcome2";
 		$cardinality = Cardinality::MULTIPLE;
@@ -76,7 +108,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('', $value->getAttribute('baseType'));
 	}
 	
-	public function testMarshallMatchTable() {
+	public function testMarshallMatchTable21() {
 
 		$identifier = 'outcome3';
 		$cardinality = Cardinality::SINGLE;
@@ -118,7 +150,33 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('2.5', $entry->getAttribute('targetValue'));
 	}
 	
-	public function testUnmarshallMinimal() {
+	/**
+	 * @depends testMarshallMatchTable21
+	 */
+	public function testMarshallMatchTable20() {
+	    // Make sure there is no output of lookupTable
+	    // in QTI 2.0 mode.
+	    $identifier = 'outcome3';
+	    $cardinality = Cardinality::SINGLE;
+	    $baseType = BaseType::FLOAT;
+	    
+	    $component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
+	    $entries = new MatchTableEntryCollection();
+	    $entries[] = new MatchTableEntry(1, 1.5);
+	    
+	    $matchTable = new MatchTable($entries);
+	    $component->setLookupTable($matchTable);
+	    
+	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    
+	    $lookupTable = $element->getElementsByTagName('matchTable');
+	    $this->assertEquals(0, $lookupTable->length);
+	}
+	
+	public function testUnmarshallMinimal21() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer"/>');
 		$element = $dom->documentElement;
@@ -132,7 +190,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($component->getBaseType(), BaseType::INTEGER);
 	}
 	
-	public function testUnmarshallDefaultValue() {
+	public function testUnmarshallDefaultValue21() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
@@ -168,7 +226,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[1]->getValue());
 	}
 	
-	public function testUnmarshallRecord() {
+	public function testUnmarshallRecord21() {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
@@ -221,7 +279,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(1.11, $values[2]->getValue());
 	}
 	
-	public function testUnmarshallMatchTable() {
+	public function testUnmarshallMatchTable21() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
@@ -253,5 +311,30 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(2, $entries[1]->getSourceValue());
 		$this->assertInternalType('float', $entries[0]->getTargetValue());
 		$this->assertEquals(2.5, $entries[1]->getTargetValue());
+	}
+	
+	/**
+	 * @depends testUnmarshallMatchTable21
+	 */
+	public function testUnmarshallMatchTable20() {
+	    // Make sure match table is not take into account
+	    // in a QTI 2.0 context.
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML(
+	                    '
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration3" cardinality="single" baseType="float">
+				<matchTable>
+					<matchTableEntry sourceValue="1" targetValue="1.5"/>
+					<matchTableEntry sourceValue="2" targetValue="2.5"/>
+				</matchTable>
+			</outcomeDeclaration>
+			'
+	    );
+	    $element = $dom->documentElement;
+	
+	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $this->assertSame(null, $component->getLookupTable());
 	}
 }
