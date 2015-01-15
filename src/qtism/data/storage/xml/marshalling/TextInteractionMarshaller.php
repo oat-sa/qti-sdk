@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\content\interactions\TextFormat;
 use qtism\data\content\interactions\ExtendedTextInteraction;
 use qtism\data\content\interactions\TextEntryInteraction;
@@ -47,6 +48,7 @@ class TextInteractionMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $version = $this->getVersion();
 
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
@@ -79,7 +81,7 @@ class TextInteractionMarshaller extends Marshaller
                 self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
             }
 
-            if ($component->getMinStrings() !== 0) {
+            if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinStrings() !== 0) {
                 self::setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
             }
 
@@ -87,7 +89,7 @@ class TextInteractionMarshaller extends Marshaller
                 self::setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
             }
 
-            if ($component->getFormat() !== TextFormat::PLAIN) {
+            if (Version::compare($version, '2.1.0', '>=') === true && $component->getFormat() !== TextFormat::PLAIN) {
                 self::setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
             }
 
@@ -110,6 +112,8 @@ class TextInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
+        $version = $this->getVersion();
+        
         if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             try {
@@ -150,7 +154,7 @@ class TextInteractionMarshaller extends Marshaller
                     $component->setMaxStrings($maxStrings);
                 }
 
-                if (($minStrings = self::getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minStrings = self::getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
                     $component->setMinStrings($minStrings);
                 }
 
@@ -158,7 +162,7 @@ class TextInteractionMarshaller extends Marshaller
                     $component->setExpectedLines($expectedLines);
                 }
 
-                if (($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
                     $component->setFormat(TextFormat::getConstantByName($format));
                 }
 

@@ -7,7 +7,7 @@ use \DOMDocument;
 
 class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshallMinimal() {
+	public function testMarshallMinimal21() {
 	    $textEntryInteraction = new TextEntryInteraction('RESPONSE');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
         
@@ -16,7 +16,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('<textEntryInteraction responseIdentifier="RESPONSE"/>', $dom->saveXML($element));
 	}
 	
-	public function testMarshallMaximal() {
+	public function testMarshallMaximal21() {
 	    $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 	    $textEntryInteraction->setBase(2);
 	    $textEntryInteraction->setStringIdentifier('mystring');
@@ -30,7 +30,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshallMinimal() {
+	public function testUnmarshallMinimal21() {
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
         $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         
@@ -43,7 +43,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertFalse($textEntryInteraction->hasPlaceholderText());
 	}
 	
-	public function testUnmarshallMaximal() {
+	public function testUnmarshallMaximal21() {
 	    $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
 	    $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	    
@@ -58,6 +58,5 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('[0-9]+', $textEntryInteraction->getPatternMask());
 	    $this->assertTrue($textEntryInteraction->hasPlaceholderText());
 	    $this->assertEquals('input here...', $textEntryInteraction->getPlaceholderText());
-	    
 	}
 }
