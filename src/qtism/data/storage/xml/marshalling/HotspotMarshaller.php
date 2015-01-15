@@ -70,21 +70,26 @@ class HotspotMarshaller extends Marshaller
         if ($component->hasHotspotLabel() === true) {
             self::setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
         }
-
+        
         if ($component instanceof AssociableHotspot) {
-            self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
-
-            if ($component->getMatchMin() !== 0) {
-                self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+            
+            if (Version::compare($version, '2.1.0', '<') === true) {
+                $matchGroup = $component->getMatchGroup();
+                if (count($matchGroup) > 0) {
+                    self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                }
+            }
+            
+            if (Version::compare($version, '2.1.0', '>=') === true) {
+                if ($component->getMatchMin() !== 0) {
+                    self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+                }
             }
         }
         
-        if ($component instanceof AssociableHotspot && Version::compare($version, '2.1.0', '<') === true) {
-            $matchGroup = $component->getMatchGroup();
-            if (count($matchGroup) > 0) {
-                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
-            }
-        } 
+        if ($component instanceof AssociableHotspot) {
+            self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        }
 
         self::fillElement($element, $component);
 
@@ -128,10 +133,6 @@ class HotspotMarshaller extends Marshaller
                     } else {
                         if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                             $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
-
-                            if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
-                                $component->setMatchMin($matchMin);
-                            }
                         } else {
                             $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
                             throw new UnmarshallingException($msg, $element);
@@ -160,8 +161,18 @@ class HotspotMarshaller extends Marshaller
                         }
                     }
                     
-                    if ($element->localName === 'associableHotspot' && Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
-                        $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
+                    if ($element->localName === 'associableHotspot') {
+                        if (Version::compare($version, '2.1.0', '<') === true) {
+                            if (($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                                $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
+                            }
+                        }
+                        
+                        if (Version::compare($version, '2.1.0', '>=') === true) {
+                            if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                                $component->setMatchMin($matchMin);
+                            }
+                        }
                     }
 
                     self::fillBodyElement($component, $element);

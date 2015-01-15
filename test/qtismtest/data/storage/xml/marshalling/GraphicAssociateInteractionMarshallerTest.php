@@ -37,12 +37,17 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         
-        $this->assertEquals('<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
+        $this->assertEquals('<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
 	}
 	
 	public function testUnmarshall() {
         $element = $this->createDOMElement('
-            <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2" matchMin="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout">
+              <prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/>
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/>
+            </graphicAssociateInteraction>
         ');
         
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);

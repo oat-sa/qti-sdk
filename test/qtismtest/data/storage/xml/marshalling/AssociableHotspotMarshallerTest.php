@@ -28,7 +28,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>', $dom->saveXML($element));
+	    $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMin="1" matchMax="2" id="my-hot"/>', $dom->saveXML($element));
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchMax="2" matchGroup="identifier1 identifier2"/>', $dom->saveXML($element));
+	    $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchGroup="identifier1 identifier2" matchMax="2"/>', $dom->saveXML($element));
 	}
 	
 	public function testUnmarshall20() {
@@ -152,7 +152,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    // Aims at testing that matchMin, templateIdentifier and showHide attributes have no influence
 	    // in a QTI 2.0 context.
 	    $element = $this->createDOMElement('
-	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchMax="2"/>
+	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchMax="2" matchMin="3"/>
 	    ');
 	     
 	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
