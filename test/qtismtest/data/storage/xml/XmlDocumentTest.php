@@ -200,9 +200,21 @@ class XmlDocumentTest extends QtiSmTestCase {
     public function testLoadFromStringNotSupportedElement20() {
         // Will throw an error because assessmentItemRef is not supported in QTI 2.0.
         $doc = new XmlDocument('2.0');
+        $expectedMsg = "'assessmentItemRef' components are not supported in QTI version '2.0.0'.";
         
-        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException');
+        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+    }
+    
+    public function testSaveNoMarshaller20() {
+        $doc = new XMLDocument('2.1.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+        $doc->setVersion('2.0');
+        
+        $expectedMsg = "'assessmentItemRef' components are not supported in QTI version '2.0.0'.";
+        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        
+        $str = $doc->saveToString();
     }
     
     public function testVersionDoesNotChangeLoadFromString()

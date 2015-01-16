@@ -29,6 +29,7 @@ use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMDocument;
@@ -157,7 +158,6 @@ class XmlDocument extends QtiDocument
                     // is the one specified when the XmlDocument object
                     // is instantiated.
                 }
-                
 
                 if ($validate === true) {
                     $this->schemaValidate();
@@ -173,8 +173,10 @@ class XmlDocument extends QtiDocument
                     $line = $e->getDOMElement()->getLineNo();
                     $msg = "An error occured while processing QTI-XML at line ${line}.";
                     throw new XmlStorageException($msg, $e);
-                } catch (RuntimeException $e) {
-                    $msg = "Unmarshallable element '" . $element->localName . "' in QTI-XML.";
+                } catch (MarshallerNotFoundException $e) {
+                    $version = $this->getVersion();
+                    $problematicQtiClassName = $e->getQtiClassName();
+                    $msg = "'${problematicQtiClassName}' components are not supported in QTI version '${version}'.";
                     throw new XmlStorageException($msg, $e);
                 }
             } else {
@@ -289,6 +291,11 @@ class XmlDocument extends QtiDocument
                 throw new XmlStorageException($msg, $e);
             } catch (XmlStorageException $e) {
                 $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
+                throw new XmlStorageException($msg, $e);
+            } catch (MarshallerNotFoundException $e) {
+                $version = $this->getVersion();
+                $problematicQtiClassName = $e->getQtiClassName();
+                $msg = "'${problematicQtiClassName}' components are not supported in QTI version '${version}'.";
                 throw new XmlStorageException($msg, $e);
             }
         } else {
