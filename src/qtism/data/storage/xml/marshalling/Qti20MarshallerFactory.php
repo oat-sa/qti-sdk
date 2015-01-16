@@ -34,6 +34,60 @@ use \ReflectionClass;
  */
 class Qti20MarshallerFactory extends MarshallerFactory
 {
+    /**
+     * Create a new Qti20MarshallerFactory object.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->removeMappingEntry('mediaInteraction');
+        $this->removeMappingEntry('infoControl');
+        $this->removeMappingEntry('interpolationTable');
+        $this->removeMappingEntry('interpolationTableEntry');
+        $this->removeMappingEntry('matchTable');
+        $this->removeMappingEntry('matchTableEntry');
+        $this->removeMappingEntry('assessmentTest');
+        $this->removeMappingEntry('testPart');
+        $this->removeMappingEntry('assessmentSection');
+        $this->removeMappingEntry('assessmentSectionRef');
+        $this->removeMappingEntry('assessmentItemRef');
+        $this->removeMappingEntry('sectionPart');
+        $this->removeMappingEntry('selection');
+        $this->removeMappingEntry('ordering');
+        $this->removeMappingEntry('weight');
+        $this->removeMappingEntry('variableMapping');
+        $this->removeMappingEntry('templateDefault');
+        $this->removeMappingEntry('timeLimits');
+        $this->removeMappingEntry('testFeedback');
+        $this->removeMappingEntry('branchRule');
+        $this->removeMappingEntry('preCondition');
+        $this->removeMappingEntry('outcomeProcessing');
+        $this->removeMappingEntry('outcomeCondition');
+        $this->removeMappingEntry('outcomeIf');
+        $this->removeMappingEntry('outcomeElseIf');
+        $this->removeMappingEntry('outcomeElse');
+        $this->removeMappingEntry('exitTest');
+        $this->removeMappingEntry('itemSubset');
+        $this->removeMappingEntry('testVariables');
+        $this->removeMappingEntry('outcomeMaximum');
+        $this->removeMappingEntry('outcomeMinimum');
+        $this->removeMappingEntry('numberCorrect');
+        $this->removeMappingEntry('numberIncorrect');
+        $this->removeMappingEntry('numberResponded');
+        $this->removeMappingEntry('numberPresented');
+        $this->removeMappingEntry('numberSelected');
+        $this->removeMappingEntry('repeat');
+        $this->removeMappingEntry('roundTo');
+        $this->removeMappingEntry('mathOperator');
+        $this->removeMappingEntry('mathConstant');
+        $this->removeMappingEntry('min');
+        $this->removeMappingEntry('max');
+        $this->removeMappingEntry('statsOperator');
+        $this->removeMappingEntry('gcd');
+        $this->removeMappingEntry('lcd');
+        $this->removeMappingEntry('templateConstraint');
+    }
+    
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
         array_unshift($args, '2.0.0');
