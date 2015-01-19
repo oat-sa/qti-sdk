@@ -26,6 +26,7 @@ use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -358,6 +359,11 @@ class XmlDocument extends QtiDocument
             case '2.1.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';    
             break;
+            
+            case '2.2.0':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
+                $qtiSuffix = 'v2p2';
+            break;
         }
 
         $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
@@ -400,6 +406,7 @@ class XmlDocument extends QtiDocument
 	 * MarshallerFactory factory method (see gang of four).
 	 *
 	 * @return \qtism\data\storage\xml\marshalling\MarshallerFactory An appropriate MarshallerFactory object.
+	 * @throws \RuntimeException If no suitable MarshallerFactory implementation is found. 
 	 */
     protected function createMarshallerFactory()
     {
@@ -408,8 +415,13 @@ class XmlDocument extends QtiDocument
             return new Qti20MarshallerFactory();
         } else if ($version === '2.1.0') {
             return new Qti21MarshallerFactory();
-        } else {
+        } else if ($version === '2.1.1') {
             return new Qti211MarshallerFactory();
+        } else if ($version === '2.2.0') {
+            return new Qti22MarshallerFactory();
+        } else {
+            $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
+            throw new RuntimeException($msg);
         }
     }
     

@@ -55,9 +55,17 @@ class ResponseProcessingEngine extends AbstractEngine
         parent::__construct($responseProcessing, $context);
 
         $templateDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+        
+        $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'match_correct.php');
+        $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'map_response.php');
+        $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response_point', $templateDir . '2_2' . DIRECTORY_SEPARATOR . 'map_response_point.php');
+        
+        // Response Processing Templates content are the same in QTI 2.1 and 2.2.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point', $templateDir . '2_1' . DIRECTORY_SEPARATOR . 'map_response_point.php');
+        
+        // Response Processing Templates differ from QTI 2.0 to QTI 2.1.
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'match_correct.php');
         $this->addTemplateMapping('http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response_point', $templateDir . '2_0' . DIRECTORY_SEPARATOR . 'map_response_point.php');

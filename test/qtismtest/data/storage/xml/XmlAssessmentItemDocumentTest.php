@@ -209,6 +209,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function validFileProvider() {
 		return array(
+		    array(self::decorateUri('choice_multiple.xml', '2.2.0'), '2.2.0'),
+		                
             array(self::decorateUri('adaptive.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('adaptive_template.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('mc_stat2.xml', '2.1.1'), '2.1.1'),
@@ -326,6 +328,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 			return self::samplesDir() . 'ims/items/2_1/' . $uri;
 		} elseif ($version === '2.1.1') {
 		    return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
+		} elseif ($version === '2.2' || $version === '2.2.0') {
+		    return self::samplesDir() . 'ims/items/2_2/' . $uri;
 		} else {
 			return self::samplesDir() . 'ims/items/2_0/' . $uri;
 		}

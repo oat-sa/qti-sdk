@@ -1,0 +1,479 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+     targetNamespace="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+     xmlns:m2="http://www.w3.org/1998/Math/MathML"
+     xmlns:m3="http://www.w3.org/2010/Math/MathML"
+     xmlns:qti="http://www.imsglobal.org/xsd/imsqti_v2p2"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     version="IMS QTI 2.2.0 HTML5"
+     elementFormDefault="qualified"
+     attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.imsglobal.org/xsd/w3/2001/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd" />
+    <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="http://www.imsglobal.org/xsd/w3/Math/XMLSchema/mathml3/mathml3.xsd" />
+    <xs:import namespace="http://www.imsglobal.org/xsd/imsqti_v2p2" schemaLocation="http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.imsglobal.org/xsd/w3/2001/XInclude.xsd" />
+
+    <xs:annotation>
+        <xs:documentation>
+            XSD Data File Information
+            =========================
+            Author:         Colin Smythe (IMS Global, UK) and Mark McKell (IMS Global, USA)
+            Date:           1st February, 2015
+            Version:        1.0
+            Status:         Final Release
+            Description:    This is the Platform Specific Model (PSM) of the QTIv2.2 HTML5 Information Model and corresponding XSD Binding. This is used in conjunction with the QTIv2.2 ASI Information Model.
+
+            History:        This is the original PSM of the QTIv2.2 HTML5 Information Model and corresponding XSD Binding.
+
+            License:        IPR and Distribution Notices
+
+                            This machine readable file is derived from IMS Global specification IMS Question and Test Interoperability (QTI) Version 2.2
+                            found at http://www.imsglobal.org/question and the original IMS Global schema binding or code base
+                            http://www.imsglobal.org/qti.
+
+                            Recipients of this document are requested to submit, with their comments, notification of any relevant 
+                            patent claims or other intellectual property rights of which they may be aware that might be infringed by
+                            any implementation of the specification set forth in this document, and to provide supporting documentation.
+
+                            IMS takes no position regarding the validity or scope of any intellectual property or other rights that might
+                            be claimed to pertain to the implementation or use of the technology described in this document or the extent 
+                            to which any license under such rights might or might not be available; neither does it represent that it has 
+                            made any effort to identify any such rights. Information on IMS procedures with respect to rights in IMS 
+                            specifications can be found at the IMS Global Intellectual Property Rights web page: http://www.imsglobal.org/ipr/imsipr_policyFinal.pdf.
+
+                            Copyright (c) IMS Global Learning Consortium 1999-2014. All Rights Reserved.
+
+                            Use of this specification to develop products or services is governed by the license with IMS found on the IMS website: http://www.imsglobal.org/license.html.
+
+                            Permission is granted to all parties to use excerpts from this document as needed in producing requests for proposals.
+
+                            The limited permissions granted above are perpetual and will not be revoked by IMS or its successors or assigns.
+
+                            THIS SPECIFICATION IS BEING OFFERED WITHOUT ANY WARRANTY WHATSOEVER, AND IN PARTICULAR, ANY WARRANTY OF NONINFRINGEMENT IS
+                            EXPRESSLY DISCLAIMED. ANY USE OF THIS SPECIFICATION SHALL BE MADE ENTIRELY AT THE IMPLEMENTERS OWN RISK, AND NEITHER THE CONSORTIUM
+                            NOR ANY OF ITS MEMBERS OR SUBMITTERS, SHALL HAVE ANY LIABILITY WHATSOEVER TO ANY IMPLEMENTER OR THIRD PARTY FOR ANY DAMAGES OF
+                            ANY NATURE WHATSOEVER, DIRECTLY OR INDIRECTLY, ARISING FROM THE USE OF THIS SPECIFICATION.
+
+            Source UML File Information
+            ===========================
+            The source file information must be supplied as an XMI file (without diagram layout information).
+            The supported UML authoring tools are:
+            (a) Poseidon - v6 (and later)
+            (b) Papyrus - v0.10.2 (and later)
+
+            Source XSLT File Information
+            ============================
+            XSL Generator:    Specificationv1p0_GenerationToolv1.xsl
+            XSLT Processor:   Saxon-PE-9.5.0.2
+            Release:          1.0
+            Date:             31st July, 2014
+            Autogen Engineer: Colin Smythe (IMS Global, UK)
+            Autogen Date:     2014-12-29
+
+            IMS Global Auto-generation Binding Tool-kit (I-BAT)
+            ===================================================
+            This file was auto-generated using the IMS Global Binding Auto-generation Tool-kit (I-BAT).  While every
+            attempt has been made to ensure that this tool auto-generates the files correctly, users should be aware
+            that this is an experimental tool.  Permission is given to make use of this tool.  IMS Global makes no
+            claim on the materials created by third party users of this tool.  Details on how to use this tool
+            are contained in the IMS Global "I-BAT" documentation available at the IMS Global web-site:
+            http://www.imsglobal.org.
+
+            Tool Copyright:  2012-2014  (c) IMS Global Learning Consortium Inc.  All Rights Reserved.
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:annotation>
+        <xs:documentation>
+            Schematron Strict Selection Validation Rules
+            ============================================
+            This is the set of Schematron rules that have been created to enforce the use of the "Unordered" stereotype.
+            These rules ensure that the number of entries in an unordered complexType of an element obey the multiplicity constraints.
+            This is required so that any-order/any-multiplicity complexTypes can be constructed and validated.
+        </xs:documentation>
+        <xs:appinfo>
+            <sch:ns uri="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" prefix="qh5" />
+            <sch:title>Schematron validation rules for the enforcement of the Unordered stereotype.</sch:title>
+
+            <!-- RULESET ******************************************************************* -->
+            <sch:pattern abstract="false" id="Figure.Type">
+                <sch:title>[RULESET] For the Figure.Type complexType.</sch:title>
+
+                <sch:rule abstract="false" context="qh5:figure">
+
+                    <sch:assert test="count(qh5:figcaption) = 0 or count(qh5:figcaption) = 1">
+                        [RULE for Root Class Attribute 1] Invalid number of "figcaption" elements: <sch:value-of select="count(qh5:figcaption)" />.
+                    </sch:assert>
+
+                </sch:rule>
+
+            </sch:pattern>
+            <!-- *************************************************************************** -->
+
+        </xs:appinfo>
+    </xs:annotation>
+
+    <xs:annotation>
+        <xs:documentation>
+            Definition of Schematron Validation Rules
+            =========================================
+            Author:         Colin Smythe (IMS Global, UK) and Mark McKell (IMS Global, USA)
+            Date:           1st February, 2015
+            Version:        1.0
+            Status:         Final Release
+
+            Description:    The set of Schematron Rules to further enforce the HTML5 features in the QTIv2.2 Information Model. The rule sets that have been defined are:
+
+                            [RULE_SET_GENERAL] Ensure the figcaption element positioning within the figure element.
+
+                            RULE_SET_GENERAL: Ensure the figcaption element positioning within the figure element. The set of rules are:-
+                            * RULE GENERAL 1-Assertion 1 :- The figcaption must be either the first or last element in the contained sequence.
+
+            History:        The first set of of schematron rules for the IMS QTIv2.2 specification.
+
+        </xs:documentation>
+
+        <xs:appinfo>
+            <sch:ns uri="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" prefix="qh5" />
+            <sch:title>Schematron Validation Rules for the HTML5 Features in the QTIv2.2 Specification.</sch:title>
+
+                <!-- RULESET ******************************************************************* -->
+                <sch:pattern abstract="false" id="RULE_SET_GENERAL">
+                    <sch:title>Ensure the figcaption element positioning within the figure element.</sch:title>
+
+                    <sch:rule abstract="false" context="//qh5:figure">
+                        <sch:assert test="qh5:figcaption[position()=first() or position()=last()]">
+                            [RULE GENERAL 1: Assertion 1] The figcaption must be either the first or last element in the contained sequence.<sch:value-of select="concat('The Figure identifier is: ', @id)" />
+                        </sch:assert>
+                    </sch:rule>
+
+                </sch:pattern>
+                <!-- *************************************************************************** -->
+
+        </xs:appinfo>
+    </xs:annotation>
+
+    <!-- Generate Global Attributes (non-assigned) ******************************************************** -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate Global Attributes *********************************************************************** -->
+
+    <xs:attributeGroup name="class.BDI.Attr">
+        <xs:attribute name="class" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="StringList.Type" />
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="dir.BDI.Attr">
+        <xs:attribute name="dir" use="required" fixed="auto">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ltr" />
+                    <xs:enumeration value="rtl" />
+                    <xs:enumeration value="auto" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="id.BDI.Attr">
+        <xs:attribute name="id" use="optional" type="UniqueIdentifier.Type" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="label.BDI.Attr">
+        <xs:attribute name="label" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="language.BDI.Attr">
+        <xs:attribute ref="xml:lang" use="optional" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="title.BDI.Attr">
+        <xs:attribute name="title" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="class.FigCaption.Attr">
+        <xs:attribute name="class" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="StringList.Type" />
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="dir.FigCaption.Attr">
+        <xs:attribute name="dir" use="optional" default="auto">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ltr" />
+                    <xs:enumeration value="rtl" />
+                    <xs:enumeration value="auto" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="id.FigCaption.Attr">
+        <xs:attribute name="id" use="optional" type="UniqueIdentifier.Type" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="label.FigCaption.Attr">
+        <xs:attribute name="label" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="language.FigCaption.Attr">
+        <xs:attribute ref="xml:lang" use="optional" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="title.FigCaption.Attr">
+        <xs:attribute name="title" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="class.Figure.Attr">
+        <xs:attribute name="class" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="StringList.Type" />
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="dir.Figure.Attr">
+        <xs:attribute name="dir" use="optional" default="auto">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ltr" />
+                    <xs:enumeration value="rtl" />
+                    <xs:enumeration value="auto" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="id.Figure.Attr">
+        <xs:attribute name="id" use="optional" type="UniqueIdentifier.Type" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="label.Figure.Attr">
+        <xs:attribute name="label" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="language.Figure.Attr">
+        <xs:attribute ref="xml:lang" use="optional" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="title.Figure.Attr">
+        <xs:attribute name="title" use="optional" type="xs:normalizedString" />
+    </xs:attributeGroup>
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate Global List Types *********************************************************************** -->
+
+    <xs:simpleType name="StringList.Type">
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate Namespaced extension Group  ************************************************************* -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate Special DataTypes  ********************************************************************** -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the enumerated simpleType declarations ************************************************** -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the simpleType elements based on IMS data-types (Parameter) ***************************** -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the simpleType elements based on IMS data-types (Derived) ******************************* -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the simpleType elements based on IMS data-types (Union) ********************************* -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the simpleType elements based on IMS data-types (Complex) ******************************* -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the derived data-type elements based upon simpleType ************************************ -->
+
+    <xs:simpleType name="UniqueIdentifier.Type">
+        <xs:restriction base="xs:ID" />
+    </xs:simpleType>
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the derived data-type elements based upon derived simpleType **************************** -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the ComplexTypes ************************************************************************ -->
+
+    <xs:complexType name="Audio.Type" abstract="false" mixed="false">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FigCaption.Type" abstract="false" mixed="true">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                ...TBD (Figcaption)...
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="m2:math" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="m3:math" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="xi:include" minOccurs="1" maxOccurs="1" />
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="qti:img" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:br" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:object" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:em" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:a" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:code" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:span" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:sub" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:acronym" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:big" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:tt" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:kbd" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:q" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:i" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:dfn" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:abbr" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:strong" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:sup" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:var" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:small" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:samp" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:b" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:cite" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="qti:bdo" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="bdi" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="figure" minOccurs="1" maxOccurs="1" />
+                </xs:choice>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attributeGroup ref="id.FigCaption.Attr" />
+        <xs:attributeGroup ref="title.FigCaption.Attr" />
+        <xs:attributeGroup ref="dir.FigCaption.Attr" />
+        <xs:attributeGroup ref="language.FigCaption.Attr" />
+        <xs:attributeGroup ref="label.FigCaption.Attr" />
+        <xs:attributeGroup ref="class.FigCaption.Attr" />
+    </xs:complexType>
+
+    <xs:complexType name="Figure.Type" abstract="false" mixed="false">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                ...TBD (Figure)...
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs = "0" maxOccurs = "unbounded">
+            <xs:element ref="figcaption" minOccurs="0" maxOccurs="1" />
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="qti:img" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:br" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:object" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:em" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:a" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:code" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:span" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:sub" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:acronym" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:big" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:tt" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:kbd" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:q" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:i" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:dfn" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:abbr" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:strong" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:sup" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:var" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:small" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:samp" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:b" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:cite" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="qti:bdo" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="bdi" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="figure" minOccurs="1" maxOccurs="1" />
+            </xs:choice>
+        </xs:choice>
+        <xs:attributeGroup ref="id.Figure.Attr" />
+        <xs:attributeGroup ref="title.Figure.Attr" />
+        <xs:attributeGroup ref="dir.Figure.Attr" />
+        <xs:attributeGroup ref="language.Figure.Attr" />
+        <xs:attributeGroup ref="label.Figure.Attr" />
+        <xs:attributeGroup ref="class.Figure.Attr" />
+    </xs:complexType>
+
+    <xs:complexType name="Source.Type" abstract="false" mixed="false">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Track.Type" abstract="false" mixed="false">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Video.Type" abstract="false" mixed="false">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================================================================================================== -->
+
+    <!-- Generate the derived ComplexTypes **************************************************************** -->
+
+    <xs:complexType name="BDI.Type" abstract="false" mixed="false">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                ...TBD (BIDI class)...
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="id.BDI.Attr" />
+                <xs:attributeGroup ref="class.BDI.Attr" />
+                <xs:attributeGroup ref="language.BDI.Attr" />
+                <xs:attributeGroup ref="label.BDI.Attr" />
+                <xs:attributeGroup ref="title.BDI.Attr" />
+                <xs:attributeGroup ref="dir.BDI.Attr" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================== -->
+
+    <!-- Declaration of the elements (Complex) ************************************************************ -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Declaration of the elements (Derived) ************************************************************ -->
+
+    <!-- ================================================================================================== -->
+
+    <!-- Declaration of the root element(s) *************************************************************** -->
+
+    <xs:element name="bdi" type="BDI.Type" />
+    <xs:element name="figcaption" type="FigCaption.Type" />
+    <xs:element name="figure" type="Figure.Type" />
+
+    <!-- ================================================================================================== -->
+
+</xs:schema>

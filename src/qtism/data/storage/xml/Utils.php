@@ -49,6 +49,8 @@ class Utils
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
         } elseif ($version === '2.1.1') {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1p1.xsd';
+        } elseif ($version === '2.2.0') {
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p2.xsd';
         } else {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
         }
@@ -84,6 +86,12 @@ class Utils
                     $version = '2.1.0';
                 } else if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd') {
                     $version = '2.1.1';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsqti_v2p2') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsqti_v2p2');
+                
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd') {
+                    $version = '2.2.0';
                 }
             }
         }
