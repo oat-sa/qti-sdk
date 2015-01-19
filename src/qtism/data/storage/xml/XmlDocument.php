@@ -384,7 +384,12 @@ class XmlDocument extends QtiDocument
         foreach ($libXmlErrors as $error) {
             switch ($error->level) {
                 case LIBXML_ERR_WARNING:
-                    $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    // Since QTI 2.2, some schemas are imported multiple times.
+                    // Xerces does not produce errors, but libxml does...
+                    if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
+                        $formattedErrors[] = "Warning: " . trim($error->message) . " at " . $error->line . ":" . $error->column . ".";
+                    }
+                    
                     break;
 
                 case LIBXML_ERR_ERROR:
