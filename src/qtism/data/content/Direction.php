@@ -14,67 +14,95 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
-namespace qtism\data;
+namespace qtism\data\content;
 
 use qtism\common\enums\Enumeration;
 
 /**
- * The ShowHide enumeration.
- *
+ * The Direction enumeration describes in which direction QTI content
+ * is displayed. From Left to Right, From Right to Left, or Automatic
+ * detection.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ShowHide implements Enumeration
+class Direction implements Enumeration
 {
-    const SHOW = 0;
-
-    const HIDE = 1;
-
-    public static function asArray()
+    /**
+     * Automatic direction detection.
+     * 
+     * @var integer
+     */
+    const AUTO = 0;
+    
+    /**
+     * Left To Right direction.
+     * 
+     * @var integer
+     */
+    const LTR = 1;
+    
+    /**
+     * Right to Left direction.
+     * 
+     * @var integer
+     */
+    const RTL = 2;
+    
+    static public function asArray()
     {
         return array(
-            'SHOW' => self::SHOW,
-            'HIDE' => self::HIDE
+            'AUTO' => self::SHOW,
+            'LTR' => self::LTR,
+            'RTL' => self::RTL            
         );
     }
-
-    public static function getConstantByName($name)
+    
+    static public function getConstantByName($name)
     {
         switch (strtolower($name)) {
-            case 'show':
-                return self::SHOW;
+            case 'auto':
+                return self::AUTO;
                 break;
-
-            case 'hide':
-                return self::HIDE;
+    
+            case 'ltr':
+                return self::LTR;
                 break;
-
+            
+            case 'rtl':
+                return self::RTL;
+                break;
+            
             default:
                 return false;
                 break;
         }
     }
-
+    
     public static function getNameByConstant($constant)
     {
         switch ($constant) {
-            case self::SHOW:
-                return 'show';
+            case self::AUTO:
+                return 'auto';
                 break;
 
-            case self::HIDE:
-                return 'hide';
+            case self::LTR:
+                return 'ltr';
                 break;
 
+            case self::RTL:
+                return 'rtl';
+                break;
+                
             default:
                 return false;
                 break;
         }
     }
-}
+}    
