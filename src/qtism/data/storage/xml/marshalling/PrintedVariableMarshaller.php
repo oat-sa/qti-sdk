@@ -74,7 +74,7 @@ class PrintedVariableMarshaller extends Marshaller
             self::setXmlBase($element, $component->getXmlBase());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -125,7 +125,7 @@ class PrintedVariableMarshaller extends Marshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

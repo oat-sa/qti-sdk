@@ -58,7 +58,7 @@ class Direction implements Enumeration
     static public function asArray()
     {
         return array(
-            'AUTO' => self::SHOW,
+            'AUTO' => self::AUTO,
             'LTR' => self::LTR,
             'RTL' => self::RTL            
         );

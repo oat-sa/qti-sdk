@@ -48,7 +48,7 @@ class ListMarshaller extends ContentMarshaller
             $component->setXmlBase($xmlBase);
         }
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
@@ -68,7 +68,7 @@ class ListMarshaller extends ContentMarshaller
             $element->appendChild($elt);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

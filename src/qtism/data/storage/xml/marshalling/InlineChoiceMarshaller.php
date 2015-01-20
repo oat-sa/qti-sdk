@@ -80,7 +80,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
 
@@ -97,7 +97,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {

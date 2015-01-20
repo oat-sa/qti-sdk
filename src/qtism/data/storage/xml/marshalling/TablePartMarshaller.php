@@ -50,7 +50,7 @@ class TablePartMarshaller extends Marshaller
             $element->appendChild($marshaller->marshall($tr));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -79,7 +79,7 @@ class TablePartMarshaller extends Marshaller
         $class = "qtism\\data\\content\\xhtml\\tables\\" . ucfirst($element->localName);
         $component = new $class($trs);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

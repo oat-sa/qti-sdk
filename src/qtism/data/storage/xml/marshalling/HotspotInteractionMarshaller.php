@@ -79,7 +79,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
                             $component->setPrompt($prompt);
                         }
 
-                        self::fillBodyElement($component, $element);
+                        $this->fillBodyElement($component, $element);
 
                         return $component;
                     } else {
@@ -108,7 +108,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
 

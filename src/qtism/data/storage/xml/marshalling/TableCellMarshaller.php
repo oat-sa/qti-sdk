@@ -83,7 +83,7 @@ class TableCellMarshaller extends ContentMarshaller
 
         try {
             $component->setContent(new FlowCollection($children->getArrayCopy()));
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } catch (InvalidArgumentException $e) {
@@ -129,7 +129,7 @@ class TableCellMarshaller extends ContentMarshaller
             $element->appendChild($marshaller->marshall($c));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

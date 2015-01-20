@@ -90,7 +90,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
                 $component->setPrompt($prompt);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {
@@ -107,7 +107,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         
         // responseIdentifier.
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());

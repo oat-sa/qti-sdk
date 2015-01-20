@@ -67,7 +67,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
         }
 
         $component->setContent(new InlineCollection($children->getArrayCopy()));
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         // The q class has a specific cite (URI) attribute.
         if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
@@ -89,7 +89,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());

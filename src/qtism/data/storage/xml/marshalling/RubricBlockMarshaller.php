@@ -81,7 +81,7 @@ class RubricBlockMarshaller extends Marshaller
             $element->appendChild($stylesheetMarshaller->marshall($stylesheet));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -143,7 +143,7 @@ class RubricBlockMarshaller extends Marshaller
             $object->setStylesheets($stylesheets);
             $object->setContent($content);
 
-            self::fillBodyElement($object, $element);
+            $this->fillBodyElement($object, $element);
 
             return $object;
         } else {

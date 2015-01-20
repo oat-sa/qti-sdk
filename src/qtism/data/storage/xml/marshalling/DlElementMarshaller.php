@@ -47,7 +47,7 @@ class DlElementMarshaller extends ContentMarshaller
         $childrenArray = $children->getArrayCopy();
         $component->setContent(($component instanceof Dt) ? new InlineCollection($childrenArray) : new FlowCollection($childrenArray));
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
@@ -63,7 +63,7 @@ class DlElementMarshaller extends ContentMarshaller
             $element->appendChild($elt);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

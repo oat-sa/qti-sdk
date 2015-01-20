@@ -44,7 +44,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('endAttemptInteraction');
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'title', $component->getTitle());
 
@@ -78,7 +78,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

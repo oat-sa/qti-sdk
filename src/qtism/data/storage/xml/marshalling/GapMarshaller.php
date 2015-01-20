@@ -73,7 +73,7 @@ class GapMarshaller extends Marshaller
             }
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -112,7 +112,7 @@ class GapMarshaller extends Marshaller
                 $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
 

@@ -116,7 +116,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
                 $component->setPrompt($prompt);
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {
@@ -135,7 +135,7 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
         $isChoiceInteraction = $component instanceof ChoiceInteraction;
         
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.

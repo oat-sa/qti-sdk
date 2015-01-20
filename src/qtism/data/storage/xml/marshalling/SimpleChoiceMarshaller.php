@@ -62,7 +62,7 @@ class SimpleChoiceMarshaller extends ContentMarshaller
             }
 
             $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
 
@@ -79,7 +79,7 @@ class SimpleChoiceMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 

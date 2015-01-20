@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -84,6 +84,14 @@ abstract class BodyElement extends QtiComponent
      * @qtism-bean-property
      */
     private $label = '';
+    
+    /**
+     * The direction in which body elements must be displayed.
+     * 
+     * @var integer
+     * @qtism-bean-property
+     */
+    private $dir;
 
     /**
      * Create a new BodyElement object.
@@ -99,6 +107,7 @@ abstract class BodyElement extends QtiComponent
         $this->setClass($class);
         $this->setLang($lang);
         $this->setLabel($label);
+        $this->setDir(Direction::AUTO);
     }
 
     /**
@@ -238,5 +247,31 @@ abstract class BodyElement extends QtiComponent
     public function hasLabel()
     {
         return $this->getLabel() !== '';
+    }
+    
+    /**
+     * Set the direction in which body elements must be displayed.
+     * 
+     * @param integer $dir A value from the Direction enumeration.
+     * @throws InvalidArgumentException If $dir is not a value from the Direction enumeration.
+     */
+    public function setDir($dir)
+    {
+        if (in_array($dir, Direction::asArray()) === true) {
+            $this->dir = $dir;
+        } else {
+            $msg = "The 'dir' argument must be a value from the Direction enumeration.";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Get the direction in which body elements must be displayed.
+     * 
+     * @return integer A value from the Direction enumeration.
+     */
+    public function getDir()
+    {
+        return $this->dir;
     }
 }

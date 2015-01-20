@@ -49,7 +49,7 @@ class BrMarshaller extends Marshaller
             self::setXmlBase($element, $component->setXmlBase());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -69,7 +69,7 @@ class BrMarshaller extends Marshaller
             $component->setXmlBase($xmlBase);
         }
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }

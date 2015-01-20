@@ -73,7 +73,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
                 }
 
                 $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
-                self::fillBodyElement($component, $element);
+                $this->fillBodyElement($component, $element);
 
                 return $component;
             } else {
@@ -93,7 +93,7 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());

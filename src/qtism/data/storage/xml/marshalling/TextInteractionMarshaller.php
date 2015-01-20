@@ -98,7 +98,7 @@ class TextInteractionMarshaller extends Marshaller
             }
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -172,7 +172,7 @@ class TextInteractionMarshaller extends Marshaller
                 }
             }
 
-            self::fillBodyElement($component, $element);
+            $this->fillBodyElement($component, $element);
 
             return $component;
         } else {

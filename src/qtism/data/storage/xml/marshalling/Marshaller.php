@@ -350,7 +350,7 @@ abstract class Marshaller
 	 * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
 	 * @throws UnmarshallingException If one of the attributes of $element is not valid.
 	 */
-    protected static function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
         try {
             $bodyElement->setId($element->getAttribute('id'));

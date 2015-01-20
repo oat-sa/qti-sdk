@@ -47,7 +47,7 @@ class CaptionMarshaller extends ContentMarshaller
         $inlines = new InlineCollection($children->getArrayCopy());
         $component->setContent($inlines);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
@@ -64,7 +64,7 @@ class CaptionMarshaller extends ContentMarshaller
             $element->appendChild($marshaller->marshall($c));
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

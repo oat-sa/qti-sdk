@@ -63,7 +63,7 @@ class BlockquoteMarshaller extends ContentMarshaller
             self::setXmlBase($element, $component->getXmlBase());
         }
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
@@ -87,7 +87,7 @@ class BlockquoteMarshaller extends ContentMarshaller
             $element->appendChild($e);
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }

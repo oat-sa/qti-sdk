@@ -91,7 +91,7 @@ class HotspotMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -175,7 +175,7 @@ class HotspotMarshaller extends Marshaller
                         }
                     }
 
-                    self::fillBodyElement($component, $element);
+                    $this->fillBodyElement($component, $element);
 
                     return $component;
                 } else {

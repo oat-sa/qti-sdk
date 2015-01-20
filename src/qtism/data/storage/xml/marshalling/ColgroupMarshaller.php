@@ -52,7 +52,7 @@ class ColgroupMarshaller extends Marshaller
             $element->appendChild($marshaller->marshall());
         }
 
-        self::fillElement($element, $component);
+        $this->fillElement($element, $component);
 
         return $element;
     }
@@ -79,7 +79,7 @@ class ColgroupMarshaller extends Marshaller
         }
         $component->setContent($cols);
 
-        self::fillBodyElement($component, $element);
+        $this->fillBodyElement($component, $element);
 
         return $component;
     }
