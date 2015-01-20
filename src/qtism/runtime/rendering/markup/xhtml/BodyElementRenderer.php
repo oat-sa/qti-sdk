@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\Direction;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
@@ -67,6 +68,10 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
 
         if ($component->hasLang() === true) {
             $fragment->firstChild->setAttribute('lang', $component->getLang());
+        }
+        
+        if ($component->getDir() !== Direction::AUTO) {
+            $fragment->firstChild->setAttribute('dir', Direction::getNameByConstant($component->getDir()));
         }
     }
 }
