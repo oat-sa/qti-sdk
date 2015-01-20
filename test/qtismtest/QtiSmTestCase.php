@@ -25,9 +25,9 @@ abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
 	public function getMarshallerFactory($version = '2.1') {
 	    if (Version::compare($version, '2.0.0', '==') === true) {
 	        return new Qti20MarshallerFactory();
-	    } elseif (Version::compare($version, '2.1.1') === true) {
+	    } elseif (Version::compare($version, '2.1.1', '==') === true) {
 	        return new Qti211MarshallerFactory();
-	    } elseif (Version::compare($version, '2.2.0') === true) {
+	    } elseif (Version::compare($version, '2.2.0', '==') === true) {
 	        return new Qti22MarshallerFactory();
 	    } else {
 	        return new Qti21MarshallerFactory();
@@ -111,11 +111,12 @@ abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
 	 * Create a QtiComponent object from an XML String.
 	 *
 	 * @param string $xmlString An XML String to transform in a QtiComponent object.
+	 * @param string $version A QTI version rule the creation of the component.
 	 * @return \qtism\data\QtiComponent
 	 */
-	public function createComponentFromXml($xmlString) {
+	public function createComponentFromXml($xmlString, $version = '2.1.0') {
 		$element = QtiSmTestCase::createDOMElement($xmlString);
-		$factory = $this->getMarshallerFactory();
+		$factory = $this->getMarshallerFactory($version);
 		$marshaller = $factory->createMarshaller($element);
 		return $marshaller->unmarshall($element);
 	}

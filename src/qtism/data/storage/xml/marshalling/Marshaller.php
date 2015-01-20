@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
+use qtism\data\content\Direction;
 use qtism\data\QtiComponent;
 use qtism\data\content\BodyElement;
 use \DOMDocument;
@@ -339,12 +341,13 @@ abstract class Marshaller
     }
 
     /**
-	 * Fill $bodyElement with the following bodyElement:
+	 * Fill $bodyElement with the following bodyElement attributes:
 	 *
 	 * * id
 	 * * class
 	 * * lang
 	 * * label
+	 * * dir (QTI 2.2)
 	 *
 	 * @param BodyElement $bodyElement The bodyElement to fill.
 	 * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
@@ -357,8 +360,13 @@ abstract class Marshaller
             $bodyElement->setClass($element->getAttribute('class'));
             $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
             $bodyElement->setLabel($element->getAttribute('label'));
+            
+            $version = $this->getVersion();
+            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = self::getDOMElementAttributeAs($element, 'dir')) !== null) {
+                $bodyElement->setDir(Direction::getConstantByName($dir));
+            }
         } catch (InvalidArgumentException $e) {
-            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label).";
+            $msg = "An error occured while filling the bodyElement attributes (id, class, lang, label, dir).";
             throw new UnmarshallingException($msg, $element, $e);
         }
     }
@@ -385,6 +393,11 @@ abstract class Marshaller
 
         if (($label = $bodyElement->getLabel()) != '') {
             $element->setAttribute('label', $label);
+        }
+        
+        $version = $this->getVersion();
+        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO) {
+            $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
     }
 

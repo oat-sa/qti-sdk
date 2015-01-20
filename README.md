@@ -5,7 +5,7 @@
 
 # QTI Software Development Kit for PHP
 
-A QTI 2.1 (Question &amp; Test Interoperability) Software Development Kit for PHP 5.3 and higher supporting a wide 
+An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 5.3 and higher supporting a wide 
 range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
 
 __This implementation of QTI is a beta software. The API might change at any time while the code is under constant enhancement. A stable
@@ -13,6 +13,7 @@ version will be released "when it's done".__
 
 ## Features
 
+* Targets QTI 2.0, 2.1 and 2.2
 * Complete QTI Information Model
 * Complete QTI Rule Engine Support
 * Custom Operator Hooks through PSR-0
