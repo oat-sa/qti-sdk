@@ -15,8 +15,8 @@
         </mapping>
     </responseDeclaration>
     <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
-    <itemBody dir="rtl">
-        <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0">
+    <itemBody>
+        <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0" dir="rtl">
             <prompt>איזה מהגורמים הבאים משמשים ליצירת מים</prompt>
             <simpleChoice identifier="H" fixed="false">מימן</simpleChoice>
             <simpleChoice identifier="He" fixed="false">הליום</simpleChoice>
