@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd"
+    identifier="bidiTorture1" title="BIDI Torture Test 1" timeDependent="false">
+    <itemBody>
+        <div>
+            <bdo dir="rtl">hello</bdo>
+            <blockquote dir="ltr">
+                <table dir="rtl">
+                    <caption dir="auto">Developers List</caption>
+                    <colgroup dir="rtl">
+                        <col dir="auto" span="1"/>
+                    </colgroup>
+                    <colgroup>
+                        <col span="1"/>
+                    </colgroup>
+                    <thead dir="ltr">
+                        <tr>
+                            <th>First Name</th>
+                            <th dir="auto">Last Name</th>
+                        </tr>
+                    </thead>
+                    <tfoot dir="auto">
+                        <tr dir="ltr">
+                            <td>First Name</td>
+                            <td dir="rtl">Last Name</td>
+                        </tr>
+                    </tfoot>
+                    <tbody dir="rtl">
+                        <tr>
+                            <td>Jérôme</td>
+                            <td>Bogaerts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </blockquote>
+        </div>
+        <div>
+            <dl dir="ltr">
+                <dt dir="auto">QTI</dt>
+                <dd dir="rtl">Question and Test Interoperability</dd>
+            </dl>
+            <hr dir="rtl"/>
+            <abbr dir="ltr"><bdo dir="rtl">etc.</bdo></abbr>
+            <acronym dir="auto">QTI</acronym>
+            <address dir="rtl">9 Avenue des Haut-Fourneaux</address>
+            <p>
+                This <b dir="rtl">bold</b> and <strong dir="ltr">strong</strong> <span dir="auto">text</span> is <em dir="rtl">emphased</em> with <i dir="auto">italic</i>.
+            </p>
+            <big dir="ltr">BIG</big>
+            <cite dir="auto">Cite!</cite>
+            <code dir="rtl">some code</code>
+            <dfn dir="ltr">A definition</dfn>
+            <h1 dir="auto">Heading 1</h1>
+            <h2 dir="rtl">Heading 2</h2>
+            <h3 dir="auto">Heading 3</h3>
+            <h4 dir="ltr">Heading 4</h4>
+            <h5 dir="rtl">Heading 5</h5>
+            <h6 dir="ltr">Heading 6</h6>
+            <kbd dir="rtl">Keyboard Input</kbd>
+            <pre dir="rtl">Preformated</pre>
+            <samp dir="rtl">sample</samp>
+            <small dir="rtl">tiny</small>
+            <sup dir="rtl">SUP</sup>
+            <tt dir="rtl">telnet?</tt>
+            <var dir="rtl">variable?</var>
+            <img src="somewhere.png" alt="somewhere..." dir="rtl"/>
+            <ul dir="rtl">
+                <li dir="rtl">item</li>
+            </ul>
+            <ol dir="rtl">
+                <li dir="rtl">item #1</li>
+            </ol>
+            <object type="image/svg" data="data.svg" dir="rtl"/>
+            <q dir="rtl">a</q>
+        </div>
+    </itemBody>
+    <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response"/>
+</assessmentItem>
