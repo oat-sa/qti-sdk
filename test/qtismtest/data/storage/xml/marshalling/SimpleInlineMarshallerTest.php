@@ -2,6 +2,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\xhtml\text\Bdo;
 use qtism\data\content\Direction;
 use qtism\data\content\xhtml\text\Q;
 use qtism\data\content\xhtml\A;
@@ -179,5 +180,26 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 	    $element = $dom->importNode($element, true);
 	
 	    $this->assertEquals('<q id="albert"/>', $dom->saveXML($element));
+	}
+	
+	public function testMarshallBdo22() {
+	    $bdo = new Bdo('bido');
+	    $bdo->setDir(Direction::RTL);
+	    $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($bdo);
+	    $element = $marshaller->marshall($bdo);
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $element = $dom->importNode($element, true);
+	    
+	    $this->assertEquals('<bdo id="bido" dir="rtl"/>', $dom->saveXML($element));
+	}
+	
+	public function testUnmarshallBdo22() {
+	    $bdo = $this->createComponentFromXml('<bdo dir="rtl">I am reversed!</bdo>', '2.2.0');
+	    $this->assertEquals(Direction::RTL, $bdo->getDir());
+	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Bdo', $bdo);
+	    
+	    $content = $bdo->getContent();
+	    $this->assertSame(1, count($content));
+	    $this->assertEquals('I am reversed!', $content[0]->getContent());
 	}
 }

@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\utils\Version;
 use qtism\data\content\InfoControl;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
@@ -48,6 +49,7 @@ use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;
+use qtism\data\content\xhtml\text\Bdo;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\xhtml\lists\DlElement;
@@ -104,7 +106,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'templateBlock',
-                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 'feedbackBlock');
+                                             'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 
+                                             'feedbackBlock');
 
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
@@ -219,7 +222,14 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function getChildrenElements(DOMElement $element)
     {
-        if (in_array($element->localName, self::$simpleComposites) === true) {
+        $simpleComposites = self::$simpleComposites;
+        $version = $this->getVersion();
+        
+        if (Version::compare($version, '2.2.0', '>=') === true) {
+            $simpleComposites[] = 'bdo';
+        }
+        
+        if (in_array($element->localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);
         } elseif ($element->localName === 'choiceInteraction') {
             return self::getChildElementsByTagName($element, 'simpleChoice');

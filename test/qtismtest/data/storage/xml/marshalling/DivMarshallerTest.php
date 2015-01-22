@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\xhtml\text\Bdo;
+
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\xhtml\text\Strong;
 use qtism\data\content\xhtml\text\P;

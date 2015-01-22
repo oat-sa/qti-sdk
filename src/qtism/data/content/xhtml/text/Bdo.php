@@ -20,35 +20,23 @@
  * @license GPLv2
  */
 
-namespace qtism\data\storage\xml\marshalling;
+namespace qtism\data\content\xhtml\text;
 
-use qtism\common\utils\Reflection;
-use \ReflectionClass;
+use qtism\data\content\SimpleInline;
 
 /**
- * A MarshallerFactory focusing on instantiating and configuring
- * Marshallers for QTI 2.2.
- * 
+ * The XHTML bdo class.
+ *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Qti22MarshallerFactory extends MarshallerFactory
+class Bdo extends SimpleInline
 {
     /**
-     * Create a new Qti22MarshallerFactory object.
+     * @see \qtism\data\QtiComponent::getQtiClassName()
      */
-    public function __construct()
+    public function getQtiClassName()
     {
-        parent::__construct();
-        $this->addMappingEntry('bdo', 'qtism\\data\\storage\\xml\\marshalling\\SimpleInlineMarshaller');
-    }
-    
-    /**
-     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
-     */
-    protected function instantiateMarshaller(ReflectionClass $class, array $args)
-    {
-        array_unshift($args, '2.2.0');
-        return Reflection::newInstance($class, $args);
+        return 'bdo';
     }
 }
