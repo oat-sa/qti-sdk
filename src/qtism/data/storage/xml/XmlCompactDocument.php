@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -39,7 +39,16 @@ use \DOMElement;
 use \SplObjectStorage;
 
 /**
- * The XmlCompactDocument class.
+ * The XmlCompactDocument class represents a test and the needed information from its items to be runnable.
+ * 
+ * Compacting a test within items information to represent a test as a single unit. This class references
+ * the minimal data required to make a test runnable. By runnable, we mean a test that can be instantiated,
+ * to represent the item flow that will be presented to the candidate. In other words, the intrinsic content 
+ * of the test in addition with item's:
+ * 
+ * * Response Processing
+ * * Variable Declarations
+ * * Modal feedback conditions
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -55,20 +64,15 @@ class XmlCompactDocument extends XmlDocument
     private $explodeRubricBlocks = false;
 
     /**
-     * Whether or not the rubrickBlock components contained
-     * in the document should be separated from the document.
+     * Whether or not the rubrickBlock components contained in the document should be separated from the document.
      *
-     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save()
-     * will:
+     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save(), the following rules apply:
      *
      * * rubricBlock components will be removed from the document.
-     * * replace the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes.
+     * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
      * * place the substituted rubricBlock content in separate QTI-XML files, in a valid location and with a valid name regarding the generated rubricBlockRef components.
      *
-     * Please note that this is took under consideration only when the XmlDocument::save() method
-     * is used.
-     *
-     * @param boolean $explodeRubricBlocks
+     * @param boolean $explodeRubricBlocks Wheter rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
     public function setExplodeRubricBlocks($explodeRubricBlocks)
     {
@@ -76,8 +80,7 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
-     * Whether or not the rubricBlock components contained
-     * in the document should be separated from the document.
+     * Whether or not the rubricBlock components contained in the document should be separated from the document.
      *
      * @return boolean
      */
@@ -311,8 +314,7 @@ class XmlCompactDocument extends XmlDocument
 	 */
     public function beforeSave(QtiComponent $documentComponent, $uri)
     {
-        // Take care of rubricBlock explosion. Transform
-        // actual rubricBlocks in rubricBlockRefs.
+        // Take care of rubricBlock explosion. Transform actual rubricBlocks in rubricBlockRefs.
         if ($this->mustExplodeRubricBlocks() === true) {
 
             // Get all rubricBlock elements...
@@ -354,6 +356,10 @@ class XmlCompactDocument extends XmlDocument
                 }
             }
         }
+        
+        // Take care of modalFeedbacks.
+        // 1. Extract modal feedback conditions.
+        
     }
     
     protected function inferVersion()

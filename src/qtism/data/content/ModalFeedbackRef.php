@@ -37,7 +37,7 @@ use \InvalidArgumentException;
 class ModalFeedbackRef extends QtiComponent
 {
     /**
-     * The identifier on which it is decided to show or hide the feedback.
+     * The outcome identifier serving as a lookup.
      * 
      * @var string
      * @qtism-bean-property

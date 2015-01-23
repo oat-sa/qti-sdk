@@ -145,7 +145,6 @@ abstract class MarshallerFactory
         $this->addMappingEntry('object', 'qtism\\data\\storage\\xml\\marshalling\\ObjectMarshaller');
         $this->addMappingEntry('col', 'qtism\\data\\storage\\xml\\marshalling\\ColMarshaller');
         $this->addMappingEntry('equal', 'qtism\\data\\storage\\xml\\marshalling\\EqualMarshaller');
-        $this->addMappingEntry('rubricBlockRef', 'qtism\\data\\storage\\xml\\marshalling\\RubricBlockRefMarshaller');
         $this->addMappingEntry('sectionPart', 'qtism\\data\\storage\\xml\\marshalling\\SectionPartMarshaller');
         $this->addMappingEntry('selectPointInteraction', 'qtism\\data\\storage\\xml\\marshalling\\SelectPointInteractionMarshaller');
         $this->addMappingEntry('setOutcomeValue', 'qtism\\data\\storage\\xml\\marshalling\\SetOutcomeValueMarshaller');
