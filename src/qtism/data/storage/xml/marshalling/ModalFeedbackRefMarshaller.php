@@ -44,11 +44,14 @@ class ModalFeedbackRefMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('modalFeedbackRef');
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getIdentifier());
+        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
         self::setDOMElementAttribute($element, 'href', $component->getHref());
+        
+        if ($component->hasTitle() === true) {
+            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        }
 
         return $element;
     }

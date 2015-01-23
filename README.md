@@ -38,5 +38,6 @@ version will be released "when it's done".__
 Run Unit Tests by invoking the following shell command:
 
 ```shell
+cp phpunit.xml.dist phpunit.xml
 ./vendor/bin/phpunit test
 ```

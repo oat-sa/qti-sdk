@@ -145,7 +145,7 @@ class ModalFeedbackRef extends QtiComponent
      */
     public function getOutcomeIdentifier()
     {
-        return $this->identifier;
+        return $this->outcomeIdentifier;
     }
     
     /**
@@ -203,6 +203,8 @@ class ModalFeedbackRef extends QtiComponent
     /**
      * Set the title of the feedback.
      * 
+     * An empty string means there is no title.
+     * 
      * @param string $title
      * @throws InvalidArgumentException If $title is not a string.
      */
@@ -225,6 +227,16 @@ class ModalFeedbackRef extends QtiComponent
     {
         return $this->title;
     }
+    
+    /**
+     * Whether a title is defined for this feedback.
+     * 
+     * @return boolean
+     */
+    public function hasTitle()
+    {
+        return $this->getTitle() !== '';
+    }
 
     /**
      * @see \qtism\data\QtiComponent::getComponents()
@@ -232,5 +244,13 @@ class ModalFeedbackRef extends QtiComponent
     public function getComponents()
     {
         return new QtiComponentCollection();
+    }
+    
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
+        return 'modalFeedbackRef';
     }
 }
