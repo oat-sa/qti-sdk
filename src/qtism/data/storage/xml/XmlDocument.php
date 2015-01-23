@@ -187,7 +187,7 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "An internal occured while parsing QTI-XML:\n${formattedErrors}";
+                $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
                 throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } catch (DOMException $e) {

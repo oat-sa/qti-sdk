@@ -107,7 +107,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'templateBlock',
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 
-                                             'feedbackBlock');
+                                             'feedbackBlock', 'bdo');
 
     /**
      * @see \qtism\data\storage\xml\marshalling\RecursiveMarshaller::isElementFinal()
@@ -224,10 +224,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     {
         $simpleComposites = self::$simpleComposites;
         $version = $this->getVersion();
-        
-        if (Version::compare($version, '2.2.0', '>=') === true) {
-            $simpleComposites[] = 'bdo';
-        }
         
         if (in_array($element->localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);

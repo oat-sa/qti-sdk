@@ -89,7 +89,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
         }
 
         // Deal with lookup table.
-        if (Version::compare($version, '2.1.0', '>=') === true && $component->getLookupTable() != null) {
+        if ($component->getLookupTable() != null) {
             $lookupTableMarshaller = $this->getMarshallerFactory()->createMarshaller($component->getLookupTable(), array($component->getBaseType()));
             $element->appendChild($lookupTableMarshaller->marshall($component->geTLookupTable()));
         }
@@ -154,7 +154,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $interpolationTables = $element->getElementsByTagName('interpolationTable');
             $matchTable = $element->getElementsByTagName('matchTable');
 
-            if (Version::compare($version, '2.1.0', '>=') === true && ($interpolationTables->length == 1 || $matchTable->length == 1)) {
+            if ($interpolationTables->length == 1 || $matchTable->length == 1) {
                 // we have a lookupTable defined.
                 $lookupTable = null;
 

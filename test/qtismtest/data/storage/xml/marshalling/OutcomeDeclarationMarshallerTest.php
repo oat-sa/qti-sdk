@@ -40,7 +40,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	/**
 	 * @depends testMarshallMinimal21
 	 */
-	public function testMarshallNoOutputViewsNormalMinimumMasteryValueViewLookupTable() {
+	public function testMarshallNoOutputViewsNormalMinimumMasteryValueView20() {
 	    $identifier = "outcome1";
 	    $cardinality = Cardinality::SINGLE;
 	    $baseType = BaseType::INTEGER;
@@ -49,12 +49,6 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	    $component->setViews(new ViewCollection(array(View::AUTHOR)));
 	    $component->setNormalMinimum(10.4);
 	    $component->setMasteryValue(10.3);
-	    
-	    $entries = new MatchTableEntryCollection();
-	    $entries[] = new MatchTableEntry(1, 1.5);
-	    $entries[] = new MatchTableEntry(2, 2.5);
-	    $matchTable = new MatchTable($entries);
-	    $component->setLookupTable($matchTable);
 	    
 	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component);
 	    $element = $marshaller->marshall($component);
@@ -154,8 +148,8 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	 * @depends testMarshallMatchTable21
 	 */
 	public function testMarshallMatchTable20() {
-	    // Make sure there is no output of lookupTable
-	    // in QTI 2.0 mode.
+	    // This should fail because no marshaller is known for lookupTable sub classes
+	    // in a QTI 2.0 context.
 	    $identifier = 'outcome3';
 	    $cardinality = Cardinality::SINGLE;
 	    $baseType = BaseType::FLOAT;
@@ -167,13 +161,10 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	    $matchTable = new MatchTable($entries);
 	    $component->setLookupTable($matchTable);
 	    
+	    $expectedMsg = "No mapping entry found for QTI class name 'matchTable'.";
+	    $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\MarshallerNotFoundException', $expectedMsg);
 	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component);
 	    $element = $marshaller->marshall($component);
-	    
-	    $this->assertInstanceOf('\\DOMElement', $element);
-	    
-	    $lookupTable = $element->getElementsByTagName('matchTable');
-	    $this->assertEquals(0, $lookupTable->length);
 	}
 	
 	public function testUnmarshallMinimal21() {
@@ -332,9 +323,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	    );
 	    $element = $dom->documentElement;
 	
+	    $expectedMsg = "No mapping entry found for QTI class name 'matchTable'.";
+	    $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\MarshallerNotFoundException', $expectedMsg);
 	    $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
 	    $component = $marshaller->unmarshall($element);
-	    
-	    $this->assertSame(null, $component->getLookupTable());
 	}
 }

@@ -224,4 +224,105 @@ class XmlDocumentTest extends QtiSmTestCase {
         // Version always returned as MAJOR.MINOR.PATCH
         $this->assertEquals('2.1.1', $doc->getVersion());
     }
+    
+    public function testUnknownClassWhileSavingBecauseOfVersion1()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->loadFromString('
+            <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <matchTable>
+                    <matchTableEntry sourceValue="1" targetValue="2.5"/>
+                </matchTable>
+            </outcomeDeclaration>'
+        );
+        
+        // This should fail because in QTI 2.0.0, <matchTable> does not exist.
+        $doc->setVersion('2.0.0');
+        
+        $expectedMsg = "'matchTable' components are not supported in QTI version '2.0.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        $str = $doc->saveToString(true);
+    }
+    
+    public function testUnknownClassWhileLoadingBecauseOfVersion1()
+    {
+        $expectedMsg = "'matchTable' components are not supported in QTI version '2.0.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        
+        // This will fail because no <matchTable> element is defined in the 2.0.0 QTI Information Model.
+        $doc = new XmlDocument('2.0.0');
+        $doc->loadFromString('
+            <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <matchTable>
+                    <matchTableEntry sourceValue="1" targetValue="2.5"/>
+                </matchTable>
+            </outcomeDeclaration>'
+        );
+    }
+    
+    public function testUnknownClassWhileSavingBecauseOfVersion2()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->loadFromString('
+            <sum>
+                <subtract>
+                    <mathConstant name="pi"/>
+                    <mathConstant name="pi"/>            
+                </subtract>
+            </sum>'
+        );
+        
+        // This should fail because in QTI 2.0.0, <mathConstant does not exist>.
+        $doc->setVersion('2.0.0');
+        
+        $expectedMsg = "'mathConstant' components are not supported in QTI version '2.0.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        $str = $doc->saveToString(true);
+    }
+    
+    public function testUnknownClassWhileLoadingBecauseOfVersion2()
+    {
+        $expectedMsg = "'mathConstant' components are not supported in QTI version '2.0.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        
+        $doc = new XmlDocument('2.0.0');
+        $doc->loadFromString('
+            <sum>
+                <subtract>
+                    <mathConstant name="pi"/>
+                    <mathConstant name="pi"/>
+                </subtract>
+            </sum>'
+        );
+    }
+    
+    public function testUnknownClassWhileSavingBecauseOfVersion3()
+    {
+        $doc = new XmlDocument('2.2.0');
+        $doc->loadFromString('
+            <div>
+                <bdo dir="rtl">I am reversed!</bdo>            
+            </div>'
+        );
+        
+        // This should fail because in QTI 2.2.0 because <bdo> does not exist.
+        $doc->setVersion('2.1.0');
+        
+        $expectedMsg = "'bdo' components are not supported in QTI version '2.1.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+        $str = $doc->saveToString(true);
+    }
+    
+    public function testUnknownClassWhileLoadingBecauseOfVersion3()
+    {
+        $expectedMsg = "'bdo' components are not supported in QTI version '2.0.0'";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg);
+    
+        $doc = new XmlDocument('2.0.0');
+        $doc->loadFromString('
+            <div>
+                <bdo dir="rtl">I am reversed!</bdo>            
+            </div>'
+        );
+    }
 }
