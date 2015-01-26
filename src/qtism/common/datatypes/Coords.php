@@ -42,12 +42,12 @@ class Coords extends IntegerCollection implements QtiDatatype
     private $shape;
 
     /**
-	 * Create a new Coords object.
-	 *
-	 * @param integer $shape A value from the Shape enumeration.
-	 * @param array $coords An array of number values.
-	 * @throws \InvalidArgumentException If an error occurs while creating the Coords object.
-	 */
+     * Create a new Coords object.
+     *
+     * @param integer $shape A value from the Shape enumeration.
+     * @param array $coords An array of number values.
+     * @throws \InvalidArgumentException If an error occurs while creating the Coords object.
+     */
     public function __construct($shape, array $coords = array())
     {
         parent::__construct($coords);
@@ -85,11 +85,11 @@ class Coords extends IntegerCollection implements QtiDatatype
     }
 
     /**
-	 * Set the $shape on which the coordinates apply.
-	 *
-	 * @param integer $shape A value from the Shape enumeration.
-	 * @throws \InvalidArgumentException
-	 */
+     * Set the $shape on which the coordinates apply.
+     *
+     * @param integer $shape A value from the Shape enumeration.
+     * @throws \InvalidArgumentException
+     */
     protected function setShape($shape)
     {
         if (in_array($shape, Shape::asArray())) {
@@ -101,22 +101,22 @@ class Coords extends IntegerCollection implements QtiDatatype
     }
 
     /**
-	 * Get the shape on which the coordinates apply.
-	 *
-	 * @return integer A value from the Shape enumeration.
-	 *
-	 */
+     * Get the shape on which the coordinates apply.
+     *
+     * @return integer A value from the Shape enumeration.
+     *
+     */
     public function getShape()
     {
         return $this->shape;
     }
 
     /**
-	 * Whether the given $point is inside the coordinates.
-	 *
-	 * @param Point $point A Point object.
-	 * @return boolean
-	 */
+     * Whether the given $point is inside the coordinates.
+     *
+     * @param Point $point A Point object.
+     * @return boolean
+     */
     public function inside(Point $point)
     {
         if ($this->getShape() === Shape::DEF) {
@@ -170,43 +170,43 @@ class Coords extends IntegerCollection implements QtiDatatype
     }
 
     /**
-	 * Return all the points of the coordinates, separated by commas (,).
-	 *
-	 * @return string
-	 */
+     * Return all the points of the coordinates, separated by commas (,).
+     *
+     * @return string
+     */
     public function __toString()
     {
         return implode(",", $this->getDataPlaceHolder());
     }
 
     /**
-	 * Whether or not $obj is equals to $this. Two Coords objects are
-	 * considered to be equal if they have the same coordinates and shape.
-	 *
-	 * return boolean
-	 */
+     * Whether or not $obj is equals to $this. Two Coords objects are
+     * considered to be equal if they have the same coordinates and shape.
+     *
+     * return boolean
+     */
     public function equals($obj)
     {
         return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
     }
 
     /**
-	 * Get the baseType of the value. This method systematically returns
-	 * BaseType::COORDS.
-	 *
-	 * @return integer A value from the BaseType enumeration.
-	 */
+     * Get the baseType of the value. This method systematically returns
+     * BaseType::COORDS.
+     *
+     * @return integer A value from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return BaseType::COORDS;
     }
 
     /**
-	 * Get the cardinality of the value. This method systematically returns
-	 * Cardinality::SINGLE.
-	 *
-	 * @return integer A value from the Cardinality enumeration.
-	 */
+     * Get the cardinality of the value. This method systematically returns
+     * Cardinality::SINGLE.
+     *
+     * @return integer A value from the Cardinality enumeration.
+     */
     public function getCardinality()
     {
         return Cardinality::SINGLE;

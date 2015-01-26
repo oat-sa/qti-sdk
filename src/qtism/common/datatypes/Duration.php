@@ -57,30 +57,30 @@ class Duration implements QtiDatatype
     private $interval;
 
     /**
-	 * Create a new instance of Duration.
-	 *
-	 * The $intervalSpec argument is a duration specification:
-	 *
-	 * The format begins with <b>P</b> for "period". Each year of the period is represented
-	 * by an integer value followed by the period symbol. If the duration contains timing elements,
-	 * this portion of the specification is prefixed by letter <b>T</b>.
-	 *
-	 * * Y -> Years
-	 * * M -> Months
-	 * * D -> Days
-	 * * W -> Week. It will be converted to days. Then, you cannot combine it with D.
-	 * * H -> Hours
-	 * * M -> Minutes
-	 * * S -> Seconds
-	 *
-	 * Here are examples: 2 days will be <b>P2D</b>, 2 seconds will be <b>P2TS</b>,
-	 * 6 years and 5 minutes will be <b>P6YT5M</b>.
-	 *
-	 * Please note that this datatype does not support negative durations.
-	 *
-	 * @param string $intervalSpec A duration as in ISO8601.
-	 * @throws \InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
-	 */
+     * Create a new instance of Duration.
+     *
+     * The $intervalSpec argument is a duration specification:
+     *
+     * The format begins with <b>P</b> for "period". Each year of the period is represented
+     * by an integer value followed by the period symbol. If the duration contains timing elements,
+     * this portion of the specification is prefixed by letter <b>T</b>.
+     *
+     * * Y -> Years
+     * * M -> Months
+     * * D -> Days
+     * * W -> Week. It will be converted to days. Then, you cannot combine it with D.
+     * * H -> Hours
+     * * M -> Minutes
+     * * S -> Seconds
+     *
+     * Here are examples: 2 days will be <b>P2D</b>, 2 seconds will be <b>P2TS</b>,
+     * 6 years and 5 minutes will be <b>P6YT5M</b>.
+     *
+     * Please note that this datatype does not support negative durations.
+     *
+     * @param string $intervalSpec A duration as in ISO8601.
+     * @throws \InvalidArgumentException If $intervalSpec is not a valid ISO8601 duration.
+     */
     public function __construct($intervalSpec)
     {
         if (gettype($intervalSpec) === 'string' && $intervalSpec !== '') {
@@ -105,11 +105,11 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Create a Duration object from a DateInterval object.
-	 *
-	 * @param \DateInterval $interval
-	 * @return \qtism\common\datatypes\Duration
-	 */
+     * Create a Duration object from a DateInterval object.
+     *
+     * @param \DateInterval $interval
+     * @return \qtism\common\datatypes\Duration
+     */
     public static function createFromDateInterval(DateInterval $interval)
     {
         $duration = new Duration('PT0S');
@@ -119,61 +119,61 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Get the PHP DateInterval object corresponding to the duration.
-	 *
-	 * @return \DateInterval A DateInterval PHP object.
-	 */
+     * Get the PHP DateInterval object corresponding to the duration.
+     *
+     * @return \DateInterval A DateInterval PHP object.
+     */
     protected function getInterval()
     {
         return $this->interval;
     }
 
     /**
-	 * Set the PHP DateInterval object corresponding to the duration.
-	 *
-	 * @param \DateInterval $interval A DateInterval PHP object.
-	 */
+     * Set the PHP DateInterval object corresponding to the duration.
+     *
+     * @param \DateInterval $interval A DateInterval PHP object.
+     */
     protected function setInterval(DateInterval $interval)
     {
         $this->interval = $interval;
     }
 
     /**
-	 * Get the number of years.
-	 *
-	 * @return int
-	 */
+     * Get the number of years.
+     *
+     * @return int
+     */
     public function getYears()
     {
         return $this->getInterval()->y;
     }
 
     /**
-	 * Get the number of months.
-	 *
-	 * @return int
-	 */
+     * Get the number of months.
+     *
+     * @return int
+     */
     public function getMonths()
     {
         return $this->getInterval()->m;
     }
 
     /**
-	 * Get the number of days.
-	 *
-	 * @param boolean $total Wether the number of days must be the total of days or simply an offset (default).
-	 * @return int
-	 */
+     * Get the number of days.
+     *
+     * @param boolean $total Wether the number of days must be the total of days or simply an offset (default).
+     * @return int
+     */
     public function getDays($total = false)
     {
         return ($total == true) ? $this->getInterval()->days : $this->getInterval()->d;
     }
 
     /**
-	 * Get the number of hours.
-	 *
-	 * @return int
-	 */
+     * Get the number of hours.
+     *
+     * @return int
+     */
     public function getHours()
     {
         return $this->getInterval()->h;
@@ -190,11 +190,11 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Get the number of seconds.
-	 *
-	 * @param int $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
-	 * @return int The value of the total duration in seconds.
-	 */
+     * Get the number of seconds.
+     *
+     * @param int $total Whether to get the total amount of seconds, as a single integer, that represents the complete duration.
+     * @return int The value of the total duration in seconds.
+     */
     public function getSeconds($total = false)
     {
         if ($total === false) {
@@ -252,11 +252,11 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Whether a given $obj is equal to this Duration.
-	 *
-	 * @param mixed $obj A given value.
-	 * @return boolean Whether the equality is established.
-	 */
+     * Whether a given $obj is equal to this Duration.
+     *
+     * @param mixed $obj A given value.
+     * @return boolean Whether the equality is established.
+     */
     public function equals($obj)
     {
         return (gettype($obj) === 'object' &&
@@ -265,12 +265,12 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Whether the duration described by this Duration object is shorter
-	 * than the one described by $duration.
-	 *
-	 * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
-	 * @return boolean
-	 */
+     * Whether the duration described by this Duration object is shorter
+     * than the one described by $duration.
+     *
+     * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+     * @return boolean
+     */
     public function shorterThan(Duration $duration)
     {
         if ($this->getYears() < $duration->getYears()) {
@@ -291,12 +291,12 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Whether the duration described by this Duration object is longer than or
-	 * equal to the one described by $duration.
-	 *
-	 * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
-	 * @return boolean
-	 */
+     * Whether the duration described by this Duration object is longer than or
+     * equal to the one described by $duration.
+     *
+     * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
+     * @return boolean
+     */
     public function longerThanOrEquals(Duration $duration)
     {
         if ($this->getYears() < $duration->getYears()) {
@@ -317,12 +317,12 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Add a duration to this one.
-	 *
-	 * For instance, PT1S + PT1S = PT2S.
-	 *
-	 * @param \qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
-	 */
+     * Add a duration to this one.
+     *
+     * For instance, PT1S + PT1S = PT2S.
+     *
+     * @param \qtism\common\datatypes\Duration|\DateInterval $duration A Duration or DateInterval object.
+     */
     public function add($duration)
     {
         $d1 = $this->refDate;
@@ -343,11 +343,11 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Subtract a duration to this one. If $duration is greather than or equal to
-	 * the current duration, a duration of 0 seconds is returned.
-	 *
-	 * For instance P2S - P1S = P1S
-	 */
+     * Subtract a duration to this one. If $duration is greather than or equal to
+     * the current duration, a duration of 0 seconds is returned.
+     *
+     * For instance P2S - P1S = P1S
+     */
     public function sub(Duration $duration)
     {
         if ($duration->longerThanOrEquals($this) === true) {
@@ -388,32 +388,32 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
+     *
+     * @return boolean
+     */
     public function isNegative()
     {
         return $this->interval->invert === 0;
     }
 
     /**
-	 * Get the baseType of the value. This method systematically returns
-	 * the BaseType::DURATION value.
-	 *
-	 * @return integer A value from the BaseType enumeration.
-	 */
+     * Get the baseType of the value. This method systematically returns
+     * the BaseType::DURATION value.
+     *
+     * @return integer A value from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return BaseType::DURATION;
     }
 
     /**
-	 * Get the cardinality of the value. This method systematically returns
-	 * the Cardinality::SINGLE value.
-	 *
-	 * @return integer A value from the Cardinality enumeration.
-	 */
+     * Get the cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
+     *
+     * @return integer A value from the Cardinality enumeration.
+     */
     public function getCardinality()
     {
         return Cardinality::SINGLE;

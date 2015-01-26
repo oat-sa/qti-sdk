@@ -72,16 +72,16 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     }
 
     /**
-	 * @see \qtism\runtime\common\MultipleContainer::getCardinality()
-	 */
+     * @see \qtism\runtime\common\MultipleContainer::getCardinality()
+     */
     public function getCardinality()
     {
         return Cardinality::ORDERED;
     }
 
     /**
-	 * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
-	 */
+     * @see \qtism\runtime\common\MultipleContainer::getToStringBounds()
+     */
     protected function getToStringBounds()
     {
         return array('<', '>');

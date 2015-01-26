@@ -72,18 +72,18 @@ use \InvalidArgumentException;
 class Container extends AbstractCollection implements Comparable
 {
     /**
-	 * Create a new Container object.
-	 *
-	 * @param array $array An array of values to be set in the container.
-	 */
+     * Create a new Container object.
+     *
+     * @param array $array An array of values to be set in the container.
+     */
     public function __construct(array $array = array())
     {
         parent::__construct($array);
     }
 
     /**
-	 * @see \qtism\common\collections\AbstractCollection::checkType()
-	 */
+     * @see \qtism\common\collections\AbstractCollection::checkType()
+     */
     protected function checkType($value)
     {
         if (!RuntimeUtils::isQtiScalarDatatypeCompliant($value)) {
@@ -97,12 +97,12 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-	 * In the QTI runtime model, an empty container is considered to
-	 * have the NULL value. This method helps you to know whether or not
-	 * the container has the NULL value.
-	 *
-	 * @return boolean Whether the container has to be considered as NULL.
-	 */
+     * In the QTI runtime model, an empty container is considered to
+     * have the NULL value. This method helps you to know whether or not
+     * the container has the NULL value.
+     *
+     * @return boolean Whether the container has to be considered as NULL.
+     */
     public function isNull()
     {
         $data = $this->getDataPlaceHolder();
@@ -110,26 +110,26 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-	 * Get the QTI cardinality of the container.
-	 *
-	 * @return int A value from the Cardinality enumeration.
-	 */
+     * Get the QTI cardinality of the container.
+     *
+     * @return int A value from the Cardinality enumeration.
+     */
     public function getCardinality()
     {
         return Cardinality::MULTIPLE;
     }
 
     /**
-	 * Wheter the container is equal to $obj.
-	 *
-	 * * If $obj is not an instance of Container, false is returned.
-	 * * If $obj is [A,B,C] and the container is [C,A,B], true is returned because the order does not matter.
-	 * * If $obj is [A,B,C] and the container is [B,C,D], false is returned.
-	 * * If $obj is [] and the container is [], false is returned.
-	 *
-	 * @param mixed $obj A value to compare to this one.
-	 * @return boolean Whether the container is equal to $obj.
-	 */
+     * Wheter the container is equal to $obj.
+     *
+     * * If $obj is not an instance of Container, false is returned.
+     * * If $obj is [A,B,C] and the container is [C,A,B], true is returned because the order does not matter.
+     * * If $obj is [A,B,C] and the container is [B,C,D], false is returned.
+     * * If $obj is [] and the container is [], false is returned.
+     *
+     * @param mixed $obj A value to compare to this one.
+     * @return boolean Whether the container is equal to $obj.
+     */
     public function equals($obj)
     {
         $countA = count($obj);
@@ -154,14 +154,14 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-	 * Get the number of occurences of a given $obj in the container.
-	 *
-	 * * If $obj is an instance of Comparable, an equality check will be performed using the Comparable::equals method of $obj.
-	 * * If $obj is a primitive type, a strict comparison (===) will be applied.
-	 *
-	 * @param mixed $obj The object you want to find the number of occurences in the container.
-	 * @return int A number of occurences.
-	 */
+     * Get the number of occurences of a given $obj in the container.
+     *
+     * * If $obj is an instance of Comparable, an equality check will be performed using the Comparable::equals method of $obj.
+     * * If $obj is a primitive type, a strict comparison (===) will be applied.
+     *
+     * @param mixed $obj The object you want to find the number of occurences in the container.
+     * @return int A number of occurences.
+     */
     public function occurences($obj)
     {
         $occurences = 0;
@@ -190,12 +190,12 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-	 * Create a Container object from a Data Model ValueCollection object.
-	 *
-	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-	 * @return \qtism\common\collections\Container A Container object populated with the values found in $valueCollection.
-	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
-	 */
+     * Create a Container object from a Data Model ValueCollection object.
+     *
+     * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+     * @return \qtism\common\collections\Container A Container object populated with the values found in $valueCollection.
+     * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
+     */
     public static function createFromDataModel(ValueCollection $valueCollection)
     {
         $container = new static();
@@ -207,24 +207,24 @@ class Container extends AbstractCollection implements Comparable
     }
 
     /**
-	 * Get the character bounds of the container while output in
-	 * a __toString context. For instance, this method returns
-	 * array('[', ']'). Thus, the result of the __toString method will
-	 * be '[10, 20, 30]' if the values held by the container are integer
-	 * 10, 20 and 30.
-	 *
-	 * @return array An array with two entries which are respectively to character lower and upper bounds.
-	 */
+     * Get the character bounds of the container while output in
+     * a __toString context. For instance, this method returns
+     * array('[', ']'). Thus, the result of the __toString method will
+     * be '[10, 20, 30]' if the values held by the container are integer
+     * 10, 20 and 30.
+     *
+     * @return array An array with two entries which are respectively to character lower and upper bounds.
+     */
     protected function getToStringBounds()
     {
         return array('[', ']');
     }
 
     /**
-	 * Obtain a string representation of the container.
-	 *
-	 * @return string
-	 */
+     * Obtain a string representation of the container.
+     *
+     * @return string
+     */
     public function __toString()
     {
         $bounds = $this->getToStringBounds();

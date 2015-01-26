@@ -43,20 +43,20 @@ use \InvalidArgumentException;
 class MultipleContainer extends Container implements QtiDatatype
 {
     /**
-	 * The baseType determines the value set of the accepted values of
-	 * this container.
-	 *
-	 * @var int
-	 */
+     * The baseType determines the value set of the accepted values of
+     * this container.
+     *
+     * @var int
+     */
     private $baseType = -1;
 
     /**
-	 * Create a new MultipleContainer object.
-	 *
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @param array $array An array of data to insert in the container.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration or if data in $array are not compliant with the given $baseType.
-	 */
+     * Create a new MultipleContainer object.
+     *
+     * @param int $baseType A value from the BaseType enumeration.
+     * @param array $array An array of data to insert in the container.
+     * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration or if data in $array are not compliant with the given $baseType.
+     */
     public function __construct($baseType, array $array = array())
     {
         $this->setBaseType($baseType);
@@ -64,12 +64,12 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * Set the baseType of the values that will be held by the
-	 * container.
-	 *
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
-	 */
+     * Set the baseType of the values that will be held by the
+     * container.
+     *
+     * @param int $baseType A value from the BaseType enumeration.
+     * @throws \InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
+     */
     protected function setBaseType($baseType)
     {
         if (in_array($baseType, BaseType::asArray(), true)) {
@@ -81,18 +81,18 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * Get the baseType of the container.
-	 *
-	 * @return int A value from the BaseType enumeration or -1.
-	 */
+     * Get the baseType of the container.
+     *
+     * @return int A value from the BaseType enumeration or -1.
+     */
     public function getBaseType()
     {
         return $this->baseType;
     }
 
     /**
-	 * @see \qtism\common\collections\Container::checkType()
-	 */
+     * @see \qtism\common\collections\Container::checkType()
+     */
     protected function checkType($value)
     {
         parent::checkType($value);
@@ -103,13 +103,13 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * Create a MultipleContainer object from a Data Model ValueCollection object.
-	 *
-	 * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
-	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @return \qtism\runtime\common\MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
-	 * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
-	 */
+     * Create a MultipleContainer object from a Data Model ValueCollection object.
+     *
+     * @param \qtism\data\state\ValueCollection $valueCollection A collection of qtism\data\state\Value objects.
+     * @param integer $baseType A value from the BaseType enumeration.
+     * @return \qtism\runtime\common\MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
+     * @throws \InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
+     */
     public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER)
     {
         $container = new static($baseType);
@@ -121,16 +121,16 @@ class MultipleContainer extends Container implements QtiDatatype
     }
 
     /**
-	 * @see \qtism\common\collections\Container::getToStringBounds()
-	 */
+     * @see \qtism\common\collections\Container::getToStringBounds()
+     */
     protected function getToStringBounds()
     {
         return array('[', ']');
     }
 
     /**
-	 * @see \qtism\common\collections\Container::getCardinality()
-	 */
+     * @see \qtism\common\collections\Container::getCardinality()
+     */
     public function getCardinality()
     {
         return Cardinality::MULTIPLE;
