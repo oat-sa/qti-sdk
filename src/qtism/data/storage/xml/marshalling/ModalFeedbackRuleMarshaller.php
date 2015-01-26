@@ -24,30 +24,29 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\ShowHide;
 use qtism\data\QtiComponent;
-use qtism\data\content\ModalFeedbackRef;
+use qtism\data\content\ModalFeedbackRule;
 use \DOMElement;
 
 /**
- * Marshalling implementation for ModalFeedbackRef extended QTI class.
+ * Marshalling implementation for ModalFeedbackRule extended QTI class.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackRefMarshaller extends Marshaller
+class ModalFeedbackRuleMarshaller extends Marshaller
 {
     /**
-     * Marshall a ModalFeedbackRef object to its XML counterpart.
+     * Marshall a ModalFeedbackRule object to its XML counterpart.
      *
      * @param \qtism\data\QtiComponent $component
      * @return \DOMElement
      */
     public function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('modalFeedbackRef');
+        $element = self::getDOMCradle()->createElement('modalFeedbackRule');
         self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
         self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
         
         if ($component->hasTitle() === true) {
             self::setDOMElementAttribute($element, 'title', $component->getTitle());
@@ -57,11 +56,11 @@ class ModalFeedbackRefMarshaller extends Marshaller
     }
 
     /**
-     * Unmarshall a DOMElement to its ModalFeedbackRef data model representation.
+     * Unmarshall a DOMElement to its ModalFeedbackRule data model representation.
      *
      * @param \DOMElement $element
-     * @return \qtism\data\QtiComponent A ModalFeedbackRef object.
-     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the 'identifier', 'outcomeIdentifier', 'showHide', or 'href' attribute is missing from the XML definition.
+     * @return \qtism\data\QtiComponent A ModalFeedbackRule object.
+     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException If the 'identifier', 'outcomeIdentifier', 'showHide', or attribute is missing from the XML definition.
      */
     public function unmarshall(DOMElement $element)
     {
@@ -71,33 +70,26 @@ class ModalFeedbackRefMarshaller extends Marshaller
                 
                 if (($showHide = self::getDOMElementAttributeAs($element, 'showHide', 'integer')) !== null) {
                     
-                    if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
-                        
-                        $component = new ModalFeedbackRef($outcomeIdentifier, $showHide, $identifier, $href);
-                        
-                        if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
-                            $component->setTitle($title);
-                        }
-                        
-                        return $component;
-                        
-                    } else {
-                        $msg = "The mandatory 'href' attribute is missing from element 'modalFeedbackRef'.";
-                        throw new UnmarshallingException($msg, $element);
+                    $component = new ModalFeedbackRule($outcomeIdentifier, $showHide, $identifier);
+                    
+                    if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
+                        $component->setTitle($title);
                     }
                     
+                    return $component;
+
                 } else {
-                    $msg = "The mandatory 'showHide' attribute is missing from element 'modalFeedbackRef'.";
+                    $msg = "The mandatory 'showHide' attribute is missing from element 'modalFeedbackRule'.";
                     throw new UnmarshallingException($msg, $element);
                 }
 
             } else {
-                $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element 'modalFeedbackRef'.";
+                $msg = "The mandatory 'outcomeIdentifier' attribute is missing from element 'modalFeedbackRule'.";
                 throw new UnmarshallingException($msg, $element);
             }
             
         } else {
-            $msg = "The mandatory 'identifier' attribute is missing from element 'modalFeedbackRef'.";
+            $msg = "The mandatory 'identifier' attribute is missing from element 'modalFeedbackRule'.";
             throw new UnmarshallingException($msg, $element);
         }
     }
@@ -107,6 +99,6 @@ class ModalFeedbackRefMarshaller extends Marshaller
      */
     public function getExpectedQtiClassName()
     {
-        return 'modalFeedbackRef';
+        return 'modalFeedbackRule';
     }
 }

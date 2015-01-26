@@ -29,12 +29,12 @@ use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
 /**
- * An extension of QTI that represents a reference to an external QTI modalFeedback component. 
+ * An extension of QTI that represents a ModalFeedback display rule. 
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackRef extends QtiComponent
+class ModalFeedbackRule extends QtiComponent
 {
     /**
      * The outcome identifier serving as a lookup.
@@ -71,26 +71,17 @@ class ModalFeedbackRef extends QtiComponent
     private $title;
 
     /**
-     * The URI referencing the file containing the definition of the external modalFeedback content.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $href;
-
-    /**
      * Create a new ModalFeedbackRef object.
      *
      * @param string $identifier A QTI identifier.
      * @param string $href A URI locating the external modalFeedback content definition.
      * @throws \InvalidArgumentException If any argument is invalid.
      */
-    public function __construct($outcomeIdentifier, $showHide, $identifier, $href, $title = '')
+    public function __construct($outcomeIdentifier, $showHide, $identifier, $title = '')
     {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setShowHide($showHide);
         $this->setIdentifier($identifier);
-        $this->setHref($href);
         $this->setTitle($title);
     }
 
@@ -173,32 +164,6 @@ class ModalFeedbackRef extends QtiComponent
     {
         return $this->showHide;
     }
-
-    /**
-     * Set the URI locating the external modal definition.
-     *
-     * @param string $href A URI.
-     * @throws \InvalidArgumentException If $href is not a valid URI.
-     */
-    public function setHref($href)
-    {
-        if (Format::isUri($href) === true) {
-            $this->href = $href;
-        } else {
-            $msg = "The 'href' argument must be a valid URI, '" . $href . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the URI locating the external rubrickBlock definition.
-     *
-     * @return string A URI.
-     */
-    public function getHref()
-    {
-        return $this->href;
-    }
     
     /**
      * Set the title of the feedback.
@@ -251,6 +216,6 @@ class ModalFeedbackRef extends QtiComponent
      */
     public function getQtiClassName()
     {
-        return 'modalFeedbackRef';
+        return 'modalFeedbackRule';
     }
 }
