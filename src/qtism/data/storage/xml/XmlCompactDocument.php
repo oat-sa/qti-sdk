@@ -356,10 +356,6 @@ class XmlCompactDocument extends XmlDocument
                 }
             }
         }
-        
-        // Take care of modalFeedbacks.
-        // 1. Extract modal feedback conditions.
-        
     }
     
     protected function inferVersion()
