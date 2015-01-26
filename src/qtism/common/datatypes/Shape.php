@@ -35,60 +35,60 @@ use qtism\common\enums\Enumeration;
 class Shape implements Enumeration
 {
     /**
-	 * Note: Corresponds to QTI shape::default. Unfortunately, 'default' is a reserved
-	 * token in PHP.
-	 *
-	 * From IMS QTI:
-	 *
-	 * The default shape refers to the entire area of the associated image.
-	 *
-	 * @var int
-	 */
+     * Note: Corresponds to QTI shape::default. Unfortunately, 'default' is a reserved
+     * token in PHP.
+     *
+     * From IMS QTI:
+     *
+     * The default shape refers to the entire area of the associated image.
+     *
+     * @var int
+     */
     const DEF = 0;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * A rectangular region.
-	 *
-	 * @var int
-	 */
+     * From IMS QTI:
+     *
+     * A rectangular region.
+     *
+     * @var int
+     */
     const RECT = 1;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * A circular region.
-	 *
-	 * @var int
-	 */
+     * From IMS QTI:
+     *
+     * A circular region.
+     *
+     * @var int
+     */
     const CIRCLE = 2;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * An arbitrary polygonal region.
-	 *
-	 * @var int
-	 */
+     * From IMS QTI:
+     *
+     * An arbitrary polygonal region.
+     *
+     * @var int
+     */
     const POLY = 3;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * This value is deprecated, but is included for compatibility with version
-	 * of 1 of the QTI specification. Systems should use circle or poly shapes instead.
-	 *
-	 * @var int
-	 * @deprecated
-	 */
+     * From IMS QTI:
+     *
+     * This value is deprecated, but is included for compatibility with version
+     * of 1 of the QTI specification. Systems should use circle or poly shapes instead.
+     *
+     * @var int
+     * @deprecated
+     */
     const ELLIPSE = 4;
 
     /**
-	 * Get the enumeration as an array.
-	 *
-	 * @return array An associative array.
-	 */
+     * Get the enumeration as an array.
+     *
+     * @return array An associative array.
+     */
     public static function asArray()
     {
         return array(
@@ -101,11 +101,11 @@ class Shape implements Enumeration
     }
 
     /**
-	 * Get the constant value associated with $name.
-	 *
-	 * @param string $name
-	 * @return integer|boolean The constant value associated with the name or false if not found.
-	 */
+     * Get the constant value associated with $name.
+     *
+     * @param string $name
+     * @return integer|boolean The constant value associated with the name or false if not found.
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -136,11 +136,11 @@ class Shape implements Enumeration
     }
 
     /**
-	 * Get the name associated with $constant.
-	 *
-	 * @param integer $constant
-	 * @return string|boolean The name or false if not found.
-	 */
+     * Get the name associated with $constant.
+     *
+     * @param integer $constant
+     * @return string|boolean The name or false if not found.
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

@@ -41,26 +41,26 @@ use \InvalidArgumentException;
 class Point implements QtiDatatype
 {
     /**
-	 * The position on the x-axis.
-	 *
-	 * @var int
-	 */
+     * The position on the x-axis.
+     *
+     * @var int
+     */
     private $x;
 
     /**
-	 * The position on the y-axis.
-	 *
-	 * @var int
-	 */
+     * The position on the y-axis.
+     *
+     * @var int
+     */
     private $y;
 
     /**
-	 * Create a new Point object.
-	 *
-	 * @param int $x A position on the x-axis.
-	 * @param int $y A position on the y-axis.
-	 * @throws \InvalidArgumentException If $x or $y are not integer values.
-	 */
+     * Create a new Point object.
+     *
+     * @param int $x A position on the x-axis.
+     * @param int $y A position on the y-axis.
+     * @throws \InvalidArgumentException If $x or $y are not integer values.
+     */
     public function __construct($x, $y)
     {
         $this->setX($x);
@@ -68,11 +68,11 @@ class Point implements QtiDatatype
     }
 
     /**
-	 * Set the position on the x-axis.
-	 *
-	 * @param int $x A position on the x-axis.
-	 * @throws \InvalidArgumentException If $x is nto an integer value.
-	 */
+     * Set the position on the x-axis.
+     *
+     * @param int $x A position on the x-axis.
+     * @throws \InvalidArgumentException If $x is nto an integer value.
+     */
     public function setX($x)
     {
         if (is_int($x)) {
@@ -84,21 +84,21 @@ class Point implements QtiDatatype
     }
 
     /**
-	 * Get the position on the x-axis.
-	 *
-	 * @return int A position on the x-axis.
-	 */
+     * Get the position on the x-axis.
+     *
+     * @return int A position on the x-axis.
+     */
     public function getX()
     {
         return $this->x;
     }
 
     /**
-	 * Set the position on y-axis.
-	 *
-	 * @param int $y A position on the y-axis.
-	 * @throws \InvalidArgumentException If $y is not an integer value.
-	 */
+     * Set the position on y-axis.
+     *
+     * @param int $y A position on the y-axis.
+     * @throws \InvalidArgumentException If $y is not an integer value.
+     */
     public function setY($y)
     {
         if (is_int($y)) {
@@ -110,22 +110,22 @@ class Point implements QtiDatatype
     }
 
     /**
-	 * Get the position on the y-axis.
-	 *
-	 * @return int A position on the y-axis.
-	 */
+     * Get the position on the y-axis.
+     *
+     * @return int A position on the y-axis.
+     */
     public function getY()
     {
         return $this->y;
     }
 
     /**
-	 * Wheter a given $obj is equal to $this Point object. Two Point objects
-	 * are considered to be the same if they have the same coordinates.
-	 *
-	 * @param mixed $obj An object.
-	 * @return boolean Whether or not the equality is established.
-	 */
+     * Wheter a given $obj is equal to $this Point object. Two Point objects
+     * are considered to be the same if they have the same coordinates.
+     *
+     * @param mixed $obj An object.
+     * @return boolean Whether or not the equality is established.
+     */
     public function equals($obj)
     {
         return (gettype($obj) === 'object' &&
@@ -135,34 +135,34 @@ class Point implements QtiDatatype
     }
 
     /**
-	 * Returns a string representation of the Point object
-	 * e.g. "20 30" for a Point object where 20 is the value
-	 * of X and 30 is the value of Y.
-	 *
-	 * @return string
-	 */
+     * Returns a string representation of the Point object
+     * e.g. "20 30" for a Point object where 20 is the value
+     * of X and 30 is the value of Y.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getX() . ' ' . $this->getY();
     }
 
     /**
-	 * Get the BaseType of the value. This method systematically returns
-	 * the BaseType::POINT value.
-	 *
-	 * @return A value from the BaseType enumeration.
-	 */
+     * Get the BaseType of the value. This method systematically returns
+     * the BaseType::POINT value.
+     *
+     * @return A value from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return BaseType::POINT;
     }
 
     /**
-	 * Get the Cardinality of the value. This method systematically returns
-	 * the Cardinality::SINGLE value.
-	 *
-	 * @return A value from the Cardinality enumeration.
-	 */
+     * Get the Cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
+     *
+     * @return A value from the Cardinality enumeration.
+     */
     public function getCardinality()
     {
         return Cardinality::SINGLE;

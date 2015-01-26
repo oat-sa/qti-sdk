@@ -180,10 +180,10 @@ class Duration implements QtiDatatype
     }
 
     /**
-	 * Get the number of minutes.
-	 *
-	 * @return int
-	 */
+     * Get the number of minutes.
+     *
+     * @return int
+     */
     public function getMinutes()
     {
         return $this->getInterval()->i;

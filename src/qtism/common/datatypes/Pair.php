@@ -40,26 +40,26 @@ use \InvalidArgumentException;
 class Pair implements QtiDatatype
 {
     /**
-	 * The first identifier of the Pair.
-	 *
-	 * @var string
-	 */
+     * The first identifier of the Pair.
+     *
+     * @var string
+     */
     private $first;
 
     /**
-	 * The second identifier of the Pair.
-	 *
-	 * @var string
-	 */
+     * The second identifier of the Pair.
+     *
+     * @var string
+     */
     private $second;
 
     /**
-	 * Create a new instance of Pair.
-	 *
-	 * @param string $first The first identifier of the pair.
-	 * @param string $second The second identifier of the pair.
-	 * @throws \InvalidArgumentException If $first nor $second are valid QTI identifiers.
-	 */
+     * Create a new instance of Pair.
+     *
+     * @param string $first The first identifier of the pair.
+     * @param string $second The second identifier of the pair.
+     * @throws \InvalidArgumentException If $first nor $second are valid QTI identifiers.
+     */
     public function __construct($first, $second)
     {
         $this->setFirst($first);
@@ -67,11 +67,11 @@ class Pair implements QtiDatatype
     }
 
     /**
-	 * Set the first identifier of the pair.
-	 *
-	 * @param string $first A QTI Identifier.
-	 * @throws \InvalidArgumentException If $first is an invalid QTI Identifier.
-	 */
+     * Set the first identifier of the pair.
+     *
+     * @param string $first A QTI Identifier.
+     * @throws \InvalidArgumentException If $first is an invalid QTI Identifier.
+     */
     public function setFirst($first)
     {
         if (Format::isIdentifier($first)) {
@@ -83,21 +83,21 @@ class Pair implements QtiDatatype
     }
 
     /**
-	 * Get the first identifier of the pair.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the first identifier of the pair.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getFirst()
     {
         return $this->first;
     }
 
     /**
-	 * Set the second identifier of the pair.
-	 *
-	 * @param string $second A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the second identifier of the pair.
+     *
+     * @param string $second A QTI Identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setSecond($second)
     {
         if (Format::isIdentifier($second)) {
@@ -109,33 +109,33 @@ class Pair implements QtiDatatype
     }
 
     /**
-	 * Get the second identifier of the pair.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the second identifier of the pair.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getSecond()
     {
         return $this->second;
     }
 
     /**
-	 * Returns 'FIRST_ID SECOND_ID'.
-	 *
-	 * @return string The serialized version of the Pair.
-	 */
+     * Returns 'FIRST_ID SECOND_ID'.
+     *
+     * @return string The serialized version of the Pair.
+     */
     public function __toString()
     {
         return $this->getFirst() . ' ' . $this->getSecond();
     }
 
     /**
-	 * Whether a given $obj is equal to this Pair. Two Pair objects
-	 * are considered to be identical if the first and second values
-	 * of $obj are the same as the ones of $obj.
-	 *
-	 * @param mixed $obj A value to compare.
-	 * @return boolean Whether or not the equality could be established.
-	 */
+     * Whether a given $obj is equal to this Pair. Two Pair objects
+     * are considered to be identical if the first and second values
+     * of $obj are the same as the ones of $obj.
+     *
+     * @param mixed $obj A value to compare.
+     * @return boolean Whether or not the equality could be established.
+     */
     public function equals($obj)
     {
         if (gettype($obj) === 'object' && $obj instanceof self) {
@@ -149,22 +149,22 @@ class Pair implements QtiDatatype
     }
 
     /**
-	 * Get the baseType of the value. This method systematically returns
-	 * The BaseType::PAIR value.
-	 *
-	 * @return A value from the BaseType enumeration.
-	 */
+     * Get the baseType of the value. This method systematically returns
+     * The BaseType::PAIR value.
+     *
+     * @return A value from the BaseType enumeration.
+     */
     public function getBaseType()
     {
         return BaseType::PAIR;
     }
 
     /**
-	 * Get the Cardinality of the value. This method systematically returns
-	 * the Cardinality::SINGLE value.
-	 *
-	 * @return A value from the Cardinality enumeration.
-	 */
+     * Get the Cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
+     *
+     * @return A value from the Cardinality enumeration.
+     */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
