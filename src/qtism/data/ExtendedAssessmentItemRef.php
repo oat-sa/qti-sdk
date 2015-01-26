@@ -338,11 +338,11 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     public function getComponents()
     {
         $components = array_merge(
-                          parent::getComponents()->getArrayCopy(),
-                          $this->getResponseDeclarations()->getArrayCopy(),
-                          $this->getOutcomeDeclarations()->getArrayCopy(),
-                          $this->getModalFeedbackRules()->getArrayCopy()
-                      );
+            parent::getComponents()->getArrayCopy(),
+            $this->getResponseDeclarations()->getArrayCopy(),
+            $this->getOutcomeDeclarations()->getArrayCopy(),
+            $this->getModalFeedbackRules()->getArrayCopy()
+        );
 
         if ($this->hasResponseProcessing() === true) {
             $components[] = $this->getResponseProcessing();

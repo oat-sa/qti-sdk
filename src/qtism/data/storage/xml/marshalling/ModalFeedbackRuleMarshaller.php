@@ -68,8 +68,9 @@ class ModalFeedbackRuleMarshaller extends Marshaller
 
             if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
                 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide', 'integer')) !== null) {
+                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
                     
+                    $showHide = ShowHide::getConstantByName($showHide);
                     $component = new ModalFeedbackRule($outcomeIdentifier, $showHide, $identifier);
                     
                     if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {

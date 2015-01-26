@@ -22,7 +22,7 @@
 
 namespace qtism\data\content;
 
-use qtism\data\QtiIdentifiableCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -31,7 +31,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ModalFeedbackRuleCollection extends QtiIdentifiableCollection
+class ModalFeedbackRuleCollection extends QtiComponentCollection
 {
     /**
      * Checks whether $value is an instance of ModalFeedbackRule.

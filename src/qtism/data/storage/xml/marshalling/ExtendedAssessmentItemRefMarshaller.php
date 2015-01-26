@@ -14,13 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\storage\xml\marshalling;
+
+use qtism\data\content\ModalFeedbackRuleCollection;
 
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
@@ -37,11 +39,11 @@ use \DOMElement;
 class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
 {
     /**
-	 * Marshall a ExtendedAssessmentItemRef object into its DOMElement representation.
-	 *
-	 * @param \qtism\data\QtiComponent
-	 * @return \DOMElement The according DOMElement object.
-	 */
+     * Marshall a ExtendedAssessmentItemRef object into its DOMElement representation.
+     *
+     * @param \qtism\data\QtiComponent
+     * @return \DOMElement The according DOMElement object.
+     */
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
@@ -54,6 +56,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclaration);
             $element->appendChild($marshaller->marshall($outcomeDeclaration));
+        }
+        
+        foreach ($component->getModalFeedbackRules() as $modalFeedbackRule) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackRule);
+            $element->appendChild($marshaller->marshall($modalFeedbackRule));
         }
 
         if ($component->hasResponseProcessing() === true) {
@@ -69,12 +76,12 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
     }
 
     /**
-	 * Unmarshall an extended version of an assessmentItemRef DOMElement into
-	 * a ExtendedAssessmentItemRef object.
-	 *
-	 * @param \DOMElement $element
-	 * @return  \qtism\data\ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
-	 */
+     * Unmarshall an extended version of an assessmentItemRef DOMElement into
+     * a ExtendedAssessmentItemRef object.
+     *
+     * @param \DOMElement $element
+     * @return  \qtism\data\ExtendedAssessmentItemRef A ExtendedAssessmentItemRef object.
+     */
     protected function unmarshall(DOMElement $element)
     {
         $baseComponent = parent::unmarshall($element);
@@ -93,6 +100,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setVariableMappings($baseComponent->getVariableMappings());
         $compactAssessmentItemRef->setCategories($baseComponent->getCategories());
 
+        // ResponseDeclarations.
         $responseDeclarationElts = self::getChildElementsByTagName($element, 'responseDeclaration');
         $responseDeclarations = new ResponseDeclarationCollection();
         foreach ($responseDeclarationElts as $responseDeclarationElt) {
@@ -101,6 +109,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         }
         $compactAssessmentItemRef->setResponseDeclarations($responseDeclarations);
 
+        // OutcomeDeclarations.
         $outcomeDeclarationElts = self::getChildElementsByTagName($element, 'outcomeDeclaration');
         $outcomeDeclarations = new OutcomeDeclarationCollection();
         foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
@@ -109,6 +118,16 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         }
         $compactAssessmentItemRef->setOutcomeDeclarations($outcomeDeclarations);
 
+        // ModalFeedbacks (transformed in ModalFeedbackRules).
+        $modalFeedbackElts = self::getChildElementsByTagName($element, 'modalFeedbackRule');
+        $modalFeedbackRules = new ModalFeedbackRuleCollection();
+        foreach ($modalFeedbackElts as $modalFeedbackElt) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackElt);
+            $modalFeedbackRules[] = $marshaller->unmarshall($modalFeedbackElt);
+        }
+        $compactAssessmentItemRef->setModalFeedbackRules($modalFeedbackRules);
+        
+        // ResponseProcessing.
         $responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
         if (count($responseProcessingElts) === 1) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);

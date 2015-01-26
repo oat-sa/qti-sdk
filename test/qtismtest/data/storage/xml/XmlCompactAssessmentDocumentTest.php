@@ -2,6 +2,7 @@
 namespace qtismtest\data\storage\xml;
 
 use qtismtest\QtiSmTestCase;
+use qtism\data\ShowHide;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
@@ -214,6 +215,60 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertTrue(file_exists($path));
 	    unlink($path);
 	    $this->assertFalse(file_exists($path));
+	    
+	    unlink($file);
+	}
+	
+	public function testModalFeedbackRuleLoad() {
+	    $src = self::samplesDir() . 'custom/runtime/modalfeedbackrules.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src, true);
+	    
+	    $test = $doc->getDocumentComponent();
+	    $itemRefs = $test->getComponentsByClassName('assessmentItemRef', true);
+	    $this->assertEquals(1, count($itemRefs));
+	    
+	    $feedbackRules = $itemRefs[0]->getModalFeedbackRules();
+	    $this->assertEquals(2, count($feedbackRules));
+	    
+	    $this->assertEquals('LOOKUP', $feedbackRules[0]->getOutcomeIdentifier());
+	    $this->assertEquals('SHOWME', $feedbackRules[0]->getIdentifier());
+	    $this->assertEquals(ShowHide::SHOW, $feedbackRules[0]->getShowHide());
+	    $this->assertEquals('Feedback 1', $feedbackRules[0]->getTitle());
+	    
+	    $this->assertEquals('LOOKUP2', $feedbackRules[1]->getOutcomeIdentifier());
+	    $this->assertEquals('HIDEME', $feedbackRules[1]->getIdentifier());
+	    $this->assertEquals(ShowHide::HIDE, $feedbackRules[1]->getShowHide());
+	    $this->assertFalse($feedbackRules[1]->hasTitle());
+	}
+	
+	/**
+	 * @depends testModalFeedbackRuleLoad
+	 */
+	public function testModalFeedbackRuleSave() {
+	    $src = self::samplesDir() . 'custom/runtime/modalfeedbackrules.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src);
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    // Let's load the document as DOMDocument...
+	    $doc = new DOMDocument('1.0', 'UTF-8');
+	    $doc->load($file);
+	    
+	    $modalFeedbackRuleElts = $doc->documentElement->getElementsByTagName('modalFeedbackRule');
+	    $modalFeedbackRule1 = $modalFeedbackRuleElts->item(0);
+	    $this->assertEquals('LOOKUP', $modalFeedbackRule1->getAttribute('outcomeIdentifier'));
+	    $this->assertEquals('SHOWME', $modalFeedbackRule1->getAttribute('identifier'));
+	    $this->assertEquals('show', $modalFeedbackRule1->getAttribute('showHide'));
+	    $this->assertEquals('Feedback 1', $modalFeedbackRule1->getAttribute('title'));
+	    
+	    $modalFeedbackRule2 = $modalFeedbackRuleElts->item(1);
+	    $this->assertEquals('LOOKUP2', $modalFeedbackRule2->getAttribute('outcomeIdentifier'));
+	    $this->assertEquals('HIDEME', $modalFeedbackRule2->getAttribute('identifier'));
+	    $this->assertEquals('hide', $modalFeedbackRule2->getAttribute('showHide'));
+	    $this->assertEquals('', $modalFeedbackRule2->getAttribute('title'));
 	    
 	    unlink($file);
 	}
