@@ -22,6 +22,8 @@
 
 namespace qtism\data;
 
+use qtism\data\content\ModalFeedbackRuleCollection;
+use qtism\data\content\ModalFeedbackRule;
 use qtism\data\content\ModalFeedbackCollection;
 use qtism\data\processing\TemplateProcessing;
 use qtism\data\content\StylesheetCollection;
@@ -45,168 +47,168 @@ use \SplObserver;
 class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmentItem
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The principle identifier of the item. This identifier must have a
-	 * corresponding entry in the item's metadata.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The principle identifier of the item. This identifier must have a
+     * corresponding entry in the item's metadata.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The title of an assessmentItem is intended to enable the item to be selected
-	 * in situations where the full text of the itemBody is not available, for example
-	 * when a candidate is browsing a set of items to determine the order in which to
-	 * attempt them. Therefore, delivery engines may reveal the title to candidates at
-	 * any time but are not required to do so.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The title of an assessmentItem is intended to enable the item to be selected
+     * in situations where the full text of the itemBody is not available, for example
+     * when a candidate is browsing a set of items to determine the order in which to
+     * attempt them. Therefore, delivery engines may reveal the title to candidates at
+     * any time but are not required to do so.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $title;
 
     /**
-	 * The label of the item.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The label of the item.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $label = '';
 
     /**
-	 * The language used in the Item.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The language used in the Item.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $lang = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Items are classified into Adaptive Items and Non-adaptive Items.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Items are classified into Adaptive Items and Non-adaptive Items.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $adaptive = false;
 
     /**
-	 * Wether the item is time dependent or not.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * Wether the item is time dependent or not.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $timeDependent;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool name attribute allows the tool creating the item to identify
-	 * itself. Other processing systems may use this information to interpret
-	 * the content of application specific data, such as labels on the elements
-	 * of the item's itemBody.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool name attribute allows the tool creating the item to identify
+     * itself. Other processing systems may use this information to interpret
+     * the content of application specific data, such as labels on the elements
+     * of the item's itemBody.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolName = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool name attribute allows the tool creating the item to identify itself.
-	 * Other processing systems may use this information to interpret the content of
-	 * application specific data, such as labels on the elements of the item's itemBody.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool name attribute allows the tool creating the item to identify itself.
+     * Other processing systems may use this information to interpret the content of
+     * application specific data, such as labels on the elements of the item's itemBody.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolVersion = '';
 
     /**
-	 * The response declarations.
-	 *
-	 * @var \qtism\data\state\ResponseDeclarationCollection
-	 * @qtism-bean-property
-	 */
+     * The response declarations.
+     *
+     * @var \qtism\data\state\ResponseDeclarationCollection
+     * @qtism-bean-property
+     */
     private $responseDeclarations;
 
     /**
-	 * The outcome declarations.
-	 *
-	 * @var \qtism\data\state\OutcomeDeclarationCollection
-	 * @qtism-bean-property
-	 */
+     * The outcome declarations.
+     *
+     * @var \qtism\data\state\OutcomeDeclarationCollection
+     * @qtism-bean-property
+     */
     private $outcomeDeclarations;
 
     /**
-	 * The template declarations.
-	 *
-	 * @var \qtism\data\state\TemplateDeclarationCollection
-	 * @qtism-bean-property
-	 */
+     * The template declarations.
+     *
+     * @var \qtism\data\state\TemplateDeclarationCollection
+     * @qtism-bean-property
+     */
     private $templateDeclarations;
 
     /**
-	 * The stylesheets of the item.
-	 *
-	 * @var \qtism\data\content\StylesheetCollection
-	 * @qtism-bean-property
-	 */
+     * The stylesheets of the item.
+     *
+     * @var \qtism\data\content\StylesheetCollection
+     * @qtism-bean-property
+     */
     private $stylesheets;
 
     /**
-	 * The content body of the item.
-	 *
-	 * @var \qtism\data\ItemBody
-	 * @qtism-bean-property
-	 */
+     * The content body of the item.
+     *
+     * @var \qtism\data\ItemBody
+     * @qtism-bean-property
+     */
     private $itemBody = null;
 
     /**
-	 * The templateProcessing.
-	 *
-	 * @var \qtism\data\processing\TemplateProcessing
-	 * @qtism-bean-property
-	 */
+     * The templateProcessing.
+     *
+     * @var \qtism\data\processing\TemplateProcessing
+     * @qtism-bean-property
+     */
     private $templateProcessing = null;
 
     /**
-	 * The responseProcessing.
-	 *
-	 * @var \qtism\data\processing\ResponseProcessing
-	 * @qtism-bean-property
-	 */
+     * The responseProcessing.
+     *
+     * @var \qtism\data\processing\ResponseProcessing
+     * @qtism-bean-property
+     */
     private $responseProcessing = null;
 
     /**
-	 * The modalFeedbacks.
-	 *
-	 * @var \qtism\data\content\ModalFeedbackCollection
-	 */
+     * The modalFeedbacks.
+     *
+     * @var \qtism\data\content\ModalFeedbackCollection
+     */
     private $modalFeedbacks;
 
     /**
-	 * The observers of this object.
-	 *
-	 * @var \SplObjectStorage
-	 */
+     * The observers of this object.
+     *
+     * @var \SplObjectStorage
+     */
     private $observers;
 
     /**
-	 * Create a new AssessmentItem object.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @param string $title The title of the item.
-	 * @param boolean $timeDependent Whether the item is time dependent.
-	 * @param string $lang The language (code) of the item.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value.
-	 */
+     * Create a new AssessmentItem object.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @param string $title The title of the item.
+     * @param boolean $timeDependent Whether the item is time dependent.
+     * @param string $lang The language (code) of the item.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, if $title is not a string value, if $timeDependent is not a boolean value, or if $lang is not a string value.
+     */
     public function __construct($identifier, $title, $timeDependent, $lang = '')
     {
         $this->setObservers(new SplObjectStorage());
@@ -223,11 +225,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Set the identifier.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -241,21 +243,21 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Get the identifier.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the identifier.
+     *
+     * @return string A QTI identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the title of the item.
-	 *
-	 * @param string $title A title.
-	 * @throws \InvalidArgumentException If $title is not a string value.
-	 */
+     * Set the title of the item.
+     *
+     * @param string $title A title.
+     * @throws \InvalidArgumentException If $title is not a string value.
+     */
     public function setTitle($title)
     {
         if (is_string($title) === true) {
@@ -267,21 +269,21 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Get the title of the item.
-	 *
-	 * @return string A title.
-	 */
+     * Get the title of the item.
+     *
+     * @return string A title.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
     /**
-	 * Set the language code.
-	 *
-	 * @param string $lang A language code.
-	 * @throws \InvalidArgumentException If $lang is not a string.
-	 */
+     * Set the language code.
+     *
+     * @param string $lang A language code.
+     * @throws \InvalidArgumentException If $lang is not a string.
+     */
     public function setLang($lang = '')
     {
         if (gettype($lang) === 'string') {
@@ -293,11 +295,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Set the label of the item.
-	 *
-	 * @param string $label A string with at most 256 characters.
-	 * @throws \InvalidArgumentException If $label is not a string with at most 256 characters.
-	 */
+     * Set the label of the item.
+     *
+     * @param string $label A string with at most 256 characters.
+     * @throws \InvalidArgumentException If $label is not a string with at most 256 characters.
+     */
     public function setLabel($label)
     {
         if (Format::isString256($label) === true) {
@@ -309,40 +311,40 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Whether or not a value is defined for the label attribute.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not a value is defined for the label attribute.
+     *
+     * @return boolean
+     */
     public function hasLabel()
     {
         return $this->getLabel() !== '';
     }
 
     /**
-	 * Get the label of the item.
-	 *
-	 * @return string A string with at most 256 characters.
-	 */
+     * Get the label of the item.
+     *
+     * @return string A string with at most 256 characters.
+     */
     public function getLabel()
     {
         return $this->label;
     }
 
     /**
-	 * Get the language code.
-	 *
-	 * @return string A language code.
-	 */
+     * Get the language code.
+     *
+     * @return string A language code.
+     */
     public function getLang()
     {
         return $this->lang;
     }
 
     /**
-	 * Wether the AssessmentItem has a language.
-	 *
-	 * @return boolean
-	 */
+     * Wether the AssessmentItem has a language.
+     *
+     * @return boolean
+     */
     public function hasLang()
     {
         $lang = $this->getLang();
@@ -351,11 +353,11 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Set whether the item is adaptive.
-	 *
-	 * @param boolean $adaptive Adaptive or not.
-	 * @throws \InvalidArgumentException If $adaptive is not a boolean value.
-	 */
+     * Set whether the item is adaptive.
+     *
+     * @param boolean $adaptive Adaptive or not.
+     * @throws \InvalidArgumentException If $adaptive is not a boolean value.
+     */
     public function setAdaptive($adaptive)
     {
         if (is_bool($adaptive)) {
@@ -367,21 +369,21 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Whether the item is adaptive.
-	 *
-	 * @return boolean
-	 */
+     * Whether the item is adaptive.
+     *
+     * @return boolean
+     */
     public function isAdaptive()
     {
         return $this->adaptive;
     }
 
     /**
-	 * Set whether the item is time dependent or not.
-	 *
-	 * @param boolean $timeDependent Time dependent or not.
-	 * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
-	 */
+     * Set whether the item is time dependent or not.
+     *
+     * @param boolean $timeDependent Time dependent or not.
+     * @throws \InvalidArgumentException If $timeDependent is not a boolean value.
+     */
     public function setTimeDependent($timeDependent)
     {
         if (is_bool($timeDependent)) {
@@ -393,21 +395,21 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Wether the item is time dependent.
-	 *
-	 * @return boolean
-	 */
+     * Wether the item is time dependent.
+     *
+     * @return boolean
+     */
     public function isTimeDependent()
     {
         return $this->timeDependent;
     }
 
     /**
-	 * Set the name of the tool with which the item was created.
-	 *
-	 * @param string $toolName A tool name with at most 256 characters.
-	 * @throws \InvalidArgumentException If $toolName is not a string value with at most 256 characters.
-	 */
+     * Set the name of the tool with which the item was created.
+     *
+     * @param string $toolName A tool name with at most 256 characters.
+     * @throws \InvalidArgumentException If $toolName is not a string value with at most 256 characters.
+     */
     public function setToolName($toolName)
     {
         if (Format::isString256($toolName) === true) {
@@ -419,31 +421,31 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Get the name of the tool with which the item was created.
-	 *
-	 * @return string
-	 */
+     * Get the name of the tool with which the item was created.
+     *
+     * @return string
+     */
     public function getToolName()
     {
         return $this->toolName;
     }
 
     /**
-	 * Whether or not a value is defined for the toolName attribute.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not a value is defined for the toolName attribute.
+     *
+     * @return boolean
+     */
     public function hasToolName()
     {
         return $this->getToolName() !== '';
     }
 
     /**
-	 * Set the version of the tool with which the item was created.
-	 *
-	 * @param string $toolVersion A tool version with at most 256 characters.
-	 * @throws \InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
-	 */
+     * Set the version of the tool with which the item was created.
+     *
+     * @param string $toolVersion A tool version with at most 256 characters.
+     * @throws \InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
+     */
     public function setToolVersion($toolVersion)
     {
         if (Format::isString256($toolVersion) === true) {
@@ -455,229 +457,248 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Get the version of the tool with which the item was created.
-	 *
-	 * @return string A tool version with at most 256 characters.
-	 */
+     * Get the version of the tool with which the item was created.
+     *
+     * @return string A tool version with at most 256 characters.
+     */
     public function getToolVersion()
     {
         return $this->toolVersion;
     }
 
     /**
-	 * Whether or not a value is defined for the toolVersion attribute.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not a value is defined for the toolVersion attribute.
+     *
+     * @return boolean
+     */
     public function hasToolVersion()
     {
         return $this->getToolVersion() !== '';
     }
 
     /**
-	 * Set the response declarations.
-	 *
-	 * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
-	 */
+     * Set the response declarations.
+     *
+     * @param \qtism\data\state\ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
+     */
     public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations)
     {
         $this->responseDeclarations = $responseDeclarations;
     }
 
     /**
-	 * Get the response declarations.
-	 *
-	 * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
-	 */
+     * Get the response declarations.
+     *
+     * @return \qtism\data\state\ResponseDeclarationCollection A collection of ResponseDeclaration objects.
+     */
     public function getResponseDeclarations()
     {
         return $this->responseDeclarations;
     }
 
     /**
-	 * Set the outcome declarations.
-	 *
-	 * @param qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
-	 */
+     * Set the outcome declarations.
+     *
+     * @param qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
 
     /**
-	 * Get the outcome declarations.
-	 *
-	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
-	 */
+     * Get the outcome declarations.
+     *
+     * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+     */
     public function getOutcomeDeclarations()
     {
         return $this->outcomeDeclarations;
     }
 
     /**
-	 * Set the template declarations.
-	 *
-	 * @param \qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
-	 */
+     * Set the template declarations.
+     *
+     * @param \qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+     */
     public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations)
     {
         $this->templateDeclarations = $templateDeclarations;
     }
 
     /**
-	 * Get the template declarations.
-	 *
-	 * @return qtism\data\state\TemplateDeclarationCollection A collection of TemplateDeclaration objects.
-	 */
+     * Get the template declarations.
+     *
+     * @return qtism\data\state\TemplateDeclarationCollection A collection of TemplateDeclaration objects.
+     */
     public function getTemplateDeclarations()
     {
         return $this->templateDeclarations;
     }
 
     /**
-	 * Set the TemplateProcessing object composing this item. Give the null value
-	 * to $templateProcessing to express that there is not TemplateProcessing object
-	 * bound to the item.
-	 *
-	 * @param \qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null.
-	 */
+     * Set the TemplateProcessing object composing this item. Give the null value
+     * to $templateProcessing to express that there is not TemplateProcessing object
+     * bound to the item.
+     *
+     * @param \qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null.
+     */
     public function setTemplateProcessing(TemplateProcessing $templateProcessing = null)
     {
         $this->templateProcessing = $templateProcessing;
     }
 
     /**
-	 * Get the TemplateProcessing object composing the item. If no TemplateProcessing
-	 * object is bound to the item, the null value is returned.
-	 *
-	 * @return \qtism\data\processing\TemplateProcessing A TemplateProcessing object or null.
-	 */
+     * Get the TemplateProcessing object composing the item. If no TemplateProcessing
+     * object is bound to the item, the null value is returned.
+     *
+     * @return \qtism\data\processing\TemplateProcessing A TemplateProcessing object or null.
+     */
     public function getTemplateProcessing()
     {
         return $this->templateProcessing;
     }
 
     /**
-	 * Whether or not a TemplateProcessing object is bound to the item.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not a TemplateProcessing object is bound to the item.
+     *
+     * @return boolean
+     */
     public function hasTemplateProcessing()
     {
         return $this->getTemplateProcessing() !== null;
     }
 
     /**
-	 * Set the stylesheets.
-	 *
-	 * @param \qtism\data\content\StylesheetCollection $stylesheets A collection of Stylesheet objects.
-	 */
+     * Set the stylesheets.
+     *
+     * @param \qtism\data\content\StylesheetCollection $stylesheets A collection of Stylesheet objects.
+     */
     public function setStylesheets(StylesheetCollection $stylesheets)
     {
         $this->stylesheets = $stylesheets;
     }
 
     /**
-	 * Get the stylesheets.
-	 *
-	 * @return \qtism\data\content\StylesheetCollection A collection of Stylesheet objects.
-	 */
+     * Get the stylesheets.
+     *
+     * @return \qtism\data\content\StylesheetCollection A collection of Stylesheet objects.
+     */
     public function getStylesheets()
     {
         return $this->stylesheets;
     }
 
     /**
-	 * Set the ItemBody object representing the content body of the item.
-	 *
-	 * @param \qtism\data\content\ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
-	 */
+     * Set the ItemBody object representing the content body of the item.
+     *
+     * @param \qtism\data\content\ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
+     */
     public function setItemBody(ItemBody $itemBody = null)
     {
         $this->itemBody = $itemBody;
     }
 
     /**
-	 * Get the ItemBody object representing the content body of the item.
-	 *
-	 * @return \qtism\data\content\ItemBody An ItemBody object or the NULL value if the item has no content.
-	 */
+     * Get the ItemBody object representing the content body of the item.
+     *
+     * @return \qtism\data\content\ItemBody An ItemBody object or the NULL value if the item has no content.
+     */
     public function getItemBody()
     {
         return $this->itemBody;
     }
 
     /**
-	 * Whether or not the object has an ItemBody object representing its content.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not the object has an ItemBody object representing its content.
+     *
+     * @return boolean
+     */
     public function hasItemBody()
     {
         return $this->getItemBody() !== null;
     }
 
     /**
-	 * Get the associated ResponseProcessing object.
-	 *
-	 * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
-	 */
+     * Get the associated ResponseProcessing object.
+     *
+     * @return \qtism\data\processing\ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+     */
     public function getResponseProcessing()
     {
         return $this->responseProcessing;
     }
 
     /**
-	 * Set the associated ResponseProcessing object.
-	 *
-	 * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
-	 */
+     * Set the associated ResponseProcessing object.
+     *
+     * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
+     */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null)
     {
         $this->responseProcessing = $responseProcessing;
     }
 
     /**
-	 * Whether the AssessmentItem has a response processing.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentItem has a response processing.
+     *
+     * @return boolean
+     */
     public function hasResponseProcessing()
     {
         return $this->getResponseProcessing() !== null;
     }
 
     /**
-	 * Set the associated ModalFeedback objects.
-	 *
-	 * @param \qtism\data\content\ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
-	 */
+     * Set the associated ModalFeedback objects.
+     *
+     * @param \qtism\data\content\ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
+     */
     public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks)
     {
         $this->modalFeedbacks = $modalFeedbacks;
     }
 
     /**
-	 * Get the associated ModalFeedback objects.
-	 *
-	 * @return \qtism\data\content\ModalFeedbackCollection A collection of ModalFeedback objects.
-	 */
+     * Get the associated ModalFeedback objects.
+     *
+     * @return \qtism\data\content\ModalFeedbackCollection A collection of ModalFeedback objects.
+     */
     public function getModalFeedbacks()
     {
         return $this->modalFeedbacks;
     }
+    
+    /**
+     * @see \qtism\data\IAssessmentItem::getModalFeedbackRules()
+     */
+    public function getModalFeedbackRules()
+    {
+        $modalFeedbackRules = new ModalFeedbackRuleCollection();
+        
+        foreach ($this->getModalFeedbacks() as $modalFeedback) {
+            $identifier = $modalFeedback->getIdentifier();
+            $outcomeIdentifier = $modalFeedback->getOutcomeIdentifier();
+            $showHide = $modalFeedback->getShowHide();
+            $title = $modalFeedback->getTitle();
+            
+            $modalFeedbackRules[] = new ModalFeedbackRule($outcomeIdentifier, $showHide, $identifier, $title);
+        }
+        
+        return $modalFeedbackRules;
+    }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'assessmentItem';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
@@ -706,48 +727,48 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-	 * Get the observers of the object.
-	 *
-	 * @return \SplObjectStorage An SplObjectStorage object.
-	 */
+     * Get the observers of the object.
+     *
+     * @return \SplObjectStorage An SplObjectStorage object.
+     */
     protected function getObservers()
     {
         return $this->observers;
     }
 
     /**
-	 * Set the observers of the object.
-	 *
-	 * @param \SplObjectStorage $observers An SplObjectStorage object.
-	 */
+     * Set the observers of the object.
+     *
+     * @param \SplObjectStorage $observers An SplObjectStorage object.
+     */
     protected function setObservers(SplObjectStorage $observers)
     {
         $this->observers = $observers;
     }
 
     /**
-	 * SplSubject::attach implementation.
-	 *
-	 * @param \SplObserver An SplObserver object.
-	 */
+     * SplSubject::attach implementation.
+     *
+     * @param \SplObserver An SplObserver object.
+     */
     public function attach(SplObserver $observer)
     {
         $this->getObservers()->attach($observer);
     }
 
     /**
-	 * SplSubject::detach implementation.
-	 *
-	 * @param \SplObserver $observer An SplObserver object.
-	 */
+     * SplSubject::detach implementation.
+     *
+     * @param \SplObserver $observer An SplObserver object.
+     */
     public function detach(SplObserver $observer)
     {
         $this->getObservers()->detach($observer);
     }
 
     /**
-	 * SplSubject::notify implementation.
-	 */
+     * SplSubject::notify implementation.
+     */
     public function notify()
     {
         foreach ($this->getObservers() as $observer) {

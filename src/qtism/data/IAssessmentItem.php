@@ -22,6 +22,8 @@
 
 namespace qtism\data;
 
+use qtism\data\content\ModalFeedbackRuleCollection;
+
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\processing\ResponseProcessing;
@@ -93,6 +95,13 @@ interface IAssessmentItem extends QtiIdentifiable
      * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations);
+    
+    /**
+     * Get the modal feedback rules.
+     * 
+     * @return \qtism\data\content\ModalFeedbackRuleCollection
+     */
+    public function getModalFeedbackRules();
 
     /**
      * Get the associated ResponseProcessing object.
