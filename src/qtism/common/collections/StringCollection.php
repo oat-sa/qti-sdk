@@ -32,10 +32,10 @@ use InvalidArgumentException as InvalidArgumentException;
 class StringCollection extends AbstractCollection
 {
     /**
-	 * Check if $value is a valid string.
-	 *
-	 * @throws \InvalidArgumentException If $value is not a valid string.
-	 */
+     * Check if $value is a valid string.
+     *
+     * @throws \InvalidArgumentException If $value is not a valid string.
+     */
     protected function checkType($value)
     {
         if (gettype($value) !== 'string') {
@@ -45,11 +45,11 @@ class StringCollection extends AbstractCollection
     }
 
     /**
-	 * Whether or not the collection contains a given $string.
-	 *
-	 * @param mixed $value A string.
-	 * @return boolean Whether the collection contains $value.
-	 */
+     * Whether or not the collection contains a given $string.
+     *
+     * @param mixed $value A string.
+     * @return boolean Whether the collection contains $value.
+     */
     public function contains($value)
     {
         $data = &$this->getDataPlaceHolder();

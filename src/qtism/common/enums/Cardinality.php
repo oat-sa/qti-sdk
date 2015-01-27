@@ -59,24 +59,24 @@ class Cardinality implements Enumeration
     const SINGLE = 0;
 
     /**
-	 * The QTI multiple cardinality.
-	 *
-	 * @var integer
-	 */
+     * The QTI multiple cardinality.
+     *
+     * @var integer
+     */
     const MULTIPLE = 1;
 
     /**
-	 * The QTI ordered cardinality.
-	 *
-	 * @var integer
-	 */
+     * The QTI ordered cardinality.
+     *
+     * @var integer
+     */
     const ORDERED = 2;
 
     /**
-	 * The QTI record cardinality.
-	 *
-	 * @var integer
-	 */
+     * The QTI record cardinality.
+     *
+     * @var integer
+     */
     const RECORD = 3;
 
     public static function asArray()
@@ -90,11 +90,11 @@ class Cardinality implements Enumeration
     }
 
     /**
-	 * Get a constant value from its name.
-	 *
-	 * @param unknown_type $name The name of the constant, as per QTI spec.
-	 * @return integer|boolean The constant value or false if not found.
-	 */
+     * Get a constant value from its name.
+     *
+     * @param unknown_type $name The name of the constant, as per QTI spec.
+     * @return integer|boolean The constant value or false if not found.
+     */
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
@@ -121,11 +121,11 @@ class Cardinality implements Enumeration
     }
 
     /**
-	 * Get the name of a constant from its value.
-	 *
-	 * @param string $constant The constant value to search the name for.
-	 * @return string|boolean The name of the constant or false if not found.
-	 */
+     * Get the name of a constant from its value.
+     *
+     * @param string $constant The constant value to search the name for.
+     * @return string|boolean The name of the constant or false if not found.
+     */
     public static function getNameByConstant($constant)
     {
         switch ($constant) {

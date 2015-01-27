@@ -31,16 +31,16 @@ namespace qtism\common\collections;
 interface Stack
 {
     /**
-	 * Push a value on the Stack.
-	 *
-	 * @param mixed $value A value.
-	 */
+     * Push a value on the Stack.
+     *
+     * @param mixed $value A value.
+     */
     public function push($value);
 
     /**
-	 * Pop a value from the Stack.
-	 *
-	 * @return mixed A value.
-	 */
+     * Pop a value from the Stack.
+     *
+     * @return mixed A value.
+     */
     public function pop();
 }

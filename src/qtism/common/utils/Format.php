@@ -45,16 +45,16 @@ class Format
     private static $printfFormatSpecifier = '%(?:(?:-|\+| |#|0)*){0,1}(?:[0-9]+|\*){0,1}(?:\.[0-9]+|\*){0,1}(?:hh|h|ll|l|j|z|t|L){0,1}(?:d|i|u|o|x|X|f|F|e|E|g|G|a|A|c|s|p|n)';
 
     /**
-	 * Check if string is compliant with the identifier datatype of IMS QTI.
-	 *
-	 * IMS Global says :
-	 * Identifiers can contain the character classes Letter, Digit, Combining which are described in the
-	 * Extensible Markup Language (XML) 1.0 (Second Edition). Identifiers should have no more
-	 * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
-	 *
-	 * @link http://www.w3.org/TR/2000/REC-xml-20001006
-	 * @return boolean Wether $string is a valid identifier.
-	 */
+     * Check if string is compliant with the identifier datatype of IMS QTI.
+     *
+     * IMS Global says :
+     * Identifiers can contain the character classes Letter, Digit, Combining which are described in the
+     * Extensible Markup Language (XML) 1.0 (Second Edition). Identifiers should have no more
+     * than 32 characters for compatibility with version 1. They are always compared case-sensitively.
+     *
+     * @link http://www.w3.org/TR/2000/REC-xml-20001006
+     * @return boolean Wether $string is a valid identifier.
+     */
     public static function isIdentifier($string, $strict = true)
     {
         if ($strict === true) {
@@ -83,44 +83,44 @@ class Format
     }
 
     /**
-	 * Get Perl XML Digit regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML Digit regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlDigit()
     {
         return self::$perlXmlDigit;
     }
 
     /**
-	 * Get Perl XML BaseChar regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML BaseChar regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlBaseChar()
     {
         return self::$perlXmlBaseChar;
     }
 
     /**
-	 * Get Perl XML Ideographic regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML Ideographic regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlIdeographic()
     {
         return self::$perlXmlIdeographic;
     }
 
     /**
-	 * Get Perl XML Letter regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML Letter regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlLetter()
     {
         $baseChar = self::getPerlXmlBaseChar();
@@ -130,56 +130,56 @@ class Format
     }
 
     /**
-	 * Get Perl XML CombiningChar regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML CombiningChar regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlCombiningChar()
     {
         return self::$perlXmlCombiningChar;
     }
 
     /**
-	 * Get Perl XML Extender regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
-	 */
+     * Get Perl XML Extender regular expression.
+     *
+     * @return string A perl regular expression.
+     * @link http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.04/lib/XML/RegExp.pm
+     */
     private static function getPerlXmlExtender()
     {
         return self::$perlXmlExtender;
     }
 
     /**
-	 * Get Perl printf format specifier regular expression.
-	 *
-	 * @return string A perl regular expression.
-	 * @see http://www.cplusplus.com/reference/cstdio/printf/ C++ printf format.
-	 */
+     * Get Perl printf format specifier regular expression.
+     *
+     * @return string A perl regular expression.
+     * @see http://www.cplusplus.com/reference/cstdio/printf/ C++ printf format.
+     */
     private static function getPrintfFormatSpecifier()
     {
         return self::$printfFormatSpecifier;
     }
 
     /**
-	 * Apply both PHP::strtolower and PHP::trim on a given $string.
-	 *
-	 * @param string $string A string on which you want to apply PHP::strtolower and PHP::trim.
-	 * @return string An altered string.
-	 */
+     * Apply both PHP::strtolower and PHP::trim on a given $string.
+     *
+     * @param string $string A string on which you want to apply PHP::strtolower and PHP::trim.
+     * @return string An altered string.
+     */
     public static function toLowerTrim($string)
     {
         return strtolower(trim($string));
     }
 
     /**
-	 * Wether a given $string is a URI.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wether $string is a valid URI.
-	 * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
-	 */
+     * Wether a given $string is a URI.
+     *
+     * @param string $string A string value.
+     * @return boolean Wether $string is a valid URI.
+     * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
+     */
     public static function isUri($string)
     {
         // @todo find the ultimate URI validation rule.
@@ -192,33 +192,33 @@ class Format
     }
 
     /**
-	 * Wether a given $string can be cast into an integer value.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wether $string can be cast into an integer value.
-	 */
+     * Wether a given $string can be cast into an integer value.
+     *
+     * @param string $string A string value.
+     * @return boolean Wether $string can be cast into an integer value.
+     */
     public static function isInteger($string)
     {
         return (preg_match('/^(?:\\-|\\+){0,1}[0-9]+$/', self::toLowerTrim($string)) === 1);
     }
 
     /**
-	 * Wether a given $string can be cast into a float value.
-	 *
-	 * @param string $string A string value e.g. '27.111'.
-	 * @return boolean Wether $string can be converted to a float.
-	 */
+     * Wether a given $string can be cast into a float value.
+     *
+     * @param string $string A string value e.g. '27.111'.
+     * @return boolean Wether $string can be converted to a float.
+     */
     public static function isFloat($string)
     {
         return (preg_match('/^(?:(?:\\-|\\+){0,1}[0-9]+)$|^(?:(?:\\-|\\+){0,1}[0-9]+\\.[0-9]+)+/', Format::toLowerTrim($string)) === 1);
     }
 
     /**
-	 * Wether a given $string can be cast into a pair.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wether $string can be converted to a pair.
-	 */
+     * Wether a given $string can be cast into a pair.
+     *
+     * @param string $string A string value.
+     * @return boolean Wether $string can be converted to a pair.
+     */
     public static function isPair($string)
     {
         $pair = explode("\x20", $string);
@@ -233,22 +233,22 @@ class Format
     }
 
     /**
-	 * Wether a given $string can be cast into a directed pair.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wether $string can be converted to a directed pair.
-	 */
+     * Wether a given $string can be cast into a directed pair.
+     *
+     * @param string $string A string value.
+     * @return boolean Wether $string can be converted to a directed pair.
+     */
     public static function isDirectedPair($string)
     {
         return self::isPair($string);
     }
 
     /**
-	 * Wether a given $string can be cast into a duration.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wether $string can be converted to a duration.
-	 */
+     * Wether a given $string can be cast into a duration.
+     *
+     * @param string $string A string value.
+     * @return boolean Wether $string can be converted to a duration.
+     */
     public static function isDuration($string)
     {
         try {
@@ -261,11 +261,11 @@ class Format
     }
 
     /**
-	 * Whether a given $string can be transformed into a boolean.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Whether $string can be converted to a boolean.
-	 */
+     * Whether a given $string can be transformed into a boolean.
+     *
+     * @param string $string A string value.
+     * @return boolean Whether $string can be converted to a boolean.
+     */
     public static function isBoolean($string)
     {
         if (gettype($string) === 'string') {
@@ -283,11 +283,11 @@ class Format
     }
 
     /**
-	 * Whether a given $string can be cast into a Point datatype.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Wheter $string can be transformed to a Point datatype.
-	 */
+     * Whether a given $string can be cast into a Point datatype.
+     *
+     * @param string $string A string value.
+     * @return boolean Wheter $string can be transformed to a Point datatype.
+     */
     public static function isPoint($string)
     {
         if (gettype($string) === 'string') {
@@ -303,11 +303,11 @@ class Format
     }
 
     /**
-	 * Whether a given $string can be cast into the file baseType.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean
-	 */
+     * Whether a given $string can be cast into the file baseType.
+     *
+     * @param string $string A string value.
+     * @return boolean
+     */
     public static function isFile($string)
     {
         // @todo implement File baseType as a complex type. See QTI-PCI spec for redemption.
@@ -315,12 +315,12 @@ class Format
     }
 
     /**
-	 * Whether or not a given string is a variable ref.
-	 *
-	 * @param string $string A given string.
-	 * @return boolean Wheter $string is a valid variable ref.
-	 * @example '{myIdentifier1}' is a valid variable ref but 'myIdentifier1' is not.
-	 */
+     * Whether or not a given string is a variable ref.
+     *
+     * @param string $string A given string.
+     * @return boolean Wheter $string is a valid variable ref.
+     * @example '{myIdentifier1}' is a valid variable ref but 'myIdentifier1' is not.
+     */
     public static function isVariableRef($string)
     {
         $firstBrace = substr($string, 0, 1);
@@ -334,15 +334,15 @@ class Format
     }
 
     /**
-	 * Whether or not a given string is a coordinate collection.
-	 *
-	 * For compatibility reasons, float formatted numbers will also
-	 * be accepted as valid numbers to compose coordinates.
-	 *
-	 * @param string $string A given string.
-	 * @return boolean Wether $string is a valid coordinate collection.
-	 * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
-	 */
+     * Whether or not a given string is a coordinate collection.
+     *
+     * For compatibility reasons, float formatted numbers will also
+     * be accepted as valid numbers to compose coordinates.
+     *
+     * @param string $string A given string.
+     * @return boolean Wether $string is a valid coordinate collection.
+     * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
+     */
     public static function isCoords($string)
     {
         $pattern = "/^-{0,1}[0-9]+(?:\.[0-9]+){0,1}(?:\s*,\s*-{0,1}[0-9]+(?:\.[0-9]+){0,1})*$/";
@@ -351,24 +351,24 @@ class Format
     }
 
     /**
-	 * Whether a given $string is a string value with a maximum
-	 * of 256 characters.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean
-	 */
+     * Whether a given $string is a string value with a maximum
+     * of 256 characters.
+     *
+     * @param string $string A string value.
+     * @return boolean
+     */
     public static function isString256($string)
     {
         return is_string($string) && mb_strlen($string, 'UTF-8') <= 256;
     }
 
     /**
-	 * Whether a given $string is a valid value for a body element's class
-	 * attribute e.g. 'qti-label' or 'qti-label qti-component'.
-	 *
-	 * @param string $string A string value.
-	 * @return boolean
-	 */
+     * Whether a given $string is a valid value for a body element's class
+     * attribute e.g. 'qti-label' or 'qti-label qti-component'.
+     *
+     * @param string $string A string value.
+     * @return boolean
+     */
     public static function isClass($string)
     {
         $pattern = "/^(?:[^\s]+?(?:\x20){0,1})+$/";
@@ -377,16 +377,16 @@ class Format
     }
 
     /**
-	 * Get a float variable into a Standard Form / Scientific notation e.g. 6.72 x 10⁴.
-	 *
-	 * * If no $precision is given, 6 significant numbers will be displayed after the decimal separator.
-	 * * If no $x is given, the 'x' character will be used as the 'times' operator.
-	 *
-	 * @param float $float
-	 * @param string $x The character to be used as the 'times' operator.
-	 * @param false|integer $precision The number of requested significant numbers after the decimal separator.
-	 * @return string
-	 */
+     * Get a float variable into a Standard Form / Scientific notation e.g. 6.72 x 10⁴.
+     *
+     * * If no $precision is given, 6 significant numbers will be displayed after the decimal separator.
+     * * If no $x is given, the 'x' character will be used as the 'times' operator.
+     *
+     * @param float $float
+     * @param string $x The character to be used as the 'times' operator.
+     * @param false|integer $precision The number of requested significant numbers after the decimal separator.
+     * @return string
+     */
     public static function scale10($float, $x = 'x', $precision = false)
     {
         // 1. Transform in 'E' notation.
@@ -450,62 +450,62 @@ class Format
     }
 
     /**
-	 * This method is not absolutely safe because of the 'volatile' nature of
-	 * the printf format. However, it can validate a lot of strings as a first
-	 * barrier for further code to be implemented.
-	 *
-	 * Examples:
-	 *
-	 * Format::isPrintfIsoFormat('%#x') => true
-	 * Format::isPrintfIsoFormat('%#llx') => true
-	 * Format::isPrintfIsoFormat('Octal %#x is Octal %#llx') => true
-	 * Format::isPrintfIsoFormat("%d\n") => true
-	 * Format::isPrintfIsoFormat("%3d\n") => true
-	 * Format::isPrintfIsoFormat("%03d\n") => true
-	 * Format::isPrintfIsoFormat("Characters: %c %c \n") => true
-	 * Format::isPrintfIsoFormat("Decimals: %d %ld\n") => true
-	 * Format::isPrintfIsoFormat("Preceding with blanks: %10d \n") => true
-	 * Format::isPrintfIsoFormat("Preceding with zeros: %010d \n") => true
-	 * Format::isPrintfIsoFormat("Some different radices: %d %x %o %#x %#o \n") => true
-	 * Format::isPrintfIsoFormat("floats: %4.2f %+.0e %E \n") => true
-	 * Format::isPrintfIsoFormat("Width trick: %*d \n") => true
-	 * Format::isPrintfIsoFormat("%s \n") => true
-	 * Format::isPrintfIsoFormat("%3d %06.3f\n") => true
-	 * Format::isPrintfIsoFormat("The color: %s\n") => true
-	 * Format::isPrintfIsoFormat("First number: %d\n") => true
-	 * Format::isPrintfIsoFormat("Second number: %04d\n") => true
-	 * Format::isPrintfIsoFormat("Third number: %i\n") => true
-	 * Format::isPrintfIsoFormat("Float number: %3.2f\n") => true
-	 * Format::isPrintfIsoFormat("Hexadecimal: %x\n") => true
-	 * Format::isPrintfIsoFormat("Octal: %o\n") => true
-	 * Format::isPrintfIsoFormat("Unsigned value: %u\n") => true
-	 * Format::isPrintfIsoFormat("Just print the percentage sign %%\n") => false // Do not contain valid specifier.
-	 * Format::isPrintfIsoFormat(":%s:\n") => true
-	 * Format::isPrintfIsoFormat(":%15s:\n") => true
-	 * Format::isPrintfIsoFormat(":%.10s:\n") => true
-	 * Format::isPrintfIsoFormat(":%-10s:\n") => true
-	 * Format::isPrintfIsoFormat(":%-15s:\n") => true
-	 * Format::isPrintfIsoFormat(":%.15s:\n") => true
-	 * Format::isPrintfIsoFormat(":%15.10s:\n") => true
-	 * Format::isPrintfIsoFormat(":%-15.10s:\n") => true
-	 * Format::isPrintfIsoFormat("This is an integer with padding %03d\n") => true
-	 * Format::isPrintfIsoFormat('This is an integer with padding...') => false
-	 * Format::isPrintfIsoFormat("Escape or not? %%s") => false
-	 * Format::isPrintfIsoFormat("Escape or not? %%%s") => true
-	 * Format::isPrintfIsoFormat("Escape or not? %%%%s") => false
-	 * Format::isPrintfIsoFormat("Escape or not? %%%%%s") => true
-	 * Format::isPrintfIsoFormat("%s bla %s and %%%s is %s and %%%%s") => true
-	 * Format::isPrintfIsoFormat("%%s bla %s and %%%s is %s and %%%%s") => true
-	 * Format::isPrintfIsoFormat("%%s bla %%s and %%%s is %s and %%%%s") => true
-	 * Format::isPrintfIsoFormat("%%s bla %%s and %%s is %s and %%%%s") => true
-	 * Format::isPrintfIsoFormat("%%s bla %%s and %%s is %%%%s and %%%%s") => false
-	 * Format::isPrintfIsoFormat("%s") => true
-	 * Format::isPrintfIsoFormat("%S") => false
-	 * Format::isPrintfIsoFormat("bla %S bli %s") => true
-	 *
-	 * @param string $isoFormat
-	 * @return boolean
-	 */
+     * This method is not absolutely safe because of the 'volatile' nature of
+     * the printf format. However, it can validate a lot of strings as a first
+     * barrier for further code to be implemented.
+     *
+     * Examples:
+     *
+     * Format::isPrintfIsoFormat('%#x') => true
+     * Format::isPrintfIsoFormat('%#llx') => true
+     * Format::isPrintfIsoFormat('Octal %#x is Octal %#llx') => true
+     * Format::isPrintfIsoFormat("%d\n") => true
+     * Format::isPrintfIsoFormat("%3d\n") => true
+     * Format::isPrintfIsoFormat("%03d\n") => true
+     * Format::isPrintfIsoFormat("Characters: %c %c \n") => true
+     * Format::isPrintfIsoFormat("Decimals: %d %ld\n") => true
+     * Format::isPrintfIsoFormat("Preceding with blanks: %10d \n") => true
+     * Format::isPrintfIsoFormat("Preceding with zeros: %010d \n") => true
+     * Format::isPrintfIsoFormat("Some different radices: %d %x %o %#x %#o \n") => true
+     * Format::isPrintfIsoFormat("floats: %4.2f %+.0e %E \n") => true
+     * Format::isPrintfIsoFormat("Width trick: %*d \n") => true
+     * Format::isPrintfIsoFormat("%s \n") => true
+     * Format::isPrintfIsoFormat("%3d %06.3f\n") => true
+     * Format::isPrintfIsoFormat("The color: %s\n") => true
+     * Format::isPrintfIsoFormat("First number: %d\n") => true
+     * Format::isPrintfIsoFormat("Second number: %04d\n") => true
+     * Format::isPrintfIsoFormat("Third number: %i\n") => true
+     * Format::isPrintfIsoFormat("Float number: %3.2f\n") => true
+     * Format::isPrintfIsoFormat("Hexadecimal: %x\n") => true
+     * Format::isPrintfIsoFormat("Octal: %o\n") => true
+     * Format::isPrintfIsoFormat("Unsigned value: %u\n") => true
+     * Format::isPrintfIsoFormat("Just print the percentage sign %%\n") => false // Do not contain valid specifier.
+     * Format::isPrintfIsoFormat(":%s:\n") => true
+     * Format::isPrintfIsoFormat(":%15s:\n") => true
+     * Format::isPrintfIsoFormat(":%.10s:\n") => true
+     * Format::isPrintfIsoFormat(":%-10s:\n") => true
+     * Format::isPrintfIsoFormat(":%-15s:\n") => true
+     * Format::isPrintfIsoFormat(":%.15s:\n") => true
+     * Format::isPrintfIsoFormat(":%15.10s:\n") => true
+     * Format::isPrintfIsoFormat(":%-15.10s:\n") => true
+     * Format::isPrintfIsoFormat("This is an integer with padding %03d\n") => true
+     * Format::isPrintfIsoFormat('This is an integer with padding...') => false
+     * Format::isPrintfIsoFormat("Escape or not? %%s") => false
+     * Format::isPrintfIsoFormat("Escape or not? %%%s") => true
+     * Format::isPrintfIsoFormat("Escape or not? %%%%s") => false
+     * Format::isPrintfIsoFormat("Escape or not? %%%%%s") => true
+     * Format::isPrintfIsoFormat("%s bla %s and %%%s is %s and %%%%s") => true
+     * Format::isPrintfIsoFormat("%%s bla %s and %%%s is %s and %%%%s") => true
+     * Format::isPrintfIsoFormat("%%s bla %%s and %%%s is %s and %%%%s") => true
+     * Format::isPrintfIsoFormat("%%s bla %%s and %%s is %s and %%%%s") => true
+     * Format::isPrintfIsoFormat("%%s bla %%s and %%s is %%%%s and %%%%s") => false
+     * Format::isPrintfIsoFormat("%s") => true
+     * Format::isPrintfIsoFormat("%S") => false
+     * Format::isPrintfIsoFormat("bla %S bli %s") => true
+     *
+     * @param string $isoFormat
+     * @return boolean
+     */
     public static function isPrintfIsoFormat($isoFormat)
     {
         $subPattern = self::getPrintfFormatSpecifier();
@@ -523,17 +523,17 @@ class Format
     }
 
     /**
-	 * Transform an ISO number formatting into a format that can
-	 * be handled by PHP's printf/sprintf implementation.
-	 *
-	 * Please note that this method is not totally safe because
-	 * of the "funky" nature of ISO number formats especially when
-	 * used with C++. However, this method can be a good first attempt
-	 * of transformation for further instructions to be executed.
-	 *
-	 * @param string $isoFormat
-	 * @return string The transformed formatting.
-	 */
+     * Transform an ISO number formatting into a format that can
+     * be handled by PHP's printf/sprintf implementation.
+     *
+     * Please note that this method is not totally safe because
+     * of the "funky" nature of ISO number formats especially when
+     * used with C++. However, this method can be a good first attempt
+     * of transformation for further instructions to be executed.
+     *
+     * @param string $isoFormat
+     * @return string The transformed formatting.
+     */
     public static function printfFormatIsoToPhp($isoFormat)
     {
         // Valid format, do the modifications to be compliant with
@@ -554,12 +554,12 @@ class Format
     }
 
     /**
-	 * Whether or not a given $length is a compliant XHTML
-	 * length (e.g. "10%", 10, ...).
-	 *
-	 * @param mixed $length A length as a string or integer.
-	 * @return boolean
-	 */
+     * Whether or not a given $length is a compliant XHTML
+     * length (e.g. "10%", 10, ...).
+     *
+     * @param mixed $length A length as a string or integer.
+     * @return boolean
+     */
     public static function isXhtmlLength($length)
     {
         if (is_int($length) === true) {

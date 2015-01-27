@@ -31,12 +31,12 @@ namespace qtism\common;
 interface Comparable
 {
     /**
-	 * Indicates whether some object is equal to this one. (c.f. JavaSE doc)
-	 *
-	 * @param mixed $obj An object to compare.
-	 * @return boolean Whether the object to compare is equal to this one.
-	 * @link http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#equals(java.lang.Object)
-	 */
+     * Indicates whether some object is equal to this one. (c.f. JavaSE doc)
+     *
+     * @param mixed $obj An object to compare.
+     * @return boolean Whether the object to compare is equal to this one.
+     * @link http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#equals(java.lang.Object)
+     */
     public function equals($obj);
 
 }
