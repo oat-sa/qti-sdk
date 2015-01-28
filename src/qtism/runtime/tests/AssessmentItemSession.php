@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,6 +22,10 @@
  */
 
 namespace qtism\runtime\tests;
+
+use qtism\data\ShowHide;
+
+use qtism\common\datatypes\Scalar;
 
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
@@ -479,8 +483,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-	 * Set the current time of the running assessment item session. If the session
-	 * is in INTERACTING mode, the difference between the last time reference provided
+	 * Set the current time of the running assessment item session. 
+	 * 
+	 * If the session is in INTERACTING mode, the difference between the last time reference provided
 	 * with the previous call on the setTime() method and $time will be computed. This
 	 * time difference will be added to the current value of the built-in outcome variable
 	 * 'duration'.
@@ -701,7 +706,7 @@ class AssessmentItemSession extends State
         // For more information, see Response Processing.
         //
         // The responseProcessing can be skipped by given a false value to $responseProcessing. Why?
-        // Because when the SubmissionMode is SubmissionMode::SIMULTANEOUS, the responseProcessing must
+        // Because when the SubmissionMode is SubmissionMode::SIMULTANEOUS, the responseProcessing must be
         // deffered to the end of the current testPart.
         if ($responseProcessing === true) {
 
@@ -722,10 +727,15 @@ class AssessmentItemSession extends State
         if ($this->getSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
             $maxAttempts = 1;
         }
-
+        
+        // Should the item go to modalFeedback state?
+        $mustModalFeedback = $this->mustModalFeedback();
+        
         // -- Adaptive item.
         if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
-            $this->endItemSession();
+            if ($mustModalFeedback === false) {
+                $this->endItemSession();
+            }
         }
         // -- Non-adaptive item + maxAttempts reached.
         elseif ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts) {
@@ -735,7 +745,7 @@ class AssessmentItemSession extends State
             // + Special case, no response processing requested && simulatenous navigation mode
             // --> The session must not close prior to deferred response processing. The session goes
             // then in suspended mode.
-            if ($maxAttempts !== 0 && $responseProcessing === true) {
+            if ($mustModalFeedback === false && $maxAttempts !== 0 && $responseProcessing === true) {
                 $this->endItemSession();
             }
 
@@ -749,10 +759,13 @@ class AssessmentItemSession extends State
         }
 
         // End of attempt, go in SUSPEND state (only if real endAttempt).
-        if ($this->getState() !== AssessmentItemSessionState::CLOSED) {
-            if ($responseProcessing === true) {
-                // Real end attempt.
+        if ($this->getState() !== AssessmentItemSessionState::CLOSED && $responseProcessing === true) {
+            // Real end attempt.
+            
+            if ($mustModalFeedback === false) {
                 $this->suspend();
+            } else {
+                $this->setState(AssessmentItemSessionState::MODAL_FEEDBACK);
             }
         }
     }
@@ -815,7 +828,9 @@ class AssessmentItemSession extends State
     
     
     /**
-     * Indicate that the candidate is ending its candidate session. In other words, the candidate makes the item session
+     * Indicate that the candidate is ending its candidate session. 
+     * 
+     * In other words, the candidate makes the item session
      * go from the INTERACTING mode to the SUSPENDED mode, without ending the attempt. The attempt can be resumed by a
      * call to the beginCandidateSession() method.
      * 
@@ -1117,6 +1132,43 @@ class AssessmentItemSession extends State
     protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing)
     {
         return new ResponseProcessingEngine($responseProcessing, $this);
+    }
+    
+    /**
+     * Wheter the current session affects visibility of modal feedbacks.
+     * 
+     * This method will detect whether or not the current is composed by a scope of 
+     * variable set in such a way that at least one modalFeedback elements must be displayed.
+     * 
+     * Please note that if the current itemSessionControl's showFeedback attribute value is false
+     * or if the current submission mode is Simultaneous, false is systematically returned. 
+     * 
+     * @return boolean
+     */
+    private function mustModalFeedback()
+    {
+        $mustModalFeedback = false;
+        
+        // Feedback is never shown in SIMULTANEOUS submission mode, nor if showFeedback is disabled.
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustShowFeedback() === true) {
+            
+            foreach ($this->getAssessmentItem()->getModalFeedbackRules() as $rule) {
+                if (($outcomeValue = $this[$rule->getOutcomeIdentifier()]) !== null) {
+            
+                    $identifierValue = new Identifier($rule->getIdentifier());
+                    $showHide = $rule->getShowHide();
+                    $match = ($outcomeValue instanceof Scalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
+            
+                    if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {
+                        // At least one modal feedback will be displayed!
+                        $mustModalFeedback = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $mustModalFeedback;
     }
 
     /**

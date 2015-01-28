@@ -294,6 +294,36 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(6.0, $itemSession['SCORE']->getValue());
     }
     
+    public function testModalFeedback() {
+        $doc = new XmlDocument('2.1.0');
+        $doc->load(self::samplesDir() . 'ims/items/2_1/modalFeedback.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setShowFeedback(true);
+        $itemSessionControl->setMaxAttempts(0);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
+        
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('true'))));
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals('correct', $itemSession['FEEDBACK']->getValue());
+        $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $itemSession->getState());
+        
+        // new attempt!
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('false'))));
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals('incorrect', $itemSession['FEEDBACK']->getValue());
+        $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $itemSession->getState());
+        
+        $itemSession->endItemSession();
+        $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
+    }
+    
     public function testSimultaneousSubmissionOnlyOneAttempt() {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
