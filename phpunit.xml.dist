@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit bootstrap="./vendor/autoload.php">
-	<testsuites>
-		<testsuite name ="QTISM Test Suite">
-			<directory>./test</directory>
-		</testsuite>
-	</testsuites>
-	<php>
-		<ini name="memory_limit" value="1024M" />
-	</php>
+    <testsuites>
+        <testsuite name ="QTISM Test Suite">
+            <directory>./test</directory>
+        </testsuite>
+    </testsuites>
+    <!-- PHP configuration -->
+    <php>
+        <!-- About 300Mo are consumed on Travis CI or ContinuousPHP. -->
+        <ini name="memory_limit" value="1024M" />
+    </php>
 </phpunit>
