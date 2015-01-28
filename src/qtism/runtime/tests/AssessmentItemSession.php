@@ -796,8 +796,23 @@ class AssessmentItemSession extends State
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
         } else {
-            $this->setState(AssessmentItemSessionState::SUSPENDED);
-            $this->setAttempting(false);
+            
+            if ($state == AssessmentItemSessionState::MODAL_FEEDBACK) {
+                // Let's play the suspension ritual...
+                $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
+                
+                // -- Adaptive item.
+                if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+                    $this->endItemSession();
+                } 
+                // -- Non-adaptive item + maxAttempts reached.
+                elseif ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts && $maxAttempts !== 0 && $this->getSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
+                    $this->endItemSession();
+                }
+            } else {
+                $this->setState(AssessmentItemSessionState::SUSPENDED);
+                $this->setAttempting(false);
+            }
         }
     }
 

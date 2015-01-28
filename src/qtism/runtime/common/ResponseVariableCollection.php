@@ -23,6 +23,7 @@
 
 namespace qtism\data;
 
+use qtism\runtime\common\VariableCollection;
 use qtism\runtime\common\ResponseVariable;
 use \InvalidArgumentException;
 

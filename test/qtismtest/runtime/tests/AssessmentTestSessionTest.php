@@ -1438,4 +1438,46 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // and the session is then closed.
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	}
+	
+	public function testItemModalFeedbacks() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/item_modalfeedbacks/modalfeedbacks_nonadaptive_individual_linear.xml', true);
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+	    $session->beginTestSession();
+	    
+	    // -- Q01.
+	    $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('true'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+	    
+	    // -- Move from Q01 to Q02.
+	    $session->moveNext();
+	    // Check that the item session for Q01 is correctly CLOSED by moving next,
+	    // even if it was in a modal feedback state. Why closed and not suspended?
+	    // Because maxAttempts = 1.
+	    $itemSessions = $session->getAssessmentItemSessions('Q01');
+	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSessions[0]->getState());
+	    
+	    // -- Q02.
+	    // Here, the maxAttempts is 0 i.e. no limit. Moreover, feedback is shown only if the answer
+	    // is wrong.
+	    $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+	    
+	    // Brutal new attempt!
+	    $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('true'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+	    
+	    $session->endTestSession();
+	    $itemSessions = $session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions();
+	    foreach ($itemSessions as $itemSession) {
+	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+	    }
+	}
 }

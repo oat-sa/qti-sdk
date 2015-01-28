@@ -1815,6 +1815,11 @@ class AssessmentTestSession extends State
         if ($this->getTestResultsSubmission() === TestResultsSubmission::END) {
             $this->submitTestResults();
         }
+        
+        // Close all sessions !
+        foreach ($this->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+            $itemSession->endItemSession();
+        }
 
         $this->setState(AssessmentTestSessionState::CLOSED);
     }
@@ -2219,6 +2224,8 @@ class AssessmentTestSession extends State
         } elseif (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
             if ($itemSession->getState() === AssessmentItemSessionState::INTERACTING) {
                 $itemSession->endCandidateSession();
+            } else if ($itemSession->getState() === AssessmentItemSessionState::MODAL_FEEDBACK) {
+                $itemSession->suspend();
             }
         } else {
             $msg = "Cannot retrieve the current item session.";
