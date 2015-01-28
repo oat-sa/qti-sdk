@@ -1,0 +1,14 @@
+<project name="continuousphp-worker" default="help" basedir=".">
+
+    <target name="help" description="List available targets">
+        <exec executable="phing"
+              passthru="true">
+            <arg value="-l"/>
+        </exec>
+    </target>
+
+    <target name="setup-testing" description="Setup environment in order to execute tests">
+        <copy file="${project.basedir}/phpunit.xml.dist" tofile="${project.basedir}/phpunit.xml" overwrite="true" />
+    </target>
+
+</project>
