@@ -1020,7 +1020,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $session->beginTestSession();
 	    
-	    // Finally, suspend an item session in interacting state by moving to the next item during an attempt.
+	    // Suspend an item session in interacting state by moving to the next item during an attempt.
 	    $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getCurrentAssessmentItemSession()->getState());
 	    $session->beginAttempt();
 	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());

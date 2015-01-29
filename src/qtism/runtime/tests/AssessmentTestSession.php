@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -80,86 +80,86 @@ class AssessmentTestSession extends State
     private $assessmentItemSessionStore;
 
     /**
-	 * The route to be taken by this AssessmentTestSession.
-	 *
-	 * @var \qtism\runtime\tests\Route
-	 */
+     * The route to be taken by this AssessmentTestSession.
+     *
+     * @var \qtism\runtime\tests\Route
+     */
     private $route;
 
     /**
-	 * The state of the AssessmentTestSession.
-	 *
-	 * @var integer
-	 */
+     * The state of the AssessmentTestSession.
+     *
+     * @var integer
+     */
     private $state;
 
     /**
-	 * The AssessmentTest the AssessmentTestSession is an instance of.
-	 *
-	 * @var \qtism\data\AssessmentTest
-	 */
+     * The AssessmentTest the AssessmentTestSession is an instance of.
+     *
+     * @var \qtism\data\AssessmentTest
+     */
     private $assessmentTest;
 
     /**
-	 * A map (indexed by AssessmentItemRef objects) to store
-	 * the last occurence that has one of its variable updated.
-	 *
-	 * @var \SplObjectStorage
-	 */
+     * A map (indexed by AssessmentItemRef objects) to store
+     * the last occurence that has one of its variable updated.
+     *
+     * @var \SplObjectStorage
+     */
     private $lastOccurenceUpdate;
 
     /**
-	 * A Store of PendingResponse objects that are used to postpone
-	 * response processing in SIMULTANEOUS submission mode.
-	 *
-	 * @var \qtism\runtime\tests\PendingResponseStore
-	 */
+     * A Store of PendingResponse objects that are used to postpone
+     * response processing in SIMULTANEOUS submission mode.
+     *
+     * @var \qtism\runtime\tests\PendingResponseStore
+     */
     private $pendingResponseStore;
 
     /**
-	 * Whether the Assessment Test Session must move automatically
-	 * to the next RouteItem after ending an attempt.
-	 *
-	 * @var boolean
-	 */
+     * Whether the Assessment Test Session must move automatically
+     * to the next RouteItem after ending an attempt.
+     *
+     * @var boolean
+     */
     private $autoForward = true;
 
     /**
-	 * How/When test results must be submitted.
-	 *
-	 * @var integer
-	 * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
-	 */
+     * How/When test results must be submitted.
+     *
+     * @var integer
+     * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
+     */
     private $testResultsSubmission = TestResultsSubmission::OUTCOME_PROCESSING;
 
     /**
-	 * A state dedicated to store assessment test level durations.
-	 *
-	 * @var \qtism\runtime\tests\DurationStore
-	 */
+     * A state dedicated to store assessment test level durations.
+     *
+     * @var \qtism\runtime\tests\DurationStore
+     */
     private $durationStore;
 
     /**
-	 * The manager to be used to create new AssessmentItemSession objects.
-	 *
-	 * @var \qtism\runtime\tests\AbstractSessionManager
-	 */
+     * The manager to be used to create new AssessmentItemSession objects.
+     *
+     * @var \qtism\runtime\tests\AbstractSessionManager
+     */
     private $sessionManager;
 
     /**
-	 * The Time Reference object.
-	 *
-	 * @var \DateTime
-	 */
+     * The Time Reference object.
+     *
+     * @var \DateTime
+     */
     private $timeReference = null;
 
     /**
-	 * Create a new AssessmentTestSession object.
-	 *
-	 * @param \qtism\data\AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
-	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager The manager to be used to create new AssessmentItemSession objects.
-	 * @param \qtism\runtime\tests\Route $route The sequence of items that has to be taken for the session.
-	 */
+     * Create a new AssessmentTestSession object.
+     *
+     * @param \qtism\data\AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
+     * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager The manager to be used to create new AssessmentItemSession objects.
+     * @param \qtism\runtime\tests\Route $route The sequence of items that has to be taken for the session.
+     */
     public function __construct(AssessmentTest $assessmentTest, AbstractSessionManager $sessionManager, Route $route)
     {
         parent::__construct();
@@ -185,10 +185,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Set the current time of the running assessment test session.
-	 *
-	 * @param \DateTime $time
-	 */
+     * Set the current time of the running assessment test session.
+     *
+     * @param \DateTime $time
+     */
     public function setTime(DateTime $time)
     {
         // Force $time to be UTC.
@@ -225,42 +225,42 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the temporal reference time of the running assessment test session.
-	 *
-	 * @return \DateTime
-	 */
+     * Get the temporal reference time of the running assessment test session.
+     *
+     * @return \DateTime
+     */
     public function getTimeReference()
     {
         return $this->timeReference;
     }
 
     /**
-	 * Set the temporal reference time of the running assessment test session.
-	 *
-	 * @param \DateTime $timeReference
-	 */
+     * Set the temporal reference time of the running assessment test session.
+     *
+     * @param \DateTime $timeReference
+     */
     public function setTimeReference(DateTime $timeReference = null)
     {
         $this->timeReference = $timeReference;
     }
 
     /**
-	 * Whether a temporal reference time is defined for the running assessment
-	 * test session.
-	 *
-	 * @return boolean
-	 */
+     * Whether a temporal reference time is defined for the running assessment
+     * test session.
+     *
+     * @return boolean
+     */
     public function hasTimeReference()
     {
         return $this->timeReference !== null;
     }
 
     /**
-	 * Set the unique session ID for this AssessmentTestSession.
-	 *
-	 * @param string $sessionId A unique ID.
-	 * @throws \InvalidArgumentException If $sessionId is not a string or is empty.
-	 */
+     * Set the unique session ID for this AssessmentTestSession.
+     *
+     * @param string $sessionId A unique ID.
+     * @throws \InvalidArgumentException If $sessionId is not a string or is empty.
+     */
     public function setSessionId($sessionId)
     {
         if (gettype($sessionId) === 'string') {
@@ -278,80 +278,80 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the unique session ID for this AssessmentTestSession.
-	 *
-	 * @return string A unique ID.
-	 */
+     * Get the unique session ID for this AssessmentTestSession.
+     *
+     * @return string A unique ID.
+     */
     public function getSessionId()
     {
         return $this->sessionId;
     }
 
     /**
-	 * Get the AssessmentTest object the AssessmentTestSession is an instance of.
-	 *
-	 * @return \qtism\data\AssessmentTest An AssessmentTest object.
-	 */
+     * Get the AssessmentTest object the AssessmentTestSession is an instance of.
+     *
+     * @return \qtism\data\AssessmentTest An AssessmentTest object.
+     */
     public function getAssessmentTest()
     {
         return $this->assessmentTest;
     }
 
     /**
-	 * Set the AssessmentTest object the AssessmentTestSession is an instance of.
-	 *
-	 * @param \qtism\data\AssessmentTest $assessmentTest
-	 */
+     * Set the AssessmentTest object the AssessmentTestSession is an instance of.
+     *
+     * @param \qtism\data\AssessmentTest $assessmentTest
+     */
     protected function setAssessmentTest(AssessmentTest $assessmentTest)
     {
         $this->assessmentTest = $assessmentTest;
     }
 
     /**
-	 * Get the assessmentItemRef objects involved in the context.
-	 *
-	 * @return \qtism\data\AssessmentItemRefCollection A Collection of AssessmentItemRef objects.
-	 */
+     * Get the assessmentItemRef objects involved in the context.
+     *
+     * @return \qtism\data\AssessmentItemRefCollection A Collection of AssessmentItemRef objects.
+     */
     protected function getAssessmentItemRefs()
     {
         return $this->getRoute()->getAssessmentItemRefs();
     }
 
     /**
-	 * Get the Route object describing the succession of items to be possibly taken.
-	 *
-	 * @return \qtism\runtime\tests\Route A Route object.
-	 */
+     * Get the Route object describing the succession of items to be possibly taken.
+     *
+     * @return \qtism\runtime\tests\Route A Route object.
+     */
     public function getRoute()
     {
         return $this->route;
     }
 
     /**
-	 * Set the Route object describing the succession of items to be possibly taken.
-	 *
-	 * @param \qtism\runtime\tests\Route $route A route object.
-	 */
+     * Set the Route object describing the succession of items to be possibly taken.
+     *
+     * @param \qtism\runtime\tests\Route $route A route object.
+     */
     public function setRoute(Route $route)
     {
         $this->route = $route;
     }
 
     /**
-	 * Get the current status of the AssessmentTestSession.
-	 *
-	 * @return integer A value from the AssessmentTestSessionState enumeration.
-	 */
+     * Get the current status of the AssessmentTestSession.
+     *
+     * @return integer A value from the AssessmentTestSessionState enumeration.
+     */
     public function getState()
     {
         return $this->state;
     }
 
     /**
-	 * Set the current status of the AssessmentTestSession.
-	 *
-	 * @param integer $state A value from the AssessmentTestSessionState enumeration.
-	 */
+     * Set the current status of the AssessmentTestSession.
+     *
+     * @param integer $state A value from the AssessmentTestSessionState enumeration.
+     */
     public function setState($state)
     {
         if (in_array($state, AssessmentTestSessionState::asArray()) === true) {
@@ -363,64 +363,64 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the AssessmentItemSessionStore.
-	 *
-	 * @return \qtism\runtime\tests\AssessmentItemSessionStore
-	 */
+     * Get the AssessmentItemSessionStore.
+     *
+     * @return \qtism\runtime\tests\AssessmentItemSessionStore
+     */
     public function getAssessmentItemSessionStore()
     {
         return $this->assessmentItemSessionStore;
     }
 
     /**
-	 * Set the AssessmentItemSessionStore.
-	 *
-	 * @param \qtism\runtime\tests\AssessmentItemSessionStore $assessmentItemSessionStore
-	 */
+     * Set the AssessmentItemSessionStore.
+     *
+     * @param \qtism\runtime\tests\AssessmentItemSessionStore $assessmentItemSessionStore
+     */
     public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore)
     {
         $this->assessmentItemSessionStore = $assessmentItemSessionStore;
     }
 
     /**
-	 * Get the pending responses that are waiting for response processing
-	 * when the simultaneous sumbission mode is in force.
-	 *
-	 * @return \qtism\runtime\tests\PendingResponsesCollection A collection of PendingResponses objects.
-	 */
+     * Get the pending responses that are waiting for response processing
+     * when the simultaneous sumbission mode is in force.
+     *
+     * @return \qtism\runtime\tests\PendingResponsesCollection A collection of PendingResponses objects.
+     */
     public function getPendingResponses()
     {
         return $this->getPendingResponseStore()->getAllPendingResponses();
     }
 
     /**
-	 * Get the PendingResponses objects store used to postpone
-	 * response processing in SIMULTANEOUS submission mode.
-	 *
-	 * @return \qtism\runtime\tests\PendingResponseStore A PendingResponseStore object.
-	 */
+     * Get the PendingResponses objects store used to postpone
+     * response processing in SIMULTANEOUS submission mode.
+     *
+     * @return \qtism\runtime\tests\PendingResponseStore A PendingResponseStore object.
+     */
     public function getPendingResponseStore()
     {
         return $this->pendingResponseStore;
     }
 
     /**
-	 * Set the PendingResponses objects store used to postpone
-	 * response processing in SIMULTANEOUS submission mode.
-	 *
-	 * @param \qtism\runtime\tests\PendingResponseStore $pendingResponseStore
-	 */
+     * Set the PendingResponses objects store used to postpone
+     * response processing in SIMULTANEOUS submission mode.
+     *
+     * @param \qtism\runtime\tests\PendingResponseStore $pendingResponseStore
+     */
     public function setPendingResponseStore(PendingResponseStore $pendingResponseStore)
     {
         $this->pendingResponseStore = $pendingResponseStore;
     }
 
     /**
-	 * Add a set of responses for which the response processing is postponed.
-	 *
-	 * @param \qtism\runtime\tests\PendingResponses $pendingResponses
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the current submission mode is not simultaneous.
-	 */
+     * Add a set of responses for which the response processing is postponed.
+     *
+     * @param \qtism\runtime\tests\PendingResponses $pendingResponses
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the current submission mode is not simultaneous.
+     */
     protected function addPendingResponses(PendingResponses $pendingResponses)
     {
         if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
@@ -432,76 +432,76 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the Test Results Submission configuration value.
-	 *
-	 * @param integer $testResultsSubmission
-	 * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
-	 */
+     * Get the Test Results Submission configuration value.
+     *
+     * @param integer $testResultsSubmission
+     * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
+     */
     public function setTestResultsSubmission($testResultsSubmission)
     {
         $this->testResultsSubmission = $testResultsSubmission;
     }
 
     /**
-	 * Get the Test Results Submission configuration value.
-	 *
-	 * @return integer
-	 * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
-	 */
+     * Get the Test Results Submission configuration value.
+     *
+     * @return integer
+     * @see \qtism\runtime\tests\TestResultsSubmission The TestResultsSubmission enumeration.
+     */
     public function getTestResultsSubmission()
     {
         return $this->testResultsSubmission;
     }
 
     /**
-	 * Set the state dedicated to store assessment test level durations.
-	 *
-	 * @param \qtism\runtime\tests\DurationStore $durationStore
-	 */
+     * Set the state dedicated to store assessment test level durations.
+     *
+     * @param \qtism\runtime\tests\DurationStore $durationStore
+     */
     public function setDurationStore(DurationStore $durationStore)
     {
         $this->durationStore = $durationStore;
     }
 
     /**
-	 * Get the state dedicated to store assessment test level durations.
-	 *
-	 * @return \qtism\runtime\tests\DurationStore
-	 */
+     * Get the state dedicated to store assessment test level durations.
+     *
+     * @return \qtism\runtime\tests\DurationStore
+     */
     public function getDurationStore()
     {
         return $this->durationStore;
     }
 
     /**
-	 * Set the manager to be used to create new AssessmentItemSession objects.
-	 *
-	 * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager
-	 */
+     * Set the manager to be used to create new AssessmentItemSession objects.
+     *
+     * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager
+     */
     public function setSessionManager(AbstractSessionManager $sessionManager)
     {
         $this->sessionManager = $sessionManager;
     }
 
     /**
-	 * Get the manager to be used to create new AssessmentItemSession objects.
-	 *
-	 * @return \qtism\runtime\tests\AbstractSessionManager
-	 */
+     * Get the manager to be used to create new AssessmentItemSession objects.
+     *
+     * @return \qtism\runtime\tests\AbstractSessionManager
+     */
     public function getSessionManager()
     {
         return $this->sessionManager;
     }
 
     /**
-	 * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
-	 * where 'Q01' is the item the requested weight belongs to, and 'weight1' is the
-	 * actual identifier of the weight.
-	 *
-	 * @param string|\qtism\runtime\common\VariableIdentifier $identifier A prefixed string identifier or a PrefixedVariableName object.
-	 * @return false|\qtism\data\state\Weight The weight corresponding to $identifier or false if such a weight do not exist.
-	 * @throws \InvalidArgumentException If $identifier is malformed string, not a VariableIdentifier object, or if the VariableIdentifier object has no prefix.
-	 */
+     * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
+     * where 'Q01' is the item the requested weight belongs to, and 'weight1' is the
+     * actual identifier of the weight.
+     *
+     * @param string|\qtism\runtime\common\VariableIdentifier $identifier A prefixed string identifier or a PrefixedVariableName object.
+     * @return false|\qtism\data\state\Weight The weight corresponding to $identifier or false if such a weight do not exist.
+     * @throws \InvalidArgumentException If $identifier is malformed string, not a VariableIdentifier object, or if the VariableIdentifier object has no prefix.
+     */
     public function getWeight($identifier)
     {
         if (gettype($identifier) === 'string') {
@@ -550,12 +550,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Add a variable (Variable object) to the current context. Variables that can be set using this method
-	 * must have simple variable identifiers, in order to target the global AssessmentTestSession scope only.
-	 *
-	 * @param \qtism\runtime\common\Variable $variable A Variable object to add to the current context.
-	 * @throws \OutOfRangeException If the identifier of the given $variable is not a simple variable identifier (no prefix, no sequence number).
-	 */
+     * Add a variable (Variable object) to the current context. Variables that can be set using this method
+     * must have simple variable identifiers, in order to target the global AssessmentTestSession scope only.
+     *
+     * @param \qtism\runtime\common\Variable $variable A Variable object to add to the current context.
+     * @throws \OutOfRangeException If the identifier of the given $variable is not a simple variable identifier (no prefix, no sequence number).
+     */
     public function setVariable(Variable $variable)
     {
         try {
@@ -577,10 +577,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get a variable from any scope of the AssessmentTestSession.
-	 *
-	 * @return \qtism\runtime\common\Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
-	 */
+     * Get a variable from any scope of the AssessmentTestSession.
+     *
+     * @return \qtism\runtime\common\Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
+     */
     public function getVariable($variableIdentifier)
     {
         $v = new VariableIdentifier($variableIdentifier);
@@ -606,20 +606,19 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get a variable value from the current session using the bracket ([]) notation.
-	 *
-	 * The value can be retrieved for any variables in the scope of the AssessmentTestSession. In other words,
-	 *
-	 * * Outcome variables in the global scope of the AssessmentTestSession,
-	 * * Outcome and Response variables in TestPart/AssessmentSection scopes.
-	 *
-	 * Please note that if the requested variable is a duration, the durationUpdate() method
-	 * will be called to return an accurate result.
-	 *
-	 * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
-	 * @throws \OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
-	 * @qtism-test-duration-update
-	 */
+     * Get a variable value from the current session using the bracket ([]) notation.
+     *
+     * The value can be retrieved for any variables in the scope of the AssessmentTestSession. In other words,
+     *
+     * * Outcome variables in the global scope of the AssessmentTestSession,
+     * * Outcome and Response variables in TestPart/AssessmentSection scopes.
+     *
+     * Please note that if the requested variable is a duration, the durationUpdate() method
+     * will be called to return an accurate result.
+     *
+     * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
+     * @throws \OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
+     */
     public function offsetGet($offset)
     {
         try {
@@ -697,11 +696,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Set the value of a variable with identifier $offset.
-	 *
-	 * @throws \OutOfRangeException If $offset is not a string or an invalid variable identifier.
-	 * @throws \OutOfBoundsException If the variable with identifier $offset cannot be found.
-	 */
+     * Set the value of a variable with identifier $offset.
+     *
+     * @throws \OutOfRangeException If $offset is not a string or an invalid variable identifier.
+     * @throws \OutOfBoundsException If the variable with identifier $offset cannot be found.
+     */
     public function offsetSet($offset, $value)
     {
         if (gettype($offset) !== 'string') {
@@ -754,15 +753,15 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Unset a given variable's value identified by $offset from the global scope of the AssessmentTestSession.
-	 * Please not that unsetting a variable's value keep the variable still instantiated
-	 * in the context with its value replaced by NULL.
-	 *
-	 *
-	 * @param string $offset A simple variable identifier (no prefix, no sequence number).
-	 * @throws \OutOfRangeException If $offset is not a simple variable identifier.
-	 * @throws \OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
-	 */
+     * Unset a given variable's value identified by $offset from the global scope of the AssessmentTestSession.
+     * Please not that unsetting a variable's value keep the variable still instantiated
+     * in the context with its value replaced by NULL.
+     *
+     *
+     * @param string $offset A simple variable identifier (no prefix, no sequence number).
+     * @throws \OutOfRangeException If $offset is not a simple variable identifier.
+     * @throws \OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
+     */
     public function offsetUnset($offset)
     {
         $data = &$this->getDataPlaceHolder();
@@ -789,12 +788,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Check if a given variable identified by $offset exists in the global scope
-	 * of the AssessmentTestSession.
-	 *
-	 * @return boolean Whether the variable identified by $offset exists in the current context.
-	 * @throws \OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
-	 */
+     * Check if a given variable identified by $offset exists in the global scope
+     * of the AssessmentTestSession.
+     *
+     * @return boolean Whether the variable identified by $offset exists in the current context.
+     * @throws \OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
+     */
     public function offsetExists($offset)
     {
         try {
@@ -816,21 +815,21 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * This protected method contains the logic of instantiating a new AssessmentItemSession object.
-	 *
-	 * @param \qtism\data\IAssessmentItem $assessmentItem
-	 * @param integer $navigationMode
-	 * @param integer $submissionMode
-	 * @return \qtism\runtime\tests\AssessmentItemSession
-	 */
+     * This protected method contains the logic of instantiating a new AssessmentItemSession object.
+     *
+     * @param \qtism\data\IAssessmentItem $assessmentItem
+     * @param integer $navigationMode
+     * @param integer $submissionMode
+     * @return \qtism\runtime\tests\AssessmentItemSession
+     */
     protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
     {
         return $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
     }
 
     /**
-	 * Initialize test-level durations.
-	 */
+     * Initialize test-level durations.
+     */
     protected function initializeTestDurations()
     {
         $route = $this->getRoute();
@@ -856,12 +855,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Begins the test session. Calling this method will make the state
-	 * change into AssessmentTestSessionState::INTERACTING.
-	 *
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
+     * Begins the test session. Calling this method will make the state
+     * change into AssessmentTestSessionState::INTERACTING.
+     * 
+     */
     public function beginTestSession()
     {
         // Initialize test-level durations.
@@ -875,13 +872,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Select the eligible items from the current one to the last
-	 * following item in the route which is in linear navigation mode.
-	 *
-	 * AssessmentItemSession objects related to the eligible items
-	 * will be instantiated.
-	 *
-	 */
+     * Select the eligible items from the current one to the last
+     * following item in the route which is in linear navigation mode.
+     *
+     * AssessmentItemSession objects related to the eligible items
+     * will be instantiated.
+     *
+     */
     protected function selectEligibleItems()
     {
         $route = $this->getRoute();
@@ -944,11 +941,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Add an item session to the current assessment test session.
-	 *
-	 * @param \qtism\runtime\tests\AssessmentItemSession $session
-	 * @throws \LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
-	 */
+     * Add an item session to the current assessment test session.
+     *
+     * @param \qtism\runtime\tests\AssessmentItemSession $session
+     * @throws \LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
+     */
     protected function addItemSession(AssessmentItemSession $session, $occurence = 0)
     {
         $assessmentItemRefs = $this->getAssessmentItemRefs();
@@ -965,12 +962,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get an assessment item session.
-	 *
-	 * @param \qtism\data\AssessmentItemRef $assessmentItemRef
-	 * @param integer $occurence
-	 * @return \qtism\runtime\tests\AssessmentItemSession|false
-	 */
+     * Get an assessment item session.
+     *
+     * @param \qtism\data\AssessmentItemRef $assessmentItemRef
+     * @param integer $occurence
+     * @return \qtism\runtime\tests\AssessmentItemSession|false
+     */
     protected function getItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {
         $store = $this->getAssessmentItemSessionStore();
@@ -983,10 +980,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current Route Item.
-	 *
-	 * @return \qtism\runtime\tests\RouteItem|false A RouteItem object or false if the test session is not running.
-	 */
+     * Get the current Route Item.
+     *
+     * @return \qtism\runtime\tests\RouteItem|false A RouteItem object or false if the test session is not running.
+     */
     protected function getCurrentRouteItem()
     {
         if ($this->isRunning() === true) {
@@ -997,10 +994,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current AssessmentItemRef.
-	 *
-	 * @return \qtism\data\AssessmentItemRef|false An AssessmentItemRef object or false if the test session is not running.
-	 */
+     * Get the current AssessmentItemRef.
+     *
+     * @return \qtism\data\AssessmentItemRef|false An AssessmentItemRef object or false if the test session is not running.
+     */
     public function getCurrentAssessmentItemRef()
     {
         if ($this->isRunning() === true) {
@@ -1011,13 +1008,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current AssessmentItemRef occurence number. In other words
-	 *
-	 *  * if the current item of the selection is Q23, the return value is 0.
-	 *  * if the current item of the selection is Q01.3, the return value is 2.
-	 *
-	 * @return integer the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
-	 */
+     * Get the current AssessmentItemRef occurence number. In other words
+     *
+     *  * if the current item of the selection is Q23, the return value is 0.
+     *  * if the current item of the selection is Q01.3, the return value is 2.
+     *
+     * @return integer the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
+     */
     public function getCurrentAssessmentItemRefOccurence()
     {
         if ($this->isRunning() === true) {
@@ -1028,10 +1025,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current AssessmentSection.
-	 *
-	 * @return \qtism\data\AssessmentSection|false An AssessmentSection object or false if the test session is not running.
-	 */
+     * Get the current AssessmentSection.
+     *
+     * @return \qtism\data\AssessmentSection|false An AssessmentSection object or false if the test session is not running.
+     */
     public function getCurrentAssessmentSection()
     {
         if ($this->isRunning() === true) {
@@ -1042,10 +1039,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current TestPart.
-	 *
-	 * @return \qtism\data\TestPart A TestPart object or false if the test session is not running.
-	 */
+     * Get the current TestPart.
+     *
+     * @return \qtism\data\TestPart A TestPart object or false if the test session is not running.
+     */
     public function getCurrentTestPart()
     {
         if ($this->isRunning() === true) {
@@ -1056,10 +1053,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current navigation mode.
-	 *
-	 * @return integer|false A value from the NavigationMode enumeration or false if the test session is not running.
-	 */
+     * Get the current navigation mode.
+     *
+     * @return integer|false A value from the NavigationMode enumeration or false if the test session is not running.
+     */
     public function getCurrentNavigationMode()
     {
         if ($this->isRunning() === true) {
@@ -1070,10 +1067,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current submission mode.
-	 *
-	 * @return integer|false A value from the SubmissionMode enumeration or false if the test session is not running.
-	 */
+     * Get the current submission mode.
+     *
+     * @return integer|false A value from the SubmissionMode enumeration or false if the test session is not running.
+     */
     public function getCurrentSubmissionMode()
     {
         if ($this->isRunning() === true) {
@@ -1084,10 +1081,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of remaining items for the current item in the route.
-	 *
-	 * @return integer|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
-	 */
+     * Get the number of remaining items for the current item in the route.
+     *
+     * @return integer|false -1 if the item is adaptive but not completed, otherwise the number of remaining attempts. If the assessment test session is not running, false is returned.
+     */
     public function getCurrentRemainingAttempts()
     {
         if ($this->isRunning() === true) {
@@ -1101,11 +1098,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether the current item is adaptive.
-	 *
-	 * @return boolean
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running.
-	 */
+     * Whether the current item is adaptive.
+     *
+     * @return boolean
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running.
+     */
     public function isCurrentAssessmentItemAdaptive()
     {
         if ($this->isRunning() === false) {
@@ -1117,10 +1114,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether the current item is in INTERACTIVE mode.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running.
-	 */
+     * Whether the current item is in INTERACTIVE mode.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running.
+     */
     public function isCurrentAssessmentItemInteracting()
     {
         if ($this->isRunning() === false) {
@@ -1136,12 +1133,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the Previous RouteItem object in the route.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the AssessmentTestSession is not running.
-	 * @throws \OutOfBoundsException If the current position in the route is 0.
-	 * @return \qtism\runtime\tests\RouteItem A RouteItem object.
-	 */
+     * Get the Previous RouteItem object in the route.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the AssessmentTestSession is not running.
+     * @throws \OutOfBoundsException If the current position in the route is 0.
+     * @return \qtism\runtime\tests\RouteItem A RouteItem object.
+     */
     public function getPreviousRouteItem()
     {
          if ($this->isRunning() === false) {
@@ -1158,12 +1155,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the Next RouteItem object in the route.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException
-	 * @throws \OutOfBoundsException
-	 * @return \qtism\runtime\tests\RouteItem A RouteItem object.
-	 */
+     * Get the Next RouteItem object in the route.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException
+     * @throws \OutOfBoundsException
+     * @return \qtism\runtime\tests\RouteItem A RouteItem object.
+     */
     public function getNextRouteItem()
     {
         if ($this->isRunning() === false) {
@@ -1180,12 +1177,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Skip the current item.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
+     * Skip the current item.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
+     */
     public function skip()
     {
         if ($this->isRunning() === false) {
@@ -1197,7 +1192,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
-        $this->checkTimeLimits(true);
+        $this->checkTimeLimits();
 
         $item = $this->getCurrentAssessmentItemRef();
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
@@ -1214,10 +1209,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Begin an attempt for the current item in the route.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed or time limits are not respected.
-	 */
+     * Begin an attempt for the current item in the route.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the time limits at the test level (testPart, assessmentSection) are already exceeded or the session is closed or time limits are not respected.
+     */
     public function beginAttempt()
     {
         if ($this->isRunning() === false) {
@@ -1251,17 +1246,15 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * End an attempt for the current item in the route. If the current navigation mode
-	 * is LINEAR, the TestSession moves automatically to the next step in the route or
-	 * the end of the session if the responded item is the last one.
-	 *
-	 * @param \qtism\runtime\common\State $responses The responses for the curent item in the sequence.
-	 * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException
-	 * @throws \qtism\runtime\tests\AssessmentItemSessionException
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
+     * End an attempt for the current item in the route. If the current navigation mode
+     * is LINEAR, the TestSession moves automatically to the next step in the route or
+     * the end of the session if the responded item is the last one.
+     *
+     * @param \qtism\runtime\common\State $responses The responses for the curent item in the sequence.
+     * @param boolean $allowLateSubmission If set to true, maximum time limits will not be taken into account.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException
+     * @throws \qtism\runtime\tests\AssessmentItemSessionException
+     */
     public function endAttempt(State $responses, $allowLateSubmission = false)
     {
         if ($this->isRunning() === false) {
@@ -1314,16 +1307,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Perform a 'jump' to a given position in the Route sequence. The current navigation
-	 * mode must be LINEAR to be able to jump.
-	 *
-	 * @param integer $position The position in the route the jump has to be made.
-	 * @param boolean $allowTimeout Whether or not it is allowed to jump if the timeLimits in force of the jump target are not respected.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
-    public function jumpTo($position, $allowTimeout = false)
+     * Perform a 'jump' to a given position in the Route sequence. The current navigation
+     * mode must be LINEAR to be able to jump.
+     *
+     * @param integer $position The position in the route the jump has to be made.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
+     */
+    public function jumpTo($position)
     {
         // Can we jump?
         if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
@@ -1338,12 +1328,7 @@ class AssessmentTestSession extends State
             $this->suspendItemSession();
             $route->setPosition($position);
             $this->selectEligibleItems();
-
-            // Check the time limits after the jump is trully performed.
-            if ($allowTimeout === false) {
-                $this->checkTimeLimits(false, true);
-                $this->interactWithItemSession();
-            }
+            $this->interactWithItemSession();
         } catch (AssessmentTestSessionException $e) {
             // Rollback to previous position.
             $route->setPosition($oldPosition);
@@ -1355,41 +1340,41 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * AssessmentTestSession implementations must override this method in order
-	 * to submit item results from a given $assessmentItemSession to the appropriate
-	 * data source.
-	 *
-	 * This method is triggered each time response processing takes place.
-	 *
-	 * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
-	 * @param integer $occurence The occurence number of the item bound to $assessmentItemSession.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
-	 */
+     * AssessmentTestSession implementations must override this method in order
+     * to submit item results from a given $assessmentItemSession to the appropriate
+     * data source.
+     *
+     * This method is triggered each time response processing takes place.
+     *
+     * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
+     * @param integer $occurence The occurence number of the item bound to $assessmentItemSession.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
+     */
     protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
     {
         return;
     }
 
     /**
-	 * AssessmentTestSession implementations must override this method in order to submit test results
-	 * from the current AssessmentTestSession to the appropriate data source.
-	 *
-	 * This method is triggered once at the end of the AssessmentTestSession.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
-	 */
+     * AssessmentTestSession implementations must override this method in order to submit test results
+     * from the current AssessmentTestSession to the appropriate data source.
+     *
+     * This method is triggered once at the end of the AssessmentTestSession.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException With error code RESULT_SUBMISSION_ERROR if an error occurs while transmitting results.
+     */
     protected function submitTestResults()
     {
         return;
     }
 
     /**
-	 * Apply the response processing on pending responses due to
-	 * the simultaneous submission mode in force.
-	 *
-	 * @return \qtism\runtime\tests\PendingResponsesCollection The collection of PendingResponses objects that were processed.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
-	 */
+     * Apply the response processing on pending responses due to
+     * the simultaneous submission mode in force.
+     *
+     * @return \qtism\runtime\tests\PendingResponsesCollection The collection of PendingResponses objects that were processed.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
+     */
     protected function defferedResponseProcessing()
     {
         $itemSessionStore = $this->getAssessmentItemSessionStore();
@@ -1435,33 +1420,25 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * This protected method contains the logic of creating a new ResponseProcessingEngine.
-	 *
-	 * @param \qtism\data\processing\ResponseProcessing $responseProcessing
-	 * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession
-	 * @return \qtism\runtime\processing\ResponseProcessingEngine
-	 */
+     * This protected method contains the logic of creating a new ResponseProcessingEngine.
+     *
+     * @param \qtism\data\processing\ResponseProcessing $responseProcessing
+     * @param \qtism\runtime\tests\AssessmentItemSession $assessmentItemSession
+     * @return \qtism\runtime\processing\ResponseProcessingEngine
+     */
     protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing, AssessmentItemSession $assessmentItemSession)
     {
         return new ResponseProcessingEngine($responseProcessing, $assessmentItemSession);
     }
 
     /**
-	 * Ask the test session to move to next RouteItem in the Route sequence.
-	 *
-	 * If $allowTimeout is set to true, the very next RouteItem in the Route sequence will bet set
-	 * as the current RouteItem, whether or not it is timed out or not.
-	 *
-	 * On the other hand, if $allowTimeout is set to false, the next RouteItem in the Route sequence
-	 * which is not timed out will be set as the current RouteItem. If there is no more following RouteItems
-	 * that are not timed out in the Route sequence, the test session ends gracefully.
-	 *
-	 * @param boolean $allowTimeout If set to true, the next RouteItem in the Route sequence does not have to respect the timeLimits in force. Default value is false.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...).
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
-    public function moveNext($allowTimeout = false)
+     * Ask the test session to move to next RouteItem in the Route sequence.
+     * 
+     * If there is no more following RouteItems in the Route sequence, the test session ends gracefully.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
+     */
+    public function moveNext()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the next item while the test session state is INITIAL or CLOSED.";
@@ -1471,110 +1448,45 @@ class AssessmentTestSession extends State
         $this->suspendItemSession();
         $this->nextRouteItem();
 
-        while ($this->isRunning() === true) {
-
-            if ($allowTimeout === false) {
-                try {
-                    // Do not check min times, include item timings.
-                    $this->checkTimeLimits(false, true);
-
-                    // No exception thrown, we found a non timed-out item to be
-                    // presented to the candidate.
-                    $this->interactWithItemSession();
-
-                    return;
-                } catch (AssessmentTestSessionException $e) {
-                    // The item is timed out, let's try the next route item.
-                    $this->nextRouteItem();
-                }
-            } else {
-                // $allowTimeout === true, only 1 iteration
-                // is necessary, the following item is presented
-                // whatever happens.
-                $this->interactWithItemSession();
-
-                return;
-            }
+        if ($this->isRunning() === true) {
+            $this->interactWithItemSession();
         }
-
-        // If the execution comes here, this is the end of the test...
+        // Otherwise, this is the end of the test...
     }
 
     /**
-	 * Ask the test session to move to the previous RouteItem in the Route sequence.
-	 *
-	 * If $allowTimeout is set to true, the previous RouteItem in the Route sequence will bet set
-	 * as the current RouteItem, whether or not it is timed out.
-	 *
-	 * On the other hand, if $allowTimeout is set to false, the previous RouteItem in the Route sequence
-	 * which is not timed out will be set as the current RouteItem. If there is no more previous RouteItems
-	 * that are not timed out in the Route sequence, the current RouteItem remains the same and an
-	 * AssessmentTestSessionException with the appropriate timing error code is thrown.
-	 *
-	 * @param boolean $allowTimeout If set to true, the next RouteItem in the sequence does not have to respect timeLimits in force. Default value is false.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or an issue occurs during the transition (e.g. branching, preConditions, ...) or if $allowTimeout = false and there absolutely no possibility to move backward (even the first RouteItem is timed out).
-	 * @qtism-test-interaction
-	 * @qtism-test-duration-update
-	 */
-    public function moveBack($allowTimeout = false)
+     * Ask the test session to move to the previous RouteItem in the Route sequence.
+     *
+     * If there is no more previous RouteItems that are not timed out in the Route sequence, the current RouteItem remains the same.
+     * 
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
+     */
+    public function moveBack()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
-        $this->suspendItemSession();
         $route = $this->getRoute();
-        $oldPosition = $route->getPosition();
-        $this->previousRouteItem();
-
-        while ($route->isFirst() === false) {
-
-            if ($allowTimeout = false) {
-                try {
-                    // Do not check min times, include item timings.
-                    $this->checkTimeLimits(false, true);
-
-                    // No exception thrown, return.
-                    $this->interactWithItemSession();
-
-                    return;
-                } catch (AssessmentTestSessionException $e) {
-                    // The item is timed out, let's try the previous route item.
-                    $this->previousRouteItem();
-                }
-            } else {
-                $this->interactWithItemSession();
-
-                return;
-            }
-        }
-
-        // If we are here, it means we got moved back to the very first RouteItem.
-        // Maybe we are not allowed to be here because of the hypothetic timeout
-        // of the first RouteItem of the test...
-        if ($allowTimeout === false) {
-            try {
-                $this->checkTimeLimits(false, true);
-                $this->interactWithItemSession();
-            } catch (AssessmentTestSessionException $e) {
-                $route->setPosition($oldPosition);
-                $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
-                throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
-            }
+        
+        if ($route->isFirst() === false) {
+            $this->suspendItemSession();
+            $this->previousRouteItem();
+            $this->interactWithItemSession();
         }
     }
 
     /**
-	 * Move to the next item in the route.
-	 *
-	 * * If there is no more item in the route to be explored the session ends gracefully.
-	 * * If there the end of a test part is reached, pending responses are submitted.
-	 *
-	 * @param boolean $ignoreBranchings Whether or not to ignore branching.
-	 * @param boolean $ignorePreConditions Whether or not to ignore preConditions.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
-	 */
+     * Move to the next item in the route.
+     *
+     * * If there is no more item in the route to be explored the session ends gracefully.
+     * * If there the end of a test part is reached, pending responses are submitted.
+     *
+     * @param boolean $ignoreBranchings Whether or not to ignore branching.
+     * @param boolean $ignorePreConditions Whether or not to ignore preConditions.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
+     */
     protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
     {
         if ($this->isRunning() === false) {
@@ -1657,12 +1569,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Set the position in the Route at the very next TestPart in the Route sequence or, if the current
-	 * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
-	 * is simultaneous, the pending responses are processed.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is currently not running.
-	 */
+     * Set the position in the Route at the very next TestPart in the Route sequence or, if the current
+     * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
+     * is simultaneous, the pending responses are processed.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is currently not running.
+     */
     public function moveNextTestPart()
     {
         if ($this->isRunning() === false) {
@@ -1684,13 +1596,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Set the position in the Route at the very next assessmentSection in the route sequence.
-	 *
-	 * * If there is no assessmentSection left in the flow, the test session ends gracefully.
-	 * * If there are still pending responses, they are processed.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
-	 */
+     * Set the position in the Route at the very next assessmentSection in the route sequence.
+     *
+     * * If there is no assessmentSection left in the flow, the test session ends gracefully.
+     * * If there are still pending responses, they are processed.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
+     */
     public function moveNextAssessmentSection()
     {
         if ($this->isRunning() === false) {
@@ -1712,13 +1624,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Set the position in the Route at the very next assessmentItem in the route sequence.
-	 *
-	 * * If there is no item left in the flow, the test session ends gracefully.
-	 * * If there are still pending responses, they are processed.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
-	 */
+     * Set the position in the Route at the very next assessmentItem in the route sequence.
+     *
+     * * If there is no item left in the flow, the test session ends gracefully.
+     * * If there are still pending responses, they are processed.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
+     */
     public function moveNextAssessmentItem()
     {
         if ($this->isRunning() === false) {
@@ -1734,10 +1646,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Move to the previous item in the route.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running or if trying to go to the previous route item in LINEAR navigation mode or if the current route item is the very first one in the route sequence.
-	 */
+     * Move to the previous item in the route.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running or if trying to go to the previous route item in LINEAR navigation mode or if the current route item is the very first one in the route sequence.
+     */
     protected function previousRouteItem()
     {
         if ($this->isRunning() === false) {
@@ -1756,10 +1668,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Apply outcome processing at test-level.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If an error occurs at OutcomeProcessing time or at result submission time.
-	 */
+     * Apply outcome processing at test-level.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If an error occurs at OutcomeProcessing time or at result submission time.
+     */
     protected function outcomeProcessing()
     {
         if ($this->getAssessmentTest()->hasOutcomeProcessing() === true) {
@@ -1785,23 +1697,21 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether the test session is running. In other words, if the test session is not in
-	 * state INITIAL nor CLOSED.
-	 *
-	 * @return boolean Whether the test session is running.
-	 */
+     * Whether the test session is running. In other words, if the test session is not in
+     * state INITIAL nor CLOSED.
+     *
+     * @return boolean Whether the test session is running.
+     */
     public function isRunning()
     {
         return $this->getState() !== AssessmentTestSessionState::INITIAL && $this->getState() !== AssessmentTestSessionState::CLOSED;
     }
 
     /**
-	 * End the test session.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
-	 * @qtism-test-interaction
-	 * @qtism-test-update-duration
-	 */
+     * End the test session.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is already CLOSED or is in INITIAL state.
+     */
     public function endTestSession()
     {
         if ($this->isRunning() === false) {
@@ -1818,19 +1728,21 @@ class AssessmentTestSession extends State
         
         // Close all sessions !
         foreach ($this->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
-            $itemSession->endItemSession();
+            if ($itemSession->getState() !== AssessmentItemSessionState::CLOSED) {
+                $itemSession->endItemSession();
+            }
         }
 
         $this->setState(AssessmentTestSessionState::CLOSED);
     }
 
     /**
-	 * Get the item sessions held by the test session by item reference $identifier.
-	 *
-	 * @param string $identifier An item reference $identifier e.g. Q04. Prefixed or sequenced identifiers e.g. Q04.1.X are considered to be malformed.
-	 * @return \qtism\runtime\tests\AssessmentItemSessionCollection|false A collection of AssessmentItemSession objects or false if no item session could be found for $identifier.
-	 * @throws \InvalidArgumentException If the given $identifier is malformed.
-	 */
+     * Get the item sessions held by the test session by item reference $identifier.
+     *
+     * @param string $identifier An item reference $identifier e.g. Q04. Prefixed or sequenced identifiers e.g. Q04.1.X are considered to be malformed.
+     * @return \qtism\runtime\tests\AssessmentItemSessionCollection|false A collection of AssessmentItemSession objects or false if no item session could be found for $identifier.
+     * @throws \InvalidArgumentException If the given $identifier is malformed.
+     */
     public function getAssessmentItemSessions($identifier)
     {
         try {
@@ -1858,56 +1770,56 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get a subset of AssessmentItemRef objects involved in the test session.
-	 *
-	 * @param string $sectionIdentifier An optional section identifier.
-	 * @param \qtism\common\collections\IdentifierCollection $includeCategories The optional item categories to be included in the subset.
-	 * @param \qtism\common\collections\IdentifierCollection $excludeCategories The optional item categories to be excluded from the subset.
-	 * @return \qtism\data\AssessmentItemRefCollection A collection of AssessmentItemRef objects that match all the given criteria.
-	 */
+     * Get a subset of AssessmentItemRef objects involved in the test session.
+     *
+     * @param string $sectionIdentifier An optional section identifier.
+     * @param \qtism\common\collections\IdentifierCollection $includeCategories The optional item categories to be included in the subset.
+     * @param \qtism\common\collections\IdentifierCollection $excludeCategories The optional item categories to be excluded from the subset.
+     * @return \qtism\data\AssessmentItemRefCollection A collection of AssessmentItemRef objects that match all the given criteria.
+     */
     public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
     {
         return $this->getRoute()->getAssessmentItemRefsSubset($sectionIdentifier, $includeCategories, $excludeCategories);
     }
 
     /**
-	 * Get the number of items in the current Route. In other words, the total number
-	 * of item occurences the candidate can take during the test.
-	 *
-	 * @return integer
-	 */
+     * Get the number of items in the current Route. In other words, the total number
+     * of item occurences the candidate can take during the test.
+     *
+     * @return integer
+     */
     public function getRouteCount()
     {
         return $this->getRoute()->count();
     }
 
     /**
-	 * Get the map of last occurence updates.
-	 *
-	 * @return \SplObjectStorage A map.
-	 */
+     * Get the map of last occurence updates.
+     *
+     * @return \SplObjectStorage A map.
+     */
     protected function getLastOccurenceUpdate()
     {
         return $this->lastOccurenceUpdate;
     }
 
     /**
-	 * Set the map of last occurence updates.
-	 *
-	 * @param \SplObjectStorage $lastOccurenceUpdate A map.
-	 */
+     * Set the map of last occurence updates.
+     *
+     * @param \SplObjectStorage $lastOccurenceUpdate A map.
+     */
     public function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate)
     {
         $this->lastOccurenceUpdate = $lastOccurenceUpdate;
     }
 
     /**
-	 * Whether a given item occurence is the last updated.
-	 *
-	 * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-	 * @param integer $occurence An occurence number
-	 * @return boolean
-	 */
+     * Whether a given item occurence is the last updated.
+     *
+     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param integer $occurence An occurence number
+     * @return boolean
+     */
     public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
         if (($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) {
@@ -1920,11 +1832,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Notify which $occurence of $assessmentItemRef was the last updated.
-	 *
-	 * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
-	 * @param integer $occurence An occurence number for $assessmentItemRef.
-	 */
+     * Notify which $occurence of $assessmentItemRef was the last updated.
+     *
+     * @param \qtism\data\AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
+     * @param integer $occurence An occurence number for $assessmentItemRef.
+     */
     protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
     {
         $lastOccurenceUpdate = $this->getLastOccurenceUpdate();
@@ -1932,11 +1844,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Returns which occurence of item was lastly updated.
-	 *
-	 * @param \qtism\data\AssessmentItemRef|string $assessmentItemRef An AssessmentItemRef object.
-	 * @return int|false The occurence number of the lastly updated item session for the given $assessmentItemRef or false if no occurence was updated yet.
-	 */
+     * Returns which occurence of item was lastly updated.
+     *
+     * @param \qtism\data\AssessmentItemRef|string $assessmentItemRef An AssessmentItemRef object.
+     * @return int|false The occurence number of the lastly updated item session for the given $assessmentItemRef or false if no occurence was updated yet.
+     */
     public function whichLastOccurenceUpdate($assessmentItemRef)
     {
         if (gettype($assessmentItemRef) === 'string') {
@@ -1958,14 +1870,14 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether the candidate is authorized to move backward depending on the current context
-	 * of the test session.
-	 *
-	 * * If the current navigation mode is LINEAR, false is returned.
-	 * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
-	 *
-	 * @return boolean
-	 */
+     * Whether the candidate is authorized to move backward depending on the current context
+     * of the test session.
+     *
+     * * If the current navigation mode is LINEAR, false is returned.
+     * * Otherwise, it depends on the position in the Route. If the candidate is at first position in the route, false is returned.
+     *
+     * @return boolean
+     */
     public function canMoveBackward()
     {
         if ($this->getRoute()->getPosition() === 0) {
@@ -1984,14 +1896,14 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the Jump description objects describing to which RouteItem the candidate
-	 * is able to "jump" to when the NONLINEAR navigation mode is in force.
-	 *
-	 * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
-	 *
-	 * @param integer $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
-	 * @return \qtism\runtime\tests\JumpCollection A collection of Jump objects.
-	 */
+     * Get the Jump description objects describing to which RouteItem the candidate
+     * is able to "jump" to when the NONLINEAR navigation mode is in force.
+     *
+     * If the LINEAR navigation mode is in force, an empty JumpCollection is returned.
+     *
+     * @param integer $place A value from the the AssessmentTestPlace enumeration determining the scope of possible jumps to be gathered.
+     * @return \qtism\runtime\tests\JumpCollection A collection of Jump objects.
+     */
     public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '')
     {
         $jumps = new JumpCollection();
@@ -2039,10 +1951,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether the current TestPart is complete. In other words, if all the items of the current TestPart were 'responded'.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If the current navigation mode is not SIMULTANEOUS. The error code will be LOGIC_ERROR.
-	 */
+     * Whether the current TestPart is complete. In other words, if all the items of the current TestPart were 'responded'.
+     *
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the current navigation mode is not SIMULTANEOUS. The error code will be LOGIC_ERROR.
+     */
     public function isCurrentTestPartComplete()
     {
         if ($this->getCurrentSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
@@ -2054,13 +1966,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the time constraints running for the current testPart or/and current assessmentSection
-	 * or/and assessmentItem.
-	 *
-	 * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
-	 * @return \qtism\runtime\tests\TimeConstraintCollection A collection of TimeConstraint objects.
-	 * @qtism-test-duration-update
-	 */
+     * Get the time constraints running for the current testPart or/and current assessmentSection
+     * or/and assessmentItem.
+     *
+     * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
+     * @return \qtism\runtime\tests\TimeConstraintCollection A collection of TimeConstraint objects.
+     */
     public function getTimeConstraints($places = null)
     {
         if ($places === null) {
@@ -2102,25 +2013,25 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Checks if the timeLimits in force, at the testPart/assessmentSection/assessmentItem level, are respected.
-	 * If this is not the case, an AssessmentTestSessionException will be raised with the appropriate error code.
-	 *
-	 * In case of error, the error code shipped with the AssessmentTestSessionException might be:
-	 *
-	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW
-	 * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW
-	 * * AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW
-	 * * AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW
-	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW
-	 * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW
-	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW
-	 * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW
-	 *
-	 * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
-	 * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException If one or more time limits in force are not respected.
-	 * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
-	 */
+     * Checks if the timeLimits in force, at the testPart/assessmentSection/assessmentItem level, are respected.
+     * If this is not the case, an AssessmentTestSessionException will be raised with the appropriate error code.
+     *
+     * In case of error, the error code shipped with the AssessmentTestSessionException might be:
+     *
+     * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW
+     * * AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW
+     * * AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW
+     * * AssessmentTestSessionException::TEST_PART_DURATION_UNDERFLOW
+     * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW
+     * * AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_UNDERFLOW
+     * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW
+     * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW
+     *
+     * @param boolean $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
+     * @param boolean $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException If one or more time limits in force are not respected.
+     * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
+     */
     public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false)
     {
         $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
@@ -2189,10 +2100,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the current AssessmentItemSession object.
-	 *
-	 * @return \qtism\runtime\tests\AssessmentItemSession|false The current AssessmentItemSession object or false if no assessmentItemSession is running.
-	 */
+     * Get the current AssessmentItemSession object.
+     *
+     * @return \qtism\runtime\tests\AssessmentItemSession|false The current AssessmentItemSession object or false if no assessmentItemSession is running.
+     */
     public function getCurrentAssessmentItemSession()
     {
         $session = false;
@@ -2209,12 +2120,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Put the current item session in SUSPENDED state.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the SUSPENDED state.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
-	 * @throws \UnexpectedValueException If the current item session cannot be retrieved.
-	 */
+     * Put the current item session in SUSPENDED state.
+     *
+     * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the SUSPENDED state.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
+     * @throws \UnexpectedValueException If the current item session cannot be retrieved.
+     */
     protected function suspendItemSession()
     {
         if ($this->isRunning() === false) {
@@ -2234,12 +2145,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Put the current item session in INTERACTING mode.
-	 *
-	 * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the INTERACTING state.
-	 * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
-	 * @throws \UnexpectedValueException If the current item session cannot be retrieved.
-	 */
+     * Put the current item session in INTERACTING mode.
+     *
+     * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the current item session cannot switch to the INTERACTING state.
+     * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
+     * @throws \UnexpectedValueException If the current item session cannot be retrieved.
+     */
     protected function interactWithItemSession()
     {
         if ($this->isRunning() === false) {
@@ -2257,11 +2168,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of responded items.
-	 *
-	 * @param string $identifier An optional assessmentSection identifier.
-	 * @return integer
-	 */
+     * Get the number of responded items.
+     *
+     * @param string $identifier An optional assessmentSection identifier.
+     * @return integer
+     */
     public function numberResponded($identifier = '')
     {
         $numberResponded = 0;
@@ -2282,11 +2193,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of correctly answered items.
-	 *
-	 * @param string $identifier An optional assessmentSection identifier.
-	 * @return integer
-	 */
+     * Get the number of correctly answered items.
+     *
+     * @param string $identifier An optional assessmentSection identifier.
+     * @return integer
+     */
     public function numberCorrect($identifier = '')
     {
         $numberCorrect = 0;
@@ -2307,11 +2218,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of incorrectly answered items.
-	 *
-	 * @param string $identifier An optional assessmentSection identifier.
-	 * @return integer
-	 */
+     * Get the number of incorrectly answered items.
+     *
+     * @param string $identifier An optional assessmentSection identifier.
+     * @return integer
+     */
     public function numberIncorrect($identifier = '')
     {
         $numberIncorrect = 0;
@@ -2332,11 +2243,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of presented items.
-	 *
-	 * @param string $identifier An optional assessmentSection identifier.
-	 * @return integer
-	 */
+     * Get the number of presented items.
+     *
+     * @param string $identifier An optional assessmentSection identifier.
+     * @return integer
+     */
     public function numberPresented($identifier = '')
     {
         $numberPresented = 0;
@@ -2357,11 +2268,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Get the number of selected items.
-	 *
-	 * @param string $identifier An optional assessmentSection identifier.
-	 * @return integer
-	 */
+     * Get the number of selected items.
+     *
+     * @param string $identifier An optional assessmentSection identifier.
+     * @return integer
+     */
     public function numberSelected($identifier = '')
     {
         $numberSelected = 0;
@@ -2382,15 +2293,15 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Obtain the number of items considered to be completed during the AssessmentTestSession.
-	 *
-	 * An item involved in a candidate test session is considered complete if:
-	 *
-	 * * The navigation mode in force for the item is non-linear, and its completion status is 'complete'.
-	 * * The navigation mode in force for the item is linear, and it was presented at least one time.
-	 *
-	 * @return integer The number of completed items.
-	 */
+     * Obtain the number of items considered to be completed during the AssessmentTestSession.
+     *
+     * An item involved in a candidate test session is considered complete if:
+     *
+     * * The navigation mode in force for the item is non-linear, and its completion status is 'complete'.
+     * * The navigation mode in force for the item is linear, and it was presented at least one time.
+     *
+     * @return integer The number of completed items.
+     */
     public function numberCompleted()
     {
         $numberCompleted = 0;
@@ -2427,17 +2338,17 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Transforms any exception to a suitable AssessmentTestSessionException object.
-	 *
-	 * This method takes car to return matching AssessmentTestSessionException objects
-	 * when $e are AssessmentItemSessionException objects.
-	 *
-	 * In case of other Exception types, an AssessmentTestSession object
-	 * with code UNKNOWN is returned.
-	 *
-	 * @param \Exception $e
-	 * @return \qtism\runtime\tests\AssessmentTestSessionException
-	 */
+     * Transforms any exception to a suitable AssessmentTestSessionException object.
+     *
+     * This method takes car to return matching AssessmentTestSessionException objects
+     * when $e are AssessmentItemSessionException objects.
+     *
+     * In case of other Exception types, an AssessmentTestSession object
+     * with code UNKNOWN is returned.
+     *
+     * @param \Exception $e
+     * @return \qtism\runtime\tests\AssessmentTestSessionException
+     */
     protected function transformException(Exception $e)
     {
         if ($e instanceof AssessmentItemSessionException) {
@@ -2500,10 +2411,10 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Build the complete identifier corresponding to the current item session.
-	 *
-	 * @return string
-	 */
+     * Build the complete identifier corresponding to the current item session.
+     *
+     * @return string
+     */
     protected function buildCurrentItemSessionIdentifier()
     {
         $itemIdentifier = $this->getCurrentAssessmentItemRef()->getIdentifier();
@@ -2513,11 +2424,11 @@ class AssessmentTestSession extends State
     }
 
     /**
-	 * Whether or not time limits are in force for the current route item.
-	 *
-	 * @param boolean $excludeItem Whether or not include item time limits.
-	 * @return boolean
-	 */
+     * Whether or not time limits are in force for the current route item.
+     *
+     * @param boolean $excludeItem Whether or not include item time limits.
+     * @return boolean
+     */
     protected function timeLimitsInForce($excludeItem = false)
     {
         return count($this->getCurrentRouteItem()->getTimeLimits($excludeItem)) !== 0;

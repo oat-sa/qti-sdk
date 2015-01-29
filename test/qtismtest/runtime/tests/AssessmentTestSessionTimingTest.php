@@ -139,7 +139,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
         $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->equals(new Duration('PT1S')));
          
-        // Q04.
+        // Q04.1
         // The candidate begins an attempt on Q04 at 13:00:06.
         $session->setTime(self::createDate('2014-07-14 13:00:06'));
         $session->beginAttempt();
@@ -153,9 +153,14 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         catch (AssessmentTestSessionException $e) {
             // The maxtime of 1 second ruled by P02 is reached.
             $this->assertEquals(AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW, $e->getCode());
+            
+            // Reach the end... Pass through Q04.2 and Q04.3
+            $session->moveNext();
+            $session->moveNext();
             $session->moveNext();
         }
          
+        // Q04.2
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
         $this->assertFalse($session->getCurrentAssessmentItemRef());
          
@@ -202,48 +207,6 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             
             // We get an item duration overflow, because $forceLateSubmission = false and we spent 2 seconds (maxtime = 1) on item Q01.
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW, $e->getCode());
-        }
-    }
-    
-    /**
-     * This test aims at testing that an exception is thrown if we move
-     * to a next target item which is timed out.
-     * 
-     */
-    public function testJumpToTargetTimeout($allowTimeout = false) {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/move_next_target_timeout.xml');
-        
-        $session->setTime(self::createDate('2014-07-14 13:00:00'));
-        $session->beginTestSession();
-        $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
-        
-        // Jump to the target item (the 2nd and last one) to outreach timings.
-        $session->jumpTo(1);
-        
-        $session->setTime(self::createDate('2014-07-14 13:00:00'));
-        $session->beginAttempt();
-        $session->setTime(self::createDate('2014-07-14 13:00:02'));
-        
-        // The Q02 item session should be in closed state because the max time is reached...
-        $q02Sessions = $session->getAssessmentItemSessions('Q02');
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q02Sessions[0]->getState());
-        
-        // Move back to item Q01...
-        $session->moveBack();
-        
-        // And jump again on item Q02, which is time out.
-        try {
-            $session->jumpTo(1, $allowTimeout);
-            $this->assertTrue($allowTimeout);
-            $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
-        }
-        catch (AssessmentTestSessionException $e) {
-            $this->assertFalse($allowTimeout);
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW, $e->getCode());
-            
-            // We did not move then?
-            $this->assertTrue($session->isRunning());
-            $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
         }
     }
     
