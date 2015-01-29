@@ -488,7 +488,7 @@ class AssessmentTestSession extends State
      *
      * @return \qtism\runtime\tests\AbstractSessionManager
      */
-    public function getSessionManager()
+    protected function getSessionManager()
     {
         return $this->sessionManager;
     }
