@@ -1139,7 +1139,7 @@ class AssessmentTestSession extends State
      * @throws \OutOfBoundsException If the current position in the route is 0.
      * @return \qtism\runtime\tests\RouteItem A RouteItem object.
      */
-    public function getPreviousRouteItem()
+    protected function getPreviousRouteItem()
     {
          if ($this->isRunning() === false) {
              $msg = "Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED";
@@ -1152,28 +1152,6 @@ class AssessmentTestSession extends State
              $msg = "There is no previous route item because the current position in the route sequence is 0";
              throw new OutOfBoundsException($msg, 0, $e);
          }
-    }
-
-    /**
-     * Get the Next RouteItem object in the route.
-     *
-     * @throws \qtism\runtime\tests\AssessmentTestSessionException
-     * @throws \OutOfBoundsException
-     * @return \qtism\runtime\tests\RouteItem A RouteItem object.
-     */
-    public function getNextRouteItem()
-    {
-        if ($this->isRunning() === false) {
-            $msg = "Cannot know what is the next route item while the state of the test session is INITIAL or CLOSED.";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-        }
-
-        try {
-            return $this->getRoute()->getNext();
-        } catch (OutOfBoundsException $e) {
-            $msg = "There is not next route item because the current position in the route sequence is the last one.";
-            throw new OutOfBoundsException($msg, 0, $e);
-        }
     }
 
     /**
@@ -1575,7 +1553,7 @@ class AssessmentTestSession extends State
      *
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is currently not running.
      */
-    public function moveNextTestPart()
+    protected function moveNextTestPart()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
@@ -1603,7 +1581,7 @@ class AssessmentTestSession extends State
      *
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
      */
-    public function moveNextAssessmentSection()
+    protected function moveNextAssessmentSection()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
@@ -1617,28 +1595,6 @@ class AssessmentTestSession extends State
             // Move to the next route item by ignoring branchings and preConditions.
             $this->nextRouteItem();
         }
-
-        if ($this->isRunning() === true) {
-            $this->interactWithItemSession();
-        }
-    }
-
-    /**
-     * Set the position in the Route at the very next assessmentItem in the route sequence.
-     *
-     * * If there is no item left in the flow, the test session ends gracefully.
-     * * If there are still pending responses, they are processed.
-     *
-     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test is not running.
-     */
-    public function moveNextAssessmentItem()
-    {
-        if ($this->isRunning() === false) {
-            $msg = "Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-        }
-
-        $this->nextRouteItem();
 
         if ($this->isRunning() === true) {
             $this->interactWithItemSession();
@@ -1951,23 +1907,7 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Whether the current TestPart is complete. In other words, if all the items of the current TestPart were 'responded'.
-     *
-     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the current navigation mode is not SIMULTANEOUS. The error code will be LOGIC_ERROR.
-     */
-    public function isCurrentTestPartComplete()
-    {
-        if ($this->getCurrentSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
-            $msg = "It makes no sense to check if the current TestPart is complete when the current navigation mode is not SIMULTANEOUS.";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::LOGIC_ERROR);
-        }
-
-        return count($this->getRoute()->getCurrentTestPartRouteItems()) === count($this->getPendingResponses());
-    }
-
-    /**
-     * Get the time constraints running for the current testPart or/and current assessmentSection
-     * or/and assessmentItem.
+     * Get the time constraints in force.
      *
      * @param integer $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
      * @return \qtism\runtime\tests\TimeConstraintCollection A collection of TimeConstraint objects.
@@ -2032,7 +1972,7 @@ class AssessmentTestSession extends State
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If one or more time limits in force are not respected.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
      */
-    public function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false)
+    protected function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false)
     {
         $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
         // Include assessmentItem only if formally asked by client-code.
