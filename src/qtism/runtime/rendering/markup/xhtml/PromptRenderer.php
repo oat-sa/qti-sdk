@@ -45,7 +45,7 @@ class PromptRenderer extends BodyElementRenderer
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
-        $this->transform('div');
+        $this->transform('p');
     }
 
     /**

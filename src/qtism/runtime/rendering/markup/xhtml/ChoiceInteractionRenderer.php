@@ -82,38 +82,22 @@ class ChoiceInteractionRenderer extends InteractionRenderer
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
-
-        // Get back the 'qti-simpleChoice' elements.
-        $elts = $fragment->firstChild->childNodes;
-        $choices = array();
-
-        for ($i = 0; $i < $elts->length; $i++) {
-            if ($elts->item($i)->nodeType === XML_ELEMENT_NODE) {
-                $classes = $elts->item($i)->getAttribute('class');
-                if (mb_strpos($classes, 'qti-simpleChoice', 0, 'UTF-8') !== false) {
-                    $choices[] = $elts->item($i);
-                }
-            }
-
-        }
-
-        // Give a unique id for the input->name attribute.
-        $inputId = uniqid();
         
-        if ($component->getMaxChoices() === 0 || $component->getMaxChoices() > 1) {
-            foreach ($choices as $c) {
-                $checkbox = $fragment->ownerDocument->createElement('input');
-                $checkbox->setAttribute('type', 'checkbox');
-                $checkbox->setAttribute('name', $inputId);
-                $c->insertBefore($checkbox, $c->firstChild);
-            }
-        } else {
-            foreach ($choices as $c) {
-                $radio = $fragment->ownerDocument->createElement('input');
-                $radio->setAttribute('type', 'radio');
-                $radio->setAttribute('name', $inputId);
-                $c->insertBefore($radio, $c->firstChild);
-            }
+        // Put the choice elements into an unordered list.
+        // Dev note: it seems we need a trick ... http://php.net/manual/en/domnode.removechild.php#90292
+        $choiceElts = $fragment->firstChild->getElementsByTagName('li');
+        $choiceQueue = array();
+        $ulElt = $fragment->ownerDocument->createElement('ul');
+        
+        foreach ($choiceElts as $choiceElt) {
+            $choiceQueue[] = $choiceElt;
         }
+        
+        foreach ($choiceQueue as $choiceElt) {
+            $fragment->firstChild->removeChild($choiceElt);
+            $ulElt->appendChild($choiceElt);
+        }
+        
+        $fragment->firstChild->appendChild($ulElt);
     }
 }
