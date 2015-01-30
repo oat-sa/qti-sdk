@@ -79,11 +79,33 @@ class AssociateInteractionRenderer extends InteractionRenderer
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleAssociableChoices()->getArrayCopy()));
         }
+        
+        // Put the choice elements into an unordered list.
+        // Dev note: it seems we need a trick ... http://php.net/manual/en/domnode.removechild.php#90292
+        // @dev Bwaaaah copy/paste!
+        $choiceElts = $fragment->firstChild->getElementsByTagName('li');
+        $choiceQueue = array();
+        $ulElt = $fragment->ownerDocument->createElement('ul');
+        
+        foreach ($choiceElts as $choiceElt) {
+            $choiceQueue[] = $choiceElt;
+        }
+        
+        foreach ($choiceQueue as $choiceElt) {
+            $fragment->firstChild->removeChild($choiceElt);
+            $ulElt->appendChild($choiceElt);
+        }
+        
+        $fragment->firstChild->appendChild($ulElt);
 
         // The number of possible associations to display is maxAssociations if the attribute is present and different from 0, otherwise:
         //
         // * minAssociations, if different from 0 is used to determine the possible associations to display. Otherwise,
         // * a single possible association is displayed. Actions to undertake when this first association is done by the candidate depends on the implementation.
+        
+        // QUESTION: Should we delegate that to implementers decisions i.e. JS libraries to generate as they whish?
+        // Below is commented code of such a generation directly in the markup...
+        // At the present time, my feeling is to delegate ...
         $nbAssoc = (($assoc = $component->getMaxAssociations()) > 0) ? $assoc : ((($assoc = $component->getMinAssociations()) > 0) ? $assoc : 1);
 
         for ($i = 0; $i < $nbAssoc; $i++) {

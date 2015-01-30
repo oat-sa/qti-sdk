@@ -28,7 +28,7 @@ use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
 /**
- * SimpleAssociableChoice renderer. This renderer will transform the prompt into a 'div' element with an
+ * SimpleAssociableChoice renderer. This renderer will transform the prompt into a 'li' element with an
  * additional 'qti-simpleAssociableChoice' CSS class.
  *
  * Depending on the value of the qti:choice->showHide attribute and only if
@@ -51,6 +51,17 @@ use \DOMDocumentFragment;
  */
 class SimpleAssociableChoiceRenderer extends ChoiceRenderer
 {
+    /**
+     * Create a new SimpleAssociableChoiceRenderer object.
+     *
+     * @param AbstractMarkupRenderingEngine $renderingEngine
+     */
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    {
+        parent::__construct($renderingEngine);
+        $this->transform('li');
+    }
+    
     /**
      * @see \qtism\runtime\rendering\markup\xhtml\ChoiceRenderer::appendAttributes()
      */

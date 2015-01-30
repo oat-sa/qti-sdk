@@ -30,6 +30,9 @@
 		"phpunit/PHPUnit": ">=3.7.20",
 		"satooshi/php-coveralls": "dev-master"
 	},
+	"bin": [
+	   "bin/qtisdk"
+	],
 	"autoload": {
 		"psr-0": {
 			"qtism": "src"

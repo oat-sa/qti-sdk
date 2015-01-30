@@ -69,7 +69,9 @@ class OrderInteractionRenderer extends InteractionRenderer
 
         if ($component->hasMaxChoices() === true) {
             $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
-        } else {
+        }
+
+        if ($component->hasMinChoices() === true) {
             $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
         }
 
@@ -86,5 +88,22 @@ class OrderInteractionRenderer extends InteractionRenderer
         if ($this->getRenderingEngine()->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
+        
+        // Put the choice elements into an unordered list.
+        // Dev note: it seems we need a trick ... http://php.net/manual/en/domnode.removechild.php#90292
+        $choiceElts = $fragment->firstChild->getElementsByTagName('li');
+        $choiceQueue = array();
+        $ulElt = $fragment->ownerDocument->createElement('ul');
+        
+        foreach ($choiceElts as $choiceElt) {
+            $choiceQueue[] = $choiceElt;
+        }
+        
+        foreach ($choiceQueue as $choiceElt) {
+            $fragment->firstChild->removeChild($choiceElt);
+            $ulElt->appendChild($choiceElt);
+        }
+        
+        $fragment->firstChild->appendChild($ulElt);
     }
 }
