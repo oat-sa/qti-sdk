@@ -41,3 +41,12 @@ Run Unit Tests by invoking the following shell command:
 cp phpunit.xml.dist phpunit.xml
 ./vendor/bin/phpunit test
 ```
+
+## QTI Rendering
+
+The QTI Software Development Kit enables you to transform XML serialized QTI files
+into their (X)HTML5 equivalent. Do it with the following shell command:
+
+```shell
+./vendor/bin/qtisdk render /path/to/qti.xml
+```
