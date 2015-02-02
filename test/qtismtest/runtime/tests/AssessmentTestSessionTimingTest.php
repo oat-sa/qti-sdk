@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\runtime\tests;
 
+use qtism\runtime\tests\AssessmentItemSession;
+
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\common\datatypes\Identifier;
@@ -416,6 +418,183 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(7, $session['duration']->getSeconds(true));
         
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+    
+    public function testIsTimeout1() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/istimeout_1.xml');
+         
+        // If the session has not begun, the method systematically returns false.
+        $this->assertFalse($session->isTimeout());
+         
+        // If no time limits in force, the test session is never considered timeout while running.
+        $session->setTime(self::createDate('2015-02-02 11:54:00'));
+        $session->beginTestSession();
+        $this->assertSame(0, $session->isTimeout());
+         
+        // -- Q01 (1st attempt)
+        $session->beginAttempt();
+        $this->assertSame(0, $session->isTimeout());
+        
+        // Spend 25 seconds...
+        $session->setTime(self::createDate('2015-02-02 11:54:25'));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $this->assertSame(0, $session->isTimeout());
+        
+        // -- Q01 (2nd attempt)
+        $session->beginAttempt();
+        $this->assertSame(0, $session->isTimeout());
+        
+        // Spend 10 seconds...
+        $session->setTime(self::createDate('2015-02-02 11:54:35'));
+        $this->assertSame(AssessmentTestPlace::ASSESSMENT_ITEM, $session->isTimeout());
+        
+        // Check max time reached for item... (item maxTime = 30S)
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT30S')));
+        
+        // Check current time for the overall session...
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT35S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT35S')));
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT35S')));
+        
+        // Spend 20 seconds here...
+        $session->setTime(self::createDate('2015-02-02 11:54:55'));
+        $this->assertSame(AssessmentTestPlace::ASSESSMENT_SECTION, $session->isTimeout());
+        
+        // Check current time for the overall session... (session maxTime = 45S)
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT45S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT55S')));
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT55S')));
+        
+        // Spend 10 more seconds here to outreach P01's maxTime.
+        $session->setTime(self::createDate('2015-02-02 11:55:05'));
+        $this->assertSame(AssessmentTestPlace::TEST_PART, $session->isTimeout());
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT1M5S')));
+        
+        // Spend 30 more seconds here to outreach istimeout's maxTime. The test session must close.
+        $session->setTime(self::createDate('2015-02-02 11:55:35'));
+        $this->assertSame(AssessmentTestSessionState::CLOSED, $session->getState());
+        
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT45S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT1M30S')));
+    }
+    
+    public function testItemSessionsAreClosed1() {
+        // - istimeout maxTime = 120
+        // -- P01 maxTime = 90
+        // --- S01 maxTime = 60
+        // ---- S01A maxTime = 30
+        // ----- Q01 maxTime = 10
+        // ----- Q02 maxTime = 10
+        // ---- S01B maxTime = 30
+        // ----- Q03 maxTime = 10
+        // ----- Q04 maxTime = 10
+        
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/istimeout_2.xml');
+        
+        $session->setTime(self::createDate('2015-02-02 14:25:00'));
+        $session->beginTestSession();
+        
+        // Spend 10 seconds before the first attempt on Q01...
+        $session->setTime(self::createDate('2015-02-02 14:25:10'));
+        
+        // -- Q01 attempt.
+        $session->beginAttempt();
+        // Spend 8 seconds ...
+        $session->setTime(self::createDate('2015-02-02 14:25:18'));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->moveNext();
+        
+        // -- Q02 attempt.
+        // Spend 15 seconds to reach the maxTime of the parent section.
+        // As a result, Q01 and Q02 item sessions must be closed!
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2015-02-02 14:25:33'));
+        
+        $q01Sessions = $session->getAssessmentItemSessions('Q01');
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Sessions[0]->getState());
+        
+        $q02Sessions = $session->getAssessmentItemSessions('Q02');
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q02Sessions[0]->getState());
+        
+        $session->moveNext();
+        
+        // Let's check durations...
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT33S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT33S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT33S')));
+        $this->assertTrue($session['S01A.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01B.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT10S')));
+        
+        // -- Let's dive into S01B and make it timeout.
+        $q03Sessions = $session->getAssessmentItemSessions('Q03');
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $q03Sessions[0]->getState());
+        
+        $q04Sessions = $session->getAssessmentItemSessions('Q04');
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $q04Sessions[0]->getState());
+        
+        // Spend 29 seconds in S01B to make S01 timeout.
+        $session->setTime(self::createDate('2015-02-02 14:26:02'));
+        
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q03Sessions[0]->getState());
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q04Sessions[0]->getState());
+        
+        // Let's check durations...
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT1M2S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M2S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['S01A.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01B.duration']->equals(new Duration('PT29S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT0S')));
+        
+        // Even if all item sessions are closed, we consider the test is still running
+        // We can imagine a test taker navigating through the item flow searching
+        // for a non-timed out item to take. It's however a weird situation that
+        // a test driver built on top of qtism should consider.
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
+        
+        // Let's spend another 30 seconds to make the test part time out.
+        $session->setTime(self::createDate('2015-02-02 14:26:32'));
+        
+        // Let's check durations...
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT1M32S')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M30S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['S01A.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01B.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT0S')));
+        
+        // Let's spend another 28 seconds to reach the end of the test's maxTime.
+        $session->setTime(self::createDate('2015-02-02 14:27:00'));
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        
+        // Let's check durations...
+        $this->assertTrue($session['istimeout.duration']->equals(new Duration('PT2M')));
+        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M30S')));
+        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['S01A.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['S01B.duration']->equals(new Duration('PT30S')));
+        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT8S')));
+        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT0S')));
+        
+        // All sessions still closed?
+        foreach ($session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+        }
     }
  }
  

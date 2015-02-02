@@ -155,6 +155,8 @@ class DurationTest extends QtiSmTestCase {
 		$returnValue[] = array(new Duration('PT1H25M0S'), new Duration('PT1H26M12S'), false);
 		$returnValue[] = array(new Duration('PT1H26M12S'), new Duration('PT1H25M0S'), true);
 		$returnValue[] = array(new Duration('PT1H26M'), new Duration('PT1H26M'), true);
+		$returnValue[] = array(new Duration('PT1M5S'), new Duration('PT1M'), true);
+		$returnValue[] = array(new Duration('PT1M15S'), new Duration('PT45S'), true);
 	
 		return $returnValue;
 	}

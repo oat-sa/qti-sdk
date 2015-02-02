@@ -212,16 +212,60 @@ class AssessmentTestSession extends State
                 foreach (array_merge(array($assessmentTestDurationId), array($testPartDurationId), $assessmentSectionDurationIds) as $id) {
                     $durationStore[$id]->add($diffDuration);
                 }
+                
+                // Adjust durations if they exceed the time limits in force.
+                $timeConstraints = $this->getTimeConstraints();
+                foreach ($timeConstraints as $timeConstraint) {
+                    if ($timeConstraint->maxTimeInForce() === true) {
+                        
+                        $identifier = $timeConstraint->getSource()->getIdentifier();
+                        $maxTime = $timeConstraint->getSource()->getTimeLimits()->getMaxTime();
+                        
+                        if (($duration = $durationStore[$identifier]) !== null && $duration->longerThanOrEquals($maxTime)) {
+                            $durationStore[$identifier] = clone $maxTime;
+                        }
+                    }
+                }
+                
+                // Let's update item sessions time.
+                foreach ($this->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+                    $itemSession->setTime($time);
+                }
+                
+                // Let's now check if the test itself, the current test part
+                // or current sections are timed out. If it's the case, we will
+                // have to close some item sessions.
+                foreach ($timeConstraints as $timeConstraint) {
+                    if ($timeConstraint->maxTimeInforce() && $timeConstraint->getMaximumRemainingTime()->getSeconds(true) === 0) {
+                        $routeItemsToClose = new RouteItemCollection();
+                        $route = $this->getRoute();
+                        $source = $timeConstraint->getSource();
+                        
+                        if ($source instanceof AssessmentTest) {
+                            $this->endTestSession();
+                            break;
+                        } elseif ($source instanceof TestPart) {
+                            $routeItemsToClose = $route->getRouteItemsByTestPart($source);
+                        } elseif ($source instanceof AssessmentSection) {
+                            $routeItemsToClose = $route->getRouteItemsByAssessmentSection($source);
+                        }
+                        
+                        if (count($routeItemsToClose) > 0) {
+                            foreach ($routeItemsToClose as $routeItem) {
+                                $itemRef = $routeItem->getAssessmentItemRef();
+                                $occurence = $routeItem->getOccurence();
+                                $session = $this->getItemSession($itemRef, $occurence)->endItemSession();
+                            }
+                            
+                            break;
+                        }
+                    }
+                }
             }
         }
 
         // Update reference time with $time.
         $this->setTimeReference($time);
-
-        if (($itemSession = $this->getCurrentAssessmentItemSession()) !== false) {
-            // Tell the current item session the time has changed.
-            $itemSession->setTime($time);
-        }
     }
 
     /**
@@ -1937,9 +1981,11 @@ class AssessmentTestSession extends State
         }
 
         if ($places & AssessmentTestPlace::ASSESSMENT_SECTION) {
-            $source = $this->getCurrentAssessmentSection();
-            $duration = $durationStore[$source->getIdentifier()];
-            $constraints[] = new TimeConstraint($source, $duration, $navigationMode);
+            // Multiple sections might be embedded.
+            foreach ($this->getCurrentRouteItem()->getAssessmentSections() as $section) {
+                $duration = $durationStore[$section->getIdentifier()];
+                $constraints[] = new TimeConstraint($section, $duration, $navigationMode);
+            }
         }
 
         if ($places & AssessmentTestPlace::ASSESSMENT_ITEM) {
@@ -1950,6 +1996,59 @@ class AssessmentTestSession extends State
         }
 
         return $constraints;
+    }
+    
+    /**
+     * Check wheter the test session is somehow in a timeout state.
+     * 
+     * This method aims at providing timeout information about the test. In other words,
+     * whether the time limits in force are reached for one of the given component of the
+     * test: Assessment Test, Test Part, Assessment Section, Assessment Item.
+     * 
+     * If the test session is not running (not begun or closed), the method will
+     * return false.
+     * 
+     * If no time limits in force are reached at the current position in the item flow,
+     * the method will return 0. 
+     * 
+     * Otherwise, the return value will be a value of the AssessmentTestPlace enumeration, 
+     * describing which component of the test is currently in a timeout state.
+     * 
+     * @return integer|boolean
+     */
+    public function isTimeout()
+    {
+        if ($this->isRunning() === false) {
+            return false;
+        }
+        
+        try {
+            $this->checkTimeLimits(false, true);
+        } catch (AssessmentTestSessionException $e) {
+            switch ($e->getCode()) {
+                case AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW:
+                    
+                    return AssessmentTestPlace::ASSESSMENT_TEST;
+                    break;
+                   
+                case AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW:
+                    
+                    return AssessmentTestPlace::TEST_PART;
+                    break;
+                    
+                case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW:
+                    
+                    return AssessmentTestPlace::ASSESSMENT_SECTION;
+                    break;
+                    
+                case AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW:
+                    
+                    return AssessmentTestPlace::ASSESSMENT_ITEM;
+                    break;
+            }
+        }
+        
+        return 0;
     }
 
     /**

@@ -24,9 +24,7 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\ShowHide;
-
 use qtism\common\datatypes\Scalar;
-
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\common\collections\Container;

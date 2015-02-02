@@ -273,21 +273,7 @@ class Duration implements QtiDatatype
      */
     public function shorterThan(Duration $duration)
     {
-        if ($this->getYears() < $duration->getYears()) {
-            return true;
-        } elseif ($this->getMonths() < $duration->getMonths()) {
-            return true;
-        } elseif ($this->getDays() < $duration->getDays()) {
-            return true;
-        } elseif ($this->getHours() < $duration->getHours()) {
-            return true;
-        } elseif ($this->getMinutes() < $duration->getMinutes()) {
-            return true;
-        } elseif ($this->getSeconds() < $duration->getSeconds()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->getSeconds(true) < $duration->getSeconds(true);
     }
 
     /**
@@ -299,21 +285,7 @@ class Duration implements QtiDatatype
      */
     public function longerThanOrEquals(Duration $duration)
     {
-        if ($this->getYears() < $duration->getYears()) {
-            return false;
-        } elseif ($this->getMonths() < $duration->getMonths()) {
-            return false;
-        } elseif ($this->getDays() < $duration->getDays()) {
-            return false;
-        } elseif ($this->getHours() < $duration->getHours()) {
-            return false;
-        } elseif ($this->getMinutes() < $duration->getMinutes()) {
-            return false;
-        } elseif ($this->getSeconds() < $duration->getSeconds()) {
-            return false;
-        } else {
-            return true;
-        }
+        return $this->getSeconds(true) >= $duration->getSeconds(true);
     }
 
     /**

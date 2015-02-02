@@ -1415,4 +1415,57 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
 	    }
 	}
+	
+	public function testIsTimeout() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+	    
+	    // If the session has not begun, the method systematically returns false.
+	    $this->assertFalse($session->isTimeout());
+	    
+	    // If no time limits in force, the test session is never considered timeout while running.
+	    $session->beginTestSession();
+	    $this->assertSame(0, $session->isTimeout());
+	    
+	    // Q01.
+	    $session->beginAttempt();
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->moveNext();
+	    
+	    // Q02.
+	    $session->beginAttempt();
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->moveNext();
+	    
+	    // Q03.
+	    $session->beginAttempt();
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->moveNext();
+	    
+	    // Q04.
+	    $session->beginAttempt();
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->moveNext();
+	    
+	    // Q05.
+	    $session->beginAttempt();
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceE')))));
+	    $this->assertSame(0, $session->isTimeout());
+	    $session->moveNext();
+	    
+	    // If the session is closed, the method systematically returns false.
+	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+	    $this->assertFalse($session->isTimeout());
+	}
 }
