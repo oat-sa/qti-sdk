@@ -100,6 +100,35 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	/**
 	 * @depends testUnmarshall21
 	 */
+    public function testUnmarshall21MinChoicesIs0() {
+        // graphicOrderInteraction->minChoices = 0 is an endless debate:
+        // The Information models says: If specfied, minChoices must be 1 or greater but ...
+        // The XSD 2.1 says: xs:integer, [-inf, +inf], optional
+        // The XSD 2.1.1 says: xs:nonNegativeInteger, [0, +inf]
+        //
+        // --> Let's say that if <= 0, we consider it not specfied!
+        
+        $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="0" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
+              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicOrderInteraction', $component);
+        $this->assertEquals('my-graphicOrder', $component->getId());
+        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this->assertFalse($component->hasMinChoices());
+        $this->assertEquals(3, $component->getMaxChoices());
+    }
+	
+	/**
+	 * @depends testUnmarshall21
+	 */
 	public function testUnmarshall20() {
 	    // Make sure minChoices and maxChoices attributes are not taken into account in a QTI 2.0 context.
 	    $element = $this->createDOMElement('
