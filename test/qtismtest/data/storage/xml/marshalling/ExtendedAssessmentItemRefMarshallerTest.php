@@ -1,6 +1,10 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\state\TemplateDeclaration;
+
+use qtism\data\state\TemplateDeclarationCollection;
+
 use qtismtest\QtiSmTestCase;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -45,6 +49,9 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('./q01.xml', $component->getHref());
 	}
 	
+	/**
+	 * @depends testMarshallMinimal
+	 */
 	public function testMarshallModerate() {
 		$factory = new CompactMarshallerFactory();
 		$component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -88,6 +95,33 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('O02', $outcomeDeclarationElts->item(1)->getAttribute('identifier'));
 	}
 	
+	/**
+	 * @depends testMarshallMinimal
+	 */
+	public function testMarshallTemplateDeclarations() {
+	    $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    
+	    $templateDeclarations = new TemplateDeclarationCollection();
+	    $templateDeclarations[] = new TemplateDeclaration('T01', BaseType::INTEGER, Cardinality::SINGLE);
+	    $templateDeclarations[] = new TemplateDeclaration('T02', BaseType::INTEGER, Cardinality::SINGLE);
+	    $component->setTemplateDeclarations($templateDeclarations);
+	    
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    
+	    $templateDeclarationElts = $element->getElementsByTagName('templateDeclaration');
+	    $this->assertEquals(2, $templateDeclarationElts->length);
+	    $this->assertEquals('T01', $templateDeclarationElts->item(0)->getAttribute('identifier'));
+		$this->assertEquals('T02', $templateDeclarationElts->item(1)->getAttribute('identifier'));
+	}
+	
+	/**
+	 * @depends testUnmarshallMinimal
+	 */
 	public function testUnmarshallModerate() {
 		$factory = new CompactMarshallerFactory();
 		$dom = new DOMDocument('1.0', 'UTF-8');
@@ -123,6 +157,26 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$outcomeDeclarations = $component->getOutcomeDeclarations();
 		$this->assertEquals('O01', $outcomeDeclarations['O01']->getIdentifier());
 		$this->assertEquals('O02', $outcomeDeclarations['O02']->getIdentifier());
-		
+	}
+	
+	/**
+	 * @depends testUnmarshallMinimal
+	 */
+	public function testUnmarshallTemplateDeclarations() {
+	    $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('
+			<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true">
+				<templateDeclaration identifier="T01" baseType="integer" cardinality="single"/>
+	            <templateDeclaration identifier="T02" baseType="integer" cardinality="single"/>
+			</assessmentItemRef>
+			');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $templateDeclarations = $component->getTemplateDeclarations();
+	    $this->assertEquals('T01', $templateDeclarations['T01']->getIdentifier());
+	    $this->assertEquals('T02', $templateDeclarations['T02']->getIdentifier());
 	}
 }

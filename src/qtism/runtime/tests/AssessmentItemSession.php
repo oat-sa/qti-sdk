@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\common\TemplateVariable;
+
 use qtism\data\ShowHide;
 use qtism\common\datatypes\Scalar;
 use qtism\common\utils\Time;
@@ -540,6 +542,7 @@ class AssessmentItemSession extends State
     public function beginItemSession()
     {
         // We initialize the item session and its variables.
+        
         foreach ($this->getAssessmentItem()->getOutcomeDeclarations() as $outcomeDeclaration) {
             // Outcome variables are instantiantiated as part of the item session.
             // Their values may be initialized with a default value if they have one.
@@ -547,6 +550,16 @@ class AssessmentItemSession extends State
             $outcomeVariable->initialize();
             $outcomeVariable->applyDefaultValue();
             $this->setVariable($outcomeVariable);
+        }
+        
+        foreach ($this->getAssessmentItem()->getTemplateDeclarations() as $templateDeclaration) {
+            // Template variables are instantiated as part of the item session.
+            // Even if it's not specifically said in the spec, we assume they are initialized with
+            // a default value if they have one.
+            $templateVariable = TemplateVariable::createFromDataModel($templateDeclaration);
+            $templateVariable->initialize();
+            $templateVariable->applyDefaultValue();
+            $this->setVariable($templateVariable);
         }
 
         foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {

@@ -121,9 +121,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     /**
      * Persist an AssessmentTestSession into binary data.
      *
-     * The QTI Binary Storage Version that will be used to persist the AssessmentTestSession
-     * will be systematically the one defined in QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION.
-     *
      * @param \qtism\runtime\tests\AssessmentTestSession $assessmentTestSession
      * @throws \qtism\runtime\storage\common\StorageException
      */
@@ -136,8 +133,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $access = $this->createBinaryStreamAccess($stream);
 
             // -- Deal with intrinsic values of the Test Session.
-            // write the QTI Binary Storage version in use to persist the test session.
-            $access->writeTinyInt(QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION);
             $access->writeTinyInt($assessmentTestSession->getState());
 
             // Write the current position in the route.
@@ -232,9 +227,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->open();
             $access = $this->createBinaryStreamAccess($stream);
 
-            // -- Retrieve in which version the binary date is persisted.
-            $version = $access->readTinyInt();
-
             // -- Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
             $currentPosition = $access->readTinyInt();
@@ -300,18 +292,15 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Build the duration store.
             $durationStore = new DurationStore();
-
-            if ($version >= 4) {
-                $durationCount = $access->readShort();
-                for ($i = 0; $i < $durationCount; $i++) {
-                    $varName = $access->readString();
-                    $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
-                    $access->readVariableValue($durationVariable);
-                    $durationStore->setVariable($durationVariable);
-                }
-
-                $assessmentTestSession->setDurationStore($durationStore);
+            $durationCount = $access->readShort();
+            for ($i = 0; $i < $durationCount; $i++) {
+                $varName = $access->readString();
+                $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
+                $access->readVariableValue($durationVariable);
+                $durationStore->setVariable($durationVariable);
             }
+
+            $assessmentTestSession->setDurationStore($durationStore);
 
             $stream->close();
 

@@ -28,6 +28,8 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\state\TemplateDeclaration;
+use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\common\collections\IdentifierCollection;
 use \InvalidArgumentException;
@@ -57,6 +59,14 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @qtism-bean-property
      */
     private $responseDeclarations;
+    
+    /**
+     * The templateDeclarations found in the referenced assessmentItem.
+     * 
+     * @var \qtism\data\state\TemplateDeclarationCollection
+     * @qtism-bean-property
+     */
+    private $templateDeclarations;
 
     /**
      * The responseProcessing found in the referenced assessmentItem
@@ -104,6 +114,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
         $this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
         $this->setResponseDeclarations(new ResponseDeclarationCollection());
+        $this->setTemplateDeclarations(new TemplateDeclarationCollection());
         $this->setModalFeedbackRules(new ModalFeedbackRuleCollection());
     }
 
@@ -215,6 +226,46 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration)
     {
         $this->getResponseDeclarations()->detach($responseDeclaration);
+    }
+    
+    /**
+     * Set the templateDeclarations found in the referenced item.
+     * 
+     * @param \qtism\data\state\TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
+     */
+    public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations)
+    {
+        $this->templateDeclarations = $templateDeclarations;
+    }
+    
+    /**
+     * Get the templateDeclarations found in the referenced item.
+     * 
+     * @return \qtism\data\state\TemplateDeclarationCollection
+     */
+    public function getTemplateDeclarations()
+    {
+        return $this->templateDeclarations;
+    }
+    
+    /**
+     * Add a TemplateDeclaration object.
+     * 
+     * @param \qtism\data\state\TemplateDeclaration $templateDeclaration
+     */
+    public function addTemplateDeclaration(TemplateDeclaration $templateDeclaration)
+    {
+        $this->templateDeclarations->attach($templateDeclaration);
+    }
+    
+    /**
+     * Remove a TemplateDeclaration object.
+     * 
+     * @param \qtism\data\state\TemplateDeclaration $templateDeclaration
+     */
+    public function removeTemplateDeclaration(TemplateDeclaration $templateDeclaration)
+    {
+        $this->templateDeclarations->detach($templateDeclaration);
     }
     
     /**

@@ -391,8 +391,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
         $varCount = "\x02"; // 2 variables (SCORE & RESPONSE).
         
-        $score = "\x01" . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
-        $response = "\x00" . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
+        $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0);
+        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA';
         
         $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response));
         $stream = new MemoryStream($bin);

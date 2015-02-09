@@ -23,9 +23,9 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\content\ModalFeedbackRuleCollection;
-
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -56,6 +56,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclaration);
             $element->appendChild($marshaller->marshall($outcomeDeclaration));
+        }
+        
+        foreach ($component->getTemplateDeclarations() as $templateDeclaration) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclaration);
+            $element->appendChild($marshaller->marshall($templateDeclaration));
         }
         
         foreach ($component->getModalFeedbackRules() as $modalFeedbackRule) {
@@ -117,6 +122,15 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $outcomeDeclarations[] = $marshaller->unmarshall($outcomeDeclarationElt);
         }
         $compactAssessmentItemRef->setOutcomeDeclarations($outcomeDeclarations);
+        
+        // TemplateDeclarations.
+        $templateDeclarationElts = self::getChildElementsByTagName($element, 'templateDeclaration');
+        $templateDeclarations = new TemplateDeclarationCollection();
+        foreach ($templateDeclarationElts as $templateDeclarationElt) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclarationElt);
+            $templateDeclarations[] = $marshaller->unmarshall($templateDeclarationElt);
+        }
+        $compactAssessmentItemRef->setTemplateDeclarations($templateDeclarations);
 
         // ModalFeedbacks (transformed in ModalFeedbackRules).
         $modalFeedbackElts = self::getChildElementsByTagName($element, 'modalFeedbackRule');

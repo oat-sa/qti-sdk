@@ -23,6 +23,10 @@
 
 namespace qtism\runtime\storage\binary;
 
+use qtism\runtime\common\TemplateVariable;
+
+use qtism\data\state\TemplateDeclaration;
+
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\common\datatypes\Scalar;
@@ -530,11 +534,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
             $session->setState($this->readTinyInt());
             $session->setNavigationMode($this->readTinyInt());
             $session->setSubmissionMode($this->readTinyInt());
-
-            // The is-attempting field was added in Binary Storage v2.
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 2) {
-                $session->setAttempting($this->readBoolean());
-            }
+            $session->setAttempting($this->readBoolean());
 
             if ($this->readBoolean() === true) {
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
@@ -545,32 +545,36 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
             $session['duration'] = $this->readDuration();
             $session['completionStatus'] = new Identifier($this->readString());
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 6) {
-                if ($this->readBoolean() === true) {
-                    // A time reference is set.
-                    $session->setTimeReference($this->readDateTime());
-                }
-            } else {
-                if ($session['numAttempts']->getValue() > 0) {
-                    $session->setTimeReference($this->readDateTime());
-                }
+            if ($this->readBoolean() === true) {
+                // A time reference is set.
+                $session->setTimeReference($this->readDateTime());
             }
 
             $varCount = $this->readTinyInt();
             for ($i = 0; $i < $varCount; $i++) {
-                $isOutcome = $this->readBoolean();
+                $varNature = $this->readShort();
                 $varPosition = $this->readShort();
 
                 $variable = null;
 
                 try {
-                    $variable = $seeker->seekComponent(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
+                    if ($varNature === 0) {
+                        // outcome
+                        $variable = $seeker->seekComponent('outcomeDeclaration', $varPosition);
+                        $variable = OutcomeVariable::createFromDataModel($variable);
+                    } elseif ($varNature === 1) {
+                        // response
+                        $variable = $seeker->seekComponent('responseDeclaration', $varPosition);
+                        $variable = ResponseVariable::createFromDataModel($variable);
+                    } elseif ($varNature === 2) {
+                        // template
+                        $variable = $seeker->seekComponent('templateDeclaration', $varPosition);
+                        $variable = TemplateVariable::createFromDataModel($variable);
+                    }
                 } catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
                     throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
                 }
-
-                $variable = ($variable instanceof OutcomeDeclaration) ? OutcomeVariable::createFromDataModel($variable) : ResponseVariable::createFromDataModel($variable);
 
                 // If we are here, we have our variable.
                 $this->readVariableValue($variable);
@@ -633,16 +637,25 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
 
             $itemOutcomes = $session->getAssessmentItem()->getOutcomeDeclarations();
             $itemResponses = $session->getAssessmentItem()->getResponseDeclarations();
+            $itemTemplates = $session->getAssessmentItem()->getTemplateDeclarations();
 
             foreach ($session->getKeys() as $varId) {
                 if (in_array($varId, array('numAttempts', 'duration', 'completionStatus')) === false) {
 
                     $var = $session->getVariable($varId);
-                    $isOutcome = $var instanceof OutcomeVariable;
-                    $variableDeclaration = ($isOutcome === true) ? $itemOutcomes[$varId] : $itemResponses[$varId];
+                    if ($var instanceof OutcomeVariable) {
+                        $variableDeclaration = $itemOutcomes[$varId];
+                        $varNature = 0;
+                    } elseif ($var instanceof ResponseVariable) {
+                        $variableDeclaration = $itemResponses[$varId];
+                        $varNature = 1;
+                    } elseif ($var instanceof TemplateDeclaration) {
+                        $variableDeclaration = $itemTemplates[$varId];
+                        $varNature = 2;
+                    }
 
                     try {
-                        $this->writeBoolean($isOutcome);
+                        $this->writeShort($varNature);
                         $this->writeShort($seeker->seekPosition($variableDeclaration));
                         $this->writeVariableValue($var);
                     } catch (OutOfBoundsException $e) {
@@ -672,24 +685,13 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $occurence = $this->readTinyInt();
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
-
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
-                // Prior to version 3, only a singe assessmentSection might be bound
-                // to the RouteItem.
-                $sections = $seeker->seekComponent('assessmentSection', $this->readShort());
-            }
-
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
-                // From version 3, multiple assessmentSections might be bound
-                // to the RouteItem.
-                $sectionsCount = $this->readTinyInt();
-                $sections = new AssessmentSectionCollection();
+            $sectionsCount = $this->readTinyInt();
+            $sections = new AssessmentSectionCollection();
 
-                for ($i = 0; $i < $sectionsCount; $i++) {
-                    $sections[] = $seeker->seekComponent('assessmentSection', $this->readShort());
-                }
+            for ($i = 0; $i < $sectionsCount; $i++) {
+                $sections[] = $seeker->seekComponent('assessmentSection', $this->readShort());
             }
 
             $branchRulesCount = $this->readTinyInt();
@@ -733,24 +735,13 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $this->writeTinyInt($routeItem->getOccurence());
             $this->writeShort($seeker->seekPosition($routeItem->getAssessmentItemRef()));
-
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION <= 2) {
-                // Prior to version 3, only a single assessmentSection might be bound
-                // to the RouteItem.
-                $this->writeShort($seeker->seekPosition($routeItem->getAssessmentSection()));
-            }
-
             $this->writeShort($seeker->seekPosition($routeItem->getTestPart()));
 
-            if (QtiBinaryConstants::QTI_BINARY_STORAGE_VERSION >= 3) {
-                $assessmentSections = $routeItem->getAssessmentSections();
-                // From version 3, multiple assessmentSections might be bound
-                // to the RouteItem.
-                $this->writeTinyInt(count($assessmentSections));
+            $assessmentSections = $routeItem->getAssessmentSections();
+            $this->writeTinyInt(count($assessmentSections));
 
-                foreach ($assessmentSections as $assessmentSection) {
-                    $this->writeShort($seeker->seekPosition($assessmentSection));
-                }
+            foreach ($assessmentSections as $assessmentSection) {
+                $this->writeShort($seeker->seekPosition($assessmentSection));
             }
 
             $branchRules = $routeItem->getBranchRules();

@@ -41,7 +41,18 @@ class BinaryAssessmentTestSeeker extends AssessmentTestSeeker
      */
     public function __construct(AssessmentTest $test)
     {
-        $classes = array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition', 'itemSessionControl');
+        $classes = array(
+            'assessmentItemRef', 
+            'assessmentSection',
+            'testPart',
+            'outcomeDeclaration',
+            'responseDeclaration',
+            'templateDeclaration',
+            'branchRule',
+            'preCondition',
+            'itemSessionControl'
+        );
+        
         parent::__construct($test, $classes);
     }
 }

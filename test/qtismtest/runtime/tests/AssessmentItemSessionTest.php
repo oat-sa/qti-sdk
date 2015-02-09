@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\runtime\tests;
 
+use qtism\common\datatypes\Float;
+
 use qtismtest\QtiSmAssessmentItemTestCase;
 use qtism\common\datatypes\Identifier;
 use qtism\data\storage\xml\XmlDocument;
@@ -322,6 +324,36 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $itemSession->endItemSession();
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
+    }
+    
+    public function testTemplateVariableDefault() {
+        // This test aims at testing whether template variables
+        // are correctly instantiated as part of the item session and
+        // they can be used in response processing.
+        $doc = new XmlDocument('2.1.0');
+        $doc->load(self::samplesDir() . 'custom/items/template_declaration_default.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        
+        $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
+        
+        $this->assertTrue($itemSession['WRONGSCORE']->equals(new Float(0.0)));
+        $this->assertTrue($itemSession['GOODSCORE']->equals(new Float(1.0)));
+        
+        // 1st attempt to get 'GOODSCORE' as 'SCORE'.
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt($responses);
+        $this->assertTrue($itemSession['SCORE']->equals($itemSession['GOODSCORE']));
+        
+        // 2nd attempt to get 'WRONGSCORE' as 'SCORE'.
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB'))));
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt($responses);
+        $this->assertTrue($itemSession['SCORE']->equals($itemSession['WRONGSCORE']));
     }
     
     public function testSimultaneousSubmissionOnlyOneAttempt() {
