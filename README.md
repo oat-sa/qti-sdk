@@ -42,6 +42,16 @@ cp phpunit.xml.dist phpunit.xml
 ./vendor/bin/phpunit test
 ```
 
+## Contribute
+
+We are always looking for people to feed the project with:
+
+* Bug reports
+* Unit tests
+* New features
+
+[Please make yourself known](https://github.com/bugalood)!
+
 ## QTI Rendering
 
 The QTI Software Development Kit enables you to transform XML serialized QTI files
