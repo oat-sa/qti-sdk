@@ -22,7 +22,9 @@
 namespace qtism\cli;
 
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use \DOMXPath;
 
 /**
  * The main class of the Command Line Interface.
@@ -63,6 +65,7 @@ class Cli
     {
         $renderer = new XhtmlRenderingEngine();
         $source = $argv[2];
+        $profile = (isset($argv[3]) === true) ? $argv[3] : 'default';
         
         if (is_readable($source) === true) {
             $doc = new XmlDocument();
@@ -72,16 +75,54 @@ class Cli
             $xml->formatOutput = true;
             
             $header = "<!doctype html>\n";
-            $header .= "<html>\n";
-            $header .= "<head>\n";
-            $header .= "<meta charset=\"utf-8\">\n";
-            $header .= "</head>\n";
-            $header .= "<body>\n";
             
-            $body = $xml->saveXml($xml->documentElement) . "\n";
             
-            $footer = "</body>\n";
-            $footer .= "</html>\n";
+            if (strtolower($profile) === 'aqti') {
+                $xpath = new DOMXPath($xml);
+                $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
+                if ($assessmentItemElts->length > 0) {
+                    $htmlAttributes = array();
+                    
+                    // Take the content of <assessmentItem> and put it into <html>.
+                    $attributes = $assessmentItemElts->item(0)->attributes;
+                    foreach ($attributes as $name => $attr) {
+                        $htmlAttributes[] = $name . '="'. $attr->value . '"';
+                    }
+                    
+                    while ($attributes->length > 0) {
+                        $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
+                    }
+                    
+                    $header .= "<html " . implode(' ', $htmlAttributes) . ">\n";
+                    $header .= "<head>\n";
+                    $header .= "<meta charset=\"utf-8\">\n";
+                    $header .= "</head>\n";
+                    
+                    $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
+                    if ($itemBodyElts->length > 0) {
+                        $body = $xml->saveXml($itemBodyElts->item(0));
+                        $body = substr($body, strlen('<div>'));
+                        $body = substr($body, 0, strlen('</div>') * -1);
+                        $body = "<body ${body}</body>\n";
+                    } else {
+                        $body = $xml->saveXml($xml->documentElement) . "\n";
+                    }
+                    
+                    $footer = "</html>\n";
+                }
+            } else {
+                $header .= "<html>\n";
+                $header .= "<head>\n";
+                $header .= "<meta charset=\"utf-8\">\n";
+                $header .= "</head>\n";
+                $header .= "<body>\n";
+                
+                $footer = "</body>\n";
+                $footer .= "</html>\n";
+                
+                $body = $xml->saveXml($xml->documentElement) . "\n";
+            }
+            
             echo "{$header}{$body}{$footer}";
         }
     }

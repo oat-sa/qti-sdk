@@ -4,7 +4,7 @@ if (!ini_get('date.timezone')) {
     ini_set('date.timezone', 'UTC');
 }
 
-foreach (array(__DIR__ . '/../../../autoload.php') as $file) {
+foreach (array(__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php') as $file) {
     if (file_exists($file)) {
         define('QTISDK_COMPOSER_INSTALL', $file);
         break;

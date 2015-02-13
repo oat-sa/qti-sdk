@@ -58,5 +58,5 @@ The QTI Software Development Kit enables you to transform XML serialized QTI fil
 into their (X)HTML5 equivalent. Do it with the following shell command:
 
 ```shell
-./vendor/bin/qtisdk render /path/to/qti.xml
+./vendor/bin/qtisdk render /path/to/qti.xml aqti
 ```
