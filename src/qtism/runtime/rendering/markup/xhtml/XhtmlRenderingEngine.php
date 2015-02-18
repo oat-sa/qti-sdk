@@ -137,6 +137,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('selectPointInteraction', new SelectPointInteractionRenderer());
         $this->registerRenderer('graphicOrderInteraction', new GraphicOrderInteractionRenderer());
         $this->registerRenderer('graphicGapMatchInteraction', new GraphicGapMatchInteractionRenderer());
+        $this->registerRenderer('graphicAssociateInteraction', new GraphicAssociateInteractionRenderer());
         $this->registerRenderer('positionObjectInteraction', new PositionObjectInteractionRenderer());
         $this->registerRenderer('sliderInteraction', new SliderInteractionRenderer());
         $this->registerRenderer('mediaInteraction', new MediaInteractionRenderer());
