@@ -24,14 +24,15 @@ namespace qtism\cli;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use qtism\runtime\rendering\markup\aqti\AqtiRenderingEngine;
 use cli\Arguments as Arguments;
 use \DOMXPath;
 
 /**
- * The main class of the Command Line Interface.
+ * Render CLI Module.
  * 
- * Some components of this class are inspired by Sebastian Bergmann's PHPUnit command line (BSD-3-Clause). 
- * Thanks to him for his great devotion to the PHP community.
+ * This CLI Module enables you to render QTI XML files in various flavours
+ * e.g. XHTML or aQTI.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -49,7 +50,7 @@ class Render extends Cli
         $arguments->addOption(
             array('flavour', 'f'),
             array(
-                'default' => 'default',
+                'default' => 'xhtml',
                 'description' => 'Rendering flavour'
             )
         );
@@ -66,75 +67,169 @@ class Render extends Cli
     }
     
     /**
-     * Renders a QTI XML File into another flavour.
-     * 
-     * @see \qtism\cli\Cli::run()
+     * @see \qtism\cli\Cli::checkArguments()
      */
-    protected function run()
+    protected function checkArguments()
     {
         $arguments = $this->getArguments();
         
-        $renderer = new XhtmlRenderingEngine();
+        // Check 'source' argument.
+        if (($source = $arguments['source']) === null) {
+            $this->missingArgument('source');
+        } else {
+            if (is_readable($source) === false) {
+                if (file_exists($source) === false) {
+                    $msg = "The QTI XML source file does not exist.";
+                } else {
+                    $msg = "The QTI XML source file cannot be read. Check permissions.";
+                }
+                
+                $this->fail($msg);
+            }
+        }
+        
+        // Check 'flavour' argument.
+        if (empty($arguments['flavour']) == true) {
+            $arguments['flavour'] = 'xhtml';
+        }
+        
+        $knownFlavours = array(
+            'xhtml',
+            'aqti'                
+        );
+        
+        if (in_array(strtolower($arguments['flavour']), $knownFlavours) === false) {
+            $msg = "Unknown flavour '" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . ".";
+            $this->fail($msg);
+        }
+    }
+    
+    /**
+     * Renders a QTI XML File into another flavour.
+     * 
+     * This implementations considers that all necessary checks about
+     * arguments and their values were performed in \qtism\cli\Render::checkArguments().
+     * 
+     * @see \qtism\cli\Cli::run()
+     * @see \qtism\cli\Render::checkArguments()
+     */
+    protected function run()
+    {
+        $engine = $this->instantiateEngine();
+        $arguments = $this->getArguments();
+        
+        switch (strtolower($arguments['flavour'])) {
+            case 'aqti':
+                $this->runAqti($engine);
+                break;
+                
+            case 'xhtml':
+                $this->runXhtml($engine);
+                break;
+        }
+        
+        $this->success("QTI XML file successfully rendered.");
+    }
+    
+    /**
+     * Run the rendering behaviour related to the "aQTI" flavour.
+     * 
+     * @param AqtiRenderingEngine $engine
+     */
+    private function runAqti(AqtiRenderingEngine $engine) {
+        $arguments = $this->getArguments();
+        
+        $renderer = $this->instantiateEngine();
         $source = $arguments['source'];
         $profile = $arguments['flavour'];
         
-        if (is_readable($source) === true) {
-            $doc = new XmlDocument();
-            $doc->load($source);
-            
-            $xml = $renderer->render($doc->getDocumentComponent());
-            $xml->formatOutput = true;
-            
-            $header = "<!doctype html>\n";
-            
-            if (strtolower($profile) === 'aqti') {
-                $xpath = new DOMXPath($xml);
-                $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
-                if ($assessmentItemElts->length > 0) {
-                    $htmlAttributes = array();
-                    
-                    // Take the content of <assessmentItem> and put it into <html>.
-                    $attributes = $assessmentItemElts->item(0)->attributes;
-                    foreach ($attributes as $name => $attr) {
-                        $htmlAttributes[] = $name . '="'. $attr->value . '"';
-                    }
-                    
-                    while ($attributes->length > 0) {
-                        $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
-                    }
-                    
-                    $header .= "<html " . implode(' ', $htmlAttributes) . ">\n";
-                    $header .= "<head>\n";
-                    $header .= "<meta charset=\"utf-8\">\n";
-                    $header .= "</head>\n";
-                    
-                    $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
-                    if ($itemBodyElts->length > 0) {
-                        $body = $xml->saveXml($itemBodyElts->item(0));
-                        $body = substr($body, strlen('<div>'));
-                        $body = substr($body, 0, strlen('</div>') * -1);
-                        $body = "<body ${body}</body>\n";
-                    } else {
-                        $body = $xml->saveXml($xml->documentElement) . "\n";
-                    }
-                    
-                    $footer = "</html>\n";
-                }
+        $doc = new XmlDocument();
+        $doc->load($source);
+        
+        $xml = $renderer->render($doc->getDocumentComponent());
+        $xml->formatOutput = true;
+        
+        $header = "<!doctype html>\n";
+        $xpath = new DOMXPath($xml);
+        $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
+        
+        if ($assessmentItemElts->length > 0) {
+            $htmlAttributes = array();
+    
+            // Take the content of <assessmentItem> and put it into <html>.
+            $attributes = $assessmentItemElts->item(0)->attributes;
+            foreach ($attributes as $name => $attr) {
+                $htmlAttributes[] = $name . '="'. $attr->value . '"';
+            }
+    
+            while ($attributes->length > 0) {
+                $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
+            }
+    
+            $header .= "<html " . implode(' ', $htmlAttributes) . ">\n";
+            $header .= "<head>\n";
+            $header .= "<meta charset=\"utf-8\">\n";
+            $header .= "</head>\n";
+    
+            $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
+            if ($itemBodyElts->length > 0) {
+                $body = $xml->saveXml($itemBodyElts->item(0));
+                $body = substr($body, strlen('<div>'));
+                $body = substr($body, 0, strlen('</div>') * -1);
+                $body = "<body ${body}</body>\n";
             } else {
-                $header .= "<html>\n";
-                $header .= "<head>\n";
-                $header .= "<meta charset=\"utf-8\">\n";
-                $header .= "</head>\n";
-                $header .= "<body>\n";
-                
-                $footer = "</body>\n";
-                $footer .= "</html>\n";
-                
                 $body = $xml->saveXml($xml->documentElement) . "\n";
             }
-            
-            echo "{$header}{$body}{$footer}";
-            exit(self::EXIT_SUCCESS);
+        
+            $footer = "</html>\n";
+        }
+        
+        $this->out("{$header}{$body}{$footer}", false);
+    }
+    
+    /**
+     * Run the rendering behaviour related to the "XHTML" flavour.
+     * 
+     * @param XhtmlRenderingEngine $engine
+     */
+    private function runXhtml(XhtmlRenderingEngine $engine) {
+        $arguments = $this->getArguments();
+        
+        $renderer = $this->instantiateEngine();
+        $source = $arguments['source'];
+        $profile = $arguments['flavour'];
+        
+        $doc = new XmlDocument();
+        $doc->load($source);
+        
+        $xml = $renderer->render($doc->getDocumentComponent());
+        $xml->formatOutput = true;
+        
+        $header = "<!doctype html>\n";
+        $header .= "<html>\n";
+        $header .= "<head>\n";
+        $header .= "<meta charset=\"utf-8\">\n";
+        $header .= "</head>\n";
+        $header .= "<body>\n";
+    
+        $footer = "</body>\n";
+        $footer .= "</html>\n";
+    
+        $body = $xml->saveXml($xml->documentElement) . "\n";
+        
+        $this->out("{$header}{$body}{$footer}", false);
+    }
+    
+    private function instantiateEngine() {
+        $arguments = $this->getArguments();
+        switch (strtolower($arguments['flavour'])) {
+            case 'aqti':
+                return new AqtiRenderingEngine();
+                break;
+                
+            case 'xhtml':
+                return new XhtmlRenderingEngine();
+                break;
         }
     }
 }
