@@ -21,13 +21,13 @@
  */
 namespace qtism\cli;
 
-use qtism\data\storage\xml\XmlDocument;
-use qtism\data\storage\xml\Utils as XmlUtils;
-use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
-use \DOMXPath;
+use cli\Arguments;
 
 /**
  * The main class of the Command Line Interface.
+ * 
+ * The Cli class represents a CLI Module (e.g. render, validate, ...) that will be triggered
+ * through the command line.
  * 
  * Some components of this class are inspired by Sebastian Bergmann's PHPUnit command line (BSD-3-Clause). 
  * Thanks to him for his great devotion to the PHP community.
@@ -35,10 +35,19 @@ use \DOMXPath;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Cli
+abstract class Cli
 {
     const EXIT_SUCCESS = 0;
     const EXIT_FAILURE = 1;
+    
+    /**
+     * An Arguments object (from php-cli-tools) representing the input
+     * arguments of the CLI module.
+     * 
+     * @var \cli\Arguments
+     * @see https://github.com/wp-cli/php-cli-tools The PHP CLI Tools github repository.
+     */
+    private $arguments;
     
     /**
      * Main CLI entry point.
@@ -47,89 +56,65 @@ class Cli
     {
         $cli = new static();
         
-        return $cli->run($_SERVER['argv']);
+        // Initialize arguments from factory method.
+        $arguments = $cli->setupArguments();
+        $arguments->parse();
+        $cli->setArguments($arguments);
+        
+        return $cli->run();
     }
     
     /**
-     * Run the Command Line Interface for a given set of arguments.
-     * 
-     * @param array $argv The Command Line Arguments.
+     * Run the Command Line Interface.
      */
-    protected function run(array $argv)
+    abstract protected function run();
+    
+    /**
+     * Setup the arguments of the CLI Module.
+     * 
+     * @return \cli\Arguments An Arguments object (from php-cli-tools).
+     * @see https://github.com/wp-cli/php-cli-tools The PHP CLI Tools github repository.
+     */
+    abstract protected function setupArguments();
+    
+    /**
+     * Set the parsed arguments to the CLI Module.
+     * 
+     * @param cli\Arguments $arguments An Arguments object from php-cli-tools.
+     */
+    private function setArguments(Arguments $arguments)
     {
-        $this->runRender($argv);
-        exit(self::EXIT_SUCCESS);
+        $this->arguments = $arguments;
     }
     
-    private function runRender(array $argv)
+    /**
+     * Get the parsed arguments of the current CLI Module.
+     * 
+     * @return \cli\Arguments An Arguments object from php-cli-tools.
+     */
+    protected function getArguments()
     {
-        $renderer = new XhtmlRenderingEngine();
-        $source = $argv[2];
-        $profile = (isset($argv[3]) === true) ? $argv[3] : 'default';
-        
-        if (is_readable($source) === true) {
-            $doc = new XmlDocument();
-            $doc->load($source);
-            
-            $xml = $renderer->render($doc->getDocumentComponent());
-            $xml->formatOutput = true;
-            
-            $header = "<!doctype html>\n";
-            
-            
-            if (strtolower($profile) === 'aqti') {
-                $xpath = new DOMXPath($xml);
-                $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
-                if ($assessmentItemElts->length > 0) {
-                    $htmlAttributes = array();
-                    
-                    // Take the content of <assessmentItem> and put it into <html>.
-                    $attributes = $assessmentItemElts->item(0)->attributes;
-                    foreach ($attributes as $name => $attr) {
-                        $htmlAttributes[] = $name . '="'. $attr->value . '"';
-                    }
-                    
-                    while ($attributes->length > 0) {
-                        $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
-                    }
-                    
-                    $header .= "<html " . implode(' ', $htmlAttributes) . ">\n";
-                    $header .= "<head>\n";
-                    $header .= "<meta charset=\"utf-8\">\n";
-                    $header .= "</head>\n";
-                    
-                    $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
-                    if ($itemBodyElts->length > 0) {
-                        $body = $xml->saveXml($itemBodyElts->item(0));
-                        $body = substr($body, strlen('<div>'));
-                        $body = substr($body, 0, strlen('</div>') * -1);
-                        $body = "<body ${body}</body>\n";
-                    } else {
-                        $body = $xml->saveXml($xml->documentElement) . "\n";
-                    }
-                    
-                    $footer = "</html>\n";
-                }
-            } else {
-                $header .= "<html>\n";
-                $header .= "<head>\n";
-                $header .= "<meta charset=\"utf-8\">\n";
-                $header .= "</head>\n";
-                $header .= "<body>\n";
-                
-                $footer = "</body>\n";
-                $footer .= "</html>\n";
-                
-                $body = $xml->saveXml($xml->documentElement) . "\n";
-            }
-            
-            echo "{$header}{$body}{$footer}";
-        }
+        return $this->arguments;
     }
     
-    private function showError($message)
+    /**
+     * Show an error message as a single line.
+     * 
+     * @param string $message The error message.
+     */
+    protected function error($message)
     {
         echo "${message}\n";
+    }
+    
+    /**
+     * Show an error message as a single line and return a non zero exit status.
+     * 
+     * @param string $message The error message.
+     */
+    protected function fail($message)
+    {
+        $this->error($message);
         exit(self::EXIT_FAILURE);
     }
 }

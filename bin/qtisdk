@@ -1,5 +1,9 @@
 #!/usr/bin/env php
 <?php
+use qtism\cli\Cli;
+use qtism\cli\Render;
+use cli as CliTools;
+
 if (!ini_get('date.timezone')) {
     ini_set('date.timezone', 'UTC');
 }
@@ -17,12 +21,23 @@ if (!defined('QTISDK_COMPOSER_INSTALL')) {
         'wget http://getcomposer.org/composer.phar' . PHP_EOL .
         'php composer.phar install' . PHP_EOL
     );
-    die(1);
+    exit(Cli::EXIT_FAILURE);
 }
 
 require QTISDK_COMPOSER_INSTALL;
 
-use qtism\cli\Cli;
+// Enable colors if supported.
+CliTools\Colors::enable(false);
 
 // Execute main entry point.
-Cli::main();
+$availableModules = array('render');
+$requestedModuleName = $argv[1];
+$module = strtolower($requestedModuleName);
+switch ($module) {
+    case 'render':
+        Render::main();
+        break;
+    default:
+        CliTools\err("%RUnknown module '${requestedModuleName}'. Available modules are: " . implode(',', $availableModules) . ".%n");
+        exit(Cli::EXIT_FAILURE);
+}

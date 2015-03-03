@@ -24,7 +24,12 @@
 		"GPL-2.0"
 	],
 	"require" : {
-		"php" : ">=5.3.10"
+		"php" : ">=5.3.10",
+		"ext-dom": "*",
+		"ext-mbstring": "*",
+		"ext-json": "*",
+		"ext-date": "*",
+		"wp-cli/php-cli-tools": "0.10.3"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": ">=3.7.20",
