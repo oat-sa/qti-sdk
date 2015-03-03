@@ -126,13 +126,18 @@ class Render extends Cli
         $engine = $this->instantiateEngine();
         $arguments = $this->getArguments();
         
+        // Load XML Document.
+        $source = $arguments['source'];
+        $doc = new XmlDocument();
+        $doc->load($source);
+        
         switch (strtolower($arguments['flavour'])) {
             case 'aqti':
-                $this->runAqti($engine);
+                $this->runAqti($doc, $engine);
                 break;
                 
             case 'xhtml':
-                $this->runXhtml($engine);
+                $this->runXhtml($doc, $engine);
                 break;
         }
         
@@ -142,16 +147,13 @@ class Render extends Cli
     /**
      * Run the rendering behaviour related to the "aQTI" flavour.
      * 
+     * @param \qtism\data\storage\xml\XmlDocument $doc the QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\aqti\AqtiRenderingEngine $renderer
      */
-    private function runAqti(AqtiRenderingEngine $renderer) {
+    private function runAqti(XmlDocument $doc, AqtiRenderingEngine $renderer) {
         $arguments = $this->getArguments();
-        $source = $arguments['source'];
         $profile = $arguments['flavour'];
-        
-        $doc = new XmlDocument();
-        $doc->load($source);
-        
+
         $xml = $renderer->render($doc->getDocumentComponent());
         $xml->formatOutput = true;
         
@@ -206,15 +208,12 @@ class Render extends Cli
     /**
      * Run the rendering behaviour related to the "XHTML" flavour.
      * 
+     * @param \qtism\data\storage\xml\XmlDocument $doc The QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine $renderer
      */
-    private function runXhtml(XhtmlRenderingEngine $renderer) {
+    private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer) {
         $arguments = $this->getArguments();
-        $source = $arguments['source'];
         $profile = $arguments['flavour'];
-        
-        $doc = new XmlDocument();
-        $doc->load($source);
         
         $xml = $renderer->render($doc->getDocumentComponent());
         $xml->formatOutput = true;
