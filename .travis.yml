@@ -7,7 +7,7 @@ php:
   - 5.6
   
 before_script:
-  - composer install --dev --no-interaction
+  - composer install --no-interaction
 
 script: 
   - mkdir -p build/logs
