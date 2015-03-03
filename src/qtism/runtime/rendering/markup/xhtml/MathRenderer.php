@@ -25,6 +25,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\storage\xml\Utils;
 use qtism\runtime\rendering\RenderingException;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 use \RuntimeException;
@@ -38,6 +39,43 @@ use \RuntimeException;
 class MathRenderer extends ExternalQtiComponentRenderer
 {
     /**
+     * Whether to embed the resulting output into the MathML namespace.
+     */
+    private $namespaceOutput = true;
+    
+    /**
+     * Create a MathRenderer object.
+     * 
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
+     * @param boolean $namespace Whether to embed the resulting output into the MathML namespace.
+     */
+    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
+    {
+        parent::__construct($renderingEngine);
+        $this->setNamespaceOutput($namespaceOutput);
+    }
+    
+    /**
+     * Set whether the resulting output must be embedded in the MathML namespace.
+     * 
+     * @param boolean $namespaceOutput
+     */
+    public function setNamespaceOutput($namespaceOutput)
+    {
+        $this->namespaceOutput = $namespaceOutput;
+    }
+    
+    /**
+     * Wheter the resulting output must be embedded in the MathML namespace.
+     * 
+     * @return boolean
+     */
+    public function mustNamespaceOutput()
+    {
+        return $this->namespaceOutput;
+    }
+    
+    /**
      * @see \qtism\runtime\rendering\markup\xhtml\ExternalQtiComponentRenderer::appendChildren()
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
@@ -45,8 +83,13 @@ class MathRenderer extends ExternalQtiComponentRenderer
         try {
             $dom = $component->getXml();
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
+            $nodeNamespaceUri = $node->namespaceURI;
             $node = Utils::anonimizeElement($node);
-            $node->setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
+            
+            if ($this->mustNamespaceOutput() === true) {
+                $node->setAttribute('xmlns', $nodeNamespaceUri);
+            }
+            
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
             $msg = "An error occured while rendering the XML content of the 'MathML' external component.";

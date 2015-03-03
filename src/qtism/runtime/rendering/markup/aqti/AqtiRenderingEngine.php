@@ -24,6 +24,7 @@
 namespace qtism\runtime\rendering\markup\aqti;
 
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
+use qtism\runtime\rendering\markup\xhtml\MathRenderer;
 
 /**
  * The aQTI Rendering Engine.
@@ -40,5 +41,9 @@ class AqtiRenderingEngine extends XhtmlRenderingEngine
     public function __construct()
     {
         parent::__construct();
+        
+        // Register the MathRenderer to make it render
+        // MathML without namespacing.
+        $this->registerRenderer('math', new MathRenderer(null, false));
     }
 }
