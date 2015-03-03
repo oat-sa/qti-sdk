@@ -252,6 +252,6 @@ abstract class Cli
     protected function isVerbose()
     {
         $arguments = $this->getArguments();
-        return $this->arguments['verbose'];
+        return $this->arguments['verbose'] === true;
     }
 }

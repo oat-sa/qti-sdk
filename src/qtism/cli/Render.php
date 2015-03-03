@@ -46,6 +46,7 @@ class Render extends Cli
     {
         $arguments = new Arguments(array('strict' => false));
         
+        // -- Options
         // Flavour option.
         $arguments->addOption(
             array('flavour', 'f'),
@@ -61,6 +62,13 @@ class Render extends Cli
             array(
                 'description' => 'QTI XML source to be rendered'
             )
+        );
+        
+        // -- Flags
+        // Document option.
+        $arguments->addFlag(
+            array('document', 'd'),
+            'Embed the rendering into a document.'
         );
         
         return $arguments;
@@ -134,12 +142,10 @@ class Render extends Cli
     /**
      * Run the rendering behaviour related to the "aQTI" flavour.
      * 
-     * @param AqtiRenderingEngine $engine
+     * @param \qtism\runtime\rendering\markup\aqti\AqtiRenderingEngine $renderer
      */
-    private function runAqti(AqtiRenderingEngine $engine) {
+    private function runAqti(AqtiRenderingEngine $renderer) {
         $arguments = $this->getArguments();
-        
-        $renderer = $this->instantiateEngine();
         $source = $arguments['source'];
         $profile = $arguments['flavour'];
         
@@ -149,11 +155,17 @@ class Render extends Cli
         $xml = $renderer->render($doc->getDocumentComponent());
         $xml->formatOutput = true;
         
-        $header = "<!doctype html>\n";
+        $header = "";
+        $footer = "";
+        
+        if ($arguments['document'] === true) {
+            $header .= "<!doctype html>\n";
+        }
+        
         $xpath = new DOMXPath($xml);
         $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
         
-        if ($assessmentItemElts->length > 0) {
+        if ($assessmentItemElts->length > 0 && $arguments['document'] === true) {
             $htmlAttributes = array();
     
             // Take the content of <assessmentItem> and put it into <html>.
@@ -181,7 +193,11 @@ class Render extends Cli
                 $body = $xml->saveXml($xml->documentElement) . "\n";
             }
         
-            $footer = "</html>\n";
+            if ($arguments['document'] === true) {
+                $footer = "</html>\n";
+            }
+        } else {
+            $body = $xml->saveXml($xml->documentElement) . "\n";
         }
         
         $this->out("{$header}{$body}{$footer}", false);
@@ -190,12 +206,10 @@ class Render extends Cli
     /**
      * Run the rendering behaviour related to the "XHTML" flavour.
      * 
-     * @param XhtmlRenderingEngine $engine
+     * @param \qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine $renderer
      */
-    private function runXhtml(XhtmlRenderingEngine $engine) {
+    private function runXhtml(XhtmlRenderingEngine $renderer) {
         $arguments = $this->getArguments();
-        
-        $renderer = $this->instantiateEngine();
         $source = $arguments['source'];
         $profile = $arguments['flavour'];
         
@@ -205,21 +219,33 @@ class Render extends Cli
         $xml = $renderer->render($doc->getDocumentComponent());
         $xml->formatOutput = true;
         
-        $header = "<!doctype html>\n";
-        $header .= "<html>\n";
-        $header .= "<head>\n";
-        $header .= "<meta charset=\"utf-8\">\n";
-        $header .= "</head>\n";
-        $header .= "<body>\n";
-    
-        $footer = "</body>\n";
-        $footer .= "</html>\n";
+        $header = "";
+        $footer = "";
+        
+        if ($arguments['document'] === true) {
+            $header .= "<!doctype html>\n";
+            $header .= "<html>\n";
+            $header .= "<head>\n";
+            $header .= "<meta charset=\"utf-8\">\n";
+            $header .= "</head>\n";
+            $header .= "<body>\n";
+            
+            $footer = "</body>\n";
+            $footer .= "</html>\n";
+        }
     
         $body = $xml->saveXml($xml->documentElement) . "\n";
-        
         $this->out("{$header}{$body}{$footer}", false);
     }
     
+    /**
+     * Instantiate an appropriate Rendering Engine.
+     * 
+     * The instantiated Rendering Engine implementation will depend on the "flavour"
+     * CLI argument.
+     * 
+     * @return \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine
+     */
     private function instantiateEngine() {
         $arguments = $this->getArguments();
         switch (strtolower($arguments['flavour'])) {
