@@ -67,7 +67,7 @@ class Render extends Cli
         // -- Flags
         // Document option.
         $arguments->addFlag(
-            array('document'),
+            array('document', 'd'),
             'Embed the rendering into a document.'
         );
         

@@ -57,10 +57,11 @@ We are always looking for people to feed the project with:
 The QTI Software Development Kit enables you to transform XML serialized QTI files
 into their (X)HTML5 Goldilocks equivalent. The following shell command renders the
 `path/to/qti.xml` QTI file into an HTML5 document using the (X)HTML5 Golidlocks rendering 
-flavour with indentation formatting.
+flavour with indentation formatting. The rendering output (stdout) is redirected to the
+`/home/jerome/qti.html` file.
 
 ```shell
-./vendor/bin/qtisdk render -df --source path/to/qti.xml --flavour goldilocks
+./vendor/bin/qtisdk render -df --source path/to/qti.xml --flavour goldilocks > /home/jerome/qti.html
 ```
 
 For additionnal help and information, just call the help screen!
