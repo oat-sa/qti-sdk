@@ -135,7 +135,7 @@ class Render extends Cli
         // Load XML Document.
         $source = $arguments['source'];
         $doc = new XmlDocument();
-        $doc->load($source);
+        $doc->load($source, true);
         
         $renderingData = '';
         
