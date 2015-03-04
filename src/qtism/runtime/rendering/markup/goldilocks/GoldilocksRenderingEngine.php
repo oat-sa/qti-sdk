@@ -21,7 +21,7 @@
  *
  */
 
-namespace qtism\runtime\rendering\markup\aqti;
+namespace qtism\runtime\rendering\markup\goldilocks;
 
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\MathRenderer;
@@ -32,7 +32,7 @@ use qtism\runtime\rendering\markup\xhtml\MathRenderer;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AqtiRenderingEngine extends XhtmlRenderingEngine
+class GoldilocksRenderingEngine extends XhtmlRenderingEngine
 {
     /**
      * Create a new AqtiRenderingEngine object.

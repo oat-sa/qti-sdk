@@ -24,7 +24,7 @@ namespace qtism\cli;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
-use qtism\runtime\rendering\markup\aqti\AqtiRenderingEngine;
+use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use cli\Arguments as Arguments;
 use \DOMXPath;
 
@@ -32,7 +32,7 @@ use \DOMXPath;
  * Render CLI Module.
  * 
  * This CLI Module enables you to render QTI XML files in various flavours
- * e.g. XHTML or aQTI.
+ * e.g. XHTML or Goldilocks.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -103,7 +103,7 @@ class Render extends Cli
         
         $knownFlavours = array(
             'xhtml',
-            'aqti'                
+            'goldilocks'
         );
         
         if (in_array(strtolower($arguments['flavour']), $knownFlavours) === false) {
@@ -132,8 +132,8 @@ class Render extends Cli
         $doc->load($source);
         
         switch (strtolower($arguments['flavour'])) {
-            case 'aqti':
-                $this->runAqti($doc, $engine);
+            case 'goldilocks':
+                $this->runGoldilocks($doc, $engine);
                 break;
                 
             case 'xhtml':
@@ -145,12 +145,12 @@ class Render extends Cli
     }
     
     /**
-     * Run the rendering behaviour related to the "aQTI" flavour.
+     * Run the rendering behaviour related to the "Goldilocks" flavour.
      * 
      * @param \qtism\data\storage\xml\XmlDocument $doc the QTI XML document to be rendered.
-     * @param \qtism\runtime\rendering\markup\aqti\AqtiRenderingEngine $renderer
+     * @param \qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine $renderer
      */
-    private function runAqti(XmlDocument $doc, AqtiRenderingEngine $renderer) {
+    private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer) {
         $arguments = $this->getArguments();
         $profile = $arguments['flavour'];
 
@@ -248,8 +248,8 @@ class Render extends Cli
     private function instantiateEngine() {
         $arguments = $this->getArguments();
         switch (strtolower($arguments['flavour'])) {
-            case 'aqti':
-                return new AqtiRenderingEngine();
+            case 'goldilocks':
+                return new GoldilocksRenderingEngine();
                 break;
                 
             case 'xhtml':

@@ -55,8 +55,14 @@ We are always looking for people to feed the project with:
 ## QTI Rendering
 
 The QTI Software Development Kit enables you to transform XML serialized QTI files
-into their (X)HTML5 equivalent. Do it with the following shell command:
+into their (X)HTML5 Goldilocks equivalent. Do it with the following shell command:
 
 ```shell
-./vendor/bin/qtisdk render --source /path/to/qti.xml --flavour aqti
+./vendor/bin/qtisdk render --source /path/to/qti.xml --flavour goldilocks
+```
+
+For additionnal help and information, just call the help screen!
+
+```shell
+./vendor/bin/qtisdk render --help
 ```
