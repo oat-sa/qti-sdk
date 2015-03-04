@@ -159,7 +159,8 @@ class Render extends Cli
      * @param \qtism\data\storage\xml\XmlDocument $doc the QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine $renderer
      */
-    private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer) {
+    private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer)
+    {
         $arguments = $this->getArguments();
         $profile = $arguments['flavour'];
 
@@ -224,7 +225,8 @@ class Render extends Cli
      * @param \qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine $renderer
      * @return string The raw rendering data.
      */
-    private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer) {
+    private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer)
+    {
         $arguments = $this->getArguments();
         $profile = $arguments['flavour'];
         
@@ -262,7 +264,8 @@ class Render extends Cli
      * 
      * @return \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine
      */
-    private function instantiateEngine() {
+    private function instantiateEngine()
+    {
         $arguments = $this->getArguments();
         switch (strtolower($arguments['flavour'])) {
             case 'goldilocks':
