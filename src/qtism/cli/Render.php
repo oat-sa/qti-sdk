@@ -21,7 +21,9 @@
  */
 namespace qtism\cli;
 
+use qtism\common\utils\Exception as ExceptionUtils;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
@@ -93,9 +95,9 @@ class Render extends Cli
         } else {
             if (is_readable($source) === false) {
                 if (file_exists($source) === false) {
-                    $msg = "The QTI XML source file does not exist.";
+                    $msg = "The QTI file '${source}' does not exist.";
                 } else {
-                    $msg = "The QTI XML source file cannot be read. Check permissions.";
+                    $msg = "The QTI file '${source}' cannot be read. Check permissions.";
                 }
                 
                 $this->fail($msg);
@@ -135,22 +137,49 @@ class Render extends Cli
         // Load XML Document.
         $source = $arguments['source'];
         $doc = new XmlDocument();
-        $doc->load($source, true);
         
-        $renderingData = '';
-        
-        switch (strtolower($arguments['flavour'])) {
-            case 'goldilocks':
-                $renderingData = $this->runGoldilocks($doc, $engine);
-                break;
-                
-            case 'xhtml':
-                $renderingData = $this->runXhtml($doc, $engine);
-                break;
+        try {
+            $doc->load($source, true);
+            
+            $renderingData = '';
+            
+            switch (strtolower($arguments['flavour'])) {
+                case 'goldilocks':
+                    $renderingData = $this->runGoldilocks($doc, $engine);
+                    break;
+            
+                case 'xhtml':
+                    $renderingData = $this->runXhtml($doc, $engine);
+                    break;
+            }
+            
+            $this->out($renderingData, false);
+            $this->success("QTI XML file successfully rendered.");
+        } catch (XmlStorageException $e) {
+            switch ($e->getCode()) {
+                case XmlStorageException::READ:
+                    $msg = "An error occured while reading QTI file '${source}'.\nThe system returned the following error:\n";
+                    $msg .= ExceptionUtils::formatMessage($e);
+                    $this->fail($msg);
+                    break;
+                    
+                case XmlStorageException::XSD_VALIDATION:
+                    $msg = "The QTI file '${source}' is invalid against XML Schema.\nThe system returned the following error:\n";
+                    $msg .= ExceptionUtils::formatMessage($e);
+                    $this->fail($msg);
+                    break;
+                    
+                case XmlStorageException::VERSION:
+                    $msg = "The QTI version of file '${source}' could not be detected.";
+                    $this->fail($msg);
+                    break;
+                    
+                default:
+                    $msg = "An fatal error occured while reading QTI file '${source}'.";
+                    $this->fail($msg);
+                    break;
+            }
         }
-        
-        $this->out($renderingData, false);
-        $this->success("QTI XML file successfully rendered.");
     }
     
     /**
