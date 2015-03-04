@@ -248,7 +248,7 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
         } catch (Exception $e) {
             $msg = "An error occured while unreferencing file '${href}'.";
-            throw new XmlStorageException($msg, $e);
+            throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
 
@@ -271,7 +271,7 @@ class XmlCompactDocument extends XmlDocument
             return $doc->getDocumentComponent();
         } catch (XmlStorageException $e) {
             $msg = "An error occured while unreferencing file '${href}'.";
-            throw new XmlStorageException($msg);
+            throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
         }
     }
 
@@ -352,7 +352,7 @@ class XmlCompactDocument extends XmlDocument
                     $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
                 } catch (XmlStorageException $e) {
                     $msg = "An error occured while creating external rubrickBlock definition(s).";
-                    throw new XmlStorageException($msg, $e);
+                    throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
             }
         }

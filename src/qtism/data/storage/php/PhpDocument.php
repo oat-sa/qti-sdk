@@ -159,7 +159,7 @@ class PhpDocument extends QtiDocument
             file_put_contents($url, $stream->getBinary());
         } catch (StreamAccessException $e) {
             $msg = "An error occured while writing the PHP source code stream.";
-            throw new PhpStorageException($msg, 0, $e);
+            throw new PhpStorageException($msg, PhpStorageException::WRITE, $e);
         }
     }
 
@@ -173,7 +173,7 @@ class PhpDocument extends QtiDocument
     {
         if (is_readable($url) === false) {
             $msg = "The PHP document located at '${url}' is not readable or does not exist.";
-            throw new PhpStorageException($msg);
+            throw new PhpStorageException($msg, PhpStorageException::READ);
         }
 
         try {
@@ -182,7 +182,7 @@ class PhpDocument extends QtiDocument
             $this->setUrl($url);
         } catch (Exception $e) {
             $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
-            throw new PhpStorageException($msg, 0, $e);
+            throw new PhpStorageException($msg, PhpStorageException::UNKNOWN, $e);
         }
     }
 

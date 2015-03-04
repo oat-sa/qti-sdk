@@ -140,8 +140,14 @@ class XmlDocument extends QtiDocument
             $oldErrorConfig = libxml_use_internal_errors(true);
             $loadMethod = ($fromString === true) ? 'loadXML' : 'load';
             $doc = $this->getDomDocument();
+            
+            // pre-check to throw an appropriate exception when load from an empty string.
+            if ($loadMethod === 'loadXML' && empty($data) === true) {
+                $msg = "Cannot load QTI from an empty string.";
+                throw new XmlStorageException($msg, XmlStorageException::READ);
+            }
 
-            if (call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
+            if (@call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
 
                 // Infer the QTI version.
                 if ($fromString === false) {
@@ -151,8 +157,8 @@ class XmlDocument extends QtiDocument
                     if (($version = $this->inferVersion()) !== false) {
                         $this->setVersion($version);
                     } else {
-                        $msg = "Cannot infer QTI version. Is it well formed?";
-                        throw new XmlStorageException($msg);
+                        $msg = "Cannot infer QTI version. Check namespaces and schema locations in XML file.";
+                        throw new XmlStorageException($msg, XmlStorageException::VERSION);
                     }
                 } else {
                     // When loaded from a string, the version to be used
@@ -173,12 +179,12 @@ class XmlDocument extends QtiDocument
                 } catch (UnmarshallingException $e) {
                     $line = $e->getDOMElement()->getLineNo();
                     $msg = "An error occured while processing QTI-XML at line ${line}.";
-                    throw new XmlStorageException($msg, $e);
+                    throw new XmlStorageException($msg, XmlStorageException::READ, $e);
                 } catch (MarshallerNotFoundException $e) {
                     $version = $this->getVersion();
                     $problematicQtiClassName = $e->getQtiClassName();
                     $msg = "'${problematicQtiClassName}' components are not supported in QTI version '${version}'.";
-                    throw new XmlStorageException($msg, $e);
+                    throw new XmlStorageException($msg, XmlStorageException::VERSION, $e);
                 }
             } else {
                 $libXmlErrors = libxml_get_errors();
@@ -188,12 +194,12 @@ class XmlDocument extends QtiDocument
                 libxml_use_internal_errors($oldErrorConfig);
 
                 $msg = "An internal error occured while parsing QTI-XML:\n${formattedErrors}";
-                throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
+                throw new XmlStorageException($msg, XmlStorageException::READ, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } catch (DOMException $e) {
             $line = $e->getLine();
             $msg = "An error occured while parsing QTI-XML at line ${line}.";
-            throw new XmlStorageException($msg, $e);
+            throw new XmlStorageException($msg, XmlStorageException::READ, $e);
         }
     }
 
@@ -271,10 +277,10 @@ class XmlDocument extends QtiDocument
 
                 if (empty($uri) === false) {
 
-                    if ($this->getDomDocument()->save($uri) === false) {
+                    if (@$this->getDomDocument()->save($uri) === false) {
                         // An error occured while saving.
-                        $msg = "An internal error occured while saving QTI-XML file at '${uri}'.";
-                        throw new XmlStorageException($msg);
+                        $msg = "An error occured while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
+                        throw new XmlStorageException($msg, XmlStorageException::WRITE);
 
                         $this->setUrl($uri);
                     }
@@ -284,24 +290,21 @@ class XmlDocument extends QtiDocument
                     } else {
                         // An error occured while saving.
                         $msg = "An internal error occured while exporting QTI-XML as string.";
-                        throw new XmlStorageException($msg);
+                        throw new XmlStorageException($msg, XmlStorageException::WRITE);
                     }
                 }
             } catch (DOMException $e) {
                 $msg = "An internal error occured while saving QTI-XML data.";
-                throw new XmlStorageException($msg, $e);
-            } catch (XmlStorageException $e) {
-                $msg = "An error occured before saving QTI-XML data. Make sure the implementation of XmlDocument::beforeSave() is correct.";
-                throw new XmlStorageException($msg, $e);
+                throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
             } catch (MarshallerNotFoundException $e) {
                 $version = $this->getVersion();
                 $problematicQtiClassName = $e->getQtiClassName();
                 $msg = "'${problematicQtiClassName}' components are not supported in QTI version '${version}'.";
-                throw new XmlStorageException($msg, $e);
+                throw new XmlStorageException($msg, XmlStorageException::VERSION, $e);
             }
         } else {
             $msg = "The Assessment Document cannot be saved. No AssessmentTest object provided.";
-            throw new XmlStorageException($msg);
+            throw new XmlStorageException($msg, XmlStorageException::WRITE);
         }
     }
 
@@ -331,8 +334,8 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "The document could not be validated with schema '${filename}':\n${formattedErrors}";
-                throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
+                $msg = "The document could not be validated with XML Schema:\n${formattedErrors}";
+                throw new XmlStorageException($msg, XmlStorageException::XSD_VALIDATION, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } else {
             $msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
