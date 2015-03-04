@@ -363,4 +363,15 @@ class XmlDocumentTest extends QtiSmTestCase {
             </div>'
         );
     }
+    
+    public function testInvalidAgainstXMLSchema()
+    {
+        $expectedMsg = "The document could not be validated with XML Schema:\n";
+        $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::XSD_VALIDATION);
+        
+        $uri = self::samplesDir() . 'invalid/xsdinvalid.xml';
+        $doc = new XmlDocument('2.1.0');
+        $doc->load($uri, true);
+    }
 }
