@@ -87,10 +87,10 @@ abstract class Cli
         $arguments = $cli->setupArguments();
         
         // Add help flag.
-        $arguments->addFlag(array('help', 'h'), 'Show help screen');
+        $arguments->addFlag(array('help', 'h'), 'Show help screen.');
         
         // Add verbose flag.
-        $arguments->addFlag(array('verbose', 'v'), 'Verbose mode');
+        $arguments->addFlag(array('verbose', 'v'), 'Verbose mode.');
         
         // Parse arguments and provide to implementation.
         $arguments->parse();

@@ -49,18 +49,18 @@ class Render extends Cli
         // -- Options
         // Flavour option.
         $arguments->addOption(
-            array('flavour', 'f'),
+            array('flavour'),
             array(
                 'default' => 'xhtml',
-                'description' => 'Rendering flavour'
+                'description' => 'Rendering flavour.'
             )
         );
         
         // Source option.
         $arguments->addOption(
-            array('source', 's'),
+            array('source'),
             array(
-                'description' => 'QTI XML source to be rendered'
+                'description' => 'QTI XML source to be rendered.'
             )
         );
         
