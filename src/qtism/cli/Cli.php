@@ -42,6 +42,11 @@ use cli as CliTools;
  * If one or more command line arguments is missing/invalid, Cli implementations will display
  * an appropriate error message and return a zero exit status.
  * 
+ * To make CLI Module commands more homogeneous, they will respect the following rules:
+ * 
+ * * Flags have a long name, and a unique alias (e.g. --format, -f).
+ * * Options have a long name only (e.g. --source).
+ * 
  * Some components of this class are inspired by Sebastian Bergmann's PHPUnit command line (BSD-3-Clause). 
  * Thanks to him for his great devotion to the PHP community.
  * 
