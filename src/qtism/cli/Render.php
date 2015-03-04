@@ -79,6 +79,12 @@ class Render extends Cli
             'Format the rendering output with indentation.'
         );
         
+        // Novalidate option.
+        $arguments->addFlag(
+            array('novalidate', 'n'),
+            'Do not validate QTI XML source.'                
+        );
+        
         return $arguments;
     }
     
@@ -137,9 +143,10 @@ class Render extends Cli
         // Load XML Document.
         $source = $arguments['source'];
         $doc = new XmlDocument();
+        $validate = !($arguments['novalidate'] === true);
         
         try {
-            $doc->load($source, true);
+            $doc->load($source, $validate);
             
             $renderingData = '';
             
