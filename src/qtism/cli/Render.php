@@ -131,16 +131,19 @@ class Render extends Cli
         $doc = new XmlDocument();
         $doc->load($source);
         
+        $renderingData = '';
+        
         switch (strtolower($arguments['flavour'])) {
             case 'goldilocks':
-                $this->runGoldilocks($doc, $engine);
+                $renderingData = $this->runGoldilocks($doc, $engine);
                 break;
                 
             case 'xhtml':
-                $this->runXhtml($doc, $engine);
+                $renderingData = $this->runXhtml($doc, $engine);
                 break;
         }
         
+        $this->out($renderingData, false);
         $this->success("QTI XML file successfully rendered.");
     }
     
@@ -210,6 +213,7 @@ class Render extends Cli
      * 
      * @param \qtism\data\storage\xml\XmlDocument $doc The QTI XML document to be rendered.
      * @param \qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine $renderer
+     * @return string The raw rendering data.
      */
     private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer) {
         $arguments = $this->getArguments();
@@ -234,7 +238,8 @@ class Render extends Cli
         }
     
         $body = $xml->saveXml($xml->documentElement) . "\n";
-        $this->out("{$header}{$body}{$footer}", false);
+        
+        return "{$header}{$body}{$footer}";
     }
     
     /**
