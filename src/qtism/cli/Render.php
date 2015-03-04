@@ -67,8 +67,14 @@ class Render extends Cli
         // -- Flags
         // Document option.
         $arguments->addFlag(
-            array('document', 'd'),
+            array('document'),
             'Embed the rendering into a document.'
+        );
+        
+        // Format option.
+        $arguments->addFlag(
+            array('format', 'f'),
+            'Format the rendering output with indentation.'
         );
         
         return $arguments;
@@ -158,7 +164,10 @@ class Render extends Cli
         $profile = $arguments['flavour'];
 
         $xml = $renderer->render($doc->getDocumentComponent());
-        $xml->formatOutput = true;
+        
+        if ($arguments['format'] === true) {
+            $xml->formatOutput = true;
+        }
         
         $header = "";
         $footer = "";
@@ -220,7 +229,10 @@ class Render extends Cli
         $profile = $arguments['flavour'];
         
         $xml = $renderer->render($doc->getDocumentComponent());
-        $xml->formatOutput = true;
+        
+        if ($arguments['format'] === true) {
+            $xml->formatOutput = true;
+        }
         
         $header = "";
         $footer = "";
