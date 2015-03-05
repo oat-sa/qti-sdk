@@ -202,12 +202,16 @@ class Render extends Cli
 
         $xml = $renderer->render($doc->getDocumentComponent());
         
+        $header = '';
+        $footer = '';
+        $indent = '';
+        $nl = '';
+        
         if ($arguments['format'] === true) {
             $xml->formatOutput = true;
+            $indent .= "\x20\x20";
+            $nl .= "\n";
         }
-        
-        $header = "";
-        $footer = "";
         
         if ($arguments['document'] === true) {
             $header .= "<!doctype html>\n";
@@ -229,29 +233,38 @@ class Render extends Cli
                 $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
             }
     
-            $header .= "<html " . implode(' ', $htmlAttributes) . ">\n";
-            $header .= "<head>\n";
-            $header .= "<meta charset=\"utf-8\">\n";
-            $header .= "</head>\n";
+            $header .= "<html " . implode(' ', $htmlAttributes) . ">${nl}";
+            $header .= "${indent}<head>${nl}";
+            $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
+            $header .= "${indent}</head>${nl}";
     
             $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
             if ($itemBodyElts->length > 0) {
                 $body = $xml->saveXml($itemBodyElts->item(0));
                 $body = substr($body, strlen('<div>'));
                 $body = substr($body, 0, strlen('</div>') * -1);
-                $body = "<body ${body}</body>\n";
+                $body = "<body ${body}</body>${nl}";
             } else {
-                $body = $xml->saveXml($xml->documentElement) . "\n";
+                $body = $xml->saveXml($xml->documentElement) . "${nl}";
             }
         
             if ($arguments['document'] === true) {
                 $footer = "</html>\n";
             }
         } else {
-            $body = $xml->saveXml($xml->documentElement) . "\n";
+            $body = $xml->saveXml($xml->documentElement) . "${nl}";
         }
         
-        $this->out("{$header}{$body}{$footer}", false);
+        // Indent body...
+        $indentBody = '';
+        foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
+            // do stuff with $line
+            $indentBody .= "${indent}${bodyLine}${nl}";
+        }
+        
+        $body = $indentBody;
+        
+        return "{$header}{$body}{$footer}";
     }
     
     /**
@@ -268,28 +281,41 @@ class Render extends Cli
         
         $xml = $renderer->render($doc->getDocumentComponent());
         
+        $header = '';
+        $footer = '';
+        $indent = '';
+        $nl = '';
+        
         if ($arguments['format'] === true) {
             $xml->formatOutput = true;
+            $indent .= "\x20\x20";
+            $nl .= "\n";
         }
         
-        $header = "";
-        $footer = "";
-        
         if ($arguments['document'] === true) {
-            $header .= "<!doctype html>\n";
-            $header .= "<html>\n";
-            $header .= "<head>\n";
-            $header .= "<meta charset=\"utf-8\">\n";
-            $header .= "</head>\n";
-            $header .= "<body>\n";
+            $header .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+            $header .= "<html>${nl}";
+            $header .= "${indent}<head>${nl}";
+            $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
+            $header .= "${indent}</head>${nl}";
+            $header .= "${indent}<body>${nl}";
             
-            $footer = "</body>\n";
+            $footer = "${indent}</body>${nl}";
             $footer .= "</html>\n";
         }
     
-        $body = $xml->saveXml($xml->documentElement) . "\n";
+        $body = $xml->saveXml($xml->documentElement) . "${nl}";
         
-        return "{$header}{$body}{$footer}";
+        // Indent body...
+        $indentBody = '';
+        foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
+            // do stuff with $line
+            $indentBody .= "${indent}${indent}${bodyLine}${nl}";
+        }
+        
+        $body = $indentBody;
+        
+        return "{$header}{$indentBody}{$footer}";
     }
     
     /**
