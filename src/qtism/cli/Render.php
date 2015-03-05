@@ -221,21 +221,24 @@ class Render extends Cli
         $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
         
         if ($assessmentItemElts->length > 0 && $arguments['document'] === true) {
+            $rootComponent = $doc->getDocumentComponent();
             $htmlAttributes = array();
     
             // Take the content of <assessmentItem> and put it into <html>.
             $attributes = $assessmentItemElts->item(0)->attributes;
             foreach ($attributes as $name => $attr) {
-                $htmlAttributes[] = $name . '="'. $attr->value . '"';
+                $htmlAttributes[$name] = $name . '="'. XmlUtils::escapeXmlSpecialChars($attr->value, true) . '"';
             }
     
             while ($attributes->length > 0) {
                 $assessmentItemElts->item(0)->removeAttribute($attributes->item(0)->name);
             }
-    
+            
             $header .= "<html " . implode(' ', $htmlAttributes) . ">${nl}";
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
+            $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";
+            
             $header .= "${indent}</head>${nl}";
     
             $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
@@ -257,6 +260,11 @@ class Render extends Cli
         
         // Indent body...
         $indentBody = '';
+        
+        if ($arguments['document'] === null) {
+            $indent = '';
+        }
+        
         foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
             // do stuff with $line
             $indentBody .= "${indent}${bodyLine}${nl}";
@@ -293,10 +301,13 @@ class Render extends Cli
         }
         
         if ($arguments['document'] === true) {
+            $rootComponent = $doc->getDocumentComponent();
+            
             $header .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
             $header .= "<html>${nl}";
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
+            $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";
             $header .= "${indent}</head>${nl}";
             $header .= "${indent}<body>${nl}";
             
@@ -308,6 +319,11 @@ class Render extends Cli
         
         // Indent body...
         $indentBody = '';
+        
+        if ($arguments['document'] === null) {
+            $indent = '';
+        }
+        
         foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
             // do stuff with $line
             $indentBody .= "${indent}${indent}${bodyLine}${nl}";

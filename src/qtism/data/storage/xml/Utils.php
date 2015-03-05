@@ -250,4 +250,33 @@ class Utils
             }
         }
     }
+    
+    /**
+     * Escape XML Special characters from a given string.
+     * 
+     * The list below describe each escaped character and its replacement.
+     * 
+     * * " --> &quot;
+     * * ' --> &apos;
+     * * < --> &lt;
+     * * > --> $gt;
+     * * & --> &amp;
+     * 
+     * @param string $string An input string.
+     * @param boolean $isAttribute Whether or not to escape ', >, < which do not have to be escaped in attributes.
+     * @return string An escaped string.
+     */
+    static public function escapeXmlSpecialChars($string, $isAttribute = false)
+    {
+        $fullSearch = array('"', "'", '<', '>', '&');
+        $fullReplace = array('&quot;', '&apos;', '&lt;', '&gt;', '&amp;');
+        
+        $attrSearch = array('"', "&");
+        $attrReplace = array('&quot;', '&amp;');
+        
+        $search = ($isAttribute === false) ? $fullSearch : $attrSearch;
+        $replace = ($isAttribute === false) ? $fullReplace : $attrReplace;
+        
+        return str_replace($search, $replace, $string);
+    }
 }
