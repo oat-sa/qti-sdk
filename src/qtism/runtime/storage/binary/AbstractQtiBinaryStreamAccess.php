@@ -24,9 +24,6 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\runtime\common\TemplateVariable;
-
-use qtism\data\state\TemplateDeclaration;
-
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\common\datatypes\Scalar;
@@ -649,7 +646,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     } elseif ($var instanceof ResponseVariable) {
                         $variableDeclaration = $itemResponses[$varId];
                         $varNature = 1;
-                    } elseif ($var instanceof TemplateDeclaration) {
+                    } elseif ($var instanceof TemplateVariable) {
                         $variableDeclaration = $itemTemplates[$varId];
                         $varNature = 2;
                     }

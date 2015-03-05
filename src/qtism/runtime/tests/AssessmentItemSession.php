@@ -24,7 +24,6 @@
 namespace qtism\runtime\tests;
 
 use qtism\runtime\common\TemplateVariable;
-
 use qtism\data\ShowHide;
 use qtism\common\datatypes\Scalar;
 use qtism\common\utils\Time;

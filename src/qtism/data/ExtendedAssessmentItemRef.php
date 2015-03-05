@@ -392,6 +392,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
             parent::getComponents()->getArrayCopy(),
             $this->getResponseDeclarations()->getArrayCopy(),
             $this->getOutcomeDeclarations()->getArrayCopy(),
+            $this->getTemplateDeclarations()->getArrayCopy(),
             $this->getModalFeedbackRules()->getArrayCopy()
         );
 
