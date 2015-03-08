@@ -160,7 +160,13 @@ class Render extends Cli
                     break;
             }
             
-            $this->out($renderingData, false);
+            // Add final new line?
+            $nl = false;
+            if ($arguments['document'] !== true && $arguments['format'] !== true) {
+                $nl = true;
+            }
+            
+            $this->out($renderingData, $nl);
             $this->success("QTI XML file successfully rendered.");
         } catch (XmlStorageException $e) {
             switch ($e->getCode()) {
