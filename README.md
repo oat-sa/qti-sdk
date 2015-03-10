@@ -18,9 +18,9 @@ version will be released "when it's done".__
 * Complete QTI Rule Engine Support
 * Custom Operator Hooks through PSR-0
 * [Wilbert Kraan's](http://blogs.cetis.ac.uk/wilbert/2013/11/06/using-standards-to-make-assessment-in-e-textbooks-scalable-engaging-but-robust) / [Steve Lay's](http://swl10.blogspot.co.uk/2013/09/transforming-qti-v2-into-xhtml-5.html) Goldilocks Rendering
-* CSS Parser for direct QTI Information Model mapping
-* QTI Item Sessions (with lightning fast binary persistence)
-* QTI Test Sessions (with lightning fast binary persistence)
+* CSS Parser for direct QTI Information Model mapping at rendering time
+* Item Sessions (with lightning fast binary persistence)
+* Test Sessions (with lightning fast binary persistence)
 * Nice and Clean API for QTI Document manipulation/traversal
 * PreConditions and Branching
 * Response/Outcome Processing
