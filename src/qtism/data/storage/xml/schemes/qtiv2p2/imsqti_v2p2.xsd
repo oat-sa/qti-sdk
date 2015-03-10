@@ -8,7 +8,7 @@
      xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-     version="IMS QTI 2.2.0"
+     version="IMS QTI ASI 2.2.0"
      elementFormDefault="qualified"
      attributeFormDefault="unqualified">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../w3/xml.xsd" />
@@ -23,7 +23,7 @@
             XSD Data File Information
             =========================
             Author:         Colin Smythe (IMS Global UK) and Mark McKell (IMS, Global, USA)
-            Date:           1st February, 2015
+            Date:           1st March, 2015
             Version:        2.2
             Status:         Final Release
             Description:    This is the Platform Specific Model for the IMS QTIv2.2 specification Information Model. It is from this model that the corresponding XSD is generated.
@@ -46,7 +46,7 @@
                             made any effort to identify any such rights. Information on IMS procedures with respect to rights in IMS 
                             specifications can be found at the IMS Global Intellectual Property Rights web page: http://www.imsglobal.org/ipr/imsipr_policyFinal.pdf.
 
-                            Copyright (c) IMS Global Learning Consortium 1999-2014. All Rights Reserved.
+                            Copyright (c) IMS Global Learning Consortium 1999-2015. All Rights Reserved.
 
                             Use of this specification to develop products or services is governed by the license with IMS found on the IMS website: http://www.imsglobal.org/license.html.
 
@@ -73,7 +73,7 @@
             Release:          1.0
             Date:             31st July, 2014
             Autogen Engineer: Colin Smythe (IMS Global, UK)
-            Autogen Date:     2014-12-29
+            Autogen Date:     2015-02-20
 
             IMS Global Auto-generation Binding Tool-kit (I-BAT)
             ===================================================
@@ -84,7 +84,7 @@
             are contained in the IMS Global "I-BAT" documentation available at the IMS Global web-site:
             http://www.imsglobal.org.
 
-            Tool Copyright:  2012-2014  (c) IMS Global Learning Consortium Inc.  All Rights Reserved.
+            Tool Copyright:  2012-2015  (c) IMS Global Learning Consortium Inc.  All Rights Reserved.
         </xs:documentation>
     </xs:annotation>
 
@@ -779,6 +779,10 @@
         <xs:attribute name="label" use="optional" type="xs:normalizedString" />
     </xs:attributeGroup>
 
+    <xs:attributeGroup name="language.AssessmentItem.Attr">
+        <xs:attribute ref="xml:lang" use="optional" />
+    </xs:attributeGroup>
+
     <xs:attributeGroup name="timeDependent.AssessmentItem.Attr">
         <xs:attribute name="timeDependent" use="required" type="xs:boolean" />
     </xs:attributeGroup>
@@ -793,10 +797,6 @@
 
     <xs:attributeGroup name="toolVersion.AssessmentItem.Attr">
         <xs:attribute name="toolVersion" use="optional" type="xs:normalizedString" />
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="xmllang.AssessmentItem.Attr">
-        <xs:attribute ref="xml:lang" use="optional" />
     </xs:attributeGroup>
 
     <xs:attributeGroup name="category.AssessmentItemRef.Attr">
@@ -1980,7 +1980,7 @@
         <xs:attribute name="label" use="optional" type="xs:normalizedString" />
     </xs:attributeGroup>
 
-    <xs:attributeGroup name="xmllang.ItemBody.Attr">
+    <xs:attributeGroup name="language.ItemBody.Attr">
         <xs:attribute ref="xml:lang" use="optional" />
     </xs:attributeGroup>
 
@@ -3658,7 +3658,7 @@
         <xs:attributeGroup ref="identifier.AssessmentItem.Attr" />
         <xs:attributeGroup ref="title.AssessmentItem.Attr" />
         <xs:attributeGroup ref="label.AssessmentItem.Attr" />
-        <xs:attributeGroup ref="xmllang.AssessmentItem.Attr" />
+        <xs:attributeGroup ref="language.AssessmentItem.Attr" />
         <xs:attributeGroup ref="toolName.AssessmentItem.Attr" />
         <xs:attributeGroup ref="toolVersion.AssessmentItem.Attr" />
         <xs:attributeGroup ref="adaptive.AssessmentItem.Attr" />
@@ -4602,7 +4602,17 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="BasePromptInteraction.Type" />
+            <xs:extension base="BasePromptInteraction.Type">
+                <xs:attributeGroup ref="base.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="stringIdentifier.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="expectedLength.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="patternMask.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="placeholderText.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="maxStrings.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="minStrings.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="expectedLines.ExtendedTextInteraction.Attr" />
+                <xs:attributeGroup ref="format.ExtendedTextInteraction.Attr" />
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
@@ -5517,7 +5527,7 @@
         </xs:sequence>
         <xs:attributeGroup ref="id.ItemBody.Attr" />
         <xs:attributeGroup ref="class.ItemBody.Attr" />
-        <xs:attributeGroup ref="xmllang.ItemBody.Attr" />
+        <xs:attributeGroup ref="language.ItemBody.Attr" />
         <xs:attributeGroup ref="label.ItemBody.Attr" />
     </xs:complexType>
 
@@ -7482,7 +7492,14 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="BasePromptInteraction.Type" />
+            <xs:extension base="BasePromptInteraction.Type">
+                <xs:attributeGroup ref="lowerBound.SliderInteraction.Attr" />
+                <xs:attributeGroup ref="upperBound.SliderInteraction.Attr" />
+                <xs:attributeGroup ref="step.SliderInteraction.Attr" />
+                <xs:attributeGroup ref="stepLabel.SliderInteraction.Attr" />
+                <xs:attributeGroup ref="orientation.SliderInteraction.Attr" />
+                <xs:attributeGroup ref="reverse.SliderInteraction.Attr" />
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
@@ -8458,7 +8475,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="BasePromptInteraction.Type" />
+            <xs:extension base="BasePromptInteraction.Type">
+                <xs:attributeGroup ref="type.UploadInteraction.Attr" />
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 

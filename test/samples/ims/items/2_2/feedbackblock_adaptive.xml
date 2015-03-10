@@ -147,11 +147,11 @@
                 
                 <feedbackInline id="feedbackInline1" identifier="CORRECT"
                     outcomeIdentifier="FEEDBACK" showHide="show"> That's the correct answer. </feedbackInline>
-                <feedbackInline id="feedbackInline1" identifier="PARTIAL"
+                <feedbackInline id="feedbackInline2" identifier="PARTIAL"
                     outcomeIdentifier="FEEDBACK" showHide="show"> Your answer is partially correct;
                     the correct answer is "Too many <b>cooks</b>
                     <b>spoil</b> the <b>broth</b>". </feedbackInline>
-                <feedbackInline id="feedbackInline1" identifier="INCORRECT"
+                <feedbackInline id="feedbackInline3" identifier="INCORRECT"
                     outcomeIdentifier="FEEDBACK" showHide="show"> Sorry, that's not correct; the
                     correct answer is "Too many <b>cooks</b>
                     <b>spoil</b> the <b>broth</b>". </feedbackInline>

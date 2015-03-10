@@ -209,6 +209,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function validFileProvider() {
 		return array(
+		    // -- 2.2.0
 		    array(self::decorateUri('adaptive_template.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('adaptive.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('associate.xml', '2.2.0'), '2.2.0'),
@@ -217,7 +218,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		    array(self::decorateUri('choice.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('extended_text_rubric.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('extended_text.xml', '2.2.0'), '2.2.0'),
-		    array(self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'),
+		    // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
+		    //array(self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('feedbackblock_solution_random.xml', '2.2.0'), '2.2.0'),
 		    //array(self::decorateUri('feedbackblock_templateblock.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('feedbackInline.xml', '2.2.0'), '2.2.0'),
@@ -243,7 +245,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		    array(self::decorateUri('slider.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('template.xml', '2.2.0'), '2.2.0'),
 		    array(self::decorateUri('text_entry.xml', '2.2.0'), '2.2.0'),
-		                
+
+		    // -- 2.1.1
             array(self::decorateUri('adaptive.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('adaptive_template.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('mc_stat2.xml', '2.1.1'), '2.1.1'),
@@ -282,6 +285,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::decorateUri('likert.xml', '2.1.1'), '2.1.1'),
             //array(self::decorateUri('feedbackblock_templateblock.xml', '2.1.1'), '2.1.1'),
 		
+		    // -- 2.1.0
 		    array(self::decorateUri('adaptive.xml', '2.1'), '2.1.0'),
 		    array(self::decorateUri('adaptive_template.xml', '2.1'), '2.1.0'),
 		    array(self::decorateUri('mc_stat2.xml', '2.1'), '2.1.0'),
@@ -319,6 +323,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		    array(self::decorateUri('likert.xml', '2.1'), '2.1.0'),
 		    //array(self::decorateUri('feedbackblock_templateblock.xml', '2.1'), '2.1.0'),
 		
+		    // -- 2.0
 			array(self::decorateUri('associate.xml', '2.0'), '2.0.0'),
 		    array(self::decorateUri('associate_lang.xml', '2.0'), '2.0.0'),
 			array(self::decorateUri('adaptive.xml', '2.0'), '2.0.0'),
