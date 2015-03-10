@@ -8,7 +8,7 @@
 An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 5.3 and higher supporting a wide 
 range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
 
-__This implementation of QTI is a beta software. The API might change at any time while the code is under constant enhancement. See tag 0.9.1 for a stable version.__
+__This implementation of QTI is under constant enhancement. The API of the master branch might change at any time. See tag 0.9.1 for a stable version.__
 
 ## Features
 
