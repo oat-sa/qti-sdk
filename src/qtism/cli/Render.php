@@ -25,6 +25,7 @@ use qtism\common\utils\Exception as ExceptionUtils;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use cli\Arguments as Arguments;
@@ -63,6 +64,15 @@ class Render extends Cli
             array('source'),
             array(
                 'description' => 'QTI XML source to be rendered.'
+            )
+        );
+        
+        // XMLBase option.
+        $arguments->addOption(
+            array('xmlbase'),
+            array(
+                'default' => 'process',
+                'description' => 'xml:base behaviour.'
             )
         );
         
@@ -121,7 +131,23 @@ class Render extends Cli
         );
         
         if (in_array(strtolower($arguments['flavour']), $knownFlavours) === false) {
-            $msg = "Unknown flavour '" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . ".";
+            $msg = "Unknown --flavour value'" . $arguments['flavour'] . "'. Available flavours are " . implode(', ', $knownFlavours) . ".";
+            $this->fail($msg);
+        }
+        
+        // Check 'xmlbase' argument.
+        if (empty($arguments['xmlbase']) == true) {
+            $arguments['xmlbase'] = 'process';
+        }
+        
+        $knownXmlBase = array(
+            'process',
+            'keep',
+            'ignore'
+        );
+        
+        if (in_array(strtolower($arguments['xmlbase']), $knownXmlBase) === false) {
+            $msg = "Unknown --xmlbase value '" . $arguments['xmlbase'] . "'. Available values are " . implode(', ', $knownXmlBase) . ".";
             $this->fail($msg);
         }
     }
@@ -309,11 +335,20 @@ class Render extends Cli
         if ($arguments['document'] === true) {
             $rootComponent = $doc->getDocumentComponent();
             
+            $title = '';
+            if ($rootComponent->getQtiClassName() === 'assessmentItem') {
+                $title = XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle());
+            }
+            
             $header .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
             $header .= "<html>${nl}";
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
-            $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";
+            
+            if (empty($title) !== false) {
+                $header .= "${indent}${indent}<title>" . $title . "</title>${nl}";
+            }
+            
             $header .= "${indent}</head>${nl}";
             $header .= "${indent}<body>${nl}";
             
@@ -351,14 +386,25 @@ class Render extends Cli
     private function instantiateEngine()
     {
         $arguments = $this->getArguments();
+        $engine = null;
         switch (strtolower($arguments['flavour'])) {
             case 'goldilocks':
-                return new GoldilocksRenderingEngine();
+                $engine = new GoldilocksRenderingEngine();
                 break;
                 
             case 'xhtml':
-                return new XhtmlRenderingEngine();
+                $engine = new XhtmlRenderingEngine();
                 break;
         }
+        
+        if ($arguments['xmlbase'] === 'process') {
+            $engine->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_PROCESS);
+        } elseif ($arguments['xmlbase'] === 'keep') {
+            $engine->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_KEEP);
+        } elseif ($arguments['xmlbase'] === 'ignore') {
+            $engine->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_IGNORE);
+        }
+        
+        return $engine;
     }
 }
