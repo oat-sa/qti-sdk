@@ -270,7 +270,7 @@ class Render extends Cli
             $header .= "${indent}<head>${nl}";
             $header .= "${indent}${indent}<meta charset=\"utf-8\">${nl}";
             $header .= "${indent}${indent}<title>" . XmlUtils::escapeXmlSpecialChars($rootComponent->getTitle()) . "</title>${nl}";
-            
+            $header .= "${indent}${indent}" . $renderer->getStylesheets()->ownerDocument->saveXML($renderer->getStylesheets());
             $header .= "${indent}</head>${nl}";
     
             $itemBodyElts = $xpath->query("//div[contains(@class, 'qti-itemBody')]");
@@ -349,6 +349,7 @@ class Render extends Cli
                 $header .= "${indent}${indent}<title>" . $title . "</title>${nl}";
             }
             
+            $header .= "${indent}${indent}" . $renderer->getStylesheets()->ownerDocument->saveXML($renderer->getStylesheets());
             $header .= "${indent}</head>${nl}";
             $header .= "${indent}<body>${nl}";
             
@@ -403,6 +404,10 @@ class Render extends Cli
             $engine->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_KEEP);
         } elseif ($arguments['xmlbase'] === 'ignore') {
             $engine->setXmlBasePolicy(AbstractMarkupRenderingEngine::XMLBASE_IGNORE);
+        }
+        
+        if ($arguments['document'] === true) {
+            $engine->setStylesheetPolicy(AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE);
         }
         
         return $engine;
