@@ -95,6 +95,7 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('tfoot', $bodyElementRenderer);
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
+        $this->registerRenderer('bdo', $bodyElementRenderer);
 
         // Both col and components elements can be rendered
         // by the ColRenderer.
