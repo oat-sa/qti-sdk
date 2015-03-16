@@ -296,6 +296,14 @@ class BeanTest extends QtiSmTestCase {
     
         $this->setExpectedException('\\InvalidArgumentException', "The 'property' argument must be a string or a BeanProperty object.");
         $bean = new Bean($mock);
-        $getter = $bean->hasGetter(null);
+        $getter = $bean->hasSetter(null);
+    }
+    
+    public function testPropertyButNoSetter() {
+        $mock = new SimpleBean('Name', 'Car');
+        $bean = new Bean($mock);
+        
+        $this->setExpectedException('\\qtism\\common\\beans\\BeanException', "The bean has no public setter for a 'noGetter' property.");
+        $setter = $bean->getSetter('noGetter', BeanException::NO_METHOD);
     }
 }

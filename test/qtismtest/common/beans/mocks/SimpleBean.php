@@ -27,6 +27,15 @@ class SimpleBean {
     private $uselessProperty;
     
     /**
+     * A property reported as a bean-property but with
+     * no actual setter/getter.
+     * 
+     * @var string
+     * @qtism-bean-property
+     */
+    private $noGetter;
+    
+    /**
      * Another useless property because its getter is private.
      * 
      * @var string
