@@ -167,6 +167,7 @@ class FormatTest extends QtiSmTestCase {
 			array('3bad'),
 			array('.bad'),
 			array('好壞好'),
+		    array('ba[d'),
 			array('')
 		);
 	}
