@@ -84,6 +84,13 @@ class FormatTest extends QtiSmTestCase {
 	}
 	
 	/**
+	 * @dataProvider validFileFormatProvider
+	 */
+	public function testValidFile($string) {
+	    $this->assertTrue(Format::isFile($string));
+	}
+	
+	/**
 	 * @dataProvider scale10Provider
 	 */
 	public function testScale10($float, $expected, $x = 'x', $precision = false) {
@@ -125,6 +132,12 @@ class FormatTest extends QtiSmTestCase {
 	        // No precision, no X
 	        array(2, '2.000000 x 10⁰'),
 	        array(25, '2.500000 x 10¹'),
+	        array(250, '2.500000 x 10²'),
+	        array(2500, '2.500000 x 10³'),
+	        array(250000, '2.500000 x 10⁵'),
+	        array(2500000, '2.500000 x 10⁶'),
+	        array(25000000, '2.500000 x 10⁷'),
+	        array(250000000, '2.500000 x 10⁸'),
 	        array(-53000, '-5.300000 x 10⁴'),
 	        array(6720000000, '6.720000 x 10⁹'),
 	        array(672000000000, '6.720000 x 10¹¹'),
@@ -230,6 +243,12 @@ class FormatTest extends QtiSmTestCase {
 	public function invalidString256FormatProvider() {
 	    return array(
 	        array("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue.")          
+	    );
+	}
+	
+	public function validFileFormatProvider() {
+	    return array(
+	        array('data')   
 	    );
 	}
 	

@@ -4,6 +4,7 @@ namespace qtismtest\common\utils;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Integer;
 use qtism\common\utils\Reflection;
+use \ReflectionClass;
 
 class ReflectionTest extends QtiSmTestCase {
 	
@@ -14,6 +15,23 @@ class ReflectionTest extends QtiSmTestCase {
      */
     public function testShortClassName($expected, $object) {
         $this->assertSame($expected, Reflection::shortClassName($object));
+    }
+    
+    public function testNewInstanceWithArguments() {
+        $clazz = new ReflectionClass('\Exception');
+        $args = array("A message", 12);
+        $instance = Reflection::newInstance($clazz, $args);
+        
+        $this->assertInstanceOf('\\Exception', $instance);
+        $this->assertEquals("A message", $instance->getMessage());
+        $this->assertEquals(12, $instance->getCode());
+    }
+    
+    public function testNewInstanceWithoutArguments() {
+        $clazz = new ReflectionClass('\stdClass');
+        $instance = Reflection::newInstance($clazz);
+    
+        $this->assertInstanceOf('\\stdClass', $instance);
     }
     
     public function shortClassNameProvider() {
