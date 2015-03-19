@@ -23,6 +23,7 @@
 namespace qtism\common\beans;
 
 use \ReflectionParameter;
+use \ReflectionException;
 
 /**
  * Represents a Bean method parameter.
@@ -40,7 +41,7 @@ class BeanParameter
     private $parameter;
 
     /**
-     * Create a new ReflectionParameter object.
+     * Create a new BeanParameter object.
      *
      * @param string $class The class name.
      * @param string $method The method name.
@@ -52,7 +53,7 @@ class BeanParameter
         try {
             $this->setParameter(new ReflectionParameter(array($class, $method), $name));
         } catch (ReflectionException $e) {
-            $msg = "No such parameter '${parameter}' for method '${method}' of class '${class}'.";
+            $msg = "No such parameter '${name}' for method '${method}' of class '${class}'.";
             throw new BeanException($msg, BeanException::NO_PARAMETER, $e);
         }
     }
