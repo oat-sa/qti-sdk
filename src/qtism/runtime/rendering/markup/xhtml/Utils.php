@@ -95,20 +95,16 @@ class Utils
     }
 
     /**
-     * Whether or not a given $node has the given CSS $class(es).
+     * Whether or not a given $node element has the given CSS $class(es).
      *
-     * @param \DOMNode $node
+     * @param \DOMElement $node
      * @param string|array $class A class or an array of CSS classes.
      * @return boolean
      */
-    public static function hasClass(DOMNode $node, $class)
+    public static function hasClass(DOMElement $node, $class)
     {
         if (is_array($class) === false) {
             $class = array($class);
-        }
-
-        if (!$node instanceof DOMElement) {
-            return false;
         }
 
         $attr = explode("\x20", $node->getAttribute('class'));

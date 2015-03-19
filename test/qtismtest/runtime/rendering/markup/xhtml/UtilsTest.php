@@ -63,4 +63,17 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
         $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
+    
+    public function testHasClass() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $node = $dom->createElement('root');
+        
+        $node->setAttribute('class', 'hello there');
+        
+        $this->assertTrue(Utils::hasClass($node, 'hello'));
+        $this->assertTrue(Utils::hasClass($node, 'there'));
+        $this->assertTrue(Utils::hasClass($node, array('hello', 'there')));
+        $this->assertFalse(Utils::hasClass($node, 'unknown'));
+        $this->assertFalse(Utils::hasClass($node, array('unknown', 'class')));
+    }
 }
