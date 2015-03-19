@@ -80,16 +80,6 @@ abstract class Scalar implements QtiDatatype
     }
 
     /**
-     * Whether or not the Scalar object holds a QTI NULL value.
-     *
-     * @return boolean
-     */
-    public function isNull()
-    {
-        return $this->getValue() === null;
-    }
-
-    /**
      * Wheter or not $this is equal to $obj. Two Scalar
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
