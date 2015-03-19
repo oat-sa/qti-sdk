@@ -5,9 +5,17 @@ use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Coords;
 use qtism\common\datatypes\Point;
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 
 class CoordsTest extends QtiSmTestCase {
 
+    public function testInstantiate() {
+        $coords = new Coords(Shape::POLY, array(0, 0, 0, 3, 3, 0));
+        $this->assertEquals(BaseType::COORDS, $coords->getBaseType());
+        $this->assertEquals(Cardinality::SINGLE, $coords->getCardinality());
+    }
+    
 	public function testInsideCircle() {
 		$coords = new Coords(Shape::CIRCLE, array(5, 5, 5));
 		
@@ -64,6 +72,12 @@ class CoordsTest extends QtiSmTestCase {
 		
 		$point = new Point(6, 4); // 6, 4 is inside.
 		$this->assertTrue($coords->inside($point));
+	}
+	
+	public function testOnEdgePolygon() {
+	    $coords = new Coords(Shape::POLY, array(0, 0, 0, 3, 3, 0));
+	    $point = new Point(0, 2);
+	    $this->assertTrue($coords->inside($point));
 	}
 	
 	public function testInsideDefault() {
