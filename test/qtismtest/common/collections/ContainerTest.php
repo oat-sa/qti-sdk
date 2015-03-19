@@ -14,6 +14,7 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
+use qtism\common\enums\Cardinality;
 
 class ContainerTest extends QtiSmTestCase {
 
@@ -165,7 +166,8 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Container(array(new String('string'), new Integer(2), new String('str'), new String('string'), new String('string'))), new String('string'), 3),
 			array(new Container(array(new String('null'), null)), null, 1),
 			array(new Container(array(new Integer(14), new Integer(15), new Integer(16))), true, 0),
-			array(new Container(array(new String('string'), new Integer(1), new Boolean(true), new Float(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
+			array(new Container(array(new String('string'), new Integer(1), new Boolean(true), new Float(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1),
+		    array(new Container(array(null)), new Integer(1), 0)
 		);
 	}
 	
@@ -259,5 +261,10 @@ class ContainerTest extends QtiSmTestCase {
 	        array(array(), $msg . "'php:array' given."),
 	        array(new Container(), $msg . "'qtism\\common\\collections\\Container' given.")
 	    );
+	}
+	
+	public function testAlwaysMultipleCardinality() {
+	    $container = new Container();
+	    $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
 	}
 }
