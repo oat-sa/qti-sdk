@@ -302,9 +302,10 @@ class Duration implements QtiDatatype
 
         if ($duration instanceof Duration) {
             $toAdd = $duration;
+        } elseif ($duration instanceof DateInterval) {
+            $toAdd = self::createFromDateInterval($duration);
         } else {
-            $toAdd = new Duration('PT0S');
-            $toAdd->setInterval($duration);
+            return;
         }
 
         $d2->add(new DateInterval($this->__toString()));

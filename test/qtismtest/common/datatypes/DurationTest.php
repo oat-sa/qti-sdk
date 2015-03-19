@@ -3,6 +3,7 @@ namespace qtismtest\common\datatypes;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Duration;
+use \DateInterval;
 
 class DurationTest extends QtiSmTestCase {
 	
@@ -81,6 +82,11 @@ class DurationTest extends QtiSmTestCase {
 		$d2 = new Duration('PT10S');
 		$d1->add($d2);
 		$this->assertEquals('P1DT9S', $d1->__toString());
+		
+		$d1 = new Duration('PT1S');
+		$d2 = new DateInterval('PT1S');
+		$d1->add($d2);
+		$this->assertEquals('PT2S', $d1->__toString());
 	}
 	
 	public function testSub() {
@@ -108,6 +114,12 @@ class DurationTest extends QtiSmTestCase {
 	    $d2 = new Duration('PT21S');
 	    $d1->sub($d2);
 	    $this->assertTrue($d1->isNegative());
+	}
+	
+	public function createFromDateInterval() {
+	    $interval = new DateInterval('PT5S');
+	    $duration = Duration::createFromDateInterval($interval);
+	    $this->assertEquals(5, $duration->getSeconds(true));
 	}
 		
 	/**
