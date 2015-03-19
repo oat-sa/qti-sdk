@@ -1,11 +1,9 @@
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/4217431/6734391/3b3ef4e8-ce58-11e4-83a1-d6e39a91400f.png" alt="QTI-SDK" /></p>
-
-<p align="center">
 [![Build Status](https://travis-ci.org/oat-sa/qti-sdk.svg?branch=master)](https://travis-ci.org/oat-sa/qti-sdk)
 [![Coverage Status](https://coveralls.io/repos/oat-sa/qti-sdk/badge.png)](https://coveralls.io/r/oat-sa/qti-sdk)
 [![License GPL2](http://img.shields.io/badge/licence-gpl2-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/qtism/qtism.svg)](https://packagist.org/packages/qtism/qtism)
-</p>
+
+<p align="center"><img src="https://cloud.githubusercontent.com/assets/4217431/6734391/3b3ef4e8-ce58-11e4-83a1-d6e39a91400f.png" alt="QTI-SDK" /></p>
 
 # QTI Software Development Kit for PHP
 
