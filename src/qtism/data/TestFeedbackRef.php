@@ -92,16 +92,20 @@ class TestFeedbackRef extends QtiComponent
     /**
      * Create a new TestFeedbackRef object.
      * 
-     * @param string $identifier
-     * @param string $outcomeIdentifier
-     * @param string $href
+     * @param string $identifier An identifier.
+     * @param string $outcomeIdentifier An identifier.
+     * @param integer $access A value from the TestFeedbackAccess enumeration.
+     * @param integer $showHide A value from the ShowHide enumeration.
+     * @param string $href A URI.
      * @throws \InvalidArgumentException If one of the arguments is invalid.
      */
-    public function __construct($identifier, $outcomeIdentifier, $href)
+    public function __construct($identifier, $outcomeIdentifier, $access, $showHide, $href)
     {
         $this->setIdentifier($identifier);
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setHref($href);
+        $this->setAccess($access);
+        $this->setShowHide($showHide);
     }
     
     /**
@@ -237,5 +241,21 @@ class TestFeedbackRef extends QtiComponent
             $msg = "'${href}' is not a valid URI.";
             throw new InvalidArgumentException($msg);
         }
+    }
+    
+    /**
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
+    public function getQtiClassName()
+    {
+        return 'testFeedbackRef';
+    }
+    
+    /**
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
+    public function getComponents()
+    {
+        return new QtiComponentCollection();
     }
 }

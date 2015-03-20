@@ -35,6 +35,7 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use \Exception;
 use \DOMElement;
 use \SplObjectStorage;
 
