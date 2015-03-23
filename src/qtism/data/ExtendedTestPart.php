@@ -109,6 +109,8 @@ class ExtendedTestPart extends TestPart
             $testPart->setSubmissionMode()
         );
         
+        $ref->setAssessmentSections($testPart->getAssessmentSections());
+        $ref->setTimeLimits($testPart->getTimeLimits());
         $ref->setPreConditions($testPart->getPreConditions());
         $ref->setBranchRules($testPart->getBranchRules());
         $ref->setItemSessionControl($testPart->getItemSessionControl());
