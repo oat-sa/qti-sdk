@@ -272,4 +272,26 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    
 	    unlink($file);
 	}
+	
+	/**
+	 * @depends testSchemaValid
+	 */
+	public function testSchemaValid2() {
+	    $doc = new DOMDocument('1.0', 'UTF-8');
+	    $file = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
+	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
+	    
+	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
+	    $this->assertTrue($doc->schemaValidate($schema));
+	}
+	
+	public function testTestFeedbackRefLoad() {
+	    $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src, true);
+	     
+	    $test = $doc->getDocumentComponent();
+	    $testFeedbackRefs = $test->getComponentsByClassName('testFeedbackRef');
+	    $this->assertEquals(1, count($testFeedbackRefs));
+	}
 }
