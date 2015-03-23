@@ -52,7 +52,7 @@ We are always looking for people to feed the project with:
 * Unit tests
 * New features
 
-[Please make yourself known](https://github.com/bugalood)!
+[Please make yourself known](https://github.com/bugalot)!
 
 ## QTI Rendering
 
