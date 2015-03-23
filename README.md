@@ -66,7 +66,7 @@ flavour with indentation formatting. The rendering output (stdout) is redirected
 ./vendor/bin/qtisdk render -df --source path/to/qti.xml --flavour goldilocks > /home/jerome/qti.html
 ```
 
-For additionnal help and information, just call the help screen!
+For additionnal help and information, just call the help screen to know about the features provided by the rendering binaries!
 
 ```shell
 ./vendor/bin/qtisdk render --help
