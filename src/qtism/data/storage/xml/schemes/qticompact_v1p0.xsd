@@ -49,6 +49,53 @@
     </xs:attributeGroup>
     
     <xs:attributeGroup name="identifier.RubricBlockRef.Attr">
+        <xs:attribute name="identifier" use="required" type="xs:normalizedString"/>
+    </xs:attributeGroup>
+    
+    <xs:complexType name="TestFeedbackRef.Type" mixed="false">
+        <xs:annotation>
+            <xs:documentation>
+               A reference to an existing testFeedback.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="identifier.TestFeedbackRef.Attr"/>
+        <xs:attributeGroup ref="access.TestFeedbackRef.Attr"/>
+        <xs:attributeGroup ref="outcomeIdentifier.TestFeedbackRef.Attr"/>
+        <xs:attributeGroup ref="showHide.TestFeedbackRef.Attr"/>
+        <xs:attributeGroup ref="href.TestFeedbackRef.Attr"/>
+    </xs:complexType>
+    
+    <xs:attributeGroup name="access.TestFeedbackRef.Attr">
+        <xs:attribute name="access" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="atEnd"/>
+                    <xs:enumeration value="during"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="outcomeIdentifier.TestFeedbackRef.Attr">
+        <xs:attribute name="outcomeIdentifier" use="required" type="Identifier.Type"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="showHide.TestFeedbackRef.Attr">
+        <xs:attribute name="showHide" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="show"/>
+                    <xs:enumeration value="hide"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="href.TestFeedbackRef.Attr">
+        <xs:attribute name="href" use="required" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="identifier.TestFeedbackRef.Attr">
     	<xs:attribute name="identifier" use="required" type="xs:normalizedString"/>
     </xs:attributeGroup>
     
