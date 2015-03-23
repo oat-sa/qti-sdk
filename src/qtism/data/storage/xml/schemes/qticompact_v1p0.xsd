@@ -42,6 +42,16 @@
     	       </xs:extension>
     	   </xs:complexContent>
     	</xs:complexType>
+    	
+    	<xs:complexType name="AssessmentTest.Type">
+           <xs:complexContent>
+               <xs:extension base="AssessmentTest.Type">
+                   <xs:sequence>
+                       <xs:element name="testFeedbackRef" type="TestFeedbackRef.Type" minOccurs="0" maxOccurs="unbounded"/>
+                   </xs:sequence>
+               </xs:extension>
+           </xs:complexContent>
+        </xs:complexType>
     </xs:redefine>
     
     <xs:complexType name="RubricBlockRef.Type" mixed="false">
