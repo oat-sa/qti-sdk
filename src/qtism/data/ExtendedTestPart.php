@@ -60,7 +60,7 @@ class ExtendedTestPart extends TestPart
      * 
      * @param \qtism\data\TestFeedbackRefCollection $testFeedbackRefs
      */
-    public function setTestFeedbackRefs(TestFeedbackCollection $testFeedbackRefs)
+    public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs)
     {
         $this->testFeedbackRefs = $testFeedbackRefs;
     }
@@ -99,14 +99,15 @@ class ExtendedTestPart extends TestPart
      * Create a new ExtendedTestPart object from another TestPart object.
      * 
      * @param \qtism\data\TestPart $testPart
+     * @return \qtism\data\ExtendedTestPart
      */
     static public function createFromTestPart(TestPart $testPart)
     {
-        $ref = new TestPart(
+        $ref = new ExtendedTestPart(
             $testPart->getIdentifier(), 
             $testPart->getAssessmentSections(),
             $testPart->getNavigationMode(),
-            $testPart->setSubmissionMode()
+            $testPart->getSubmissionMode()
         );
         
         $ref->setAssessmentSections($testPart->getAssessmentSections());
@@ -115,6 +116,8 @@ class ExtendedTestPart extends TestPart
         $ref->setBranchRules($testPart->getBranchRules());
         $ref->setItemSessionControl($testPart->getItemSessionControl());
         $ref->setTestFeedbacks($testPart->getTestFeedbacks());
+        
+        return $ref;
     }
     
     /**

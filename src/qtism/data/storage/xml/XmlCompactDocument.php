@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\ExtendedTestPart;
+
 use qtism\data\content\RubricBlockRef;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
@@ -207,6 +209,9 @@ class XmlCompactDocument extends XmlDocument
                             break;
                         }
                     }
+                } elseif ($component instanceof TestPart) {
+                    $testPart = ExtendedTestPart::createFromTestPart($component);
+                    $root->getTestParts()->replace($component, $testPart);
                 } elseif ($component === $root) {
                     // 2nd pass on the root, we have to stop.
                     $compactAssessmentTest->setDocumentComponent($assessmentTest);
