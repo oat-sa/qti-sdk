@@ -171,7 +171,7 @@ abstract class Cli
     }
     
     /**
-     * Show a success message as a single line in stdout and return a zero exit status.
+     * Show a success message as a single line in stdout and return a zero POSIX exit status.
      * 
      * This method produces no output if verbose mode is not in force but the exit status
      * will still be returned.
