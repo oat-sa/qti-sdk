@@ -22,8 +22,6 @@
 
 namespace qtism\data\storage\xml;
 
-use qtism\data\ExtendedTestPart;
-
 use qtism\data\content\RubricBlockRef;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
@@ -36,6 +34,8 @@ use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\AssessmentTest;
+use qtism\data\ExtendedAssessmentTest;
+use qtism\data\ExtendedTestPart;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \Exception;
 use \DOMElement;
@@ -214,7 +214,7 @@ class XmlCompactDocument extends XmlDocument
                     $root->getTestParts()->replace($component, $testPart);
                 } elseif ($component === $root) {
                     // 2nd pass on the root, we have to stop.
-                    $compactAssessmentTest->setDocumentComponent($assessmentTest);
+                    $compactAssessmentTest->setDocumentComponent(ExtendedAssessmentTest::createFromAssessmentTest($assessmentTest));
 
                     return $compactAssessmentTest;
                 }
