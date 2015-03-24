@@ -2,6 +2,10 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\xhtml\text\Div;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\common\enums\BaseType;
@@ -33,8 +37,10 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase {
 		$testParts = new TestPartCollection();
 		$testParts[] = new TestPart('myTestPart', $assessmentSections);
 		
+		$div = new Div();
+		$div->setContent(new FlowCollection(array(new TextRun('Feedback!'))));
 		$testFeedBacks = new TestFeedbackCollection();
-		$testFeedBacks[] = new TestFeedback('myFeedback', 'myOutcome', '<div>Feedback!</div>', 'A Feedback');
+		$testFeedBacks[] = new TestFeedback('myFeedback', 'myOutcome', new FlowStaticCollection(array($div)), 'A Feedback');
 		
 		$outcomeRules = new OutcomeRuleCollection();
 		$outcomeRules[] = new SetOutcomeValue('myOutcome', new BaseValue(BaseType::BOOLEAN, true));

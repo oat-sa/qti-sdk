@@ -26,7 +26,10 @@ use qtism\data\QtiComponent;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\ShowHide;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\FlowStatic;
 use \DOMElement;
+use \DOMText;
 use \InvalidArgumentException;
 
 /**
@@ -59,9 +62,10 @@ class TestFeedbackMarshaller extends Marshaller
             self::setDOMElementAttribute($element, 'title', $title);
         }
 
-        $flowStatic = static::getDOMCradle()->createDocumentFragment();
-        $flowStatic->appendXML($component->getContent());
-        $element->appendChild($flowStatic);
+        foreach ($component->getContent() as $flowStatic) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($flowStatic);
+            $element->appendChild($marshaller->marshall($flowStatic));
+        }
 
         return $element;
     }
@@ -76,26 +80,42 @@ class TestFeedbackMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+            
             if (($outcomeIdentifier = static::getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
+                
                 if (($showHide = static::getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
+                    
                     if (($access = static::getDOMElementAttributeAs($element, 'access', 'string')) !== null) {
 
-                        $content = self::extractContent($element);
-
-                        if (!empty($content)) {
-                            $object = new TestFeedback($identifier, $outcomeIdentifier, $content);
-                            $object->setAccess(($access == 'atEnd') ? TestFeedbackAccess::AT_END : TestFeedbackAccess::DURING);
-                            $object->setShowHide(($showHide == 'show') ? ShowHide::SHOW : ShowHide::HIDE);
-
-                            if (($title = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
-                                $object->setTitle($title);
+                        $content = new FlowStaticCollection();
+    
+                        foreach (self::getChildElements($element, true) as $elt) {
+            
+                            if ($elt instanceof DOMText) {
+                                $elt = self::getDOMCradle()->createElement('textRun', $elt->wholeText);
                             }
-
-                            return $object;
-                        } else {
-                            $msg = "Element '" . $element->localName . "' has no feedback content.";
-                            throw new UnmarshallingException($msg, $element);
+            
+                            $marshaller = $this->getMarshallerFactory()->createMarshaller($elt);
+                            $cpt = $marshaller->unmarshall($elt);
+            
+                            if ($cpt instanceof FlowStatic) {
+                                $content[] = $cpt;
+                            } else {
+                                $msg = "'testFeedback' elements cannot contain '" . $cpt->getQtiClassName() . "' elements.";
+                                throw new UnmarshallingException($msg, $element);
+                            }
                         }
+                        
+                        $object = new TestFeedback($identifier, $outcomeIdentifier, $content);
+                        $object->setAccess(($access == 'atEnd') ? TestFeedbackAccess::AT_END : TestFeedbackAccess::DURING);
+                        $object->setShowHide(($showHide == 'show') ? ShowHide::SHOW : ShowHide::HIDE);
+
+                        if (($title = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
+                            $object->setTitle($title);
+                        }
+
+                        return $object;
+
 
                     } else {
                         $msg = "The mandatory 'access' attribute is missing from element '" . $element->localName . "'.";
@@ -118,21 +138,5 @@ class TestFeedbackMarshaller extends Marshaller
     public function getExpectedQtiClassName()
     {
         return 'testFeedback';
-    }
-
-    /**
-	 * Extract the content (direct children) of a testFeedback element.
-	 *
-	 * @param \DOMElement $element The testFeedback element you want to extract the content.
-	 * @return string The content of the feedback element as a string. If there is no extractable content, an empty string is returned.
-	 * @throws \InvalidArgumentException If $element is not a testFeedback element.
-	 */
-    protected static function extractContent(DOMElement $element)
-    {
-        if ($element->localName == 'testFeedback') {
-            return preg_replace('#</{0,1}testFeedback.*?>#iu', '', $element->ownerDocument->saveXML($element));
-        } else {
-            throw new InvalidArgumentException("The element must be a QTI testFeedbackElement, '" . $element->localName . "' element given.");
-        }
     }
 }

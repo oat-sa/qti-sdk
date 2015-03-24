@@ -7,6 +7,12 @@ use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\ShowHide;
+use qtism\data\content\TextRun;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\xhtml\text\P;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\xhtml\text\Div;
+use qtism\data\content\FlowStaticCollection;
 use \ReflectionClass;
 use \DOMDocument;
 
@@ -18,7 +24,12 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase {
 		$outcomeIdentifier = 'myOutcomeIdentifier1';
 		$access = TestFeedbackAccess::AT_END;
 		$showHide = ShowHide::SHOW;
-		$content = '<div><p>Hello World!</p></div>';
+		$text = new TextRun('Hello World!');
+		$p = new P();
+		$p->setContent(new InlineCollection(array($text)));
+		$div = new Div();
+		$div->setContent(new FlowCollection(array($p)));
+		$content = new FlowStaticCollection(array($div));
 
 		$component = new TestFeedback($identifier, $outcomeIdentifier, $content);
 		$component->setAccess($access);
@@ -43,7 +54,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshall() {
 		
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>');
+		$dom->loadXML('
+		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title"><p>Have a nice test!</p></testFeedback>');
 		$element = $dom->documentElement;
 
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
@@ -54,26 +66,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
 		$this->assertEquals($component->getShowHide(), ShowHide::SHOW);
 		$this->assertEquals($component->getTitle(), 'my title');
-		$this->assertEquals($component->getContent(), '<p>Have a nice test!</p>');
-	}
-	
-	/**
-	 * @dataProvider feedbackContent
-	 */
-	public function testExtractContent($xmlData, $expectedContent) {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML($xmlData);
-		$element = $dom->documentElement;
 		
-		$class = new ReflectionClass('qtism\\data\\storage\\xml\\marshalling\\TestFeedbackMarshaller');
-		$method = $class->getMethod('extractContent');
-		$method->setAccessible(true);
-		$this->assertEquals($method->invokeArgs(null, array($element)), $expectedContent);
-	}
-	
-	public function feedbackContent() {
-		return array(
-			array('<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" access="during" identifier="myId1" outcomeIdentifier="myId2" showHide="show"><div><p>Hello there!</p></div></testFeedback>', '<div><p>Hello there!</p></div>')		
-		);
+		$content = $component->getContent();
+		$this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $content[0]);
 	}
 }

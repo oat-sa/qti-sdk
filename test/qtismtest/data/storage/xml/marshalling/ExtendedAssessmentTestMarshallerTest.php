@@ -7,6 +7,10 @@ use qtism\data\rules\SetOutcomeValue;
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\xhtml\text\P;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\ExtendedAssessmentTest;
@@ -45,7 +49,9 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase {
 	    
 	    $timeLimits = new TimeLimits(null, new Duration('PT1M40S'));
 	    
-	    $testFeedback = new TestFeedback('feedback1', 'show', '<p>Prima!</p>');
+	    $p = new P();
+	    $p->setContent(new InlineCollection(array(new TextRun('Prima!'))));
+	    $testFeedback = new TestFeedback('feedback1', 'show', new FlowStaticCollection(array($p)));
 	    $testFeedback->setTitle('hello!');
 	    $testFeedback->setAccess(TestFeedbackAccess::AT_END);
 	    $testFeedback->setShowHide(ShowHide::SHOW);
@@ -74,7 +80,9 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase {
 	    $outcomeRules = new OutcomeRuleCollection(array(new SetOutcomeValue('COUNT', new BaseValue(BaseType::INTEGER, 1))));
 	    $outcomeProcessing = new OutcomeProcessing($outcomeRules);
 	    
-	    $testFeedback = new TestFeedback('feedbackTest', 'show', '<p>Good!</p>');
+	    $p = new P();
+	    $p->setContent(new InlineCollection(array(new TextRun('Good!'))));
+	    $testFeedback = new TestFeedback('feedbackTest', 'show', new FlowStaticCollection(array($p)));
 	    $testFeedback->setTitle('hello!');
 	    $testFeedback->setAccess(TestFeedbackAccess::AT_END);
 	    $testFeedback->setShowHide(ShowHide::SHOW);

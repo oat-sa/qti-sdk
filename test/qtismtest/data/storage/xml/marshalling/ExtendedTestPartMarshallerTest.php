@@ -2,6 +2,10 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\xhtml\text\P;
 use qtism\data\ExtendedTestPart;
 use qtism\data\TestFeedbackRefCollection;
 use qtism\data\TestFeedbackCollection;
@@ -36,8 +40,10 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase {
 	    $itemSessionControl->setShowSolution(true);
 	    
 	    $timeLimits = new TimeLimits(null, new Duration('PT1M40S'));
+	    $p = new P();
+	    $p->setContent(new InlineCollection(array(new TextRun('Prima!'))));
 	    
-	    $testFeedback = new TestFeedback('feedback1', 'show', '<p>Prima!</p>');
+	    $testFeedback = new TestFeedback('feedback1', 'show', new FlowStaticCollection(array($p)));
 	    $testFeedback->setTitle('hello!');
 	    $testFeedback->setAccess(TestFeedbackAccess::AT_END);
 	    $testFeedback->setShowHide(ShowHide::SHOW);

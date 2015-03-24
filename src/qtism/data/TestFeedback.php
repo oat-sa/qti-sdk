@@ -22,6 +22,8 @@
 
 namespace qtism\data;
 
+use qtism\data\content\FlowStaticCollection;
+
 use \InvalidArgumentException;
 use qtism\common\utils\Format;
 
@@ -94,14 +96,13 @@ class TestFeedback extends QtiComponent
 
     /**
 	 * The markup content of the feedback to show. In IMS QTI specs, this attribute
-	 * is a FlowStatic element. For more convenience, the content is stored as a string
-	 * for easier manipulation.
+	 * is a FlowStatic element.
 	 *
 	 * From IMS QTI:
 	 *
 	 * The content of the testFeedback must not contain any interactions.
 	 *
-	 * @var string
+	 * @var \qtism\data\content\FlowStaticCollection
 	 * @qtism-bean-property
 	 */
     private $content;
@@ -114,11 +115,11 @@ class TestFeedback extends QtiComponent
 	 *
 	 * @param string $identifier The identifier of the feedback.
 	 * @param string $outcomeIdentifier The identifier of the outcome variable bound to the feedback.
-	 * @param string $content The content of the feedback as an XML markup binary stream.
+	 * @param \qtism\data\content\FlowStaticCollection $content The content of the feedback.
 	 * @param string $title The title of the feedback. An empty string means that no title is specified.
 	 * @throws \InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
 	 */
-    public function __construct($identifier, $outcomeIdentifier, $content, $title = '')
+    public function __construct($identifier, $outcomeIdentifier, FlowStaticCollection $content, $title = '')
     {
         $this->setIdentifier($identifier);
         $this->setOutcomeIdentifier($outcomeIdentifier);
@@ -265,28 +266,22 @@ class TestFeedback extends QtiComponent
     /**
 	 * Get the XML stream of the content of the TestFeedback.
 	 *
-	 * @return string XML markup binary stream as a string.
+	 * @return \qtism\data\content\FlowStaticCollection The content of the TestFeedback.
 	 */
     public function getContent()
     {
-        // @todo handle flowStatic as a DOMDocumentFragment which easily 'queryable'.
         return $this->content;
     }
 
     /**
 	 * Set the XML stream of the content of the TestFeedback.
 	 *
-	 * @param string $content XML markup binary stream as a string.
+	 * @param FlowStaticCollection $content XML markup binary stream as a string.
 	 * @throws \InvalidArgumentException If $content is not a string.
 	 */
-    public function setContent($content)
+    public function setContent(FlowStaticCollection $content)
     {
-        if (gettype($content) === 'string') {
-            $this->content = $content;
-        } else {
-            $msg = "Content must be a string, '" . gettype($content) . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->content = $content;
     }
 
     public function getQtiClassName()
