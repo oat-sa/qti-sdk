@@ -22,6 +22,8 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\data\TestFeedbackRef;
+
 use qtism\data\content\RubricBlockRef;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
@@ -65,11 +67,19 @@ class XmlCompactDocument extends XmlDocument
      * @var boolean
      */
     private $explodeRubricBlocks = false;
+    
+    /**
+     * Whether or not the testFeedback elements
+     * must be separated from the core document.
+     * 
+     * @var boolean
+     */
+    private $explodeTestFeedbacks = false;
 
     /**
      * Whether or not the rubrickBlock components contained in the document should be separated from the document.
      *
-     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save(), the following rules apply:
+     * If $explodedRubricBlocks is set to true, a call to XmlCompactDocument::save() will make the following rules to be applied:
      *
      * * rubricBlock components will be removed from the document.
      * * a replacement of the rubricBlock components by rubricBlockRef components with a suitable value for identifier and href attributes will occur.
@@ -90,6 +100,32 @@ class XmlCompactDocument extends XmlDocument
     public function mustExplodeRubricBlocks()
     {
         return $this->explodeRubricBlocks;
+    }
+    
+    /**
+     * Whether or not the testFeedback components contained in the document should be separated from the document.
+     * 
+     * If $explodeTestFeedbacs is set to true, a call to XmlCompactDocument::save() will make the following rules to be applied:
+     * 
+     * * testFeedback elements will be removed from the document.
+     * * a replacement of the testFeedback components by testFeedbackRef components with a suitable value for the href attribute will occur.
+     * * place the substituted testFeedback contents in separate QTI-XML files, in a valid location and with a valid name regarding the generated testFeedbackRef components.
+     * 
+     * @param boolean $explodeTestFeedbacks
+     */
+    public function setExplodeTestFeedbacks($explodeTestFeedbacks)
+    {
+        $this->explodeTestFeedbacks = $explodeTestFeedbacks;
+    }
+    
+    /**
+     * Whether or not the testFeedback components contained in the document should be separated from the document.
+     * 
+     * @return boolean
+     */
+    public function mustExplodeTestFeedbacks()
+    {
+        return $this->explodeTestFeedbacks;
     }
 
     /**
@@ -360,6 +396,55 @@ class XmlCompactDocument extends XmlDocument
                     $msg = "An error occured while creating external rubrickBlock definition(s).";
                     throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
                 }
+            }
+        }
+        
+        // Take care of testFeedback explosion. Transform actual testFeedbacks in testFeedbackRefs.
+        if ($this->mustExplodeTestFeedbacks() === true) {
+            $iterator = new QtiComponentIterator($documentComponent, array('testFeedback'));
+            $testPartCount = new SplObjectStorage();
+            $testCount = 0;
+            
+            foreach ($iterator as $testFeedback) {
+                $parent = $iterator->parent();
+                
+                if ($parent instanceof TestPart) {
+                    if (isset($testPartCount[$parent]) === false) {
+                        $testPartCount[$parent] = 0;
+                    }
+                    
+                    $testPartCount[$parent] = $testPartCount[$parent] + 1;
+                    $occurence = $testPartCount[$parent];
+                } else {
+                    // It's a testFeedback related to an assessmentTest.
+                    $testCount += 1;
+                    $occurence = $testCount;
+                }
+                
+                $parentId = $parent->getIdentifier();
+                $href = "./testFeedback_TF_${parentId}_${occurence}.xml";
+                
+                // Generate the document.
+                $doc = new XmlDocument();
+                $doc->setDocumentComponent($testFeedback);
+                
+                try {
+                    $pathinfo = pathinfo($uri);
+                    $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
+                    
+                    $parent->getTestFeedbacks()->remove($testFeedback);
+                    $testFeedbackRefs = $parent->getTestFeedbackRefs();
+                    $testFeedbackRefs[] = new TestFeedbackRef(
+                        $testFeedback->getIdentifier(),
+                        $testFeedback->getOutcomeIdentifier(),
+                        $testFeedback->getAccess(),
+                        $testFeedback->getShowHide(),
+                        $href
+                    );
+                } catch (XmlStorageException $e) {
+                    $msg = "An error occured while creating external testFeedback definition(s).";
+                    throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
+                } 
             }
         }
     }

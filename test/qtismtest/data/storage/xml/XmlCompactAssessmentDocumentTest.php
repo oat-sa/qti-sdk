@@ -219,6 +219,43 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    unlink($file);
 	}
 	
+	public function testExplodeTestFeedbacks() {
+	    $src = self::samplesDir() . 'custom/runtime/testfeedbackrefs_explosion.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src, true);
+	    $doc->setExplodeTestFeedbacks(true);
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    $pathinfo = pathinfo($file);
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'testFeedback_TF_P01_1.xml';
+	    $this->assertTrue(file_exists($path));
+	    $tfDoc = new XmlDocument();
+	    $tfDoc->load($path);
+	    $this->assertEquals('feedback1', $tfDoc->getDocumentComponent()->getIdentifier());
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'testFeedback_TF_P01_2.xml';
+	    $this->assertTrue(file_exists($path));
+	    $tfDoc = new XmlDocument();
+	    $tfDoc->load($path);
+	    $this->assertEquals('feedback2', $tfDoc->getDocumentComponent()->getIdentifier());
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'testFeedback_TF_testfeedbackrefs_explosion_1.xml';
+	    $this->assertTrue(file_exists($path));
+	    $tfDoc = new XmlDocument();
+	    $tfDoc->load($path);
+	    $this->assertEquals('mainfeedback1', $tfDoc->getDocumentComponent()->getIdentifier());
+	    
+	    $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'testFeedback_TF_testfeedbackrefs_explosion_2.xml';
+	    $this->assertTrue(file_exists($path));
+	    $tfDoc = new XmlDocument();
+	    $tfDoc->load($path);
+	    $this->assertEquals('mainfeedback2', $tfDoc->getDocumentComponent()->getIdentifier());
+	    
+	    $this->assertEquals(0, $doc->getDocumentComponent()->containsComponentWithClassName('testFeedback'));
+	}
+	
 	public function testModalFeedbackRuleLoad() {
 	    $src = self::samplesDir() . 'custom/runtime/modalfeedbackrules.xml';
 	    $doc = new XmlCompactDocument();
@@ -292,7 +329,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	     
 	    $test = $doc->getDocumentComponent();
 	    $testFeedbackRefs = $test->getComponentsByClassName('testFeedbackRef');
-	    $this->assertEquals(2, count($testFeedbackRefs));
+	    $this->assertEquals(3, count($testFeedbackRefs));
 	}
 	
 	/**
@@ -310,7 +347,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $doc->load($file);
 	    
 	    $testFeedbackRefElts = $doc->getElementsByTagName('testFeedbackRef');
-	    $this->assertEquals(2, $testFeedbackRefElts->length);
+	    $this->assertEquals(3, $testFeedbackRefElts->length);
 	    
 	    $testFeedbackRefElt1 = $testFeedbackRefElts->item(0);
 	    $this->assertEquals('feedback1', $testFeedbackRefElt1->getAttribute('identifier'));
@@ -320,10 +357,17 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals('./TF01.xml', $testFeedbackRefElt1->getAttribute('href'));
 	    
 	    $testFeedbackRefElt2 = $testFeedbackRefElts->item(1);
-	    $this->assertEquals('mainfeedback1', $testFeedbackRefElt2->getAttribute('identifier'));
-	    $this->assertEquals('during', $testFeedbackRefElt2->getAttribute('access'));
+	    $this->assertEquals('feedback2', $testFeedbackRefElt2->getAttribute('identifier'));
+	    $this->assertEquals('atEnd', $testFeedbackRefElt2->getAttribute('access'));
 	    $this->assertEquals('show', $testFeedbackRefElt2->getAttribute('showHide'));
 	    $this->assertEquals('showme', $testFeedbackRefElt2->getAttribute('outcomeIdentifier'));
-	    $this->assertEquals('./TFMAIN.xml', $testFeedbackRefElt2->getAttribute('href'));
+	    $this->assertEquals('./TF02.xml', $testFeedbackRefElt2->getAttribute('href'));
+	    
+	    $testFeedbackRefElt3 = $testFeedbackRefElts->item(2);
+	    $this->assertEquals('mainfeedback1', $testFeedbackRefElt3->getAttribute('identifier'));
+	    $this->assertEquals('during', $testFeedbackRefElt3->getAttribute('access'));
+	    $this->assertEquals('show', $testFeedbackRefElt3->getAttribute('showHide'));
+	    $this->assertEquals('showme', $testFeedbackRefElt3->getAttribute('outcomeIdentifier'));
+	    $this->assertEquals('./TFMAIN.xml', $testFeedbackRefElt3->getAttribute('href'));
 	}
 }
