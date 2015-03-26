@@ -15,11 +15,12 @@
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 			</assessmentItemRef>
 		</assessmentSection>
-		<testFeedback access="atEnd" outcomeIdentifier="show" identifier="feedback1" showHide="show">
+		<testFeedback access="atEnd" outcomeIdentifier="showme" identifier="feedback1" showHide="show">
             <p>
                 Hello!
             </p>
 		</testFeedback>
-		<testFeedbackRef access="atEnd" outcomeIdentifier="show" identifier="feedback1" showHide="show" href="./TF01.xml"/>
+		<testFeedbackRef access="atEnd" outcomeIdentifier="showme" identifier="feedback1" showHide="show" href="./TF01.xml"/>
 	</testPart>
+	<testFeedbackRef access="during" outcomeIdentifier="showme" identifier="mainfeedback1" showHide="show" href="./TFMAIN.xml"/>
 </assessmentTest>

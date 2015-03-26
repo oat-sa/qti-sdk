@@ -292,6 +292,38 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	     
 	    $test = $doc->getDocumentComponent();
 	    $testFeedbackRefs = $test->getComponentsByClassName('testFeedbackRef');
-	    $this->assertEquals(1, count($testFeedbackRefs));
+	    $this->assertEquals(2, count($testFeedbackRefs));
+	}
+	
+	/**
+	 * @depends testTestFeedbackRefLoad
+	 */
+	public function testFeedbackRefSave() {
+	    $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
+	    $doc = new XmlCompactDocument();
+	    $doc->load($src, true);
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    $doc = new DOMDocument('1.0', 'UTF-8');
+	    $doc->load($file);
+	    
+	    $testFeedbackRefElts = $doc->getElementsByTagName('testFeedbackRef');
+	    $this->assertEquals(2, $testFeedbackRefElts->length);
+	    
+	    $testFeedbackRefElt1 = $testFeedbackRefElts->item(0);
+	    $this->assertEquals('feedback1', $testFeedbackRefElt1->getAttribute('identifier'));
+	    $this->assertEquals('atEnd', $testFeedbackRefElt1->getAttribute('access'));
+	    $this->assertEquals('show', $testFeedbackRefElt1->getAttribute('showHide'));
+	    $this->assertEquals('showme', $testFeedbackRefElt1->getAttribute('outcomeIdentifier'));
+	    $this->assertEquals('./TF01.xml', $testFeedbackRefElt1->getAttribute('href'));
+	    
+	    $testFeedbackRefElt2 = $testFeedbackRefElts->item(1);
+	    $this->assertEquals('mainfeedback1', $testFeedbackRefElt2->getAttribute('identifier'));
+	    $this->assertEquals('during', $testFeedbackRefElt2->getAttribute('access'));
+	    $this->assertEquals('show', $testFeedbackRefElt2->getAttribute('showHide'));
+	    $this->assertEquals('showme', $testFeedbackRefElt2->getAttribute('outcomeIdentifier'));
+	    $this->assertEquals('./TFMAIN.xml', $testFeedbackRefElt2->getAttribute('href'));
 	}
 }
