@@ -1178,17 +1178,20 @@ class AssessmentItemSession extends State
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustShowFeedback() === true) {
             
             foreach ($this->getAssessmentItem()->getModalFeedbackRules() as $rule) {
-                if (($outcomeValue = $this[$rule->getOutcomeIdentifier()]) !== null) {
             
-                    $identifierValue = new Identifier($rule->getIdentifier());
-                    $showHide = $rule->getShowHide();
+                $outcomeValue = $this[$rule->getOutcomeIdentifier()];
+                $identifierValue = new Identifier($rule->getIdentifier());
+                $showHide = $rule->getShowHide();
+                
+                $match = false;
+                if (is_null($outcomeValue) === false) {
                     $match = ($outcomeValue instanceof Scalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
-            
-                    if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {
-                        // At least one modal feedback will be displayed!
-                        $mustModalFeedback = true;
-                        break;
-                    }
+                }
+        
+                if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {
+                    // At least one modal feedback will be displayed!
+                    $mustModalFeedback = true;
+                    break;
                 }
             }
         }

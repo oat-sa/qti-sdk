@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\ShowHide;
+
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\IAssessmentItem;
@@ -43,6 +45,8 @@ use qtism\data\TestPart;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
+use qtism\data\TestFeedbackAccess;
+use qtism\data\TestFeedbackRefCollection;
 use qtism\runtime\common\State;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\runtime\common\Variable;
@@ -733,6 +737,15 @@ class AssessmentTestSession extends State
         }
     
         $this->suspendItemSession();
+        
+        // Let's see if we have to show a testFeedback...
+        if ($this->getState() !== AssessmentTestSessionState::MODAL_FEEDBACK && $this->mustShowTestFeedback() === true) {
+            $this->setState(AssessmentTestSessionState::MODAL_FEEDBACK);
+            // A new call to moveNext will be necessary to actuall move
+            // next!!!
+            return;
+        }
+        
         $this->nextRouteItem();
     
         if ($this->isRunning() === true) {
@@ -766,7 +779,7 @@ class AssessmentTestSession extends State
     
     /**
      * Perform a 'jump' to a given position in the Route sequence. The current navigation
-     * mode must be LINEAR to be able to jump.
+     * mode must be NONLINEAR to be able to jump.
      *
      * @param integer $position The position in the route the jump has to be made.
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
@@ -2476,5 +2489,76 @@ class AssessmentTestSession extends State
     protected function timeLimitsInForce($excludeItem = false)
     {
         return count($this->getCurrentRouteItem()->getTimeLimits($excludeItem)) !== 0;
+    }
+    
+    /**
+     * Whether or not a testFeedback must be shown.
+     * 
+     * @return boolean
+     */
+    protected function mustShowTestFeedback()
+    {
+        $mustShowTestFeedback = false;
+        $feedbackRefs = new TestFeedbackRefCollection();
+        
+        if ($this->isRunning() === true) {
+            $route = $this->getRoute();
+            $routeItem = $route->current();
+         
+            // Taking car of assessmentTest feedbacks...
+            $testFeedbackRefs = $routeItem->getAssessmentTest()->getTestFeedbackRefs();
+            
+            // Remove "atEnd" testFeedbacks if not at the end of the test.
+            if ($route->isLast() === false) {
+                $tmp = new TestFeedbackRefCollection();
+                
+                foreach ($testFeedbackRefs as $testFeedbackRef) {
+                    if ($testFeedbackRef->getAccess() === TestFeedbackAccess::DURING) {
+                        $tmp[] = $testFeedbackRef;
+                    }
+                }
+               
+                $feedbackRefs->merge($tmp);
+            } else {
+                $feedbackRefs->merge($testFeedbackRefs);
+            }
+            
+            // Taking care of testPart feedbacks...
+            $testFeedbackRefs = $routeItem->getTestPart()->getTestFeedbackRefs();
+            
+            // Remove "atEnd" testFeedbacks if not at the end of the testPart.
+            if ($route->isLastOfTestPart() === false) {
+                $tmp->reset();
+                
+                foreach ($testFeedbackRefs as $testFeedbackRef) {
+                    if ($testFeedbackRef->getAccess() === TestFeedbackAccess::DURING) {
+                        $tmp[] = $testFeedbackRef;
+                    }
+                }
+                 
+                $feedbackRefs->merge($tmp);
+            } else {
+                $feedbackRefs->merge($testFeedbackRefs);
+            }
+            
+            // Checking if one of them must be shown...
+            foreach ($feedbackRefs as $feedbackRef) {
+                $outcomeValue = $this[$feedbackRef->getOutcomeIdentifier()];
+                $identifierValue = new Identifier($feedbackRef->getIdentifier());
+                $showHide = $feedbackRef->getShowHide();
+                
+                $match = false;
+                if (is_null($outcomeValue) === false) {
+                    $match = ($outcomeValue instanceof Scalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
+                }
+                
+                if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {
+                    $mustShowTestFeedback = true;
+                    break;
+                }
+            }
+        }
+        
+        return $mustShowTestFeedback;
     }
 }

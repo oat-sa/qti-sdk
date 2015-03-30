@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\data\TestFeedbackRefCollection;
 use qtism\data\content\RubricBlockRefCollection;
 use qtism\data\content\RubricBlockCollection;
 use qtism\data\AssessmentTest;
