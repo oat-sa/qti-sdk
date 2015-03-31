@@ -77,7 +77,6 @@ class TestVariablesProcessor extends ItemSubsetProcessor
         $baseTypes = $this->getExpression()->getBaseType();
         $variableIdentifier = $this->getExpression()->getVariableIdentifier();
         $weightIdentifier = $this->getExpression()->getWeightIdentifier();
-        $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight($weightIdentifier);
         $values = array();
         $integerCount = 0;
 
@@ -106,8 +105,11 @@ class TestVariablesProcessor extends ItemSubsetProcessor
                     // For each variable of the item session matching $outcomeIdentifier...
                     foreach ($itemSession->getKeys() as $identifier) {
                 
+                        $itemRefIdentifier = $itemSession->getAssessmentItem()->getIdentifier();
+                        
                         if ($identifier === $id) {
                             $var = $itemSession->getVariable($id);
+                            $weight = (empty($weightIdentifier) === true) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
                 
                             // Single cardinality? Does it match the baseType?
                             if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
