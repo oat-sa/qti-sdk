@@ -198,9 +198,9 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $json = json_encode(array('list' => array('directedPair' => array(array('A', 'B'), array('D', 'C')))));
         $returnValue[] = array($container, $json);
         
-        // duration multiple("P3Y6M4DT12H30M5S", "P4Y").
-        $container = new MultipleContainer(BaseType::DURATION, array(new Duration('P3Y6M'), new Duration('P4Y')));
-        $json = json_encode(array('list' => array('duration' => array('P3Y6M', 'P4Y'))));
+        // duration multiple("P3Y67M", "P4Y").
+        $container = new MultipleContainer(BaseType::DURATION, array(new Duration('P3Y7M'), new Duration('P4Y')));
+        $json = json_encode(array('list' => array('duration' => array('P3Y7M', 'P4Y'))));
         $returnValue[] = array($container, $json);
         
         // uri multiple("file:///aFile.txt", "file:///abc.txt").

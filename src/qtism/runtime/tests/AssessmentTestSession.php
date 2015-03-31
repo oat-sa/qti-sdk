@@ -24,7 +24,8 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\ShowHide;
-
+use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\Identifier;
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\IAssessmentItem;
@@ -738,8 +739,12 @@ class AssessmentTestSession extends State
     
         $this->suspendItemSession();
         
+        // If the current state is MODAL_FEEDBACK, it means we are now really moving forward!
+        if ($this->getState() === AssessmentTestSessionState::MODAL_FEEDBACK) {
+            $this->setState(AssessmentTestSessionState::INTERACTING);
+        }
         // Let's see if we have to show a testFeedback...
-        if ($this->getState() !== AssessmentTestSessionState::MODAL_FEEDBACK && $this->mustShowTestFeedback() === true) {
+        elseif ($this->getState() !== AssessmentTestSessionState::MODAL_FEEDBACK && $this->mustShowTestFeedback() === true) {
             $this->setState(AssessmentTestSessionState::MODAL_FEEDBACK);
             // A new call to moveNext will be necessary to actuall move
             // next!!!
