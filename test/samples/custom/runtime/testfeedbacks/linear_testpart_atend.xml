@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+    identifier="linear_assessmenttest_during" title="Linear AssessmentTest During">
+    <outcomeDeclaration identifier="FULLCORRECT1" cardinality="SINGLE" baseType="identifier">
+        <defaultValue>
+            <value>false</value>
+        </defaultValue>
+    </outcomeDeclaration>
+    <outcomeDeclaration identifier="FULLCORRECT2" cardinality="SINGLE" baseType="identifier">
+        <defaultValue>
+            <value>false</value>
+        </defaultValue>
+    </outcomeDeclaration>
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S01" title="Section 01" visible="true">
+            <assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceA</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceB</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <!-- This testFeedback will be shown at the end of the testPart if the answer to Q01 and Q02 are correct. -->
+        <testFeedbackRef access="atEnd" outcomeIdentifier="FULLCORRECT1" showHide="show" identifier="true" href="TF01.xml"/>
+    </testPart>
+    <testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S02" title="Section 02" visible="true">
+            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceC</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceD</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <!-- This testFeedback will be shown at the end of the testPart if the answer to Q01 and Q02 are correct. -->
+        <testFeedbackRef access="atEnd" outcomeIdentifier="FULLCORRECT2" showHide="show" identifier="true" href="TF02.xml"/>
+    </testPart>
+    <outcomeProcessing>
+        <outcomeCondition>
+            <outcomeIf>
+                <match>
+                    <numberCorrect sectionIdentifier="S01"/>
+                    <baseValue baseType="integer">2</baseValue>
+                </match>
+                <setOutcomeValue identifier="FULLCORRECT1">
+                    <baseValue baseType="identifier">true</baseValue>
+                </setOutcomeValue>
+            </outcomeIf>
+            <outcomeElse>
+                <setOutcomeValue identifier="FULLCORRECT1">
+                    <baseValue baseType="identifier">false</baseValue>
+                </setOutcomeValue>
+            </outcomeElse>
+        </outcomeCondition>
+        <outcomeCondition>
+            <outcomeIf>
+                <match>
+                    <numberCorrect sectionIdentifier="S02"/>
+                    <baseValue baseType="integer">2</baseValue>
+                </match>
+                <setOutcomeValue identifier="FULLCORRECT2">
+                    <baseValue baseType="identifier">true</baseValue>
+                </setOutcomeValue>
+            </outcomeIf>
+            <outcomeElse>
+                <setOutcomeValue identifier="FULLCORRECT2">
+                    <baseValue baseType="identifier">false</baseValue>
+                </setOutcomeValue>
+            </outcomeElse>
+        </outcomeCondition>
+    </outcomeProcessing>
+</assessmentTest>

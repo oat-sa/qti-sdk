@@ -78,4 +78,83 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         $testSession->moveNext();
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState()); 
     }
+    
+    /**
+     * @depends testLinearAssessmentTestAtEndShow
+     */
+    public function testLinearAssessmentTestAtEndNoShow() {
+        $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_assessmenttest_atend.xml';
+        $testSession = self::instantiate($url);
+    
+        $testSession->beginTestSession();
+        $this->assertEquals('false', $testSession['FULLCORRECT']->getValue());
+    
+        // Attempt on Q01. Correct response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->moveNext();
+    
+        // Attempt on Q02. Incorrect response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+        $testSession->moveNext();
+    
+        // Because it is the end of the test, and the two responses are not correct, the feedback must not be shown.
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+    }
+    
+    public function testLinearTestPartAtEndShow() {
+        $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_testpart_atend.xml';
+        $testSession = self::instantiate($url);
+    
+        $testSession->beginTestSession();
+        $this->assertEquals('false', $testSession['FULLCORRECT1']->getValue());
+    
+        // Entering testPart P01...
+        // Attempt on Q01. Correct response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->moveNext();
+    
+        // No feedback must be shown because we are not at the end of the testPart.
+        // Moreover, the FULLCORRECT1's value should still be 'false'.
+        $this->assertEquals('false', $testSession['FULLCORRECT1']->getValue());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
+    
+        // Attempt on Q02. Correct response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $testSession->moveNext();
+    
+        // Because it is the end of the testPart, and the two responses of this testPart are correct, the feedback must be shown.
+        $this->assertEquals(AssessmentTestSessionState::MODAL_FEEDBACK, $testSession->getState());
+        $this->assertEquals('true', $testSession['FULLCORRECT1']->getValue());
+        
+        // Entering testPart P02...
+        $testSession->moveNext();
+        $this->assertEquals('false', $testSession['FULLCORRECT2']->getValue());
+        
+        // Attempt on Q03. Correct response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+        $testSession->moveNext();
+        
+        // No feedback must be shown because we are not at the end of the testPart.
+        // Moreover, the FULLCORRECT2's value should still be 'false'.
+        $this->assertEquals('false', $testSession['FULLCORRECT2']->getValue());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
+        
+        // Attempt on Q04. Correct response.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+        $testSession->moveNext();
+        
+        // Because it is the end of the testPart, and the two responses of this testPart are correct, the feedback must be shown.
+        $this->assertEquals(AssessmentTestSessionState::MODAL_FEEDBACK, $testSession->getState());
+        $this->assertEquals('true', $testSession['FULLCORRECT2']->getValue());
+        
+        // A very last moveNext ends the test.
+        $testSession->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+    }
 }
