@@ -65,6 +65,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-choiceInteraction');
+        $this->additionalUserClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
 
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
