@@ -132,6 +132,9 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
             $glue = ($currentClasses !== '') ? "\x20" : "";
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
+        
+        // Reset additional user classes for next rendering with this implementation.
+        $this->setAdditionalUserClasses(array());
     }
 
     /**

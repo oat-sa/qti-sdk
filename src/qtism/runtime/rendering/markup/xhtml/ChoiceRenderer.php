@@ -74,7 +74,7 @@ abstract class ChoiceRenderer extends BodyElementRenderer
         $fragment->firstChild->setAttribute('data-fixed', ($component->isFixed() === true) ? 'true' : 'false');
 
         if ($component->hasTemplateIdentifier() === true) {
-            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
+            $this->additionalUserClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
             $fragment->firstChild->setAttribute('data-template-identifier', $component->getTemplateIdentifier());
             $fragment->firstChild->setAttribute('data-show-hide', ($component->getShowHide() === ShowHide::SHOW) ? 'show' : 'hide');
         }

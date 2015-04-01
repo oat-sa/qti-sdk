@@ -68,7 +68,7 @@ class ModalFeedbackRenderer extends AbstractXhtmlRenderer
         $fragment->firstChild->setAttribute('data-identifier', $component->getIdentifier());
 
         if ($this->getRenderingEngine()->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_STATIC) {
-            $this->additionalClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
+            $this->additionalUserClass(($component->getShowHide() === ShowHide::SHOW) ? 'qti-hide' : 'qti-show');
         }
     }
 }
