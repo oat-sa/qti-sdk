@@ -73,7 +73,7 @@ class SliderInteractionRenderer extends InteractionRenderer
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-sliderInteraction');
-        $this->additionalClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
+        $this->additionalUserClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
 
         $fragment->firstChild->setAttribute('data-lower-bound', $component->getLowerBound());
         $fragment->firstChild->setAttribute('data-upper-bound', $component->getUpperBound());
