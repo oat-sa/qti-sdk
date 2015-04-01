@@ -15,6 +15,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase {
 	    ');
 	    
 	    $renderingEngine = new XhtmlRenderingEngine();
+	    $renderingEngine->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
 	    $rendering = $renderingEngine->render($div);
 	    
 	    $this->assertInstanceOf('\\DOMDocument', $rendering);

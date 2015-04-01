@@ -119,13 +119,24 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
         $this->appendChildren($fragment, $component, $base);
         $this->appendAttributes($fragment, $component, $base);
 
-        if ($this->hasAdditionalClasses() === true) {
-            $classes = implode("\x20", $this->getAdditionalClasses());
-            $currentClasses = $fragment->firstChild->getAttribute('class');
-            $glue = ($currentClasses !== '') ? "\x20" : "";
-            $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
+        if ($this->getRenderingEngine()->getCssClassPolicy() === AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT) {
+            // The whole hierarchy of qti- CSS classes must be rendered.
+            if ($this->hasAdditionalClasses() === true) {
+                $classes = implode("\x20", $this->getAdditionalClasses());
+                $currentClasses = $fragment->firstChild->getAttribute('class');
+                $glue = ($currentClasses !== '') ? "\x20" : "";
+                $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
+            }
+        } else {
+            // Only the last added qti- CSS class must be rendered.
+            if ($this->hasAdditionalClasses() === true) {
+                $classes = $this->getAdditionalClasses();
+                $class = array_pop($classes);
+                $fragment->firstChild->setAttribute('class', $class);
+            }
         }
         
+        // Add user specific CSS classes e.g. 'my-class' to rendering. 
         if ($this->hasAdditionalUserClasses() === true) {
             $classes = implode("\x20", $this->getAdditionalUserClasses());
             $currentClasses = $fragment->firstChild->getAttribute('class');

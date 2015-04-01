@@ -110,6 +110,22 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @var integer
      */
     const STYLESHEET_SEPARATE = 7;
+    
+    /**
+     * QTI specific CSS classes will be ones related to
+     * concrete QTI classes from the information model only.
+     * 
+     * @var integer
+     */
+    const CSSCLASS_CONCRETE = 8;
+    
+    /**
+     * QTI specific CSS classes will be corresponding to the
+     * whole QTI information model class hierarchy.
+     * 
+     * @var integer
+     */
+    const CSSCLASS_ABSTRACT = 9;
 
     /**
      * An array used to 'tag' explored Component object.
@@ -212,6 +228,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @var integer
      */
     private $stylesheetPolicy = AbstractMarkupRenderingEngine::STYLESHEET_INLINE;
+    
+    /**
+     * The policy to adopt while dealing with QTI related CSS classes.
+     * 
+     * @var integer
+     */
+    private $cssClassPolicy = AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE;
 
     /**
      * The variable name to be used as the QTI AssessmentTest/AssessmentItem
@@ -1086,6 +1109,32 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     public function getStylesheetPolicy()
     {
         return $this->stylesheetPolicy;
+    }
+    
+    /**
+     * Set the policy to adopt while dealing with QTI related CSS classes.
+     * 
+     * * AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE: Only the concrete QTI specific classes will be rendered.
+     * * AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT: The whole hierarachy of QTI specific classes will be rendered.
+     * 
+     * @param integer $cssClassPolicy
+     */
+    public function setCssClassPolicy($cssClassPolicy)
+    {
+        $this->cssClassPolicy = $cssClassPolicy;
+    }
+    
+    /**
+     * Get the policy to adopt while dealing with QTI related CSS classes.
+     * 
+     * * AbstractMarkupRenderingEngine::CSSCLASS_CONCRETE: Only the concrete QTI specific classes will be rendered.
+     * * AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT: The whole hierarachy of QTI specific classes will be rendered.
+     * 
+     * @return integer
+     */
+    public function getCssClassPolicy()
+    {
+        return $this->cssClassPolicy;
     }
 
     /**

@@ -77,22 +77,28 @@ class Render extends Cli
         );
         
         // -- Flags
-        // Document option.
+        // Document flag.
         $arguments->addFlag(
             array('document', 'd'),
             'Embed the rendering into a document.'
         );
         
-        // Format option.
+        // Format flag.
         $arguments->addFlag(
             array('format', 'f'),
             'Format the rendering output with indentation.'
         );
         
-        // Novalidate option.
+        // Novalidate flag.
         $arguments->addFlag(
             array('novalidate', 'n'),
             'Do not validate QTI XML source.'                
+        );
+        
+        // CSS Class Hierarchy flag.
+        $arguments->addFlag(
+            array('csshierarchy', 'c'),
+            'Full qti- CSS class hierarchy.'                
         );
         
         return $arguments;
@@ -408,6 +414,10 @@ class Render extends Cli
         
         if ($arguments['document'] === true) {
             $engine->setStylesheetPolicy(AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE);
+        }
+        
+        if ($arguments['csshierarchy'] === true) {
+            $engine->setCssClassPolicy(AbstractMarkupRenderingEngine::CSSCLASS_ABSTRACT);
         }
         
         return $engine;

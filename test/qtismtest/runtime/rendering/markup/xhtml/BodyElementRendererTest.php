@@ -14,6 +14,7 @@ class BodyElementRendererTest extends QtiSmTestCase {
 	
 	public function testRenderNoChildren() {
 	    $ctx = new XhtmlRenderingEngine();
+	    $ctx->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
 	    $br = new Br('my-br', 'break down', 'en-US', 'QTISM generated.');
 	    
 	    $renderer = new BodyElementRenderer();
@@ -30,6 +31,7 @@ class BodyElementRendererTest extends QtiSmTestCase {
 	
 	public function testRenderChildren() {
 	    $ctx = new XhtmlRenderingEngine();
+	    $ctx->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
 	    
 	    $abbr = new Abbr('my-abbr', 'qti qti-abbr');
 	    $abbrRenderer = new BodyElementRenderer();
