@@ -23,7 +23,7 @@ class BodyElementRendererTest extends QtiSmTestCase {
 	    
 	    $this->assertEquals('br', $element->nodeName);
 	    $this->assertEquals('my-br', $element->getAttribute('id'));
-	    $this->assertEquals('break down qti-bodyElement qti-br', $element->getAttribute('class'));
+	    $this->assertEquals('qti-bodyElement qti-br break down', $element->getAttribute('class'));
 	    $this->assertEquals('en-US', $element->getAttribute('lang'));
 	    $this->assertEquals('', $element->getAttribute('label'));
 	}
@@ -47,7 +47,7 @@ class BodyElementRendererTest extends QtiSmTestCase {
 	    
 	    $this->assertEquals('abbr', $element->nodeName);
 	    $this->assertEquals('my-abbr', $element->getAttribute('id'));
-	    $this->assertEquals('qti qti-abbr qti-bodyElement qti-abbr', $element->getAttribute('class'));
+	    $this->assertEquals('qti-bodyElement qti-abbr qti qti-abbr', $element->getAttribute('class'));
 	    $this->assertEquals('abbreviation...', $element->firstChild->wholeText);
 	}
 }

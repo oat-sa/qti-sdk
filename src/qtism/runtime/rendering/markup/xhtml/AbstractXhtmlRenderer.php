@@ -47,12 +47,20 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     private $replacementTagName = '';
 
     /**
-     * A set of additional CSS classes to be added
+     * A set of additional QTI specific classes to be added
      * to the rendered element.
      *
      * @var array
      */
     private $additionalClasses = array();
+    
+    /**
+     * A set of additional user specific classes to be added to the
+     * rendered element.
+     * 
+     * @var array
+     */
+    private $additionalUserClasses = array();
 
     /**
      * Create a new AbstractXhtmlRenderer object.
@@ -117,9 +125,13 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
             $glue = ($currentClasses !== '') ? "\x20" : "";
             $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
         }
-
-        // Reset additional classes for next rendering.
-        $this->setAdditionalClasses(array());
+        
+        if ($this->hasAdditionalUserClasses() === true) {
+            $classes = implode("\x20", $this->getAdditionalUserClasses());
+            $currentClasses = $fragment->firstChild->getAttribute('class');
+            $glue = ($currentClasses !== '') ? "\x20" : "";
+            $fragment->firstChild->setAttribute('class', $currentClasses . $glue . $classes);
+        }
     }
 
     /**
@@ -242,12 +254,58 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
     {
         $additionalClasses = $this->getAdditionalClasses();
         
-        
         if (($key = array_search($additionalClass, $additionalClasses)) !== false) {
             unset($additionalClasses[$key]);
         }
         
         $additionalClasses[] = $additionalClass;
-        $this->setAdditionalClasses(array_unique($additionalClasses));
+        $this->setAdditionalClasses($additionalClasses);
+    }
+    
+    /**
+     * Set the array of additional user CSS classes.
+     * 
+     * @param array $additionalUserClasses
+     */
+    public function setAdditionalUserClasses(array $additionalUserClasses)
+    {
+        $this->additionalUserClasses = $additionalUserClasses;
+    }
+    
+    /**
+     * Get the array of additional user CSS classes.
+     * 
+     * @return array
+     */
+    public function getAdditionalUserClasses()
+    {
+        return $this->additionalUserClasses;
+    }
+    
+    /**
+     * Whether additional user CSS classes are defined for rendering.
+     * 
+     * @return boolean
+     */
+    public function hasAdditionalUserClasses()
+    {
+        return count($this->getAdditionalUserClasses()) > 0;
+    }
+    
+    /**
+     * Add an additional user CSS class to be rendered.
+     * 
+     * @param string $additionalUserClass
+     */
+    public function additionalUserClass($additionalUserClass)
+    {
+        $additionalClasses = $this->getAdditionalUserClasses();
+        
+        if (($key = array_search($additionalUserClass, $additionalClasses)) !== false) {
+            unset($additionalClasses[$key]);
+        }
+        
+        $additionalClasses[] = $additionalUserClass;
+        $this->setAdditionalUserClasses($additionalClasses);
     }
 }

@@ -47,6 +47,7 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
+        $this->additionalClass('qti-bodyElement');
     }
 
     /**
@@ -55,15 +56,17 @@ class BodyElementRenderer extends AbstractXhtmlRenderer
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         parent::appendAttributes($fragment, $component, $base);
-        $this->additionalClass('qti-bodyElement');
         $this->additionalClass('qti-' . $component->getQtiClassName());
-
+        
         if ($component->hasId() === true) {
             $fragment->firstChild->setAttribute('id', $component->getId());
         }
 
         if ($component->hasClass() === true) {
-            $fragment->firstChild->setAttribute('class', $component->getClass());
+            $classes = explode("\x20", $component->getClass());
+            foreach ($classes as $class) {
+                $this->additionalUserClass($class);
+            }
         }
 
         if ($component->hasLang() === true) {

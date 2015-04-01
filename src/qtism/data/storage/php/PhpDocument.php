@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\php;
 
+use qtism\data\ExtendedAssessmentTest;
 use qtism\common\datatypes\Coords;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
@@ -188,7 +189,9 @@ class PhpDocument extends QtiDocument
 
     protected static function getBaseImplementation($object)
     {
-        if ($object instanceof AssessmentTest) {
+        if ($object instanceof ExtendedAssessmentTest) {
+            return "qtism\\data\\ExtendedAssessmentTest";
+        } elseif ($object instanceof AssessmentTest) {
             return "qtism\\data\\AssessmentTest";
         } elseif ($object instanceof AssessmentItem) {
             return "qtism\\data\\AssessmentItem";
