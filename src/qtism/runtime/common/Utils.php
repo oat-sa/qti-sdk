@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\common;
 
+use qtism\common\collections\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
@@ -37,10 +38,8 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;
 
-// @todo write an isNull method that applies on both scalar and container values.
 
 /**
  * Utility class gathering utility methods for the \qtism\runtime\common
@@ -52,13 +51,13 @@ use \InvalidArgumentException;
 class Utils
 {
     /**
-	 * Whether a given $value is compliant with the QTI runtime model. In other words,
-	 * if it is null or a QTI Scalar Datatype.
-	 *
-	 * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
-	 * @return boolean
-	 */
-    public static function isQtiScalarDatatypeCompliant($value)
+     * Whether a given $value is compliant with the QTI runtime model. In other words,
+     * if it is null or a QTI Scalar Datatype.
+     *
+     * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
+     * @return boolean
+     */
+    static public function isQtiScalarDatatypeCompliant($value)
     {
         if ($value === null) {
             return true;
@@ -70,13 +69,13 @@ class Utils
     }
 
     /**
-	 * Whether a given $value is compliant with a given $baseType.
-	 *
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @param mixed $value A value.
-	 * @return boolean
-	 */
-    public static function isBaseTypeCompliant($baseType, $value)
+     * Whether a given $value is compliant with a given $baseType.
+     *
+     * @param int $baseType A value from the BaseType enumeration.
+     * @param mixed $value A value.
+     * @return boolean
+     */
+    static public function isBaseTypeCompliant($baseType, $value)
     {
         if ($value === null) {
             return true; // A value can always be null.
@@ -88,13 +87,13 @@ class Utils
     }
 
     /**
-	 * Whether a given $cardinality is compliant with a given $value.
-	 *
-	 * @param integer $cardinality
-	 * @param mixed $value
-	 * @return boolean
-	 */
-    public static function isCardinalityCompliant($cardinality, $value)
+     * Whether a given $cardinality is compliant with a given $value.
+     *
+     * @param integer $cardinality
+     * @param mixed $value
+     * @return boolean
+     */
+    static public function isCardinalityCompliant($cardinality, $value)
     {
         if ($value === null) {
             return true;
@@ -106,12 +105,12 @@ class Utils
     }
 
     /**
-	 * Throw an InvalidArgumentException depending on a PHP in-memory value.
-	 *
-	 * @param mixed $value A given PHP primitive value.
-	 * @throws \InvalidArgumentException In any case.
-	 */
-    public static function throwTypingError($value)
+     * Throw an InvalidArgumentException depending on a PHP in-memory value.
+     *
+     * @param mixed $value A given PHP primitive value.
+     * @throws \InvalidArgumentException In any case.
+     */
+    static public function throwTypingError($value)
     {
         $givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value);
         $acceptedTypes = array('boolean', 'integer', 'float', 'double', 'string', 'Duration', 'Pair', 'DirectedPair', 'Point');
@@ -121,14 +120,14 @@ class Utils
     }
 
     /**
-	 * Throw an InvalidArgumentException depending on a given qti:baseType
-	 * and an in-memory PHP value.
-	 *
-	 * @param int $baseType A value from the BaseType enumeration.
-	 * @param mixed $value A given PHP primitive value.
-	 * @throws \InvalidArgumentException In any case.
-	 */
-    public static function throwBaseTypeTypingError($baseType, $value)
+     * Throw an InvalidArgumentException depending on a given qti:baseType
+     * and an in-memory PHP value.
+     *
+     * @param int $baseType A value from the BaseType enumeration.
+     * @param mixed $value A given PHP primitive value.
+     * @throws \InvalidArgumentException In any case.
+     */
+    static public function throwBaseTypeTypingError($baseType, $value)
     {
         $givenValue = (gettype($value) == 'object') ? get_class($value) : gettype($value) . ':' . $value;
         $acceptedTypes = BaseType::getNameByConstant($baseType);
@@ -137,12 +136,12 @@ class Utils
     }
 
     /**
-	 * Infer the QTI baseType of a given $value.
-	 *
-	 * @param mixed $value A value you want to know the QTI baseType.
-	 * @return integer|false A value from the BaseType enumeration or false if the baseType could not be infered.
-	 */
-    public static function inferBaseType($value)
+     * Infer the QTI baseType of a given $value.
+     *
+     * @param mixed $value A value you want to know the QTI baseType.
+     * @return integer|false A value from the BaseType enumeration or false if the baseType could not be infered.
+     */
+    static public function inferBaseType($value)
     {
         if ($value === null) {
             return false;
@@ -156,17 +155,17 @@ class Utils
     }
 
     /**
-	 * Infer the cardinality of a given $value.
-	 *
-	 * Please note that:
-	 *
-	 * * A RecordContainer has no cardinality, thus it always returns false for such a container.
-	 * * The null value has no cardinality, this it always returns false for such a value.
-	 *
-	 * @param mixed $value A value you want to infer the cardinality.
-	 * @return integer|boolean A value from the Cardinality enumeration or false if it could not be infered.
-	 */
-    public static function inferCardinality($value)
+     * Infer the cardinality of a given $value.
+     *
+     * Please note that:
+     *
+     * * A RecordContainer has no cardinality, thus it always returns false for such a container.
+     * * The null value has no cardinality, this it always returns false for such a value.
+     *
+     * @param mixed $value A value you want to infer the cardinality.
+     * @return integer|boolean A value from the Cardinality enumeration or false if it could not be infered.
+     */
+    static public function inferCardinality($value)
     {
         if ($value === null) {
             return false;
@@ -178,19 +177,19 @@ class Utils
     }
 
     /**
-	 * Whether a given $string is a valid variable identifier.
-	 *
-	 * Q01			-> Valid
-	 * Q_01			-> Valid
-	 * 1_Q01		-> Invalid
-	 * Q01.SCORE	-> Valid
-	 * Q-01.1.Score	-> Valid
-	 * Q*01.2.Score	-> Invalid
-	 *
-	 * @param string $string A string value.
-	 * @return boolean Whether the given $string is a valid variable identifier.
-	 */
-    public static function isValidVariableIdentifier($string)
+     * Whether a given $string is a valid variable identifier.
+     *
+     * Q01			-> Valid
+     * Q_01			-> Valid
+     * 1_Q01		-> Invalid
+     * Q01.SCORE	-> Valid
+     * Q-01.1.Score	-> Valid
+     * Q*01.2.Score	-> Invalid
+     *
+     * @param string $string A string value.
+     * @return boolean Whether the given $string is a valid variable identifier.
+     */
+    static public function isValidVariableIdentifier($string)
     {
         if (gettype($string) !== 'string' || empty($string)) {
             return false;
@@ -202,19 +201,19 @@ class Utils
     }
 
     /**
-	 * Makes $value compliant with baseType $targetBaseType, if $value is compliant. Otherwise,
-	 * the original $value is returned.
-	 *
-	 * @param mixed $value A QTI Runtime compliant value.
-	 * @param integer $targetBaseType The target baseType.
-	 * @return mixed The juggled value if needed, otherwise the original value of $value.
-	 */
-    public static function juggle($value, $targetBaseType)
+     * Makes $value compliant with baseType $targetBaseType, if $value is compliant. Otherwise,
+     * the original $value is returned.
+     *
+     * @param mixed $value A QTI Runtime compliant value.
+     * @param integer $targetBaseType The target baseType.
+     * @return mixed The juggled value if needed, otherwise the original value of $value.
+     */
+    static public function juggle($value, $targetBaseType)
     {
         // A lot of people designing QTI items want to put float values
         // in integer baseType'd variables... So let's go for type juggling!
 
-        $valueBaseType = RuntimeUtils::inferBaseType($value);
+        $valueBaseType = self::inferBaseType($value);
 
         if ($valueBaseType !== $targetBaseType && ($value instanceof MultipleContainer || $value instanceof OrderedContainer)) {
 
@@ -250,12 +249,12 @@ class Utils
     }
 
     /**
-	 * Transforms the content of float array to an integer array.
-	 *
-	 * @param array $floatArray An array containing float values.
-	 * @return array An array containing integer values.
-	 */
-    public static function floatArrayToInteger($floatArray)
+     * Transforms the content of float array to an integer array.
+     *
+     * @param array $floatArray An array containing float values.
+     * @return array An array containing integer values.
+     */
+    static public function floatArrayToInteger($floatArray)
     {
         $integerArray = array();
         foreach ($floatArray as $f) {
@@ -266,12 +265,12 @@ class Utils
     }
 
     /**
-	 * Transforms the content of an integer array to a float array.
-	 *
-	 * @param array $integerArray An array containing integer values.
-	 * @return array An array containing float values.
-	 */
-    public static function integerArrayToFloat($integerArray)
+     * Transforms the content of an integer array to a float array.
+     *
+     * @param array $integerArray An array containing integer values.
+     * @return array An array containing float values.
+     */
+    static public function integerArrayToFloat($integerArray)
     {
         $floatArray = array();
         foreach ($integerArray as $i) {
@@ -282,13 +281,13 @@ class Utils
     }
 
     /**
-	 * Transform a given PHP runtime value to a QtiDatatype object.
-	 *
-	 * @param mixed|null $v
-	 * @param integer $baseType A value from the BaseType enumeration.
-	 * @return \qtism\common\datatypes\Integer|\qtism\common\datatypes\IntOrIdentifier|\qtism\common\datatypes\Identifier|\qtism\common\datatypes\String|\qtism\common\datatypes\Uri|\qtism\common\datatypes\Float|\qtism\common\datatypes\Boolean|null
-	 */
-    public static function valueToRuntime($v, $baseType)
+     * Transform a given PHP runtime value to a QtiDatatype object.
+     *
+     * @param mixed|null $v
+     * @param integer $baseType A value from the BaseType enumeration.
+     * @return \qtism\common\datatypes\Integer|\qtism\common\datatypes\IntOrIdentifier|\qtism\common\datatypes\Identifier|\qtism\common\datatypes\String|\qtism\common\datatypes\Uri|\qtism\common\datatypes\Float|\qtism\common\datatypes\Boolean|null
+     */
+    static public function valueToRuntime($v, $baseType)
     {
         if ($v !== null) {
 
@@ -320,5 +319,19 @@ class Utils
         }
 
         return $v;
+    }
+    
+    /**
+     * Whether or not a QtiDatatype is considered to be null.
+     * 
+     * As per the QTI specification, the NULL value, empty strings and empty containers
+     * are always treated as NULL values.
+     * 
+     * @param \qtism\common\datatypes\QtiDatatype $value
+     * @return boolean
+     */
+    static public function isNull(QtiDatatype $value = null)
+    {
+        return is_null($value) === true || ($value instanceof String && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
     }
 }

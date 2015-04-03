@@ -57,6 +57,14 @@ class RuleProcessingException extends ProcessingException
      * @var integer
      */
     const EXIT_TEMPLATE = 12;
+    
+    /**
+     * The error code to use when a templateConstraint rule returned
+     * false or null.
+     * 
+     * @var integer
+     */
+    const TEMPLATE_CONSTRAINT_UNSATISFIED = 13;
 
     /**
 	 * Set the source of the error.

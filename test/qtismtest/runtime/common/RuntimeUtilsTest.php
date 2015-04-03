@@ -18,6 +18,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
+use qtism\common\datatypes\QtiDatatype;
 
 class RuntimeUtilsTest extends QtiSmTestCase {
 
@@ -43,6 +44,16 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	 */
 	public function testIsValidVariableIdentifier($string, $expected) {
 		$this->assertSame($expected, Utils::isValidVariableIdentifier($string));
+	}
+	
+	/**
+	 * @dataProvider isNullDataProvider
+	 * 
+	 * @param QtiDatatype $value
+	 * @param boolean $expected
+	 */
+	public function testIsNull(QtiDatatype $value = null, $expected) {
+	    $this->assertSame($expected, Utils::isNull($value));
 	}
 	
 	public function inferBaseTypeProvider() {
@@ -115,5 +126,18 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 			array('Q01.0.SCORE', false), // non positive sequence number -> false
 			array('Q01.09.SCORE', false) // prefixing sequence by zero not allowed.
 		);
+	}
+	
+	public function isNullDataProvider() {
+	    return array(
+	        array(new Boolean(true), false),
+	        array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20))), false),
+	        array(new String('G-string!'), false),
+	        array(null, true),
+	        array(new String(''), true),
+	        array(new MultipleContainer(BaseType::INTEGER), true),
+	        array(new OrderedContainer(BaseType::INTEGER), true),
+	        array(new RecordContainer(), true)                 
+	    );
 	}
 }
