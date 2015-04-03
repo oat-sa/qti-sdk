@@ -2,6 +2,7 @@
 namespace qtismtest\runtime\rules;
 
 use qtismtest\QtiSmTestCase;
+use qtism\runtime\rules\RuleProcessingException;
 use qtism\common\datatypes\Boolean;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
@@ -137,5 +138,26 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 		$processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $state['myBool']);
 		$this->assertTrue($state['myBool']->getValue());
+	}
+	
+	public function testSetOutcomeValueNoVariable() {
+	    $rule = $this->createComponentFromXml('
+	        <setOutcomeValue identifier="SCOREXXXX">
+	            <baseValue baseType="float">1337.1337</baseValue>
+	        </setOutcomeValue>
+	    ');
+	    
+	    $processor = new SetOutcomeValueProcessor($rule);
+	    $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
+	    $state = new State(array($score));
+	    $processor->setState($state);
+	    
+	    $this->setExpectedException(
+	        'qtism\\runtime\\rules\\RuleProcessingException',
+	        "No variable with identifier 'SCOREXXXX' to be set in the current state.",
+	        RuleProcessingException::NONEXISTENT_VARIABLE
+	    );
+	    
+	    $processor->process();
 	}
 }
