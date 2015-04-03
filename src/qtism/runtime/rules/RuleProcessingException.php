@@ -49,6 +49,14 @@ class RuleProcessingException extends ProcessingException
 	 * @var integer
 	 */
     const EXIT_TEST = 11;
+    
+    /**
+     * The error code to use when the exitTemplate rule is invoked
+     * during rule processing.
+     * 
+     * @var integer
+     */
+    const EXIT_TEMPLATE = 12;
 
     /**
 	 * Set the source of the error.
