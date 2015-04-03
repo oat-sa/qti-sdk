@@ -24,6 +24,7 @@
 namespace qtism\runtime\rules;
 
 use qtism\runtime\expressions\ExpressionEngine;
+use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\common\enums\BaseType;
@@ -33,21 +34,21 @@ use \InvalidArgumentException;
 /**
  * From IMS QTI:
  * 
- * The response variable to have its correct value set.
+ * The response variable or outcome variable to have its default value set.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SetCorrectResponseProcessor extends RuleProcessor
+class SetDefaultValueProcessor extends RuleProcessor
 {
     /**
-     * Apply the current SetCorrectResponse rule on the current state.
+     * Apply the current SetDefaultValue rule on the current state.
      * 
      * A RuleProcessingException will be thrown if:
      * 
      * * No variable corresponds to the given identifier in the current state.
-     * * The target variable is not a ResponseVariable.
-     * * The baseType and/or cardinality of the value to be set does not correspond to the baseType and/or cardinality of the target variable.
+     * * The target variable is not a ResponseVariable nor an OutcomeVariable.
+     * * The baseType and/or cardinality of the value to be set as the default value does not correspond to the baseType and/or cardinality of the target variable.
      * * An error occurs while processing the expression representing the value to be set.
      * 
      * @throws \qtism\runtime\rules\RuleProcessingException
@@ -63,15 +64,15 @@ class SetCorrectResponseProcessor extends RuleProcessor
         if (is_null($var) === true) {
             $msg = "No variable with identifier '${variableIdentifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
-        } elseif (!$var instanceof ResponseVariable) {
-            $msg = "The variable to set '${variableIdentifier}' is not an instance of 'ResponseVariable'.";
+        } elseif (!$var instanceof ResponseVariable && !$var instanceof OutcomeVariable) {
+            $msg = "The variable to set '${variableIdentifier}' is not an instance of 'ResponseVariable' nor an instance of 'OutcomeVariable'.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
         
         try {
             $expressionEngine = new ExpressionEngine($rule->getExpression(), $state);
             $val = $expressionEngine->process();
-            $var->setCorrectResponse($val);
+            $var->setDefaultValue($val);
         } catch (InvalidArgumentException $e) {
             $varBaseType = (BaseType::getNameByConstant($var->getBaseType())  === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
             $varCardinality = (Cardinality::getNameByConstant($var->getCardinality()));
@@ -89,6 +90,6 @@ class SetCorrectResponseProcessor extends RuleProcessor
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetCorrectResponse';
+        return 'qtism\\data\\rules\\SetDefaultValue';
     }
 }
