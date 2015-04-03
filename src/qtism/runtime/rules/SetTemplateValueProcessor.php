@@ -26,27 +26,19 @@ namespace qtism\runtime\rules;
 /**
  * From IMS QTI:
  *
- * The setOutcomeValue rule sets the value of an outcome variable to the value
- * obtained from the associated expression. An outcome variable can be updated with
- * reference to a previously assigned value, in other words, the outcome variable
- * being set may appear in the expression where it takes the value previously assigned
- * to it.
- *
- * Special care is required when using the numeric base-types because floating point
- * values can not be assigned to integer variables and vice-versa. The truncate,
- * round or integerToFloat operators must be used to achieve numeric type conversion.
+ * 
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class SetOutcomeValueProcessor extends SetValueProcessor
+class SetTemplateValueProcessor extends SetValueProcessor
 {
     /**
      * @see \qtism\runtime\rules\RuleProcessor::getRuleType()
      */
     protected function getRuleType()
     {
-        return 'qtism\\data\\rules\\SetOutcomeValue';
+        return 'qtism\\data\\rules\\SetTemplateValue';
     }
     
     /**
@@ -54,6 +46,6 @@ class SetOutcomeValueProcessor extends SetValueProcessor
      */
     protected function getVariableType()
     {
-        return 'qtism\\runtime\\common\\OutcomeVariable';
+        return 'qtism\\runtime\\common\\TemplateVariable';
     }
 }
