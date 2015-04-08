@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\common\Utils;
 use qtism\runtime\common\TemplateVariable;
 use qtism\data\ShowHide;
 use qtism\common\datatypes\Scalar;
@@ -1046,19 +1047,15 @@ class AssessmentItemSession extends State
 
             if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
 
-                $currentValue = $var->getValue();
-                $currentDefaultValue = $var->getDefaultValue();
+                $value = $var->getValue();
+                $defaultValue = $var->getDefaultValue();
 
-                if ($currentValue === null) {
-                    if ($currentValue !== $currentDefaultValue) {
-                        return true;
-                    }
-                } elseif ($currentValue instanceof Container && $currentValue->isNull() === true) {
-                    if ($currentDefaultValue !== null && $currentDefaultValue->isNull() === false) {
+                if (Utils::isNull($value) === true) {
+                    if (Utils::isNull($defaultValue) === false) {
                         return true;
                     }
                 } else {
-                    if ($currentValue->equals($currentDefaultValue) === false) {
+                    if ($value->equals($defaultValue) === false) {
                         return true;
                     }
                 }
