@@ -157,6 +157,14 @@ class AssessmentTestSession extends State
      * @var \DateTime
      */
     private $timeReference = null;
+    
+    /**
+     * Whether or not the AssessmentTest to be delivered is
+     * adaptive (preConditions, branchingRules).
+     * 
+     * @var boolean
+     */
+    private $adaptive;
 
     /**
      * Create a new AssessmentTestSession object.
@@ -186,6 +194,7 @@ class AssessmentTestSession extends State
         }
 
         $this->setSessionId('no_session_id');
+        $this->setAdaptive($assessmentTest->containsComponentWithClassName(array('branchRule', 'preCondition')));
         $this->setState(AssessmentTestSessionState::INITIAL);
     }
 
@@ -540,6 +549,28 @@ class AssessmentTestSession extends State
     protected function getSessionManager()
     {
         return $this->sessionManager;
+    }
+    
+    /**
+     * Set whether or not the AssessmentTest to be delivered
+     * is adaptive (preConditions, branchingRules).
+     * 
+     * @param boolean $adaptive
+     */
+    protected function setAdaptive($adaptive)
+    {
+        $this->adaptive = $adaptive;
+    }
+    
+    /**
+     * Whether or not the AssessmentTest to be delivered is
+     * adaptive (preConditions, branchingRules).
+     * 
+     * @return boolean
+     */
+    protected function isAdaptive()
+    {
+        return $this->adaptive;
     }
     
     /**
@@ -1821,7 +1852,7 @@ class AssessmentTestSession extends State
     {
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
-        $adaptive = $this->getAssessmentTest()->containsComponentWithClassName(array('branchRule', 'preCondition'));
+        $adaptive = $this->isAdaptive();
 
         // In this loop, we select at least the first routeItem we find as eligible.
         while ($route->valid() === true) {
