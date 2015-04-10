@@ -269,6 +269,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	    $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new Integer(25));
 	    $var->setDefaultValue(new Integer(1));
 	    
+	    // value and default value must be independant.
 	    $clone = clone $var;
 	    $this->assertNotSame($var->getValue(), $clone->getValue());
 	    $this->assertNotSame($var->getDefaultValue(), $clone->getDefaultValue());
