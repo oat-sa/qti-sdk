@@ -327,7 +327,13 @@ class Unmarshaller
      */
     protected function unmarshallFloat(array $unit)
     {
-        return new Float($unit['base']['float']);
+        $val = $unit['base']['float'];
+        
+        if (is_int($val) === true) {
+            $val = floatval($val);    
+        }
+        
+        return new Float($val);
     }
 
     /**

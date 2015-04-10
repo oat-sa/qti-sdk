@@ -137,6 +137,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             array(new Boolean(false), '{ "base" : {"boolean" : false } }'),
             array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
             array(new Float(23.23), '{ "base" : {"float" : 23.23 } }'),
+            array(new Float(6.0), '{ "base" : {"float" : 6 } }'),
             array(new String('string'), '{ "base" : {"string" : "string" } }'),
             array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
             array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
