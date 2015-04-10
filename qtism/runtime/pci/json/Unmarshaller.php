@@ -43,6 +43,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\State;
 use qtism\common\utils\Arrays;
+use qtism\common\utils\Format;
 use \InvalidArgumentException;
 
 /**
@@ -330,6 +331,11 @@ class Unmarshaller {
      * @returnFloat
      */
     protected function unmarshallFloat(array $unit) {
+        
+        if (is_int($unit['base']['float']) === true) {
+            $unit['base']['float'] = floatval($unit['base']['float']);
+        }  
+        
         return new Float($unit['base']['float']);
     }
     
