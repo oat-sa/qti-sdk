@@ -264,4 +264,13 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$value['point1'] = new Point(100, 200);
 		$this->assertFalse($outcome->isNull());
 	}
+	
+	public function testClone() {
+	    $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new Integer(25));
+	    $var->setDefaultValue(new Integer(1));
+	    
+	    $clone = clone $var;
+	    $this->assertNotSame($var->getValue(), $clone->getValue());
+	    $this->assertNotSame($var->getDefaultValue(), $clone->getDefaultValue());
+	}
 }
