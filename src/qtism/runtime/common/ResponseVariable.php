@@ -226,5 +226,8 @@ class ResponseVariable extends Variable
     public function __clone()
     {
         parent::__clone();
+        if (($cv = $this->getCorrectResponse()) !== null) {
+            $this->correctResponse = clone $cv;
+        }
     }
 }
