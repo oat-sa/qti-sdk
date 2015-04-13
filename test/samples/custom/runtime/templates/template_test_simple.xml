@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+    identifier="template_test_simple" title="Template Test Simple">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S01" title="Section1" visible="true">
+            <assessmentItemRef identifier="QTPL1" href="./QTPL.xml" timeDependent="false">
+                <templateDefault templateIdentifier="GOODSCORE">
+                    <baseValue baseType="float">1.0</baseValue>
+                </templateDefault>
+                <templateDefault templateIdentifier="WRONGSCORE">
+                    <baseValue baseType="float">0.0</baseValue>
+                </templateDefault>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceA</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <templateDeclaration identifier="GOODSCORE" cardinality="single" baseType="float"/>
+                <templateDeclaration identifier="WRONGSCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+			        <responseCondition>
+			            <responseIf>
+			                <match>
+			                    <variable identifier="RESPONSE"/>
+			                    <correct identifier="RESPONSE"/>
+			                </match>
+			                <setOutcomeValue identifier="SCORE">
+			                    <variable identifier="GOODSCORE"/>
+			                </setOutcomeValue>
+			            </responseIf>
+			            <responseElse>
+			                <setOutcomeValue identifier="SCORE">
+			                    <variable identifier="WRONGSCORE"/>
+			                </setOutcomeValue>
+			            </responseElse>
+			        </responseCondition>
+			    </responseProcessing>
+            </assessmentItemRef>
+            
+            <assessmentItemRef identifier="QTPL2" href="./QTPL.xml" timeDependent="false">
+                <templateDefault templateIdentifier="GOODSCORE">
+                    <baseValue baseType="float">2.0</baseValue>
+                </templateDefault>
+                <templateDefault templateIdentifier="WRONGSCORE">
+                    <baseValue baseType="float">-1.0</baseValue>
+                </templateDefault>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>ChoiceB</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <templateDeclaration identifier="GOODSCORE" cardinality="single" baseType="float"/>
+                <templateDeclaration identifier="WRONGSCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <variable identifier="GOODSCORE"/>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="SCORE">
+                                <variable identifier="WRONGSCORE"/>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+            </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

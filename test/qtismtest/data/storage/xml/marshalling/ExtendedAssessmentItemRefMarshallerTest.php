@@ -1,12 +1,6 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
-use qtism\data\expressions\BaseValue;
-
-use qtism\data\rules\SetCorrectResponse;
-
-use qtism\data\rules\TemplateRuleCollection;
-
 use qtismtest\QtiSmTestCase;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -21,6 +15,11 @@ use qtism\data\processing\TemplateProcessing;
 use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\expressions\BaseValue;
+use qtism\data\rules\SetCorrectResponse;
+use qtism\data\rules\TemplateRuleCollection;
+use qtism\data\state\TemplateDefault;
+use qtism\data\state\TemplateDefaultCollection;
 use \DOMDocument;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
@@ -76,10 +75,14 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$templateRules[] = new SetCorrectResponse('R01', new BaseValue(BaseType::INTEGER, 20));
 		$templateProcessing = new TemplateProcessing($templateRules);
 		
+		$templateDefaults = new TemplateDefaultCollection();
+		$templateDefaults[] = new TemplateDefault('T01', new BaseValue(BaseType::INTEGER, 20));
+		
 		$component->setWeights($weights);
 		$component->setResponseDeclarations($responseDeclarations);
 		$component->setOutcomeDeclarations($outcomeDeclarations);
 		$component->setTemplateProcessing($templateProcessing);
+		$component->setTemplateDefaults($templateDefaults);
 		
 		$marshaller = $factory->createMarshaller($component);
 		$element = $marshaller->marshall($component);
@@ -109,6 +112,9 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$templateProcessingElt = $templateProcessingElts->item(0);
 		$baseValueElements = $templateProcessingElt->getElementsByTagName('baseValue');
 		$this->assertEquals(1, $baseValueElements->length);
+		
+		$templateDefaultElts = $element->getElementsByTagName('templateDefault');
+		$this->assertEquals(1, $templateDefaultElts->length);
 	}
 	
 	/**
@@ -146,6 +152,9 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 			<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true">
 				<weight identifier="W01" value="1.0"/>
 				<weight identifier="W02" value="2.0"/>
+		        <templateDefault templateIdentifier="T01">
+		            <baseValue baseType="boolean">true</baseValue>
+		        </templateDefault>
 				<responseDeclaration identifier="R01" baseType="integer" cardinality="single"/>
 				<responseDeclaration identifier="R02" baseType="boolean" cardinality="single"/>
 				<outcomeDeclaration identifier="O01" baseType="float" cardinality="single"/>
@@ -181,6 +190,13 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		
 		$templateProcessing = $component->getTemplateProcessing();
 		$this->assertNotNull($templateProcessing);
+		
+		$templateDefaults = $component->getTemplateDefaults();
+		$this->assertEquals(1, count($templateDefaults));
+		$this->assertEquals('T01', $templateDefaults[0]->getTemplateIdentifier());
+		
+		$templateDefaultExpression = $templateDefaults[0]->getExpression();
+		$this->assertInstanceOf('qtism\\data\\expressions\\BaseValue', $templateDefaultExpression);
 	}
 	
 	/**

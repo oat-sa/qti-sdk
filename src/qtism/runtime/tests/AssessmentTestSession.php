@@ -1802,15 +1802,39 @@ class AssessmentTestSession extends State
 
     /**
      * This protected method contains the logic of instantiating a new AssessmentItemSession object.
+     * 
+     * It will take care of instantiating the AssessmentItemSession with the appropriate navigation mode,
+     * submission mode, and will set up templateDefaults if any.
      *
      * @param \qtism\data\IAssessmentItem $assessmentItem
      * @param integer $navigationMode
      * @param integer $submissionMode
      * @return \qtism\runtime\tests\AssessmentItemSession
+     * @throws \qtism\runtime\expressions\ExpressionProcessingException|\qtism\runtime\expressions\operators\OperatorProcessingException If something wrong happens when initializing templateDefaults.
      */
     protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
     {
-        return $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+        $session = $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+        $templateDefaults = $session->getAssessmentItem()->getTemplateDefaults();
+        
+        if (count($templateDefaults) > 0) {
+            // Some templateVariable default values must have to be changed...
+            
+            foreach ($session->getAssessmentItem()->getTemplateDefaults() as $templateDefault) {
+                $identifier = $templateDefault->getTemplateIdentifier();
+                $expression = $templateDefault->getExpression();
+                $variable = $session->getVariable($identifier);
+                
+                $expressionEngine = new ExpressionEngine($expression, $this);
+            
+                if (is_null($variable) === false) {
+                    $val = $expressionEngine->process();
+                    $variable->setDefaultValue($val);
+                }
+            }
+        }
+        
+        return $session;
     }
 
     /**

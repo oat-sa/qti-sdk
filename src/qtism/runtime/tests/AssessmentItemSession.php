@@ -255,6 +255,16 @@ class AssessmentItemSession extends State
 
         // -- Create the built-in outcome variables.
         $this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
+        
+        // -- Template variables are instantiated at construction time
+        // so that they are available to test sessions to modify templateDefaults!
+        foreach ($this->getAssessmentItem()->getTemplateDeclarations() as $templateDeclaration) {
+            // Template variables are instantiated as part of the item session.
+            // Even if it's not specifically said in the spec, we assume they are initialized with
+            // a default value if they have one.
+            $templateVariable = TemplateVariable::createFromDataModel($templateDeclaration);
+            $this->setVariable($templateVariable);
+        }
     }
 
     /**
@@ -552,16 +562,6 @@ class AssessmentItemSession extends State
             $outcomeVariable->applyDefaultValue();
             $this->setVariable($outcomeVariable);
         }
-        
-        foreach ($this->getAssessmentItem()->getTemplateDeclarations() as $templateDeclaration) {
-            // Template variables are instantiated as part of the item session.
-            // Even if it's not specifically said in the spec, we assume they are initialized with
-            // a default value if they have one.
-            $templateVariable = TemplateVariable::createFromDataModel($templateDeclaration);
-            $templateVariable->initialize();
-            $templateVariable->applyDefaultValue();
-            $this->setVariable($templateVariable);
-        }
 
         foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
             // Response variables are instantiated as part of the item session.
@@ -569,6 +569,15 @@ class AssessmentItemSession extends State
             $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
             $responseVariable->initialize();
             $this->setVariable($responseVariable);
+        }
+        
+        // Template variables are already instantiated, but not initialized...
+        $data = &$this->getDataPlaceHolder();
+        foreach ($data as $variable) {
+            if ($variable instanceof TemplateVariable) {
+                $variable->initialize();
+                $variable->applyDefaultValue();
+            }
         }
 
         // Apply templateProcessing.
