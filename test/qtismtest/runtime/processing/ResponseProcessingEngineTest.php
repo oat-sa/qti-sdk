@@ -9,6 +9,8 @@ use qtism\runtime\common\State;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\processing\ResponseProcessingEngine;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 
 class ResponseProcessingEngineTest extends QtiSmTestCase {
 	
@@ -49,20 +51,22 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
 	public function testResponseProcessingExitResponse() {
 	    $responseProcessing = $this->createComponentFromXml('
 	        <responseProcessing>
+	            <setOutcomeValue identifier="OUTCOME">
+	                <baseValue baseType="integer">1</baseValue>
+	            </setOutcomeValue>
                 <exitResponse/>
+	            <!-- Should never be executed! -->
+	            <setOutcomeValue identifier="OUTCOME">
+	                <baseValue baseType="integer">2</baseValue>
+	            </setOutcomeValue>
 	        </responseProcessing>
 	    ');
 	    
+	    $state = new State();
+	    $state->setVariable(new OutcomeVariable('OUTCOME', Cardinality::SINGLE, BaseType::INTEGER));
 	    $engine = new ResponseProcessingEngine($responseProcessing);
-	    
-	    try {
-	        $engine->process();
-	        // An exception MUST be thrown.
-	        $this->assertTrue(true);
-	    }
-	    catch (ProcessingException $e) {
-	        $this->assertInstanceOf('qtism\\runtime\\rules\\RuleProcessingException', $e);
-	        $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
-	    }
+	    $engine->setContext($state);
+	    $engine->process();
+	    $this->assertEquals(1, $state['OUTCOME']->getValue());
 	}
 }

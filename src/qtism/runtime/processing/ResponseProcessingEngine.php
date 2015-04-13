@@ -24,6 +24,7 @@ namespace qtism\runtime\processing;
 
 use qtism\data\storage\php\PhpDocument;
 use qtism\runtime\common\ProcessingException;
+use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\rules\RuleEngine;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
@@ -193,10 +194,18 @@ class ResponseProcessingEngine extends AbstractEngine
             $this->trace(count($rules) . " responseRule(s) extracted from the response processing template");
         }
 
-        foreach ($rules as $rule) {
-            $engine = new RuleEngine($rule, $this->getContext());
-            $engine->process();
-            $this->trace($rule->getQtiClassName() . ' executed');
+        try {
+            foreach ($rules as $rule) {
+                $engine = new RuleEngine($rule, $this->getContext());
+                $engine->process();
+                $this->trace($rule->getQtiClassName() . ' executed');
+            }
+        } catch (RuleProcessingException $e) {
+            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
+                throw $e;
+            } else {
+                $this->trace('Termination of response processing.');
+            }
         }
     }
 }
