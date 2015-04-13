@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\processing;
 
+use qtism\runtime\common\ResponseVariable;
+
 use qtism\data\processing\TemplateProcessing;
 use qtism\runtime\rules\RuleProcessorFactory;
 use qtism\runtime\rules\RuleProcessingException;
@@ -50,7 +52,7 @@ class TemplateProcessingEngine extends AbstractEngine
     private $ruleProcessorFactory;
 
     /**
-     * Create a new OutcomeProcessingEngine object.
+     * Create a new TemplateProcessingEngine object.
      *
      * @param \qtism\data\QtiComponent $templateProcessing A QTI Data Model TemplateProcessing object.
      * @param \qtism\runtime\common\State $context A State object as the execution context.
@@ -66,7 +68,7 @@ class TemplateProcessingEngine extends AbstractEngine
      * on the current context.
      *
      * @param \qtism\data\QtiComponent $templateProcessing A TemplateProcessing object.
-     * @throws \InvalidArgumentException If $outcomeProcessing is not A TemplateProcessing object.
+     * @throws \InvalidArgumentException If $templateProcessing is not A TemplateProcessing object.
      */
     public function setComponent(QtiComponent $templateProcessing)
     {
@@ -99,28 +101,57 @@ class TemplateProcessingEngine extends AbstractEngine
     }
 
     /**
+     * Process the template processing.
      * 
      * @throws \qtism\runtime\common\ProcessingException If an error occurs while executing the TemplateProcessing.
      */
     public function process()
     {
         $context = $this->getContext();
-
         $templateProcessing = $this->getComponent();
+        $trialCount = 0;
         
-        try {
-            foreach ($templateProcessing->getTemplateRules() as $rule) {
-                $processor = $this->getRuleProcessorFactory()->createProcessor($rule);
-                $processor->setState($context);
-                $processor->process();
-                $this->trace($rule->getQtiClassName() . ' executed.');
-            }
-        } catch (RuleProcessingException $e) {
-            if ($e->getCode() !== RuleProcessingException::EXIT_TEMPLATE) {
-                throw $e;
-            } else {
-                $this->trace('Termination of template processing.');
-            }
+        // Make a copy of possibly impacted variables.
+        $impactedVariables = Utils::templateProcessingImpactedVariables($templateProcessing);
+        
+        $tplVarCopies = array();
+        foreach ($impactedVariables as $varIdentifier) {
+            $tplVarCopies[] = clone $context->getVariable($varIdentifier);
         }
+        
+        do {
+            $validConstraints = true;
+            
+            try {
+                $trialCount++;
+                
+                foreach ($templateProcessing->getTemplateRules() as $rule) {
+                    $processor = $this->getRuleProcessorFactory()->createProcessor($rule);
+                    $processor->setState($context);
+                    $processor->process();
+                    $this->trace($rule->getQtiClassName() . ' executed.');
+                }
+            } catch (RuleProcessingException $e) {
+                if ($e->getCode() === RuleProcessingException::EXIT_TEMPLATE) {
+                    $this->trace('Termination of template processing.');
+                } else if ($e->getCode() === RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED) {
+                    $this->trace('Unsatisfied template constraint.');
+                    
+                    // Reset variables with their originals.
+                    foreach ($tplVarCopies as $copy) {
+                        $context->getVariable($copy->getIdentifier())->setValue($copy->getDefaultValue());
+                        $context->getVariable($copy->getIdentifier())->setDefaultValue($copy->getDefaultValue());
+                        
+                        if ($copy instanceof ResponseVariable) {
+                            $context->getVariable($copy->getIdentifier())->setCorrectResponse($copy->getCorrectResponse());
+                        }
+                    }
+
+                    $validConstraints = false;
+                } else {
+                    throw $e;
+                }
+            }
+        } while ($validConstraints === false && $trialCount < 100);
     }
 }

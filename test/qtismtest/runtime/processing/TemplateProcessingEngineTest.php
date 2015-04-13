@@ -67,4 +67,36 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
         
         $this->assertEquals(1336, $state['TEMPLATE']->getValue());
     }
+    
+    /**
+     * @depends testVeryBasic
+     */
+    public function testTemplateConstraintImpossibleWithTemplateVariableOnly() {
+        $component = $this->createComponentFromXml('
+            <templateProcessing>
+                <setTemplateValue identifier="TEMPLATE">
+                    <baseValue baseType="integer">0</baseValue>
+                </setTemplateValue>
+                <templateConstraint>
+                    <gt>
+                        <variable identifier="TEMPLATE"/>
+                        <baseValue baseType="integer">0</baseValue>
+                    </gt>
+                </templateConstraint>
+            </templateProcessing>
+        ');
+        
+        $var = new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER);
+        $var->setDefaultValue(new Integer(-1));
+        $state = new State(
+            array($var)
+        );
+        
+        // The <templateConstraint> will never be satisfied.
+        // We should then find the default value in TEMPLATE.
+        $engine = new TemplateProcessingEngine($component, $state);
+        $engine->process();
+        
+        $this->assertEquals(-1, $state['TEMPLATE']->getValue());
+    }
 }
