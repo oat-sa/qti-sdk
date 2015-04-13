@@ -1208,7 +1208,7 @@ class AssessmentItemSession extends State
     {
         $assessmentItem = $this->getAssessmentItem();
         if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
-            $templateProcessingEngine = new TemplateProcessingEngine($templateProcessingEngine, $this);
+            $templateProcessingEngine = new TemplateProcessingEngine($templateProcessing, $this);
             $templateProcessingEngine->process();
         }
     }
