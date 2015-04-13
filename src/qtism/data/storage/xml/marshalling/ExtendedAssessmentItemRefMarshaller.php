@@ -63,17 +63,23 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $element->appendChild($marshaller->marshall($templateDeclaration));
         }
         
-        foreach ($component->getModalFeedbackRules() as $modalFeedbackRule) {
-            $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackRule);
-            $element->appendChild($marshaller->marshall($modalFeedbackRule));
+        if ($component->hasTemplateProcessing() === true) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getTemplateProcessing());
+            $templProcElt = $marshaller->marshall($component->getTemplateProcessing());
+            $element->appendChild($templProcElt);
         }
-
+        
         if ($component->hasResponseProcessing() === true) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getResponseProcessing());
             $respProcElt = $marshaller->marshall($component->getResponseProcessing());
             $element->appendChild($respProcElt);
         }
-
+        
+        foreach ($component->getModalFeedbackRules() as $modalFeedbackRule) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackRule);
+            $element->appendChild($marshaller->marshall($modalFeedbackRule));
+        }
+        
         self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
         self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
 
@@ -131,7 +137,21 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $templateDeclarations[] = $marshaller->unmarshall($templateDeclarationElt);
         }
         $compactAssessmentItemRef->setTemplateDeclarations($templateDeclarations);
-
+        
+        // TemplateProcessing.
+        $templateProcessingElts = self::getChildElementsByTagName($element, 'templateProcessing');
+        if (count($templateProcessingElts) === 1) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($templateProcessingElts[0]);
+            $compactAssessmentItemRef->setTemplateProcessing($marshaller->unmarshall($templateProcessingElts[0]));
+        }
+        
+        // ResponseProcessing.
+        $responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
+        if (count($responseProcessingElts) === 1) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
+            $compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
+        }
+        
         // ModalFeedbacks (transformed in ModalFeedbackRules).
         $modalFeedbackElts = self::getChildElementsByTagName($element, 'modalFeedbackRule');
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
@@ -140,13 +160,6 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $modalFeedbackRules[] = $marshaller->unmarshall($modalFeedbackElt);
         }
         $compactAssessmentItemRef->setModalFeedbackRules($modalFeedbackRules);
-        
-        // ResponseProcessing.
-        $responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
-        if (count($responseProcessingElts) === 1) {
-            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
-            $compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
-        }
 
         if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);

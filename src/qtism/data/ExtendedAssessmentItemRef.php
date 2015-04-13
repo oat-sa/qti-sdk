@@ -31,6 +31,7 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\processing\TemplateProcessing;
 use qtism\common\collections\IdentifierCollection;
 use \InvalidArgumentException;
 
@@ -69,7 +70,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $templateDeclarations;
 
     /**
-     * The responseProcessing found in the referenced assessmentItem
+     * The responseProcessing found in the referenced assessmentItem.
      *
      * @var \qtism\data\processing\ResponseProcessing
      * @qtism-bean-property
@@ -99,6 +100,14 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @qtism-bean-property
      */
     private $modalFeedbackRules;
+    
+    /**
+     * The template processing found in the referenced assessmentIem.
+     * 
+     * @var \qtism\data\processing\TemplateProcessing
+     * @qtism-bean-property
+     */
+    private $templateProcessing = null;
 
     /**
      * Create a new instance of CompactAssessmentItem
@@ -159,13 +168,43 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     }
 
     /**
-     * Whether the referenced assessmentITem has a responseProcessing entry.
+     * Whether the referenced assessmentItem has a responseProcessing entry.
      *
      * @return boolean
      */
     public function hasResponseProcessing()
     {
         return $this->getResponseProcessing() !== null;
+    }
+    
+    /**
+     * Set the templateProcessing found in the referenced assessmentItem.
+     * 
+     * @param \qtism\data\processing\TemplateProcessing $templateProcessing
+     */
+    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null)
+    {
+        $this->templateProcessing = $templateProcessing;
+    }
+    
+    /**
+     * Get the templateProcessing found in the referenced assessmentItem.
+     * 
+     * @return \qtism\data\processing\TemplateProcessing
+     */
+    public function getTemplateProcessing()
+    {
+        return $this->templateProcessing;
+    }
+    
+    /**
+     * Whether the referenced assessmentItem has a templateProcessing entry.
+     * 
+     * @return boolean
+     */
+    public function hasTemplateProcessing()
+    {
+        return $this->getTemplateProcessing() !== null;
     }
 
     /**
@@ -392,13 +431,18 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
             parent::getComponents()->getArrayCopy(),
             $this->getResponseDeclarations()->getArrayCopy(),
             $this->getOutcomeDeclarations()->getArrayCopy(),
-            $this->getTemplateDeclarations()->getArrayCopy(),
-            $this->getModalFeedbackRules()->getArrayCopy()
+            $this->getTemplateDeclarations()->getArrayCopy()
         );
+        
+        if ($this->hasTemplateProcessing() === true) {
+            $components[] = $this->getResponseProcessing();
+        }
 
         if ($this->hasResponseProcessing() === true) {
             $components[] = $this->getResponseProcessing();
         }
+        
+        $components = array_merge($components, $this->getModalFeedbackRules()->getArrayCopy());
 
         return new QtiComponentCollection($components);
     }

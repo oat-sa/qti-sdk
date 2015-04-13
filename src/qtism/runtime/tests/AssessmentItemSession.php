@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\TemplateVariable;
 use qtism\data\ShowHide;
@@ -570,6 +571,9 @@ class AssessmentItemSession extends State
             $this->setVariable($responseVariable);
         }
 
+        // Apply templateProcessing.
+        $this->templateProcessing();
+        
         // The session gets the INITIAL state, ready for a first attempt.
         $this->setState(AssessmentItemSessionState::INITIAL);
         $this['duration'] = new Duration('PT0S');
@@ -1194,6 +1198,19 @@ class AssessmentItemSession extends State
         }
 
         return $mustModalFeedback;
+    }
+    
+    /**
+     * Apply templateProcessing on the session if a templateProcessing is described.
+     * @throws \qtism\runtime\rules\RuleProcessingException
+     */
+    protected function templateProcessing()
+    {
+        $assessmentItem = $this->getAssessmentItem();
+        if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
+            $templateProcessingEngine = new TemplateProcessingEngine($templateProcessingEngine, $this);
+            $templateProcessingEngine->process();
+        }
     }
 
     /**

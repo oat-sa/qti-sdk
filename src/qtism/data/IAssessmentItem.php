@@ -22,6 +22,7 @@
 
 namespace qtism\data;
 
+use qtism\data\processing\TemplateProcessing;
 use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
@@ -130,4 +131,18 @@ interface IAssessmentItem extends QtiIdentifiable
      * @param \qtism\data\processing\ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
+    
+    /**
+     * Get the associated TemplateProcessing object.
+     *
+     * @return \qtism\data\processing\TemplateProcessing A TemplateProcessing object or null if no associated template processing.
+     */
+    public function getTemplateProcessing();
+    
+    /**
+     * Set the associated TemplateProcessing object.
+     *
+     * @param \qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null if no associated template processing.
+    */
+    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null);
 }

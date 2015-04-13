@@ -14,6 +14,7 @@
 	    				<xs:element name="responseDeclaration" minOccurs="0" maxOccurs="unbounded"/>
 	    				<xs:element name="outcomeDeclaration" minOccurs="0" maxOccurs="unbounded"/>
 	    				<xs:element name="templateDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+	    				<xs:element name="templateProcessing" minOccurs="0" maxOccurs="1"/>
 	    				<xs:element name="responseProcessing" minOccurs="0" maxOccurs="1"/>
 	    				<xs:element name="modalFeedbackRule" type="ModalFeedbackRule.Type" minOccurs="0" maxOccurs="unbounded"/>
 	    			</xs:sequence>
