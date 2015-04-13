@@ -136,7 +136,7 @@ class OutcomeProcessingEngine extends AbstractEngine
             $processor = $this->getRuleProcessorFactory()->createProcessor($rule);
             $processor->setState($context);
             $processor->process();
-            $this->trace($rule->getQtiClassName() . ' executed');
+            $this->trace($rule->getQtiClassName() . ' executed.');
         }
     }
 }
