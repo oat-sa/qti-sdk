@@ -23,6 +23,7 @@
 namespace qtism\data\rules;
 
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
 /**
  * The QTI templateElse class.
@@ -74,7 +75,7 @@ class TemplateElse extends QtiComponent
      */
     public function getComponents()
     {
-        return new $this->getTemplateRules();
+        return new QtiComponentCollection($this->getTemplateRules()->getArrayCopy());
     }
 
     /**
