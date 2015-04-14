@@ -303,24 +303,41 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
      * 
      * @param Variable $variable
      */
-    public function testWriteVariableValue(Variable $variable) {
+    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccessFsFile::RW_VALUE) {
         $stream = new MemoryStream();
         $stream->open();
         $access = new QtiBinaryStreamAccessFsFile($stream);
         
+        switch ($valueType) {
+            case QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE:
+                $setterToCall = 'setDefaultValue';
+                $getterToCall = 'getDefaultValue';
+                break;
+        
+            case QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE:
+                $setterToCall = 'setCorrectResponse';
+                $getterToCall = 'getCorrectResponse';
+                break;
+        
+            default:
+                $setterToCall = 'setValue';
+                $getterToCall = 'getValue';
+                break;
+        }
+        
         // Write the variable value.
-        $access->writeVariableValue($variable);
+        $access->writeVariableValue($variable, $valueType);
         $stream->rewind();
         
         $testVariable = clone $variable;
         // Reset the value of $testVariable.
-        $testVariable->setValue(null);
+        call_user_func(array($testVariable, $setterToCall), null);
         
         // Read what we just wrote.
-        $access->readVariableValue($testVariable);
+        $access->readVariableValue($testVariable, $valueType);
         
-        $originalValue = $variable->getValue();
-        $readValue = $testVariable->getValue();
+        $originalValue = call_user_func(array($variable, $getterToCall));
+        $readValue = call_user_func(array($testVariable, $getterToCall));
         
         // Compare.
         if (is_null($originalValue) === true) {
@@ -350,151 +367,218 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
     }
     
     public function writeVariableValueProvider() {
-        return array(
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new Integer(26))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new Integer(-34455))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(-2147483647))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(2147483647))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(26.1))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(-34455.0))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(-21474.654))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(21474.3))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(false), new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false), new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(false))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(false), null, new Boolean(true), null, new Boolean(false))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false), null, new Boolean(true), null, new Boolean(false))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('identifier'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('non-identifier'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2'), new Identifier('identifier3'), new Identifier('identifier4'), new Identifier('identifier5'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2'), new Identifier('identifier3'), new Identifier('X-Y-Z'), new Identifier('identifier4'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), null, new Identifier('identifier2'), null, new Identifier('identifier3'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), null, new Identifier('identifier2'), null, new Identifier('identifier3'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri6'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri5'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION, new Duration('P3DT2H1S'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT2S'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('P2YT2S'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('P4D'), null, new Duration('P10D'), null, new Duration('P20D'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('P4D'), null, new Duration('P10D'), null, new Duration('P20D'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR, new Pair('A', 'B'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F'), new Pair('G', 'H'), new Pair('I', 'J'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F'), new Pair('G', 'H'), new Pair('I', 'J'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), null, new Pair('C', 'D'), null, new Pair('E', 'F'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), null, new Pair('D', 'E'), null, new Pair('F', 'G'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR, new DirectedPair('A', 'B'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), null, new DirectedPair('C', 'D'), null, new DirectedPair('E', 'F'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), null, new DirectedPair('D', 'E'), null, new DirectedPair('F', 'G'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new Point(50, 50))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 0), new Point(100, 50), new Point(150, 3), new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 35), new Point(30, 50), new Point(40, 55), new Point(0, 0))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(30, 50), null, new Point(20, 50), null, new Point(45, 32))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(20, 11), null, new Point(36, 43), null, new Point(50, 44))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new IntOrIdentifier(26))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new IntOrIdentifier('Q01'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(-2147483647))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier('Section1'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), new IntOrIdentifier('Q01'), new IntOrIdentifier('Q02'), new IntOrIdentifier(-200000), new IntOrIdentifier(200000))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), new IntOrIdentifier(-1), new IntOrIdentifier(1), new IntOrIdentifier(-200000), new IntOrIdentifier('Q05'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), null, new IntOrIdentifier(1), null, new IntOrIdentifier(200000))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), null, new IntOrIdentifier('Q01'), null, new IntOrIdentifier(200000))))),
-
-                        
-            array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'))),    
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE, new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'), FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_noname.txt'))))),
-                        
-            array(new OutcomeVariable('VAR', Cardinality::RECORD)),
-            array(new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(array('key1' => null)))),
-            array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new Float(25.5), 'key3' => new Integer(2), 'key4' => new String('String!'), 'key5' => null, 'key6' => new Boolean(true)))))
-        );
+        
+        $rw_value = QtiBinaryStreamAccessFsFile::RW_VALUE;
+        $rw_defaultValue = QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE;
+        $rw_correctResponse = QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE;
+        
+        $data = array();
+        
+        // -- Integers
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new Integer(26)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new Integer(-34455)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(-2147483647)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(2147483647)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), new Integer(-1), new Integer(1), new Integer(-200000), new Integer(200000)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000)))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(null); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(new Integer(26)); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setCorrectResponse(new Integer(26)); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER); $v->setDefaultValue(new Integer(-34455)); $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER); $v->setDefaultValue(new MultipleContainer(BaseType::INTEGER, array(new Integer(-2147483647)))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER); $v->setCorrectResponse(new OrderedContainer(BaseType::INTEGER, array(new Integer(2147483647)))); $data[] = array($v, $rw_correctResponse);
+        
+        // -- Floats
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(26.1)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(-34455.0)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(-21474.654)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(21474.3)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005)))));
+        
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setDefaultValue(new Float(26.1)); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setCorrectResponse(new Float(26.1)); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT); $v->setDefaultValue(new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005)))); $data[] = array($v, $rw_defaultValue);
+        
+        // -- Booleans
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(false), new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false), new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(false)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(false), null, new Boolean(true), null, new Boolean(false)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(false), null, new Boolean(true), null, new Boolean(false)))));
+        
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN); $v->setDefaultValue(new Boolean(true)); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN); $v->setCorrectResponse(new Boolean(true)); $data[] = array($v, $rw_correctResponse);
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER); $v->setDefaultValue(new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2'), new Identifier('identifier3'), new Identifier('identifier4'), new Identifier('identifier5')))); $data[] = array($v, $rw_defaultValue);
+        
+        // -- Identifiers
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('identifier')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('non-identifier')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2'), new Identifier('identifier3'), new Identifier('identifier4'), new Identifier('identifier5')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2'), new Identifier('identifier3'), new Identifier('X-Y-Z'), new Identifier('identifier4')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), null, new Identifier('identifier2'), null, new Identifier('identifier3')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), null, new Identifier('identifier2'), null, new Identifier('identifier3')))));
+        
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER); $v->setDefaultValue(new Identifier('non-identifier')); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::IDENTIFIER); $v->setDefaultValue(new Identifier('non-identifier')); $data[] = array($v, $rw_correctResponse);
+        
+        // -- URIs
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri6')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri5')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3')))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI); $v->setDefaultValue(new Uri('http://www.my.uri')); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI); $v->setDefaultValue(new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3')))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::URI); $v->setCorrectResponse(new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3')))); $data[] = array($v, $rw_correctResponse);
+        
+        // -- Durations
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION, new Duration('P3DT2H1S')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT2S')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('P2YT2S')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, array(new Duration('P4D'), null, new Duration('P10D'), null, new Duration('P20D')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DURATION, new OrderedContainer(BaseType::DURATION, array(new Duration('P4D'), null, new Duration('P10D'), null, new Duration('P20D')))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION); $v->setDefaultValue(new Duration('P3DT2H1S')); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION); $v->setDefaultValue(new OrderedContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S')))); array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::DURATION); $v->setCorrectResponse(new OrderedContainer(BaseType::DURATION, array(new Duration('PT1S'), new Duration('PT2S'), new Duration('PT3S'), new Duration('PT4S'), new Duration('PT5S')))); array($v, $rw_correctResponse);
+        
+        // -- Pairs
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR, new Pair('A', 'B')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F'), new Pair('G', 'H'), new Pair('I', 'J')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F'), new Pair('G', 'H'), new Pair('I', 'J')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), null, new Pair('C', 'D'), null, new Pair('E', 'F')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::PAIR, new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), null, new Pair('D', 'E'), null, new Pair('F', 'G')))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::PAIR); $v->setDefaultValue(new Pair('A', 'B')); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR); $v->setDefaultValue(new MultipleContainer(BaseType::PAIR, array(null))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::PAIR); $v->setCorrectResponse(new MultipleContainer(BaseType::PAIR, array(null))); $data[] = array($v, $rw_correctResponse);
+        
+        // -- DirectedPairs
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR, new DirectedPair('A', 'B')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), null, new DirectedPair('C', 'D'), null, new DirectedPair('E', 'F')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), null, new DirectedPair('D', 'E'), null, new DirectedPair('F', 'G')))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DIRECTED_PAIR); $v->setDefaultValue(new DirectedPair('A', 'B')); array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR); $v->setDefaultValue(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J')))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR); $v->setCorrectResponse(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('C', 'D'), new DirectedPair('E', 'F'), new DirectedPair('G', 'H'), new DirectedPair('I', 'J')))); $data[] = array($v, $rw_correctResponse);
+        
+        // -- Points
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new Point(50, 50)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 0), new Point(100, 50), new Point(150, 3), new Point(50, 50)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 35), new Point(30, 50), new Point(40, 55), new Point(0, 0)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(30, 50), null, new Point(20, 50), null, new Point(45, 32)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(20, 11), null, new Point(36, 43), null, new Point(50, 44)))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT); $v->setDefaultValue(new Point(50, 50)); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT); $v->setDefaultValue(new OrderedContainer(BaseType::POINT, array(new Point(50, 50)))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT); $v->setCorrectResponse(new OrderedContainer(BaseType::POINT, array(new Point(50, 50)))); $data[] = array($v, $rw_correctResponse);
+        
+        // IntOrIdentifiers
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new IntOrIdentifier(26)));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new IntOrIdentifier('Q01')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(-2147483647)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier('Section1')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), new IntOrIdentifier('Q01'), new IntOrIdentifier('Q02'), new IntOrIdentifier(-200000), new IntOrIdentifier(200000)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), new IntOrIdentifier(-1), new IntOrIdentifier(1), new IntOrIdentifier(-200000), new IntOrIdentifier('Q05')))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(null))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INT_OR_IDENTIFIER, new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), null, new IntOrIdentifier(1), null, new IntOrIdentifier(200000)))));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER, new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), null, new IntOrIdentifier('Q01'), null, new IntOrIdentifier(200000)))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new IntOrIdentifier(26)); $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new IntOrIdentifier('Q01')); $data[] = array($v, $rw_defaultValue);
+        $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INT_OR_IDENTIFIER); $v->setDefaultValue(new OrderedContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(0), new IntOrIdentifier(-1), new IntOrIdentifier(1), new IntOrIdentifier(-200000), new IntOrIdentifier('Q05')))); $data[] = array($v, $rw_defaultValue);
+        
+        // Files
+        $data[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FILE, new MultipleContainer(BaseType::FILE, array(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt'), FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_noname.txt')))));
+        
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE); $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FILE); $v->setDefaultValue(FileSystemFile::retrieveFile(self::samplesDir() . 'datatypes/file/text-plain_text_data.txt')); $data[] = array($v, $rw_correctResponse);
+        
+        // Records
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::RECORD));
+        $data[] = array(new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(array('key1' => null))));
+        $data[] = array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new Float(25.5), 'key3' => new Integer(2), 'key4' => new String('String!'), 'key5' => null, 'key6' => new Boolean(true)))));
+        
+        $v = new OutcomeVariable('VAR', Cardinality::RECORD, -1); $v->setDefaultValue(new RecordContainer(array('key1' => null))); array($v, $rw_defaultValue);
+        $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setDefaultValue(new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new Float(25.5), 'key3' => new Integer(2), 'key4' => new String('String!'), 'key5' => null, 'key6' => new Boolean(true)))); $data[] = array($v, $rw_defaultValue);
+        $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setCorrectResponse(new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new Float(25.5), 'key3' => new Integer(2), 'key4' => new String('String!'), 'key5' => null, 'key6' => new Boolean(true)))); $data[] = array($v, $rw_defaultValue);
+        
+        return $data;
     }
     
     public function testReadAssessmentItemSession1() {
