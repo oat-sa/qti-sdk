@@ -130,7 +130,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     $values[$val[0]] = $val[1];
                 }
 
-                $variable->setValue($values);
+                call_user_func(array($variable, $setterToCall), $values);
             } else {
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
 
