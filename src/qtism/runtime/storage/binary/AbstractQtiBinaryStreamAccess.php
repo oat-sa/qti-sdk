@@ -66,6 +66,12 @@ use qtism\common\storage\BinaryStreamAccess;
  */
 abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
 {
+    const RW_VALUE = 0;
+    
+    const RW_DEFAULTVALUE = 1;
+    
+    const RW_CORRECTRESPONSE = 2;
+    
     /**
      * Create a new QtiBinaryStreamAccess object.
      *
@@ -82,17 +88,31 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * in the current stream.
      *
      * @param \qtism\runtime\common\Variable $variable A QTI Runtime Variable object.
+     * @param integer The kind of value to be read (self::RW_VALUE | self::RW_DEFAULTVALUE | self::RW_CORRECTRESPONSE)
      * @throws \qtism\common\storage\BinaryStreamAccessException If an error occurs at the binary level.
      */
-    public function readVariableValue(Variable $variable)
+    public function readVariableValue(Variable $variable, $valueType = self::RW_VALUE)
     {
+        switch ($valueType) {
+            case self::RW_DEFAULTVALUE:
+                $setterToCall = 'setDefaultValue';
+                break;
+        
+            case self::RW_CORRECTRESPONSE:
+                $setterToCall = 'setCorrectResponse';
+                break;
+                
+            default:
+                $setterToCall = 'setValue';
+                break;
+        }
+        
         try {
             $isNull = $this->readBoolean();
 
             if ($isNull === true) {
                 // Nothing more to be read.
-                $variable->setValue(null);
-
+                call_user_func(array($variable, $setterToCall), null);
                 return;
             }
 
@@ -116,7 +136,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->setValue(Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType));
+                    $runtimeValue = Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType);
+                    call_user_func(array($variable, $setterToCall), $runtimeValue);
                 } else {
                     // Deal with multiple values.
                     $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
@@ -125,7 +146,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                         $values[] = ($isNull === true) ? null : Utils::valueToRuntime(call_user_func(array($this, $toCall)), $baseType);
                     }
 
-                    $variable->setValue($values);
+                    call_user_func(array($variable, $setterToCall), $values);
                 }
             }
 
@@ -144,10 +165,23 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\runtime\common\Variable $variable A QTI Runtime Variable object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function writeVariableValue(Variable $variable)
+    public function writeVariableValue(Variable $variable, $valueType = self::RW_VALUE)
     {
+        switch ($valueType) {
+            case self::RW_DEFAULTVALUE:
+                $getterToCall = 'getDefaultValue';
+                break;
+                
+            case self::RW_CORRECTRESPONSE:
+                $getterToCall = 'getCorrectResponse';
+                break;
+                
+            default:
+                $getterToCall = 'getValue';
+        }
+        
         try {
-            $value = $variable->getValue();
+            $value = call_user_func(array($variable, $getterToCall));
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
