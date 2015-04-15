@@ -414,7 +414,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setDefaultValue(new Float(26.1)); $data[] = array($v, $rw_defaultValue);
         $v = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT); $v->setCorrectResponse(new Float(26.1)); $data[] = array($v, $rw_correctResponse);
         $v = new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT); $v->setDefaultValue(new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005)))); $data[] = array($v, $rw_defaultValue);
-        
+        $v = new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT); $v->setDefaultValue(new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005)))); $data[] = array($v, $rw_defaultValue);
+        // $data[] = array();
         // -- Booleans
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)));
         $data[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)));
