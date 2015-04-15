@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\runtime\storage\binary;
 
+use qtism\runtime\tests\AssessmentTestSession;
+
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
@@ -644,5 +646,79 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());
+    }
+    
+    public function testTemplateProcessingBasic1() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/templates/template_processing_test_simple.xml');
+        $test = $doc->getDocumentComponent();
+        
+        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        // Let's try to persist a not begun session.
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // The session is instantiated, but not yet begun.
+        $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
+        
+        // The session begins...
+        $session->beginTestSession();
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
+        
+        // We are in linear, non adaptive test. In this context, all item sessions
+        // should be already begun.
+        $QTPL1Sessions = $session->getAssessmentItemSessions('QTPL1');
+        $QTPL1Session = $QTPL1Sessions[0];
+        
+        // The default values should be correctly initialized within their respective item sessions...
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
+        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
+        
+        $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
+        $QTPL2Session = $QTPL2Sessions[0];
+        
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
+        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
+        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        
+        // Now let's make sure the persistence works correctly when templating is in force...
+        // We do this by testing again that default values are correctly initialized within their respective
+        // item sessions...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
+        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
+        
+        $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
+        $QTPL2Session = $QTPL2Sessions[0];
+        
+        $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
+        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
+        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
     }
 }

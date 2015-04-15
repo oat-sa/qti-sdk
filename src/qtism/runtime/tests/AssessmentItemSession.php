@@ -562,21 +562,25 @@ class AssessmentItemSession extends State
         $data = &$this->getDataPlaceHolder();
         $filter = array('duration', 'numAttempts', 'completionStatus');
         
-        // Outcome, response, and template item specific variables are instantiated
-        // as part of the item session.
+        // Initialize all variables.
         foreach ($data as $identifier => $variable) {
             if (in_array($identifier, $filter) === false) {
                 $variable->initialize();
+            }
+        }
+        
+        // Apply templateProcessing.
+        $templateProcessing = $this->templateProcessing();
+        
+        foreach ($data as $identifier => $variable) {
+            if (in_array($identifier, $filter) === false) {
             
-                // Outcome and template variables are applied their default value if any.
-                if (!$variable instanceof ResponseVariable) {
+                // Outcome variables are applied their default value if any.
+                if ($variable instanceof OutcomeVariable || ($variable instanceof TemplateVariable && $templateProcessing === false)) {
                     $variable->applyDefaultValue();
                 }
             }
         }
-
-        // Apply templateProcessing.
-        $this->templateProcessing();
         
         // The session gets the INITIAL state, ready for a first attempt, and
         // built-in variables get their initial value set.
@@ -1207,7 +1211,9 @@ class AssessmentItemSession extends State
     
     /**
      * Apply templateProcessing on the session if a templateProcessing is described.
+     * 
      * @throws \qtism\runtime\rules\RuleProcessingException
+     * @return boolean Whether or not the template processing occured.
      */
     protected function templateProcessing()
     {
@@ -1215,6 +1221,10 @@ class AssessmentItemSession extends State
         if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
             $templateProcessingEngine = new TemplateProcessingEngine($templateProcessing, $this);
             $templateProcessingEngine->process();
+            
+            return true;
+        } else {
+            return false;
         }
     }
 
