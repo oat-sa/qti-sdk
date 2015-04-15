@@ -599,8 +599,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
         $varCount = "\x02"; // 2 variables (scoring & RESPONSE).
         
-        $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x01" . pack('d', 1.0); // 9th (8 + 1) outcomeDeclaration.
-        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
+        $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 9th (8 + 1) outcomeDeclaration.
+        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
         
         $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response));
         $stream = new MemoryStream($bin);
@@ -647,9 +647,9 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
         $varCount = "\x03"; // 3 variables (SCORE & RESPONSE & TPL)
         
-        $score = pack('S', 0) . pack('S', 0) . "\x00" . "\x01" . pack('d', 1.0); // 1st (0 + 1) outcomeDeclaration.
-        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
-        $template = pack('S', 2) . pack('S', 0) . "\x00" . "\x01" . pack('l', 10); // 1st (0 + 1) templateDeclaration.
+        $score = pack('S', 0) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 1st (0 + 1) outcomeDeclaration.
+        $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" .  "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
+        $template = pack('S', 2) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('l', 10); // 1st (0 + 1) templateDeclaration.
         
         $binArray = array(
             $position,

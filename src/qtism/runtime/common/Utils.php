@@ -334,4 +334,21 @@ class Utils
     {
         return is_null($value) === true || ($value instanceof String && $value->getValue() === '') || ($value instanceof Container && count($value) === 0);
     }
+    
+    /**
+     * Whether or not two QtiDatatype instances are equals. 
+     * 
+     * Because the runtime model
+     * also deals with null values, this utility method helps to determine equality
+     * easily, without testing specifically if one or both values are null prior
+     * to perform QtiDatatype::equals().
+     * 
+     * @param QtiDatatype $a
+     * @param QtiDatatype $b
+     * @return boolean
+     */
+    static public function equals(QtiDatatype $a = null, QtiDatatype $b = null)
+    {
+        return (is_null($a) ? is_null($b) : $a->equals($b));
+    }
 }

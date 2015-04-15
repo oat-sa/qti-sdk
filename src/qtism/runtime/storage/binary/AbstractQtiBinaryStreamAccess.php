@@ -581,9 +581,18 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                 $session->setTimeReference($this->readDateTime());
             }
 
+            // Read the number of item-specific variables involved in the session.
             $varCount = $this->readTinyInt();
+            
             for ($i = 0; $i < $varCount; $i++) {
+                // For each of these variables...
+                
+                // Detect the nature of the variable
+                // 0 = outcomeVariable, 1 = responseVariable, 2 = templateVariable
                 $varNature = $this->readShort();
+                
+                // Read the position of the associated variableDeclaration
+                // in the assessment tree.
                 $varPosition = $this->readShort();
 
                 $variable = null;
@@ -607,8 +616,23 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
                 }
 
-                // If we are here, we have our variable.
-                $this->readVariableValue($variable);
+                // If we are here, we have our variable. We can read its value(s).
+                
+                // Do we have a specific default value? A specific correct response?
+                $hasDefaultValue = $this->readBoolean();
+                $hasCorrectResponse = $this->readBoolean();
+                
+                // Read the intrinsic value of the variable.
+                $this->readVariableValue($variable, self::RW_VALUE);
+                
+                if ($hasDefaultValue === true) {
+                    $this->readVariableValue($variable, self::RW_DEFAULTVALUE);
+                }
+                
+                if ($hasCorrectResponse === true) {
+                    $this->readVariableValue($variable, self::RW_CORRECTRESPONSE);
+                }
+                
                 $session->setVariable($variable);
             }
 
@@ -676,19 +700,44 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     $var = $session->getVariable($varId);
                     if ($var instanceof OutcomeVariable) {
                         $variableDeclaration = $itemOutcomes[$varId];
+                        $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
                         $varNature = 0;
                     } elseif ($var instanceof ResponseVariable) {
                         $variableDeclaration = $itemResponses[$varId];
+                        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
                         $varNature = 1;
                     } elseif ($var instanceof TemplateVariable) {
                         $variableDeclaration = $itemTemplates[$varId];
+                        $variable = TemplateVariable::createFromDataModel($variableDeclaration);
                         $varNature = 2;
                     }
 
                     try {
                         $this->writeShort($varNature);
                         $this->writeShort($seeker->seekPosition($variableDeclaration));
-                        $this->writeVariableValue($var);
+                        
+                        // If defaultValue or correct response is different from what's inside
+                        // the variable declaration, just write it.
+                        $hasDefaultValue = !Utils::equals($variable->getDefaultValue(), $var->getDefaultValue());
+                        $hasCorrectResponse = false;
+                        
+                        if ($varNature === 1 && !Utils::equals($variable->getCorrectResponse(), $var->getCorrectResponse())) {
+                            $hasCorrectResponse = true;
+                        }
+                        
+                        $this->writeBoolean($hasDefaultValue);
+                        $this->writeBoolean($hasCorrectResponse);
+                        
+                        $this->writeVariableValue($var, self::RW_VALUE);
+                        
+                        if ($hasDefaultValue === true) {
+                            $this->writeVariableValue($var, self::RW_DEFAULTVALUE);
+                        }
+                        
+                        if ($hasCorrectResponse === true) {
+                            $this->writeVariableValue($var, self::RW_CORRECTRESPONSE);
+                        }
+                        
                     } catch (OutOfBoundsException $e) {
                         $msg = "No variable found in the assessmentTest tree structure.";
                         throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);

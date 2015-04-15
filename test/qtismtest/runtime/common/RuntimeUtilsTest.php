@@ -56,6 +56,17 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	    $this->assertSame($expected, Utils::isNull($value));
 	}
 	
+	/**
+	 * @dataProvider equalsProvider
+	 * 
+	 * @param QtiDatatype $a
+	 * @param QtiDatatype $b
+	 * @param boolean $expected
+	 */
+	public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected) {
+	    $this->assertSame($expected, Utils::equals($a, $b));
+	}
+	
 	public function inferBaseTypeProvider() {
 		$returnValue = array();
 		
@@ -138,6 +149,15 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	        array(new MultipleContainer(BaseType::INTEGER), true),
 	        array(new OrderedContainer(BaseType::INTEGER), true),
 	        array(new RecordContainer(), true)                 
+	    );
+	}
+	
+	public function equalsProvider() {
+	    return array(
+	        array(new Boolean(true), null, false),   
+	        array(null, null, true),
+	        array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10))), new MultipleContainer(BaseType::INTEGER, array(new Integer(10))), true),
+	        array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10))), new MultipleContainer(BaseType::INTEGER, array(new Integer(100))), false)
 	    );
 	}
 }
