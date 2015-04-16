@@ -7,6 +7,9 @@
         <assessmentSection identifier="S01" title="Section1" visible="true">
             <assessmentItemRef identifier="QTPL1" href="./QTPL.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <defaultValue>
+                        <value>ChoiceB</value>
+                    </defaultValue>
                     <correctResponse>
                         <value>ChoiceA</value>
                     </correctResponse>
@@ -44,6 +47,9 @@
             
             <assessmentItemRef identifier="QTPL2" href="./QTPL.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <defaultValue>
+                        <value>ChoiceA</value>
+                    </defaultValue>
                     <correctResponse>
                         <value>ChoiceB</value>
                     </correctResponse>

@@ -720,5 +720,82 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
         $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
         $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        
+        // It seems to be ok! Let's take the test!
+        $session->beginAttempt();
+        // TPL1's responses should be applied their default values if any at the
+        // beginning of the first attempt.
+        $this->assertEquals('ChoiceB', $session['QTPL1.RESPONSE']->getValue());
+        
+        // Noisy persistence ...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // TPL1's response should still be at their default.
+        $this->assertEquals('ChoiceB', $session['QTPL1.RESPONSE']->getValue());
+        
+        // -- TPL1 - Correct response.
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $session->endAttempt($candidateResponses);
+        
+        $this->assertEquals(1.0, $session['QTPL1.SCORE']->getValue());
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertEquals('ChoiceA', $session['QTPL1.RESPONSE']->getValue());
+        $this->assertEquals(1.0, $session['QTPL1.SCORE']->getValue());
+        
+        $session->moveNext();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // -- TPL2 - Correct response.
+        $session->beginAttempt();
+        
+        // TPL2's responses should be at their default values if any at
+        // the beginning of the first attempt.
+        $this->assertEquals('ChoiceA', $session['QTPL2.RESPONSE']->getValue());
+        
+        // Noisy persistence ...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // TPL2's response should still be at their default.
+        $this->assertEquals('ChoiceA', $session['QTPL2.RESPONSE']->getValue());
+        
+        // -- TPL2 - Incorrect response.
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))));
+        $session->endAttempt($candidateResponses);
+        
+        $this->assertEquals(-1.0, $session['QTPL2.SCORE']->getValue());
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertEquals('ChoiceC', $session['QTPL2.RESPONSE']->getValue());
+        $this->assertEquals(-1.0, $session['QTPL2.SCORE']->getValue());
+        
+        // -- Go to the end of test.
+        $session->moveNext();
+        
+        // Check states...
+        $QTPL1Sessions = $session->getAssessmentItemSessions('QTPL1');
+        $QTPL1Session = $QTPL1Sessions[0];
+        $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
+        $QTPL2Session = $QTPL2Sessions[0];
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL1Session->getState());
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
     }
 }
