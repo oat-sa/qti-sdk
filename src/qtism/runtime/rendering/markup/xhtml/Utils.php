@@ -81,12 +81,37 @@ class Utils
                 // Do only if swapping is 'useful'...
                 $placeholder1 = $node->ownerDocument->createElement('placeholder1');
                 $placeholder2 = $node->ownerDocument->createElement('placeholder2');
-
+                
+                $statements1 = self::extractStatements($elements[$shufflableIndexes[$r1]]);
+                $statements2 = self::extractStatements($elements[$shufflableIndexes[$r2]]);
+                
                 $node->replaceChild($placeholder1, $elements[$shufflableIndexes[$r1]]);
                 $node->replaceChild($placeholder2, $elements[$shufflableIndexes[$r2]]);
 
                 $placeholder1 = $node->replaceChild($elements[$shufflableIndexes[$r2]], $placeholder1);
                 $placeholder2 = $node->replaceChild($elements[$shufflableIndexes[$r1]], $placeholder2);
+                
+                if (empty($statements1) === false && empty($statements2) === false) {
+                    for ($i = 0; $i < 2; $i++) {
+                        $node->removeChild($statements1[$i]);
+                        $node->replaceChild($statements1[$i], $statements2[$i]);
+                    }
+                    
+                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
+                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
+                } else if (empty($statements1) === false && empty($statements2) === true) {
+                    $node->removeChild($statements1[0]);
+                    $node->removeChild($statements1[1]);
+                    
+                    $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
+                    $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
+                } else if (empty($statements2) === false && empty($statements1) === true) {
+                    $node->removeChild($statements2[0]);
+                    $node->removeChild($statements2[1]);
+                    
+                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
+                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
+                }
 
                 unset($placeholder1);
                 unset($placeholder2);
@@ -129,10 +154,10 @@ class Utils
         $statements = array();
         
         $previousSibling = $node->previousSibling;
-        if ($previousSibling !== null && $previousSibling->nodeType === XML_COMMENT_NODE && strpos($previousSibling->data, 'qtism-if') === 0) {
+        if ($previousSibling !== null && $previousSibling->nodeType === XML_COMMENT_NODE && strpos(trim($previousSibling->data), 'qtism-if') === 0) {
             
             $nextSibling = $node->nextSibling;
-            if ($nextSibling !== null && $nextSibling->nodeType === XML_COMMENT_NODE && strpos($nextSibling->data, 'qtism-endif') === 0) {
+            if ($nextSibling !== null && $nextSibling->nodeType === XML_COMMENT_NODE && strpos(trim($nextSibling->data), 'qtism-endif') === 0) {
                 $statements[] = $previousSibling;
                 $statements[] = $nextSibling;
             }
