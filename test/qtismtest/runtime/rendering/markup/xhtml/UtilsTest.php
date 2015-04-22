@@ -76,4 +76,50 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase {
         $this->assertFalse(Utils::hasClass($node, 'unknown'));
         $this->assertFalse(Utils::hasClass($node, array('unknown', 'class')));
     }
+    
+    public function testExtractStatements() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $node = $dom->createElement('fakenode');
+        $dom->appendChild($node);
+        
+        $div = $dom->createElement('div');
+        $node->appendChild($div);
+        
+        $if = $dom->createComment('qtism-if (true)');
+        $endif = $dom->createComment('qtism-endif');
+        
+        $node->insertBefore($if, $div);
+        $node->appendChild($endif);
+        
+        $statements = Utils::extractStatements($div);
+        $this->assertEquals('qtism-if (true)', $statements[0]->data);
+        $this->assertEquals('qtism-endif', $statements[1]->data);
+    }
+    
+    public function testExtractStatementsNothing() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $node = $dom->createElement('fakenode');
+        $dom->appendChild($node);
+    
+        $div = $dom->createElement('div');
+        $node->appendChild($div);
+    
+        $this->assertEquals(array(), Utils::extractStatements($div));
+    }
+    
+    public function testExtractStatementsIfOnly() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $node = $dom->createElement('fakenode');
+        $dom->appendChild($node);
+        
+        $div = $dom->createElement('div');
+        $node->appendChild($div);
+        
+        $if = $dom->createComment('qtism-if (true)');
+        
+        $node->insertBefore($if, $div);
+        
+        $statements = Utils::extractStatements($div);
+        $this->assertEquals(array(), $statements);
+    }
 }

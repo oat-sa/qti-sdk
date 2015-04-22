@@ -41,7 +41,7 @@ class Utils
      * @param \DOMNode $node The DOM Node where corresponding $shufflables must be shuffled.
      * @param \qtism\data\ShufflableCollection $shufflables A collection of Shufflable objects.
      */
-    public static function shuffle(DOMNode $node, ShufflableCollection $shufflables)
+    static public function shuffle(DOMNode $node, ShufflableCollection $shufflables)
     {
         $shufflableIndexes = array();
         $elements = array();
@@ -101,7 +101,7 @@ class Utils
      * @param string|array $class A class or an array of CSS classes.
      * @return boolean
      */
-    public static function hasClass(DOMElement $node, $class)
+    static public function hasClass(DOMElement $node, $class)
     {
         if (is_array($class) === false) {
             $class = array($class);
@@ -116,5 +116,28 @@ class Utils
         }
 
         return true;
+    }
+    
+    /**
+     * Extract qtism-if/qtism-endif statements around a given $node.
+     * 
+     * @param DOMElement $node
+     * @return array An array of DOMComment objects.
+     */
+    static public function extractStatements(DOMElement $node)
+    {
+        $statements = array();
+        
+        $previousSibling = $node->previousSibling;
+        if ($previousSibling !== null && $previousSibling->nodeType === XML_COMMENT_NODE && strpos($previousSibling->data, 'qtism-if') === 0) {
+            
+            $nextSibling = $node->nextSibling;
+            if ($nextSibling !== null && $nextSibling->nodeType === XML_COMMENT_NODE && strpos($nextSibling->data, 'qtism-endif') === 0) {
+                $statements[] = $previousSibling;
+                $statements[] = $nextSibling;
+            }
+        }
+        
+        return $statements;
     }
 }
