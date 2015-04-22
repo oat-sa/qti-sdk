@@ -396,11 +396,15 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
             $this->getExploration()->push($component);
+            
+            if ($this->hasRootBase() === true) {
+                
+            }
         }
 
-        // Number of Flow components which where
+        // Number of components which where
         // already met during the descending phase.
-        $flowComponentEncountered = 0;
+        $componentEncountered = 0;
 
         while (count($this->getExploration()) > 0) {
             $this->setExploredComponent($this->getExploration()->pop());
@@ -412,15 +416,9 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
             $explored = $this->isExplored();
 
             if ($final === false && $explored === false) {
-                $isFlow = false;
 
                 // Hierarchical node: 1st pass (descending phase).
-                if ($this->getExploredComponent() instanceof Flow) {
-                    $isFlow = true;
-                    $flowComponentEncountered++;
-                }
-
-                $this->registerXmlBase(($flowComponentEncountered === 1 && $isFlow) ? ($this->hasRootBase() ? $this->getRootBase() : '') : '');
+                $this->registerXmlBase(($componentEncountered === 0) ? ($this->hasRootBase() ? $this->getRootBase() : '') : '');
                 $this->markAsExplored($this->getExploredComponent());
                 $this->getExploration()->push($this->getExploredComponent());
 
@@ -430,6 +428,9 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                         $this->getExploration()->push($toExplore);
                     }
                 }
+                
+                $componentEncountered++;
+                
             } elseif ($final === false && $explored === true) {
                 // Hierarchical node: 2nd pass.
                 $this->processNode($this->resolveXmlBase());
@@ -788,7 +789,15 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function registerXmlBase($substitution = '')
     {
         $c = $this->getExploredComponent();
-        $this->getXmlBaseStack()->push(($c instanceof Flow) ? (empty($substitution) ? $c->getXmlBase() : $substitution) : '');
+        $toPush = $substitution;
+        
+        if ($c instanceof Flow) {
+            if (empty($substitution) === true) {
+                $toPush = $c->getXmlBase();
+            }
+        }
+        
+        $this->getXmlBaseStack()->push($toPush);
     }
 
     /**
