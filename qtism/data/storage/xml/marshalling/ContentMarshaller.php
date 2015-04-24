@@ -91,7 +91,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
                                       'printedVariable', 'math');
     
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
-                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
+                                             'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object',
                                              'caption', 'address', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'li', 'dd', 'dt', 'div', 'templateBlock',
                                              'simpleChoice', 'simpleAssociableChoice', 'prompt', 'gapText', 'inlineChoice', 'hottext', 'modalFeedback', 'feedbackBlock');
     
@@ -278,6 +278,19 @@ abstract class ContentMarshaller extends RecursiveMarshaller {
         }
         else if ($element->localName === 'gapImg') {
             return self::getChildElementsByTagName($element, 'object');
+        } else if ($element->localName === 'infoControl') {
+            $elts = self::getChildElements($element, true);
+            $finalElts = array();
+            
+            foreach ($elts as $elt) {
+                if ($elt->nodeType === XML_ELEMENT_NODE && $elt->localName === 'portableInfoControl') {
+                    continue;
+                } else {
+                    $finalElts[] = $elt;
+                }
+            }
+            
+            return $finalElts;
         }
         else {
             return array();

@@ -200,6 +200,12 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    unlink($file);
 	}
 	
+	public function testLoadPICItem() {
+	    $doc = new XmlDocument();
+	    $doc->load(self::samplesDir() . 'custom/pic.xml');
+	    $this->assertTrue(true);
+	}
+	
 	public function validFileProvider() {
 		return array(
 		    array(self::decorateUri('adaptive.xml')),
