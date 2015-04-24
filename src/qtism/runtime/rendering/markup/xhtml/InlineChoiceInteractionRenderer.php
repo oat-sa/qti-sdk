@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -75,7 +75,7 @@ class InlineChoiceInteractionRenderer extends InteractionRenderer
     {
         parent::appendChildren($fragment, $component, $base);
 
-        if ($this->getRenderingEngine()->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->mustShuffle() === true && $component->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getContent()->getArrayCopy()));
         }
     }

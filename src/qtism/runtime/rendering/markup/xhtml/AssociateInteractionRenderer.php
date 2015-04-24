@@ -76,7 +76,7 @@ class AssociateInteractionRenderer extends InteractionRenderer
     {
         parent::appendChildren($fragment, $component, $base);
 
-        if ($this->getRenderingEngine()->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->mustShuffle() === true && $component->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleAssociableChoices()->getArrayCopy()));
         }
         

@@ -113,24 +113,60 @@ class MatchInteractionRenderer extends InteractionRenderer
         $table->appendChild($tr);
         // Empty upper left cell.
         $tr->appendChild($fragment->ownerDocument->createElement('th'));
-
+        
+        $verticalStatementsStorage = array();
+        
         for ($i = 0; $i < count($choiceElts[1]); $i++) {
-            $tr->appendChild(XmlUtils::changeElementName($choiceElts[1][$i], 'th'));
+            $statements = Utils::extractStatements($choiceElts[1][$i]);
+            
+            if (empty($statements) === false) {
+                $verticalStatementsStorage[$i] = $statements;
+                $tr->appendChild($statements[0]);
+            }
+            
+            $th = XmlUtils::changeElementName($choiceElts[1][$i], 'th');
+            $tr->appendChild($th);
+            
+            if (empty($statements) === false) {
+                $th->parentNode->insertBefore($statements[1], $th->nextSibling);
+            }
         }
 
         // Build all remaining rows.
         for ($i = 0; $i < count($choiceElts[0]); $i++) {
             $tr = $fragment->ownerDocument->createElement('tr');
-            $tr->appendChild(XmlUtils::changeElementName($choiceElts[0][$i], 'th'));
+            
+            $statements = Utils::extractStatements($choiceElts[0][$i]);
+            
+            $th = XmlUtils::changeElementName($choiceElts[0][$i], 'th');
+            $tr->appendChild($th);
+
             $table->appendChild($tr);
 
+            if (empty($statements) === false) {
+                $tr->parentNode->insertBefore($statements[0], $tr);
+            }
+            
             for ($j = 0; $j < count($choiceElts[1]); $j++) {
                 $input = $fragment->ownerDocument->createElement('input');
                 $input->setAttribute('type', 'checkbox');
                 $td = $fragment->ownerDocument->createElement('td');
                 $td->appendChild($input);
                 $tr->appendChild($td);
+                
+                if (isset($verticalStatementsStorage[$j])) {
+                    $st1 = $verticalStatementsStorage[$j][0]->cloneNode();
+                    $td->parentNode->insertBefore($st1, $td);
+                    
+                    $st2 = $verticalStatementsStorage[$j][1]->cloneNode();
+                    $td->parentNode->insertBefore($st2, $td->nextSibling);
+                }
+            }
+            
+            if (empty($statements) === false && isset($td)) {
+                $tr->parentNode->insertBefore($statements[1], $tr->nextSibling);
             }
         }
+        
     }
 }
