@@ -100,8 +100,14 @@ class OrderInteractionRenderer extends InteractionRenderer
         }
         
         foreach ($choiceQueue as $choiceElt) {
+            $statements = Utils::extractStatements($choiceElt);
             $fragment->firstChild->removeChild($choiceElt);
             $ulElt->appendChild($choiceElt);
+            
+            if (empty($statements) === false) {
+                $choiceElt->parentNode->insertBefore($statements[0], $choiceElt);
+                $choiceElt->parentNode->insertBefore($statements[1], $choiceElt->nextSibling);
+            }
         }
         
         $fragment->firstChild->appendChild($ulElt);

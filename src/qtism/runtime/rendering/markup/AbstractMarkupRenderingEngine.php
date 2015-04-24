@@ -534,6 +534,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         if ($this->mustTemplateRubricBlockComponent($component) === true) {
             $this->templateRubricBlockComponent($component, $rendering);
         }
+        
+        if ($this->mustTemplateChoiceComponent($component) === true) {
+            $this->templateChoiceComponent($component, $rendering);
+        }
 
         $this->setLastRendering($rendering);
     }
@@ -833,7 +837,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Whether or not a given component (expected to be a feedback) must be templated or not. A component
+     * Whether or not a given component (expected to be a feedback) must be templated. A component
      * is considered to be templatable if:
      *
      * * it is an instance of FeedbackElement or ModalFeedback
@@ -848,7 +852,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Whether or not a given component (expected to be a rubricBlock) must be templated or not. A component
+     * Whether or not a given component (expected to be a rubricBlock) must be templated. A component
      * is considered to be templatable if:
      *
      * * it is an instance of RubricBlock
@@ -861,6 +865,21 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     {
         return (self::isRubricBlock($component) && $this->getViewPolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED);
     }
+    
+    /**
+     * Whether or not a given component (expected to be a choice) must be templated. A component is
+     * considered to be templatable if:
+     * 
+     * * it is an instance of Choice
+     * * the current policy for choice show/hide is TEMPLATE_ORIENTED
+     *
+     * @param QtiComponent $component
+     * @return boolean
+     */
+    protected function mustTemplateChoiceComponent(QtiComponent $component)
+    {
+        return self::isChoice($component) && $this->getChoiceShowHidePolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
+    }
 
     /**
      * Whether or not a given component is an instance of
@@ -872,6 +891,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected static function isFeedback(QtiComponent $component)
     {
         return ($component instanceof FeedbackElement || $component instanceof ModalFeedback);
+    }
+    
+    /**
+     * Whether or not a given component is an instance of Choice.
+     * 
+     * @param QtiComponent $component A QtiComponent object.
+     * @return boolean
+     */
+    protected static function isChoice(QtiComponent $component)
+    {
+        return $component instanceof Choice;
     }
 
     /**
@@ -949,6 +979,40 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
         $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
 
+        $rendering->insertBefore($ifStmtCmt, $rendering->firstChild);
+        $rendering->appendChild($endifStmtCmt);
+    }
+    
+    /**
+     * Contains the logic of templating a QTI choice (Choice).
+     * 
+     * @param QtiComponent $component The QtiComponent object being rendered
+     * @param DOMDocumentFragment $rendering The rendering corresponding to $component
+     * @throws RenderingException If $component is not an instance of Choice.
+     */
+    protected function templateChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    {
+        if (self::isChoice($component) === false) {
+            $msg = "Cannot template a component which is not an instance of Choice.";
+            throw new RenderingException($msg, RenderingException::RUNTIME);
+        }
+        
+        $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
+        $val = '$' . $this->getStateName() . "['" . $component->getTemplateIdentifier() . "']";
+        $identifier = $component->getIdentifier();
+        $identifierType = 'qtism\\common\\datatypes\\Identifier';
+        $scalarType = 'qtism\\common\\datatypes\\Scalar';
+        $containerType = 'qtism\\common\\collections\\Container';
+        $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
+        $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
+        $valCheck = "(${scalarCheck} || ${containerCheck})";
+        
+        $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
+        $endifStmt = " qtism-endif ";
+        
+        $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
+        $endifStmtCmt = $rendering->ownerDocument->createComment($endifStmt);
+        
         $rendering->insertBefore($ifStmtCmt, $rendering->firstChild);
         $rendering->appendChild($endifStmtCmt);
     }
