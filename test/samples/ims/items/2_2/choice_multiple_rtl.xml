@@ -15,16 +15,18 @@
 		</mapping>
 	</responseDeclaration>
 	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
-	<itemBody dir="rtl">
+	<itemBody>
+	  <div dir="rtl">
 		<choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0">
 			<prompt>איזה מהגורמים הבאים משמשים ליצירת מים</prompt>
 			<simpleChoice identifier="H" fixed="false">מימן</simpleChoice>
 			<simpleChoice identifier="He" fixed="false">הליום</simpleChoice>
-			<simpleChoice identifier="C" fixed="false">פחמן</simpleChoice>
+			<simpleChoice identifier="C" fixed="false">פחם</simpleChoice>
 			<simpleChoice identifier="O" fixed="false">חמצן</simpleChoice>
 			<simpleChoice identifier="N" fixed="false">חנקן</simpleChoice>
 			<simpleChoice identifier="Cl" fixed="false">כלור</simpleChoice>
 		</choiceInteraction>
+      </div>
 	</itemBody>
 	<responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response"/>
 </assessmentItem>
