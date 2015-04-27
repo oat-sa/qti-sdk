@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -56,6 +56,100 @@ abstract class Marshaller
      * @var string
      */
     private $version;
+    
+    /**
+     * An array containing the name of classes
+     * that are allowed to have their 'dir' attribute set.
+     * 
+     * @var array
+     */
+    private static $dirClasses = array(
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'hotspotInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'selectPointInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'bdo',
+        'caption',
+        'colgroup',
+        'gapImg',
+        'gapText',
+        'infoControl',
+        'inlineChoice',
+        'li',
+        'prompt',
+        'simpleAssociableChoice',
+        'simpleChoice',
+        'stimulusBody',
+        'tbody',
+        'tfoot',
+        'thead',
+        'td',
+        'th',
+        'tr',
+        'customInteraction',
+        'graphicGapMatchInteraction',
+        'graphicOrderInteraction',
+        'inlineChoiceInteraction',
+        'positionObjecInteraction',
+        'a',
+        'dd',
+        'div',
+        'dl',
+        'dt',
+        'feedbackBlock',
+        'feedbackInline',
+        'hottext',
+        'abbr',
+        'acronym',
+        'address',
+        'b',
+        'big',
+        'cite',
+        'code',
+        'dfn',
+        'em',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'i',
+        'kbd',
+        'p',
+        'pre',
+        'samp',
+        'small',
+        'span',
+        'strong',
+        'sub',
+        'sup',
+        'tt',
+        'var',
+        'br',
+        'col',
+        'hr',
+        'img',
+        'q',
+        'label',
+        'object',
+        'ul',
+        'rubricBlock',
+        'table',
+        'templateBlock',
+        'templateInline',
+        'hottext'
+    );
     
     /**
      * Create a new Marshaller object.
@@ -362,7 +456,7 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
             
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = self::getDOMElementAttributeAs($element, 'dir')) !== null) {
+            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = self::getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
                 $bodyElement->setDir(Direction::getConstantByName($dir));
             }
         } catch (InvalidArgumentException $e) {
@@ -396,7 +490,7 @@ abstract class Marshaller
         }
         
         $version = $this->getVersion();
-        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO) {
+        if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
             $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
     }
