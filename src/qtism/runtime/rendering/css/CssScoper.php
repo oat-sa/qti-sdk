@@ -217,6 +217,7 @@ class CssScoper implements Renderable
                                        'a' => 'qti-a',
 
                                        // QTI Components considered to be safe CSS selector targets.
+                                       'assessmentItem' => 'qti-assessmentItem',
                                        'itemBody' => 'qti-itemBody',
                                        'feedbackBlock' => 'qti-feedbackBlock',
                                        'feedbackInline' => 'qti-feedbackInline',
