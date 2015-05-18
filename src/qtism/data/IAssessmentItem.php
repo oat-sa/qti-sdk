@@ -22,6 +22,7 @@
 
 namespace qtism\data;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\processing\TemplateProcessing;
 use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\state\TemplateDeclarationCollection;
@@ -145,4 +146,11 @@ interface IAssessmentItem extends QtiIdentifiable
      * @param \qtism\data\processing\TemplateProcessing $templateProcessing A TemplateProcessing object or null if no associated template processing.
     */
     public function setTemplateProcessing(TemplateProcessing $templateProcessing = null);
+    
+    /**
+     * Get the response variable identifiers related to endAttemptInteractions in the item content.
+     * 
+     * @return \qtism\common\collections\IdentifierCollection
+     */
+    public function getEndAttemptIdentifiers();
 }

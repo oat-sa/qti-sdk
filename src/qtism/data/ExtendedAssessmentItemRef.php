@@ -94,6 +94,15 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $timeDependent = false;
     
     /**
+     * A collection of QTI identifiers identifying response variables bound
+     * to endAttemptInteractions contained in the item content.
+     * 
+     * @var \qtism\common\collections\IdentifierCollection
+     * @qtism-bean-property
+     */
+    private $endAttemptIdentifiers = null;
+    
+    /**
      * The modalFeedbackRules found in the referenced assessmentItem.
      * 
      * @var \qtism\data\content\ModalFeedbackRuleCollection
@@ -125,6 +134,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         $this->setResponseDeclarations(new ResponseDeclarationCollection());
         $this->setTemplateDeclarations(new TemplateDeclarationCollection());
         $this->setModalFeedbackRules(new ModalFeedbackRuleCollection());
+        $this->setEndAttemptIdentifiers(new IdentifierCollection());
     }
 
     /**
@@ -397,6 +407,24 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     public function isTimeDependent()
     {
         return $this->timeDependent;
+    }
+    
+    /**
+     * Set the response identifiers related to endAttemptInteractions in the item content.
+     * 
+     * @param \qtism\common\collections\IdentifierCollection $endAttemptIdentifiers
+     */
+    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers) {
+        $this->endAttemptIdentifiers = $endAttemptIdentifiers;
+    }
+    
+    /**
+     * Get the response identifiers related to endAttemptInteractions in the item content.
+     * 
+     * @return \qtism\common\collections\IdentifierCollection
+     */
+    public function getEndAttemptIdentifiers() {
+        return $this->endAttemptIdentifiers;
     }
 
     /**

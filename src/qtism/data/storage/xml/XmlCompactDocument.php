@@ -22,8 +22,8 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\TestFeedbackRef;
-
 use qtism\data\content\RubricBlockRef;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
@@ -273,21 +273,23 @@ class XmlCompactDocument extends XmlDocument
 
             $doc = new XmlDocument();
             $doc->load($href);
+            $item = $doc->getDocumentComponent();
 
-            foreach ($doc->getDocumentComponent()->getResponseDeclarations() as $resp) {
+            foreach ($item->getResponseDeclarations() as $resp) {
                 $compactAssessmentItemRef->addResponseDeclaration($resp);
             }
 
-            foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $out) {
+            foreach ($item->getOutcomeDeclarations() as $out) {
                 $compactAssessmentItemRef->addOutcomeDeclaration($out);
             }
 
-            if ($doc->getDocumentComponent()->hasResponseProcessing() === true) {
-                $compactAssessmentItemRef->setResponseProcessing($doc->getDocumentComponent()->getResponseProcessing());
+            if ($item->hasResponseProcessing() === true) {
+                $compactAssessmentItemRef->setResponseProcessing($item->getResponseProcessing());
             }
 
-            $compactAssessmentItemRef->setAdaptive($doc->getDocumentComponent()->isAdaptive());
-            $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
+            $compactAssessmentItemRef->setAdaptive($item->isAdaptive());
+            $compactAssessmentItemRef->setTimeDependent($item->isTimeDependent());
+            $compactAssessmentItemRef->setEndAttemptIdentifiers($item->getEndAttemptIdentifiers());
         } catch (Exception $e) {
             $msg = "An error occured while unreferencing file '${href}'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);

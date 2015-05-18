@@ -2,6 +2,7 @@
 namespace qtismtest\data\storage\xml;
 
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\Identifier;
 use qtism\data\ShowHide;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;
@@ -322,6 +323,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertTrue($doc->schemaValidate($schema));
 	}
 	
+	/**
+	 * @depends testSchemaValid
+	 */
+	public function testSchemaValid3() {
+	    $doc = new DOMDocument('1.0', 'UTF-8');
+	    $file = self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml';
+	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
+	     
+	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
+	    $this->assertTrue($doc->schemaValidate($schema));
+	}
+	
 	public function testTestFeedbackRefLoad() {
 	    $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
 	    $doc = new XmlCompactDocument();
@@ -369,5 +382,27 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals('show', $testFeedbackRefElt3->getAttribute('showHide'));
 	    $this->assertEquals('showme', $testFeedbackRefElt3->getAttribute('outcomeIdentifier'));
 	    $this->assertEquals('./TFMAIN.xml', $testFeedbackRefElt3->getAttribute('href'));
+	}
+	
+	public function testCreateFromAssessmentTestEndAttemptIdentifiers() {
+	    $doc = new XmlDocument('2.1');
+	    $file = self::samplesDir() . 'custom/test_contains_endattemptinteractions.xml';
+	    $doc->load($file);
+	    $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+	    
+	    // ExtendedAssessmentItemRefs!
+	    $assessmentItemRefs = $compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef');
+	    $this->assertEquals(2, count($assessmentItemRefs));
+	    
+	    $assessmentItemRef = $assessmentItemRefs[0];
+	    $endAttemptIdentifiers = $assessmentItemRef->getEndAttemptIdentifiers();
+	    $this->assertEquals(1, count($endAttemptIdentifiers));
+	    $this->assertEquals('HINT', $endAttemptIdentifiers[0]);
+	    
+	    $assessmentItemRef = $assessmentItemRefs[1];
+	    $endAttemptIdentifiers = $assessmentItemRef->getEndAttemptIdentifiers();
+	    $this->assertEquals(2, count($endAttemptIdentifiers));
+	    $this->assertEquals('LOST', $endAttemptIdentifiers[0]);
+	    $this->assertEquals('LOST2', $endAttemptIdentifiers[1]);
 	}
 }

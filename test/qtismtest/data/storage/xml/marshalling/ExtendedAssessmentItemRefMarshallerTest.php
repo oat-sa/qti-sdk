@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
+
 use qtismtest\QtiSmTestCase;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
@@ -34,6 +36,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('assessmentItemRef', $element->nodeName);
 		$this->assertEquals('Q01', $element->getAttribute('identifier'));
 		$this->assertEquals('./q01.xml', $element->getAttribute('href'));
+		$this->assertEquals('', $element->getAttribute('endAttemptIdentifiers'));
 	}
 	
 	public function testUnmarshallMinimal() {
@@ -51,6 +54,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(0, count($component->getResponseDeclarations()));
 		$this->assertEquals('Q01', $component->getIdentifier());
 		$this->assertEquals('./q01.xml', $component->getHref());
+		$this->assertEquals(0, count($component->getEndAttemptIdentifiers()));
 	}
 	
 	/**
@@ -218,5 +222,98 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 	    $templateDeclarations = $component->getTemplateDeclarations();
 	    $this->assertEquals('T01', $templateDeclarations['T01']->getIdentifier());
 	    $this->assertEquals('T02', $templateDeclarations['T02']->getIdentifier());
+	}
+	
+	public function testMarshallMultipleEndAttemptIdentifiers() {
+	    $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    $component->setEndAttemptIdentifiers(new IdentifierCollection(array('HINT1', 'HINT2', 'HINT3')));
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
+	    $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+	    $this->assertEquals('HINT1 HINT2 HINT3', $element->getAttribute('endAttemptIdentifiers'));
+	}
+	
+	public function testMarshallSingleEndAttemptIdentifiers() {
+	    $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    $component->setEndAttemptIdentifiers(new IdentifierCollection(array('HINT1')));
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	     
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
+	    $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+	    $this->assertEquals('HINT1', $element->getAttribute('endAttemptIdentifiers'));
+	}
+	
+	public function testMarshallNoEndAttemptIdentifiers() {
+	    $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    $component->setEndAttemptIdentifiers(new IdentifierCollection(array()));
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
+	    $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+	    $this->assertEquals('', $element->getAttribute('endAttemptIdentifiers'));
+	}
+	
+	public function testUnmarshallMultipleEndAttemptIdentifiers() {
+	    $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true" endAttemptIdentifiers="HINT1 HINT2 HINT3"/>');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	    
+	    $this->assertEquals('Q01', $component->getIdentifier());
+	    $this->assertEquals('./q01.xml', $component->getHref());
+	    $this->assertTrue($component->isTimeDependent());
+	    $this->assertTrue($component->isAdaptive());
+	    
+	    $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
+	    $this->assertEquals(3, count($endAttemptIdentifiers));
+	    $this->assertEquals('HINT1', $endAttemptIdentifiers[0]);
+	    $this->assertEquals('HINT2', $endAttemptIdentifiers[1]);
+	    $this->assertEquals('HINT3', $endAttemptIdentifiers[2]);
+	}
+	
+	/**
+	 * @depends testUnmarshallMultipleEndAttemptIdentifiers
+	 */
+	public function testUnmarshallSingleEndAttemptIdentifier() {
+	    $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true" endAttemptIdentifiers="HINT1"/>');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	     
+	    $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
+	    $this->assertEquals(1, count($endAttemptIdentifiers));
+	    $this->assertEquals('HINT1', $endAttemptIdentifiers[0]);
+	}
+	
+	/**
+	 * @depends testUnmarshallMultipleEndAttemptIdentifiers
+	 */
+	public function testUnmarshallNoEndAttemptIdentifier() {
+	    $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true" adaptive="true"/>');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	
+	    $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
+	    $this->assertEquals(0, count($endAttemptIdentifiers));
 	}
 }

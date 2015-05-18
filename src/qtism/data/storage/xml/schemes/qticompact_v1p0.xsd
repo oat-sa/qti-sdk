@@ -20,6 +20,7 @@
 	    			</xs:sequence>
 	    			<xs:attribute name="adaptive" default="false" use="optional" type="xs:boolean"/>
 	    			<xs:attribute name="timeDependent" use="required" type="xs:boolean"/>
+	    			<xs:attribute name="endAttemptIdentifiers" use="optional" type="xs:string"/>
 	    		</xs:extension>
 	    	</xs:complexContent>
 	    </xs:complexType>

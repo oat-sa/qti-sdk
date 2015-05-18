@@ -22,6 +22,7 @@
 
 namespace qtism\data;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\content\ModalFeedbackCollection;
@@ -686,6 +687,22 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         }
         
         return $modalFeedbackRules;
+    }
+    
+    /**
+     * Get the response variable identifiers related to the endAttemptInteraction in the item content.
+     * 
+     * @return \qtism\common\collections\IdentifierCollection 
+     * @see \qtism\data\IAssessmentItem::getEndAttemptIdentifiers()
+     */
+    public function getEndAttemptIdentifiers() {
+        $endAttemptIdentifiers = new IdentifierCollection();
+        
+        foreach ($this->getComponentsByClassName('endAttemptInteraction') as $endAttemptInteraction) {
+            $endAttemptIdentifiers[] = $endAttemptInteraction->getResponseIdentifier();
+        }
+        
+        return $endAttemptIdentifiers;
     }
 
     /**

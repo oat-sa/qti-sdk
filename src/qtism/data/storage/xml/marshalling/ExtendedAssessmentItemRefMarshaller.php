@@ -22,6 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
@@ -82,6 +83,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         
         self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
         self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        
+        $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
+        if (count($endAttemptIdentifiers) > 0) {
+            self::setDOMElementAttribute($element, 'endAttemptIdentifiers', implode("\x20", $endAttemptIdentifiers->getArrayCopy()));
+        }
 
         return $element;
     }
@@ -170,6 +176,13 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         } else {
             $msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
+        }
+        
+        if (($endAttemptIdentifiers = self::getDOMElementAttributeAs($element, 'endAttemptIdentifiers')) !== null) {
+            $identifiersArray = explode("\x20", $endAttemptIdentifiers);
+            if (count($identifiersArray) > 0) {
+                $compactAssessmentItemRef->setEndAttemptIdentifiers(new IdentifierCollection($identifiersArray));
+            }
         }
 
         return $compactAssessmentItemRef;
