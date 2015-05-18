@@ -340,6 +340,19 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($result->getValue());
 	}
 	
+	public function testMultipleOccurences() {
+	    $expression = $this->createFakeExpression();
+	    $operands = new OperandsCollection(
+	        array(
+	            new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('no'), new Identifier('yes'), new Identifier('yes'), new Identifier('no'))),
+	            new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('yes'), new Identifier('yes')))                
+	        )                
+	    );
+	    $processor = new ContainsProcessor($expression, $operands);
+	    $result = $processor->process();
+	    $this->assertTrue($result->getValue());
+	}
+	
 	public function testNull() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(null, new MultipleContainer(BaseType::INTEGER, array(new Integer(25)))));
