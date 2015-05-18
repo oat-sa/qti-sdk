@@ -29,11 +29,11 @@ use \DOMDocumentFragment;
 
 /**
  * EndAttemptInteraction renderer. Rendered components will be transformed as
- * 'span' elements with the 'qti-inlineInteraction' and 'qti-endAttemptInteraction' additional CSS class.
+ * 'button' elements with the 'qti-inlineInteraction' and 'qti-endAttemptInteraction' additional CSS class.
  *
- * An <input type="submit"> element is appended to the rendered element to depict
- * the input to be pressed by the candidate to end the attempt. The attribute 'value' of
- * the <input type="submit"> element will be set with the value of qti:endAttemptInteraction->title.
+ * A <button> element is appended to the rendered element to depict
+ * the input to be pressed by the candidate to end the attempt. The text content
+ * of the button will be the value of qti:endAttemptInteraction->title.
  *
  * The following data-X attributes will be rendered:
  *
@@ -53,7 +53,7 @@ class EndAttemptInteractionRenderer extends InteractionRenderer
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
-        $this->transform('span');
+        $this->transform('button');
     }
 
     /**
@@ -73,10 +73,9 @@ class EndAttemptInteractionRenderer extends InteractionRenderer
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         parent::appendChildren($fragment, $component, $base);
-
-        $submitElt = $fragment->ownerDocument->createElement('input');
-        $submitElt->setAttribute('type', 'submit');
-        $submitElt->setAttribute('value', $component->getTitle());
-        $fragment->firstChild->appendChild($submitElt);
+        
+        $titleElt = $fragment->ownerDocument->createTextNode($component->getTitle());
+        $fragment->firstChild->appendChild($titleElt);
+        $fragment->firstChild->setAttribute('title', $component->getTitle());
     }
 }
