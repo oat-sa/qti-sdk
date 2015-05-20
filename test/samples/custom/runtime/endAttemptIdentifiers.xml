@@ -4,6 +4,7 @@
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
     identifier="endAttemptIdentifiers" title="End Attempt Identifiers">
     <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <itemSessionControl maxAttempts="0"/>
         <assessmentSection identifier="S01" title="Section1" visible="true">
             <!-- Single endAttemptIdentifier. -->
             <assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false" endAttemptIdentifiers="HINT">
@@ -13,12 +14,44 @@
                     </correctResponse>
                 </responseDeclaration>
                 <responseDeclaration identifier="HINT" cardinality="single" baseType="boolean"/>
-                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <outcomeDeclaration identifier="SHOWHINT" cardinality="single" baseType="boolean">
                     <defaultValue>
-                        <value>0</value>
+                        <value>false</value>
                     </defaultValue>
                 </outcomeDeclaration>
-                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+                <responseProcessing>
+                    <!-- Show/Hide hint information to candidate. -->
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="HINT"/>
+                                <baseValue baseType="boolean">true</baseValue>
+                            </match>
+                            <setOutcomeValue identifier="SHOWHINT">
+                                <baseValue baseType="boolean">true</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    
+                    <!-- Actual Response Processing. -->
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">0.0</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
             </assessmentItemRef>
             
             <!-- No endAttemptIdentifier. -->
@@ -28,27 +61,77 @@
                         <value>ChoiceB</value>
                     </correctResponse>
                 </responseDeclaration>
-                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
-                    <defaultValue>
-                        <value>0</value>
-                    </defaultValue>
-                </outcomeDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
             </assessmentItemRef>
             
             <!-- Multiple endAttemptIdentifiers. -->
-            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false" endAttemptIdentifiers="HINT1 HINT2">
+            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false" endAttemptIdentifiers="HINT1 HINT2" adaptive="true">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>ChoiceC</value>
                     </correctResponse>
                 </responseDeclaration>
-                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                <responseDeclaration identifier="HINT1" cardinality="single" baseType="boolean">
                     <defaultValue>
-                        <value>0</value>
+                        <value>true</value>
+                    </defaultValue>
+                </responseDeclaration>
+                <responseDeclaration identifier="HINT2" cardinality="single" baseType="boolean">
+                    <defaultValue>
+                        <value>true</value>
+                    </defaultValue>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SHOWHINT1" cardinality="single" baseType="boolean">
+                    <defaultValue>
+                        <value>false</value>
                     </defaultValue>
                 </outcomeDeclaration>
-                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+                <outcomeDeclaration identifier="SHOWHINT2" cardinality="single" baseType="boolean">
+                    <defaultValue>
+                        <value>false</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <!-- Show/Hide hints information to candidate. -->
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="HINT1"/>
+                                <baseValue baseType="boolean">true</baseValue>
+                            </match>
+                            <setOutcomeValue identifier="SHOWHINT1">
+                                <baseValue baseType="boolean">true</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElseIf>
+                            <match>
+                                <variable identifier="HINT2"/>
+                                <baseValue baseType="boolean">true</baseValue>
+                            </match>
+                            <setOutcomeValue identifier="SHOWHINT2">
+                                <baseValue baseType="boolean">true</baseValue>
+                            </setOutcomeValue>
+                        </responseElseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">0.0</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
             </assessmentItemRef>
         </assessmentSection>
     </testPart>

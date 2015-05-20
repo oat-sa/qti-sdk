@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\Boolean;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\TemplateVariable;
@@ -662,6 +663,11 @@ class AssessmentItemSession extends State
             // At the start of the first attempt, the completionStatus goes
             // to 'unknown'.
             $this['completionStatus']->setValue(self::COMPLETION_STATUS_UNKNOWN);
+        }
+        
+        // For any attempt, the variables related to endAttemptInteractions are reset to false.
+        foreach ($this->getAssessmentItem()->getEndAttemptIdentifiers() as $endAttemptIdentifier) {
+            $this[$endAttemptIdentifier] = new Boolean(false);
         }
 
         // Increment the built-in variable 'numAttempts' by one.
