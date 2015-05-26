@@ -282,6 +282,10 @@ class XmlCompactDocument extends XmlDocument
             foreach ($item->getOutcomeDeclarations() as $out) {
                 $compactAssessmentItemRef->addOutcomeDeclaration($out);
             }
+            
+            foreach ($item->getTemplateDeclarations() as $tpl) {
+                $compactAssessmentItemRef->addTemplateDeclaration($tpl);
+            }
 
             if ($item->hasResponseProcessing() === true) {
                 $compactAssessmentItemRef->setResponseProcessing($item->getResponseProcessing());
