@@ -290,6 +290,10 @@ class XmlCompactDocument extends XmlDocument
             if ($item->hasResponseProcessing() === true) {
                 $compactAssessmentItemRef->setResponseProcessing($item->getResponseProcessing());
             }
+            
+            if ($item->hasTemplateProcessing() === true) {
+                $compactAssessmentItemRef->setTemplateProcessing($item->getTemplateProcessing());
+            }
 
             $compactAssessmentItemRef->setAdaptive($item->isAdaptive());
             $compactAssessmentItemRef->setTimeDependent($item->isTimeDependent());
