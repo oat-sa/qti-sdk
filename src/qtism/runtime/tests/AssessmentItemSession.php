@@ -640,6 +640,11 @@ class AssessmentItemSession extends State
                 $msg = "A new attempt for item '${identifier}' is not allowed. The maximum time limit in force is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
             }
+            elseif ($this->getAssessmentItem()->isAdaptive() === true && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
+                $identifier = $this->getAssessmentItem()->getIdentifier();
+                $msg = "A new attempt for item '${identifier}' is not allowed. It is adaptive and its completion status is 'completed'.";
+                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
+            }
         }
         
         
