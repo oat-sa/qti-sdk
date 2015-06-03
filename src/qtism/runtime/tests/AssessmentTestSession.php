@@ -2208,8 +2208,8 @@ class AssessmentTestSession extends State
         $route = $this->getRoute();
         $from = $route->current();
 
+        $route->next();
         while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
-            // Move to the next route item. Ignore branchings and preConditions.
             $this->nextRouteItem();
         }
 
@@ -2235,9 +2235,9 @@ class AssessmentTestSession extends State
 
         $route = $this->getRoute();
         $from = $route->current();
-
+        
+        $route->next();
         while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
-            // Move to the next route item by ignoring branchings and preConditions.
             $this->nextRouteItem();
         }
 
