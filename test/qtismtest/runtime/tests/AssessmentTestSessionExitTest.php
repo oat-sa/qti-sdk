@@ -7,21 +7,51 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSessionState;
+use qtism\runtime\tests\AssessmentTestSessionState;
 
 class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
     
-    public function testLinearAssessmentTestDuring() {
+    public function testExitSection() {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsection.xml';
         $testSession = self::instantiate($url);
         
         $testSession->beginTestSession();
         
-        // If we get correct to the first question, we should EXIT SECTION.
+        // If we get correct to the first question, we should EXIT_SECTION. We should
+        // then be redirected to S02.
         $testSession->beginAttempt();
         $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
         
         // We should arrive at section 2.
         $testSession->moveNext();
         $this->assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+    }
+    
+    public function testExitSectionEndOfTest() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exitsectionendoftest.xml';
+        $testSession = self::instantiate($url);
+        
+        $testSession->beginTestSession();
+        
+        // If we get correct to the first question, we will EXIT_SECTION. We should
+        // be then redirected to the end of the test, because S01 is the unique section
+        // of the test.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        
+        // We should be at the end of the test.
+        $testSession->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        
+        // All session closed (parano mode)?
+        $itemSessions = $testSession->getAssessmentItemSessions('Q01');
+        $q01Session = $itemSessions[0];
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        
+        // For Q02, we should not get any result because we by-passed it with the branchRule.
+        $itemSessions = $testSession->getAssessmentItemSessions('Q02');
+        $this->assertEquals(false, $itemSessions);
     }
 }
