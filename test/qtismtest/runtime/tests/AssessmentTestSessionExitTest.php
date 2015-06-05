@@ -77,8 +77,86 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $q01Session = $itemSessions[0];
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
         
-        // For Q02, we should not get any result because we by-passed it with the initial branchRule.
+        // For Q02 and Q03, we should not get any result because we both by-passed them with the initial branchRule
+        // and the ending preCondition.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
+        $this->assertEquals(false, $itemSessions);
+        
+        $itemSessions = $testSession->getAssessmentItemSessions('Q03');
+        $this->assertEquals(false, $itemSessions);
+    }
+    
+    public function testExitTestPart() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exittestpart.xml';
+        $testSession = self::instantiate($url);
+    
+        $testSession->beginTestSession();
+    
+        // If we get correct to the first question, we should EXIT_TESTPART. We should
+        // then be redirected to P02.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+    
+        // We should arrive at testPart 2
+        $testSession->moveNext();
+        $this->assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
+    }
+    
+    public function testExitTestPartEndOfTest() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exittestpartendoftest.xml';
+        $testSession = self::instantiate($url);
+    
+        $testSession->beginTestSession();
+    
+        // If we get correct to the first question, we will EXIT_TESTPART. We should
+        // be then redirected to the end of the test, because T01 is the unique testPart
+        // of the test.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+    
+        // We should be at the end of the test.
+        $testSession->moveNext();
+    
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+    
+        // All session closed (parano mode all over again)?
+        $itemSessions = $testSession->getAssessmentItemSessions('Q01');
+        $q01Session = $itemSessions[0];
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+    
+        // For Q02, we should not get any result because we by-passed it with the branchRule.
+        $itemSessions = $testSession->getAssessmentItemSessions('Q02');
+        $this->assertEquals(false, $itemSessions);
+    }
+    
+    public function testExitTestPartPreconditionsEndOfTest() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exittestpartpreconditions.xml';
+        $testSession = self::instantiate($url);
+    
+        $testSession->beginTestSession();
+    
+        // If we get correct to the first question, we will EXIT_TESTPART. We should
+        // be then redirected to the end of the test, because Q03 has a precondition
+        // which is never satisfied (return always false).
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+    
+        // We should be at the end of the test.
+        $testSession->moveNext();
+    
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+    
+        // All session closed (parano mode again)?
+        $itemSessions = $testSession->getAssessmentItemSessions('Q01');
+        $q01Session = $itemSessions[0];
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+    
+        // For Q02 & Q03, we should not get any result because we both by-passed them with the initial branchRule
+        // and the ending preCondition.
+        $itemSessions = $testSession->getAssessmentItemSessions('Q02');
+        $this->assertEquals(false, $itemSessions);
+        
+        $itemSessions = $testSession->getAssessmentItemSessions('Q03');
         $this->assertEquals(false, $itemSessions);
     }
 }
