@@ -54,4 +54,31 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
         $this->assertEquals(false, $itemSessions);
     }
+    
+    public function testExitSectionPreconditionsEndOfTest() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exitsectionpreconditions.xml';
+        $testSession = self::instantiate($url);
+        
+        $testSession->beginTestSession();
+        
+        // If we get correct to the first question, we will EXIT_SECTION. We should
+        // be then redirected to the end of the test, because Q03 has a precondition
+        // which is never satisfied (return always false).
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        
+        // We should be at the end of the test.
+        $testSession->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        
+        // All session closed (parano mode again)?
+        $itemSessions = $testSession->getAssessmentItemSessions('Q01');
+        $q01Session = $itemSessions[0];
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        
+        // For Q02, we should not get any result because we by-passed it with the initial branchRule.
+        $itemSessions = $testSession->getAssessmentItemSessions('Q02');
+        $this->assertEquals(false, $itemSessions);
+    }
 }
