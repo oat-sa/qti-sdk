@@ -22,6 +22,7 @@
 
 namespace qtism\data\content;
 
+use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 

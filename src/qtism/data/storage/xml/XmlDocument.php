@@ -22,22 +22,28 @@
 
 namespace qtism\data\storage\xml;
 
+use qtism\common\utils\Url;
+use qtism\data\QtiComponentCollection;
+use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\AssessmentTest;
+use qtism\data\content\Flow;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
+use \ReflectionClass;
 use \DOMDocument;
 use \DOMElement;
 use \DOMException;
 use \RuntimeException;
 use \InvalidArgumentException;
+use \LogicException;
 
 /**
  * This class represents a QTI-XML Document.
@@ -340,6 +346,62 @@ class XmlDocument extends QtiDocument
         } else {
             $msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
             throw new InvalidArgumentException($msg);
+        }
+    }
+    
+    /**
+     * Resolve include components.
+     * 
+     * After the item has been loaded using the load or loadFromString method,
+     * the include components can be resolved by calling this method. Files will
+     * be included following the rules described by the XInclude specification.
+     * 
+     * @param boolean $validate Whether or not validate files being included.
+     * @throws \LogicException If the method is called prior the load or loadFromString method was called.
+     * @throws \qtism\data\storage\xml\XmlStorageException If an error occured while parsing or validating files to be included.
+     */
+    public function xInclude($validate = false) {
+        
+        if (($root = $this->getDocumentComponent()) !== false) {
+            
+            $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+            $pathinfo = pathinfo($baseUri);
+            $basePath = $pathinfo['dirname'];
+            
+            $iterator = new QtiComponentIterator($root, array('include'));
+            foreach ($iterator as $include) {
+                $parent = $iterator->parent();
+                
+                // Is the parent something we can deal with for replacement?
+                $reflection = new ReflectionClass($parent);
+                
+                if ($reflection->hasMethod('getContent') === true && $parent->getContent() instanceof QtiComponentCollection) {
+                    $href = $include->getHref();
+                    
+                    if (Url::isRelative($href) === true) {
+                        $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
+                        
+                        $doc = new XmlDocument();
+                        $doc->load($href, $validate);
+                        $includeRoot = $doc->getDocumentComponent();
+                        
+                        if ($includeRoot instanceof Flow) {
+                            // Derive xml:base...
+                            $xmlBase = Url::ltrim(str_replace($basePath, '', $href));
+                            $xmlBasePathInfo = pathinfo($xmlBase);
+                            
+                            if ($xmlBasePathInfo['dirname'] !== '.') {
+                                $includeRoot->setXmlBase($xmlBasePathInfo['dirname'] . '/');
+                            }
+                        }
+                        
+                        $parent->getContent()->replace($include, $includeRoot);
+                    }
+                }
+            }
+        } else {
+            $msg = "Cannot include fragments prior to loading any file.";
+            throw new LogicException($msg);
         }
     }
 
