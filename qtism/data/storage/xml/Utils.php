@@ -71,6 +71,10 @@ class Utils {
 					return '2.1';
 				break;
 				
+				case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
+                    return '2.1';				    
+				break;
+				
 				case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
 					return '2.0';
 				break;
