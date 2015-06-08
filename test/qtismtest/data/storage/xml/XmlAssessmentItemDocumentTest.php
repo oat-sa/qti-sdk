@@ -7,6 +7,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\View;
 use qtism\data\AssessmentItem;
+use qtism\data\storage\xml\XmlStorageException;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
@@ -205,6 +206,27 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	    
 	    $this->testLoadPCIItem($file);
 	    unlink($file);
+	}
+	
+	public function testLoadAndSaveXIncludeNsInTag() {
+	    $doc = new XmlDocument();
+	    $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
+	    
+	    $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
+	    $this->assertEquals(1, count($includes));
+	    $this->assertEquals('xinclude_ns_in_tag_content1.xml', $includes[0]->getHref());
+	    
+	    $file = tempnam('/tmp', 'qsm');
+	    $doc->save($file);
+	    
+	    // Does it validate again?
+	    $doc = new XmlDocument();
+	    try {
+	        $doc->load($file, true);
+	        $this->assertTrue(true);
+	    } catch (XmlStorageException $e) {
+	        $this->assertFalse(true, "The document using xinclude should validate after being saved.");
+	    }
 	}
 	
 	public function validFileProvider() {

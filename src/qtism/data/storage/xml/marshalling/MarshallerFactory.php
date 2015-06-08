@@ -284,6 +284,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('templateBlock', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
         $this->addMappingEntry('hotspotChoice', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
         $this->addMappingEntry('associableHotspot', 'qtism\\data\\storage\\xml\\marshalling\\HotspotMarshaller');
+        $this->addMappingEntry('include', 'qtism\\data\\storage\\xml\\marshalling\\XIncludeMarshaller');
     }
 
     /**
