@@ -66,6 +66,6 @@ class TextRunMarshaller extends Marshaller
 	 */
     public function getExpectedQtiClassName()
     {
-        return 'randomInteger';
+        return 'textRun';
     }
 }
