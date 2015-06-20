@@ -78,7 +78,7 @@ class Format
                 return false;
             }
         } else {
-            return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
+            return preg_match("/^[a-zA-Z0-9_\.-]+$/u", $string) === 1;
         }
     }
 

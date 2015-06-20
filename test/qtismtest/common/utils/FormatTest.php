@@ -12,6 +12,20 @@ class FormatTest extends QtiSmTestCase {
 	public function testValidIdentifierFormat($string) {
 		$this->assertTrue(Format::isIdentifier($string));
 	}
+
+    /**
+     * @dataProvider validIdentifierNonStrictFormatProvider
+     */
+    public function testValidIdentifierNonStrictFormat($string) {
+        $this->assertTrue(Format::isIdentifier($string, false));
+    }
+
+    /**
+     * @dataProvider invalidIdentifierNonStrictFormatProvider
+     */
+    public function testInvalidIdentifierNonStrictFormat($string) {
+        $this->assertFalse(Format::isIdentifier($string, false));
+    }
 	
 	/**
 	 * @dataProvider invalidIdentifierFormatProvider
@@ -161,6 +175,24 @@ class FormatTest extends QtiSmTestCase {
 			array('myWeight1')
 		);
 	}
+
+    public function validIdentifierNonStrictFormatProvider() {
+        return array(
+            array('_good'),
+            array('g0od'),
+            array('_-goOd3'),
+            array('g.0.o.d...'),
+            array('myWeight1'),
+            array('123456')
+        );
+    }
+
+    public function invalidIdentifierNonStrictFormatProvider() {
+        return array(
+            array(''),
+            array('*')
+        );
+    }
 	
 	public function invalidIdentifierFormatProvider() {
 		return array(
