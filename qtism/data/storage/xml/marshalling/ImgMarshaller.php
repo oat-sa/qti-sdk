@@ -63,7 +63,7 @@ class ImgMarshaller extends Marshaller {
         }
         
         if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->setXmlBase());
+            self::setXmlBase($element, $component->getXmlBase());
         }
         
         self::fillElement($element, $component);
