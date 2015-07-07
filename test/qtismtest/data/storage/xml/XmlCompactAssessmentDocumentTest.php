@@ -335,6 +335,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertTrue($doc->schemaValidate($schema));
 	}
 	
+	/**
+	 * @depends testSchemaValid
+	 */
+	public function testSchemaValid4() {
+	    $doc = new DOMDocument('1.0', 'UTF-8');
+	    $file = self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml';
+	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
+	    
+	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
+	    $this->assertTrue($doc->schemaValidate($schema));
+	}
+	
 	public function testTestFeedbackRefLoad() {
 	    $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
 	    $doc = new XmlCompactDocument();

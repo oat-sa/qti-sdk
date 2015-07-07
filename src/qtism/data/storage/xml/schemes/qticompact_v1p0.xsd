@@ -17,6 +17,7 @@
 	    				<xs:element name="templateProcessing" minOccurs="0" maxOccurs="1"/>
 	    				<xs:element name="responseProcessing" minOccurs="0" maxOccurs="1"/>
 	    				<xs:element name="modalFeedbackRule" type="ModalFeedbackRule.Type" minOccurs="0" maxOccurs="unbounded"/>
+	    				<xs:element name="shuffling" type="Shuffling.Type" minOccurs="0" maxOccurs="unbounded"/>
 	    			</xs:sequence>
 	    			<xs:attribute name="adaptive" default="false" use="optional" type="xs:boolean"/>
 	    			<xs:attribute name="timeDependent" use="required" type="xs:boolean"/>
@@ -154,5 +155,21 @@
     
     <xs:attributeGroup name="title.ModalFeedbackRule.Attr">
         <xs:attribute name="title" use="optional" type="xs:string"/>
+    </xs:attributeGroup>
+    
+    <xs:complexType name="Shuffling.Type" mixed="false">
+        <xs:annotation>
+            <xs:documentation>
+                Data about choice shuffling for interactions.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="shufflingGroup" type="xs:string" minOccurs="1" maxOccurs="2"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="responseIdentifier.Shuffling.Attr"/>
+    </xs:complexType>
+    
+    <xs:attributeGroup name="responseIdentifier.Shuffling.Attr">
+        <xs:attribute name="responseIdentifier" use="required" type="xs:normalizedString"/>
     </xs:attributeGroup>
 </xs:schema>

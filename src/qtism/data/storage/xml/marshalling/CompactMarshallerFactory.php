@@ -44,5 +44,7 @@ class CompactMarshallerFactory extends Qti21MarshallerFactory
         $this->addMappingEntry('rubricBlockRef', 'qtism\\data\\storage\\xml\\marshalling\\RubricBlockRefMarshaller');
         $this->addMappingEntry('testFeedbackRef', 'qtism\\data\\storage\\xml\\marshalling\\TestFeedbackRefMarshaller');
         $this->addMappingEntry('modalFeedbackRule', 'qtism\\data\\storage\\xml\\marshalling\\ModalFeedbackRuleMarshaller');
+        $this->addMappingEntry('shuffling', 'qtism\\data\\storage\\xml\\marshalling\\ShufflingMarshaller');
+        $this->addMappingEntry('shufflingGroup', 'qtism\\data\\storage\\xml\\marshalling\\ShufflingGroupMarshaller');
     }
 }
