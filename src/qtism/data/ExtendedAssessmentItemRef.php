@@ -30,6 +30,8 @@ use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\TemplateDeclarationCollection;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingCollection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\processing\TemplateProcessing;
 use qtism\common\collections\IdentifierCollection;
@@ -117,6 +119,17 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @qtism-bean-property
      */
     private $templateProcessing = null;
+    
+    /**
+     * The Shuffling components.
+     * 
+     * The Shuffling components indicate what are the identifiers involved
+     * in interaction's choice shuffling.
+     * 
+     * @var \qtism\data\state\ShufflingCollection
+     * @qtism-bean-property
+     */
+    private $shufflings;
 
     /**
      * Create a new instance of CompactAssessmentItem
@@ -135,6 +148,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         $this->setTemplateDeclarations(new TemplateDeclarationCollection());
         $this->setModalFeedbackRules(new ModalFeedbackRuleCollection());
         $this->setEndAttemptIdentifiers(new IdentifierCollection());
+        $this->setShufflings(new ShufflingCollection());
     }
 
     /**
@@ -340,7 +354,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Add a ModalFeedbackRule object to this AssessmentItemRef.
      * 
-     * @param ModalFeedbackRule $modalFeedbackRule
+     * @param \qtism\data\content\ModalFeedbackRule $modalFeedbackRule
      */
     public function addModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
     {
@@ -350,11 +364,47 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Remove a given $modalFeedbackRule from the AssessmentItemRef.
      * 
-     * @param ModalFeedbackRule $modalFeedbackRule
+     * @param \qtism\data\content\ModalFeedbackRule $modalFeedbackRule
      */
     public function removeModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
     {
         $this->getModalFeedbackRules()->detach($modalFeedbackRule);
+    }
+    
+    /**
+     * Set the Shuffling components.
+     * 
+     * @param \qtism\data\state\ShufflingCollection $shufflings
+     */
+    public function setShufflings(ShufflingCollection $shufflings) {
+        $this->shufflings = $shufflings;
+    }
+    
+    /**
+     * Get the Shuffling components.
+     * 
+     * @return \qtism\data\state\ShufflingCollection
+     */
+    public function getShufflings() {
+        return $this->shufflings;
+    }
+    
+    /**
+     * Add a Shuffling component.
+     * 
+     * @param \qtism\data\state\Shuffling $shuffling
+     */
+    public function addShuffling(Shuffling $shuffling) {
+        $this->getShufflings()->attach($shuffling);
+    }
+    
+    /*
+     * Remove a Shuffling component.
+     * 
+     * @param \qtism\data\state\Shuffling $shuffling
+     */
+    public function removeShuffling(Shuffling $shuffling) {
+        $this->getShufflings()->detach($shuffling);
     }
 
     /**

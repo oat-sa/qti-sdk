@@ -100,7 +100,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		$this->assertFalse(file_exists($file));
 	}
 	
-	public function testCreateFormExploded(XmlCompactDocument $compactDoc = null) {
+	public function testCreateFromExploded(XmlCompactDocument $compactDoc = null) {
 		$doc = new XmlDocument('2.1');
 		$file = self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen.xml';
 		$doc->load($file);
@@ -154,6 +154,94 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		unlink($file);
 		$this->assertFalse(file_exists($file));
 	}
+    
+    public function testCreateFromTestWithShuffledInteractions() {
+        $doc = new XmlDocument('2.1');
+		$file = self::samplesDir() . 'custom/tests/shufflings.xml';
+		$doc->load($file);
+		$compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+        $compactTest = $compactDoc->getDocumentComponent();
+        
+        // Checking Q01 (choiceInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q01');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(1, count($shufflingGroups));
+        $this->assertEquals(array('ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q02 (orderInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q02');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(1, count($shufflingGroups));
+        $this->assertEquals(array('DriverA', 'DriverB', 'DriverC'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q03 (associateInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q03');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(1, count($shufflingGroups));
+        $this->assertEquals(array('A', 'C', 'D', 'L', 'M', 'P'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q04 (matchInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q04');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(2, count($shufflingGroups));
+        $this->assertEquals(array('C', 'D', 'L', 'P'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('M', 'R', 'T'), $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q05 (gapMatchInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q05');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(1, count($shufflingGroups));
+        $this->assertEquals(array('W', 'Sp', 'Su', 'A'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q06 (inlineChoiceInteraction) shufflings...
+        $itemRef = $compactTest->getComponentByIdentifier('Q06');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(1, count($shufflingGroups));
+        $this->assertEquals(array('G', 'L', 'Y'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        
+        // Checking Q07 (inlineChoiceInteraction) shufflings with shuffle attribute set to FALSE.
+        $itemRef = $compactTest->getComponentByIdentifier('Q07');
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $itemRef);
+        
+        $shufflings = $itemRef->getShufflings();
+        $this->assertEquals(0, count($shufflings));
+    }
 	
 	public function testLoadRubricBlockRefs(XmlCompactDocument $doc = null) {
 	    if (empty($doc) === true) {

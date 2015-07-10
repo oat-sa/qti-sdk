@@ -39,6 +39,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\ExtendedAssessmentTest;
 use qtism\data\ExtendedTestPart;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
+use qtism\data\state\Utils as StateUtils;
 use \Exception;
 use \DOMElement;
 use \SplObjectStorage;
@@ -293,6 +294,26 @@ class XmlCompactDocument extends XmlDocument
             
             if ($item->hasTemplateProcessing() === true) {
                 $compactAssessmentItemRef->setTemplateProcessing($item->getTemplateProcessing());
+            }
+            
+            // Deal with shufflings.
+            $shufflableInteractionsClassNames = array(
+                'choiceInteraction',
+                'orderInteraction',
+                'associateInteraction',
+                'matchInteraction',
+                'gapMatchInteraction',
+                'inlineChoiceInteraction'
+            );
+            
+            $shufflableInteractions = $item->getComponentsByClassName($shufflableInteractionsClassNames);
+            
+            foreach ($shufflableInteractions as $interaction) {
+                $shuffling = StateUtils::createShufflingFromInteraction($interaction);
+                
+                if ($shuffling !== false) {
+                    $compactAssessmentItemRef->addShuffling($shuffling);
+                }
             }
 
             $compactAssessmentItemRef->setAdaptive($item->isAdaptive());

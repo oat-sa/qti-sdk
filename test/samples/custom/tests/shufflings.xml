@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+    identifier="shufflings" title="Shufflings">
+    <testPart identifier="testpartID" navigationMode="nonlinear" submissionMode="individual">
+        <assessmentSection identifier="S01" title="Section 01" visible="true">
+            <assessmentItemRef identifier="Q01" href="../../ims/items/2_1/choice_fixed.xml"/>
+            <assessmentItemRef identifier="Q02" href="../../ims/items/2_1/order.xml"/>
+            <assessmentItemRef identifier="Q03" href="../../ims/items/2_1/associate.xml"/>
+            <assessmentItemRef identifier="Q04" href="../../ims/items/2_1/match.xml"/>
+            <assessmentItemRef identifier="Q05" href="gapmatch.xml"/>
+            <assessmentItemRef identifier="Q06" href="inlinechoice.xml"/>
+            <assessmentItemRef identifier="Q07" href="../../ims/items/2_1/inline_choice.xml"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

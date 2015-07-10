@@ -22,6 +22,10 @@ use qtism\data\rules\SetCorrectResponse;
 use qtism\data\rules\TemplateRuleCollection;
 use qtism\data\state\TemplateDefault;
 use qtism\data\state\TemplateDefaultCollection;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingCollection;
+use qtism\data\state\ShufflingGroup;
+use qtism\data\state\ShufflingGroupCollection;
 use \DOMDocument;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
@@ -316,4 +320,63 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 	    $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
 	    $this->assertEquals(0, count($endAttemptIdentifiers));
 	}
+    
+    /**
+     * @depends testMarshallMinimal
+     */
+    public function testMarshallShufflingGroups() {
+        $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    
+        $group1 = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
+        $group2 = new ShufflingGroup(new IdentifierCollection(array('id4', 'id5', 'id6')));
+        $shufflingGroups = new ShufflingGroupCollection(array($group1, $group2));
+        $shufflings = new ShufflingCollection(array(new Shuffling('RESPONSE', $shufflingGroups)));
+        $component->setShufflings($shufflings);
+        
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	     
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
+	    $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+	    
+        $shufflingElts = $element->getElementsByTagName('shuffling');
+        $this->assertEquals(1, $shufflingElts->length);
+        $this->assertEquals('RESPONSE', $shufflingElts->item(0)->getAttribute('responseIdentifier'));
+        
+        $shufflingGroupElts = $shufflingElts->item(0)->getElementsByTagName('shufflingGroup');
+        $this->assertEquals(2, $shufflingGroupElts->length);
+        $this->assertEquals('id1 id2 id3', $shufflingGroupElts->item(0)->nodeValue);
+        $this->assertEquals('id4 id5 id6', $shufflingGroupElts->item(1)->nodeValue);
+    }
+    
+    /**
+     * @depends testUnmarshallMinimal
+     */
+    public function testUnmarshallShufflingGroups() {
+        $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('
+            <assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true">
+                <shuffling responseIdentifier="RESPONSE">
+                    <shufflingGroup>id1 id2 id3</shufflingGroup>
+                    <shufflingGroup>id4 id5 id6</shufflingGroup>
+                </shuffling>
+            </assessmentItemRef>
+        ');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+	
+	    $shufflings = $component->getShufflings();
+        $this->assertEquals(1, count($shufflings));
+        $this->assertEquals('RESPONSE', $shufflings[0]->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflings[0]->getShufflingGroups();
+        $this->assertEquals(2, count($shufflingGroups));
+        $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id4', 'id5', 'id6'), $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
+    }
 }

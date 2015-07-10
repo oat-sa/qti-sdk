@@ -27,6 +27,7 @@ use qtism\data\content\ModalFeedbackRuleCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
+use qtism\data\state\ShufflingCollection;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -79,6 +80,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         foreach ($component->getModalFeedbackRules() as $modalFeedbackRule) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackRule);
             $element->appendChild($marshaller->marshall($modalFeedbackRule));
+        }
+        
+        foreach ($component->getShufflings() as $shuffling) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($shuffling);
+            $element->appendChild($marshaller->marshall($shuffling));
         }
         
         self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
@@ -166,6 +172,15 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $modalFeedbackRules[] = $marshaller->unmarshall($modalFeedbackElt);
         }
         $compactAssessmentItemRef->setModalFeedbackRules($modalFeedbackRules);
+        
+        // Shufflings.
+        $shufflingElts = self::getChildElementsByTagName($element, 'shuffling');
+        $shufflings = new ShufflingCollection();
+        foreach ($shufflingElts as $shufflingElt) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($shufflingElt);
+            $shufflings[] = $marshaller->unmarshall($shufflingElt);
+        }
+        $compactAssessmentItemRef->setShufflings($shufflings);
 
         if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);
