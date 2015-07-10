@@ -562,7 +562,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses()) === true) {
             return true;
         }
-        // Context Aware + FeedbackElement OR Context Aware + Choice
+        // Context Aware + FeedbackElement OR Context Aware + Choice Templating.
         elseif ((self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE) || ($component instanceof Choice && $component->hasTemplateIdentifier() === true && $this->getChoiceShowHidePolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE)) {
             $matches = $this->identifierMatches($component);
             $showHide = $component->getShowHide();
