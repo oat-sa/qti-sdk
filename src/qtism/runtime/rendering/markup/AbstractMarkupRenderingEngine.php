@@ -26,11 +26,8 @@
 namespace qtism\runtime\rendering\markup;
 
 use qtism\common\collections\Container;
-
 use qtism\common\datatypes\Identifier;
-
 use qtism\common\datatypes\Scalar;
-
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\data\content\ModalFeedback;

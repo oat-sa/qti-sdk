@@ -1,10 +1,9 @@
 <?php
 namespace qtismtest\common\collections;
 
-use qtism\common\datatypes\Identifier;
-
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\String;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
