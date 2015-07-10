@@ -153,4 +153,11 @@ interface IAssessmentItem extends QtiIdentifiable
      * @return \qtism\common\collections\IdentifierCollection
      */
     public function getEndAttemptIdentifiers();
+    
+    /**
+     * Get the ShufflingCollection object representing how choices are shuffled in shuffled interactions.
+     * 
+     * @return \qtism\data\state\ShufflingCollection
+     */
+    public function getShufflings();
 }

@@ -296,26 +296,7 @@ class XmlCompactDocument extends XmlDocument
                 $compactAssessmentItemRef->setTemplateProcessing($item->getTemplateProcessing());
             }
             
-            // Deal with shufflings.
-            $shufflableInteractionsClassNames = array(
-                'choiceInteraction',
-                'orderInteraction',
-                'associateInteraction',
-                'matchInteraction',
-                'gapMatchInteraction',
-                'inlineChoiceInteraction'
-            );
-            
-            $shufflableInteractions = $item->getComponentsByClassName($shufflableInteractionsClassNames);
-            
-            foreach ($shufflableInteractions as $interaction) {
-                $shuffling = StateUtils::createShufflingFromInteraction($interaction);
-                
-                if ($shuffling !== false) {
-                    $compactAssessmentItemRef->addShuffling($shuffling);
-                }
-            }
-
+            $compactAssessmentItemRef->setShufflings($item->getShufflings());
             $compactAssessmentItemRef->setAdaptive($item->isAdaptive());
             $compactAssessmentItemRef->setTimeDependent($item->isTimeDependent());
             $compactAssessmentItemRef->setEndAttemptIdentifiers($item->getEndAttemptIdentifiers());

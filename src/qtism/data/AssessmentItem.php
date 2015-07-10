@@ -32,6 +32,8 @@ use qtism\data\content\ItemBody;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
+use qtism\data\state\ShufflingCollection;
+use qtism\data\state\Utils as StateUtils;
 use qtism\data\processing\ResponseProcessing;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
@@ -703,6 +705,31 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         }
         
         return $endAttemptIdentifiers;
+    }
+    
+    /**
+     * @see \qtism\data\IAssessmentItem::getShufflings()
+     */
+    public function getShufflings() {
+        $classNames = array(
+            'choiceInteraction',
+            'orderInteraction',
+            'associateInteraction',
+            'matchInteraction',
+            'gapMatchInteraction',
+            'inlineChoiceInteraction'
+        );
+        
+        $shufflings = new ShufflingCollection();
+        foreach ($this->getComponentsByClassName($classNames) as $interaction) {
+            $shuffling = StateUtils::createShufflingFromInteraction($interaction);
+            
+            if ($shuffling !== false) {
+                $shufflings[] = $shuffling;
+            }
+        }
+        
+        return $shufflings;
     }
 
     /**

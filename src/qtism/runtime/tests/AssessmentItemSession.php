@@ -41,6 +41,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
+use qtism\data\state\ShufflingCollection;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\ItemSessionControl;
@@ -225,6 +226,14 @@ class AssessmentItemSession extends State
      * @var boolean
      */
     private $attempting = false;
+    
+    /**
+     * A collection of Shuffling object representing how the choices involved in shufflable
+     * interactions are actually shuffled.
+     * 
+     * @var \qtism\data\state\ShufflingCollection
+     */
+    private $shufflingStates;
 
     /**
      * Create a new AssessmentItemSession object. 
@@ -272,6 +281,13 @@ class AssessmentItemSession extends State
             $templateVariable = TemplateVariable::createFromDataModel($templateDeclaration);
             $this->setVariable($templateVariable);
         }
+        
+        // -- Perform choice shuffling for interactions by creating the Shuffling States for this item session.
+        $shufflingStates = new ShufflingCollection();
+        foreach ($assessmentItem->getShufflings() as $shuffling) {
+            $shufflingStates[] = $shuffling->shuffle();
+        }
+        $this->setShufflingStates($shufflingStates);
     }
 
     /**
@@ -498,6 +514,25 @@ class AssessmentItemSession extends State
     public function isAttempting()
     {
         return $this->attempting;
+    }
+    
+    /**
+     * Set the collection of Shuffling objects representing how the choices involved in shufflable interactions are actually shuffled.
+     * 
+     * @param \qtism\data\state\ShufflingCollection $shufflingStates
+     */
+    public function setShufflingStates(ShufflingCollection $shufflingStates)
+    {
+        $this->shufflingStates = $shufflingStates;
+    }
+    
+    /**
+     * Get the collection of Shuffling object representing how the choices involved in shufflable interactions are actually shuffled.
+     * 
+     * @param \qtism\data\state\ShufflingCollection $shufflingStates
+     */
+    public function getShufflingStates() {
+        return $this->shufflingStates;
     }
 
     /**
