@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\common\collections;
 
+use qtism\common\datatypes\Identifier;
+
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\String;
@@ -214,6 +216,13 @@ class ContainerTest extends QtiSmTestCase {
 		$container = $this->getContainer();
 		$container[] = $pair;
 		$this->assertTrue($container->contains(new Pair('A', 'B')));
+	}
+	
+	public function testContains2() {
+	    $identifier = new Identifier('test');
+	    $container = $this->getContainer();
+	    $container[] = $identifier;
+	    $this->assertTrue($container->contains(new Identifier('test')));
 	}
 	
 	/**

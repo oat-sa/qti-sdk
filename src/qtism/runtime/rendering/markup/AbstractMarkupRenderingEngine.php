@@ -25,6 +25,12 @@
 
 namespace qtism\runtime\rendering\markup;
 
+use qtism\common\collections\Container;
+
+use qtism\common\datatypes\Identifier;
+
+use qtism\common\datatypes\Scalar;
+
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\data\content\ModalFeedback;
@@ -595,11 +601,21 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function identifierMatches(QtiComponent $component)
     {
         $variableIdentifier = ($component instanceof FeedbackElement || $component instanceof ModalFeedback) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
-        $identifier = $component->getIdentifier();
+        $identifier = new Identifier($component->getIdentifier());
         $showHide = $component->getShowHide();
         $state = $this->getState();
-
-        return (($val = $state[$variableIdentifier]) !== null && $val->equals($identifier));
+        
+        $matches = false;
+        
+        if (($val = $state[$variableIdentifier]) !== null) {
+            if ($val instanceof Scalar) {
+                $matches = $val->equals($identifier);
+            } elseif ($val instanceof Container) {
+                $matches = $val->contains($identifier);
+            }
+        }
+        
+        return $matches;
     }
 
     /**
