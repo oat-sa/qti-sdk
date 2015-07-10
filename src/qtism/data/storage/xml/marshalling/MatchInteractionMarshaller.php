@@ -51,7 +51,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
 
             try {
                 $component = new $fqClass($responseIdentifier, new SimpleMatchSetCollection($children->getArrayCopy()));
-            } catch (InvalidArgumentException $msg) {
+            } catch (InvalidArgumentException $e) {
                 $msg = "A matchInteraction element must contain exactly 2 simpleMatchSet elements, " . count($children) . "' given.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
