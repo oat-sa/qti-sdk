@@ -14,6 +14,7 @@ $doc = new XmlDocument();
 $doc->load(dirname(__FILE__) . '/../samples/rendering/choiceinteraction_2.xml');
 
 $renderer = new XhtmlRenderingEngine();
+$renderer->setShufflingPolicy(XhtmlRenderingEngine::TEMPLATE_ORIENTED);
 $rendering = $renderer->render($doc->getDocumentComponent());
 $rendering->formatOutput = true;
 

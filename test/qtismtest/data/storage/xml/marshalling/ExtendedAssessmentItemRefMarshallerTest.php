@@ -336,7 +336,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
         
 	    $marshaller = $factory->createMarshaller($component);
 	    $element = $marshaller->marshall($component);
-	     
+	    
 	    $this->assertInstanceOf('\\DOMElement', $element);
 	    $this->assertEquals('assessmentItemRef', $element->nodeName);
 	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
@@ -348,8 +348,8 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
         
         $shufflingGroupElts = $shufflingElts->item(0)->getElementsByTagName('shufflingGroup');
         $this->assertEquals(2, $shufflingGroupElts->length);
-        $this->assertEquals('id1 id2 id3', $shufflingGroupElts->item(0)->nodeValue);
-        $this->assertEquals('id4 id5 id6', $shufflingGroupElts->item(1)->nodeValue);
+        $this->assertEquals('id1 id2 id3', $shufflingGroupElts->item(0)->getAttribute('identifiers'));
+        $this->assertEquals('id4 id5 id6', $shufflingGroupElts->item(1)->getAttribute('identifiers'));
     }
     
     /**
@@ -361,8 +361,8 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
 	    $dom->loadXML('
             <assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true">
                 <shuffling responseIdentifier="RESPONSE">
-                    <shufflingGroup>id1 id2 id3</shufflingGroup>
-                    <shufflingGroup>id4 id5 id6</shufflingGroup>
+                    <shufflingGroup identifiers="id1 id2 id3"/>
+                    <shufflingGroup identifiers="id4 id5 id6"/>
                 </shuffling>
             </assessmentItemRef>
         ');

@@ -11,7 +11,7 @@ $doc->load(dirname(__FILE__) . '/../samples/rendering/orderinteraction_1.xml');
 $renderer = new XhtmlRenderingEngine();
 
 if (isset($argv[1]) && $argv[1] === 'shuffle') {
-    $renderer->setShuffle(true);
+    $renderer->setShufflingPolicy(XhtmlRenderingEngine::CONTEXT_AWARE);
 }
 
 $rendering = $renderer->render($doc->getDocumentComponent());

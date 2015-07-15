@@ -19,7 +19,7 @@
 				</outcomeDeclaration>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
 				<shuffling responseIdentifier="RESPONSE">
-				    <shufflingGroup>ChoiceA ChoiceB ChoiceC ChoiceD</shufflingGroup>
+				    <shufflingGroup identifiers="ChoiceA ChoiceB ChoiceC ChoiceD"/>
 				</shuffling>
 			</assessmentItemRef>
 			
@@ -39,8 +39,8 @@
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
                 <shuffling responseIdentifier="RESPONSE">
-                    <shufflingGroup>ChoiceA ChoiceB ChoiceC</shufflingGroup>
-                    <shufflingGroup>ChoiceD ChoiceE ChoiceF</shufflingGroup>
+                    <shufflingGroup identifiers="ChoiceA ChoiceB ChoiceC"/>
+                    <shufflingGroup identifiers="ChoiceD ChoiceE ChoiceF"/>
                 </shuffling>
             </assessmentItemRef>
 		</assessmentSection>

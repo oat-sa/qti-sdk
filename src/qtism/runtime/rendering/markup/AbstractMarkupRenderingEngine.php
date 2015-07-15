@@ -25,18 +25,22 @@
 
 namespace qtism\runtime\rendering\markup;
 
+use qtism\data\content\interactions\Gap;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Scalar;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\data\content\ModalFeedback;
+use qtism\data\content\interactions\Interaction;
 use qtism\common\utils\Url;
+use qtism\data\QtiComponentCollection;
 use qtism\data\content\Flow;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\RubricBlock;
 use qtism\data\ShowHide;
 use qtism\data\content\FeedbackElement;
+use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\runtime\common\State;
 use qtism\data\ViewCollection;
 use qtism\data\View;
@@ -217,6 +221,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @var integer
      */
     private $printedVariablePolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
+    
+    /**
+     * The policy to adopt while dealing with shuffling.
+     * 
+     * @var integer
+     */
+    private $shufflingPolicy = AbstractMarkupRenderingEngine::CONTEXT_STATIC;
 
     /**
      * The policy to adopt to deal with xml:base values.
@@ -275,14 +286,15 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @var State
      */
     private $state;
-
+    
     /**
-     * Wether choices in shufflable interactions
-     * must be shuffled.
-     *
-     * @var boolean
+     * The current interaction at rendering time.
+     * 
+     * @var \qtism\data\content\interactions\Interaction
      */
-    private $shuffle = false;
+    private $currentInteraction = null;
+    
+    private $choiceCounter = 0;
 
     /**
      * The DOM fragment to be generated during rendering. If the current
@@ -390,6 +402,26 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     {
         return $this->lastRendering;
     }
+    
+    /**
+     * Set the current interaction at rendering time.
+     * 
+     * @param \qtism\data\content\interactions\Interaction $interaction
+     */
+    protected function setCurrentInteraction(Interaction $interaction = null)
+    {
+        $this->currentInteraction = $interaction;
+    }
+    
+    /**
+     * Get the current interaction at rendering time.
+     * 
+     * @return \qtism\data\content\interactions\Interaction
+     */
+    protected function getCurrentInteraction()
+    {
+        return $this->currentInteraction;
+    }
 
     public function render($component, $base = '')
     {
@@ -432,11 +464,21 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                     }
                 }
                 
+                // If this is an interaction, just tag it as the current one.
+                if ($this->getExploredComponent() instanceof Interaction) {
+                    $this->setCurrentInteraction($this->getExploredComponent());
+                    $this->choiceCounter = 0;
+                }
+                
                 $componentEncountered++;
                 
             } elseif ($final === false && $explored === true) {
                 // Hierarchical node: 2nd pass.
                 $this->processNode($this->resolveXmlBase());
+                
+                if ($this->getExploredComponent() instanceof Choice) {
+                    $this->choiceCounter++;
+                }
 
                 if ($this->getExploredComponent() === $component) {
                     // End of the rendering.
@@ -478,7 +520,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     protected function getNextExploration()
     {
-        return $this->getExploredComponent()->getComponents();
+        return new QtiComponentCollection(array_reverse($this->getExploredComponent()->getComponents()->getArrayCopy()));
     }
 
     /**
@@ -540,6 +582,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         
         if ($this->mustTemplateChoiceComponent($component) === true) {
             $this->templateChoiceComponent($component, $rendering);
+        }
+        
+        if ($this->mustIncludeChoiceComponent($component) === true) {
+            $this->includeChoiceComponent($component, $rendering);
         }
 
         $this->setLastRendering($rendering);
@@ -764,13 +810,13 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     {
         $returnValue = array();
 
-        foreach ($component->getComponents() as $c) {
+        foreach (array_reverse($component->getComponents()->getArrayCopy()) as $c) {
 
             if (count($this->getRenderingStack()) > 0) {
                 list($renderedComponent, $rendering) = $this->getRenderingStack()->pop();
 
                 if ($c === $renderedComponent) {
-                    $returnValue[] = $rendering;
+                    array_unshift($returnValue, $rendering);
                 } else {
                     // repush...
                     $this->storeRendering($renderedComponent, $rendering);
@@ -788,6 +834,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     public function reset()
     {
+        $this->choiceCounter = 0;
         $this->setExploration(new SplStack());
         $this->setExplorationMarker(array());
         $this->setLastRendering(null);
@@ -795,6 +842,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $this->setXmlBaseStack(new SplStack());
         $this->setDocument(new DOMDocument('1.0', 'UTF-8'));
         $this->setStylesheets($this->getDocument()->createDocumentFragment());
+        $this->setCurrentInteraction(null);
     }
 
     /**
@@ -891,7 +939,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     protected function mustTemplateChoiceComponent(QtiComponent $component)
     {
-        return self::isChoice($component) && $this->getChoiceShowHidePolicy() === AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
+        return self::isChoice($component) && $this->getChoiceShowHidePolicy() === self::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
+    }
+    
+    protected function mustIncludeChoiceComponent(QtiComponent $component)
+    {
+        return self::isChoice($component) && !$component instanceof Gap && $component->isFixed() === false && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED;
     }
 
     /**
@@ -1029,6 +1082,19 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $rendering->insertBefore($ifStmtCmt, $rendering->firstChild);
         $rendering->appendChild($endifStmtCmt);
     }
+    
+    protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    {
+        $responseIdentifier = PhpUtils::doubleQuotedPhpString($this->getCurrentInteraction()->getResponseIdentifier());
+        $choiceIndex = $this->choiceCounter;
+        $choiceIdentifier = PhpUtils::doubleQuotedPhpString($component->getIdentifier());
+        $stateName = $this->getStateName();
+        
+        $includeStmtCmt = $rendering->ownerDocument->createComment(' qtism-include($' . "${stateName}, ${responseIdentifier}, ${choiceIdentifier}, ${choiceIndex}): ");
+        $endIncludeStmtCmt = $rendering->ownerDocument->createComment(' qtism-endinclude ');
+        $rendering->insertBefore($includeStmtCmt, $rendering->firstChild);
+        $rendering->appendChild($endIncludeStmtCmt);
+    }
 
     /**
      * Set the policy ruling the way qti:choice components are managed while rendering.
@@ -1141,6 +1207,16 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     public function getPrintedVariablePolicy()
     {
         return $this->printedVariablePolicy;
+    }
+    
+    public function setShufflingPolicy($shufflingPolicy)
+    {
+        $this->shufflingPolicy = $shufflingPolicy;
+    }
+    
+    public function getShufflingPolicy()
+    {
+        return $this->shufflingPolicy;
     }
 
     /**
@@ -1340,29 +1416,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     public function getState()
     {
         return $this->state;
-    }
-
-    /**
-     * Set whether or not choices in shufflable interactions
-     * e.g. ChoiceInteraction, MatchInteraction must be
-     * shuffled at rendering time.
-     *
-     * @param boolean $shuffle
-     */
-    public function setShuffle($shuffle)
-    {
-        $this->shuffle = $shuffle;
-    }
-
-    /**
-     * Whether or not choices in shufflable interactions e.g. ChoiceInteraction,
-     * MatchInteraction must be shuffled at rendering time.
-     *
-     * @return boolean
-     */
-    public function mustShuffle()
-    {
-        return $this->shuffle;
     }
 
     /**

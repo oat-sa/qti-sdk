@@ -125,7 +125,21 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
      * @var integer
      */
     const PENDING_RESPONSES = 22;
-
+    
+    /**
+     * An error occured while reading/writing shuffling states.
+     * 
+     * @var integer
+     */
+    const SHUFFLING_STATE = 23;
+    
+    /**
+     * An error occured while reading/writing a shuffling group.
+     * 
+     * @var integer
+     */
+    const SHUFFLING_GROUP = 24;
+    
     /**
      * Create a new QtiBinaryStreamAccessException object.
      *

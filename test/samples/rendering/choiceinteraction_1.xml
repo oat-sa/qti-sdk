@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itemBody xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd">
-	<choiceInteraction responseIdentifier="RESPONSE">
+	<choiceInteraction responseIdentifier="RESPONSE" shuffle="true">
 		<prompt id="color-prompt" class="my-prompt">What is your favourite <strong>color</strong>?</prompt>
 		<simpleChoice id="my-choice-red" identifier="red" class="my-super-class">Red</simpleChoice>
 		<simpleChoice id="my-choice-blue" fixed="true" identifier="blue">Blue</simpleChoice>

@@ -26,6 +26,7 @@ namespace qtism\data\state;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use \OutOfBoundsException;
 
 /**
  * The Shuffling class represents sets of shuffled/to be shuffled identifiers 
@@ -133,20 +134,57 @@ class Shuffling extends QtiComponent
         
         for ($i = 0; $i < count($groups); $i++) {
             $identifiers = $groups[$i]->getIdentifiers();
+            $fixedIdentifiers = $groups[$i]->getFixedIdentifiers()->getArrayCopy();
+            $shufflableIndexes = array();
+            
+            // Find shuffblable indexes.
+            for ($n = 0; $n < count($identifiers); $n++) {
+                if (in_array($identifiers[$n], $fixedIdentifiers) === false) {
+                    $shufflableIndexes[] = $n;
+                }
+            }
+            
             // Shuffle the new group.
-            $n = count($identifiers);
-            for ($j = $n - 1; $j > 0; $j--) {
-                $k = mt_rand(0, $j);
+            $n = count($shufflableIndexes) - 1;
+            for ($j = $n; $j > 0; $j--) {
+                $k = mt_rand(0, $n);
                 
-                $tmp1 = $identifiers[$j];
-                $tmp2 = $identifiers[$k];
+                $tmp1 = $identifiers[$shufflableIndexes[$j]];
+                $tmp2 = $identifiers[$shufflableIndexes[$k]];
                 
-                $identifiers[$j] = $tmp2;
-                $identifiers[$k] = $tmp1;
+                $identifiers[$shufflableIndexes[$j]] = $tmp2;
+                $identifiers[$shufflableIndexes[$k]] = $tmp1;
             }
         }
         
         return $shuffling;
+    }
+    
+    /**
+     * Retrieve an identifier by $index.
+     * 
+     * You can reach identifiers in all the ShufflingGroup objects composing the Shuffling object.
+     * For instance, if the Shuffling object is composed of 2 ShufflingGroup objects containing
+     * respectively ['id1', 'id2', 'id3'] and ['id4', 'id5', 'id6'], then 'id2' is at index 1 and
+     * 'id5' is at index 4.
+     * 
+     * @param integer $index
+     * @throws OutOfBoundsException
+     * @return string
+     */
+    public function getIdentifierAt($index) {
+        $i = 0;
+        
+        foreach ($this->getShufflingGroups() as $shufflingGroup) {
+            foreach ($shufflingGroup->getIdentifiers() as $identifier) {
+                if ($i === $index) {
+                    return $identifier;
+                }
+                $i++;
+            }
+        }
+        
+        throw new OutOfBoundsException("Could not retrieve identifier at index '${i}");
     }
     
     /**

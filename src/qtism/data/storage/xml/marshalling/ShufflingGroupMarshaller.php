@@ -44,8 +44,12 @@ class ShufflingGroupMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
-
-        self::setDOMElementValue($element, implode("\x20", $component->getIdentifiers()->getArrayCopy()));
+        self::setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
+        
+        $fixedIdentifiers = $component->getFixedIdentifiers();
+        if (count($fixedIdentifiers) > 0) {
+            self::setDOMElementAttribute($element, 'fixedIdentifiers', implode("\x20", $component->getFixedIdentifiers()->getArrayCopy()));
+        }
 
         return $element;
     }
@@ -59,10 +63,20 @@ class ShufflingGroupMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        $identifiers = explode("\x20", $element->nodeValue);
-        $component = new ShufflingGroup(new IdentifierCollection($identifiers));
-        
-        return $component;
+        if (($identifiers = self::getDOMElementAttributeAs($element, 'identifiers')) !== null) {
+            $identifiers = explode("\x20", $identifiers);
+            $component = new ShufflingGroup(new IdentifierCollection($identifiers));
+            
+            if (($fixedIdentifiers = self::getDOMElementAttributeAs($element, 'fixedIdentifiers')) !== null) {
+                $fixedIdentifiers = explode("\x20", $fixedIdentifiers);
+                $component->setFixedIdentifiers(new IdentifierCollection($fixedIdentifiers));
+            }
+
+            return $component;
+        } else {
+            $msg = "The mandatory attribute 'identifiers' is missing from element '" . $element->localName . "'.";
+            throw new UnmarshallingException($msg, $element);
+        }
     }
 
     /**

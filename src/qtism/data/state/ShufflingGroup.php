@@ -46,6 +46,14 @@ class ShufflingGroup extends QtiComponent
     private $identifiers;
     
     /**
+     * A collection of identifiers
+     * 
+     * @var \qtism\common\collections\IdentifierCollection
+     * @qtism-bean-property
+     */
+    private $fixedIdentifiers;
+    
+    /**
      * Create a ShufflingGroup object.
      * 
      * @param \qtism\common\collections\IdentifierCollection $identifiers
@@ -53,6 +61,7 @@ class ShufflingGroup extends QtiComponent
     public function __construct(IdentifierCollection $identifiers)
     {
         $this->setIdentifiers($identifiers);
+        $this->setFixedIdentifiers(new IdentifierCollection());
     }
     
     /**
@@ -73,6 +82,26 @@ class ShufflingGroup extends QtiComponent
     public function getIdentifiers()
     {
         return $this->identifiers;
+    }
+    
+    /**
+     * Set the identifiers involved in shuffled interactions that are fixed.
+     * 
+     * @param \qtism\common\collections\IdentifierCollection $fixedIdentifiers
+     */
+    public function setFixedIdentifiers(IdentifierCollection $fixedIdentifiers)
+    {
+        $this->fixedIdentifiers = $fixedIdentifiers;
+    }
+    
+    /**
+     * Get the identifiers involved in shuffled interactions that are fixed.
+     * 
+     * @return \qtism\common\collections\IdentifierCollection
+     */
+    public function getFixedIdentifiers()
+    {
+        return $this->fixedIdentifiers;
     }
     
     /**

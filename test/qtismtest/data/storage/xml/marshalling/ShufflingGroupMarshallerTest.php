@@ -17,12 +17,12 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase {
 		$element = $marshaller->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
-		$this->assertEquals('id1 id2 id3', $element->nodeValue);
+		$this->assertEquals('id1 id2 id3', $element->getAttribute('identifiers'));
 	}
 	
 	public function testUnmarshall() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<shufflingGroup>id1 id2 id3</shufflingGroup>');
+		$dom->loadXML('<shufflingGroup identifiers="id1 id2 id3"/>');
 		$element = $dom->documentElement;
 		
 		$factory = new CompactMarshallerFactory();

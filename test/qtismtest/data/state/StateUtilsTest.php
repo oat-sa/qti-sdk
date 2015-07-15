@@ -26,10 +26,14 @@ use qtism\data\state\Utils as StateUtils;
 class StateUtilsTest extends QtiSmTestCase {
     
     public function testCreateShufflingFromInteractionChoice() {
-        $choiceCollection = new SimpleChoiceCollection();
-        $choiceCollection[] = new SimpleChoice('id1');
-        $choiceCollection[] = new SimpleChoice('id2');
-        $choiceCollection[] = new SimpleChoice('id3');
+        
+        $choice1 = new SimpleChoice('id1');
+        $choice2 = new SimpleChoice('id2');
+        $choice3 = new SimpleChoice('id3');
+        $choice1->setFixed(true);
+        $choice3->setFixed(true);
+        $choiceCollection = new SimpleChoiceCollection(array($choice1, $choice2, $choice3));
+        
         $choiceInteraction = new ChoiceInteraction('RESPONSE', $choiceCollection);
         $choiceInteraction->setShuffle(true);
         
@@ -39,6 +43,7 @@ class StateUtilsTest extends QtiSmTestCase {
         $shufflingGroups = $shuffling->getShufflingGroups();
         $this->assertEquals(1, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id1', 'id3'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
     public function testCreateShufflingFromOrder() {

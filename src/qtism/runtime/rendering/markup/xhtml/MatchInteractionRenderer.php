@@ -90,7 +90,7 @@ class MatchInteractionRenderer extends InteractionRenderer
                 $simpleMatchSetElts[] = $n;
                 $sets = $component->getSimpleMatchSets();
 
-                if ($this->getRenderingEngine()->mustShuffle() === true) {
+                if ($this->getRenderingEngine()->getShufflingPolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE && $component->mustShuffle()) {
                     Utils::shuffle($n, new ShufflableCollection($sets[$currentSet]->getSimpleAssociableChoices()->getArrayCopy()));
                 }
 
@@ -114,21 +114,30 @@ class MatchInteractionRenderer extends InteractionRenderer
         // Empty upper left cell.
         $tr->appendChild($fragment->ownerDocument->createElement('th'));
         
-        $verticalStatementsStorage = array();
+        $ifVerticalStatementsStorage = array();
         
         for ($i = 0; $i < count($choiceElts[1]); $i++) {
-            $statements = Utils::extractStatements($choiceElts[1][$i]);
+            $ifStatements = Utils::extractStatements($choiceElts[1][$i], Utils::EXTRACT_IF);
+            $incStatements = Utils::extractStatements($choiceElts[1][$i], Utils::EXTRACT_INCLUDE);
             
-            if (empty($statements) === false) {
-                $verticalStatementsStorage[$i] = $statements;
-                $tr->appendChild($statements[0]);
+            if (empty($incStatements) === false) {
+                $tr->appendChild($incStatements[0]);
+            }
+            
+            if (empty($ifStatements) === false) {
+                $ifVerticalStatementsStorage[$i] = $ifStatements;
+                $tr->appendChild($ifStatements[0]);
             }
             
             $th = XmlUtils::changeElementName($choiceElts[1][$i], 'th');
             $tr->appendChild($th);
             
-            if (empty($statements) === false) {
-                $th->parentNode->insertBefore($statements[1], $th->nextSibling);
+            if (empty($incStatements) === false) {
+                $th->parentNode->insertBefore($incStatements[1], $th->nextSibling);
+            }
+            
+            if (empty($ifStatements) === false) {
+                $th->parentNode->insertBefore($ifStatements[1], $th->nextSibling);
             }
         }
 
@@ -136,15 +145,20 @@ class MatchInteractionRenderer extends InteractionRenderer
         for ($i = 0; $i < count($choiceElts[0]); $i++) {
             $tr = $fragment->ownerDocument->createElement('tr');
             
-            $statements = Utils::extractStatements($choiceElts[0][$i]);
+            $ifStatements = Utils::extractStatements($choiceElts[0][$i], Utils::EXTRACT_IF);
+            $incStatements = Utils::extractStatements($choiceElts[0][$i], Utils::EXTRACT_INCLUDE);
             
             $th = XmlUtils::changeElementName($choiceElts[0][$i], 'th');
             $tr->appendChild($th);
 
             $table->appendChild($tr);
 
-            if (empty($statements) === false) {
-                $tr->parentNode->insertBefore($statements[0], $tr);
+            if (empty($incStatements) === false) {
+                $tr->parentNode->insertBefore($incStatements[0], $tr);
+            }
+            
+            if (empty($ifStatements) === false) {
+                $tr->parentNode->insertBefore($ifStatements[0], $tr);
             }
             
             for ($j = 0; $j < count($choiceElts[1]); $j++) {
@@ -154,17 +168,18 @@ class MatchInteractionRenderer extends InteractionRenderer
                 $td->appendChild($input);
                 $tr->appendChild($td);
                 
-                if (isset($verticalStatementsStorage[$j])) {
-                    $st1 = $verticalStatementsStorage[$j][0]->cloneNode();
-                    $td->parentNode->insertBefore($st1, $td);
-                    
-                    $st2 = $verticalStatementsStorage[$j][1]->cloneNode();
-                    $td->parentNode->insertBefore($st2, $td->nextSibling);
+                if (isset($ifVerticalStatementsStorage[$j])) {
+                    $td->parentNode->insertBefore($ifVerticalStatementsStorage[$j][0]->cloneNode(), $td);
+                    $td->parentNode->insertBefore($ifVerticalStatementsStorage[$j][1]->cloneNode(), $td->nextSibling);
                 }
             }
             
-            if (empty($statements) === false && isset($td)) {
-                $tr->parentNode->insertBefore($statements[1], $tr->nextSibling);
+            if (empty($incStatements) === false && isset($td)) {
+                $tr->parentNode->insertBefore($incStatements[1], $tr->nextSibling);
+            }
+            
+            if (empty($ifStatements) === false && isset($td)) {
+                $tr->parentNode->insertBefore($ifStatements[1], $tr->nextSibling);
             }
         }
         

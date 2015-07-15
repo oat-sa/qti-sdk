@@ -35,6 +35,10 @@ use \DOMElement;
  */
 class Utils
 {
+    const EXTRACT_IF = 0;
+    
+    const EXTRACT_INCLUDE = 1;
+    
     /**
      * Shuffle the elements related to $shufflables components within a given $node.
      *
@@ -149,20 +153,42 @@ class Utils
      * @param DOMElement $node
      * @return array An array of DOMComment objects.
      */
-    static public function extractStatements(DOMElement $node)
+    static public function extractStatements(DOMElement $node, $type = self::EXTRACT_IF)
     {
         $statements = array();
+        $extract = array(
+            'qtism-if',
+            'qtism-endif'                
+        );
         
-        $previousSibling = $node->previousSibling;
-        if ($previousSibling !== null && $previousSibling->nodeType === XML_COMMENT_NODE && strpos(trim($previousSibling->data), 'qtism-if') === 0) {
-            
-            $nextSibling = $node->nextSibling;
-            if ($nextSibling !== null && $nextSibling->nodeType === XML_COMMENT_NODE && strpos(trim($nextSibling->data), 'qtism-endif') === 0) {
-                $statements[] = $previousSibling;
-                $statements[] = $nextSibling;
+        if ($type === self::EXTRACT_INCLUDE) {
+            $extract = array(
+                'qtism-include',
+                'qtism-endinclude'                
+            );
+        }
+        
+        
+        $sibling = $node->previousSibling;
+        while ($sibling && $sibling->nodeType === XML_COMMENT_NODE) {
+            if (strpos(trim($sibling->data), $extract[0]) === 0) {
+                $statements[] = $sibling;
+                break;
+            }
+            $sibling = $sibling->previousSibling;
+        }
+        
+        if (empty($statements) === false) {
+            $sibling = $node->nextSibling;
+            while ($sibling && $sibling->nodeType === XML_COMMENT_NODE) {
+                if (strpos(trim($sibling->data), $extract[1]) === 0) {
+                    $statements[] = $sibling;
+                    return $statements;
+                }
+                $sibling = $sibling->nextSibling;
             }
         }
         
-        return $statements;
+        return array();
     }
 }

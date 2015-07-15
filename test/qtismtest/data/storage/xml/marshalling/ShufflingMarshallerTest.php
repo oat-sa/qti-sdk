@@ -23,14 +23,14 @@ class ShufflingMarshallerTest extends QtiSmTestCase {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    
-	    $this->assertEquals('<shuffling responseIdentifier="RESPONSE"><shufflingGroup>id1 id2 id3</shufflingGroup><shufflingGroup>id4 id5 id6</shufflingGroup></shuffling>', $dom->saveXML($element));
+	    $this->assertEquals('<shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>', $dom->saveXML($element));
 	    
 
 	}
 	
 	public function testUnmarshall() {
 	    $element = $this->createDOMElement('
-	        <shuffling responseIdentifier="RESPONSE"><shufflingGroup>id1 id2 id3</shufflingGroup><shufflingGroup>id4 id5 id6</shufflingGroup></shuffling>                
+	        <shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>                
 	    ');
 	    
 	    $factory = new CompactMarshallerFactory();

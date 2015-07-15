@@ -12,8 +12,12 @@ use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
+use qtism\data\state\ShufflingGroup;
+use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\Shuffling;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -602,7 +606,9 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 9th (8 + 1) outcomeDeclaration.
         $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
         
-        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response));
+        $shufflingCount = "\x00"; // No shuffling states.
+        
+        $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $shufflingCount));
         $stream = new MemoryStream($bin);
         $stream->open();
         $access = new QtiBinaryStreamAccessFsfile($stream);
@@ -651,6 +657,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" .  "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
         $template = pack('S', 2) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('l', 10); // 1st (0 + 1) templateDeclaration.
         
+        $shufflingCount = "\x00"; // No shuffling states.
+        
         $binArray = array(
             $position,
             $state,
@@ -666,7 +674,8 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
             $varCount, 
             $score,
             $response,
-            $template
+            $template,
+            $shufflingCount
         );
         
         $bin = implode('', $binArray);
@@ -898,5 +907,87 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $this->assertEquals('Q01', $pendingResponses->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals(0, $pendingResponses->getOccurence());
         $this->assertInternalType('integer', $pendingResponses->getOccurence());
+    }
+    
+    public function testReadShufflingGroup() {
+        $bin = '';
+        $bin .= "\x03"; // identifier-count = 3
+        $bin .= pack('S', 3) . 'id1';
+        $bin .= pack('S', 3) . 'id2';
+        $bin .= pack('S', 3) . 'id3';
+        $bin .= "\x01"; // fixed-identifier-count = 1
+        $bin .= pack('S', 3) . 'id2';
+        
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccessFsFile($stream);
+        
+        $shufflingGroup = $access->readShufflingGroup();
+        $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroup->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
+    }
+    
+    public function testWriteShufflingGroup() {
+        $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
+        $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
+        
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccessFsFile($stream);
+        
+        $access->writeShufflingGroup($shufflingGroup);
+        $stream->rewind();
+        
+        $shufflingGroup = $access->readShufflingGroup();
+        $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroup->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
+    }
+    
+    public function testReadShufflingState() {
+        $bin = '';
+        
+        // Binary data related to Shuffling State.
+        $bin .= pack('S', 8) . 'RESPONSE'; // response-identifier
+        $bin .= "\x01"; // shuffling-group-count
+
+        // Binary data related to Shuffling Group.
+        $bin .= "\x03"; // identifier-count = 3
+        $bin .= pack('S', 3) . 'id1';
+        $bin .= pack('S', 3) . 'id2';
+        $bin .= pack('S', 3) . 'id3';
+        $bin .= "\x01"; // fixed-identifier-count = 1
+        $bin .= pack('S', 3) . 'id2';
+        
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccessFsFile($stream);
+        
+        $shufflingState = $access->readShufflingState();
+        $this->assertEquals('RESPONSE', $shufflingState->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflingState->getShufflingGroups();
+        $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+    }
+    
+    public function testWriteShufflingState() {
+        $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
+        $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
+        $shufflingGroups = new ShufflingGroupCollection(array($shufflingGroup));
+        
+        $shuffling = new Shuffling('RESPONSE', $shufflingGroups);
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access->writeShufflingState($shuffling);
+        
+        $stream->rewind();
+        $shufflingState = $access->readShufflingState();
+        
+        $this->assertEquals('RESPONSE', $shufflingState->getResponseIdentifier());
+        
+        $shufflingGroups = $shufflingState->getShufflingGroups();
+        $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 }

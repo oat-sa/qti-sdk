@@ -92,12 +92,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
         if ($component instanceof Stylesheet && $renderingEngine->getStylesheetPolicy() === AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE) {
             // Stylesheet must be rendered separately.
             $stylesheets = $renderingEngine->getStylesheets();
-
-            if ($stylesheets->childNodes->length === 0) {
-                $stylesheets->appendChild($fragment);
-            } else {
-                $stylesheets->insertBefore($fragment, $stylesheets->firstChild);
-            }
+            $stylesheets->appendChild($fragment);
         } else {
             // Stylesheet must be rendered at the same place.
             $renderingEngine->storeRendering($component, $fragment);

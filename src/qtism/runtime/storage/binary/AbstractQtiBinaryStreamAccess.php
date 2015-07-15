@@ -23,13 +23,21 @@
 
 namespace qtism\runtime\storage\binary;
 
+
+
+use qtism\data\state\ShufflingCollection;
+
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\common\datatypes\Scalar;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\Value;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingGroup;
+use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
 use qtism\data\rules\PreConditionCollection;
@@ -424,6 +432,114 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
         }
     }
+    
+    /**
+     * Read a ShufflingGroup from the current binary stream.
+     * 
+     * @throws QtiBinaryStreamAccessException
+     * @return \qtism\data\state\ShufflingGroup
+     */
+    public function readShufflingGroup()
+    {
+        try {
+            $identifiers = new IdentifierCollection();
+            $fixedIdentifiers = new IdentifierCollection();
+            
+            $identifiersCount = $this->readTinyInt();
+            
+            for ($i = 0; $i < $identifiersCount; $i++) {
+                $identifiers[] = $this->readString();
+            }
+            
+            $shufflingGroup = new ShufflingGroup($identifiers);
+            
+            $fixedIdentifiersCount = $this->readTinyInt();
+            for ($i = 0; $i < $fixedIdentifiersCount; $i++) {
+                $fixedIdentifiers[] = $this->readString();
+            }
+            
+            $shufflingGroup->setFixedIdentifiers($fixedIdentifiers);
+            
+            return $shufflingGroup;
+            
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading a shufflingGroup.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_GROUP, $e);
+        }
+    }
+    
+    /**
+     * Write a ShufflingGroup in the current binary stream.
+     * 
+     * @param \qtism\data\state\ShufflingGroup $shufflingGroup
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function writeShufflingGroup(ShufflingGroup $shufflingGroup)
+    {
+        try {
+            $identifiers = $shufflingGroup->getIdentifiers();
+            $this->writeTinyInt(count($identifiers));
+            foreach ($identifiers as $identifier) {
+                $this->writeString($identifier);
+            }
+            
+            $fixedIdentifiers = $shufflingGroup->getFixedIdentifiers();
+            $this->writeTinyInt(count($fixedIdentifiers));
+            foreach ($fixedIdentifiers as $identifier) {
+                $this->writeString($identifier);
+            }
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing a shufflingGroup.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_GROUP, $e);
+        }
+    }
+    
+    /**
+     * Read a Shuffling object from the current binary stream.
+     * 
+     * @throws QtiBinaryStreamAccessException
+     * @return \qtism\data\state\Shuffling
+     */
+    public function readShufflingState()
+    {
+        try {
+            $responseIdentifier = $this->readIdentifier();
+            $shufflingGroupCount = $this->readTinyInt();
+            
+            $shufflingGroups = new ShufflingGroupCollection();
+            
+            for ($i = 0; $i < $shufflingGroupCount; $i++) {
+                $shufflingGroups[] = $this->readShufflingGroup();
+            }
+            
+            return new Shuffling($responseIdentifier, $shufflingGroups);
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading a shufflingState.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_STATE);
+        }
+    }
+    
+    /**
+     * Write a Shuffling object in the current binary stream.
+     * 
+     * @param \qtism\data\state\Shuffling $shufflingState
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function writeShufflingState(Shuffling $shufflingState)
+    {
+        try {
+            $this->writeIdentifier($shufflingState->getResponseIdentifier());
+            $shufflingGroups = $shufflingState->getShufflingGroups();
+            $this->writeTinyInt(count($shufflingGroups));
+            
+            foreach ($shufflingGroups as $shufflingGroup) {
+                $this->writeShufflingGroup($shufflingGroup);
+            }
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing a shufflingState.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::SHUFFLING_STATE, $e);
+        }
+    }
 
     /**
      * Read a Duration from the current binary stream.
@@ -635,6 +751,14 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                 
                 $session->setVariable($variable);
             }
+            
+            // Read shuffling states if any.
+            $shufflingStateCount = $this->readTinyInt();
+            $shufflingStates = new ShufflingCollection();
+            for ($i = 0; $i < $shufflingStateCount; $i++) {
+                $shufflingStates[] = $this->readShufflingState();
+            }
+            $session->setShufflingStates($shufflingStates);
 
             return $session;
         } catch (BinaryStreamAccessException $e) {
@@ -686,7 +810,8 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeDateTime($timeReference);
             }
 
-            // minus the 3 built-in variables
+            // Write the session variables.
+            // (minus the 3 built-in variables)
             $varCount = count($session) - 3;
             $this->writeTinyInt($varCount);
 
@@ -744,6 +869,14 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     }
                 }
             }
+            
+            // Write shuffling states if any.
+            $shufflingStates = $session->getShufflingStates();
+            $this->writeTinyInt(count($shufflingStates));
+            foreach ($shufflingStates as $shufflingState) {
+                $this->writeShufflingState($shufflingState);
+            }
+            
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while writing an assessment item session.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);

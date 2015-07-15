@@ -65,36 +65,51 @@ class Utils
         if (in_array($className, $shufflableInteractions) === true && $interaction->mustShuffle() === true) {
             if ($className === 'choiceInteraction' || $className === 'orderInteraction') {
                 $choices = $interaction->getComponentsByClassName('simpleChoice');
-                $groups[] = array();
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
                 foreach ($choices as $choice) {
-                    $groups[0][] = $choice->getIdentifier();
+                    $groups[0]['identifiers'][] = $choice->getIdentifier();
+                    if ($choice->isFixed() === true) {
+                        $groups[0]['fixed'][] = $choice->getIdentifier();
+                    }
                 }
             } elseif ($className === 'associateInteraction') {
                 $choices = $interaction->getComponentsByClassName('simpleAssociableChoice');
-                $groups[] = array();
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
                 foreach ($choices as $choice) {
-                    $groups[0][] = $choice->getIdentifier(); 
+                    $groups[0]['identifiers'][] = $choice->getIdentifier();
+                    if ($choice->isFixed() === true) {
+                        $groups[0]['fixed'][] = $choice->getIdentifier();
+                    } 
                 }
             } elseif ($className === 'matchInteraction') {
                 $matchSets = $interaction->getComponentsByClassName('simpleMatchSet');
-                $groups[] = array();
-                $groups[] = array();
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
                 for ($i = 0; $i < count($matchSets); $i++) {
                     foreach ($matchSets[$i]->getComponentsByClassName('simpleAssociableChoice') as $choice) {
-                        $groups[$i][] = $choice->getIdentifier();
+                        $groups[$i]['identifiers'][] = $choice->getIdentifier();
+                        if ($choice->isFixed() === true) {
+                            $groups[0]['fixed'][] = $choice->getIdentifier();
+                        }
                     }
                 }
             } elseif ($className === 'gapMatchInteraction') {
                 $choices = $interaction->getComponentsByClassName(array('gapText', 'gapImg'));
-                $groups[] = array();
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
                 foreach ($choices as $choice) {
-                    $groups[0][] = $choice->getIdentifier();
+                    $groups[0]['identifiers'][] = $choice->getIdentifier();
+                    if ($choice->isFixed() === true) {
+                        $groups[0]['fixed'][] = $choice->getIdentifier();
+                    }
                 }
             } elseif ($className === 'inlineChoiceInteraction') {
                 $choices = $interaction->getComponentsByClassName('inlineChoice');
-                $groups[] = array();
+                $groups[] = array('identifiers' => array(), 'fixed' => array());
                 foreach ($choices as $choice) {
-                    $groups[0][] = $choice->getIdentifier();
+                    $groups[0]['identifiers'][] = $choice->getIdentifier();
+                    if ($choice->isFixed() === true) {
+                        $groups[0]['fixed'][] = $choice->getIdentifier();
+                    }
                 }
             }
             
@@ -102,7 +117,9 @@ class Utils
             $shufflingGroups = new ShufflingGroupCollection();
             
             foreach ($groups as $group) {
-                $shufflingGroups[] = new ShufflingGroup(new IdentifierCollection($group));
+                $shufflingGroup = new ShufflingGroup(new IdentifierCollection($group['identifiers']));
+                $shufflingGroup->setFixedIdentifiers(new IdentifierCollection($group['fixed']));
+                $shufflingGroups[] = $shufflingGroup;
             }
             
             $returnValue = new Shuffling($responseIdentifier, $shufflingGroups);

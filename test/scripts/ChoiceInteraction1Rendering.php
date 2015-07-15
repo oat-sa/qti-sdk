@@ -18,7 +18,7 @@ $renderer = new XhtmlRenderingEngine();
 
 $shuffle = false;
 if (isset($argv[1]) && $argv[1] === 'shuffle') {
-    $renderer->setShuffle(true);
+    $renderer->setShufflingPolicy(XhtmlRenderingEngine::CONTEXT_AWARE);
     $shuffle = true;
 }
 

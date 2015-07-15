@@ -11,7 +11,7 @@ $doc->load(dirname(__FILE__) . '/../samples/rendering/matchinteraction_2.xml');
 $renderer = new XhtmlRenderingEngine();
 $renderer->setChoiceShowHidePolicy(XhtmlRenderingEngine::TEMPLATE_ORIENTED);
 if (isset($argv[1]) && $argv[1] === 'shuffle') {
-    $renderer->setShuffle(true);
+    $renderer->setShufflingPolicy(XhtmlRenderingEngine::TEMPLATE_ORIENTED);
 }
 
 $rendering = $renderer->render($doc->getDocumentComponent());

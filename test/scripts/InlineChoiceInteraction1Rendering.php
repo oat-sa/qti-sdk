@@ -11,7 +11,7 @@ $doc->load(dirname(__FILE__) . '/../samples/rendering/inlinechoiceinteraction_1.
 $renderer = new XhtmlRenderingEngine();
 
 if (isset($argv[1]) && $argv[1] === 'shuffle') {
-    $renderer->setShuffle(true);
+    $renderer->setShufflingPolicy(XhtmlRenderingEngine::CONTEXT_AWARE);
 }
 
 $rendering = $renderer->render($doc->getDocumentComponent());

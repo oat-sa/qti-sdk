@@ -80,7 +80,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer
     {
         parent::appendChildren($fragment, $component, $base);
 
-        if ($this->getRenderingEngine()->mustShuffle() === true && $component->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->getShufflingPolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE && $component->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getSimpleChoices()->getArrayCopy()));
         }
         
@@ -95,13 +95,24 @@ class ChoiceInteractionRenderer extends InteractionRenderer
         }
         
         foreach ($choiceQueue as $choiceElt) {
-            $statements = Utils::extractStatements($choiceElt);
+            
+            $ifStatements = Utils::extractStatements($choiceElt, Utils::EXTRACT_IF);
+            $incStatements = Utils::extractStatements($choiceElt, Utils::EXTRACT_INCLUDE);
+            
             $fragment->firstChild->removeChild($choiceElt);
             $ulElt->appendChild($choiceElt);
             
-            if (empty($statements) === false) {
-                $choiceElt->parentNode->insertBefore($statements[0], $choiceElt);
-                $choiceElt->parentNode->insertBefore($statements[1], $choiceElt->nextSibling);
+            // Re-append qtism-include/qtism-endinclude.
+            $statements = Utils::extractStatements($choiceElt, Utils::EXTRACT_INCLUDE);
+            if (empty($incStatements) === false) {
+                $choiceElt->parentNode->insertBefore($incStatements[0], $choiceElt);
+                $choiceElt->parentNode->insertBefore($incStatements[1], $choiceElt->nextSibling);
+            }
+            
+            // Re-append qtism-if/qtism-endif.
+            if (empty($ifStatements) === false) {
+                $choiceElt->parentNode->insertBefore($ifStatements[0], $choiceElt);
+                $choiceElt->parentNode->insertBefore($ifStatements[1], $choiceElt->nextSibling);
             }
         }
         

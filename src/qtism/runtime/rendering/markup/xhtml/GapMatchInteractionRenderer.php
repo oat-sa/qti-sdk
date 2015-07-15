@@ -72,7 +72,7 @@ class GapMatchInteractionRenderer extends InteractionRenderer
     {
         parent::appendChildren($fragment, $component, $base);
 
-        if ($this->getRenderingEngine()->mustShuffle() === true && $component->mustShuffle() === true) {
+        if ($this->getRenderingEngine()->getShufflingPolicy() === AbstractMarkupRenderingEngine::CONTEXT_AWARE && $component->mustShuffle() === true) {
             Utils::shuffle($fragment->firstChild, new ShufflableCollection($component->getGapChoices()->getArrayCopy()));
         }
     }
