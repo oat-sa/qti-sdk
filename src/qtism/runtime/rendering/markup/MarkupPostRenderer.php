@@ -51,6 +51,13 @@ class MarkupPostRenderer implements Renderable
      * @var boolean
      */
     private $templateOriented = false;
+    
+    /**
+     * Template fragments generated during the last invokation of ::render().
+     * 
+     * @var array
+     */
+    private $fragments;
 
     /**
      * Create a new MarkupPostRenderer object.
@@ -128,6 +135,31 @@ class MarkupPostRenderer implements Renderable
     {
         return $this->templateOriented;
     }
+    
+    /**
+     * Get the template fragments generated during the last invokation of the ::render() method.
+     * 
+     * The returned array is composed of arrays with the following keys:
+     * 
+     * * path: the path relative to the rendered file where the fragment should be stored.
+     * * content: the content of the fragment.
+     * 
+     * @return array
+     */
+    public function getFragments()
+    {
+        return $this->fragments;
+    }
+    
+    /**
+     * Set the template fragments generated during the last invokation of the ::render() method.
+     * 
+     * @param array $fragments
+     */
+    protected function setFragments(array $fragments)
+    {
+        $this->fragments = $fragments;
+    }
 
     public function render($document)
     {
@@ -136,6 +168,8 @@ class MarkupPostRenderer implements Renderable
             throw new RenderingException($msg, RenderingException::RUNTIME);
         }
 
+        $this->setFragments(array());
+        
         /*
          * 1. Format the output.
          */
@@ -153,16 +187,28 @@ class MarkupPostRenderer implements Renderable
         }
 
         /*
-         * 2. Transform qtism-if statements
-         * into PHP statements.
+         * 2. Transform qtism-if, qtism-printVariable statements into PHP statements.
          */
         if ($this->isTemplateOriented() === true) {
-            $output = preg_replace('/<!--\s+(?:qtism-if)\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
-            $output = preg_replace('/<!--\s+(?:qtism-endif)\s+-->/iu', '<?php endif; ?>', $output);
+            $output = preg_replace('/<!--\s+qtism-if\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
+            $output = preg_replace('/<!--\s+qtism-endif\s+-->/iu', '<?php endif; ?>', $output);
 
             $className = "qtism\\runtime\\rendering\\markup\\Utils";
             $call = "<?php echo ${className}::printVariable(\\1); ?>";
             $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
+            
+            $matches = array();
+            if (($c = preg_match_all('/<!--\s+(?:qtism-include)\s*\((?:(\$.+?), ([0-9]+), "(.+?)", ([0-9]+?))\)\s*:\s+-->(.+?)<!--\s+qtism-endinclude\s+-->/ius', $output, $matches)) > 0) {
+                $fragments = $this->getFragments();
+                for ($i = 0; $i < $c; $i++) {
+                    $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $i . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".php"); ?>', $output);
+                    $fragments[] = array(
+                        'path' => $matches[2][$i] . '-' . $matches[3][$i] . '.php',
+                        'content' => $matches[5][$i]
+                    );
+                }
+                $this->setFragments($fragments);
+            }
         }
 
         /*

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div class="qti-itemBody">
+  <div data-response-identifier="RESPONSE" data-shuffle="true" data-max-choices="0" data-min-choices="0" data-orientation="vertical" class="qti-choiceInteraction qti-vertical">
+    <p id="color-prompt" class="qti-prompt my-prompt">What is your favourite <strong class="qti-strong">color</strong>?</p>
+    <ul>
+      <!-- qtism-include($qtismState, 0, "red", 0): -->
+      <li id="my-choice-red" data-identifier="red" data-fixed="false" class="qti-simpleChoice my-super-class">Red</li>
+      <!-- qtism-endinclude -->
+      <li id="my-choice-blue" data-identifier="blue" data-fixed="true" class="qti-simpleChoice">Blue</li>
+      <!-- qtism-include($qtismState, 0, "black", 2): -->
+      <!-- qtism-if (!($qtismState['SHOWBLACK'] !== null && ($qtismState['SHOWBLACK'] instanceof qtism\common\datatypes\Identifier && $qtismState['SHOWBLACK']->equals(new qtism\common\datatypes\Identifier('black')) || $qtismState['SHOWBLACK'] instanceof qtism\common\collections\Container && $qtismState['SHOWBLACK']->contains(new qtism\common\datatypes\Identifier('black'))))): -->
+      <li id="my-choice-black" data-identifier="black" data-fixed="false" data-template-identifier="SHOWBLACK" data-show-hide="hide" class="qti-simpleChoice qti-show">Black</li>
+      <!-- qtism-endif -->
+      <!-- qtism-endinclude -->
+    </ul>
+  </div>
+</div>

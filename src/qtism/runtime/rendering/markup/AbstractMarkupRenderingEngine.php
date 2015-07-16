@@ -295,6 +295,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     private $currentInteraction = null;
     
     private $choiceCounter = 0;
+    
+    private $interactionCounter = 0;
 
     /**
      * The DOM fragment to be generated during rendering. If the current
@@ -436,6 +438,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                 
             }
         }
+        
+        // Number of Interaction objects met during
+        // the descending phase.
+        $this->choiceCounter = 0;
 
         // Number of components which where
         // already met during the descending phase.
@@ -478,6 +484,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
                 
                 if ($this->getExploredComponent() instanceof Choice) {
                     $this->choiceCounter++;
+                }
+                
+                if ($this->getExploredComponent() instanceof Interaction) {
+                    $this->interactionCounter++;
                 }
 
                 if ($this->getExploredComponent() === $component) {
@@ -1085,12 +1095,12 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     
     protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
     {
-        $responseIdentifier = PhpUtils::doubleQuotedPhpString($this->getCurrentInteraction()->getResponseIdentifier());
         $choiceIndex = $this->choiceCounter;
         $choiceIdentifier = PhpUtils::doubleQuotedPhpString($component->getIdentifier());
+        $interactionIndex = $this->interactionCounter;
         $stateName = $this->getStateName();
         
-        $includeStmtCmt = $rendering->ownerDocument->createComment(' qtism-include($' . "${stateName}, ${responseIdentifier}, ${choiceIdentifier}, ${choiceIndex}): ");
+        $includeStmtCmt = $rendering->ownerDocument->createComment(' qtism-include($' . "${stateName}, ${interactionIndex}, ${choiceIdentifier}, ${choiceIndex}): ");
         $endIncludeStmtCmt = $rendering->ownerDocument->createComment(' qtism-endinclude ');
         $rendering->insertBefore($includeStmtCmt, $rendering->firstChild);
         $rendering->appendChild($endIncludeStmtCmt);

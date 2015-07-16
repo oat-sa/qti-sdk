@@ -81,4 +81,27 @@ class MarkupPostRendererTest extends QtiSmTestCase {
         
         unlink($filename);
     }
+    
+    public function testTemplateOrientedInclude() {
+        $file = self::samplesDir() . 'rendering/postrendering/templateoriented_2.xml';
+        $doc = new \DOMDocument('1.0', 'UTF-8');
+        $doc->load($file, LIBXML_NONET);
+    
+        // Check output consistency...
+        $renderer = new MarkupPostRenderer(true, true, true);
+        $output = $renderer->render($doc);
+        
+        $filename = tempnam('/tmp', 'qsm');
+        file_put_contents($filename, $output);
+        
+        $file = file($filename);
+        $this->assertEquals('<?php include(dirname(__FILE__) . "/0-" . $qtismState->getShuffledChoiceIdentifierAt(0, 0) . ".php"); ?>', trim($file[4]));
+        $this->assertEquals('<?php include(dirname(__FILE__) . "/1-" . $qtismState->getShuffledChoiceIdentifierAt(0, 2) . ".php"); ?>', trim($file[6]));
+        
+        $fragments = $renderer->getFragments();
+        $this->assertEquals($fragments[0]['path'], '0-red.php');
+        $this->assertEquals($fragments[1]['path'], '0-black.php');
+        
+        unlink($filename);
+    }
 }
