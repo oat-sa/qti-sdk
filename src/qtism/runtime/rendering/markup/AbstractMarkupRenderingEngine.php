@@ -954,7 +954,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     
     protected function mustIncludeChoiceComponent(QtiComponent $component)
     {
-        return self::isChoice($component) && !$component instanceof Gap && $component->isFixed() === false && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED;
+        $shufflables = array(
+            'choiceInteraction',
+            'orderInteraction',
+            'associateInteraction',
+            'matchInteraction',
+            'gapMatchInteraction',
+            'inlineChoiceInteraction'                
+        );
+        $interaction = $this->getCurrentInteraction();
+        
+        return self::isChoice($component) && !$component instanceof Gap && $component->isFixed() === false && $this->getShufflingPolicy() === self::TEMPLATE_ORIENTED && in_array($interaction->getQtiClassName(), $shufflables) === true && $interaction->mustShuffle() === true;
     }
 
     /**
