@@ -201,7 +201,7 @@ class MarkupPostRenderer implements Renderable
             if (($c = preg_match_all('/<!--\s+(?:qtism-include)\s*\((?:(\$.+?), ([0-9]+), "(.+?)", ([0-9]+?))\)\s*:\s+-->(.+?)<!--\s+qtism-endinclude\s+-->/ius', $output, $matches)) > 0) {
                 $fragments = $this->getFragments();
                 for ($i = 0; $i < $c; $i++) {
-                    $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $i . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".phtml"); ?>', $output);
+                    $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $matches[2][$i] . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".phtml"); ?>', $output);
                     $fragments[] = array(
                         'path' => $matches[2][$i] . '-' . $matches[3][$i] . '.phtml',
                         'content' => $matches[5][$i]
