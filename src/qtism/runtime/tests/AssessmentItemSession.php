@@ -52,6 +52,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use \DateTime;
 use \InvalidArgumentException;
+use \OutOfBoundsException;
 
 /**
  * The AssessmentItemSession class implements the lifecycle of an AssessmentItem session.
@@ -1202,6 +1203,31 @@ class AssessmentItemSession extends State
         }
 
         return $state;
+    }
+    
+    /**
+     * Get the identifier of a choice involved in shuffling.
+     * 
+     * Example:
+     * 
+     * To retrieve the identifier of the 3rd choice of the 2nd interaction of the item,
+     * 
+     * * $shufflingStateIndex = 1
+     * * $choiceIndex = 2
+     * 
+     * @param integer $shufflingStateIndex The index corresponding to the interaction in the item e.g. 0 for the first interaction of the item.
+     * @param integer $choiceIndex The index corresponding to the choice you want to retrieve the identifier.
+     * @throws OutOfBoundsException If no identifier is found at [$shufflingStateIndex,$choiceIndex].
+     */
+    public function getShuffledChoiceIdentifierAt($shufflingStateIndex, $choiceIndex)
+    {
+        $shufflings = $this->getShufflingStates();
+        if (isset($shufflings[$shufflingStateIndex]) === false) {
+            $msg = "No Shuffling State at index ${shufflingStateIndex}.";
+            throw new OutOfBoundsException($msg);
+        } else {
+            return $shufflings[$shufflingStateIndex]->getIdentifierAt($choiceIndex);
+        }
     }
 
     /**

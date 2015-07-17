@@ -184,7 +184,7 @@ class Shuffling extends QtiComponent
             }
         }
         
-        throw new OutOfBoundsException("Could not retrieve identifier at index '${i}");
+        throw new OutOfBoundsException("No identifier at index ${index}.");
     }
     
     /**
