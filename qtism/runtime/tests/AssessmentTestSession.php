@@ -1421,7 +1421,7 @@ class AssessmentTestSession extends State {
 	        if ($allowTimeout === false) {
 	            try {
 	                // Do not check min times, include item timings.
-	                $this->checkTimeLimits(false, true);
+	                $this->checkTimeLimits(false, true, false);
 	                
 	                // No exception thrown, we found a non timed-out item to be
 	                // presented to the candidate.
@@ -1474,10 +1474,10 @@ class AssessmentTestSession extends State {
 	    
 	    while ($route->isFirst() === false) {
 	        
-	        if ($allowTimeout = false) {
+	        if ($allowTimeout === false) {
 	            try {
 	                // Do not check min times, include item timings.
-	                $this->checkTimeLimits(false, true);
+	                $this->checkTimeLimits(false, true, false);
 	                
 	                // No exception thrown, return.
 	                $this->interactWithItemSession();
@@ -1499,7 +1499,7 @@ class AssessmentTestSession extends State {
 	    // of the first RouteItem of the test...
 	    if ($allowTimeout === false) {
 	        try {
-	            $this->checkTimeLimits(false, true);
+	            $this->checkTimeLimits(false, true, false);
 	            $this->interactWithItemSession();
 	        }
 	        catch (AssessmentTestSessionException $e) {
