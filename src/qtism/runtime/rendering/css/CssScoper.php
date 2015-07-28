@@ -254,7 +254,8 @@ class CssScoper implements Renderable
                                        'uploadInteraction' => 'qti-uploadInteraction',
                                        'customInteraction' => 'qti-customInteraction',
                                        'endAttemptInteraction' => 'qti-endAttemptInteraction',
-                                       'infoControl' => 'qti-infoControl');
+                                       'infoControl' => 'qti-infoControl',
+                                       'modalFeedback' => 'qti-modalFeedback');
 
     /**
 	 * Create a new CssScoper object.
