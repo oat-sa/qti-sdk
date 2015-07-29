@@ -1409,4 +1409,37 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // and the session is then closed.
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	}
+	
+	public function testPreserveOutcomes() {
+	    // Aims at testing that even a section of the test is empty,
+	    // it is simply ignored at runtime.
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/preserve_test_outcomes.xml');
+	    $manager = new SessionManager();
+	     
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+	    $session->setPreservedOutcomeVariables(array('PRESERVED'));
+	    $session->beginTestSession();
+	    
+	    $this->assertEquals('I will be preserved!', $session['PRESERVED']->getValue());
+	    $session['PRESERVED'] = new String('I am still preserved!');
+	    
+	    $this->assertEquals(0, $session['NOTPRESERVED']->getValue());
+
+	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceA')))));
+	    $session->moveNext();
+	    
+	    $this->assertEquals('I am still preserved!', $session['PRESERVED']->getValue());
+	    $this->assertEquals(1, $session['NOTPRESERVED']->getValue());
+	    
+	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
+	    $session->beginAttempt();
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceB')))));
+	    $session->moveNext();
+	    
+	    $this->assertEquals('I am still preserved!', $session['PRESERVED']->getValue());
+	    $this->assertEquals(1, $session['NOTPRESERVED']->getValue());
+	}
 }

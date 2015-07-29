@@ -150,6 +150,13 @@ class AssessmentTestSession extends State {
 	private $sessionManager;
 	
 	/**
+	 * An array of identifiers representing outcome variable that must not be applied their default value at outcome processing time.
+	 * 
+	 * @var array
+	 */
+	private $preservedOutcomeVariables;
+	
+	/**
 	 * Create a new AssessmentTestSession object.
 	 *
 	 * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -167,6 +174,7 @@ class AssessmentTestSession extends State {
 		$this->setPendingResponseStore(new PendingResponseStore());
 		$durationStore = new DurationStore();
 		$this->setDurationStore($durationStore);
+		$this->setPreservedOutcomeVariables(array());
 
 		// Take the outcomeDeclaration objects of the global scope.
 		// Instantiate them with their defaults.
@@ -413,6 +421,24 @@ class AssessmentTestSession extends State {
 	 */
 	public function getSessionManager() {
 	    return $this->sessionManager;
+	}
+	
+	/**
+	 * Set the identifiers of the outcome variables that must not be applied their default value at outcome processing time.
+	 * 
+	 * @param array $identifiers
+	 */
+	public function setPreservedOutcomeVariables(array $identifiers) {
+	    $this->preservedOutcomeVariables = $identifiers;
+	}
+	
+	/**
+	 * Get the identifiers of the outcome variables that must not be applied their default value at outcome processing time.
+	 * 
+	 * @return array
+	 */
+	public function getPreservedOutcomeVariables() {
+	    return $this->preservedOutcomeVariables;
 	}
 
 	/**
@@ -1718,7 +1744,7 @@ class AssessmentTestSession extends State {
 	        // As per QTI Spec:
 	        // The values of the test's outcome variables are always reset to their defaults prior
 	        // to carrying out the instructions described by the outcomeRules.
-	        $this->resetOutcomeVariables();
+	        $this->resetOutcomeVariables(true, $this->getPreservedOutcomeVariables());
 	         
 	        $outcomeProcessing = $this->getAssessmentTest()->getOutcomeProcessing();
 	        
