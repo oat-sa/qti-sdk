@@ -641,6 +641,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Moving to Q03 and answer it.
 	    $session->jumpTo(2);
+	    
+	    // Let's check that Q01 is in SUSPENDED state.
+	    $q01s = $session->getAssessmentItemSessions('Q01');
+	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $q01s[0]->getState());
+	    
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));

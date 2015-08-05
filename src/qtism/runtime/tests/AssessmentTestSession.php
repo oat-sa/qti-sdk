@@ -828,6 +828,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
     
+        $this->suspendItemSession();
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
     
@@ -837,8 +838,9 @@ class AssessmentTestSession extends State
             $this->selectEligibleItems();
             $this->interactWithItemSession();
         } catch (AssessmentTestSessionException $e) {
-            // Rollback to previous position.
+            // Rollback to previous position and re-interact to get the same state as prior to the call.
             $route->setPosition($oldPosition);
+            $this->interactWithItemSession();
             throw $e;
         } catch (OutOfBoundsException $e) {
             $msg = "Position '${position}' is out of the Route bounds.";
