@@ -1304,6 +1304,7 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
 	    }
 	    
+	    $this->suspendItemSession();
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
 	    
@@ -1315,6 +1316,9 @@ class AssessmentTestSession extends State {
             if ($allowTimeout === false) {
                 $this->checkTimeLimits(false, true);
             }
+            
+            // No exception thrown, interact!
+            $this->interactWithItemSession();
 	    }
 	    catch (AssessmentTestSessionException $e) {
 	        // Rollback to previous position.
