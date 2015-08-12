@@ -12,7 +12,6 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
 
 class OutcomeVariableTest extends QtiSmTestCase {
 	

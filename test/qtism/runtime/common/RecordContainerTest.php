@@ -8,7 +8,6 @@ use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
-use \DOMDocument;
 
 class RecordContainerTest extends QtiSmTestCase {
 	

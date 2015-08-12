@@ -7,7 +7,6 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
-use \OutOfBoundsException;
 
 class AssessmentTestSeekerTest extends QtiSmTestCase {
 	
