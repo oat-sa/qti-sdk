@@ -24,14 +24,14 @@
  */
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
+use alroniks\dtms\DateInterval;
+use alroniks\dtms\DateTime;
+use DateTimeZone;
+use Exception;
+use InvalidArgumentException;
 use qtism\common\Comparable;
-use \DateInterval;
-use \DateTimeZone;
-use \DateTime;
-use \Exception;
-use \InvalidArgumentException;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 
 /**
  * Implementation of the QTI duration datatype.
@@ -90,7 +90,8 @@ class Duration implements Comparable, QtiDatatype {
 			try {
 			    $tz = new DateTimeZone(self::TIMEZONE);
 				$d1 = new DateTime('now', $tz);
-				$d2 = new DateTime('now', $tz);
+				$d2 = clone $d1;
+
 				$d2->add(new DateInterval($intervalSpec));
 				$interval = $d2->diff($d1);
 				$interval->invert = ($interval->invert === 1) ? 0 : 1;
@@ -109,7 +110,7 @@ class Duration implements Comparable, QtiDatatype {
 		
 	}
 	
-	static public function createFromDateInterval(DateInterval $interval) {
+	static public function createFromDateInterval(\DateInterval $interval) {
 	    $duration = new Duration('PT0S');
 	    $duration->setInterval($interval);
 	    return $duration;
@@ -129,7 +130,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * 
 	 * @param DateInterval $interval A DateInterval PHP object.
 	 */
-	protected function setInterval(DateInterval $interval) {
+	protected function setInterval(\DateInterval $interval) {
 		$this->interval = $interval;
 	}
 	
@@ -199,6 +200,25 @@ class Duration implements Comparable, QtiDatatype {
 	    
 	    return $sYears + $sMonths + $sDays + $sHours + $sMinutes + $sSeconds;
 	}
+
+	/**
+	 * Get the number of microseconds.
+	 *
+	 * @param bool|false $total Whether to get the total amount of microseconds, as a single integer, that represents the complete duration.
+	 * @return int The value of the total duration in microseconds.
+	 */
+	public function getMicroseconds($total = false)
+	{
+		if (!property_exists($this->getInterval(), 'u')) {
+			return 0;
+		}
+
+		if ($total === false) {
+			return $this->getInterval()->u;
+		}
+
+		return $this->getSeconds(true) * 1e6 + $this->getMicroseconds();
+	}
 	
 	public function __toString() {
 		$string = 'P';
@@ -215,7 +235,11 @@ class Duration implements Comparable, QtiDatatype {
 			$string .= $this->interval->d . 'D';
 		}
 		
-		if ($this->interval->h > 0 || $this->interval->i > 0 || $this->interval->s > 0) {
+		if ($this->interval->h > 0
+			|| $this->interval->i > 0
+			|| $this->interval->s > 0
+			|| (property_exists($this->interval, 'u') && $this->interval->u > 0)
+		) {
 			$string .= 'T';
 			
 			if ($this->interval->h > 0) {
@@ -228,6 +252,16 @@ class Duration implements Comparable, QtiDatatype {
 			
 			if ($this->getSeconds() > 0) {
 				$string .= $this->interval->s . 'S';
+			}
+
+			if (property_exists($this->interval, 'u') && $this->getMicroseconds() > 0 ) {
+				$u = str_pad($this->interval->u, 6, 0, STR_PAD_LEFT);
+				if ($this->getSeconds() != 0) {
+					$string = str_replace('S', '.' . $u . 'S', $string);
+				} else {
+					$string .= '0.' . $u . 'S';
+				}
+
 			}
 		}
 		
@@ -246,9 +280,21 @@ class Duration implements Comparable, QtiDatatype {
 	 * @return boolean Whether the equality is established.
 	 */
 	public function equals($obj) {
-		return (gettype($obj) === 'object' &&
-				$obj instanceof self &&
-				'' . $obj === '' . $this);
+		return (
+			is_object($obj)
+			&& $obj instanceof self
+			&& '' . $this === '' . $obj
+		);
+	}
+
+	public function round()
+	{
+		$seconds = round($this->getMicroseconds() / 1e6, 0, PHP_ROUND_HALF_UP);
+
+		$this->getInterval()->u = 0;
+		$this->getInterval()->s += $seconds;
+
+		return $this;
 	}
 	
 	/**
@@ -275,6 +321,9 @@ class Duration implements Comparable, QtiDatatype {
 			return true;
 		}
 		else if ($this->getSeconds() < $duration->getSeconds()) {
+			return true;
+		}
+		else if ($this->getMicroseconds() < $duration->getMicroseconds()) {
 			return true;
 		}
 		else {
@@ -308,6 +357,9 @@ class Duration implements Comparable, QtiDatatype {
 		else if ($this->getSeconds() < $duration->getSeconds()) {
 			return false;
 		}
+		else if ($this->getMicroseconds() < $duration->getMicroseconds()) {
+			return false;
+		}
 		else {
 			return true;
 		}
@@ -326,17 +378,16 @@ class Duration implements Comparable, QtiDatatype {
 		
 		if ($duration instanceof Duration) {
 		    $toAdd = $duration;
-		}
-		else {
-		    $toAdd = new Duration('PT0S');
+		} else {
+		    $toAdd = new Duration('PT0.0S');
 		    $toAdd->setInterval($duration);
 		}
-		
+
 		$d2->add(new DateInterval($this->__toString()));
 		$d2->add(new DateInterval($toAdd->__toString()));
 		
 		$interval = $d2->diff($d1);
-		$this->interval = $interval;
+		$this->setInterval($interval);
 	}
 	
 	/**
@@ -346,16 +397,14 @@ class Duration implements Comparable, QtiDatatype {
 	 * For instance P2S - P1S = P1S
 	 */
 	public function sub(Duration $duration) {
-	    
 	    if ($duration->longerThanOrEquals($this) === true) {
-	        $this->setInterval(new DateInterval('PT0S'));
-	    }
-	    else {
+	        $this->setInterval(new DateInterval('PT0.0S'));
+	    } else {
 	        $refStrDate = '@0';
 	        $tz = new DateTimeZone(self::TIMEZONE);
 	        $d1 = new DateTime($refStrDate, $tz);
-	        $d2 = new DateTime($refStrDate, $tz);
-	        
+			$d2 = clone $d1;
+
 	        $d1->add(new DateInterval($this->__toString()));
 	        $d2->add(new DateInterval($duration->__toString()));
 	        
@@ -368,7 +417,7 @@ class Duration implements Comparable, QtiDatatype {
 		// ... :'( ... https://bugs.php.net/bug.php?id=50559
 		$tz = new DateTimeZone(self::TIMEZONE);
 		$d1 = new DateTime('now', $tz);
-		$d2 = new DateTime('now', $tz);
+		$d2 = clone $d1;
 		$d2->add(new DateInterval($this->__toString()));
 		$interval = $d2->diff($d1);
 		$interval->invert = ($interval->invert === 1) ? 0 : 1;
