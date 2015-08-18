@@ -149,7 +149,7 @@ class Mapping extends QtiComponent
         if (is_float($upperBound) || is_double($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
             $this->upperBound = $upperBound;
         } else {
-            $msg = "The 'upperBound' argument must be a float or false, '" . gettype($lowerBound) . "' given.";
+            $msg = "The 'upperBound' argument must be a float or false, '" . gettype($upperBound) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
