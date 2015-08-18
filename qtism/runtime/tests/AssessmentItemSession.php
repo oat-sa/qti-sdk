@@ -42,9 +42,8 @@ use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
-use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\State;
-use \DateTime;
+use alroniks\dtms\DateTime;
 use \DateTimeZone;
 use \InvalidArgumentException;
 
@@ -328,7 +327,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param DateTime $timeReference A DateTime object.
 	 */
-	public function setTimeReference(DateTime $timeReference) {
+	public function setTimeReference(\DateTime $timeReference) {
 	    $this->timeReference = $timeReference;
 	}
 	
@@ -616,8 +615,7 @@ class AssessmentItemSession extends State {
 	        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
 	        // assessmentItems only when linear navigation mode is in effect.
 	        if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
-	            
-	            if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
+	            if ($this->mustConsiderMinTime() === true && $this['duration']->getMicroseconds(true) <= $this->timeLimits->getMinTime()->getMicroseconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
 	                // Suspend and wait for a next attempt.
 	                $this->suspend();
@@ -782,7 +780,7 @@ class AssessmentItemSession extends State {
 	        $this->setState(AssessmentItemSessionState::INTERACTING);
 	        
 	        // Reset the time reference. If not, the time spent in SUSPENDED mode will be taken into account!
-	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
+	        $this->setTimeReference(new \DateTime('now', new DateTimeZone('UTC')));
 	    }
 	}
 	
@@ -1052,7 +1050,7 @@ class AssessmentItemSession extends State {
 	    $reached = false;
 	    
 	    if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
-	        if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
+	        if ($this['duration']->getMicroseconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getMicroseconds(true)) {
 	            $reached = true;
 	        }
 	    }
