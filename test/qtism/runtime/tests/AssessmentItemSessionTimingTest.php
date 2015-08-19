@@ -33,7 +33,9 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(2, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
-    
+
+        sleep(1);
+
         try {
             $itemSession->endAttempt();
             // An exception MUST be thrown.
@@ -95,7 +97,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         }
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-            $this->assertEquals('PT4S', $itemSession['duration']->__toString());
+            $this->assertEquals('PT4S', $itemSession['duration']->round()->__toString());
             $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
             $this->assertEquals(0, $itemSession->getRemainingAttempts());
         }
@@ -133,8 +135,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
             sleep(1);
         }
     
-        // The total duration shold have taken 5 seconds, the rest of the time was in SUSPENDED state.
-        $this->assertEquals(5, $itemSession['duration']->getSeconds(true));
+        // The total duration should have taken 5 seconds, the rest of the time was in SUSPENDED state.
+        $this->assertEquals(5, $itemSession['duration']->round()->getSeconds(true));
     
         // one more and we get an expection... :)
         try {
@@ -168,7 +170,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     public function testDurationBrutalSessionClosing() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT0S');
+        $this->assertEquals('PT0S', $itemSession['duration']->round()->__toString());
     
         $this->assertTrue($itemSession->isAttemptable());
         $itemSession->beginAttempt();
@@ -176,7 +178,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
         // End session while attempting (brutal x))
         $itemSession->endItemSession();
-        $this->assertEquals($itemSession['duration']->__toString(), 'PT1S');
+        $this->assertEquals('PT1S', $itemSession['duration']->round()->__toString());
     }
     
     public function testRemainingTimeOne() {
@@ -190,14 +192,29 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
     
         $itemSession->beginAttempt();
+//        echo 'd: ', $itemSession['duration'], "\n";
+
         sleep(2);
         $itemSession->updateDuration();
+//        echo 'd: ', $itemSession['duration'], "\n";
+//        echo $itemSession->getRemainingTime(), "\n";
+//        echo 'd: ', $itemSession['duration'], "\n";
+
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT1S')));
         sleep(1);
         $itemSession->updateDuration();
+//        echo 'd: ', $itemSession['duration'], "\n";
+//        echo $itemSession->getRemainingTime(), "\n";
+
+
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
         sleep(1);
         $itemSession->updateDuration();
+//        echo 'd: ', $itemSession['duration'], "\n";
+        echo $itemSession->getRemainingTime(), "\n";
+
+//        exit;
+
         // It is still 0...
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
     

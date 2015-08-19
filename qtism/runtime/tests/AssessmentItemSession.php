@@ -794,9 +794,13 @@ class AssessmentItemSession extends State {
 	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
 	        $timeRef = $this->getTimeReference();
 	        $now = new DateTime('now', new DateTimeZone('UTC'));
-	        
+
 	        $data = &$this->getDataPlaceHolder();
-	        $diff = $timeRef->diff($now);
+			$diff = $now->diff($timeRef);
+
+			print_r($now);
+			print_r($timeRef);
+
 	        $data['duration']->getValue()->add($diff);
 	        
 	        $this->setTimeReference($now);
