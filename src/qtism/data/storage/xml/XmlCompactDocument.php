@@ -287,6 +287,10 @@ class XmlCompactDocument extends XmlDocument
             foreach ($item->getTemplateDeclarations() as $tpl) {
                 $compactAssessmentItemRef->addTemplateDeclaration($tpl);
             }
+            
+            foreach ($item->getModalFeedbackRules() as $modalFeedbackRule) {
+                $compactAssessmentItemRef->addModalFeedbackRule($modalFeedbackRule);
+            }
 
             if ($item->hasResponseProcessing() === true) {
                 $compactAssessmentItemRef->setResponseProcessing($item->getResponseProcessing());
