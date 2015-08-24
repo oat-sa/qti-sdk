@@ -10,7 +10,6 @@ use qtism\data\content\xhtml\text\Strong;
 use qtism\data\content\TextRun;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\lists\Li;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

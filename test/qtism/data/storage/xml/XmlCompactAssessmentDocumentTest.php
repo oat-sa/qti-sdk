@@ -4,8 +4,6 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\data\AssessmentTest;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 

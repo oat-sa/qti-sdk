@@ -2,11 +2,9 @@
 
 use qtism\common\datatypes\Coords;
 use qtism\common\datatypes\Shape;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\state\AreaMapEntryCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

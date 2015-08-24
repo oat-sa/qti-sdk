@@ -6,10 +6,7 @@ use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentItem;
-
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

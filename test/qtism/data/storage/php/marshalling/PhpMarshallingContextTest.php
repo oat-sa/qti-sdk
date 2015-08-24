@@ -6,8 +6,6 @@ use qtism\common\datatypes\Coords;
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
-use \RuntimeException;
-use \InvalidArgumentException;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

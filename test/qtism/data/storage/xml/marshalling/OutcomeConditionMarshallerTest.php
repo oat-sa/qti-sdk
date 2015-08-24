@@ -3,11 +3,9 @@
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeCondition;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\SetOutcomeValue;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -13,9 +13,7 @@ use qtism\data\TestPartCollection;
 use qtism\data\TestPart;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentSection;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentTest;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

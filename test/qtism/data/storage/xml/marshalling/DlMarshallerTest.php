@@ -7,7 +7,6 @@ use qtism\data\content\xhtml\lists\Dd;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\lists\Dt;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

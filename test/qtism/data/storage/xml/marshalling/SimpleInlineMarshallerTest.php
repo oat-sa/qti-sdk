@@ -6,7 +6,6 @@ use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\Strong;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

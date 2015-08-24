@@ -1,12 +1,10 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Coords;
 use qtism\data\expressions\Variable;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
