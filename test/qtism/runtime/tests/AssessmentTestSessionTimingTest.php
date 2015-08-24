@@ -92,8 +92,6 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $session->moveNext();
         }
 
-        var_dump($session->getCurrentTestPart());
-         
         // We should have automatically be moved to the next test part.
         $this->assertEquals('P02', $session->getCurrentTestPart() ? $session->getCurrentTestPart()->getIdentifier() : null);
         $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
@@ -216,8 +214,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertInstanceOf('qtism\\data\\AssessmentSection', $timeConstraints[2]->getSource());
         
         // AssessmentItem level
-        $this->assertEquals('PT1S', $timeConstraints[3]->getMinimumRemainingTime()->__toString());
-        $this->assertEquals('PT3S', $timeConstraints[3]->getMaximumRemainingTime()->__toString());
+        $this->assertEquals('PT1S', $timeConstraints[3]->getMinimumRemainingTime()->round()->__toString());
+        $this->assertEquals('PT3S', $timeConstraints[3]->getMaximumRemainingTime()->round()->__toString());
         $this->assertTrue($timeConstraints[3]->maxTimeInForce());
         $this->assertTrue($timeConstraints[3]->minTimeInForce());
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraints[3]->getSource());

@@ -611,11 +611,11 @@ class AssessmentItemSession extends State {
 	    
 	    // Is timeLimits in force.
 	    if ($this->hasTimeLimits() === true) {
-	        
+
 	        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
 	        // assessmentItems only when linear navigation mode is in effect.
 	        if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
-	            if ($this->mustConsiderMinTime() === true && $this['duration']->getMicroseconds(true) <= $this->timeLimits->getMinTime()->getMicroseconds(true)) {
+	            if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
 	                // Suspend and wait for a next attempt.
 	                $this->suspend();
@@ -797,10 +797,6 @@ class AssessmentItemSession extends State {
 
 	        $data = &$this->getDataPlaceHolder();
 			$diff = $now->diff($timeRef);
-
-			print_r($now);
-			print_r($timeRef);
-
 	        $data['duration']->getValue()->add($diff);
 	        
 	        $this->setTimeReference($now);
@@ -1054,7 +1050,7 @@ class AssessmentItemSession extends State {
 	    $reached = false;
 	    
 	    if ($this->hasTimeLimits() && $this->timeLimits->hasMaxTime() === true) {
-	        if ($this['duration']->getMicroseconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getMicroseconds(true)) {
+	        if ($this['duration']->getSeconds(true) > $this->getDurationWithLatency($this->timeLimits->getMaxTime())->getSeconds(true)) {
 	            $reached = true;
 	        }
 	    }

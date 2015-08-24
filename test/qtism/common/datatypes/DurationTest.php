@@ -22,13 +22,14 @@ class DurationTest extends QtiSmTestCase {
 	}
 	
 	public function testPositiveDuration() {
-		$duration = new Duration('P3Y4DT6H8M'); // 2 years, 4 days, 6 hours, 8 minutes.
+		$duration = new Duration('P3Y4DT6H8M'); // 2 years, 4 days, 6 hours, 8 minutes, 0 seconds, 0 microseconds.
 		$this->assertEquals(3, $duration->getYears());
+		$this->assertEquals(0, $duration->getMonths());
 		$this->assertEquals(4, $duration->getDays());
 		$this->assertEquals(6, $duration->getHours());
 		$this->assertEquals(8, $duration->getMinutes());
-		$this->assertEquals(0, $duration->getMonths());
 		$this->assertEquals(0, $duration->getSeconds());
+		$this->assertEquals(0, $duration->getMicroseconds());
 	}
 	
 	public function testEquality() {
@@ -130,7 +131,7 @@ class DurationTest extends QtiSmTestCase {
 		$d2 = new Duration('PT0.005S');
 		$d1->sub($d2);
 		$this->assertEquals('PT0S', $d1->__toString());
-	    
+
 	    $d1 = new Duration('PT20S');
 	    $d2 = new Duration('PT21S');
 	    $d1->sub($d2);

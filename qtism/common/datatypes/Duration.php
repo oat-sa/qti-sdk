@@ -379,7 +379,7 @@ class Duration implements Comparable, QtiDatatype {
 		if ($duration instanceof Duration) {
 		    $toAdd = $duration;
 		} else {
-		    $toAdd = new Duration('PT0.0S');
+		    $toAdd = new Duration('PT0S');
 		    $toAdd->setInterval($duration);
 		}
 

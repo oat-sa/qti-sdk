@@ -192,28 +192,14 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
     
         $itemSession->beginAttempt();
-//        echo 'd: ', $itemSession['duration'], "\n";
-
         sleep(2);
         $itemSession->updateDuration();
-//        echo 'd: ', $itemSession['duration'], "\n";
-//        echo $itemSession->getRemainingTime(), "\n";
-//        echo 'd: ', $itemSession['duration'], "\n";
-
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT1S')));
+        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new Duration('PT1S')));
         sleep(1);
         $itemSession->updateDuration();
-//        echo 'd: ', $itemSession['duration'], "\n";
-//        echo $itemSession->getRemainingTime(), "\n";
-
-
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new Duration('PT0S')));
         sleep(1);
         $itemSession->updateDuration();
-//        echo 'd: ', $itemSession['duration'], "\n";
-        echo $itemSession->getRemainingTime(), "\n";
-
-//        exit;
 
         // It is still 0...
         $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
