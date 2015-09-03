@@ -22,13 +22,14 @@ class DurationTest extends QtiSmTestCase {
 	}
 	
 	public function testPositiveDuration() {
-		$duration = new Duration('P3Y4DT6H8M'); // 2 years, 4 days, 6 hours, 8 minutes.
+		$duration = new Duration('P3Y4DT6H8M'); // 2 years, 4 days, 6 hours, 8 minutes, 0 seconds, 0 microseconds.
 		$this->assertEquals(3, $duration->getYears());
+		$this->assertEquals(0, $duration->getMonths());
 		$this->assertEquals(4, $duration->getDays());
 		$this->assertEquals(6, $duration->getHours());
 		$this->assertEquals(8, $duration->getMinutes());
-		$this->assertEquals(0, $duration->getMonths());
 		$this->assertEquals(0, $duration->getSeconds());
+		$this->assertEquals(0, $duration->getMicroseconds());
 	}
 	
 	public function testEquality() {
@@ -46,9 +47,21 @@ class DurationTest extends QtiSmTestCase {
 	public function testNegativeDuration() {
 		$duration = new Duration('P2Y4DT6H8M'); // - 2 years, 4 days, 6 hours, 8 minutes.
 	}
+
+	public function testConstruct()
+	{
+		$duration = new Duration('PT10.10S');
+		$this->assertEquals('PT10.100000S', $duration->__toString());
+
+		$duration = new Duration('PT10.010S');
+		$this->assertEquals('PT10.010000S', $duration->__toString());
+
+		$duration = new Duration('PT10.000001S');
+		$this->assertEquals('PT10.000001S', $duration->__toString());
+	}
 	
 	public function testClone() {
-		$d = new Duration('P1DT12H'); // 1 day + 12 hours.
+		$d = new Duration('P1DT12H12M12.0012S'); // 1 day + 12 hours + 12 minutes + 12 seconds and 1200 microseconds
 		$c = clone $d;
 		$this->assertFalse($c === $d);
 		$this->assertTrue($c->equals($d));
@@ -56,6 +69,7 @@ class DurationTest extends QtiSmTestCase {
 		$this->assertEquals($d->getHours(), $c->getHours());
 		$this->assertEquals($d->getMinutes(), $c->getMinutes());
 		$this->assertEquals($d->getSeconds(), $c->getSeconds());
+		$this->assertEquals($d->getMicroseconds(), $c->getMicroseconds());
 		$this->assertEquals($d->getMonths(), $c->getMonths());
 		$this->assertEquals($d->getYears(), $c->getYears());
 	}
@@ -75,11 +89,16 @@ class DurationTest extends QtiSmTestCase {
 		$d2 = new Duration('PT1S');
 		$d1->add($d2);
 		$this->assertEquals('PT2S', $d1->__toString());
-		
+
 		$d1 = new Duration('PT23H59M59S');
 		$d2 = new Duration('PT10S');
 		$d1->add($d2);
 		$this->assertEquals('P1DT9S', $d1->__toString());
+
+		$d1 = new Duration('PT1.000500S');
+		$d2 = clone $d1;
+		$d1->add($d2);
+		$this->assertEquals('PT2.001000S', $d1->__toString());
 	}
 	
 	public function testSub() {
@@ -87,22 +106,32 @@ class DurationTest extends QtiSmTestCase {
 	    $d2 = new Duration('PT1S');
 	    $d1->sub($d2);
 	    $this->assertEquals('PT1S', $d1->__toString());
-	    
+
 	    $d1 = new Duration('PT2S');
 	    $d2 = new Duration('PT4S');
 	    $d1->sub($d2);
 	    $this->assertEquals('PT0S', $d1->__toString());
-	    
+
 	    $d1 = new Duration('P1DT2H25M30S');
 	    $d2 = new Duration('P1DT2H');
 	    $d1->sub($d2);
 	    $this->assertEquals('PT25M30S', $d1->__toString());
-	    
+
 	    $d1 = new Duration('PT20S');
 	    $d2 = new Duration('PT20S');
 	    $d1->sub($d2);
 	    $this->assertEquals('PT0S', $d1->__toString());
-	    
+
+		$d1 = new Duration('PT20.005S');
+		$d2 = new Duration('PT20.003S');
+		$d1->sub($d2);
+		$this->assertEquals('PT0.002000S', $d1->__toString());
+
+		$d1 = new Duration('PT0.003S');
+		$d2 = new Duration('PT0.005S');
+		$d1->sub($d2);
+		$this->assertEquals('PT0S', $d1->__toString());
+
 	    $d1 = new Duration('PT20S');
 	    $d2 = new Duration('PT21S');
 	    $d1->sub($d2);
@@ -181,6 +210,7 @@ class DurationTest extends QtiSmTestCase {
 			array(new Duration('PT2S'), 'PT2S'), // 2 seconds
 			array(new Duration('P6YT5M'), 'P6YT5M'), // 6 years, 5 months
 			array(new Duration('PT0S'), 'PT0S'), // 0 seconds
+			array(new Duration('PT0.005S'), 'PT0.005000S'), // 5 milliseconds
 		);
 	}
 }

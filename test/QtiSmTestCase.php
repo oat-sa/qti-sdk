@@ -1,9 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 
-use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
-use \DOMElement;
 
 abstract class QtiSmTestCase extends PHPUnit_Framework_TestCase {
 	
