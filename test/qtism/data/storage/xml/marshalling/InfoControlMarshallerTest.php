@@ -5,8 +5,6 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\InfoControl;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -1,14 +1,10 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\TestPart;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
-use qtism\data\TestFeedback;
-use qtism\data\TestFeedbackCollection;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

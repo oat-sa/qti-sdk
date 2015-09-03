@@ -4,7 +4,6 @@ use qtism\data\content\ObjectFlowCollection;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\xhtml\Param;
 use qtism\data\content\xhtml\ParamType;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

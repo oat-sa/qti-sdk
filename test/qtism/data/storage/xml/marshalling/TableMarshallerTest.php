@@ -19,7 +19,6 @@ use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\tables\TableCellScope;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -4,14 +4,11 @@ use qtism\data\state\MapEntryCollection;
 use qtism\data\state\MapEntry;
 use qtism\data\state\Mapping;
 use qtism\data\state\CorrectResponse;
-use qtism\common\datatypes\Duration;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\ResponseDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

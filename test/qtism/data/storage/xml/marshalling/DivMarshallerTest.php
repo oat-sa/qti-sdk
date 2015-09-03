@@ -10,7 +10,6 @@ use qtism\data\content\xhtml\lists\LiCollection;
 use qtism\data\content\xhtml\lists\Ul;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\lists\Li;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

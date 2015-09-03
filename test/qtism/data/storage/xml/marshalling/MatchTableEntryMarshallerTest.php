@@ -1,12 +1,7 @@
 <?php
 
-use qtism\data\expressions\BaseValue;
-use qtism\data\storage\xml\marshalling\Marshaller;
-use qtism\data\storage\Utils;
 use qtism\data\state\MatchTableEntry;
 use qtism\common\enums\BaseType;
-use qtism\data\state\Value;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

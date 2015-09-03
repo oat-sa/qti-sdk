@@ -1,13 +1,10 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
 use qtism\common\enums\BaseType;
-use qtism\data\state\Value;
 use qtism\common\datatypes\Pair;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

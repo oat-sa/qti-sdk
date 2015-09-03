@@ -2,7 +2,6 @@
 
 use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentItemRef;
 use qtism\data\state\WeightCollection;
 use qtism\data\state\Weight;
@@ -18,7 +17,6 @@ use qtism\data\rules\PreCondition;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 use qtism\common\collections\IdentifierCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

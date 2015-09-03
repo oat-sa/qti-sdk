@@ -1,13 +1,8 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
-
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtism\data\ShowHide;
-use \ReflectionClass;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

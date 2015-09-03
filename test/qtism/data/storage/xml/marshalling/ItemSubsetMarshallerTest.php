@@ -1,9 +1,7 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\expressions\ItemSubset;
 use qtism\common\collections\IdentifierCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -4,7 +4,6 @@ use qtism\data\AssessmentSectionRef;
 use qtism\data\AssessmentItemRef;
 use qtism\data\SectionPartCollection;
 use qtism\data\ItemSessionControl;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentSection;
 use qtism\data\rules\PreCondition;
 use qtism\data\rules\PreConditionCollection;
@@ -12,7 +11,6 @@ use qtism\data\rules\BranchRule;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\expressions\BaseValue;
 use qtism\common\enums\BaseType;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

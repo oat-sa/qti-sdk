@@ -1,9 +1,7 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\expressions\MathConstant;
 use qtism\data\expressions\MathEnumeration;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
