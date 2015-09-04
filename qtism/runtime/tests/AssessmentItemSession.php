@@ -234,6 +234,12 @@ class AssessmentItemSession extends State {
 	 * @var AbstractSessionManager
 	 */
 	private $sessionManager;
+    
+	/**
+	 * List of callback functions
+	 * @var array
+	 */
+	private $callbacks = array();
 	
 	/**
 	 * Create a new AssessmentItemSession object.
@@ -586,6 +592,7 @@ class AssessmentItemSession extends State {
 		
 		// Register a time reference that will be used later on to compute the duration built-in variable.
 		$this->timeReference = new DateTime('now', new DateTimeZone('UTC'));
+        $this->runCallback('beginAttempt');
 	}
 	
 	/**
@@ -741,6 +748,7 @@ class AssessmentItemSession extends State {
 		// Wait for the next attempt.
 		
 		$this->attempting = false;
+        $this->runCallback('endAttempt');
 	}
 	
 	/**
@@ -760,6 +768,7 @@ class AssessmentItemSession extends State {
 	         
 	        $this->updateDuration();
 	        $this->state = AssessmentItemSessionState::SUSPENDED;
+            $this->runCallback('suspend');
 	    }
 	}
 	
@@ -783,6 +792,7 @@ class AssessmentItemSession extends State {
 	        
 	        // Reset the time reference. If not, the time spent in SUSPENDED mode will be taken into account!
 	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
+            $this->runCallback('interact');
 	    }
 	}
 	
@@ -1114,6 +1124,37 @@ class AssessmentItemSession extends State {
 	    $this->onDurationUpdate[] = $callback;
 	}
 	
+    /**
+     * Register callback function which will be invoked after method 
+     * specified in the <i>$eventName</i> parameter is called.
+     * 
+     * @param string $eventName name of method of current class after which callback function will be invoked.
+     * @param array $callback The function or method to be called. 
+     * This parameter may be an array, with the name of the class, and the method, or a string, with a function name.
+     */
+    public function registerCallback($eventName, $callback, $params = array())
+    {
+        $this->callbacks[$eventName][] = array(
+            'callback' => $callback,
+            'params' => $params
+        );
+    }
+    
+    /**
+     * Call callback functions registered for method specified in <i>$eventName</i> parameter.
+     * $this variable will be passed to the callback function as first parameter.
+     * @param string $eventName
+     */
+    public function runCallback($eventName)
+    {
+        if (isset($this->callbacks[$eventName])) {
+            foreach($this->callbacks[$eventName] as $callback) {
+                array_unshift($callback['params'], $this);
+                call_user_func_array($callback['callback'], $callback['params']);
+            }
+        }
+    }
+    
 	public function __clone() {
 	    $newData = array();
 	    $oldData = $this->getDataPlaceHolder();
