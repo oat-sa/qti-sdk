@@ -1127,10 +1127,21 @@ class AssessmentItemSession extends State {
     /**
      * Register callback function which will be invoked after method 
      * specified in the <i>$eventName</i> parameter is called.
+     * Events available for callback registration: 
+     * <ul>
+     *   <li>beginAttempt</li>
+     *   <li>endAttempt</li>
+     *   <li>suspend</li>
+     *   <li>interact</li>
+     * </ul>
+     * 
+     * Note that first parameter passed to the callback function always will be instance of current class,
+     * and the remaining parameters will be taken from the <i>$params</i> array. 
      * 
      * @param string $eventName name of method of current class after which callback function will be invoked.
      * @param array $callback The function or method to be called. 
      * This parameter may be an array, with the name of the class, and the method, or a string, with a function name.
+     * @param array $params Parameters to be passed to the callback, as an indexed array. 
      */
     public function registerCallback($eventName, $callback, $params = array())
     {
@@ -1143,9 +1154,10 @@ class AssessmentItemSession extends State {
     /**
      * Call callback functions registered for method specified in <i>$eventName</i> parameter.
      * $this variable will be passed to the callback function as first parameter.
+     * 
      * @param string $eventName
      */
-    public function runCallback($eventName)
+    protected function runCallback($eventName)
     {
         if (isset($this->callbacks[$eventName])) {
             foreach($this->callbacks[$eventName] as $callback) {
