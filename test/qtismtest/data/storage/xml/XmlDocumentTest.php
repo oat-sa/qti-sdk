@@ -224,6 +224,17 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'invalid/noversion.xml');
     }
     
+    public function testLoadFromEmptyFile() {
+        $doc = new XmlDocument('2.1');
+        // This path does not resolve anything.
+        $path = self::samplesDir() . 'invalid/unknown.xml';
+        
+        $expectedMsg = "Cannot load QTI file '${path}'. It does not exist or is not readable.";
+        $this->setExpectedException('\\qtism\\data\\storage\\xml\\XmlStorageException', $expectedMsg, XmlStorageException::RESOLUTION);
+        
+        $doc->load($path);
+    }
+    
     public function testLoadFromStringNotSupportedElement20() {
         // Will throw an error because assessmentItemRef is not supported in QTI 2.0.
         $doc = new XmlDocument('2.0');

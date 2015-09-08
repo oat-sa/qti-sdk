@@ -142,15 +142,24 @@ class XmlDocument extends QtiDocument
             $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
             $this->getDomDocument()->preserveWhiteSpace = false;
 
-            // disable xml warnings and errors and fetch error information as needed.
+            // Disable xml warnings and errors and fetch error information as needed.
             $oldErrorConfig = libxml_use_internal_errors(true);
+            
+            // Determine which way to load (from string or from file).
             $loadMethod = ($fromString === true) ? 'loadXML' : 'load';
+            
             $doc = $this->getDomDocument();
             
-            // pre-check to throw an appropriate exception when load from an empty string.
             if ($loadMethod === 'loadXML' && empty($data) === true) {
+                // Pre-check to throw an appropriate exception when load from an empty string.
                 $msg = "Cannot load QTI from an empty string.";
                 throw new XmlStorageException($msg, XmlStorageException::READ);
+            } else if ($loadMethod === 'load') {
+                // Pre-check to throw an appropriate exception when loading from a non-resolvable file.
+                if (is_readable($data) === false) {
+                    $msg = "Cannot load QTI file '${data}'. It does not exist or is not readable.";
+                    throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
+                }
             }
 
             if (@call_user_func_array(array($doc, $loadMethod), array($data, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE))) {
