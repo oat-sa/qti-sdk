@@ -1653,14 +1653,18 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $from = $route->current();
 
-        $route->next();
-	    while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
-	        $this->nextRouteItem();
-	    }
-	    
-	    if ($this->isRunning() === true) {
-	        $this->interactWithItemSession();
-	    }
+        if ($route->isLast() === true) {
+            $this->endTestSession();
+        } else {
+            $route->next();
+            while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+                $this->nextRouteItem();
+            }
+            
+            if ($this->isRunning() === true) {
+                $this->interactWithItemSession();
+            }
+        }
 	}
 	
 	/**
@@ -1681,14 +1685,18 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $from = $route->current();
 
-        $route->next();
-	    while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
-	        $this->nextRouteItem();
-	    }
-	    
-	    if ($this->isRunning() === true) {
-	        $this->interactWithItemSession();
-	    }
+        if ($route->isLast() === true) {
+            $this->endTestSession();
+        } else {
+            $route->next();
+            while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
+                $this->nextRouteItem();
+            }
+            
+            if ($this->isRunning() === true) {
+                $this->interactWithItemSession();
+            }
+        }
 	}
 	
 	/**
