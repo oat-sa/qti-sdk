@@ -1,13 +1,11 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\VariableDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\state\DefaultValue;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

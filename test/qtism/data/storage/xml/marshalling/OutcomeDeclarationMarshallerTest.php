@@ -1,7 +1,6 @@
 <?php
 
 use qtism\common\datatypes\Duration;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -11,7 +10,6 @@ use qtism\data\state\ValueCollection;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

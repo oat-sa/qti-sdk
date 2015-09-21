@@ -1,8 +1,6 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\content\Stylesheet;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -10,7 +10,6 @@ use qtism\data\content\TextRun;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\H3;
 use qtism\data\content\Stylesheet;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

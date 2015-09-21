@@ -346,4 +346,42 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
             $this->assertEquals(AssessmentItemSessionException::STATE_VIOLATION, $e->getCode());
         }
     }
+    
+    public function testRunCallback() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        
+        $itemSession->registerCallback('beginAttempt', function ($item, $itemSessionTest, $itemSession) {
+                $itemSessionTest->assertEquals($item, $itemSession);
+                $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::INTERACTING);
+            },
+            array($this, $itemSession)
+        );
+        
+        $itemSession->registerCallback('suspend', function ($item, $itemSessionTest, $itemSession) {
+                $itemSessionTest->assertEquals($item, $itemSession);
+                $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::SUSPENDED);
+            },
+            array($this, $itemSession)
+        );
+            
+        $itemSession->registerCallback('interact', function ($item, $itemSessionTest, $itemSession) {
+                $itemSessionTest->assertEquals($item, $itemSession);
+                $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::INTERACTING);
+            },
+            array($this, $itemSession)
+        );
+        
+        $itemSession->registerCallback('endAttempt', function ($item, $itemSessionTest, $itemSession) {
+                $itemSessionTest->assertEquals($item, $itemSession);
+                $itemSessionTest->assertEquals($item->getState(), AssessmentItemSessionState::CLOSED);
+            },
+            array($this, $itemSession)
+        );
+        
+        $itemSession->beginAttempt();
+        $itemSession->suspend();
+        $itemSession->interact();
+        $itemSession->endAttempt();
+    }
 }

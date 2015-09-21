@@ -6,7 +6,6 @@ use qtism\common\datatypes\Point;
 use qtism\data\storage\Utils;
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\Shape;
-use \stdClass;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 

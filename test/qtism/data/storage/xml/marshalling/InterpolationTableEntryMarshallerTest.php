@@ -1,10 +1,7 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\InterpolationTableEntry;
-use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

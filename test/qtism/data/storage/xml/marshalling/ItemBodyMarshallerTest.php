@@ -7,7 +7,6 @@ use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\H1;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 

@@ -1,13 +1,11 @@
 <?php
 
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Repeat;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\operators\MathOperator;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\common\enums\BaseType;
-use \DOMDocument;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
