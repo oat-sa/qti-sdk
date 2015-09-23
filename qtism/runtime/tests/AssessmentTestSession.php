@@ -1585,9 +1585,11 @@ class AssessmentTestSession extends State {
 	                        $this->endTestSession();
 	                    }
 	                    else if ($target === 'EXIT_TESTPART') {
+                            $route->next();
 	                        $this->moveNextTestPart();
 	                    }
 	                    else if ($target === 'EXIT_SECTION') {
+                            $route->next();
 	                        $this->moveNextAssessmentSection();
 	                    }
 	                    else {
@@ -1653,42 +1655,40 @@ class AssessmentTestSession extends State {
 	    $route = $this->getRoute();
 	    $from = $route->current();
 
-        $route->next();
-	    while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
-	        $this->nextRouteItem();
-	    }
-	    
-	    if ($this->isRunning() === true) {
-	        $this->interactWithItemSession();
-	    }
+        while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+            $this->nextRouteItem();
+        }
+
+        if ($this->isRunning() === true) {
+            $this->interactWithItemSession();
+        }
 	}
-	
+
 	/**
 	 * Set the position in the Route at the very next assessmentSection in the route sequence.
-	 * 
+	 *
 	 * * If there is no assessmentSection left in the flow, the test session ends gracefully.
 	 * * If there are still pending responses, they are processed.
-	 * 
+	 *
 	 * @throws AssessmentTestSessionException If the test is not running.
 	 */
 	public function moveNextAssessmentSection() {
-	    
+
 	    if ($this->isRunning() === false) {
 	        $msg = "Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    
+
 	    $route = $this->getRoute();
 	    $from = $route->current();
 
-        $route->next();
-	    while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
-	        $this->nextRouteItem();
-	    }
-	    
-	    if ($this->isRunning() === true) {
-	        $this->interactWithItemSession();
-	    }
+        while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
+            $this->nextRouteItem();
+        }
+
+        if ($this->isRunning() === true) {
+            $this->interactWithItemSession();
+        }
 	}
 	
 	/**
