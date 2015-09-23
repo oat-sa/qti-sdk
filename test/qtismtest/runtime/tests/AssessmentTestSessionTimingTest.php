@@ -596,5 +596,35 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         }
     }
+    
+    public function testLastItemTimeout() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_timeout.xml');
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        sleep(2);
+        $session->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+    
+    public function testLastItemSectionTimeout() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_section_timeout.xml');
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        sleep(2);
+        $session->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+    
+    public function testLastItemTestPartTimeout() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_testpart_timeout.xml');
+        $session->beginTestSession();
+        
+        $session->beginAttempt();
+        sleep(2);
+        $session->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
  }
  
