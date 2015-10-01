@@ -2,6 +2,8 @@
 namespace qtismtest\data\storage\php;
 
 use qtismtest\QtiSmTestCase;
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactDocument;
@@ -43,6 +45,40 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q01']);
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q02']);
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
+        
+        $this->assertEquals('Q01', $assessmentItemRefs['Q01']->getIdentifier());
+        $this->assertEquals('./Q01.xml', $assessmentItemRefs['Q01']->getHref());
+        $this->assertFalse(false, $assessmentItemRefs['Q01']->isTimeDependent());
+        $this->assertEquals(array('mathematics', 'chemistry'), $assessmentItemRefs['Q01']->getCategories()->getArrayCopy());
+        $variableMappings = $assessmentItemRefs['Q01']->getVariableMappings();
+        $this->assertEquals(1, count($variableMappings));
+        $this->assertEquals('scoring', $variableMappings[0]->getSource());
+        $this->assertEquals('SCORE', $variableMappings[0]->getTarget());
+        $weights = $assessmentItemRefs['Q01']->getWeights();
+        $this->assertEquals(1, count($weights));
+        $this->assertEquals('W01', $weights['W01']->getIdentifier());
+        $this->assertEquals(2.0, $weights['W01']->getValue());
+        $responseDeclarations = $assessmentItemRefs['Q01']->getResponseDeclarations();
+        $this->assertEquals(1, count($responseDeclarations));
+        $this->assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
+        $this->assertEquals(Cardinality::SINGLE, $responseDeclarations['RESPONSE']->getCardinality());
+        $this->assertEquals(BaseType::IDENTIFIER, $responseDeclarations['RESPONSE']->getBaseType());
+        $values = $responseDeclarations['RESPONSE']->getCorrectResponse()->getValues();
+        $this->assertEquals(1, count($values));
+        $this->assertEquals('ChoiceA', $values[0]->getValue());
+        $outcomeDeclarations = $assessmentItemRefs['Q01']->getOutcomeDeclarations();
+        $this->assertEquals(1, count($outcomeDeclarations));
+        $this->assertEquals('scoring', $outcomeDeclarations['scoring']->getIdentifier());
+        $this->assertEquals(Cardinality::SINGLE, $outcomeDeclarations['scoring']->getCardinality());
+        $this->assertEquals(BaseType::FLOAT, $outcomeDeclarations['scoring']->getBaseType());
+        $values = $outcomeDeclarations['scoring']->getDefaultValue()->getValues();
+        $this->assertEquals(0.0, $values[0]->getValue());
+        $responseProcessing = $assessmentItemRefs['Q01']->getResponseProcessing();
+        $this->assertInstanceOf('qtism\\data\\processing\\ResponseProcessing', $responseProcessing);
+        $this->assertFalse($responseProcessing->hasTemplateLocation());
+        $this->assertFalse($responseProcessing->hasTemplate());
+        $responseRules = $responseProcessing->getResponseRules();
+        $this->assertEquals(1, count($responseRules));
     }
     
      public function testSimpleSave() {
