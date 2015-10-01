@@ -37,6 +37,12 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertEquals('S01', $assessmentSections['S01']->getIdentifier());
         $this->assertEquals('Section1', $assessmentSections['S01']->getTitle());
         $this->assertTrue($assessmentSections['S01']->isVisible());
+        
+        $assessmentItemRefs = $assessmentSections['S01']->getSectionParts();
+        $this->assertEquals(3, count($assessmentItemRefs));
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q01']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q02']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
     }
     
      public function testSimpleSave() {
