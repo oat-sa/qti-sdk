@@ -2,21 +2,41 @@
 namespace qtismtest\data\storage\php;
 
 use qtismtest\QtiSmTestCase;
+use qtism\data\NavigationMode;
+use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
 class PhpDocumentTest extends QtiSmTestCase {
 	
-    public function testSimpleLoad() {
+    public function testSimpleLoad($path = '') {
         
         $doc = new PhpDocument();
-        $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.php');
+        if (empty($path) === true) {
+            $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.php');
+        } else {
+            $doc->load($path);
+        }
         
         $assessmentTest = $doc->getDocumentComponent();
         $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
-        
         $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
+        $this->assertEquals('PHP Storage Simple', $assessmentTest->getTitle());
+        
+        $testParts = $assessmentTest->getTestParts();
+        $this->assertEquals(1, count($testParts));
+        $this->assertTrue(isset($testParts['P01']));
+        $this->assertEquals('P01', $testParts['P01']->getIdentifier());
+        $this->assertEquals(NavigationMode::LINEAR, $testParts['P01']->getNavigationMode());
+        $this->assertEquals(SubmissionMode::INDIVIDUAL, $testParts['P01']->getSubmissionMode());
+        
+        $assessmentSections = $testParts['P01']->getAssessmentSections();
+        $this->assertEquals(1, count($assessmentSections));
+        $this->assertTrue(isset($assessmentSections['S01']));
+        $this->assertEquals('S01', $assessmentSections['S01']->getIdentifier());
+        $this->assertEquals('Section1', $assessmentSections['S01']->getTitle());
+        $this->assertTrue($assessmentSections['S01']->isVisible());
     }
     
      public function testSimpleSave() {
@@ -26,6 +46,9 @@ class PhpDocumentTest extends QtiSmTestCase {
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
+        
+        $this->testSimpleLoad($file);
+        
         unlink($file);
     }
     
