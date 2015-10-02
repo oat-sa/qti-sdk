@@ -33,7 +33,6 @@ use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
-use \OutOfBoundsException;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
 	

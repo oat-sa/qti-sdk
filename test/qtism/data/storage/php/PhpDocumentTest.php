@@ -26,6 +26,7 @@ class PhpDocumentTest extends QtiSmTestCase {
         $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
+        
         unlink($file);
     }
     
