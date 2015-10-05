@@ -1,0 +1,82 @@
+assessmentItem {
+    background: url("background.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding: 40px;
+    font-size: 16px;
+    min-height: 100%;
+}
+
+assessmentItem itemBody {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    min-width: 300px;
+    background: rgba(255, 255, 255, .4);
+    color: #222;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 25px -8px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 0px 25px -8px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 25px -8px rgba(0,0,0,0.8);
+}
+
+assessmentItem itemBody h1 {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 30px;
+}
+
+assessmentItem itemBody p {
+    margin: 20px 0;
+    line-height: 1.3em;
+    text-align: justify;
+}
+
+assessmentItem itemBody em {
+    font-style: italic;
+}
+
+assessmentItem itemBody choiceInteraction {
+    padding: 10px;
+    margin-top: 40px;
+    background: rgba(0, 0, 0, .1);
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+assessmentItem itemBody choiceInteraction prompt {
+    margin: 10px 0;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+assessmentItem itemBody choiceInteraction simpleChoice {
+    margin: 7px;
+    font-size: 16px;
+    padding: 7px;
+    background: rgba(255, 255, 255, .6);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    
+    /* CSS3 Transitions! */
+    -webkit-transition: box-shadow 200ms linear, background 200ms linear;
+    -moz-transition: box-shadow 200ms linear, background 200ms linear;
+    -ms-transition: box-shadow 200ms linear, background 200ms linear;
+    transition: box-shadow 200ms linear, background 200ms linear;
+}
+
+assessmentItem itemBody choiceInteraction simpleChoice:hover {
+    background: rgba(255, 255, 255, .8);
+    cursor: pointer;
+}
+
+assessmentItem itemBody choiceInteraction simpleChoice:-qti-selected {
+    box-shadow: 0 0 8px #d2691e;
+    background: rgba(255, 255, 255, .9);
+}

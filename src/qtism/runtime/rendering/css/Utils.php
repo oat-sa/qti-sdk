@@ -58,4 +58,13 @@ class Utils
 
         return $selector;
     }
+    
+    public static function mapPseudoClasses($selector, array $map)
+    {
+        foreach ($map as $k => $v) {
+            $selector = str_replace(":-${k}", ".${v}", $selector);
+        }
+        
+        return $selector;
+    }
 }

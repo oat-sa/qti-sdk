@@ -13,7 +13,7 @@ class CssUtilsTest extends QtiSmTestCase {
      * @param string $selector
      * @param array $map
      */
-    public function testMapSelector ($selector, $expected, $map) {
+    public function testMapSelector($selector, $expected, array $map) {
         $this->assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
     
@@ -38,6 +38,27 @@ class CssUtilsTest extends QtiSmTestCase {
             array('a:hover>a:hover', '.qtism-a:hover>.qtism-a:hover', $map),
             array('a[target=_blank]', '.qtism-a[target=_blank]', $map),
             array('prompt > b', '.qtism-prompt > .qtism-b', $map),
+        );
+    }
+    
+    /**
+     * @dataProvider mapPseudoClassesProvider
+     * 
+     * @param string $selector
+     * @param string $expected
+     * @param array $map
+     */
+    public function testMapPseudoClasses($selector, $expected, array $map) {
+        $this->assertEquals($expected, CssUtils::mapPseudoClasses($selector, $map));
+    }
+    
+    public function mapPseudoClassesProvider() {
+        $map = array(
+            'qti-selected' => 'qti-selected'
+        );
+        
+        return array(
+            array('#qtism qti-simpleChoice:-qti-selected', '#qtism qti-simpleChoice.qti-selected', $map)
         );
     }
 }
