@@ -30,6 +30,7 @@ use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\QtiDatatype;
 
 /**
@@ -65,6 +66,10 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             } elseif ($toMarshall instanceof Point) {
                 $this->marshallPoint();
 
+                return;
+            } else if ($toMarshall instanceof Identifier) {
+                $this->marshallIdentifier();
+                
                 return;
             }
         } catch (PhpMarshallingException $e) {
@@ -181,6 +186,32 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
             $msg = "An error occured while marshalling a Duration object into the PHP source code stream.";
+            throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
+        }
+    }
+    
+    /**
+     * Marshall an Identifier QTI datatype object.
+     *
+     * @throws \qtism\data\storage\php\marshalling\PhpMarshallingException
+     */
+    protected function marshallIdentifier()
+    {
+        $identifier = $this->getToMarshall();
+        $ctx = $this->getContext();
+        $access = $ctx->getStreamAccess();
+
+        try {
+            $varName = $ctx->generateVariableName($identifier);
+            $access->writeVariable($varName);
+            $access->writeEquals($ctx->mustFormatOutput());
+            $args = new PhpArgumentCollection(array(new PhpArgument($identifier->getValue())));
+            $access->writeInstantiation(get_class($identifier), $args);
+            $access->writeSemicolon($ctx->mustFormatOutput());
+
+            $ctx->pushOnVariableStack($varName);
+        } catch (StreamAccessException $e) {
+            $msg = "An error occured while marshalling an Identifier object into the PHP source code stream.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }
