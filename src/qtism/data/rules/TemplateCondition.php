@@ -45,6 +45,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      * The TemplateIf object composing the template condition.
      *
      * @var \qtism\data\rules\TemplateIf
+     * @qtism-bean-property
      */
     private $templateIf;
 
@@ -52,6 +53,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      * The collection of TemplateElseIf objects composing the template condition.
      *
      * @var \qtism\data\rules\TemplateElseIfCollection
+     * @qtism-bean-property
      */
     private $templateElseIfs;
 
@@ -59,6 +61,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      * An optional TemplateElse object composing the complate condition.
      *
      * @var \qtism\data\rules\TemplateElse
+     * @qtism-bean-property
      */
     private $templateElse = null;
 
