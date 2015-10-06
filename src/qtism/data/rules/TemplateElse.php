@@ -37,6 +37,7 @@ class TemplateElse extends QtiComponent
      * The collection of TemplateRule objects to be evaluated.
      *
      * @var \qtism\data\rules\TemplateRuleCollection
+     * @qtism-bean-property
      */
     private $templateRules;
 
@@ -44,6 +45,7 @@ class TemplateElse extends QtiComponent
      * Create a new TemplateElse object.
      *
      * @param \qtism\data\rules\TemplateRuleCollection $templateRules A collection of TemplateRule objects.
+     * 
      */
     public function __construct(TemplateRuleCollection $templateRules)
     {
