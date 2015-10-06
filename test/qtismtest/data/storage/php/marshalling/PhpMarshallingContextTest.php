@@ -102,9 +102,9 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         
         $this->assertEquals('integer_0', $ctx->generateVariableName(0));
         $this->assertEquals('integer_1', $ctx->generateVariableName(-10));
-        $this->assertEquals('nullvalue_0', $ctx->generateVariableName(null));
-        $this->assertEquals('nullvalue_1', $ctx->generateVariableName(null));
-        $this->assertEquals('nullvalue_2', $ctx->generateVariableName(null));
+        $this->assertEquals('scalarnullvalue_0', $ctx->generateVariableName(null));
+        $this->assertEquals('scalarnullvalue_1', $ctx->generateVariableName(null));
+        $this->assertEquals('scalarnullvalue_2', $ctx->generateVariableName(null));
         $this->assertEquals('boolean_0', $ctx->generateVariableName(true));
         $this->assertEquals('boolean_1', $ctx->generateVariableName(false));
         $this->assertEquals('double_0', $ctx->generateVariableName(20.3));

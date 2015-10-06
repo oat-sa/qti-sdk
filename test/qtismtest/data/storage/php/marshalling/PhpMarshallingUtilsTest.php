@@ -20,8 +20,8 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase {
     
     public function variableNameDataProvider() {
         return array(
-            array(null, 0, 'nullvalue_0'),
-            array(null, 1, 'nullvalue_1'),
+            array(null, 0, 'scalarnullvalue_0'),
+            array(null, 1, 'scalarnullvalue_1'),
             array('string!', 0, 'string_0'),
             array('string!', 2, 'string_2'),
             array(-23, 0, 'integer_0'),

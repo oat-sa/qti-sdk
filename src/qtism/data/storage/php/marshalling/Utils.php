@@ -80,7 +80,8 @@ class Utils
             }
             // null value?
             elseif (is_null($value) === true) {
-                return 'nullvalue_' . $occurence;
+                // To avoid conflict with NullValue QTI expression object!!!
+                return 'scalarnullvalue_' . $occurence;
             } else {
                 $msg = "Cannot handle the given value.";
                 throw new InvalidArgumentException($msg);
