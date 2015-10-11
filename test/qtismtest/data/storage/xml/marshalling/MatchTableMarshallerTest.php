@@ -8,7 +8,7 @@ use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use \DOMDocument;
 
 class MatchTableMarshallerTest extends QtiSmTestCase {
@@ -16,8 +16,8 @@ class MatchTableMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
 
 		$matchTableEntryCollection = new MatchTableEntryCollection();
-		$matchTableEntryCollection[] = new MatchTableEntry(1, new Pair('A', 'B'));
-		$matchTableEntryCollection[] = new MatchTableEntry(2, new Pair('A', 'C'));
+		$matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
+		$matchTableEntryCollection[] = new MatchTableEntry(2, new QtiPair('A', 'C'));
 		
 		$component = new MatchTable($matchTableEntryCollection);
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, array(BaseType::PAIR));
@@ -55,6 +55,6 @@ class MatchTableMarshallerTest extends QtiSmTestCase {
 		$entry = $matchTableEntries[0];
 		$this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
 		$this->assertEquals(1, $entry->getSourceValue());
-		$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $entry->getTargetValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $entry->getTargetValue());
 	}
 }

@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\Inside;
 use qtism\data\expressions\Expression;
 
@@ -70,7 +70,7 @@ class InsideProcessor extends OperatorProcessor
         $operand = $operands[0];
         $coords = $this->getExpression()->getCoords();
 
-        return new Boolean($coords->inside($operand));
+        return new QtiBoolean($coords->inside($operand));
     }
     
     /**

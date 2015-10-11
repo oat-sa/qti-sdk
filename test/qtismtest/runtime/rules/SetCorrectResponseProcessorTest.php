@@ -24,7 +24,7 @@ class setCorrectValueProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Identifier', $state->getVariable('RESPONSE')->getCorrectResponse());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $state->getVariable('RESPONSE')->getCorrectResponse());
 		$this->assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
 	}
 	

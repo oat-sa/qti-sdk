@@ -2,7 +2,7 @@
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -20,7 +20,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q01. 
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $current = $testSession->getRoute()->current();
         
         // The call to moveNext must put the state of the session into MODAL_FEEDBACK. Be carefull,
@@ -36,7 +36,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q02.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         
         // The call to moveNext must again put the state of the session into MODAL_FEEDBACK without
         // moving to the next item.
@@ -58,7 +58,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q01. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $testSession->moveNext();
         
         // No feedback must be shown because we are not at the end of test.
@@ -68,7 +68,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q02. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $testSession->moveNext();
         
         // Because it is the end of the test, and the two responses are correct, the feedback must be shown.
@@ -91,12 +91,12 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
     
         // Attempt on Q01. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $testSession->moveNext();
     
         // Attempt on Q02. Incorrect response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD')))));
         $testSession->moveNext();
     
         // Because it is the end of the test, and the two responses are not correct, the feedback must not be shown.
@@ -113,7 +113,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         // Entering testPart P01...
         // Attempt on Q01. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $testSession->moveNext();
     
         // No feedback must be shown because we are not at the end of the testPart.
@@ -123,7 +123,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
     
         // Attempt on Q02. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $testSession->moveNext();
     
         // Because it is the end of the testPart, and the two responses of this testPart are correct, the feedback must be shown.
@@ -136,7 +136,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q03. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC')))));
         $testSession->moveNext();
         
         // No feedback must be shown because we are not at the end of the testPart.
@@ -146,7 +146,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         
         // Attempt on Q04. Correct response.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD')))));
         $testSession->moveNext();
         
         // Because it is the end of the testPart, and the two responses of this testPart are correct, the feedback must be shown.

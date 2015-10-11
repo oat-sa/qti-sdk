@@ -22,8 +22,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
 use qtism\data\expressions\Expression;
@@ -104,7 +104,7 @@ class MathOperatorProcessor extends OperatorProcessor
         $methodName = 'process' . ucfirst($qtiFuncName);
         $result = call_user_func_array(array($this, $methodName), array());
 
-        if ($result instanceof Float && is_nan($result->getValue()) === true) {
+        if ($result instanceof QtiFloat && is_nan($result->getValue()) === true) {
             // outside the domain of the function.
             return null;
         } else {
@@ -120,7 +120,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(sin($operands[0]->getValue()));
+        return new QtiFloat(sin($operands[0]->getValue()));
     }
 
     /**
@@ -131,7 +131,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(cos($operands[0]->getValue()));
+        return new QtiFloat(cos($operands[0]->getValue()));
     }
 
     /**
@@ -142,7 +142,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(tan($operands[0]->getValue()));
+        return new QtiFloat(tan($operands[0]->getValue()));
     }
 
     /**
@@ -156,7 +156,7 @@ class MathOperatorProcessor extends OperatorProcessor
         if ($cos == 0) {
             return null;
         } else {
-            return new Float(1 / $cos);
+            return new QtiFloat(1 / $cos);
         }
     }
 
@@ -171,7 +171,7 @@ class MathOperatorProcessor extends OperatorProcessor
         if ($sin == 0) {
             return null;
         } else {
-            return new Float(1 / $sin);
+            return new QtiFloat(1 / $sin);
         }
     }
 
@@ -184,11 +184,11 @@ class MathOperatorProcessor extends OperatorProcessor
         $operands = $this->getOperands();
         $tan = tan($operands[0]->getValue());
         if (is_infinite($tan)) {
-            return new Float(0.0);
+            return new QtiFloat(0.0);
         } elseif ($tan == 0) {
             return null;
         } else {
-            return new Float(1 / $tan);
+            return new QtiFloat(1 / $tan);
         }
     }
 
@@ -200,7 +200,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(asin($operands[0]->getValue()));
+        return new QtiFloat(asin($operands[0]->getValue()));
     }
 
     /**
@@ -211,7 +211,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(acos($operands[0]->getValue()));
+        return new QtiFloat(acos($operands[0]->getValue()));
     }
 
     /**
@@ -222,7 +222,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(atan($operands[0]->getValue()));
+        return new QtiFloat(atan($operands[0]->getValue()));
     }
 
     /**
@@ -245,7 +245,7 @@ class MathOperatorProcessor extends OperatorProcessor
         $operand1 = $operands[0];
         $operand2 = $operands[1];
 
-        return new Float(atan2($operand1->getValue(), $operand2->getValue()));
+        return new QtiFloat(atan2($operand1->getValue(), $operand2->getValue()));
     }
 
     /**
@@ -261,7 +261,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new Float(acos(1 / $operand->getValue()));
+        return new QtiFloat(acos(1 / $operand->getValue()));
     }
 
     /**
@@ -277,7 +277,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new Float(asin(1 / $operand->getValue()));
+        return new QtiFloat(asin(1 / $operand->getValue()));
     }
 
     /**
@@ -290,10 +290,10 @@ class MathOperatorProcessor extends OperatorProcessor
         $operand = $operands[0];
 
         if ($operand->getValue() === 0) {
-            return new Float(M_PI_2);
+            return new QtiFloat(M_PI_2);
         }
 
-        return new Float(atan(1 / $operand->getValue()));
+        return new QtiFloat(atan(1 / $operand->getValue()));
     }
 
     /**
@@ -304,7 +304,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(sinh($operands[0]->getValue()));
+        return new QtiFloat(sinh($operands[0]->getValue()));
     }
 
     /**
@@ -315,7 +315,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(cosh($operands[0]->getValue()));
+        return new QtiFloat(cosh($operands[0]->getValue()));
     }
 
     /**
@@ -326,7 +326,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
 
-        return new Float(tanh($operands[0]->getValue()));
+        return new QtiFloat(tanh($operands[0]->getValue()));
     }
 
     /**
@@ -342,7 +342,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new Float(1 / cosh($operand->getValue()));
+        return new QtiFloat(1 / cosh($operand->getValue()));
     }
 
     /**
@@ -358,7 +358,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new Float(1 / sinh($operand->getValue()));
+        return new QtiFloat(1 / sinh($operand->getValue()));
     }
 
     /**
@@ -373,10 +373,10 @@ class MathOperatorProcessor extends OperatorProcessor
         if ($operand->getValue() == 0) {
             return null;
         } elseif (is_infinite($operand->getValue())) {
-            return new Float(0.0);
+            return new QtiFloat(0.0);
         }
 
-        return new Float(1 / tanh($operand->getValue()));
+        return new QtiFloat(1 / tanh($operand->getValue()));
     }
 
     /**
@@ -391,10 +391,10 @@ class MathOperatorProcessor extends OperatorProcessor
         if ($operand->getValue() < 0) {
             return null;
         } elseif ($operand->getValue() == 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Float(log($operand->getValue(), 10));
+        return new QtiFloat(log($operand->getValue(), 10));
     }
 
     /**
@@ -409,10 +409,10 @@ class MathOperatorProcessor extends OperatorProcessor
         if ($operand->getValue() < 0) {
             return null;
         } elseif ($operand->getValue() == 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Float(log($operand->getValue()));
+        return new QtiFloat(log($operand->getValue()));
     }
 
     /**
@@ -427,12 +427,12 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue()) === true) {
             return null;
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
-            return new Float(INF);
+            return new QtiFloat(INF);
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
-            return new Float(0.0);
+            return new QtiFloat(0.0);
         }
 
-        return new Float(exp($operand->getValue()));
+        return new QtiFloat(exp($operand->getValue()));
     }
 
     /**
@@ -448,7 +448,7 @@ class MathOperatorProcessor extends OperatorProcessor
             return null;
         }
 
-        return new Float(floatval(abs($operand->getValue())));
+        return new QtiFloat(floatval(abs($operand->getValue())));
     }
 
     /**
@@ -464,11 +464,11 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue())) {
             return null;
         } elseif ($operand->getValue() < 0) {
-            return new Integer(-1);
+            return new QtiInteger(-1);
         } elseif ($operand->getValue() > 0) {
-            return new Integer(1);
+            return new QtiInteger(1);
         } else {
-            return new Integer(0);
+            return new QtiInteger(0);
         }
     }
 
@@ -484,12 +484,12 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue())) {
             return null;
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
-            return new Float(INF);
+            return new QtiFloat(INF);
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Integer(intval(floor($operand->getValue())));
+        return new QtiInteger(intval(floor($operand->getValue())));
     }
 
     /**
@@ -504,12 +504,12 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue())) {
             return null;
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
-            return new Float(INF);
+            return new QtiFloat(INF);
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Integer(intval(ceil($operand->getValue())));
+        return new QtiInteger(intval(ceil($operand->getValue())));
     }
 
     /**
@@ -524,12 +524,12 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue())) {
             return null;
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
-            return new Float(INF);
+            return new QtiFloat(INF);
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Float(floatval(rad2deg($operand->getValue())));
+        return new QtiFloat(floatval(rad2deg($operand->getValue())));
     }
 
     /**
@@ -544,12 +544,12 @@ class MathOperatorProcessor extends OperatorProcessor
         if (is_nan($operand->getValue())) {
             return null;
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() > 0) {
-            return new Float(INF);
+            return new QtiFloat(INF);
         } elseif (is_infinite($operand->getValue()) === true && $operand->getValue() < 0) {
-            return new Float(-INF);
+            return new QtiFloat(-INF);
         }
 
-        return new Float(floatval(deg2rad($operand->getValue())));
+        return new QtiFloat(floatval(deg2rad($operand->getValue())));
     }
     
     /**

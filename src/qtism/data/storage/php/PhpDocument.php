@@ -23,7 +23,7 @@
 namespace qtism\data\storage\php;
 
 use qtism\data\ExtendedAssessmentTest;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
@@ -113,7 +113,7 @@ class PhpDocument extends QtiDocument
                     }
                 }
                 // Warning!!! Check for Coords Datatype objects. Indeed, it extends AbstractCollection, but must not be considered as it is.
-                elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof Coords)) {
+                elseif ($isMarked === false && ($component instanceof AbstractCollection && !$component instanceof QtiCoords)) {
                     // AbstractCollection node, 1st pass.
                     // Mark as explored.
                     array_push($marker, $component);

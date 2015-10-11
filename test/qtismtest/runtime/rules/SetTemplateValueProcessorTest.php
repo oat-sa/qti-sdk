@@ -3,7 +3,7 @@ namespace qtismtest\runtime\rules;
 
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\rules\RuleProcessingException;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -27,7 +27,7 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 		
 		// The state must be modified.
 		// TemplateVariable with identifier 'TPL1' must contain 4.3.
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $state['TPL1']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['TPL1']);
 		$this->assertEquals(4.3, $state['TPL1']->getValue());
 	}
 	
@@ -44,7 +44,7 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 	    $processor->setState($state);
 	    $processor->process();
 	    
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $state['TPL1']);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['TPL1']);
 	    $this->assertEquals(4.0, $state['TPL1']->getValue());
 	}
 	
@@ -61,7 +61,7 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 	    $processor->setState($state);
 	    $processor->process();
 	     
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\INTEGER', $state['TPL1']);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $state['TPL1']);
 	    $this->assertEquals(4, $state['TPL1']->getValue());
 	}
 	
@@ -130,13 +130,13 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 		');
 		
 		$processor = new SetTemplateValueProcessor($rule);
-		$myBool = new TemplateVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false));
+		$myBool = new TemplateVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false));
 		$state = new State(array($myBool));
 		$this->assertFalse($state['myBool']->getValue());
 		
 		$processor->setState($state);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $state['myBool']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $state['myBool']);
 		$this->assertTrue($state['myBool']->getValue());
 	}
 	

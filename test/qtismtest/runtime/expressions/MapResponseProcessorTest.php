@@ -2,8 +2,8 @@
 namespace qtismtest\runtime\expressions;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\MapResponse;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -11,7 +11,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\MapResponseProcessor;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
 
 class MapResponseProcessorTest extends QtiSmTestCase {
@@ -34,23 +34,23 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		// The variable has no value so the default mapping value is returned.
 		$this->assertEquals(0, $result->getValue()); 
 		
-		$state['response1'] = new Integer(0);
+		$state['response1'] = new QtiInteger(0);
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(1, $result->getValue());
 		
-		$state['response1'] = new Integer(1);
+		$state['response1'] = new QtiInteger(1);
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(2, $result->getValue());
 		
-		$state['response1'] = new Integer(240);
+		$state['response1'] = new QtiInteger(240);
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(0, $result->getValue());
 	}
 	
@@ -73,23 +73,23 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		
 		// No value could be tried to be matched.
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(0.0, $result->getValue());
 		
-		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B')));
+		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(1.5, $result->getValue());
 		
-		$state['response1'][] = new Pair('C', 'D');
+		$state['response1'][] = new QtiPair('C', 'D');
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(4, $result->getValue());
 		
 		// mapEntries must be taken into account only once, as per QTI 2.1 spec.
-		$state['response1'][] = new Pair('C', 'D');
+		$state['response1'][] = new QtiPair('C', 'D');
 		$result = $mapResponseProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
 	}
 	
@@ -106,7 +106,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
             </responseDeclaration>
 	    ');
 	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-	    $variable->setValue(new Identifier('Choice_3'));
+	    $variable->setValue(new QtiIdentifier('Choice_3'));
 	    $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
 	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
 	    $mapResponseProcessor->setState(new State(array($variable)));
@@ -168,17 +168,17 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	    $this->assertTrue($responseVariable->isNull());
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(0.0, $result->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 	    
 	    // RESPONSE is NULL.
 	    $responseVariable->setValue(null);
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(0.0, $result->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 	    
 	    // RESPONSE is Choice 6, Choice 8.
 	    // Note that Choice 8 has not mapping, the mapping's default value (0) must be then used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('Choice6'), new Identifier('Choice8')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(20.0, $result->getValue());
 	    
@@ -187,14 +187,14 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	    $mapping->setDefaultValue(-1.0);
 	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
 	    $state->setVariable($responseVariable);
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('Choice6'), new Identifier('Choice8')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(19.0, $result->getValue());
 	    
 	    // Response is 'choice7', and 'identifierX'. choice7 is in lower case but its
 	    // associated entry is case insensitive. It must be then matched.
 	    // 'identifierX' will not be matched at all, the mapping's default value (still -1) will be used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('choice7'), new Identifier('identifierX')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('choice7'), new QtiIdentifier('identifierX')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(-21.0, $result->getValue());
 	    

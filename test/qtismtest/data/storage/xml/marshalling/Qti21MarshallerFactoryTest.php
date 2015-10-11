@@ -2,8 +2,8 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Coords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
@@ -23,8 +23,8 @@ class Qti21MarshallerFactyoryTest extends QtiSmTestCase {
 	}
 	
 	public function testFromQtiComponent() {
-		$shape = Shape::RECT;
-		$coords = new Coords($shape, array(0, 20, 100, 0));
+		$shape = QtiShape::RECT;
+		$coords = new QtiCoords($shape, array(0, 20, 100, 0));
 		$component = new AreaMapEntry($shape, $coords, 1.337);
 		
 		$factory = new Qti21MarshallerFactory();

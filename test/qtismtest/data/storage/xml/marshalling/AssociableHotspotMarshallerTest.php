@@ -5,15 +5,15 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
 use qtism\common\collections\IdentifierCollection;
-use qtism\common\datatypes\Coords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use \DOMDocument;
 
 class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall21() {
-        $shape = Shape::RECT;
-        $coords = new Coords($shape, array(92, 19, 261, 66));
+        $shape = QtiShape::RECT;
+        $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 2;
 	    $matchMin = 1;
 	    $fixed = true;
@@ -37,8 +37,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	public function testMarshallNoOutputForDefaultMatchMinFixedShowHide21() {
 	    // Aims at testing that fixed, matchMin, showHide attributes are not
 	    // in the output if default values are set.
-	    $shape = Shape::RECT;
-	    $coords = new Coords($shape, array(92, 19, 261, 66));
+	    $shape = QtiShape::RECT;
+	    $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 0;
 	     
 	    $associableHotspot = new AssociableHotspot('hotspot1', $matchMax, $shape, $coords);
@@ -55,8 +55,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	public function testMarshallNoOutputForMatchGroup21() {
 	    // Aims that testing that matchGroup is never in the output
 	    // in a QTI 2.1 context.
-	    $shape = Shape::RECT;
-	    $coords = new Coords($shape, array(92, 19, 261, 66));
+	    $shape = QtiShape::RECT;
+	    $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 0;
 	    
 	    $associableHotspot = new AssociableHotspot('hotspot1', $matchMax, $shape, $coords);
@@ -78,7 +78,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
 	    
 	    $this->assertEquals('hotspot1', $component->getIdentifier());
-	    $this->assertEquals(Shape::RECT, $component->getShape());
+	    $this->assertEquals(QtiShape::RECT, $component->getShape());
 	    $this->assertEquals('92,19,261,66', $component->getCoords()->__toString());
 	    $this->assertTrue($component->isFixed());
 	    $this->assertEquals(ShowHide::HIDE, $component->getShowHide());
@@ -89,8 +89,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	}
 	
 	public function testMarshall20() {
-	    $shape = Shape::RECT;
-	    $coords = new Coords($shape, array(92, 19, 261, 66));
+	    $shape = QtiShape::RECT;
+	    $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 2;
 	    $matchMin = 1;
 	    $fixed = true;
@@ -109,8 +109,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	 * @depends testMarshall20
 	 */
 	public function testMarshallMatchGroup20() {
-	    $shape = Shape::RECT;
-	    $coords = new Coords($shape, array(92, 19, 261, 66));
+	    $shape = QtiShape::RECT;
+	    $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 2;
 	    $matchMin = 1;
 	    $showHide = ShowHide::HIDE;
@@ -137,7 +137,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\AssociableHotspot', $component);
 	     
 	    $this->assertEquals('hotspot1', $component->getIdentifier());
-	    $this->assertEquals(Shape::RECT, $component->getShape());
+	    $this->assertEquals(QtiShape::RECT, $component->getShape());
 	    $this->assertEquals('92,19,261,66', $component->getCoords()->__toString());
 	    $this->assertTrue($component->isFixed());
 	    $this->assertEquals(0, $component->getMatchMax());

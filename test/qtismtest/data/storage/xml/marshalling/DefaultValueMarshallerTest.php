@@ -7,14 +7,14 @@ use qtism\data\state\DefaultValue;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use \DOMDocument;
 
 class DefaultValueMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 		$interpretation = 'It is up to you to interpret...';
-		$pair = new Pair('id1', 'id2');
+		$pair = new QtiPair('id1', 'id2');
 		$values = new ValueCollection();
 		$values[] = new Value($pair);
 		$component = new DefaultValue($values, $interpretation);
@@ -79,7 +79,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase {
 		foreach ($component->getValues() as $value) {
 			$this->assertInstanceOf('qtism\\data\\state\\Value', $value);
 			$this->assertEquals(BaseType::DIRECTED_PAIR, $value->getBaseType());
-			$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value->getValue());
+			$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $value->getValue());
 			$this->assertFalse($value->isPartOfRecord());
 		}
 	}

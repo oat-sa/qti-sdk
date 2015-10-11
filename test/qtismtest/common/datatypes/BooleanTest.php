@@ -1,18 +1,18 @@
 <?php
 namespace qtismtest\common\datatypes;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmTestCase;
 
 class BooleanTest extends QtiSmTestCase {
     
     public function testWrongValue() {
         $this->setExpectedException('\\InvalidArgumentException');
-        $boolean = new Boolean('string');
+        $boolean = new QtiBoolean('string');
     }
     
     public function testClone() {
-        $boolean = new Boolean(true);
+        $boolean = new QtiBoolean(true);
         $otherBoolean = clone $boolean;
         
         $this->assertEquals($boolean->getValue(), $otherBoolean->getValue());

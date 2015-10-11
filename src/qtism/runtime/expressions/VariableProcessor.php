@@ -25,7 +25,7 @@ namespace qtism\runtime\expressions;
 
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -117,7 +117,7 @@ class VariableProcessor extends ExpressionProcessor
                     if (!empty($weight) && ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT)) {
 
                         if ($cardinality === Cardinality::SINGLE) {
-                            return new Float($variableValue->getValue() * $weight->getValue());
+                            return new QtiFloat($variableValue->getValue() * $weight->getValue());
                         } elseif ($cardinality === Cardinality::MULTIPLE || $cardinality === Cardinality::ORDERED) {
 
                             // variableValue is an object, the weighting should not
@@ -125,7 +125,7 @@ class VariableProcessor extends ExpressionProcessor
                             $finalValue = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer(BaseType::FLOAT) : new OrderedContainer(BaseType::FLOAT);
                             for ($i = 0; $i < count($variableValue); $i++) {
                                 if ($variableValue[$i] !== null) {
-                                    $finalValue[] = new Float($variableValue[$i]->getValue() * $weight->getValue()) ;
+                                    $finalValue[] = new QtiFloat($variableValue[$i]->getValue() * $weight->getValue()) ;
                                 } else {
                                     $finalValue[] = null;
                                 }

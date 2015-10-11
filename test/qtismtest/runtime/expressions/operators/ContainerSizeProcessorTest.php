@@ -2,13 +2,13 @@
 namespace qtismtest\runtime\expressions\operators;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\operators\ContainerSizeProcessor;
 use qtism\data\expressions\operators\ContainerSize; 
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -25,8 +25,8 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(26)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(26)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainerSizeProcessor($expression, $operands);
 	}
@@ -36,19 +36,19 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(null));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
 		$this->assertSame(0, $result->getValue());
 		
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
 		$this->assertSame(0, $result->getValue());
 	}
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(25)));
+		$operands = new OperandsCollection(array(new QtiInteger(25)));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -56,7 +56,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new Float(1.0), '2' => new Integer(2)))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new QtiFloat(1.0), '2' => new QtiInteger(2)))));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -65,15 +65,15 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	public function testSize() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('String!')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('String!')));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEquals(1, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 3), new Point(3, 4)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)));
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
 		$this->assertEquals(3, $result->getValue());
 	}
 	

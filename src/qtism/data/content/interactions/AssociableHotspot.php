@@ -23,8 +23,8 @@
 namespace qtism\data\content\interactions;
 
 use qtism\common\collections\IdentifierCollection;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
@@ -119,7 +119,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
 	 * @param string $label The label of the bodyElement.
 	 * @throws \InvalidArgument If one of the constructor's argument is invalid.
 	 */
-    public function __construct($identifier, $matchMax, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($identifier, $matchMax, $shape, QtiCoords $coords, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
         $this->setMatchMax($matchMax);
@@ -187,7 +187,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
 	 */
     public function setShape($shape)
     {
-        if (in_array($shape, Shape::asArray()) === true) {
+        if (in_array($shape, QtiShape::asArray()) === true) {
             $this->shape = $shape;
         } else {
             $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";
@@ -210,7 +210,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
 	 *
 	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
-    public function setCoords(Coords $coords)
+    public function setCoords(QtiCoords $coords)
     {
         $this->coords = $coords;
     }

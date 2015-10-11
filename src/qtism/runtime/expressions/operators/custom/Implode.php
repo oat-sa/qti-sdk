@@ -24,7 +24,7 @@
 namespace qtism\runtime\expressions\operators\custom;
 
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\CustomOperatorProcessor;
 
@@ -74,6 +74,6 @@ class Implode extends CustomOperatorProcessor
         // Note: implode() is binary-safe \0/!
         $string = implode($glue, $pieces->getArrayCopy());
 
-        return new String($string);
+        return new QtiString($string);
     }
 }

@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\Comparable;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Match;
@@ -77,9 +77,9 @@ class MatchProcessor extends OperatorProcessor
 
         if ($operands[0] instanceof Comparable) {
             // 2 containers to compare.
-            return new Boolean($operands[0]->equals($operands[1]));
+            return new QtiBoolean($operands[0]->equals($operands[1]));
         } else {
-            return new Boolean($operands[0] === $operands[1]);
+            return new QtiBoolean($operands[0] === $operands[1]);
         }
     }
     

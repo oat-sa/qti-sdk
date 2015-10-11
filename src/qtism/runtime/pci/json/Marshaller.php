@@ -23,21 +23,21 @@
 
 namespace qtism\runtime\pci\json;
 
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiUri;
+use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiScalar;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\State;
 use qtism\common\datatypes\QtiDatatype;
@@ -127,7 +127,7 @@ class Marshaller
     {
         if (is_null($unit) === true) {
             $json = array('base' => null);
-        } elseif ($unit instanceof Scalar) {
+        } elseif ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);
         } elseif ($unit instanceof MultipleContainer) {
             $json = array();
@@ -177,19 +177,19 @@ class Marshaller
         if (is_null($scalar) === true) {
             return $scalar;
         } elseif ($scalar instanceof QtiDatatype) {
-            if ($scalar instanceof Boolean) {
+            if ($scalar instanceof QtiBoolean) {
                 return $this->marshallBoolean($scalar);
-            } elseif ($scalar instanceof Integer) {
+            } elseif ($scalar instanceof QtiInteger) {
                 return $this->marshallInteger($scalar);
-            } elseif ($scalar instanceof Float) {
+            } elseif ($scalar instanceof QtiFloat) {
                 return $this->marshallFloat($scalar);
-            } elseif ($scalar instanceof Identifier) {
+            } elseif ($scalar instanceof QtiIdentifier) {
                 return $this->marshallIdentifier($scalar);
-            } elseif ($scalar instanceof Uri) {
+            } elseif ($scalar instanceof QtiUri) {
                 return $this->marshallUri($scalar);
-            } elseif ($scalar instanceof String) {
+            } elseif ($scalar instanceof QtiString) {
                 return $this->marshallString($scalar);
-            } elseif ($scalar instanceof IntOrIdentifier) {
+            } elseif ($scalar instanceof QtiIntOrIdentifier) {
                 return $this->marshallIntOrIdentifier($scalar);
             }
         } else {
@@ -217,15 +217,15 @@ class Marshaller
     {
         if (is_null($complex) === true) {
             return $complex;
-        } elseif ($complex instanceof Point) {
+        } elseif ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
-        } elseif ($complex instanceof DirectedPair) {
+        } elseif ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
-        } elseif ($complex instanceof Pair) {
+        } elseif ($complex instanceof QtiPair) {
             return $this->marshallPair($complex);
-        } elseif ($complex instanceof Duration) {
+        } elseif ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
-        } elseif ($complex instanceof File) {
+        } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         } else {
             $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
@@ -247,7 +247,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Boolean $boolean
      * @return array
      */
-    protected function marshallBoolean(Boolean $boolean)
+    protected function marshallBoolean(QtiBoolean $boolean)
     {
         return array('base' => array('boolean' => $boolean->getValue()));
     }
@@ -258,7 +258,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Integer $integer
      * @return array
      */
-    protected function marshallInteger(Integer $integer)
+    protected function marshallInteger(QtiInteger $integer)
     {
         return array('base' => array('integer' => $integer->getValue()));
     }
@@ -269,7 +269,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Float $float
      * @return array
      */
-    protected function marshallFloat(Float $float)
+    protected function marshallFloat(QtiFloat $float)
     {
         return array('base' => array('float' => $float->getValue()));
     }
@@ -280,7 +280,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Identifier $identifier
      * @return array
      */
-    protected function marshallIdentifier(Identifier $identifier)
+    protected function marshallIdentifier(QtiIdentifier $identifier)
     {
         return array('base' => array('identifier' => $identifier->getValue()));
     }
@@ -291,7 +291,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Uri $uri
      * @return array
      */
-    protected function marshallUri(Uri $uri)
+    protected function marshallUri(QtiUri $uri)
     {
         return array('base' => array('uri' => $uri->getValue()));
     }
@@ -302,7 +302,7 @@ class Marshaller
      * @param \qtism\common\datatypes\String $string
      * @return array
      */
-    protected function marshallString(String $string)
+    protected function marshallString(QtiString $string)
     {
         return array('base' => array('string' => $string->getValue()));
     }
@@ -313,7 +313,7 @@ class Marshaller
      * @param \qtism\common\datatypes\IntOrIdentifier $intOrIdentifier
      * @return array
      */
-    protected function marshallIntOrIdentifier(IntOrIdentifier $intOrIdentifier)
+    protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier)
     {
         return array('base' => array('intOrIdentifier' => $intOrIdentifier->getValue()));
     }
@@ -324,7 +324,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Point $point
      * @return array
      */
-    protected function marshallPoint(Point $point)
+    protected function marshallPoint(QtiPoint $point)
     {
         return array('base' => array('point' => array($point->getX(), $point->getY())));
     }
@@ -335,7 +335,7 @@ class Marshaller
      * @param \qtism\common\datatypes\DirectedPair $directedPair
      * @return array
      */
-    protected function marshallDirectedPair(DirectedPair $directedPair)
+    protected function marshallDirectedPair(QtiDirectedPair $directedPair)
     {
         return array('base' => array('directedPair' => array($directedPair->getFirst(), $directedPair->getSecond())));
     }
@@ -346,7 +346,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Pair $pair
      * @return array
      */
-    protected function marshallPair(Pair $pair)
+    protected function marshallPair(QtiPair $pair)
     {
         return array('base' => array('pair' => array($pair->getFirst(), $pair->getSecond())));
     }
@@ -357,7 +357,7 @@ class Marshaller
      * @param \qtism\common\datatypes\Duration $duration
      * @return array
      */
-    protected function marshallDuration(Duration $duration)
+    protected function marshallDuration(QtiDuration $duration)
     {
         return array('base' => array('duration' => $duration->__toString()));
     }
@@ -368,7 +368,7 @@ class Marshaller
      * @param \qtism\common\datatypes\File $file
      * @return array
      */
-    protected function marshallFile(File $file)
+    protected function marshallFile(QtiFile $file)
     {
         $data = array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))));
 

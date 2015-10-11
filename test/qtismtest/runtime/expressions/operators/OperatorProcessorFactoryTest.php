@@ -4,8 +4,8 @@ namespace qtismtest\runtime\expressions\operators;
 use qtismtest\QtiSmTestCase;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtism\data\expressions\operators\Operator;
@@ -36,7 +36,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		);
 		
 		$factory = new OperatorProcessorFactory();
-		$operands = new OperandsCollection(array(new Integer(2), new Integer(2)));
+		$operands = new OperandsCollection(array(new QtiInteger(2), new QtiInteger(2)));
 		$processor = $factory->createProcessor($expression, $operands);
 		$this->assertInstanceOf('qtism\\runtime\\expressions\\operators\\SumProcessor', $processor);
 		$this->assertEquals('sum', $processor->getExpression()->getQtiClassName());
@@ -60,10 +60,10 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 	    );
 	    
 	    $factory = new OperatorProcessorFactory();
-	    $operands = new OperandsCollection(array(new String('this-is-a-test')));
+	    $operands = new OperandsCollection(array(new QtiString('this-is-a-test')));
 	    $processor = $factory->createProcessor($expression, $operands);
 	    $this->assertInstanceOf('org\\qtism\\test\\Explode', $processor);
 	    $this->assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
-	    $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, array(new String('this'), new String('is'), new String('a'), new String('test')))));
+	    $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, array(new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')))));
 	}
 }

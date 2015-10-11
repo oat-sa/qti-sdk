@@ -27,56 +27,50 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the Boolean QTI Datatype.
+ * Represents the String QTI datatype.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Boolean extends Scalar
+class QtiString extends QtiScalar
 {
     /**
-     * Check whether or not the intrinsic $value is a PHP boolean.
+     * Checks whether or not $value is a valid string.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
     {
-        if (is_bool($value) !== true) {
-            $msg = "The Boolean Datatype only accepts to store boolean values.";
+        if (is_string($value) !== true) {
+            $msg = "The String Datatype only accepts to store string values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * Get the baseType of the Boolean value. This method
-     * systematically returns BaseType::BOOLEAN.
+     * Get the baseType of the value. This method systematically returns
+     * the BaseType::STRING value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::BOOLEAN;
+        return BaseType::STRING;
     }
 
     /**
-     * Get the cardinality of the Boolean value. This method
-     * systematically returns Cardinality::SINGLE.
+     * Get the cardinality of the value. This method systematically returns
+     * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
-    /**
-     * "true" or "false" depending on the intrinsic value of the Boolean
-     * object.
-     *
-     * @return string
-     */
     public function __toString()
     {
-        return ($this->getValue() === true) ? 'true' : 'false';
+        return $this->getValue();
     }
 }

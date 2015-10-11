@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomFloat;
 
@@ -61,7 +61,7 @@ class RandomFloatProcessor extends ExpressionProcessor
         if (is_float($min) && is_float($max)) {
 
             if ($min <= $max) {
-                return new Float(($min + lcg_value() * (abs($max - $min))));
+                return new QtiFloat(($min + lcg_value() * (abs($max - $min))));
             } else {
                 $msg = "'min':'${min}' is greater than 'max':'${max}'.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);

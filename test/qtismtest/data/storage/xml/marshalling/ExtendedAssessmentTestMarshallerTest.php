@@ -31,7 +31,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\PreCondition;
 use qtism\data\ExtendedAssessmentSection;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMDocument;
 
@@ -47,7 +47,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase {
 	    $itemSessionControl = new ItemSessionControl();
 	    $itemSessionControl->setShowSolution(true);
 	    
-	    $timeLimits = new TimeLimits(null, new Duration('PT1M40S'));
+	    $timeLimits = new TimeLimits(null, new QtiDuration('PT1M40S'));
 	    
 	    $p = new P();
 	    $p->setContent(new InlineCollection(array(new TextRun('Prima!'))));
@@ -75,7 +75,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase {
 	    $outcomeDeclaration = new OutcomeDeclaration('COUNT', BaseType::INTEGER, Cardinality::SINGLE);
 	    $outcomeDeclarations = new OutcomeDeclarationCollection(array($outcomeDeclaration));
 	    
-	    $timeLimits = new TimeLimits(null, new Duration('PT10M'));
+	    $timeLimits = new TimeLimits(null, new QtiDuration('PT10M'));
 	    
 	    $outcomeRules = new OutcomeRuleCollection(array(new SetOutcomeValue('COUNT', new BaseValue(BaseType::INTEGER, 1))));
 	    $outcomeProcessing = new OutcomeProcessing($outcomeRules);
@@ -167,7 +167,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(1, count($testPart->getPreConditions()));
 		$this->assertEquals(1, count($testPart->getBranchRules()));
 		$this->assertTrue($testPart->getItemSessionControl()->mustShowSolution());
-		$this->assertTrue($testPart->getTimeLimits()->getMaxTime()->equals(new Duration('PT1M40S')));
+		$this->assertTrue($testPart->getTimeLimits()->getMaxTime()->equals(new QtiDuration('PT1M40S')));
 		$this->assertEquals(1, count($testPart->getTestFeedbacks()));
 		$this->assertEquals(1, count($testPart->getTestFeedbackRefs()));
 	    $this->assertEquals(2, count($testPart->getAssessmentSections()));

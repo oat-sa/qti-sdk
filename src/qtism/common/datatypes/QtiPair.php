@@ -37,7 +37,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Pair implements QtiDatatype
+class QtiPair implements QtiDatatype
 {
     /**
      * The first identifier of the Pair.

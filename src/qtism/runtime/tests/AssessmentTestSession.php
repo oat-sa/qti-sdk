@@ -24,8 +24,8 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\ShowHide;
-use qtism\common\datatypes\Scalar;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiScalar;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\IAssessmentItem;
@@ -33,7 +33,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\TimeLimits;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
@@ -213,7 +213,7 @@ class AssessmentTestSession extends State
             if ($this->getState() === AssessmentTestSessionState::INTERACTING) {
 
                 $diffSeconds = abs(Time::timeDiffSeconds($this->getTimeReference(), $time));
-                $diffDuration = new Duration("PT${diffSeconds}S");
+                $diffDuration = new QtiDuration("PT${diffSeconds}S");
 
                 // Update the duration store.
                 $routeItem = $this->getCurrentRouteItem();
@@ -1858,7 +1858,7 @@ class AssessmentTestSession extends State
             $ids = array_merge(array($assessmentTestId), array($testPartId), $assessmentSectionIds);
             foreach ($ids as $id) {
                 if (isset($durationStore[$id]) === false) {
-                    $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+                    $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
                 }
             }
         }
@@ -2606,12 +2606,12 @@ class AssessmentTestSession extends State
             // Checking if one of them must be shown...
             foreach ($feedbackRefs as $feedbackRef) {
                 $outcomeValue = $this[$feedbackRef->getOutcomeIdentifier()];
-                $identifierValue = new Identifier($feedbackRef->getIdentifier());
+                $identifierValue = new QtiIdentifier($feedbackRef->getIdentifier());
                 $showHide = $feedbackRef->getShowHide();
                 
                 $match = false;
                 if (is_null($outcomeValue) === false) {
-                    $match = ($outcomeValue instanceof Scalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
+                    $match = ($outcomeValue instanceof QtiScalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
                 }
                 
                 if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {

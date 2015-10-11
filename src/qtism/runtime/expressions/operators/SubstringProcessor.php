@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\Substring;
 use qtism\data\expressions\Expression;
 
@@ -72,7 +72,7 @@ class SubstringProcessor extends OperatorProcessor
 
         $call = ($this->getExpression()->isCaseSensitive() === true) ? 'mb_strpos' : 'mb_stripos';
 
-        return new Boolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
+        return new QtiBoolean($call($operand2->getValue(), $operand1->getValue(), 0, 'UTF-8') !== false);
     }
     
     /**

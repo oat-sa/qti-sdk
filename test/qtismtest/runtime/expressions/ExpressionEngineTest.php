@@ -10,7 +10,7 @@ class ExpressionEngineTest extends QtiSmTestCase {
 		$expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
 		$engine = new ExpressionEngine($expression);
 		$result = $engine->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $result);
 		$this->assertEquals(2, $result->getDays());
 	}
 	
@@ -30,7 +30,7 @@ class ExpressionEngineTest extends QtiSmTestCase {
 		
 		$engine = new ExpressionEngine($expression);
 		$result = $engine->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(60.0, $result->getValue());
 	}
 }

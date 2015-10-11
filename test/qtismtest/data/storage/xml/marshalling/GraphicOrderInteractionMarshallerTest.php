@@ -6,8 +6,8 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\interactions\GraphicOrderInteraction;
 use qtism\data\content\interactions\HotspotChoiceCollection;
-use qtism\common\datatypes\Coords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
@@ -21,9 +21,9 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
-	    $choice1 = new HotspotChoice('choice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(0, 0, 15)));
-	    $choice2 = new HotspotChoice('choice2', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(2, 2, 15)));
-	    $choice3 = new HotspotChoice('choice3', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(4, 4, 15)));
+	    $choice1 = new HotspotChoice('choice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
+	    $choice2 = new HotspotChoice('choice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(2, 2, 15)));
+	    $choice3 = new HotspotChoice('choice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15)));
 	    $choices = new HotspotChoiceCollection(array($choice1, $choice2, $choice3));
 	    
 	    $object = new Object('my-img.png', 'image/png');
@@ -46,9 +46,9 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	public function testMarshall20() {
 	    // make sure minChoices and maxChoices attributes
 	    // are not in the output in a QTI 2.0 context.
-	    $choice1 = new HotspotChoice('choice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(0, 0, 15)));
-	    $choice2 = new HotspotChoice('choice2', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(2, 2, 15)));
-	    $choice3 = new HotspotChoice('choice3', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(4, 4, 15)));
+	    $choice1 = new HotspotChoice('choice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
+	    $choice2 = new HotspotChoice('choice2', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(2, 2, 15)));
+	    $choice3 = new HotspotChoice('choice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15)));
 	    $choices = new HotspotChoiceCollection(array($choice1, $choice2, $choice3));
 	     
 	    $object = new Object('my-img.png', 'image/png');

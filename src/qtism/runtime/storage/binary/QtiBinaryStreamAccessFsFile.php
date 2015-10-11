@@ -24,7 +24,7 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 
 /**
  * An implementation of AbstractQtiBinaryStreamAccess working with file system
@@ -38,7 +38,7 @@ class QtiBinaryStreamAccessFsFile extends AbstractQtiBinaryStreamAccess
     /**
      * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess::writeFile()
      */
-    public function writeFile(File $file)
+    public function writeFile(QtiFile $file)
     {
         try {
             $this->writeString($file->getPath());

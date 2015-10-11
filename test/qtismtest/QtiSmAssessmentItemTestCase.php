@@ -2,7 +2,7 @@
 namespace qtismtest;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;

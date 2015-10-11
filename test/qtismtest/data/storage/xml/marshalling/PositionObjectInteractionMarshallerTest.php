@@ -3,7 +3,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\FlowStaticCollection;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\TextRun;
 use qtism\data\content\InlineStaticCollection;
@@ -23,7 +23,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
 	    $positionObjectInteraction = new PositionObjectInteraction('RESPONSE', $object, 'my-pos');
-	    $positionObjectInteraction->setCenterPoint(new Point(150, 74));
+	    $positionObjectInteraction->setCenterPoint(new QtiPoint(150, 74));
 	    $positionObjectInteraction->setMaxChoices(2);
 	    $positionObjectInteraction->setMinChoices(1);
 	    
@@ -66,7 +66,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(2, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());
-        $this->assertTrue($component->getCenterPoint()->equals(new Point(150, 74)));
+        $this->assertTrue($component->getCenterPoint()->equals(new QtiPoint(150, 74)));
         $this->assertEquals('my-pos', $component->getId());
         
         $this->assertEquals('myimg.jpg', $component->getObject()->getData());

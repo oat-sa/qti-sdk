@@ -4,7 +4,7 @@ namespace qtismtest\runtime\processing;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\processing\TemplateProcessingEngine;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
@@ -33,7 +33,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
         ');
         
         $state = new State(
-            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new Integer(1336)))                
+            array(new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1336)))                
         );
         
         $engine = new TemplateProcessingEngine($component, $state);
@@ -87,7 +87,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase {
         ');
         
         $var = new TemplateVariable('TEMPLATE', Cardinality::SINGLE, BaseType::INTEGER);
-        $var->setDefaultValue(new Integer(-1));
+        $var->setDefaultValue(new QtiInteger(-1));
         $state = new State(
             array($var)
         );

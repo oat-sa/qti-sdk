@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\NumberSelected;
 use qtism\data\expressions\Expression;
 
@@ -67,7 +67,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
             }
         }
 
-        return new Integer($numberSelected);
+        return new QtiInteger($numberSelected);
     }
     
     /**

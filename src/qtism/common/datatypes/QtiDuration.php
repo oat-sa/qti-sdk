@@ -38,7 +38,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Duration implements QtiDatatype
+class QtiDuration implements QtiDatatype
 {
     /**
      * Internally, the Duration class always
@@ -112,7 +112,7 @@ class Duration implements QtiDatatype
      */
     public static function createFromDateInterval(DateInterval $interval)
     {
-        $duration = new Duration('PT0S');
+        $duration = new QtiDuration('PT0S');
         $duration->setInterval($interval);
 
         return $duration;
@@ -271,7 +271,7 @@ class Duration implements QtiDatatype
      * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
      * @return boolean
      */
-    public function shorterThan(Duration $duration)
+    public function shorterThan(QtiDuration $duration)
     {
         return $this->getSeconds(true) < $duration->getSeconds(true);
     }
@@ -283,7 +283,7 @@ class Duration implements QtiDatatype
      * @param \qtism\common\datatypes\Duration $duration A Duration object to compare with this one.
      * @return boolean
      */
-    public function longerThanOrEquals(Duration $duration)
+    public function longerThanOrEquals(QtiDuration $duration)
     {
         return $this->getSeconds(true) >= $duration->getSeconds(true);
     }
@@ -300,7 +300,7 @@ class Duration implements QtiDatatype
         $d1 = $this->refDate;
         $d2 = clone $d1;
 
-        if ($duration instanceof Duration) {
+        if ($duration instanceof QtiDuration) {
             $toAdd = $duration;
         } elseif ($duration instanceof DateInterval) {
             $toAdd = self::createFromDateInterval($duration);
@@ -321,7 +321,7 @@ class Duration implements QtiDatatype
      *
      * For instance P2S - P1S = P1S
      */
-    public function sub(Duration $duration)
+    public function sub(QtiDuration $duration)
     {
         if ($duration->longerThanOrEquals($this) === true) {
             $this->setInterval(new DateInterval('PT0S'));

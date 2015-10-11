@@ -22,7 +22,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\DurationLT;
 use qtism\data\expressions\Expression;
 
@@ -75,7 +75,7 @@ class DurationLTProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
-        return new Boolean($operands[0]->shorterThan($operands[1]));
+        return new QtiBoolean($operands[0]->shorterThan($operands[1]));
     }
     
     /**

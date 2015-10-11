@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\AndOperator;
 
@@ -72,11 +72,11 @@ class AndProcessor extends OperatorProcessor
 
         foreach ($operands as $operand) {
             if ($operand->getValue() === false) {
-                return new Boolean(false);
+                return new QtiBoolean(false);
             }
         }
 
-        return new Boolean(true);
+        return new QtiBoolean(true);
     }
     
     /**

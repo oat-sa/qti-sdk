@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\Not;
 
@@ -68,7 +68,7 @@ class NotProcessor extends OperatorProcessor
 
         $operand = $operands[0];
 
-        return new Boolean(!$operand->getValue());
+        return new QtiBoolean(!$operand->getValue());
     }
     
     /**

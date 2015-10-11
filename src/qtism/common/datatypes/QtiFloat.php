@@ -27,36 +27,35 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the IntOrIdentifier QTI datatype.
+ * Represents the QTI Float datatype.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class IntOrIdentifier extends Scalar
+class QtiFloat extends QtiScalar
 {
     /**
-     * Checks whether or not $value is a valid integer or string to be
-     * used as the intrinsic value of this object.
+     * Check whether or not $value is a Float object.
      *
-     * @throws \InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
+     * @throws \InvalidArgumentException If $value is not an instance of Float.
      */
     protected function checkType($value)
     {
-        if (is_int($value) !== true && is_string($value) !== true) {
-            $msg = "The IntOrIdentifier Datatype only accepts to store identifier and integer values.";
+        if (is_double($value) !== true) {
+            $msg = "The Float Datatype only accepts to store float values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
      * Get the baseType of the value. This method systematically returns
-     * the BaseType::INT_OR_IDENTIFIER value.
+     * the BaseType::FLOAT value.
      *
      * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::INT_OR_IDENTIFIER;
+        return BaseType::FLOAT;
     }
 
     /**
@@ -72,11 +71,6 @@ class IntOrIdentifier extends Scalar
 
     public function __toString()
     {
-        $v = $this->getValue();
-        if (is_string($v) === true) {
-            return $v;
-        } else {
-            return '' . $v;
-        }
+        return '' . $this->getValue();
     }
 }

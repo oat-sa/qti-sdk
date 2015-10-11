@@ -24,7 +24,7 @@
 namespace qtism\runtime\tests;
 
 use qtism\data\SectionPart;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
 
@@ -69,7 +69,7 @@ class TimeConstraint
      * @param \qtism\common\datatypes\Duration $duration The already spent duration by the candidate on $source.
      * @param integer $navigationMode The current navigation mode.
      */
-    public function __construct(QtiComponent $source, Duration $duration, $navigationMode = NavigationMode::LINEAR)
+    public function __construct(QtiComponent $source, QtiDuration $duration, $navigationMode = NavigationMode::LINEAR)
     {
         $this->setSource($source);
         $this->setDuration($duration);
@@ -102,7 +102,7 @@ class TimeConstraint
      *
      * @param \qtism\common\datatypes\Duration $duration A Duration object.
      */
-    protected function setDuration(Duration $duration)
+    protected function setDuration(QtiDuration $duration)
     {
         $this->duration = $duration;
     }
@@ -150,7 +150,7 @@ class TimeConstraint
             $remaining = clone $maxTime;
             $remaining->sub($this->getDuration());
 
-            return ($remaining->isNegative() === true) ? new Duration('PT0S') : $remaining;
+            return ($remaining->isNegative() === true) ? new QtiDuration('PT0S') : $remaining;
         } else {
             return false;
         }
@@ -169,7 +169,7 @@ class TimeConstraint
             $remaining = clone $this->getSource()->getTimeLimits()->getMinTime();
             $remaining->sub($this->getDuration());
 
-            return ($remaining->isNegative() === true) ? new Duration('PT0S') : $remaining;
+            return ($remaining->isNegative() === true) ? new QtiDuration('PT0S') : $remaining;
         } else {
             return false;
         }

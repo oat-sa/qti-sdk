@@ -24,8 +24,8 @@
 namespace qtism\runtime\rules;
 
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\rules\Rule;
 use qtism\common\enums\BaseType;
@@ -83,10 +83,10 @@ abstract class SetValueProcessor extends RuleProcessor
             if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
                 $baseType = $var->getBaseType();
 
-                if ($baseType === BaseType::INTEGER && $val instanceof Float) {
-                    $val = new Integer(intval($val->getValue()));
-                } elseif ($baseType === BaseType::FLOAT && $val instanceof Integer) {
-                    $val = new Float(floatval($val->getValue()));
+                if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
+                    $val = new QtiInteger(intval($val->getValue()));
+                } elseif ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
+                    $val = new QtiFloat(floatval($val->getValue()));
                 }
             }
 

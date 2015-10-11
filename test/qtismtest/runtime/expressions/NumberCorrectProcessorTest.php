@@ -2,10 +2,10 @@
 namespace qtismtest\runtime\expressions;
 
 use qtismtest\QtiSmItemSubsetTestCase;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -35,7 +35,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		$responses = new State();
 		// Correct!
-		$responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+		$responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')));
 		$session->endAttempt($responses);
 		$processor->setExpression($overallCorrect);
 	    $this->assertEquals(1, $processor->process()->getValue());
@@ -47,7 +47,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    $responses->reset();
 	    $session->beginAttempt();
 	    // Incorrect!
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('D', 'L')))));
 	    $session->endAttempt($responses);
 	    $processor->setExpression($overallCorrect);
 	    $this->assertEquals(1, $processor->process()->getValue());
@@ -67,7 +67,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(2, $processor->process()->getValue());
 	    $session->moveNext();
@@ -83,7 +83,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A')));
+	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(3, $processor->process()->getValue());
 	    $session->moveNext();
@@ -92,7 +92,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Incorrect
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(100, 100)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(100, 100)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.1.SCORE']->getValue());
 	    $this->assertEquals(3, $processor->process()->getValue());
@@ -102,7 +102,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Incorrect!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(10, 10)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(10, 10)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(0, $session['Q07.2.SCORE']->getValue());
 	    $this->assertEquals(3, $processor->process()->getValue());
@@ -112,7 +112,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.3.SCORE']->getValue());
 	    $this->assertEquals(4, $processor->process()->getValue());

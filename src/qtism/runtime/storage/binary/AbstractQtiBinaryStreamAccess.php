@@ -29,10 +29,10 @@ use qtism\data\state\ShufflingCollection;
 
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\tests\AbstractSessionManager;
-use qtism\common\datatypes\File;
-use qtism\common\datatypes\Scalar;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiFile;
+use qtism\common\datatypes\QtiScalar;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\state\Value;
 use qtism\data\state\Shuffling;
@@ -52,10 +52,10 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\PendingResponses;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
@@ -221,7 +221,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     $this->writeBoolean(true);
 
                     // content
-                    $this->$toCall(($value instanceof Scalar) ? $value->getValue() : $value);
+                    $this->$toCall(($value instanceof QtiScalar) ? $value->getValue() : $value);
                 } else {
                     // is-scalar
                     $this->writeBoolean(false);
@@ -233,7 +233,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                     foreach ($value as $v) {
                         if (is_null($v) === false) {
                             $this->writeBoolean(false);
-                            $this->$toCall(($v instanceof Scalar) ? $v->getValue() : $v);
+                            $this->$toCall(($v instanceof QtiScalar) ? $v->getValue() : $v);
                         } else {
                             $this->writeBoolean(true);
                         }
@@ -294,7 +294,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
 
-                call_user_func(array($this, $toCall), ($value instanceof Scalar) ? $value->getValue() : $value);
+                call_user_func(array($this, $toCall), ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a Record Field.";
@@ -343,7 +343,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     public function readPoint()
     {
         try {
-            return new Point($this->readShort(), $this->readShort());
+            return new QtiPoint($this->readShort(), $this->readShort());
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a point.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::POINT, $e);
@@ -356,7 +356,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\common\datatypes\Point $point A Point object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function writePoint(Point $point)
+    public function writePoint(QtiPoint $point)
     {
        try {
            $this->writeShort($point->getX());
@@ -376,7 +376,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     public function readPair()
     {
         try {
-            return new Pair($this->readString(), $this->readString());
+            return new QtiPair($this->readString(), $this->readString());
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a pair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PAIR, $e);
@@ -389,7 +389,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\common\datatypes\Pair $pair A Pair object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function writePair(Pair $pair)
+    public function writePair(QtiPair $pair)
     {
         try {
             $this->writeString($pair->getFirst());
@@ -409,7 +409,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     public function readDirectedPair()
     {
         try {
-            return new DirectedPair($this->readString(), $this->readString());
+            return new QtiDirectedPair($this->readString(), $this->readString());
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a directedPair.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DIRECTEDPAIR, $e);
@@ -422,7 +422,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\common\datatypes\DirectedPair $directedPair A DirectedPair object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function writeDirectedPair(DirectedPair $directedPair)
+    public function writeDirectedPair(QtiDirectedPair $directedPair)
     {
         try {
             $this->writeString($directedPair->getFirst());
@@ -550,7 +550,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     public function readDuration()
     {
         try {
-            return new Duration($this->readString());
+            return new QtiDuration($this->readString());
         } catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a duration.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::DURATION, $e);
@@ -563,7 +563,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\common\datatypes\Duration $duration A Duration object.
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    public function writeDuration(Duration $duration)
+    public function writeDuration(QtiDuration $duration)
     {
         try {
             $this->writeString($duration->__toString());
@@ -619,7 +619,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
      * @param \qtism\common\datatypes\File $file A File object
      * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
      */
-    abstract public function writeFile(File $file);
+    abstract public function writeFile(QtiFile $file);
 
     /**
      * Read an intOrIdentifier from the current binary stream.
@@ -688,9 +688,9 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
                 $session->setItemSessionControl($itemSessionControl);
             }
 
-            $session['numAttempts'] = new Integer($this->readTinyInt());
+            $session['numAttempts'] = new QtiInteger($this->readTinyInt());
             $session['duration'] = $this->readDuration();
-            $session['completionStatus'] = new Identifier($this->readString());
+            $session['completionStatus'] = new QtiIdentifier($this->readString());
 
             if ($this->readBoolean() === true) {
                 // A time reference is set.

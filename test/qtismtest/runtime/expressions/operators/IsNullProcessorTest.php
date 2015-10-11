@@ -2,11 +2,11 @@
 namespace qtismtest\runtime\expressions\operators;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
@@ -18,7 +18,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	
 	public function testWithEmptyString() {
 		$operands = new OperandsCollection();
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
@@ -53,33 +53,33 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEmpty() {
 		$expression = $this->getFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(0)));
+		$operands = new OperandsCollection(array(new QtiInteger(0)));
 		
 		$processor = new IsNullProcessor($expression, $operands);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(false);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(-1);
+		$operands[] = new QtiInteger(-1);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(3, 4), new Point(5, 6)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(3, 4), new QtiPoint(5, 6)));
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new RecordContainer(array('a' => new Boolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new Integer(24), 'e' => new Float(23.3)));
+		$operands[] = new RecordContainer(array('a' => new QtiBoolean(true),  'b' => null,  'c' => new QtiPoint(1, 2), 'd' => new QtiInteger(24), 'e' => new QtiFloat(23.3)));
 		$this->assertFalse($processor->process()->getValue());
 	}
 	
@@ -95,7 +95,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	public function testMoreThanNeededOperands() {
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		
-		$operands = new OperandsCollection(array(new Integer(25), null));
+		$operands = new OperandsCollection(array(new QtiInteger(25), null));
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
 		$result = $processor->process();

@@ -27,42 +27,42 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the QTI Float datatype.
+ * Represents the Uri QTI datatype.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Float extends Scalar
+class QtiUri extends QtiString
 {
     /**
-     * Check whether or not $value is a Float object.
+     * Checks whether or not $value is a string.
      *
-     * @throws \InvalidArgumentException If $value is not an instance of Float.
+     * @throws \InvalidArgumentException If $value is not a valid string.
      */
     protected function checkType($value)
     {
-        if (is_double($value) !== true) {
-            $msg = "The Float Datatype only accepts to store float values.";
+        if (is_string($value) !== true) {
+            $msg = "The Uri Datatype only accepts to store URI values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
      * Get the baseType of the value. This method systematically returns
-     * the BaseType::FLOAT value.
+     * the BaseType::URI value.
      *
-     * @return integer A value from the BaseType enumeration.
+     * @return A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::FLOAT;
+        return BaseType::URI;
     }
 
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -71,6 +71,6 @@ class Float extends Scalar
 
     public function __toString()
     {
-        return '' . $this->getValue();
+        return $this->getValue();
     }
 }

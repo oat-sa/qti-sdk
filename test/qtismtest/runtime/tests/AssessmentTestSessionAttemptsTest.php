@@ -3,7 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\runtime\tests\AssessmentItemSession;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -17,19 +17,19 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         
         // Q01 - first attempt.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
         
         // Q02 - second attempt.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC')))));
         
         $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
         
         // Q03 - third attempt. The completion status is now completed.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
     }

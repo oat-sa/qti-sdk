@@ -4,15 +4,15 @@ namespace qtismtest\data\storage\xml\marshalling;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\TimeLimits;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use \DOMDocument;
 
 class TimeLimitsMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 
-		$minTime = new Duration('PT50S');
-		$maxTime = new Duration('PT100S');
+		$minTime = new QtiDuration('PT50S');
+		$maxTime = new QtiDuration('PT100S');
 		
 		$component = new TimeLimits($minTime, $maxTime);
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);

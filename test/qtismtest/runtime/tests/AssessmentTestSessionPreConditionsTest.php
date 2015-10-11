@@ -2,7 +2,7 @@
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -48,12 +48,12 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         // Q01 - Answer incorrect to be redirected by successive false evaluated preconditions.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $testSession->moveNext();
         
         // Because of the autoforward, the test is finished.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']);
         $this->assertSame(null, $testSession['Q03.SCORE']);
@@ -66,12 +66,12 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('BadChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('BadChoice')))));
         $testSession->moveNext();
         
         // Incorrect answer = end of test.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         
         // Other items could not be instantiated.
@@ -87,31 +87,31 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         $this->assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('GoodChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice')))));
         $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('GoodChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice')))));
         $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q02.SCORE']->getValue());
         
         $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('GoodChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice')))));
         $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
         
         $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('GoodChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice')))));
         $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
         
         $this->assertEquals('Q05', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('GoodChoice')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice')))));
         $testSession->moveNext();
         $this->assertEquals(1.0, $testSession['Q05.SCORE']->getValue());
         
