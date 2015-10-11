@@ -23,8 +23,8 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\collections\Container;
@@ -84,7 +84,7 @@ class MinProcessor extends OperatorProcessor
         $min = PHP_INT_MAX;
         foreach ($operands as $operand) {
             if (!$operand instanceof Container) {
-                $baseType = ($operand instanceof Float) ? BaseType::FLOAT : BaseType::INTEGER;
+                $baseType = ($operand instanceof QtiFloat) ? BaseType::FLOAT : BaseType::INTEGER;
                 $value = new MultipleContainer($baseType, array($operand));
             } else {
                 $value = $operand;
@@ -96,7 +96,7 @@ class MinProcessor extends OperatorProcessor
                 }
 
                 $valueCount++;
-                $integerCount += ($v instanceof Integer) ? 1 : 0;
+                $integerCount += ($v instanceof QtiInteger) ? 1 : 0;
 
                 if ($v->getValue() < $min) {
                     $min = $v->getValue();
@@ -104,7 +104,7 @@ class MinProcessor extends OperatorProcessor
             }
         }
 
-        return ($integerCount === $valueCount) ? new Integer(intval($min)) : new Float(floatval($min));
+        return ($integerCount === $valueCount) ? new QtiInteger(intval($min)) : new QtiFloat(floatval($min));
     }
     
     /**

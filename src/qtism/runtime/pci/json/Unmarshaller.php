@@ -24,17 +24,17 @@
 namespace qtism\runtime\pci\json;
 
 use qtism\common\datatypes\files\FileManager;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiUri;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -305,7 +305,7 @@ class Unmarshaller
      */
     protected function unmarshallBoolean(array $unit)
     {
-        return new Boolean($unit['base']['boolean']);
+        return new QtiBoolean($unit['base']['boolean']);
     }
 
     /**
@@ -316,7 +316,7 @@ class Unmarshaller
      */
     protected function unmarshallInteger(array $unit)
     {
-        return new Integer($unit['base']['integer']);
+        return new QtiInteger($unit['base']['integer']);
     }
 
     /**
@@ -333,7 +333,7 @@ class Unmarshaller
             $val = floatval($val);    
         }
         
-        return new Float($val);
+        return new QtiFloat($val);
     }
 
     /**
@@ -344,7 +344,7 @@ class Unmarshaller
      */
     protected function unmarshallString(array $unit)
     {
-        return new String($unit['base']['string']);
+        return new QtiString($unit['base']['string']);
     }
 
     /**
@@ -355,7 +355,7 @@ class Unmarshaller
      */
     protected function unmarshallPoint(array $unit)
     {
-        return new Point($unit['base']['point'][0], $unit['base']['point'][1]);
+        return new QtiPoint($unit['base']['point'][0], $unit['base']['point'][1]);
     }
 
     /**
@@ -366,7 +366,7 @@ class Unmarshaller
      */
     protected function unmarshallPair(array $unit)
     {
-        return new Pair($unit['base']['pair'][0], $unit['base']['pair'][1]);
+        return new QtiPair($unit['base']['pair'][0], $unit['base']['pair'][1]);
     }
 
     /**
@@ -377,7 +377,7 @@ class Unmarshaller
      */
     protected function unmarshallDirectedPair(array $unit)
     {
-        return new DirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
+        return new QtiDirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
     }
 
     /**
@@ -388,7 +388,7 @@ class Unmarshaller
      */
     protected function unmarshallDuration(array $unit)
     {
-        return new Duration($unit['base']['duration']);
+        return new QtiDuration($unit['base']['duration']);
     }
 
     /**
@@ -412,7 +412,7 @@ class Unmarshaller
      */
     protected function unmarshallUri(array $unit)
     {
-        return new Uri($unit['base']['uri']);
+        return new QtiUri($unit['base']['uri']);
     }
 
     /**
@@ -423,7 +423,7 @@ class Unmarshaller
      */
     protected function unmarshallIntOrIdentifier(array $unit)
     {
-        return new IntOrIdentifier($unit['base']['intOrIdentifier']);
+        return new QtiIntOrIdentifier($unit['base']['intOrIdentifier']);
     }
 
     /**
@@ -434,6 +434,6 @@ class Unmarshaller
      */
     protected function unmarshallIdentifier(array $unit)
     {
-        return new Identifier($unit['base']['identifier']);
+        return new QtiIdentifier($unit['base']['identifier']);
     }
 }

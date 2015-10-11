@@ -22,8 +22,8 @@
  */
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -115,7 +115,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
                             if ($var->getCardinality() === Cardinality::SINGLE && in_array($var->getBaseType(), $baseTypes) === true && $var->getValue() !== null) {
                                 $val = clone($var->getValue());
                 
-                                if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof Integer || $val instanceof Float)) {
+                                if ($weight !== false && in_array(BaseType::FLOAT, $baseTypes) === true && ($val instanceof QtiInteger || $val instanceof QtiFloat)) {
                                     // A weight has to be applied.
                                     $val->setValue($val->getValue() * $weight->getValue());
                                 }
@@ -143,7 +143,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
 
                 // values are subject to type promotion.
                 foreach ($values as $v) {
-                    $result[] = new Float(floatval($v->getValue()));
+                    $result[] = new QtiFloat(floatval($v->getValue()));
                 }
             }
         } else {

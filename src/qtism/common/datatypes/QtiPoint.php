@@ -38,7 +38,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Point implements QtiDatatype
+class QtiPoint implements QtiDatatype
 {
     /**
      * The position on the x-axis.

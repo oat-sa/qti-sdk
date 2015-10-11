@@ -22,8 +22,8 @@
 
 namespace qtism\data\expressions\operators;
 
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\ExpressionCollection;
 use \InvalidArgumentException;
 
@@ -69,7 +69,7 @@ class Inside extends Operator
 	 * @param \qtism\common\datatypes\Coords $coords A Coords object as the size and position of the area, interpreted in conjunction with $shape.
 	 * @throws \InvalidArgumentException If the $expressions count exceeds 1 or if $shape is not a value from the Shape enumeration.
 	 */
-    public function __construct(ExpressionCollection $expressions, $shape, Coords $coords)
+    public function __construct(ExpressionCollection $expressions, $shape, QtiCoords $coords)
     {
         parent::__construct($expressions, 1, 1, array(OperatorCardinality::SINGLE, OperatorCardinality::MULTIPLE, OperatorCardinality::ORDERED), array(OperatorBaseType::POINT));
         $this->setShape($shape);
@@ -84,7 +84,7 @@ class Inside extends Operator
 	 */
     public function setShape($shape)
     {
-        if (in_array($shape, Shape::asArray())) {
+        if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
         } else {
             $msg = "The shape argument must be a value from the Shape enumeration, '" . $shape . "' given.";
@@ -107,7 +107,7 @@ class Inside extends Operator
 	 *
 	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
 	 */
-    public function setCoords(Coords $coords)
+    public function setCoords(QtiCoords $coords)
     {
         $this->coords = $coords;
     }

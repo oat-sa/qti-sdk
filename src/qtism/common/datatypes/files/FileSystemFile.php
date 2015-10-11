@@ -24,7 +24,7 @@ namespace qtism\common\datatypes\files;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 use \RuntimeException;
 
 /**
@@ -34,7 +34,7 @@ use \RuntimeException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class FileSystemFile implements File
+class FileSystemFile implements QtiFile
 {
     /**
      * The path to the file on the persistent storage.
@@ -344,7 +344,7 @@ class FileSystemFile implements File
      */
     public function equals($obj)
     {
-        if ($obj instanceof File) {
+        if ($obj instanceof QtiFile) {
             if ($this->getFilename() !== $obj->getFilename()) {
                 return false;
             } elseif ($this->getMimeType() !== $obj->getMimeType()) {

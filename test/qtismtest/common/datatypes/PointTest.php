@@ -2,14 +2,14 @@
 namespace qtismtest\common\datatypes;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 
 class PointTest extends QtiSmTestCase {
 
 	public function testEquality() {
-		$p1 = new Point(10, 10);
-		$p2 = new Point(10, 10);
-		$p3 = new Point(100, 100);
+		$p1 = new QtiPoint(10, 10);
+		$p2 = new QtiPoint(10, 10);
+		$p3 = new QtiPoint(100, 100);
 		
 		$this->assertTrue($p1->equals($p2));
 		$this->assertTrue($p2->equals($p1));

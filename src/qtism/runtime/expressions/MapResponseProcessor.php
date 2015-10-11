@@ -23,8 +23,8 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
@@ -87,7 +87,7 @@ class MapResponseProcessor extends ExpressionProcessor
                             $val = $state[$identifier];
                             $mapKey = $mapEntry->getMapKey();
 
-                            if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
+                            if ($val instanceof QtiString && $mapEntry->isCaseSensitive() === false) {
                                 $val = mb_strtolower($val->getValue(), 'UTF-8');
                                 $mapKey = mb_strtolower($mapKey, 'UTF-8');
                             }
@@ -96,12 +96,12 @@ class MapResponseProcessor extends ExpressionProcessor
                                 // relevant mapping found.
                                 $mappedValue = $mapEntry->getMappedValue();
 
-                                return new Float($mappedValue);
+                                return new QtiFloat($mappedValue);
                             }
                         }
 
                         // No relevant mapping found, return mapping default.
-                        return new Float($mapping->getDefaultValue());
+                        return new QtiFloat($mapping->getDefaultValue());
                     } elseif ($variable->isMultiple()) {
 
                         $result = 0.0;
@@ -116,7 +116,7 @@ class MapResponseProcessor extends ExpressionProcessor
 
                                     $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
 
-                                    if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
+                                    if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
                                         $val = mb_strtolower($val->getValue(), 'UTF-8');
                                         $mapKey = mb_strtolower($mapKey, 'UTF-8');
                                     }
@@ -142,15 +142,15 @@ class MapResponseProcessor extends ExpressionProcessor
 
                             // When mapping a container, try to apply lower or upper bound.
                             if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-                                return new Float($mapping->getLowerBound());
+                                return new QtiFloat($mapping->getLowerBound());
                             } elseif ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-                                return new Float($mapping->getUpperBound());
+                                return new QtiFloat($mapping->getUpperBound());
                             } else {
-                                return new Float($result);
+                                return new QtiFloat($result);
                             }
                         } else {
                             // Returns a 0.0 result.
-                            return new Float($result);
+                            return new QtiFloat($result);
                         }
 
                     } else {

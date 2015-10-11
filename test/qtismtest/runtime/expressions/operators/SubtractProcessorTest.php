@@ -2,10 +2,10 @@
 namespace qtismtest\runtime\expressions\operators;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\SubtractProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -14,22 +14,22 @@ class SubtractProcessorTest extends QtiSmTestCase {
 	
 	public function testSubtract() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(256)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(256)));
 		$processor = new SubtractProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
 		$this->assertEquals(-246, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Float(-5.0), new Integer(-10)));
+		$operands = new OperandsCollection(array(new QtiFloat(-5.0), new QtiInteger(-10)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
 		$this->assertEquals(5, $result->getValue());
 	}
 	
 	public function testNull() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), null));
+		$operands = new OperandsCollection(array(new QtiInteger(10), null));
 		$processor = new SubtractProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -42,7 +42,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Point(1, 2)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiPoint(1, 2)));
 		$processor = new SubtractProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -50,7 +50,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10))), new Integer(20)));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10))), new QtiInteger(20)));
 		$processor = new SubtractProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -65,7 +65,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(20), new Integer(30), new Integer(40)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new SubtractProcessor($expression, $operands);
 	}

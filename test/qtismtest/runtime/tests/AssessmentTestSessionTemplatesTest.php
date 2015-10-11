@@ -3,7 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\runtime\tests\AssessmentItemSession;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -24,7 +24,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         // QTPL1 - correct response.
         $session->beginAttempt();
         $responses = new State(
-            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))              
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))              
         );
         $session->endAttempt($responses);
         $session->moveNext();
@@ -32,7 +32,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         // QTPL2 - correct response.
         $session->beginAttempt();
         $responses = new State(
-            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))
         );
         $session->endAttempt($responses);
         $session->moveNext();

@@ -22,7 +22,7 @@
 
 namespace qtism\data;
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use \InvalidArgumentException;
 
 /**
@@ -116,7 +116,7 @@ class TimeLimits extends QtiComponent
 	 *
 	 * @param \qtism\common\datatypes\Duration $minTime A Duration object or null if unlimited.
 	 */
-    public function setMinTime(Duration $minTime = null)
+    public function setMinTime(QtiDuration $minTime = null)
     {
         // Prevent to get 0s durations stored.
         if (is_null($minTime) === false && $minTime->getSeconds(true) === 0) {
@@ -151,7 +151,7 @@ class TimeLimits extends QtiComponent
 	 *
 	 * @param \qtism\common\datatypes\Duration $maxTime A duration object or null if unlimited.
 	 */
-    public function setMaxTime(Duration $maxTime = null)
+    public function setMaxTime(QtiDuration $maxTime = null)
     {
         // Prevent to get 0s durations stored.
         if (is_null($maxTime) === false && $maxTime->getSeconds(true) === 0) {

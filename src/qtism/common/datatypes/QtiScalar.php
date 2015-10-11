@@ -37,7 +37,7 @@ namespace qtism\common\datatypes;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Scalar implements QtiDatatype
+abstract class QtiScalar implements QtiDatatype
 {
     /**
      * The value of the Scalar object.
@@ -88,7 +88,7 @@ abstract class Scalar implements QtiDatatype
      */
     public function equals($obj)
     {
-        if ($obj instanceof Scalar) {
+        if ($obj instanceof QtiScalar) {
             return $obj->getValue() === $this->getValue();
         } else {
             return $this->getValue() === $obj;

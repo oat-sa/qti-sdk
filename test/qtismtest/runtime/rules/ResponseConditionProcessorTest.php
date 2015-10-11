@@ -2,8 +2,8 @@
 namespace qtismtest\runtime\rules;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\common\ResponseVariable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -49,7 +49,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 			</responseDeclaration>
 		');
 		$responseVar = ResponseVariable::createFromDataModel($responseVarDeclaration);
-		$this->assertTrue($responseVar->getCorrectResponse()->equals(new Identifier('ChoiceA')));
+		$this->assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
 		
 		// Set 'ChoiceA' to 'RESPONSE' in order to get a score of 1.0.
 		$responseVar->setValue($response);
@@ -69,16 +69,16 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $state['SCORE']);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $state['SCORE']);
 		$this->assertTrue($expectedScore->equals($state['SCORE']));
 	}
 	
 	public function responseConditionMatchCorrectProvider() {
 		return array(
-			array(new Identifier('ChoiceA'), new Float(1.0)),
-			array(new Identifier('ChoiceB'), new Float(0.0)),
-			array(new Identifier('ChoiceC'), new Float(0.0)),
-			array(new Identifier('ChoiceD'), new Float(0.0))
+			array(new QtiIdentifier('ChoiceA'), new QtiFloat(1.0)),
+			array(new QtiIdentifier('ChoiceB'), new QtiFloat(0.0)),
+			array(new QtiIdentifier('ChoiceC'), new QtiFloat(0.0)),
+			array(new QtiIdentifier('ChoiceD'), new QtiFloat(0.0))
 		);
 	}
 }

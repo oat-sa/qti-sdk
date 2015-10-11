@@ -2,11 +2,11 @@
 namespace qtismtest\runtime\expressions\operators;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\expressions\operators\NotProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 
@@ -21,14 +21,14 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(false)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new NotProcessor($expression, $operands);
 	}
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)))));
 		$processor = new NotProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -36,7 +36,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(25)));
+		$operands = new OperandsCollection(array(new QtiInteger(25)));
 		$processor = new NotProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -52,7 +52,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testTrue() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false)));
 		$processor = new NotProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(true, $result->getValue());
@@ -60,10 +60,10 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testFalse() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true)));
 		$processor = new NotProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
 		$this->assertSame(false, $result->getValue());
 	}
 	

@@ -27,8 +27,8 @@ namespace qtism\runtime\rendering\markup;
 
 use qtism\data\content\interactions\Gap;
 use qtism\common\collections\Container;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiScalar;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\data\content\ModalFeedback;
@@ -654,14 +654,14 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     protected function identifierMatches(QtiComponent $component)
     {
         $variableIdentifier = ($component instanceof FeedbackElement || $component instanceof ModalFeedback) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
-        $identifier = new Identifier($component->getIdentifier());
+        $identifier = new QtiIdentifier($component->getIdentifier());
         $showHide = $component->getShowHide();
         $state = $this->getState();
         
         $matches = false;
         
         if (($val = $state[$variableIdentifier]) !== null) {
-            if ($val instanceof Scalar) {
+            if ($val instanceof QtiScalar) {
                 $matches = $val->equals($identifier);
             } elseif ($val instanceof Container) {
                 $matches = $val->contains($identifier);
@@ -1019,8 +1019,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
         $val = '$' . $this->getStateName() . "['" . $component->getOutcomeIdentifier() . "']";
         $identifier = $component->getIdentifier();
-        $identifierType = 'qtism\\common\\datatypes\\Identifier';
-        $scalarType = 'qtism\\common\\datatypes\\Scalar';
+        $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
+        $scalarType = 'qtism\\common\\datatypes\\QtiScalar';
         $containerType = 'qtism\\common\\collections\\Container';
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
@@ -1086,8 +1086,8 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $operator = ($component->getShowHide() === ShowHide::SHOW) ? '' : '!';
         $val = '$' . $this->getStateName() . "['" . $component->getTemplateIdentifier() . "']";
         $identifier = $component->getIdentifier();
-        $identifierType = 'qtism\\common\\datatypes\\Identifier';
-        $scalarType = 'qtism\\common\\datatypes\\Scalar';
+        $identifierType = 'qtism\\common\\datatypes\\QtiIdentifier';
+        $scalarType = 'qtism\\common\\datatypes\\QtiScalar';
         $containerType = 'qtism\\common\\collections\\Container';
         $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
         $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";

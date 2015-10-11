@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\StringMatch;
 use qtism\data\expressions\Expression;
 
@@ -77,7 +77,7 @@ class StringMatchProcessor extends OperatorProcessor
         // Please note that strcmp and strcasecmp are binary-safe *\0/* Hourray! *\0/*
         $func = ($expression->isCaseSensitive() === true) ? 'strcmp' : 'strcasecmp';
 
-        return new Boolean($func($operands[0]->getValue(), $operands[1]->getValue()) === 0);
+        return new QtiBoolean($func($operands[0]->getValue(), $operands[1]->getValue()) === 0);
     }
     
     /**

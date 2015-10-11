@@ -2,13 +2,13 @@
 namespace qtismtest\runtime\common;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiUri;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 
@@ -40,17 +40,17 @@ class OrderedContainerTest extends QtiSmTestCase {
 	public function equalsValidProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER), new OrderedContainer(BaseType::INTEGER)),
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(20)))),
-			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu')))),
-			array(new OrderedContainer(BaseType::PAIR, array(new Pair('abc', 'def'))), new OrderedContainer(BaseType::PAIR, array(new Pair('def', 'abc'))))
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20)))),
+			array(new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu')))),
+			array(new OrderedContainer(BaseType::PAIR, array(new QtiPair('abc', 'def'))), new OrderedContainer(BaseType::PAIR, array(new QtiPair('def', 'abc'))))
 		);
 	}
 	
 	public function equalsInvalidProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(30)))),
-			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.tao.lu'), new Uri('http://www.taotesting.com')))),
-			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('def', 'abc')))),
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(30)))),
+			array(new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.tao.lu'), new QtiUri('http://www.taotesting.com')))),
+			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('def', 'abc')))),
 		);
 	}
 }

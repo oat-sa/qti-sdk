@@ -3,7 +3,7 @@ namespace qtismtest\runtime\expressions;
 
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\BaseValueProcessor;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 
 class BaseValueProcessorTest extends QtiSmTestCase {
 	
@@ -14,6 +14,6 @@ class BaseValueProcessorTest extends QtiSmTestCase {
 		
 		$baseValue = $this->createComponentFromXml('<baseValue baseType="point">150 130</baseValue>');
 		$baseValueProcessor->setExpression($baseValue);
-		$this->assertTrue($baseValueProcessor->process()->equals(new Point(150, 130)));
+		$this->assertTrue($baseValueProcessor->process()->equals(new QtiPoint(150, 130)));
 	}
 }

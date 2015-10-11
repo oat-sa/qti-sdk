@@ -2,7 +2,7 @@
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;

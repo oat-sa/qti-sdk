@@ -3,9 +3,9 @@ namespace qtismtest\runtime\tests;
 
 use qtism\runtime\tests\AssessmentTestSessionState;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -36,7 +36,7 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $this->assertFalse($session['Q01.SHOWHINT']->getValue());
         
         // End of attempt using endAttemptInteraction 'HINT'.
-        $session->endAttempt(new State(array(new ResponseVariable('HINT', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)))));
+        $session->endAttempt(new State(array(new ResponseVariable('HINT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)))));
         
         $this->assertTrue($session['Q01.HINT']->getValue());
         $this->assertTrue($session['Q01.SHOWHINT']->getValue());
@@ -53,8 +53,8 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->endAttempt(
             new State(
                 array(
-                    new ResponseVariable('HINT', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))
+                    new ResponseVariable('HINT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))
                 )
             )
         );
@@ -67,7 +67,7 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         
         // Q02 - No endAttemptInteraction.
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         
         $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
         
@@ -85,8 +85,8 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->endAttempt(
             new State(
                 array(
-                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)),
-                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false))
+                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)),
+                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false))
                 )
             )
         );
@@ -109,9 +109,9 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->endAttempt(
             new State(
                 array(
-                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceE'))
+                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceE'))
                 )
             )
         );
@@ -127,8 +127,8 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->endAttempt(
             new State(
                 array(
-                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true))
+                    new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                    new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true))
                 )
             )
         );
@@ -143,9 +143,9 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->beginAttempt();
         $session->endAttempt(new State(
             array(
-                new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false)),
-                new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))
+                new ResponseVariable('HINT1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                new ResponseVariable('HINT2', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false)),
+                new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))
             )
         ));
         

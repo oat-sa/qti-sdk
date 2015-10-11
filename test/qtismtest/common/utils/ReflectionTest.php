@@ -2,7 +2,7 @@
 namespace qtismtest\common\utils;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\utils\Reflection;
 use \ReflectionClass;
 
@@ -42,7 +42,7 @@ class ReflectionTest extends QtiSmTestCase {
             array("Class", "\\My\\Super\\Class"),
                         
             array("stdClass", new \stdClass()),
-            array("Integer", new Integer(10)),
+            array("QtiInteger", new QtiInteger(10)),
                         
             array("My_Stupid_Class", "My_Stupid_Class"),
             array(false, 12),

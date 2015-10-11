@@ -32,7 +32,7 @@ use qtism\common\enums\Enumeration;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Shape implements Enumeration
+class QtiShape implements Enumeration
 {
     /**
      * Note: Corresponds to QTI shape::default. Unfortunately, 'default' is a reserved

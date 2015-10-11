@@ -2,7 +2,7 @@
 namespace qtismtest\runtime\expressions;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\State;
@@ -29,9 +29,9 @@ class DefaultProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		
 		$comparable = new OrderedContainer(BaseType::DURATION);
-		$comparable[] = new Duration('P2D');
-		$comparable[] = new Duration('P3D');
-		$comparable[] = new Duration('P4D');
+		$comparable[] = new QtiDuration('P2D');
+		$comparable[] = new QtiDuration('P3D');
+		$comparable[] = new QtiDuration('P4D');
 		$this->assertTrue($comparable->equals($processor->process()));
 	}
 	
@@ -49,7 +49,7 @@ class DefaultProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
 		$this->assertFalse($result->getValue());
 	}
 	

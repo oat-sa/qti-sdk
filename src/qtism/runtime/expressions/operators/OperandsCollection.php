@@ -22,13 +22,13 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\Stack;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\common\collections\Container;
@@ -81,7 +81,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if ($v instanceof Container && $v->isNull()) {
                 return true;
-            } elseif (($v instanceof String && $v->getValue() === '') || is_null($v)) {
+            } elseif (($v instanceof QtiString && $v->getValue() === '') || is_null($v)) {
                 return true;
             }
         }
@@ -111,7 +111,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
                 return false;
-            } elseif (!$v instanceof Integer && !$v instanceof Float && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+            } elseif (!$v instanceof QtiInteger && !$v instanceof QtiFloat && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
                 return false;
             }
         }
@@ -139,7 +139,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::BOOLEAN)) {
                 return false;
-            } elseif (!$v instanceof Boolean && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+            } elseif (!$v instanceof QtiBoolean && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
                 return false;
             }
         }
@@ -191,7 +191,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
                 return false;
-            } elseif (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!$v instanceof String || $v->getValue() === '')) {
+            } elseif (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!$v instanceof QtiString || $v->getValue() === '')) {
                 return false;
             }
         }
@@ -240,7 +240,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::INTEGER)) {
                 return false;
-            } elseif (!$v instanceof Integer && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+            } elseif (!$v instanceof QtiInteger && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
                 return false;
             }
         }
@@ -450,7 +450,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::POINT)) {
                 return false;
-            } elseif (!$v instanceof Point && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+            } elseif (!$v instanceof QtiPoint && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
                 return false;
             }
         }
@@ -477,7 +477,7 @@ class OperandsCollection extends AbstractCollection implements Stack
             $v = $this[$key];
             if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::DURATION)) {
                 return false;
-            } elseif (!$v instanceof Duration && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+            } elseif (!$v instanceof QtiDuration && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
                 return false;
             }
         }

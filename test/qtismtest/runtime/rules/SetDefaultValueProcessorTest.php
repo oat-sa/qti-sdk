@@ -4,8 +4,8 @@ namespace qtismtest\runtime\rules;
 use qtismtest\QtiSmTestCase;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\OutcomeVariable;
@@ -23,13 +23,13 @@ class setDefaultValueProcessorTest extends QtiSmTestCase {
 		
 		$processor = new SetDefaultValueProcessor($rule);
 		$response = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER);
-		$response->setDefaultValue(new Identifier('hello'));
+		$response->setDefaultValue(new QtiIdentifier('hello'));
 		
 		$state = new State(array($response));
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Identifier', $state->getVariable('RESPONSE')->getDefaultValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $state->getVariable('RESPONSE')->getDefaultValue());
 		$this->assertEquals('there', $state->getVariable('RESPONSE')->getDefaultValue()->getValue());
 	}
 	
@@ -42,7 +42,7 @@ class setDefaultValueProcessorTest extends QtiSmTestCase {
 	
 	    $processor = new SetDefaultValueProcessor($rule);
 	    $response = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT);
-	    $response->setDefaultValue(new Float(0.0));
+	    $response->setDefaultValue(new QtiFloat(0.0));
 	
 	    $state = new State(array($response));
 	    $processor->setState($state);

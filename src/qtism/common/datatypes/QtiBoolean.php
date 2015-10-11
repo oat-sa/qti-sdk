@@ -27,50 +27,56 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the Identifier QTI datatype.
+ * Represents the Boolean QTI Datatype.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Identifier extends String
+class QtiBoolean extends QtiScalar
 {
     /**
-     * Checks whether or not $value is a string value.
+     * Check whether or not the intrinsic $value is a PHP boolean.
      *
-     * @throws \InvalidArgumentException If $value is not a string value.
+     * @throws \InvalidArgumentException
      */
     protected function checkType($value)
     {
-        if (is_string($value) !== true) {
-            $msg = "The Identifier Datatype only accepts to store identifier values.";
+        if (is_bool($value) !== true) {
+            $msg = "The Boolean Datatype only accepts to store boolean values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * Get the baseType of the value. This method systematically returns
-     * the BaseType::IDENTIFIER value.
+     * Get the baseType of the Boolean value. This method
+     * systematically returns BaseType::BOOLEAN.
      *
      * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::IDENTIFIER;
+        return BaseType::BOOLEAN;
     }
 
     /**
-     * Get the cardinality of the value. This method systematically returns
-     * the Cardinality::SINGLE value.
+     * Get the cardinality of the Boolean value. This method
+     * systematically returns Cardinality::SINGLE.
      *
-     * @return integer A value from the Cardinality enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getCardinality()
     {
         return Cardinality::SINGLE;
     }
 
+    /**
+     * "true" or "false" depending on the intrinsic value of the Boolean
+     * object.
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->getValue();
+        return ($this->getValue() === true) ? 'true' : 'false';
     }
 }

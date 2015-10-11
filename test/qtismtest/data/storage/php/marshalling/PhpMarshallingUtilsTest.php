@@ -2,8 +2,8 @@
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\php\marshalling\Utils as PhpMarshallingUtils;
 
 class PhpMarshallingUtilsTest extends QtiSmTestCase {
@@ -30,8 +30,8 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase {
             array(24.3, 4, 'double_4'),
             array(true, 0, 'boolean_0'),
             array(false, 5, 'boolean_5'),
-            array(new Point(0, 0), 0, 'point_0'),
-            array(new Pair('A', 'B'), 6, 'pair_6'),
+            array(new QtiPoint(0, 0), 0, 'qtipoint_0'),
+            array(new QtiPair('A', 'B'), 6, 'qtipair_6'),
             array(array('a', true, false), 0, 'array_0'),
             array(array(), 7, 'array_7')
         );

@@ -6,14 +6,14 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\MultipleContainer;
@@ -75,7 +75,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         
         // S01 -> Q01 - Correct response.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
         $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
         $this->assertSame(null, $session['Q01.RESPONSE']);
     
@@ -85,15 +85,15 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The canditate spends 1 second on item Q01.
         $session->setTime(new DateTime('2014-07-14T13:00:01+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         // Are durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
         
         $session->moveNext();
     
@@ -105,10 +105,10 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
     
         // After the persist, do we still have the correct scores and durations for Q01?.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
     
         
         // S01 -> Q02 - Incorrect response.
@@ -122,20 +122,20 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 2 seconds on item Q02.
         $session->setTime(new DateTime('2014-07-14T13:00:04+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'M')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'M')))))));
         
         // Whate about scores of Q02?
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q02.SCORE']);
         $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT4S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT4S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT4S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT4S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT4S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT4S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
         
         $session->moveNext();
     
@@ -150,14 +150,14 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->skip();
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
         
         // !!! We move to the next section S02.
         $session->moveNext();
@@ -179,29 +179,29 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 5 seconds on Q04.
         $session->setTime(new DateTime('2014-07-14T13:00:20+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))));
         
         // A little bit of noisy persistence...
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
         
         // What about score of Q04.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
+        $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))));
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT20S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT20S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT6S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT20S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT20S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT6S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
         
         // A little bit of noisy persistence...
         $storage->persist($session);
@@ -220,16 +220,16 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->skip();
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT21S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT21S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT7S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
-        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT21S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT21S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT7S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new QtiDuration('PT1S')));
         
         // !!! We move to the next section S03.
         $session->moveNext();
@@ -245,17 +245,17 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->skip();
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT26S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT26S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
-        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT26S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT26S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new QtiDuration('PT2S')));
         
         // !!! We move to the next section S03.
         $session->moveNext();
@@ -276,21 +276,21 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 10 seconds on Q07.1.
         $session->setTime(new DateTime('2014-07-14T13:00:38+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 114)))));
         
         // Are the durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT38S')));
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT38S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT12S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
-        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT38S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT38S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT12S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new QtiDuration('PT10S')));
         
         $session->moveNext();
     
@@ -315,21 +315,21 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends a whole minute on Q07.2.
         $session->setTime(new DateTime('2014-07-14T13:01:38+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(200, 200)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(200, 200)))));
         
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT98S'))); // NO FEAR!
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1M38S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1M12S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
-        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q07.2.duration']->equals(new Duration('PT1M')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT98S'))); // NO FEAR!
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT1M38S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT1M12S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q07.2.duration']->equals(new QtiDuration('PT1M')));
         
         $session->moveNext();
     
@@ -354,7 +354,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate takes an hour (yes, an hour) to respond on Q07.3.
         $session->setTime(new DateTime('2014-07-14T14:01:39+00:00', new DateTimeZone('UTC')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
         $session->moveNext();
     
         // -- End of test, outcome processing performed correctly?
@@ -363,34 +363,34 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
         
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS01']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS01']);
         $this->assertEquals(1, $session['NCORRECTS01']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS02']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS02']);
         $this->assertEquals(1, $session['NCORRECTS02']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS03']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $session['NCORRECTS03']);
         $this->assertEquals(1, $session['NCORRECTS03']->getValue());
         $this->assertEquals(6, $session['NINCORRECT']->getValue());
         $this->assertEquals(6, $session['NRESPONSED']->getValue());
         $this->assertEquals(9, $session['NPRESENTED']->getValue());
         $this->assertEquals(9, $session['NSELECTED']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['PERCENT_CORRECT']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['PERCENT_CORRECT']);
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
         
         // -- End of test, are durations correct?
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT3699S'))); // NO FEAR!
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT1H1M39S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT14S')));
-        $this->assertTrue($session['S02.duration']->equals(new Duration('PT12S')));
-        $this->assertTrue($session['S03.duration']->equals(new Duration('PT1H1M13S')));
-        $this->assertTrue($session['Q01.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q02.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q03.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q04.duration']->equals(new Duration('PT5S')));
-        $this->assertTrue($session['Q05.duration']->equals(new Duration('PT1S')));
-        $this->assertTrue($session['Q06.duration']->equals(new Duration('PT2S')));
-        $this->assertTrue($session['Q07.1.duration']->equals(new Duration('PT10S')));
-        $this->assertTrue($session['Q07.2.duration']->equals(new Duration('PT1M')));
-        $this->assertTrue($session['Q07.3.duration']->equals(new Duration('PT1H')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT3699S'))); // NO FEAR!
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT1H1M39S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT14S')));
+        $this->assertTrue($session['S02.duration']->equals(new QtiDuration('PT12S')));
+        $this->assertTrue($session['S03.duration']->equals(new QtiDuration('PT1H1M13S')));
+        $this->assertTrue($session['Q01.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q02.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q03.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q04.duration']->equals(new QtiDuration('PT5S')));
+        $this->assertTrue($session['Q05.duration']->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['Q06.duration']->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['Q07.1.duration']->equals(new QtiDuration('PT10S')));
+        $this->assertTrue($session['Q07.2.duration']->equals(new QtiDuration('PT1M')));
+        $this->assertTrue($session['Q07.3.duration']->equals(new QtiDuration('PT1H')));
     }
     
     public function testLinearNavigationSimultaneousSubmission() {
@@ -410,7 +410,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q01 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $session->moveNext();
     
         $storage->persist($session);
@@ -421,7 +421,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q02 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')))))));
         $session->moveNext();
     
         $storage->persist($session);
@@ -468,7 +468,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q07.1 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
         $session->moveNext();
     
         $storage->persist($session);
@@ -479,7 +479,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q07.2 - Incorrect but in the circle
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 114)))));
         $session->moveNext();
     
         $storage->persist($session);
@@ -490,7 +490,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q07.3 - Incorrect and out of the circle
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(30, 13)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(30, 13)))));
         $this->assertSame(null, $session['Q07.3.RESPONSE']);
         $session->moveNext();
     
@@ -505,34 +505,34 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
     
         // Let's check the overall Assessment Test Session state.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Identifier', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiIdentifier', $session['Q01.RESPONSE']);
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         
-        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))));
+        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')))));
         $this->assertEquals(4.0, $session['Q02.SCORE']->getValue());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q03.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q03.SCORE']);
         $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q04.SCORE']);
         $this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q05.SCORE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q05.SCORE']);
         $this->assertEquals(0.0, $session['Q05.SCORE']->getValue());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q06.mySc0r3']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q06.mySc0r3']);
         $this->assertEquals(0.0, $session['Q06.mySc0r3']->getValue());
         
-        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
+        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
         $this->assertEquals(1.0, $session['Q07.1.SCORE']->getValue());
         
-        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 114)));
+        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 114)));
         $this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
         
-        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(30, 13)));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.3.SCORE']);
+        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(30, 13)));
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.3.SCORE']);
         $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         
         $this->assertEquals(2, $session['NCORRECTS01']->getValue());
@@ -576,7 +576,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $filepath = self::samplesDir() . 'datatypes/file/files_1.txt';
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
@@ -585,7 +585,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $storage->persist($session);
         unset($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
@@ -595,7 +595,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $filepath = self::samplesDir() . 'datatypes/file/files_2.txt';
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
@@ -606,12 +606,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
         
         // We now test all the collected variables.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
@@ -622,7 +622,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
         $session->moveNext();
         $this->assertFalse($session->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());
@@ -632,17 +632,17 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
         
         // Final big check.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q01.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
         $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
         $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
         
-        $this->assertInstanceOf('qtism\\common\\datatypes\\File', $session['Q02.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());
@@ -736,7 +736,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('ChoiceB', $session['QTPL1.RESPONSE']->getValue());
         
         // -- TPL1 - Correct response.
-        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $session->endAttempt($candidateResponses);
         
         $this->assertEquals(1.0, $session['QTPL1.SCORE']->getValue());
@@ -772,7 +772,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('ChoiceA', $session['QTPL2.RESPONSE']->getValue());
         
         // -- TPL2 - Incorrect response.
-        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))));
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))));
         $session->endAttempt($candidateResponses);
         
         $this->assertEquals(-1.0, $session['QTPL2.SCORE']->getValue());
@@ -887,7 +887,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(null, $session['QTPL1.RESPONSE']);
     
         // -- TPL1 - Correct response.
-        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $session->endAttempt($candidateResponses);
     
         $this->assertEquals(1.0, $session['QTPL1.SCORE']->getValue());
@@ -923,7 +923,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(null, $session['QTPL2.RESPONSE']);
     
         // -- TPL2 - Incorrect response.
-        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))));
+        $candidateResponses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))));
         $session->endAttempt($candidateResponses);
     
         $this->assertEquals(-1.0, $session['QTPL2.SCORE']->getValue());

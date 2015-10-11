@@ -24,8 +24,8 @@
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\QtiDatatype;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\VariableDeclaration;
@@ -249,9 +249,9 @@ class OutcomeVariable extends Variable
 
         if (is_null($this->getDefaultValue()) === true && $this->getCardinality() === Cardinality::SINGLE) {
             if ($this->getBaseType() === BaseType::INTEGER) {
-                $this->setValue(new Integer(0));
+                $this->setValue(new QtiInteger(0));
             } elseif ($this->getBaseType() === BaseType::FLOAT) {
-                $this->setValue(new Float(0.0));
+                $this->setValue(new QtiFloat(0.0));
             }
         }
     }

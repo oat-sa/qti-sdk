@@ -22,7 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\QtiComponent;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\storage\Utils;
@@ -47,7 +47,7 @@ class AreaMapEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
+        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
         self::setDOMElementAttribute($element, 'coords', $component->getCoords());
         self::setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());
 
@@ -65,7 +65,7 @@ class AreaMapEntryMarshaller extends Marshaller
     {
         if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
 
-            $shape = Shape::getConstantByName($shape);
+            $shape = QtiShape::getConstantByName($shape);
 
             if ($shape !== false) {
 

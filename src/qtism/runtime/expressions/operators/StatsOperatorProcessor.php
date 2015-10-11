@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 use qtism\data\expressions\operators\StatsOperator;
@@ -99,7 +99,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::mean(self::filterValues($operand->getArrayCopy()));
 
-        return ($result !== false) ? new Float(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
     }
 
     /**
@@ -113,7 +113,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new Float(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
     }
 
     /**
@@ -127,7 +127,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), true);
 
-        return ($result !== false) ? new Float(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
     }
 
     /**
@@ -141,7 +141,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::variance(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new Float(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
     }
 
     /**
@@ -155,7 +155,7 @@ class StatsOperatorProcessor extends OperatorProcessor
 
         $result = OperatorsUtils::standardDeviation(self::filterValues($operand->getArrayCopy()), false);
 
-        return ($result !== false) ? new Float(floatval($result)) : null;
+        return ($result !== false) ? new QtiFloat(floatval($result)) : null;
     }
 
     /**

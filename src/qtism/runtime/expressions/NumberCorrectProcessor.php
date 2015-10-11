@@ -23,7 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\NumberCorrect;
 use qtism\data\expressions\Expression;
 
@@ -67,7 +67,7 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
             }
         }
 
-        return new Integer($numberCorrect);
+        return new QtiInteger($numberCorrect);
     }
     
     /**

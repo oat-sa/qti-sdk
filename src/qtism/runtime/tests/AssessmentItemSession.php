@@ -23,17 +23,17 @@
 
 namespace qtism\runtime\tests;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\TemplateVariable;
 use qtism\data\ShowHide;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\utils\Time;
 use qtism\data\processing\ResponseProcessing;
 use qtism\common\collections\Container;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
 use qtism\runtime\expressions\CorrectProcessor;
@@ -45,7 +45,7 @@ use qtism\data\state\ShufflingCollection;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\ItemSessionControl;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -261,11 +261,11 @@ class AssessmentItemSession extends State
         $this->setSubmissionMode($submissionMode);
 
         // -- Create the built-in response variables.
-        $this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
-        $this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+        $this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(0)));
+        $this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 
         // -- Create the built-in outcome variables.
-        $this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
+        $this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
         
         // -- Create item specific outcome, response and template variables.
         foreach ($assessmentItem->getOutcomeDeclarations() as $outcomeDeclaration) {
@@ -562,7 +562,7 @@ class AssessmentItemSession extends State
                 // The session state is INTERACTING. Thus, we need to update the built-in
                 // duration variable.
                 $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
-                $diffDuration = new Duration("PT${diffSeconds}S");
+                $diffDuration = new QtiDuration("PT${diffSeconds}S");
                 $this['duration']->add($diffDuration);
             }
 
@@ -622,7 +622,7 @@ class AssessmentItemSession extends State
         // The session gets the INITIAL state, ready for a first attempt, and
         // built-in variables get their initial value set.
         $this->setState(AssessmentItemSessionState::INITIAL);
-        $this['duration'] = new Duration('PT0S');
+        $this['duration'] = new QtiDuration('PT0S');
         $this['numAttempts']->setValue(0);
         $this['completionStatus']->setValue(self::COMPLETION_STATUS_NOT_ATTEMPTED);
     }
@@ -698,8 +698,8 @@ class AssessmentItemSession extends State
                 }
             }
 
-            $this['duration'] = new Duration('PT0S');
-            $this['numAttempts'] = new Integer(0);
+            $this['duration'] = new QtiDuration('PT0S');
+            $this['numAttempts'] = new QtiInteger(0);
             
             // At the start of the first attempt, the completionStatus goes
             // to 'unknown'.
@@ -708,7 +708,7 @@ class AssessmentItemSession extends State
         
         // For any attempt, the variables related to endAttemptInteractions are reset to false.
         foreach ($this->getAssessmentItem()->getEndAttemptIdentifiers() as $endAttemptIdentifier) {
-            $this[$endAttemptIdentifier] = new Boolean(false);
+            $this[$endAttemptIdentifier] = new QtiBoolean(false);
         }
 
         // Increment the built-in variable 'numAttempts' by one.
@@ -1262,12 +1262,12 @@ class AssessmentItemSession extends State
             foreach ($this->getAssessmentItem()->getModalFeedbackRules() as $rule) {
             
                 $outcomeValue = $this[$rule->getOutcomeIdentifier()];
-                $identifierValue = new Identifier($rule->getIdentifier());
+                $identifierValue = new QtiIdentifier($rule->getIdentifier());
                 $showHide = $rule->getShowHide();
                 
                 $match = false;
                 if (is_null($outcomeValue) === false) {
-                    $match = ($outcomeValue instanceof Scalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
+                    $match = ($outcomeValue instanceof QtiScalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
                 }
         
                 if (($showHide === ShowHide::SHOW && $match === true) || ($showHide === ShowHide::HIDE && $match === false)) {

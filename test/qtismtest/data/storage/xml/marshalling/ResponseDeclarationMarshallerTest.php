@@ -6,7 +6,7 @@ use qtism\data\state\MapEntryCollection;
 use qtism\data\state\MapEntry;
 use qtism\data\state\Mapping;
 use qtism\data\state\CorrectResponse;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\state\ResponseDeclaration;
 use qtism\common\enums\Cardinality;
@@ -162,10 +162,10 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($values));
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[0]->getValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $values[0]->getValue());
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[1]->getValue());
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $values[1]->getValue());
 	}
 	
 	public function testUnmarshallMatchTable() {

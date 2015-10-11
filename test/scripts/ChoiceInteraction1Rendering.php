@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\common\State;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\common\enums\BaseType;
@@ -26,10 +26,10 @@ if ((isset($argv[1]) && $shuffle === true && isset($argv[2])) || (isset($argv[1]
     $templateVariable = new TemplateVariable('SHOWBLACK', Cardinality::SINGLE, BaseType::IDENTIFIER);
     
     if ($shuffle === true) {
-        $templateVariable->setValue(new Identifier($argv[2]));
+        $templateVariable->setValue(new QtiIdentifier($argv[2]));
     }
     else {
-        $templateVariable->setValue(new Identifier($argv[1]));
+        $templateVariable->setValue(new QtiIdentifier($argv[1]));
     }
     
     $renderer->setChoiceShowHidePolicy(AbstractMarkupRenderingEngine::CONTEXT_AWARE);

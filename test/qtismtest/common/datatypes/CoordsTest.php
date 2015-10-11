@@ -2,89 +2,89 @@
 namespace qtismtest\common\datatypes;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 
 class CoordsTest extends QtiSmTestCase {
 
     public function testInstantiate() {
-        $coords = new Coords(Shape::POLY, array(0, 0, 0, 3, 3, 0));
+        $coords = new QtiCoords(QtiShape::POLY, array(0, 0, 0, 3, 3, 0));
         $this->assertEquals(BaseType::COORDS, $coords->getBaseType());
         $this->assertEquals(Cardinality::SINGLE, $coords->getCardinality());
     }
     
 	public function testInsideCircle() {
-		$coords = new Coords(Shape::CIRCLE, array(5, 5, 5));
+		$coords = new QtiCoords(QtiShape::CIRCLE, array(5, 5, 5));
 		
-		$point = new Point(1, 1); // 1,1 is outside
+		$point = new QtiPoint(1, 1); // 1,1 is outside
 		$this->assertFalse($coords->inside($point));
 		
-		$point = new Point(3, 3); // 3,3 is inside
+		$point = new QtiPoint(3, 3); // 3,3 is inside
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(5, 5); // 5,5 is inside
+		$point = new QtiPoint(5, 5); // 5,5 is inside
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(10, 10); // 10,10 is outside
+		$point = new QtiPoint(10, 10); // 10,10 is outside
 		$this->assertFalse($coords->inside($point));
 	}
 	
 	public function testInsideRectangle() {
 		// Do not forget (x1, y1) -> left top corner, (x2, y2) -> right bottom corner. 
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(QtiShape::RECT, array(0, 0, 5, 3));
 		
-		$point = new Point(0, 0); // 0, 0 is inside.
+		$point = new QtiPoint(0, 0); // 0, 0 is inside.
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(-1, -1); // -1, -1 is outside.
+		$point = new QtiPoint(-1, -1); // -1, -1 is outside.
 		$this->assertFalse($coords->inside($point));
 		
-		$point = new Point(2, 1); // 2, 1 is inside.
+		$point = new QtiPoint(2, 1); // 2, 1 is inside.
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(5, 3); // 5, 3 is inside.
+		$point = new QtiPoint(5, 3); // 5, 3 is inside.
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(5, 4); // 5, 4 is outside.
+		$point = new QtiPoint(5, 4); // 5, 4 is outside.
 		$this->assertFalse($coords->inside($point));
 	}
 	
 	public function testInsidePolygon() {
-		$coords = new Coords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
+		$coords = new QtiCoords(QtiShape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
 		
-		$point = new Point(0, 8); // 0, 8 is inside.
+		$point = new QtiPoint(0, 8); // 0, 8 is inside.
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(10, 9); // 10, 9 is outside.
+		$point = new QtiPoint(10, 9); // 10, 9 is outside.
 		$this->assertFalse($coords->inside($point));
 		
-		$point = new Point(3, 2); // 3, 2 is outside.
+		$point = new QtiPoint(3, 2); // 3, 2 is outside.
 		$this->assertFalse($coords->inside($point));
 		
-		$point = new Point(1, 2); // 1, 2 is inside;
+		$point = new QtiPoint(1, 2); // 1, 2 is inside;
 		$this->assertTrue($coords->inside($point));
 		
-		$point = new Point(-1, -1); // -1, -1 is outside.
+		$point = new QtiPoint(-1, -1); // -1, -1 is outside.
 		$this->assertFalse($coords->inside($point));
 		
-		$point = new Point(6, 4); // 6, 4 is inside.
+		$point = new QtiPoint(6, 4); // 6, 4 is inside.
 		$this->assertTrue($coords->inside($point));
 	}
 	
 	public function testOnEdgePolygon() {
-	    $coords = new Coords(Shape::POLY, array(0, 0, 0, 3, 3, 0));
-	    $point = new Point(0, 2);
+	    $coords = new QtiCoords(QtiShape::POLY, array(0, 0, 0, 3, 3, 0));
+	    $point = new QtiPoint(0, 2);
 	    $this->assertTrue($coords->inside($point));
 	}
 	
 	public function testInsideDefault() {
 		// always true.
-		$coords = new Coords(Shape::DEF);
-		$this->assertTrue($coords->inside(new Point(0, 0)));
-		$this->assertTrue($coords->inside(new Point(100, 200)));
-		$this->assertTrue($coords->inside(new Point(-200, -100)));
+		$coords = new QtiCoords(QtiShape::DEF);
+		$this->assertTrue($coords->inside(new QtiPoint(0, 0)));
+		$this->assertTrue($coords->inside(new QtiPoint(100, 200)));
+		$this->assertTrue($coords->inside(new QtiPoint(-200, -100)));
 	}
 }

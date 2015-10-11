@@ -1,13 +1,13 @@
 <?php
 namespace qtismtest\common\datatypes;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtismtest\QtiSmTestCase;
 
 class IntegerTest extends QtiSmTestCase {
     
     public function testWrongValue() {
         $this->setExpectedException('\\InvalidArgumentException');
-        $integer = new Integer(13.37);
+        $integer = new QtiInteger(13.37);
     }
 }

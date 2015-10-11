@@ -5,7 +5,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\CorrectProcessor;
@@ -28,8 +28,8 @@ class CorrectProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		
 		$comparable = new MultipleContainer(BaseType::DIRECTED_PAIR);
-		$comparable[] = new DirectedPair('A', 'B');
-		$comparable[] = new DirectedPair('C', 'D');
+		$comparable[] = new QtiDirectedPair('A', 'B');
+		$comparable[] = new QtiDirectedPair('C', 'D');
 		
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
@@ -52,7 +52,7 @@ class CorrectProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiInteger', $result);
 		$this->assertEquals(20, $result->getValue());
 	}
 	

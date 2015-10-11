@@ -4,7 +4,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\PositionObjectInteractionCollection;
 use qtism\data\content\interactions\PositionObjectStage;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\xhtml\Object;
 use \DOMDocument;
@@ -17,7 +17,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase {
 	    $interactionObject->setWidth(16);
 	    
 	    $interaction = new PositionObjectInteraction('RESPONSE', $interactionObject);
-	    $interaction->setCenterPoint(new Point(8, 8));
+	    $interaction->setCenterPoint(new QtiPoint(8, 8));
 	    
 	    $stageObject = new Object('country.jpg', 'image/jpeg');
 	    $positionObjectStage = new PositionObjectStage($stageObject, new PositionObjectInteractionCollection(array($interaction)));
@@ -52,7 +52,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase {
         $interaction = $interactions[0];
         $this->assertEquals('RESPONSE', $interaction->getResponseIdentifier());
         $this->assertEquals(1, $interaction->getMaxChoices());
-        $this->assertTrue($interaction->getCenterPoint()->equals(new Point(8, 8)));
+        $this->assertTrue($interaction->getCenterPoint()->equals(new QtiPoint(8, 8)));
         
         $interactionObject = $interaction->getObject();
         $this->assertEquals('airplane.jpg', $interactionObject->getData());

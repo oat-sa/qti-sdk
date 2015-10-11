@@ -2,12 +2,12 @@
 namespace qtismtest\data\storage;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\Utils;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use \stdClass;
 
 class UtilsTest extends QtiSmTestCase {
@@ -87,7 +87,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToDurationValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::DURATION);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $value);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDuration', $value);
 		$this->assertEquals($value->getDays(), $expected->getDays());
 		$this->assertEquals($value->getYears(), $expected->getYears());
 		$this->assertEquals($value->getHours(), $expected->getHours());
@@ -109,7 +109,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToPairValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::PAIR);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $value);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiPair', $value);
 		$this->assertEquals($expected->getFirst(), $value->getFirst());
 		$this->assertEquals($expected->getSecond(), $value->getSecond());
 	}
@@ -127,7 +127,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToDirectedPairValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiDirectedPair', $value);
 		$this->assertEquals($expected->getFirst(), $value->getFirst());
 		$this->assertEquals($expected->getSecond(), $value->getSecond());
 	}
@@ -145,7 +145,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToCoords($string, $shape) {
 		$coords = Utils::stringToCoords($string, $shape);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $coords);
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiCoords', $coords);
 		
 		$intCoords = explode(",", $string);
 		$this->assertEquals(count($intCoords), count($coords));
@@ -188,27 +188,27 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validCoordsProvider() {
 		return array(
-			array('30, 30, 60, 30', Shape::RECT),
-			array('10, 10, 10', Shape::CIRCLE),
-			array('10,10,10', Shape::CIRCLE),
-			array('0,8,7,4,2,2,8,-4,-2,1', Shape::POLY),
-		    array('30.1, 30, 50, 30.1', Shape::RECT),
-		    array('184,237,18.38', Shape::CIRCLE),
-		    array('-184 ,237, -18.38', Shape::CIRCLE)
+			array('30, 30, 60, 30', QtiShape::RECT),
+			array('10, 10, 10', QtiShape::CIRCLE),
+			array('10,10,10', QtiShape::CIRCLE),
+			array('0,8,7,4,2,2,8,-4,-2,1', QtiShape::POLY),
+		    array('30.1, 30, 50, 30.1', QtiShape::RECT),
+		    array('184,237,18.38', QtiShape::CIRCLE),
+		    array('-184 ,237, -18.38', QtiShape::CIRCLE)
 		);
 	}
 	
 	public function invalidCoordsProvider() {
 		return array(
-			array('invalid', SHAPE::RECT),
-			array('20;40;30', SHAPE::CIRCLE),
-		    array('184.456,237.,18', SHAPE::CIRCLE),
+			array('invalid', QtiShape::RECT),
+			array('20;40;30', QtiShape::CIRCLE),
+		    array('184.456,237.,18', QtiShape::CIRCLE),
 		);
 	}
 	
 	public function invalidShapeProvider() {
 		return array(
-			array('10, 10, 10', SHAPE::DEF),
+			array('10, 10, 10', QtiShape::DEF),
 			array('10', 25)
 		);
 	}
@@ -281,9 +281,9 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validPointProvider() {
 		return array(
-			array('20 30', new Point(20, 30)),
-			array('240 30', new Point(240, 30)),
-			array('-10 3', new Point(-10, 3))
+			array('20 30', new QtiPoint(20, 30)),
+			array('240 30', new QtiPoint(240, 30)),
+			array('-10 3', new QtiPoint(-10, 3))
 		);
 	}
 	
@@ -302,13 +302,13 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validDurationProvider() {
 		return array(
-			array('P1D', new Duration('P1D')), // 1 day
-			array('P2W', new Duration('P2W')), // 2 weeks
-			array('P3M', new Duration('P3M')), // 3 months
-			array('P4Y', new Duration('P4Y')), // 4 years
-			array('P1Y1D', new Duration('P1Y1D')), // 1 year + 1 day
-			array('P1DT12H', new Duration('P1DT12H')), // 1 day + 12 hours
-			array('PT3600S', new Duration('PT3600S')) // 3600 seconds
+			array('P1D', new QtiDuration('P1D')), // 1 day
+			array('P2W', new QtiDuration('P2W')), // 2 weeks
+			array('P3M', new QtiDuration('P3M')), // 3 months
+			array('P4Y', new QtiDuration('P4Y')), // 4 years
+			array('P1Y1D', new QtiDuration('P1Y1D')), // 1 year + 1 day
+			array('P1DT12H', new QtiDuration('P1DT12H')), // 1 day + 12 hours
+			array('PT3600S', new QtiDuration('PT3600S')) // 3600 seconds
 		);
 	}
 	
@@ -324,8 +324,8 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validPairProvider() {
 		return array(
-			array('Bidule Trucmuche', new Pair('Bidule', 'Trucmuche')),
-			array('C D', new Pair('C', 'D'))
+			array('Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')),
+			array('C D', new QtiPair('C', 'D'))
 		);
 	}
 	

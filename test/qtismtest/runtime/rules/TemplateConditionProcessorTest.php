@@ -2,7 +2,7 @@
 namespace qtismtest\runtime\rules;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\rules\TemplateConditionProcessor;
@@ -102,7 +102,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase {
 	    ');
 	    
 	    $stateArray = array(
-	        new OutcomeVariable('CONTROL', Cardinality::SINGLE, BaseType::INTEGER, new Integer($controlValue)),
+	        new OutcomeVariable('CONTROL', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger($controlValue)),
 	        new TemplateVariable('TPL1', Cardinality::SINGLE, BaseType::INTEGER)
 	    );
 	    $state = new State($stateArray);

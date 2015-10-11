@@ -7,20 +7,20 @@ use qtism\common\datatypes\files\FileSystemFile;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDatatype;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiUri;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\pci\json\Unmarshaller;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 
 class JsonUnmarshallerTest extends QtiSmTestCase {
 	
@@ -34,7 +34,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
      * @param Scalar $expectedScalar
      * @param string $json
      */
-    public function testUnmarshallScalar(Scalar $expectedScalar = null, $json) {
+    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json) {
         $unmarshaller = self::createUnmarshaller();
         if (is_null($expectedScalar) === false) {
             $this->assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));
@@ -120,9 +120,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $this->assertEquals(4, count($state));
         $this->assertEquals(array('RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'), array_keys($state));
         
-        $response1 = new Identifier('ChoiceA');
-        $response2 = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('_id1'), new Identifier('id2'), new Identifier('ID3')));
-        $response3 = new RecordContainer(array('rock' => new Identifier('Paper')));
+        $response1 = new QtiIdentifier('ChoiceA');
+        $response2 = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('_id1'), new QtiIdentifier('id2'), new QtiIdentifier('ID3')));
+        $response3 = new RecordContainer(array('rock' => new QtiIdentifier('Paper')));
         $response4 = null;
 
         $this->assertTrue($response1->equals($state['RESPONSE1']));
@@ -133,16 +133,16 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     
     public function unmarshallScalarProvider() {
         return array(
-            array(new Boolean(true), '{ "base" : {"boolean" : true } }'),
-            array(new Boolean(false), '{ "base" : {"boolean" : false } }'),
-            array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
-            array(new Float(23.23), '{ "base" : {"float" : 23.23 } }'),
-            array(new Float(6.0), '{ "base" : {"float" : 6 } }'),
-            array(new String('string'), '{ "base" : {"string" : "string" } }'),
-            array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
-            array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
-            array(new IntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
-            array(new Identifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
+            array(new QtiBoolean(true), '{ "base" : {"boolean" : true } }'),
+            array(new QtiBoolean(false), '{ "base" : {"boolean" : false } }'),
+            array(new QtiInteger(123), '{ "base" : {"integer" : 123 } }'),
+            array(new QtiFloat(23.23), '{ "base" : {"float" : 23.23 } }'),
+            array(new QtiFloat(6.0), '{ "base" : {"float" : 6 } }'),
+            array(new QtiString('string'), '{ "base" : {"string" : "string" } }'),
+            array(new QtiUri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
+            array(new QtiIntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
+            array(new QtiIntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
+            array(new QtiIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
             array(null, '{ "base": null }')
         );
     }
@@ -150,10 +150,10 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     public function unmarshallComplexProvider() {
         $returnValue = array();
         
-        $returnValue[] = array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }');
-        $returnValue[] = array(new Pair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
-        $returnValue[] = array(new DirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
-        $returnValue[] = array(new Duration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
+        $returnValue[] = array(new QtiPoint(10, 20), '{ "base" : { "point" : [10, 20] } }');
+        $returnValue[] = array(new QtiPair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
+        $returnValue[] = array(new QtiDirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
+        $returnValue[] = array(new QtiDuration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
 
         return $returnValue;
     }
@@ -180,39 +180,39 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     public function unmarshallListProvider() {
         $returnValue = array();
         
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(true)));
         $json = '{ "list" : { "boolean" : [true, false, true, true] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::INTEGER, array(new Integer(2), new Integer(3), new Integer(5), new Integer(7), new Integer(11), new Integer(13)));
+        $container = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(2), new QtiInteger(3), new QtiInteger(5), new QtiInteger(7), new QtiInteger(11), new QtiInteger(13)));
         $json = '{ "list" : { "integer" : [2, 3, 5, 7, 11, 13] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::FLOAT, array(new Float(3.1415926), new Float(12.34), new Float(98.76)));
+        $container = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(3.1415926), new QtiFloat(12.34), new QtiFloat(98.76)));
         $json = '{ "list" : { "float" : [3.1415926, 12.34, 98.76] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::STRING, array(new String('Another'), new String('And Another')));
+        $container = new MultipleContainer(BaseType::STRING, array(new QtiString('Another'), new QtiString('And Another')));
         $json = '{ "list" : { "string" : ["Another", "And Another"] } }';
         $returnValue[] = array($container, $json);
 
-        $container = new MultipleContainer(BaseType::POINT, array(new Point(123, 456), new Point(640, 480)));
+        $container = new MultipleContainer(BaseType::POINT, array(new QtiPoint(123, 456), new QtiPoint(640, 480)));
         $json = '{ "list" : { "point" : [[123, 456], [640, 480]] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('D', 'C')));
+        $container = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('D', 'C')));
         $json = '{ "list" : { "pair" : [["A", "B"], ["D", "C"]] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('D', 'C')));
+        $container = new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('D', 'C')));
         $json = '{ "list" : { "directedPair" : [["A", "B"], ["D", "C"]] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::DURATION, array(new Duration('PT5S'), new Duration('PT10S')));
+        $container = new MultipleContainer(BaseType::DURATION, array(new QtiDuration('PT5S'), new QtiDuration('PT10S')));
         $json = '{ "list" : { "duration" : ["PT5S", "PT10S"] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), null, new Boolean(false)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), null, new QtiBoolean(false)));
         $json = '{ "list" : { "boolean": [true, null, false] } }';
         $returnValue[] = array($container, $json);
         
@@ -226,11 +226,11 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "record" : [] }';
         $returnValue[] = array($record, $json);
         
-        $record = new RecordContainer(array('A' => new String('A')));
+        $record = new RecordContainer(array('A' => new QtiString('A')));
         $json = '{ "record" : [ { "name" : "A", "base" : { "string" : "A" } } ] }';
         $returnValue[] = array($record, $json);
         
-        $record = new RecordContainer(array('A' => new String('A'), 'B' => null));
+        $record = new RecordContainer(array('A' => new QtiString('A'), 'B' => null));
         $json = '{ "record" : [ { "name" : "A", "base" : { "string" : "A" } }, { "name" : "B", "base" : null } ] }';
         $returnValue[] = array($record, $json);
         

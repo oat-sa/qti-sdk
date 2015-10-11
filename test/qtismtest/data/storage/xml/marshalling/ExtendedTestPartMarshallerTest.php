@@ -23,7 +23,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\rules\PreCondition;
 use qtism\data\ExtendedAssessmentSection;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMDocument;
 
@@ -39,7 +39,7 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase {
 	    $itemSessionControl = new ItemSessionControl();
 	    $itemSessionControl->setShowSolution(true);
 	    
-	    $timeLimits = new TimeLimits(null, new Duration('PT1M40S'));
+	    $timeLimits = new TimeLimits(null, new QtiDuration('PT1M40S'));
 	    $p = new P();
 	    $p->setContent(new InlineCollection(array(new TextRun('Prima!'))));
 	    
@@ -102,7 +102,7 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(1, count($component->getPreConditions()));
 		$this->assertEquals(1, count($component->getBranchRules()));
 		$this->assertTrue($component->getItemSessionControl()->mustShowSolution());
-		$this->assertTrue($component->getTimeLimits()->getMaxTime()->equals(new Duration('PT1M40S')));
+		$this->assertTrue($component->getTimeLimits()->getMaxTime()->equals(new QtiDuration('PT1M40S')));
 		$this->assertEquals(1, count($component->getTestFeedbacks()));
 		$this->assertEquals(1, count($component->getTestFeedbackRefs()));
 	    $this->assertEquals(2, count($component->getAssessmentSections()));

@@ -2,7 +2,7 @@
 namespace qtismtest\data\storage\xml;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\ShowHide;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;

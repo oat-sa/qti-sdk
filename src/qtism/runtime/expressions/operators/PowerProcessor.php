@@ -22,7 +22,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\Power;
 use qtism\data\expressions\Expression;
 
@@ -99,7 +99,7 @@ class PowerProcessor extends OperatorProcessor
             // overflow
             return null;
         } else {
-            return new Float($floatval);
+            return new QtiFloat($floatval);
         }
     }
     

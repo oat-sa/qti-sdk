@@ -27,42 +27,47 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the Uri QTI datatype.
+ * Represents the Integer QTI datatype.
+ *
+ * From IMS QTI:
+ *
+ * An integer value is a whole number in the range [-2147483648,2147483647].
+ * This is the range of a twos-complement 32-bit integer.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Uri extends String
+class QtiInteger extends QtiScalar
 {
     /**
-     * Checks whether or not $value is a string.
+     * Checks whether or not $value is an integer compliant
+     * with the QTI Integer datatype. Will check the range to make sure
+     * its contained into [-2147483648,2147483647].
      *
-     * @throws \InvalidArgumentException If $value is not a valid string.
+     * @throws \InvalidArgumentException If $value is not an integer value compliant with the QTI Integer datatype.
      */
     protected function checkType($value)
     {
-        if (is_string($value) !== true) {
-            $msg = "The Uri Datatype only accepts to store URI values.";
+        if (Utils::isQtiInteger($value) !== true) {
+            $msg = "The Integer Datatype only accepts to store integer values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-     * Get the baseType of the value. This method systematically returns
-     * the BaseType::URI value.
+     * Get the baseType of the value. This method systematically
+     * returns the BaseType::INTEGER value.
      *
-     * @return A value from the BaseType enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::URI;
+        return BaseType::INTEGER;
     }
 
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
-     *
-     * @return A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -71,6 +76,6 @@ class Uri extends String
 
     public function __toString()
     {
-        return $this->getValue();
+        return '' . $this->getValue();
     }
 }

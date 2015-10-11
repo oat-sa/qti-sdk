@@ -22,7 +22,7 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\utils\Format;
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\PositionObjectInteraction;
@@ -102,7 +102,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
 
                             if (Format::isInteger($points[1]) === true) {
 
-                                $component->setCenterPoint(new Point(intval($points[0]), intval($points[1])));
+                                $component->setCenterPoint(new QtiPoint(intval($points[0]), intval($points[1])));
                             } else {
                                 $msg = "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'.";
                                 throw new UnmarshallingException($msg, $element);

@@ -32,7 +32,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Coords extends IntegerCollection implements QtiDatatype
+class QtiCoords extends IntegerCollection implements QtiDatatype
 {
     /**
      * A value from the Shape enumeration.
@@ -54,28 +54,28 @@ class Coords extends IntegerCollection implements QtiDatatype
         $this->setShape($shape);
 
         switch ($this->getShape()) {
-            case Shape::DEF:
+            case QtiShape::DEF:
                 if (count($this->getDataPlaceHolder()) > 0) {
                     $msg = "No coordinates should be given when the default shape is used.";
                     throw new InvalidArgumentException($msg);
                 }
             break;
 
-            case Shape::RECT:
+            case QtiShape::RECT:
                 if (count($this->getDataPlaceHolder()) != 4) {
                     $msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
                     throw new InvalidArgumentException($msg);
                 }
             break;
 
-            case Shape::CIRCLE:
+            case QtiShape::CIRCLE:
                 if (count($this->getDataPlaceHolder()) != 3) {
                     $msg = "The circle coordinates must be composed by 3 values (x, y, r).";
                     throw new InvalidArgumentException($msg);
                 }
             break;
 
-            case Shape::POLY:
+            case QtiShape::POLY:
                 if (count($this->getDataPlaceHolder()) % 2 > 0) {
                     $msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
                     throw new InvalidArgumentException($msg);
@@ -92,7 +92,7 @@ class Coords extends IntegerCollection implements QtiDatatype
      */
     protected function setShape($shape)
     {
-        if (in_array($shape, Shape::asArray())) {
+        if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
         } else {
             $msg = "The shape argument must be a value from the Shape enumeration except 'default', '" . $shape . "' given.";
@@ -117,13 +117,13 @@ class Coords extends IntegerCollection implements QtiDatatype
      * @param Point $point A Point object.
      * @return boolean
      */
-    public function inside(Point $point)
+    public function inside(QtiPoint $point)
     {
-        if ($this->getShape() === Shape::DEF) {
+        if ($this->getShape() === QtiShape::DEF) {
             return true;
-        } elseif ($this->getShape() === Shape::RECT) {
+        } elseif ($this->getShape() === QtiShape::RECT) {
             return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
-        } elseif ($this->getShape() === Shape::CIRCLE) {
+        } elseif ($this->getShape() === QtiShape::CIRCLE) {
             return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
         } else {
             // we consider it is a polygon.
@@ -187,7 +187,7 @@ class Coords extends IntegerCollection implements QtiDatatype
      */
     public function equals($obj)
     {
-        return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+        return $obj instanceof QtiCoords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\common\State;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\common\enums\BaseType;

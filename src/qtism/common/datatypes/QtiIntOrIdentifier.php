@@ -27,42 +27,43 @@ use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
 /**
- * Represents the String QTI datatype.
+ * Represents the IntOrIdentifier QTI datatype.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class String extends Scalar
+class QtiIntOrIdentifier extends QtiScalar
 {
     /**
-     * Checks whether or not $value is a valid string.
+     * Checks whether or not $value is a valid integer or string to be
+     * used as the intrinsic value of this object.
      *
-     * @throws \InvalidArgumentException If $value is not a valid string.
+     * @throws \InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
      */
     protected function checkType($value)
     {
-        if (is_string($value) !== true) {
-            $msg = "The String Datatype only accepts to store string values.";
+        if (is_int($value) !== true && is_string($value) !== true) {
+            $msg = "The IntOrIdentifier Datatype only accepts to store identifier and integer values.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
      * Get the baseType of the value. This method systematically returns
-     * the BaseType::STRING value.
+     * the BaseType::INT_OR_IDENTIFIER value.
      *
-     * @return A value from the BaseType enumeration.
+     * @return integer A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
-        return BaseType::STRING;
+        return BaseType::INT_OR_IDENTIFIER;
     }
 
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
      *
-     * @return A value from the Cardinality enumeration.
+     * @return integer A value from the Cardinality enumeration.
      */
     public function getCardinality()
     {
@@ -71,6 +72,11 @@ class String extends Scalar
 
     public function __toString()
     {
-        return $this->getValue();
+        $v = $this->getValue();
+        if (is_string($v) === true) {
+            return $v;
+        } else {
+            return '' . $v;
+        }
     }
 }

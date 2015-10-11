@@ -2,8 +2,8 @@
 namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
@@ -20,9 +20,9 @@ class PendingResponseStoreTest extends QtiSmTestCase {
         $itemRef2 = new AssessmentItemRef('Q02', './Q02.xml');
         $itemRef3 = new AssessmentItemRef('Q03', './Q02.xml');
         
-        $state1 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true))));
-        $state2 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false))));
-        $state3 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER, new Integer(1337))));
+        $state1 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true))));
+        $state2 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false))));
+        $state3 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1337))));
         
         $store = new PendingResponseStore();
         $store->addPendingResponses(new PendingResponses($state1, $itemRef1));

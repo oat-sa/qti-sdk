@@ -23,7 +23,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDatatype;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\collections\Container;
@@ -80,7 +80,7 @@ class RepeatProcessor extends OperatorProcessor
             if (is_null($varValue) === true) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
-            } elseif ($varValue instanceof Integer) {
+            } elseif ($varValue instanceof QtiInteger) {
                 $msg = "The variable with name '${varName}' is not an integer value.";
                 throw new OperatorProcessingException($msg, $this);
             }
