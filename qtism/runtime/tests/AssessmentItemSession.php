@@ -42,9 +42,8 @@ use qtism\common\datatypes\Duration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
-use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\common\State;
-use \DateTime;
+use alroniks\dtms\DateTime;
 use \DateTimeZone;
 use \InvalidArgumentException;
 
@@ -334,7 +333,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @param DateTime $timeReference A DateTime object.
 	 */
-	public function setTimeReference(DateTime $timeReference) {
+	public function setTimeReference(\DateTime $timeReference) {
 	    $this->timeReference = $timeReference;
 	}
 	
@@ -619,11 +618,10 @@ class AssessmentItemSession extends State {
 	    
 	    // Is timeLimits in force.
 	    if ($this->hasTimeLimits() === true) {
-	        
+
 	        // As per QTI 2.1 Spec, Minimum times are only applicable to assessmentSections and
 	        // assessmentItems only when linear navigation mode is in effect.
 	        if ($this->isNavigationLinear() === true && $this->timeLimits->hasMinTime() === true) {
-	            
 	            if ($this->mustConsiderMinTime() === true && $this['duration']->getSeconds(true) <= $this->timeLimits->getMinTime()->getSeconds(true)) {
 	                // An exception is thrown to prevent the numAttempts to be incremented.
 	                // Suspend and wait for a next attempt.
@@ -791,7 +789,7 @@ class AssessmentItemSession extends State {
 	        $this->setState(AssessmentItemSessionState::INTERACTING);
 	        
 	        // Reset the time reference. If not, the time spent in SUSPENDED mode will be taken into account!
-	        $this->setTimeReference(new DateTime('now', new DateTimeZone('UTC')));
+	        $this->setTimeReference(new \DateTime('now', new DateTimeZone('UTC')));
             $this->runCallback('interact');
 	    }
 	}
@@ -806,9 +804,9 @@ class AssessmentItemSession extends State {
 	    if ($this->getState() === AssessmentItemSessionState::INTERACTING) {
 	        $timeRef = $this->getTimeReference();
 	        $now = new DateTime('now', new DateTimeZone('UTC'));
-	        
+
 	        $data = &$this->getDataPlaceHolder();
-	        $diff = $timeRef->diff($now);
+			$diff = $now->diff($timeRef);
 	        $data['duration']->getValue()->add($diff);
 	        
 	        $this->setTimeReference($now);

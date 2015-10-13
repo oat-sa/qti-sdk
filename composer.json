@@ -2,7 +2,7 @@
 	"name": "qtism/qtism",
 	"description": "OAT QTI Software Module Library",
 	"type": "library",
-	"version": "0.9.13",
+	"version": "0.9.14",
 	"authors": [
 		{
 			"name": "Open Assessment Technologies S.A.",
@@ -25,7 +25,8 @@
 		"GPL-2.0"
 	],
 	"require" : {
-		"php" : ">=5.3.0"
+		"php" : ">=5.3.0",
+		"alroniks/dtms": "0.5.2"
 	},
 	"require-dev": {
 		"phpunit/PHPUnit": ">=3.7.20"

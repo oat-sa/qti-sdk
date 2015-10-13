@@ -6,33 +6,22 @@ use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\String;
 use qtism\runtime\tests\AssessmentTestPlace;
-use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
-use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactDocument;
-use qtism\data\state\VariableDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\common\VariableIdentifier;
-use qtism\data\state\Weight;
-use qtism\data\state\WeightCollection;
-use qtism\data\AssessmentItemRef;
-use qtism\data\AssessmentItemRefCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
-use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
-use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Duration;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
 	

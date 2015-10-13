@@ -1277,7 +1277,7 @@ class AssessmentTestSession extends State {
                 $this->submitItemResults($this->getAssessmentItemSessionStore()->getAssessmentItemSession($currentItem, $currentOccurence), $currentOccurence);
             }
             catch (AssessmentTestSessionException $e) {
-                $msg = "An error occured while transmitting item results to the appropriate data source at deffered responses processing time.";
+                $msg = "An error occurred while transmitting item results to the appropriate data source at deferred responses processing time.";
                 throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
             
@@ -2128,7 +2128,7 @@ class AssessmentTestSession extends State {
 	        
 	        if ($includeMinTime === true) {
 	            $minRemainingTime = $constraint->getMinimumRemainingTime();
-	            
+
 	            if ($acceptableLatency === true) {
 	                $minRemainingTime->add($this->getAcceptableLatency());
 	            }
@@ -2136,14 +2136,14 @@ class AssessmentTestSession extends State {
 	        
 	        if ($includeMaxTime === true) {
 	            $maxRemainingTime = $constraint->getMaximumRemainingTime();
-	            
+
 	            if ($acceptableLatency === true) {
 	                $maxRemainingTime->add($this->getAcceptableLatency());
 	            }
 	        }
 	        
-	        $minTimeRespected = !($includeMinTime === true && $minRemainingTime->getSeconds(true) > 0);
-	        $maxTimeRespected = !($includeMaxTime === true && $maxRemainingTime->getSeconds(true) === 0);
+	        $minTimeRespected = !($includeMinTime === true && $minRemainingTime->round()->getSeconds(true) > 0);
+	        $maxTimeRespected = !($includeMaxTime === true && $maxRemainingTime->round()->getSeconds(true) === 0);
 	        
 	        if ($minTimeRespected === false || $maxTimeRespected === false) {
 	            

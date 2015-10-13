@@ -3,10 +3,8 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\storage\MemoryStream;
-use qtism\common\storage\MemoryStreamException;
 use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
-use qtism\common\storage\StreamException;
 
 class BinaryStreamAccessTest extends QtiSmTestCase {
 	
