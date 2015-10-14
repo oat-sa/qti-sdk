@@ -14,12 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *
  *
  */
 
@@ -58,6 +56,13 @@ class MarkupPostRenderer implements Renderable
      * @var array
      */
     private $fragments;
+    
+    /**
+     * Template fragments path prefix.
+     * 
+     * @var string
+     */
+    private $fragmentPrefix = '';
 
     /**
      * Create a new MarkupPostRenderer object.
@@ -160,6 +165,24 @@ class MarkupPostRenderer implements Renderable
     {
         $this->fragments = $fragments;
     }
+    
+    /**
+     * Set the prefix to be used for fragment file names.
+     * 
+     * @param string $fragmentPrefix.
+     */
+    public function setFragmentPrefix($fragmentPrefix)
+    {
+        $this->fragmentPrefix = $fragmentPrefix;
+    }
+    
+    /**
+     * Get the prefix to be used for fragment file names.
+     */
+    protected function getFragmentPrefix()
+    {
+        return $this->fragmentPrefix;
+    }
 
     public function render($document)
     {
@@ -187,7 +210,7 @@ class MarkupPostRenderer implements Renderable
         }
 
         /*
-         * 2. Transform qtism-if, qtism-printVariable statements into PHP statements.
+         * 2. Transform qtism-if, qtism-printVariable, qtism-include statements into PHP statements.
          */
         if ($this->isTemplateOriented() === true) {
             $output = preg_replace('/<!--\s+qtism-if\s*\((.+?)\)\s*:\s+-->/iu', '<?php if (\1): ?>', $output);
@@ -198,12 +221,13 @@ class MarkupPostRenderer implements Renderable
             $output = preg_replace('/<!--\s+qtism-printVariable\((.+?)\)\s+-->/iu', $call, $output);
             
             $matches = array();
+            $fragmentPrefix = $this->getFragmentPrefix();
             if (($c = preg_match_all('/<!--\s+(?:qtism-include)\s*\((?:(\$.+?), ([0-9]+), "(.+?)", ([0-9]+?))\)\s*:\s+-->(.+?)<!--\s+qtism-endinclude\s+-->/ius', $output, $matches)) > 0) {
                 $fragments = $this->getFragments();
                 for ($i = 0; $i < $c; $i++) {
-                    $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $matches[2][$i] . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".phtml"); ?>', $output);
+                    $output = str_replace($matches[0][$i], '<?php include(dirname(__FILE__) . "/' . $fragmentPrefix . $matches[2][$i] . '-" . ' . $matches[1][$i] . '->getShuffledChoiceIdentifierAt(' . $matches[2][$i] . ', ' . $matches[4][$i] . ') . ".phtml"); ?>', $output);
                     $fragments[] = array(
-                        'path' => $matches[2][$i] . '-' . $matches[3][$i] . '.phtml',
+                        'path' => $fragmentPrefix . $matches[2][$i] . '-' . $matches[3][$i] . '.phtml',
                         'content' => $matches[5][$i]
                     );
                 }
