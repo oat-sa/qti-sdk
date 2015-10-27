@@ -752,7 +752,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
                 );
 
         if ($this->hasTemplateProcessing() === true) {
-            $comp[] = $this->getResponseProcessing();
+            $comp[] = $this->getTemplateProcessing();
         }
 
         $comp = array_merge($comp, $this->getStylesheets()->getArrayCopy());

@@ -513,7 +513,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         );
         
         if ($this->hasTemplateProcessing() === true) {
-            $components[] = $this->getResponseProcessing();
+            $components[] = $this->getTemplateProcessing();
         }
 
         if ($this->hasResponseProcessing() === true) {

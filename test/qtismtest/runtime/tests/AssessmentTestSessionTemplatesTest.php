@@ -16,10 +16,12 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_test_simple.xml');
         $session->beginTestSession();
         // We are in linear mode with no branching/preconditions, so the sessions are alive...
-        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
-        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
-        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
-        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
+        // But the templateDefaults/templateProcessings will only occur at the beginning of the
+        // very first attempt.
+        $this->assertNull($session['QTPL1.GOODSCORE']);
+        $this->assertNull($session['QTPL1.WRONGSCORE']);
+        $this->assertNull($session['QTPL2.GOODSCORE']);
+        $this->assertNull($session['QTPL2.WRONGSCORE']);
         
         // QTPL1 - correct response.
         $session->beginAttempt();

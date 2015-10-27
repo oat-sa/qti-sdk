@@ -235,6 +235,13 @@ class AssessmentItemSession extends State
      * @var \qtism\data\state\ShufflingCollection
      */
     private $shufflingStates;
+    
+    /**
+     * Whether or not the template processing must occur automatically.
+     * 
+     * @var boolean
+     */
+    private $autoTemplateProcessing = true;
 
     /**
      * Create a new AssessmentItemSession object. 
@@ -247,11 +254,12 @@ class AssessmentItemSession extends State
      * @param \qtism\data\IAssessmentItem $assessmentItem The description of the item that the session handles.
      * @param integer $navigationMode (optional) A value from the NavigationMode enumeration.
      * @param integer $submissionMode (optional) A value from the SubmissionMode enumeration.
+     * @param boolean $autoTemplateProcessing (optional) Whether or not template processing must occur automatically. Default is true.
      * @throws \InvalidArgumentException If $navigationMode or $submission is not a value from the NavigationMode/SubmissionMode enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSession::setItemSessionControl() The setItemSessionControl() method.
      * @see \qtism\runtime\tests\AssessmentItemSession::setTimeLimits() The setTimeLimits() method.
      */
-    public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
+    public function __construct(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL, $autoTemplateProcessing = true)
     {
         parent::__construct();
 
@@ -259,6 +267,7 @@ class AssessmentItemSession extends State
         $this->setItemSessionControl(new ItemSessionControl());
         $this->setNavigationMode($navigationMode);
         $this->setSubmissionMode($submissionMode);
+        $this->setAutoTemplateProcessing($autoTemplateProcessing);
 
         // -- Create the built-in response variables.
         $this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(0)));
@@ -532,8 +541,27 @@ class AssessmentItemSession extends State
      * 
      * @param \qtism\data\state\ShufflingCollection $shufflingStates
      */
-    public function getShufflingStates() {
+    public function getShufflingStates() 
+    {
         return $this->shufflingStates;
+    }
+    
+    /**
+     * Set whether or not template processing must occur automatically.
+     * 
+     * @param boolean $autoTemplateProcessing
+     */
+    public function setAutoTemplateProcessing($autoTemplateProcessing) 
+    {
+        $this->autoTemplateProcessing = $autoTemplateProcessing;
+    }
+    
+    /**
+     * Know whether or not template processing must occur automatically.
+     */
+    public function mustAutoTemplateProcessing()
+    {
+        return $this->autoTemplateProcessing;
     }
 
     /**
@@ -606,15 +634,18 @@ class AssessmentItemSession extends State
             }
         }
         
-        // Apply templateProcessing.
-        $templateProcessing = $this->templateProcessing();
+        // Apply templateProcessing if needed.
+        $templateProcessing = false;
+        if ($this->mustAutoTemplateProcessing() === true) {
+            $templateProcessing = $this->templateProcessing();
         
-        foreach ($data as $identifier => $variable) {
-            if (in_array($identifier, $filter) === false) {
-            
-                // Outcome variables are applied their default value if any.
-                if ($variable instanceof OutcomeVariable || ($variable instanceof TemplateVariable && $templateProcessing === false)) {
-                    $variable->applyDefaultValue();
+            foreach ($data as $identifier => $variable) {
+                if (in_array($identifier, $filter) === false) {
+                
+                    // Outcome variables are applied their default value if any.
+                    if ($variable instanceof OutcomeVariable || ($variable instanceof TemplateVariable && $templateProcessing === false)) {
+                        $variable->applyDefaultValue();
+                    }
                 }
             }
         }
@@ -1287,7 +1318,7 @@ class AssessmentItemSession extends State
      * @throws \qtism\runtime\rules\RuleProcessingException
      * @return boolean Whether or not the template processing occured.
      */
-    protected function templateProcessing()
+    public function templateProcessing()
     {
         $assessmentItem = $this->getAssessmentItem();
         if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
@@ -1296,6 +1327,7 @@ class AssessmentItemSession extends State
             
             return true;
         } else {
+            
             return false;
         }
     }

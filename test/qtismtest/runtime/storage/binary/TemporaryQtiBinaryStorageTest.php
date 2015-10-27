@@ -827,24 +827,25 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $QTPL1Session = $QTPL1Sessions[0];
     
         // The the session is correctly instantiated, with the <templateDefault>s in force.
+        // In linear mode, the templateDefaults are applied just before the first attempt.
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
-        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
-        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
-        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
-        $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL1Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertNull($session['QTPL1.GOODSCORE']);
+        $this->assertNull($QTPL1Session['GOODSCORE']);
+        $this->assertNull($session['QTPL1.WRONGSCORE']);
+        $this->assertNull($QTPL1Session['WRONGSCORE']);
     
         $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
         $QTPL2Session = $QTPL2Sessions[0];
     
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
-        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
-        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
-        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL2Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertNull($session['QTPL2.GOODSCORE']);
+        $this->assertNull($QTPL2Session['GOODSCORE']);
+        $this->assertNull($session['QTPL2.WRONGSCORE']);
+        $this->assertNull($QTPL2Session['WRONGSCORE']);
     
         // Now let's make sure the persistence works correctly when <templateDefault>s are in force...
         // We do this by testing again that default values are correctly initialized within their respective
@@ -854,23 +855,23 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session = $storage->retrieve($test, $sessionId);
     
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
-        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
-        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
-        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
-        $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL1Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertNull($session['QTPL1.GOODSCORE']);
+        $this->assertNull($QTPL1Session['GOODSCORE']);
+        $this->assertNull($session['QTPL1.WRONGSCORE']);
+        $this->assertNull($QTPL1Session['WRONGSCORE']);
     
         $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
         $QTPL2Session = $QTPL2Sessions[0];
     
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
-        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
-        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
-        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL2Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertNull($session['QTPL2.GOODSCORE']);
+        $this->assertNull($QTPL2Session['GOODSCORE']);
+        $this->assertNull($session['QTPL2.WRONGSCORE']);
+        $this->assertNull($QTPL2Session['WRONGSCORE']);
     
         // It seems to be ok! Let's take the test!
         $session->beginAttempt();

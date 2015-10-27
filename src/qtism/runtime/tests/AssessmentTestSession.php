@@ -642,6 +642,11 @@ class AssessmentTestSession extends State
         // Time limits are OK! Let's try to begin the attempt.
         $routeItem = $this->getCurrentRouteItem();
         $session = $this->getCurrentAssessmentItemSession();
+        
+        if ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR && $session['numAttempts']->getValue() === 0) {
+            $this->applyTemplateDefaults($session);
+            $session->templateProcessing();
+        }
     
         try {
             if ($this->getCurrentSubmissionMode() === SubmissionMode::INDIVIDUAL) {
@@ -1812,17 +1817,29 @@ class AssessmentTestSession extends State
      * @param integer $navigationMode
      * @param integer $submissionMode
      * @return \qtism\runtime\tests\AssessmentItemSession
-     * @throws \qtism\runtime\expressions\ExpressionProcessingException|\qtism\runtime\expressions\operators\OperatorProcessingException If something wrong happens when initializing templateDefaults.
      */
     protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
     {
-        $session = $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+        $session = $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, false);
+        
+        return $session;
+    }
+    
+    /**
+     * Apply the templateDefault values to the item $session.
+     * 
+     * param \qtism\runtime\tests\AssessmentItemSession $session
+     * @throws \qtism\runtime\expressions\ExpressionProcessingException|\qtism\runtime\expressions\operators\OperatorProcessingException If something wrong happens when initializing templateDefaults.
+     */
+    protected function applyTemplateDefaults(AssessmentItemSession $session)
+    {
         $templateDefaults = $session->getAssessmentItem()->getTemplateDefaults();
         
         if (count($templateDefaults) > 0) {
             // Some templateVariable default values must have to be changed...
             
             foreach ($session->getAssessmentItem()->getTemplateDefaults() as $templateDefault) {
+            
                 $identifier = $templateDefault->getTemplateIdentifier();
                 $expression = $templateDefault->getExpression();
                 $variable = $session->getVariable($identifier);
@@ -1835,8 +1852,6 @@ class AssessmentTestSession extends State
                 }
             }
         }
-        
-        return $session;
     }
 
     /**
@@ -1877,62 +1892,74 @@ class AssessmentTestSession extends State
     protected function selectEligibleItems()
     {
         $route = $this->getRoute();
-        $oldPosition = $route->getPosition();
-        $adaptive = $this->isAdaptive();
-
-        // In this loop, we select at least the first routeItem we find as eligible.
-        while ($route->valid() === true) {
+        
+        if ($route->valid() === true) {
             
-            $routeItem = $route->current();
-            $itemRef = $routeItem->getAssessmentItemRef();
-            $occurence = $routeItem->getOccurence();
-            
-            $session = $this->getItemSession($itemRef, $occurence);
+            $oldPosition = $route->getPosition();
+            $adaptive = $this->isAdaptive();
+            $initialTestPart = $route->current()->getTestPart();
+            $isInitalRouteItemFirstOfTestPart = $route->isFirstOfTestPart();
 
-            // Does such a session exist for item + occurence?
-            if ($session === false) {
+            // In this loop, we select at least the first routeItem we find as eligible.
+            while ($route->valid() === true) {
+                
+                $routeItem = $route->current();
+                $itemRef = $routeItem->getAssessmentItemRef();
+                $occurence = $routeItem->getOccurence();
+                
+                $session = $this->getItemSession($itemRef, $occurence);
 
-                // Instantiate the item session...
-                $testPart = $routeItem->getTestPart();
-                $navigationMode = $testPart->getNavigationMode();
-                $submissionMode = $testPart->getSubmissionMode();
-                
-                $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
-                
-                // Determine the item session control.
-                if (($control = $routeItem->getItemSessionControl()) !== null) {
-                    $session->setItemSessionControl($control->getItemSessionControl());
-                }
-                
-                // Determine the time limits.
-                if ($itemRef->hasTimeLimits() === true) {
-                    $session->setTimeLimits($itemRef->getTimeLimits());
-                }
-                
-                $this->addItemSession($session, $occurence);
-                
-                // If we know "what time it is", we transmit
-                // that information to the eligible item.
-                if ($this->hasTimeReference() === true) {
-                    $session->setTime($this->getTimeReference());
+                // Does such a session exist for item + occurence?
+                if ($session === false) {
+
+                    // Instantiate the item session...
+                    $testPart = $routeItem->getTestPart();
+                    $navigationMode = $testPart->getNavigationMode();
+                    $submissionMode = $testPart->getSubmissionMode();
+                    
+                    $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
+                    
+                    // Determine the item session control.
+                    if (($control = $routeItem->getItemSessionControl()) !== null) {
+                        $session->setItemSessionControl($control->getItemSessionControl());
+                    }
+                    
+                    // Determine the time limits.
+                    if ($itemRef->hasTimeLimits() === true) {
+                        $session->setTimeLimits($itemRef->getTimeLimits());
+                    }
+                    
+                    $this->addItemSession($session, $occurence);
+                    
+                    // If we know "what time it is", we transmit
+                    // that information to the eligible item.
+                    if ($this->hasTimeReference() === true) {
+                        $session->setTime($this->getTimeReference());
+                    }
+
+                    $session->beginItemSession();
+                    
+                    // Deal with template defaults and template processing for non linear case.
+                    if ($testPart === $initialTestPart && $initialTestPart->getNavigationMode() === NavigationMode::NONLINEAR && $isInitalRouteItemFirstOfTestPart === true) {
+                        $this->applyTemplateDefaults($session);
+                        $session->templateProcessing();
+                    }
                 }
 
-                $session->beginItemSession();
+                if ($adaptive === true) {
+                    // We cannot foresee more items to be selected for presentation
+                    // because the rest of the sequence is linear and might contain
+                    // branching rules or preconditions.
+                    break;
+                } else {
+                    // We continue to search for route items that are selectable for
+                    // presentation to the candidate.
+                    $route->next();
+                }
             }
 
-            if ($adaptive === true) {
-                // We cannot foresee more items to be selected for presentation
-                // because the rest of the sequence is linear and might contain
-                // branching rules or preconditions.
-                break;
-            } else {
-                // We continue to search for route items that are selectable for
-                // presentation to the candidate.
-                $route->next();
-            }
+            $route->setPosition($oldPosition);
         }
-
-        $route->setPosition($oldPosition);
     }
 
     /**

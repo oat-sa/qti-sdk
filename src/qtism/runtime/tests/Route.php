@@ -914,7 +914,7 @@ class Route implements Iterator
         }
 
         $previousPosition = $this->getPosition() - 1;
-        if ($previousPosition === 0) {
+        if ($previousPosition === -1) {
             // This is the very first RouteItem of the whole Route.
             return true;
         } elseif ($this->getRouteItemAt($previousPosition)->getTestPart() !== $this->current()->getTestPart()) {
