@@ -61,14 +61,14 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
             self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
         }
 
-        if ($component->hasTimeLimits() === true) {
-            $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getTimeLimits());
-            $element->appendChild($marshaller->marshall($component->getTimeLimits()));
-        }
-
         foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclaration);
             $element->appendChild($marshaller->marshall($outcomeDeclaration));
+        }
+
+        if ($component->hasTimeLimits() === true) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getTimeLimits());
+            $element->appendChild($marshaller->marshall($component->getTimeLimits()));
         }
 
         foreach ($component->getTestParts() as $part) {
