@@ -2173,10 +2173,8 @@ class AssessmentTestSession extends State
                         if ($target === 'EXIT_TEST') {
                             $this->endTestSession();
                         } elseif ($target === 'EXIT_TESTPART') {
-                            $route->next();
                             $this->moveNextTestPart();
                         } elseif ($target === 'EXIT_SECTION') {
-                            $route->next();
                             $this->moveNextAssessmentSection();
                         } else {
                             $route->branch($branchRules[$i]->getTarget());
@@ -2240,11 +2238,7 @@ class AssessmentTestSession extends State
         $from = $route->current();
 
         while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
-            $this->nextRouteItem();
-        }
-
-        if ($this->isRunning() === true) {
-            $this->interactWithItemSession();
+            $route->next();
         }
     }
 
@@ -2267,11 +2261,7 @@ class AssessmentTestSession extends State
         $from = $route->current();
         
         while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
-            $this->nextRouteItem();
-        }
-
-        if ($this->isRunning() === true) {
-            $this->interactWithItemSession();
+            $route->next();
         }
     }
 

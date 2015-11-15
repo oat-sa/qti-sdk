@@ -55,6 +55,25 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(false, $itemSessions);
     }
     
+    public function testExitSectionFromEndOfSection() {
+        $url = self::samplesDir() . 'custom/runtime/exits/exitsectionfromendofsection.xml';
+        $testSession = self::instantiate($url);
+        
+        $testSession->beginTestSession();
+        
+        // If we get correct to the first question, we will EXIT_SECTION. We should
+        // be then redirected to next S02 section (Q02).
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+        
+        // We should be at section S02, item Q02.
+        $testSession->moveNext();
+        
+        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+    }
+    
     public function testExitSectionPreconditionsEndOfTest() {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionpreconditions.xml';
         $testSession = self::instantiate($url);
