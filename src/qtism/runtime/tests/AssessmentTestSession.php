@@ -2157,42 +2157,42 @@ class AssessmentTestSession extends State
         $route = $this->getRoute();
         $stop = false;
 
-        // Branchings?
-        if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+        while ($route->valid() === true && $stop === false) {
 
-            $branchRules = $route->current()->getBranchRules();
-            for ($i = 0; $i < count($branchRules); $i++) {
-                $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
-                $condition = $engine->process();
-                if ($condition !== null && $condition->getValue() === true) {
+            // Branchings?
+            if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
 
-                    $target = $branchRules[$i]->getTarget();
+                $branchRules = $route->current()->getBranchRules();
+                for ($i = 0; $i < count($branchRules); $i++) {
+                    $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
+                    $condition = $engine->process();
+                    if ($condition !== null && $condition->getValue() === true) {
 
-                    if ($target === 'EXIT_TEST') {
-                        $this->endTestSession();
-                    } elseif ($target === 'EXIT_TESTPART') {
-                        $route->next();
-                        $this->moveNextTestPart();
-                    } elseif ($target === 'EXIT_SECTION') {
-                        $route->next();
-                        $this->moveNextAssessmentSection();
-                    } else {
-                        $route->branch($branchRules[$i]->getTarget());
+                        $target = $branchRules[$i]->getTarget();
+
+                        if ($target === 'EXIT_TEST') {
+                            $this->endTestSession();
+                        } elseif ($target === 'EXIT_TESTPART') {
+                            $route->next();
+                            $this->moveNextTestPart();
+                        } elseif ($target === 'EXIT_SECTION') {
+                            $route->next();
+                            $this->moveNextAssessmentSection();
+                        } else {
+                            $route->branch($branchRules[$i]->getTarget());
+                        }
+
+                        break;
                     }
-
-                    break;
                 }
-            }
 
-            if ($i >= count($branchRules)) {
-                // No branch rule returned true. Simple move next.
+                if ($i >= count($branchRules)) {
+                    // No branch rule returned true. Simple move next.
+                    $route->next();
+                }
+            } else {
                 $route->next();
             }
-        } else {
-            $route->next();
-        }
-
-        while ($route->valid() === true && $stop === false) {
 
             // Preconditions on target?
             if ($ignorePreConditions === false && $route->valid() === true) {
@@ -2208,12 +2208,6 @@ class AssessmentTestSession extends State
                             $stop = true;
                             break;
                         }
-                    }
-                    
-                    if ($i >= count($preConditions)) {
-                        // No preConditions returned true, we have to move next
-                        // and fine a new item to be presented.
-                        $route->next();
                     }
                 } else {
                     $stop = true;
