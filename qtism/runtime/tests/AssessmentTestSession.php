@@ -1330,6 +1330,26 @@ class AssessmentTestSession extends State {
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
 	    }
 	}
+    
+    /**
+     * Suspend the current test session if it is running.
+     */
+    public function suspend() {
+        if ($this->isRunning() === true) {
+            $this->suspendItemSession();
+            $this->setState(AssessmentTestSessionState::SUSPENDED);
+        }
+    }
+    
+    /**
+     * Resume the current test session if it is suspended.
+     */
+    public function resume() {
+        if ($this->isRunning() === false) {
+            $this->interactWithItemSession();
+            $this->setState(AssessmentTestSessionState::INTERACTING);
+        }
+    }
 	
 	/**
 	 * AssessmentTestSession implementations must override this method in order
