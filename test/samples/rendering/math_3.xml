@@ -11,16 +11,42 @@
 			<value>E</value>
 		</correctResponse>
 	</responseDeclaration>
+    <templateDeclaration identifier="TPL_E" cardinality="single" baseType="string" mathVariable="true">
+        <defaultValue>
+            <value>E</value>
+        </defaultValue>
+    </templateDeclaration>
+    <templateDeclaration identifier="TPL_m" cardinality="single" baseType="string" mathVariable="true">
+        <defaultValue>
+            <value>m</value>
+        </defaultValue>
+    </templateDeclaration>
+    <templateDeclaration identifier="TPL_c" cardinality="single" baseType="string" mathVariable="true">
+        <defaultValue>
+            <value>c</value>
+        </defaultValue>
+    </templateDeclaration>
+    <templateProcessing>
+        <setTemplateValue identifier="TPL_E">
+            <default identifier="TPL_E"/>
+        </setTemplateValue>
+        <setTemplateValue identifier="TPL_m">
+            <default identifier="TPL_m"/>
+        </setTemplateValue>
+        <setTemplateValue identifier="TPL_c">
+            <default identifier="TPL_c"/>
+        </setTemplateValue>
+    </templateProcessing>
 	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
 	<itemBody>
 		<choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="1">
 			<prompt>Which famous scientist is popularly associated with the equation <m:math>
 					<m:mrow>
-						<m:mi>E</m:mi>
+						<m:mi>TPL_E</m:mi>
 						<m:mo>=</m:mo>
-						<m:mi>m</m:mi>
+						<m:mi>TPL_m</m:mi>
 						<m:msup>
-							<m:mi>c</m:mi>
+							<m:mi>TPL_c</m:mi>
 							<m:mn>2</m:mn>
 						</m:msup>
 					</m:mrow>

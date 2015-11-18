@@ -14,23 +14,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
- *
- *
  *
  */
 
 namespace qtism\runtime\rendering\markup;
 
+use qtism\data\AssessmentItem;
+use qtism\data\content\PrintedVariable;
 use qtism\data\content\interactions\Gap;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiScalar;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
+use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\Interaction;
 use qtism\common\utils\Url;
@@ -48,6 +49,7 @@ use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
 use \DOMDocumentFragment;
+use \DOMXPath;
 
 /**
  * The base class to be used by any rendering engines.
@@ -506,7 +508,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
             }
         }
 
-        $finalRendering = $this->createFinalRendering();
+        $finalRendering = $this->createFinalRendering($component);
 
         return $finalRendering;
     }
@@ -555,16 +557,59 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Create the final rendering as it must be rendered by the final
+     * Create the final rendering of the rendered $component as it must be rendered by the final
      * implementation.
      *
      * @return mixed
      */
-    protected function createFinalRendering()
+    protected function createFinalRendering(QtiComponent $component)
     {
         $dom = $this->getDocument();
         if (($last = $this->getLastRendering()) !== null) {
             $dom->appendChild($last);
+        }
+
+        // If we are rendering an item, let's try to find some Math to
+        // for template variable mapping. 
+        if ($component instanceof AssessmentItem && count($templateDeclarations = $component->getTemplateDeclarations()) > 0) {
+            $xpath = new DOMXPath($dom);
+            $xpath->registerNamespace('m', 'http://www.w3.org/1998/Math/MathML');
+            $maths = $xpath->query('//m:math|//math');
+            
+            if ($maths->length > 0) {
+                $printedVariableRenderer = new PrintedVariableRenderer($this);
+                
+                foreach ($templateDeclarations as $templateDeclaration) {
+                    if ($templateDeclaration->isMathVariable() === true) {
+                        $templateIdentifier = $templateDeclaration->getIdentifier();
+                        
+                        foreach ($maths as $math) {
+                            // Find <mi> and <ci> elements.
+                            foreach ($xpath->query(".//m:mi[text() = '${templateIdentifier}']|.//m:ci[text() = '${templateIdentifier}']|.//mi[text() = '${templateIdentifier}']|.//ci[text() = '${templateIdentifier}']", $math) as $mathElement) {
+                                $localElementName = ($mathElement->localName === 'mi') ? 'mn' : 'cn';
+                                $newMathElement = $mathElement->ownerDocument->createElement($localElementName);
+                                $printedVariable = new PrintedVariable($templateIdentifier);
+                                $printedVariableFragment = $printedVariableRenderer->render($printedVariable);
+                                
+                                if ($this->getPrintedVariablePolicy() === self::CONTEXT_STATIC) {
+                                    foreach ($printedVariableFragment->childNodes as $node) {
+                                        $newMathElement->appendChild($node);
+                                        $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
+                                    }
+                                } else if ($this->getPrintedVariablePolicy() === self::CONTEXT_AWARE) {
+                                    $newMathElement->appendChild($newMathElement->ownerDocument->createTextNode($printedVariableFragment->firstChild->nodeValue));
+                                    $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
+                                } else {
+                                    foreach ($printedVariableFragment->firstChild->childNodes as $node) {
+                                        $newMathElement->appendChild($node);
+                                        $mathElement->parentNode->replaceChild($newMathElement, $mathElement);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return $dom;
