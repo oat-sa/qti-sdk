@@ -230,6 +230,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		
 		// Does it contain a selection?
 		$this->assertTrue($component->hasSelection());
+        $this->assertEquals(1, $component->getSelection()->getSelect());
 		
 		// Does it contain an itemSessionControl?
 		$this->assertTrue($component->hasItemSessionControl());
@@ -239,6 +240,37 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase {
 		
 		// Does it contain a branchRule?
 		$this->assertEquals(1, count($component->getBranchRules()));
+	}
+    
+    /**
+     * @depends testUnmarshallNotRecursive
+     */
+    public function testUnmarshallNotRecursiveZeroSelection() {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML(
+			'
+			<assessmentSection identifier="myAssessmentSection" title="A non Recursive Assessment Section" visible="true" keepTogether="false">
+	  			<preCondition>
+	    			<baseValue baseType="boolean">true</baseValue>
+	  			</preCondition>
+	  			<branchRule target="EXIT_TEST">
+	    			<baseValue baseType="boolean">false</baseValue>
+	  			</branchRule>
+	  			<itemSessionControl allowReview="true"/>
+		        <selection select="0"/>
+	  			<assessmentItemRef identifier="Q01" required="false" fixed="false" href="./questions/Q01.xml"/>
+	  			<assessmentItemRef identifier="Q02" required="false" fixed="false" href="./questions/Q02.xml"/>
+	  			<assessmentSectionRef identifier="S01" required="false" fixed="false" href="./sections/S01.xml"/>
+			</assessmentSection>
+			'
+		);
+		$element = $dom->documentElement;
+	
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+		$component = $marshaller->unmarshall($element);
+
+		// Has the <selection> element has an attribute 'select' with a zero value, it's skipped.
+		$this->assertFalse($component->hasSelection());
 	}
 	
 	public function testUnmarshallRecursive() {
