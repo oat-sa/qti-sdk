@@ -1435,4 +1435,29 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('I am still preserved!', $session['PRESERVED']->getValue());
 	    $this->assertEquals(1, $session['NOTPRESERVED']->getValue());
 	}
+    
+    public function testSuspendResume() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession->beginTestSession();
+        
+        // Q01.
+        $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $assessmentTestSession->beginAttempt();
+        
+        $assessmentTestSession->suspend();
+        $this->assertEquals(AssessmentTestSessionState::SUSPENDED, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->resume();
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->endAttempt(new State(array()));
+        $assessmentTestSession->moveNext();
+        
+        // Q02.
+        $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+    }
 }
