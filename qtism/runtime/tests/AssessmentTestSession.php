@@ -1345,7 +1345,7 @@ class AssessmentTestSession extends State {
      * Resume the current test session if it is suspended.
      */
     public function resume() {
-        if ($this->isRunning() === false) {
+        if ($this->getState() === AssessmentTestSessionState::SUSPENDED) {
             $this->interactWithItemSession();
             $this->setState(AssessmentTestSessionState::INTERACTING);
         }
