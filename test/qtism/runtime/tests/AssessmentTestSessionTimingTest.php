@@ -336,6 +336,31 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(0, $session['Q01.3.duration']->getSeconds(true));
     }
     
+    public function testSuspendResume() {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        
+        // Q01.
+        $this->assertEquals('Q01', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->suspend();
+        
+        sleep(1);
+        $this->assertEquals(AssessmentTestSessionState::SUSPENDED, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->resume();
+        
+        // Even if we slept a second, no additional time taken into account because the test was suspended.
+        $this->assertEquals(0, $assessmentTestSession['Q01.duration']->getSeconds(true));
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->endAttempt(new State(array()));
+        $assessmentTestSession->moveNext();
+        
+        // Q02.
+        $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
+    }
+    
     public function testLastItemTimeout() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_timeout.xml');
         $session->beginTestSession();
