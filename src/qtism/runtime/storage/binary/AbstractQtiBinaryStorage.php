@@ -152,6 +152,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $access->writeTinyInt($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
+            $oldRoutePosition = $route->getPosition();
 
             foreach ($route as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
@@ -183,6 +184,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                     continue;
                 }
             }
+            
+            $route->setPosition($oldRoutePosition);
 
             // Deal with test session configuration.
             // !!! AutoForward (not in use anymore, fake it).
