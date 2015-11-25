@@ -71,7 +71,7 @@ use \Exception;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
+class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
     const RW_VALUE = 0;
     

@@ -89,6 +89,6 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     protected function createBinaryStreamAccess(IStream $stream)
     {
-        return new AbstractQtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     }
 }
