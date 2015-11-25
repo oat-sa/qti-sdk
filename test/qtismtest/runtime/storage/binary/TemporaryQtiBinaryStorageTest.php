@@ -6,6 +6,7 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\SessionManager;

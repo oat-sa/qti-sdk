@@ -5,6 +5,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiString;
@@ -40,10 +41,10 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\common\collections\Container;
 use qtism\runtime\common\Variable;
 use qtism\common\storage\MemoryStream;
-use qtism\runtime\storage\binary\QtiBinaryStreamAccessFsFile;
+use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 
-class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
+class QtiBinaryStreamAccessTest extends QtiSmTestCase {
 	
     /**
      * @dataProvider readVariableValueProvider
@@ -52,18 +53,18 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
      * @param string $binary
      * @param mixed $expectedValue
      */
-    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccessFsFile::RW_VALUE) {
+    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE) {
         $stream = new MemoryStream($binary);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $access->readVariableValue($variable, $valueType);
         
         switch ($valueType) {
-            case QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE:
+            case QtiBinaryStreamAccess::RW_DEFAULTVALUE:
                 $getterToCall = 'getDefaultValue';
                 break;
                 
-            case QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE:
+            case QtiBinaryStreamAccess::RW_CORRECTRESPONSE:
                 $getterToCall = 'getCorrectResponse';
                 break;
                 
@@ -100,9 +101,9 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
     public function readVariableValueProvider() {
         $returnValue = array();
         
-        $rw_value = QtiBinaryStreamAccessFsFile::RW_VALUE;
-        $rw_defaultValue = QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE;
-        $rw_correctResponse = QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE;
+        $rw_value = QtiBinaryStreamAccess::RW_VALUE;
+        $rw_defaultValue = QtiBinaryStreamAccess::RW_DEFAULTVALUE;
+        $rw_correctResponse = QtiBinaryStreamAccess::RW_CORRECTRESPONSE;
         
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(45)), "\x01", null);
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(45)), "\x01", null, $rw_defaultValue);
@@ -307,18 +308,18 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
      * 
      * @param Variable $variable
      */
-    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccessFsFile::RW_VALUE) {
+    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE) {
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         switch ($valueType) {
-            case QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE:
+            case QtiBinaryStreamAccess::RW_DEFAULTVALUE:
                 $setterToCall = 'setDefaultValue';
                 $getterToCall = 'getDefaultValue';
                 break;
         
-            case QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE:
+            case QtiBinaryStreamAccess::RW_CORRECTRESPONSE:
                 $setterToCall = 'setCorrectResponse';
                 $getterToCall = 'getCorrectResponse';
                 break;
@@ -372,9 +373,9 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
     
     public function writeVariableValueProvider() {
         
-        $rw_value = QtiBinaryStreamAccessFsFile::RW_VALUE;
-        $rw_defaultValue = QtiBinaryStreamAccessFsFile::RW_DEFAULTVALUE;
-        $rw_correctResponse = QtiBinaryStreamAccessFsFile::RW_CORRECTRESPONSE;
+        $rw_value = QtiBinaryStreamAccess::RW_VALUE;
+        $rw_defaultValue = QtiBinaryStreamAccess::RW_DEFAULTVALUE;
+        $rw_correctResponse = QtiBinaryStreamAccess::RW_CORRECTRESPONSE;
         
         $data = array();
         
@@ -611,7 +612,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $bin = implode('', array($position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $hasTimeReference, $timeReference, $varCount, $score, $response, $shufflingCount));
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsfile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
@@ -681,7 +682,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $bin = implode('', $binArray);
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsfile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl'));
         
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
@@ -713,7 +714,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
@@ -742,7 +743,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl'));
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     
         $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
         $session->beginItemSession();
@@ -772,7 +773,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
     
         $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
@@ -810,7 +811,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $routeItem = $access->readRouteItem($seeker);
         $this->assertEquals('Q03', $routeItem->getAssessmentItemRef()->getIdentifier());
@@ -829,7 +830,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
@@ -864,7 +865,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
@@ -886,7 +887,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition'));
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $factory = new SessionManager();
         $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
@@ -920,7 +921,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $shufflingGroup = $access->readShufflingGroup();
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroup->getIdentifiers()->getArrayCopy());
@@ -933,7 +934,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $access->writeShufflingGroup($shufflingGroup);
         $stream->rewind();
@@ -960,7 +961,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
         $shufflingState = $access->readShufflingState();
         $this->assertEquals('RESPONSE', $shufflingState->getResponseIdentifier());
@@ -978,7 +979,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $shuffling = new Shuffling('RESPONSE', $shufflingGroups);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccessFsFile($stream);
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $access->writeShufflingState($shuffling);
         
         $stream->rewind();

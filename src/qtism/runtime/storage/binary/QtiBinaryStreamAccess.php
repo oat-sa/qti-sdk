@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,10 +23,7 @@
 
 namespace qtism\runtime\storage\binary;
 
-
-
 use qtism\data\state\ShufflingCollection;
-
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\QtiFile;
@@ -34,6 +31,7 @@ use qtism\common\datatypes\QtiScalar;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\IdentifierCollection;
+use qtism\common\datatypes\files\FileManager;
 use qtism\data\state\Value;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroup;
@@ -64,6 +62,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Variable;
 use qtism\common\storage\IStream;
 use qtism\common\storage\BinaryStreamAccess;
+use \Exception;
 
 /**
  * The QtiBinaryStreamAccess aims at providing access to QTI data stored
@@ -72,7 +71,7 @@ use qtism\common\storage\BinaryStreamAccess;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
+class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
     const RW_VALUE = 0;
     
@@ -80,15 +79,38 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     
     const RW_CORRECTRESPONSE = 2;
     
+    private $fileManager;
+    
     /**
      * Create a new QtiBinaryStreamAccess object.
      *
      * @param \qtism\common\storage\IStream $stream The IStream object to be accessed.
      * @throws \qtism\common\storage\BinaryStreamAccessException If $stream is not open yet.
      */
-    public function __construct(IStream $stream)
+    public function __construct(IStream $stream, FileManager $fileManager)
     {
         parent::__construct($stream);
+        $this->setFileManager($fileManager);
+    }
+    
+    /**
+     * Set the FileManager object.
+     * 
+     * @param \qtism\common\datatypes\files\FileManager $fileManager A FileManager object.
+     */
+    protected function setFileManager(FileManager $fileManager)
+    {
+        $this->fileManager = $fileManager;
+    }
+    
+    /**
+     * Get the FileManager object.
+     * 
+     * @return \qtism\common\datatypes\files\FileManager A FileManager object.
+     */
+    protected function getFileManager()
+    {
+        return $this->fileManager;
     }
 
     /**
@@ -606,22 +628,6 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
     }
 
     /**
-     * Read a File from the current binary stream.
-     *
-     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     * @return \qtism\common\datatypes\File A File object
-     */
-    abstract public function readFile();
-
-    /**
-     * Write A file composed by some $binaryContent into the current binary stream.
-     *
-     * @param \qtism\common\datatypes\File $file A File object
-     * @throws \qtism\runtime\storage\binary\QtiBinaryStreamAccessException
-     */
-    abstract public function writeFile(QtiFile $file);
-
-    /**
      * Read an intOrIdentifier from the current binary stream.
      *
      * @return integer|string An integer or a string depending on the nature of the intOrIdentifier datatype.
@@ -1058,6 +1064,37 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess
         } catch (OutOfBoundsException $e) {
             $msg = "A QTI component position could not be found in the assessmentTest tree structure.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+        }
+    }
+    
+    /**
+     * Write a QtiFile object in the current binary stream.
+     * 
+     * @param \qtism\common\datatypes\QtiFile $file
+     */
+    public function writeFile(QtiFile $file)
+    {
+        try {
+            $this->writeString($file->getIdentifier());
+        } catch (QtiBinaryStreamAccessException $e) {
+            $msg = "An error occured while reading a QTI File.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
+        }
+    }
+
+    /**
+     * Read a QtiFile object from the current binary stream.
+     * 
+     * @return \qtism\common\datatypes\QtiFile
+     */
+    public function readFile()
+    {
+        try {
+            $id = $this->readString();
+            return $this->getFileManager()->retrieve($id);
+        } catch (\Exception $e) {
+            $msg = "An error occured while writing a QTI File.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
 }
