@@ -35,31 +35,5 @@ use qtism\common\datatypes\QtiFile;
  */
 class QtiBinaryStreamAccessFsFile extends AbstractQtiBinaryStreamAccess
 {
-    /**
-     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess::writeFile()
-     */
-    public function writeFile(QtiFile $file)
-    {
-        try {
-            $this->writeString($file->getPath());
-        } catch (QtiBinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a QTI File.";
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
-        }
-    }
 
-    /**
-     * @see \qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess::readFile()
-     */
-    public function readFile()
-    {
-        try {
-            $path = $this->readString();
-
-            return new FileSystemFile($path);
-        } catch (\Exception $e) {
-            $msg = "An error occured while writing a QTI File.";
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
-        }
-    }
 }
