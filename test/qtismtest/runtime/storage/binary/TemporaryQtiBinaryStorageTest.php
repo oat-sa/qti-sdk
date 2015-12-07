@@ -23,6 +23,7 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
+use qtism\runtime\storage\common\StorageException;
 use \DateTime;
 use \DateTimeZone;
 
@@ -38,6 +39,10 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($doc->getDocumentComponent()));
         $session = $storage->instantiate($test);
         $sessionId = $session->getSessionId();
+        
+        // Instantiating the test session does not mean it is persisted. At the moment,
+        // it is not persistent yet.
+        $this->assertFalse($storage->exists($sessionId));
     
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertEquals(AssessmentTestSessionState::INITIAL, $session->getState());
@@ -48,6 +53,11 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // A little bit of noisy persistence...
         $storage->persist($session);
+        
+        // Now the test is persisted, we can try to know whether it exists in storage.
+        $this->assertTrue($storage->exists($sessionId));
+        
+        // Let's retrive the session from storage.
         $session = $storage->retrieve($test, $sessionId);
         
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
@@ -557,8 +567,22 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->beginTestSession();
         $sessionId = $session->getSessionId();
         
+        // It's instantiated, but not persisted.
+        
+        // Fun test #1, delete the non-persisted test session.
+        $this->assertFalse($storage->delete($sessionId));
+        
         $storage->persist($session);
-        $session = $storage->retrieve($test, $sessionId);
+        
+        // Fun test#2, delete the persisted test session.
+        $this->assertTrue($storage->delete($sessionId));
+        
+        // Fun test#3, retrieve an unexisting test session.
+        try {
+            $session = $storage->retrieve($test, $sessionId);
+        } catch (StorageException $e) {
+            $this->assertTrue(true, "An Exception should be thrown because the test session does not exist anymore.");
+        }
     }
     
     public function testFiles() {

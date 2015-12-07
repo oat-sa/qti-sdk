@@ -77,7 +77,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
         $read = @file_get_contents($path);
 
         if ($read === false || strlen($read) === 0) {
-            $msg = "An error occured while retrieving the binary stream at '${path}'.";
+            $msg = "An error occured while retrieving the binary stream at '${path}'. Nothing could be read. The file is empty or missing.";
             throw new RuntimeException($msg);
         }
 
@@ -90,5 +90,22 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
     protected function createBinaryStreamAccess(IStream $stream)
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    }
+    
+    /**
+     * @see \qtism\runtime\storage\binary\AbstractStorage::exists()
+     */
+    public function exists($sessionId)
+    {
+        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
+        return @is_readable($path);
+    }
+    
+    /**
+     * @see \qtism\runtime\storage\binary\AbstractStorage::delete()
+     */
+    public function delete($sessionId)
+    {
+        return @unlink(sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin');
     }
 }
