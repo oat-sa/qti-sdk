@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -157,7 +157,12 @@ class PhpDocument extends QtiDocument
                 }
             }
 
-            file_put_contents($url, $stream->getBinary());
+            $exists = file_exists($url);
+            $written = file_put_contents($url, $stream->getBinary());
+            
+            if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
+                opcache_invalidate($url, true);
+            }
         } catch (StreamAccessException $e) {
             $msg = "An error occured while writing the PHP source code stream.";
             throw new PhpStorageException($msg, PhpStorageException::WRITE, $e);
