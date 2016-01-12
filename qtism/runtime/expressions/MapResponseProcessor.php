@@ -90,95 +90,90 @@ class MapResponseProcessor extends ExpressionProcessor {
 				
 				$mapping = $variable->getMapping();
 				
-				if (!is_null($mapping)) {
+				if (is_null($mapping)) {
+                    return new Float(0.0);
+                }
 					
-					if ($variable->isSingle()) {
-						
-						foreach ($mapping->getMapEntries() as $mapEntry) {
-							
-							$val = $state[$identifier];
-							$mapKey = $mapEntry->getMapKey();
-							
-							if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
-								$val = mb_strtolower($val->getValue(), 'UTF-8');
-								$mapKey = mb_strtolower($mapKey, 'UTF-8');
-							}
-							
-							if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
-								// relevant mapping found.
-								$mappedValue = $mapEntry->getMappedValue();
-								return new Float($mappedValue);
-							}
-						}
-						
-						// No relevant mapping found, return mapping default.
-						return new Float($mapping->getDefaultValue());
-					}
-					else if ($variable->isMultiple()) {
-						
-						$result = 0.0;
-						
-						if (!is_null($variable->getValue())) {
-						    $mapped = array(); // already mapped keys.
-						    $mapEntries = $mapping->getMapEntries();
-						    
-						    foreach ($variable->getValue() as $val) {
-						        
-						        for ($i = 0; $i < count($mapEntries); $i++) {
-						            
-						            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
-						            
-						            if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
-						                $val = mb_strtolower($val->getValue(), 'UTF-8');
-						                $mapKey = mb_strtolower($mapKey, 'UTF-8');
-						            }
-						            
-                                    if (($val instanceof Comparable && $val->equals($mapKey) === true) || $val === $mapKey) {
-						                if (in_array($rawMapKey, $mapped, true) === false) {
-						                    $result += $mapEntries[$i]->getMappedValue();
-						                    $mapped[] = $rawMapKey;
-						                    
-						                }
-						                // else...
-						                // This value has already been mapped.
-						                
-						                break;
-						            }
-						        }
-						        
-						        if ($i >= count($mapEntries)) {
-						            // No explicit mapping found for source value $val.
-						            $result += $mapping->getDefaultValue();
-						        }
-						    }
-						    
-						    // When mapping a container, try to apply lower or upper bound.
-						    if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-						        return new Float($mapping->getLowerBound());
-						    }
-						    else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-						        return new Float($mapping->getUpperBound());
-						    }
-						    else {
-						        return new Float($result);
-						    }
-						}
-						else {
-						    // Returns a 0.0 result.
-						    return new Float($result);
-						}
-						
-						
-					}
-					else {
-						$msg = "MapResponse cannot be applied on a RECORD container.";
-						throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
-					}
-				}
-				else {
-					$msg = "The target variable has no mapping while processing MapResponse.";
-					throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::INCONSISTENT_VARIABLE);
-				}
+                if ($variable->isSingle()) {
+                    
+                    foreach ($mapping->getMapEntries() as $mapEntry) {
+                        
+                        $val = $state[$identifier];
+                        $mapKey = $mapEntry->getMapKey();
+                        
+                        if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
+                            $val = mb_strtolower($val->getValue(), 'UTF-8');
+                            $mapKey = mb_strtolower($mapKey, 'UTF-8');
+                        }
+                        
+                        if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
+                            // relevant mapping found.
+                            $mappedValue = $mapEntry->getMappedValue();
+                            return new Float($mappedValue);
+                        }
+                    }
+                    
+                    // No relevant mapping found, return mapping default.
+                    return new Float($mapping->getDefaultValue());
+                }
+                else if ($variable->isMultiple()) {
+                    
+                    $result = 0.0;
+                    
+                    if (!is_null($variable->getValue())) {
+                        $mapped = array(); // already mapped keys.
+                        $mapEntries = $mapping->getMapEntries();
+                        
+                        foreach ($variable->getValue() as $val) {
+                            
+                            for ($i = 0; $i < count($mapEntries); $i++) {
+                                
+                                $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
+                                
+                                if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
+                                    $val = mb_strtolower($val->getValue(), 'UTF-8');
+                                    $mapKey = mb_strtolower($mapKey, 'UTF-8');
+                                }
+                                
+                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || $val === $mapKey) {
+                                    if (in_array($rawMapKey, $mapped, true) === false) {
+                                        $result += $mapEntries[$i]->getMappedValue();
+                                        $mapped[] = $rawMapKey;
+                                        
+                                    }
+                                    // else...
+                                    // This value has already been mapped.
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            if ($i >= count($mapEntries)) {
+                                // No explicit mapping found for source value $val.
+                                $result += $mapping->getDefaultValue();
+                            }
+                        }
+                        
+                        // When mapping a container, try to apply lower or upper bound.
+                        if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
+                            return new Float($mapping->getLowerBound());
+                        }
+                        else if ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
+                            return new Float($mapping->getUpperBound());
+                        }
+                        else {
+                            return new Float($result);
+                        }
+                    }
+                    else {
+                        // Returns a 0.0 result.
+                        return new Float($result);
+                    }
+                }
+                else {
+                    $msg = "MapResponse cannot be applied on a RECORD container.";
+                    throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
+                }
 			}
 			else {
 				$msg = "The target variable must be a ResponseVariable, OutcomeVariable given while processing MapResponse.";

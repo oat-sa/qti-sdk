@@ -86,73 +86,70 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 			if ($var instanceof ResponseVariable) {
 				$areaMapping = $var->getAreaMapping();
 				
-				if (!is_null($areaMapping)) {
+				if (is_null($areaMapping)) {
+                    return new Float(0.0);
+                }
 					
-					// Correct cardinality ?
-					if ($var->getBaseType() === BaseType::POINT && ($var->isSingle() || $var->isMultiple())) {
-						
-						// We can begin!
-						
-						// -- Null value, nothing will match
-						if ($var->isNull()) {
-							return new Float($areaMapping->getDefaultValue());
-						}
-						
-						if ($var->isSingle()) {
-							$val = new MultipleContainer(BaseType::POINT, array($state[$identifier]));
-						}
-						else {
-							$val = $state[$identifier];
-						}
-						
-						$result = 0;
-						$mapped = array();
-						
-						foreach ($val as $point) {
-							foreach ($areaMapping->getAreaMapEntries() as $areaMapEntry) {
+                // Correct cardinality ?
+                if ($var->getBaseType() === BaseType::POINT && ($var->isSingle() || $var->isMultiple())) {
+                    
+                    // We can begin!
+                    
+                    // -- Null value, nothing will match
+                    if ($var->isNull()) {
+                        return new Float($areaMapping->getDefaultValue());
+                    }
+                    
+                    if ($var->isSingle()) {
+                        $val = new MultipleContainer(BaseType::POINT, array($state[$identifier]));
+                    }
+                    else {
+                        $val = $state[$identifier];
+                    }
+                    
+                    $result = 0;
+                    $mapped = array();
+                    
+                    foreach ($val as $point) {
+                        foreach ($areaMapping->getAreaMapEntries() as $areaMapEntry) {
 
-								$coords = $areaMapEntry->getCoords();
-								
-								if (!in_array($coords, $mapped) && $coords->inside($point)) {
-									$mapped[] = $coords;
-									$result += $areaMapEntry->getMappedValue();
-								}
-							}
-						}
-						
-						// If no relevant mapping found, return the default.
-						if (count($mapped) === 0) {
-							return new Float($areaMapping->getDefaultValue());
-						}
-						else {
-							// Check upper and lower bound.
-							if ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
-								return new Float($areaMapping->getLowerBound());
-							}
-							else if ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
-								return new Float($areaMapping->getUpperBound());
-							}
-							else {
-								return new Float(floatval($result));
-							}
-						}
-					}
-					else {
-						if ($var->isRecord()) {
-							$msg = "The MapResponsePoint expression cannot be applied to RECORD variables.";
-							throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
-						}
-						else {
-							$strBaseType = BaseType::getNameByConstant($var->getBaseType());
-							$msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
-							throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
-						}
-					}
-				}
-				else {
-					$msg = "Variable with identifier '${identifier}' has no areaMapping.";
-					throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::INCONSISTENT_VARIABLE);
-				}
+                            $coords = $areaMapEntry->getCoords();
+                            
+                            if (!in_array($coords, $mapped) && $coords->inside($point)) {
+                                $mapped[] = $coords;
+                                $result += $areaMapEntry->getMappedValue();
+                            }
+                        }
+                    }
+                    
+                    // If no relevant mapping found, return the default.
+                    if (count($mapped) === 0) {
+                        return new Float($areaMapping->getDefaultValue());
+                    }
+                    else {
+                        // Check upper and lower bound.
+                        if ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
+                            return new Float($areaMapping->getLowerBound());
+                        }
+                        else if ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
+                            return new Float($areaMapping->getUpperBound());
+                        }
+                        else {
+                            return new Float(floatval($result));
+                        }
+                    }
+                }
+                else {
+                    if ($var->isRecord()) {
+                        $msg = "The MapResponsePoint expression cannot be applied to RECORD variables.";
+                        throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
+                    }
+                    else {
+                        $strBaseType = BaseType::getNameByConstant($var->getBaseType());
+                        $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
+                        throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
+                    }
+                }
 			}
 			else {
 				$msg = "The variable with identifier '${identifier}' is not a ResponseVariable.";

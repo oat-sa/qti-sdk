@@ -127,14 +127,14 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testNoMapping() {
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="duration" cardinality="multiple"/>');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
 		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
 		
 		$mapResponseProcessor->setState(new State(array($variable)));
-		$mapResponseProcessor->process();
+		$result = $mapResponseProcessor->process();
+        $this->assertEquals(0.0, $result->getValue());
 	}
 	
 	public function testMultipleCardinalityIdentifierToFloat() {

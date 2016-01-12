@@ -155,9 +155,9 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
-		
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
+        
 		$result = $processor->process();
+        $this->assertEquals(0.0, $result->getValue());
 	}
 	
 	public function testWrongVariableType() {
