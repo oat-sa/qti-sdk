@@ -151,6 +151,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testNoAreaMapping() {
+        // When no areaMapping is found, we consider a default value of 0.0.
 		$expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
 		$variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single"/>
@@ -159,8 +160,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		
-		$this->setExpectedException("qtism\\runtime\\expressions\\ExpressionProcessingException");
 		$result = $processor->process();
+        $this->assertEquals(0.0, $result->getValue());
 	}
 	
 	public function testWrongVariableType() {
