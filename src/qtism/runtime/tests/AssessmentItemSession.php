@@ -897,24 +897,23 @@ class AssessmentItemSession extends State
             $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state SUSPENDED.";
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
-        } else {
+        } elseif ($state == AssessmentItemSessionState::MODAL_FEEDBACK) {
+            // Let's play the suspension ritual...
+            $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
             
-            if ($state == AssessmentItemSessionState::MODAL_FEEDBACK) {
-                // Let's play the suspension ritual...
-                $maxAttempts = $this->getItemSessionControl()->getMaxAttempts();
-                
+            if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
                 // -- Adaptive item.
-                if ($this->getAssessmentItem()->isAdaptive() === true && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
-                    $this->endItemSession();
-                } 
+                $this->endItemSession();
+            } elseif ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts && $maxAttempts !== 0 && $this->getSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
                 // -- Non-adaptive item + maxAttempts reached.
-                elseif ($this->getAssessmentItem()->isAdaptive() === false && $this['numAttempts']->getValue() >= $maxAttempts && $maxAttempts !== 0 && $this->getSubmissionMode() !== SubmissionMode::SIMULTANEOUS) {
-                    $this->endItemSession();
-                }
+                $this->endItemSession();
             } else {
                 $this->setState(AssessmentItemSessionState::SUSPENDED);
                 $this->setAttempting(false);
             }
+        } else {
+            $this->setState(AssessmentItemSessionState::SUSPENDED);
+            $this->setAttempting(false);
         }
     }
 
@@ -1285,11 +1284,31 @@ class AssessmentItemSession extends State
      */
     private function mustModalFeedback()
     {
+        // From IMS QTI 2.1:
+        // A value of maxAttempts greater than 1, by definition, indicates that any applicable feedback must be shown. 
+        // This applies to both Modal Feedback and Integrated Feedback where applicable. However, once the maximum number 
+        // of allowed attempts have been used (or for adaptive items, completionStatus has been set to completed) whether 
+        // or not feedback is shown is controlled by the showFeedback constraint.
+        //
+        // This [showFeedback] constraint affects the visibility of feedback after the end of the last attempt. If it 
+        // is false then feedback is not shown. This includes both Modal Feedback and Integrated Feedback even if the 
+        // candidate has access to the review state. The default is false.
+        
         $mustModalFeedback = false;
+        $itemSessionControl = $this->getItemSessionControl();
+        
+        if ($this->getRemainingAttempts() === 0 && $itemSessionControl->mustShowFeedback() === false) {
+            return $mustModalFeedback;
+        }
         
         // Feedback is never shown in SIMULTANEOUS submission mode, nor if showFeedback is disabled.
-        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustShowFeedback() === true) {
-            
+        $maxAttempts = $itemSessionControl->getMaxAttempts();
+        if ($this->getAssessmentItem()->isAdaptive() === true) {
+            $maxAttempts = 0;
+        }
+        
+        if (($maxAttempts === 0 || $maxAttempts > 1) && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
+
             foreach ($this->getAssessmentItem()->getModalFeedbackRules() as $rule) {
             
                 $outcomeValue = $this[$rule->getOutcomeIdentifier()];
@@ -1308,7 +1327,7 @@ class AssessmentItemSession extends State
                 }
             }
         }
-
+        
         return $mustModalFeedback;
     }
     

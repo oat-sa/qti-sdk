@@ -4,9 +4,9 @@
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
     identifier="modalfeedbacks_nonadaptive_individual_linear" title="Modal Feedbacks">
     <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
-        <itemSessionControl showFeedback="true"/>
         <assessmentSection identifier="S01" title="Section1" visible="true">
             <assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+                <itemSessionControl showFeedback="true" maxAttempts="1"/>
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>true</value>
@@ -44,7 +44,7 @@
             </assessmentItemRef>
             
             <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false">
-                <itemSessionControl maxAttempts="0" showFeedback="true"/>
+                <itemSessionControl maxAttempts="0"/>
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>true</value>
@@ -78,6 +78,166 @@
                     </responseCondition>
                 </responseProcessing>
                 <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="incorrect"/>
+            </assessmentItemRef>
+            
+            <!-- showFeedback is false, so we will have no feedback at 2nd attempt. -->
+            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false">
+                <itemSessionControl maxAttempts="2"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>true</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="FEEDBACK" cardinality="single" baseType="identifier"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">correct</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">incorrect</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="incorrect"/>
+            </assessmentItemRef>
+            
+            <!-- showFeedback is true, so we will have a feedback at 2nd attempt. -->
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+                <itemSessionControl maxAttempts="2" showFeedback="true"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>true</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="FEEDBACK" cardinality="single" baseType="identifier"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">correct</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">incorrect</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="incorrect"/>
+            </assessmentItemRef>
+            
+            <!-- adaptiveItem, showFeedback is true, so we will have a final feedback when the session goes to "completed". -->
+            <assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false" adaptive="true">
+                <itemSessionControl showFeedback="true"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>true</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="FEEDBACK" cardinality="single" baseType="identifier"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">correct</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="completionStatus">
+                                <baseValue baseType="identifier">completed</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">incorrect</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="incorrect"/>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="correct"/>
+            </assessmentItemRef>
+            
+            <!-- adaptiveItem, showFeedback is false, so we will have no feedback when the session goes to "completed". -->
+            <assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false" adaptive="true">
+                <itemSessionControl showFeedback="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>true</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="FEEDBACK" cardinality="single" baseType="identifier"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">1.0</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">correct</baseValue>
+                            </setOutcomeValue>
+                            <setOutcomeValue identifier="completionStatus">
+                                <baseValue baseType="identifier">completed</baseValue>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="FEEDBACK">
+                                <baseValue baseType="identifier">incorrect</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="incorrect"/>
+                <modalFeedbackRule outcomeIdentifier="FEEDBACK" showHide="show" identifier="correct"/>
             </assessmentItemRef>
         </assessmentSection>
     </testPart>

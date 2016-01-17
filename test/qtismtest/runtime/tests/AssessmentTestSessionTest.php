@@ -1386,39 +1386,113 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $session->beginTestSession();
 	    
-	    // -- Q01.
+	    // -- Q01 nonAdaptive, maxAttempts = 1, showFeedback = true.
 	    $session->beginAttempt();
 	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('true'))));
 	    $session->endAttempt($responses);
-	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        // The ModalFeedback must not be shown because the number of attempts is not > 1.
+	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
 	    
 	    // -- Move from Q01 to Q02.
 	    $session->moveNext();
-	    // Check that the item session for Q01 is correctly CLOSED by moving next,
-	    // even if it was in a modal feedback state. Why closed and not suspended?
-	    // Because maxAttempts = 1.
-	    $itemSessions = $session->getAssessmentItemSessions('Q01');
-	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSessions[0]->getState());
 	    
-	    // -- Q02.
-	    // Here, the maxAttempts is 0 i.e. no limit. Moreover, feedback is shown only if the answer
-	    // is wrong.
+	    // -- Q02 nonAdaptive, maxAttempts = 0, showFeedback = false.
+	    // Here, the maxAttempts is 0 i.e. no limit. Moreover, feedback is shown only if the answer is wrong.
 	    $session->beginAttempt();
 	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
 	    
-	    // Brutal new attempt!
+	    // Brutal new attempt, without suspending explicitely the item session!
 	    $session->beginAttempt();
 	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('true'))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    
-	    $session->endTestSession();
+        
+        $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // -- Move from Q02 to Q03.
+	    $session->moveNext();
+        
+        // Make sure that Q02's session get's closed by moving next.
+        $itemSessions = $session->getAssessmentItemSessions('Q02');
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSessions[0]->getState());
+        
+        // -- Q03 nonAdaptive, maxAttempts = 2, showFeedback = false.
+        $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // itemSessionControl->showFeedback = false. It means that the last attempt will have no ModalFeedback shown.
+        $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // -- Move from Q03 to Q04.
+        $session->moveNext();
+        
+        // -- Q04 nonAdaptive, maxAttempts = 2, showFeedback = true
+        $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // itemSessionControl->showFeedback = true. It means that the last attempt will have a ModalFeedback shown.
+        $session->beginAttempt();
+	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+	    $session->endAttempt($responses);
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // -- Move from Q04 to Q05.
+        $session->moveNext();
+        // Check that Q04's session went to CLOSE state by moving next, because max number of attempts reached.
+        $itemSessions = $session->getAssessmentItemSessions('Q04');
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSessions[0]->getState());
+        
+        // -- Q05 adaptive, showFeedback = true
+        $session->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+        $session->endAttempt($responses);
+        $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // $itemSessionControl->showFeedback = true, so the final "correct!" feedback is shown.
+        $session->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('true'))));
+        $session->endAttempt($responses);
+        $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // -- Move from Q05 to Q06.
+        $session->moveNext();
+        // Check that Q05 went to CLOSE state.
+        $itemSessions = $session->getAssessmentItemSessions('Q05');
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSessions[0]->getState());
+        
+        // -- Q06 adaptive, showFeedback = false
+        $session->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('false'))));
+        $session->endAttempt($responses);
+        $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // $itemSessionControl->showFeedback = false, so the "correct!" feedback is not shown.
+        $session->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('true'))));
+        $session->endAttempt($responses);
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // Ends the test session.
+	    $session->moveNext();
+        
 	    $itemSessions = $session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions();
 	    foreach ($itemSessions as $itemSession) {
 	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
 	    }
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	}
 	
 	public function testIsTimeout() {
