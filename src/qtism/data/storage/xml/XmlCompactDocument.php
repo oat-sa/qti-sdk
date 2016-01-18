@@ -274,6 +274,11 @@ class XmlCompactDocument extends XmlDocument
 
             $doc = new XmlDocument();
             $doc->load($href);
+            
+            // Resolve external documents.
+            $doc->xInclude();
+            $doc->resolveTemplateLocation();
+            
             $item = $doc->getDocumentComponent();
 
             foreach ($item->getResponseDeclarations() as $resp) {

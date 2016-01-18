@@ -26,6 +26,8 @@ use qtism\common\utils\Url;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
+use qtism\data\AssessmentItem;
+use qtism\data\processing\ResponseProcessing;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
@@ -365,13 +367,13 @@ class XmlDocument extends QtiDocument
      * the include components can be resolved by calling this method. Files will
      * be included following the rules described by the XInclude specification.
      * 
-     * @param boolean $validate Whether or not validate files being included.
+     * @param boolean $validate Whether or not validate files being included. Default is false.
      * @throws \LogicException If the method is called prior the load or loadFromString method was called.
      * @throws \qtism\data\storage\xml\XmlStorageException If an error occured while parsing or validating files to be included.
      */
     public function xInclude($validate = false) {
         
-        if (($root = $this->getDocumentComponent()) !== false) {
+        if (($root = $this->getDocumentComponent()) !== null) {
             
             $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
             $pathinfo = pathinfo($baseUri);
@@ -410,6 +412,49 @@ class XmlDocument extends QtiDocument
             }
         } else {
             $msg = "Cannot include fragments prior to loading any file.";
+            throw new LogicException($msg);
+        }
+    }
+    
+    /**
+     * Resolve responseProcessing elements with template location.
+     * 
+     * If the root element of the currently loaded QTI file is an assessmentItem element,
+     * this method will try to resolve responseProcessing fragments referenced by responseProcessing
+     * elements having a templateLocation attribute.
+     * 
+     * @param boolean $validate Whether or not validate files being included. Default is false.
+     * @throws \LogicException If the method is called prior the load or loadFromString method was called.
+     * @throws \qtism\data\storage\xml\XmlStorageException If an error occured while parsing or validating files to be included.
+     */
+    public function resolveTemplateLocation($validate = false)
+    {
+        if (($root = $this->getDocumentComponent()) !== null) {
+            
+            if ($root instanceof AssessmentItem && ($responseProcessing = $root->getResponseProcessing()) !== null && ($templateLocation = $responseProcessing->getTemplateLocation()) !== '') {
+                
+                if (Url::isRelative($templateLocation) === true) {
+                    
+                    $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+                    $pathinfo = pathinfo($baseUri);
+                    $basePath = $pathinfo['dirname'];
+                    $templateLocation = Url::rtrim($basePath) . '/' . Url::ltrim($templateLocation);
+                    
+                    $doc = new XmlDocument();
+                    $doc->load($templateLocation, $validate);
+                    
+                    $newResponseProcessing = $doc->getDocumentComponent();
+                    
+                    if ($newResponseProcessing instanceof ResponseProcessing) {
+                        $root->setResponseProcessing($newResponseProcessing);
+                    } else {
+                        $msg = "The template at location '${templateLocation}' is not a document containing a QTI responseProcessing element.";
+                        throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
+                    }
+                }
+            }
+        } else {
+            $msg = "Cannot resolve template location loading any file.";
             throw new LogicException($msg);
         }
     }
