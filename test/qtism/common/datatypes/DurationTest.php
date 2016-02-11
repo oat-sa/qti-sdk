@@ -99,6 +99,12 @@ class DurationTest extends QtiSmTestCase {
 		$d2 = clone $d1;
 		$d1->add($d2);
 		$this->assertEquals('PT2.001000S', $d1->__toString());
+		
+		$d1 = new Duration('PT3S');
+        $d2 = new \DateInterval('PT1S');
+        $d2->invert = 1;
+        $d1->add($d2);
+        $this->assertEquals('PT2S', $d1->__toString());
 	}
 	
 	public function testSub() {
