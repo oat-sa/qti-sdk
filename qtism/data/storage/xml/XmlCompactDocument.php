@@ -25,7 +25,6 @@
 namespace qtism\data\storage\xml;
 
 use qtism\data\content\RubricBlockRef;
-
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiComponent;
 use qtism\data\TestPart;
@@ -41,6 +40,7 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
 use \DOMElement;
 use \SplObjectStorage;
+use \Exception;
 
 class XmlCompactDocument extends XmlDocument {
 	
