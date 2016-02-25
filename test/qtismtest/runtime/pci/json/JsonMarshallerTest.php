@@ -100,7 +100,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
      * @param mixed $input
      */
     public function testMarshallInvalidInput($input) {
-        $this->setExpectedException('qtism\\runtime\\pci\\json\\MarshallingException', MarshallingException::NOT_SUPPORTED);
+        $this->setExpectedException('qtism\\runtime\\pci\\json\\MarshallingException', '', MarshallingException::NOT_SUPPORTED);
         $marshaller = new Marshaller();
         $marshaller->marshall($input);
     }
