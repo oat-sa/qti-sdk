@@ -310,7 +310,7 @@ class XmlCompactDocument extends XmlDocument
             $compactAssessmentItemRef->setTimeDependent($item->isTimeDependent());
             $compactAssessmentItemRef->setEndAttemptIdentifiers($item->getEndAttemptIdentifiers());
         } catch (Exception $e) {
-            $msg = "An error occured while unreferencing file '${href}'.";
+            $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
@@ -333,8 +333,8 @@ class XmlCompactDocument extends XmlDocument
 
             return $doc->getDocumentComponent();
         } catch (XmlStorageException $e) {
-            $msg = "An error occured while unreferencing file '${href}'.";
-            throw new XmlStorageException($msg, XmlStorageException::RESOLUTION);
+            $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
+            throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
         }
     }
 

@@ -9,6 +9,7 @@ use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\AssessmentTest;
+use qtism\data\storage\xml\XmlStorageException;
 use \DOMDocument;
 
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
@@ -504,5 +505,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals(2, count($endAttemptIdentifiers));
 	    $this->assertEquals('LOST', $endAttemptIdentifiers[0]);
 	    $this->assertEquals('LOST2', $endAttemptIdentifiers[1]);
+	}
+    
+    public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution() {
+        $this->setExpectedException(
+            '\\qtism\\data\\storage\\xml\\XmlStorageException',
+            "An error occured while unreferencing item reference with identifier 'Q01'.",
+            XmlStorageException::RESOLUTION
+        );
+        
+	    $doc = new XmlDocument('2.1');
+	    $file = self::samplesDir() . 'custom/tests/invalidassessmentitemref.xml';
+	    $doc->load($file);
+	    $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 	}
 }

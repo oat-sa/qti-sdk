@@ -30,6 +30,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use \SplObserver;
 use \SplObjectStorage;
+use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
