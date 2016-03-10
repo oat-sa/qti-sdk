@@ -4,6 +4,7 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\NavigationMode;
 use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -215,4 +216,16 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    
 	    unlink($file);
 	}
+    
+    public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution() {
+        $this->setExpectedException(
+            '\\qtism\\data\\storage\\xml\\XmlStorageException',
+            "An error occured while unreferencing item reference with identifier 'Q01'."
+        );
+
+        $doc = new XmlDocument('2.1');
+        $file = self::samplesDir() . 'custom/tests/invalidassessmentitemref.xml';
+        $doc->load($file);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+    }
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -242,7 +242,7 @@ class XmlCompactDocument extends XmlDocument {
 	        $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
 	    }
 	    catch (Exception $e) {
-	        $msg = "An error occured while unreferencing file '${href}'.";
+	        $msg = "An error occured while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
 	        throw new XmlStorageException($msg, $e);
 	    }
 	}
@@ -264,8 +264,8 @@ class XmlCompactDocument extends XmlDocument {
 	        return $doc->getDocumentComponent();
 	    }
 	    catch (XmlStorageException $e) {
-	        $msg = "An error occured while unreferencing file '${href}'.";
-	        throw new XmlStorageException($msg);
+            $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
+            throw new XmlStorageException($msg, $e);
 	    }
 	}
 	

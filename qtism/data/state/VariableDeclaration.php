@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -32,6 +32,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use \SplObserver;
 use \SplObjectStorage;
+use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
