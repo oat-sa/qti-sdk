@@ -72,6 +72,7 @@ class FileSystemFileTest extends QtiSmTestCase {
     public function testInstantiationWrongPath() {
         $this->setExpectedException('\\RuntimeException');
         $pFile = new FileSystemFile('/qtism/test');
+        $pFile->getFilename();
     }
     
     public function retrieveProvider() {

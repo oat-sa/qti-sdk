@@ -75,11 +75,15 @@ class FileSystemFile implements File {
      * @throws RuntimeException If the file cannot be retrieved correctly.
      */
     public function __construct($path) {
+        $this->setPath($path);
+    }
+    
+    private function readInfo() {
         // Retrieve filename and mime type.
-        $fp = @fopen($path, 'r');
+        $fp = @fopen($this->getPath(), 'r');
         
         if ($fp === false) {
-            $msg = "Unable to retrieve QTI file at '${path}.";
+            $msg = "Unable to retrieve QTI file at '".$this->getPath().".";
             throw new RuntimeException($msg);
         }
         
@@ -95,7 +99,6 @@ class FileSystemFile implements File {
         
         $this->setFilename($filename);
         $this->setMimeType($mimeType);
-        $this->setPath($path);
     }
     
     /**
@@ -121,10 +124,16 @@ class FileSystemFile implements File {
     }
     
     public function getMimeType() {
+        if (is_null($this->mimeType)) {
+            $this->readInfo();
+        }
         return $this->mimeType;
     }
     
     public function getFilename() {
+        if (empty($this->filename)) {
+            $this->readInfo();
+        }
         return $this->filename;
     }
     
