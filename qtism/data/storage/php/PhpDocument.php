@@ -23,6 +23,7 @@
 
 namespace qtism\data\storage\php;
 
+use League\Flysystem\Adapter\StreamedWritingPolyfillTests;
 use qtism\common\datatypes\Coords;
 use qtism\data\ExtendedAssessmentSection;
 use qtism\data\QtiDocument;
@@ -43,6 +44,7 @@ use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\Utils as PhpUtils;
+use qtism\runtime\storage\binary\AbstractQtiBinaryStreamAccess;
 use \SplStack;
 use \Exception;
 
@@ -186,10 +188,39 @@ class PhpDocument extends QtiDocument {
             $this->setUrl($url);
         }
         catch (Exception $e) {
-            $msg = "A PHP Runtime Error occured while executing the PHP source code representing the document to be loaded at '${url}'.";
+            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
             throw new PhpStorageException($msg, 0, $e);
         }
     }
+
+    /**
+     * Load a PHP QTI document using a stream resource.
+     *
+     * @param $stream
+     * @return $this
+     * @throws PhpStorageException
+     */
+    public function loadFromStream($stream)
+    {
+        if (!is_resource($stream)) {
+            throw new PhpStorageException('Stream expected, an error occurred loading data.');
+        }
+
+        try {
+            $metadata = stream_get_meta_data($stream);
+            $this->setUrl($metadata['uri'] ?: null);
+
+            eval('?>' . stream_get_contents($stream));
+            $this->setDocumentComponent($rootcomponent);
+
+            return $this;
+        } catch (Exception $e) {
+            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document.";
+            throw new PhpStorageException($msg, 0, $e);
+        }
+    }
+
+
     
     protected static function getBaseImplementation($object) {
         if ($object instanceof AssessmentTest) {

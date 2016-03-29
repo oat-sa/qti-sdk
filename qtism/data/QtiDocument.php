@@ -91,4 +91,12 @@ abstract class QtiDocument {
      * @throws StorageException
      */
     abstract public function save($url);
+
+    /**
+     * Load php variables from stream
+     *
+     * @param $stream
+     * @return mixed
+     */
+    abstract public function loadFromStream($stream);
 }
