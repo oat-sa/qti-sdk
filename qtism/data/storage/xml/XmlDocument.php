@@ -113,18 +113,6 @@ class XmlDocument extends QtiDocument {
 	public function loadFromString($string, $validate = false) {
 	    $this->loadImplementation($string, $validate, true);
 	}
-
-	/**
-	 * Load QTI-XML from stream.
-	 *
-	 * @param $stream
-	 * @param bool $validate
-	 */
-	public function loadFromStream($stream, $validate = false)
-	{
-		$content = stream_get_contents($stream);
-		$this->loadFromString($content, $validate);
-	}
 	
 	protected function loadImplementation($data, $validate = false, $fromString = false) {
 		try {

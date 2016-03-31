@@ -26,77 +26,85 @@ namespace qtism\data;
 use qtism\data\storage\StorageException;
 
 abstract class QtiDocument {
-    
+
     /**
-     * 
+     *
      * @var string
      */
     private $version = '2.1';
-    
+
     /**
-     * 
+     *
      * @var QtiComponent
      */
     private $documentComponent;
-    
+
     /**
-     * 
+     *
      * @var string
      */
     private $url;
-    
+
     public function __construct($version = '2.1', QtiComponent $documentComponent = null) {
         $this->setVersion($version);
         $this->setDocumentComponent($documentComponent);
     }
-    
+
     public function setVersion($version) {
         $this->version = $version;
     }
-    
+
     public function getVersion() {
         return $this->version;
     }
-    
+
     public function setDocumentComponent(QtiComponent $documentComponent = null) {
         $this->documentComponent = $documentComponent;
     }
-    
+
     /**
-     * 
+     *
      * @return QtiComponent
      */
     public function getDocumentComponent() {
         return $this->documentComponent;
     }
-    
+
     protected function setUrl($url) {
         $this->url = $url;
     }
-    
+
     public function getUrl() {
         return $this->url;
     }
-    
+
     /**
-     * 
+     *
      * @param string $url
-     * @throws StorageException 
+     * @throws StorageException
      */
     abstract public function load($url);
-    
+
     /**
-     * 
+     *
      * @param string $url
      * @throws StorageException
      */
     abstract public function save($url);
 
     /**
-     * Load php variables from stream
+     * Load php variables from string
      *
-     * @param $stream
+     * @param $data
      * @return mixed
      */
-    abstract public function loadFromStream($stream);
+    abstract public function loadFromString($data);
+
+    /**
+     * Return source as string
+     * Should validate qti component
+     *
+     * @return mixed
+     */
+    abstract public function saveToString();
 }
