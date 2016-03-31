@@ -345,12 +345,12 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->beginAttempt();
         $assessmentTestSession->suspend();
         
-        sleep(1);
+        sleep(2);
         $this->assertEquals(AssessmentTestSessionState::SUSPENDED, $assessmentTestSession->getState());
         
         $assessmentTestSession->resume();
         
-        // Even if we slept a second, no additional time taken into account because the test was suspended.
+        // Even if we slept two seconds, no additional time taken into account because the test was suspended.
         $this->assertEquals(0, $assessmentTestSession['Q01.duration']->getSeconds(true));
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
         

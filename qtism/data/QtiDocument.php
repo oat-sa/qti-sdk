@@ -93,18 +93,18 @@ abstract class QtiDocument {
     abstract public function save($url);
 
     /**
-     * Load php variables from string
+     * Load the document content from a string.
      *
-     * @param $data
-     * @return mixed
+     * @param string $data
+     * @return string
+     * @throws StorageException
      */
     abstract public function loadFromString($data);
 
     /**
-     * Return source as string
-     * Should validate qti component
+     * Save the document content as a string.
      *
-     * @return mixed
+     * @return string
      */
     abstract public function saveToString();
 }
