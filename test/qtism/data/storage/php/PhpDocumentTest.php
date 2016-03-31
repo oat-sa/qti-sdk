@@ -19,6 +19,16 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
     }
     
+    public function testSimpleLoadFromString() {
+        $doc = new PhpDocument();
+        $doc->loadFromString(file_get_contents(self::samplesDir() . 'custom/php/php_storage_simple.php'));
+        
+        $assessmentTest = $doc->getDocumentComponent();
+        $this->assertInstanceOf('qtism\\data\\AssessmentTest', $assessmentTest);
+        
+        $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
+    }
+    
      public function testSimpleSave() {
 
         $doc = new XmlCompactDocument();
@@ -28,6 +38,16 @@ class PhpDocumentTest extends QtiSmTestCase {
         $phpDoc->save($file);
         
         unlink($file);
+    }
+    
+    public function testSimpleSaveToString() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
+        $phpDoc = new PhpDocument('2.1', $doc->getDocumentComponent());
+        $phpStr = $phpDoc->saveToString();
+        
+        $phpDoc->loadFromString($phpStr);
+        $this->assertEquals('php_storage_simple', $phpDoc->getDocumentComponent()->getIdentifier());
     }
     
     public function testCustomOperatorOne() {
@@ -99,6 +119,33 @@ class PhpDocumentTest extends QtiSmTestCase {
         $this->assertFalse(file_exists($file));
     }
     
+    /**
+     *
+     * @dataProvider loadTestSamplesDataProvider
+     * @param string $testUri
+     * @param string $rootType The expected fully qualified class name of the document component.
+     */
+    public function testLoadTestSamplesFromString($testUri, $rootType) {
+        // Basic XML -> PHP transormation + saveTotring + loadFromString
+        $xmlDoc = new XmlDocument('2.1');
+        $xmlDoc->loadFromString(file_get_contents($testUri));
+    
+        $phpDoc = new PhpDocument();
+        $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
+    
+        $file = tempnam('/tmp', 'qsm');
+        file_put_contents($file, $phpDoc->saveToString());
+    
+        $phpDoc = new PhpDocument();
+        $phpDoc->loadFromString(file_get_contents($file));
+    
+        $this->assertInstanceOf($rootType, $phpDoc->getDocumentComponent());
+        $this->assertNull($phpDoc->getUrl());
+    
+        unlink($file);
+        $this->assertFalse(file_exists($file));
+    }
+    
     public function testLoadInteractionMixSaschsen() {
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
@@ -119,61 +166,61 @@ class PhpDocumentTest extends QtiSmTestCase {
     
     public function loadTestSamplesDataProvider() {
         return array(
-                        array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/arbitrary_weighting_of_item_outcomes/arbitrary_weighting_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/basic_statistics_as_outcomes/basic_statistics_as_outcomes.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/branching_based_on_the_response_to_an_assessmentitem/branching_based_on_the_response_to_an_assessmentitem.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/controlling_the_duration_of_an_item_attempt/controlling_the_duration_of_an_item_attempt.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/controlling_item_feedback_in_relation_to_the_test/controlling_item_feedback_in_relation_to_the_test.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/early_termination_of_test_based_on_accumulated_item_outcomes/early_termination_of_test_based_on_accumulated_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/feedback_examples_test/feedback_examples_test.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/golden_required_items_and_sections/golden_required_items_and_sections.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/items_arranged_into_sections_within_tests/items_arranged_into_sections_within_tests.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/mapping_item_outcomes_prior_to_aggregation/mapping_item_outcomes_prior_to_aggregation.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/randomizing_the_order_of_items_and_sections/randomizing_the_order_of_items_and_sections.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/sets_of_items_with_leading_material/sets_of_items_with_leading_material.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/simple_feedback_test/simple_feedback_test.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml', 'qtism\\data\\AssessmentTest'),
-                        array(self::samplesDir() . 'rendering/various_content.xml', 'qtism\\data\\content\\RubricBlock'),
-                        array(self::samplesDir() . 'rendering/associateinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/choiceinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/choiceinteraction_2.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/drawinginteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/endattemptinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/extendedtextinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/gapmatchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/graphicgapmatchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/graphicorderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/hotspotinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/hottextinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/inlinechoiceinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/itembodywithfeedback_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/matchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/mediainteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/mediainteraction_2.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/mediainteraction_3.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/orderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/selectpointinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/positionobjectinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/sliderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/textentryinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/uploadinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
-                        array(self::samplesDir() . 'rendering/itemfeedback_1.xml', 'qtism\\data\\AssessmentItem'),
-                        array(self::samplesDir() . 'rendering/empty_object.xml', 'qtism\\data\\content\\xhtml\\Object'),
-                        array(self::samplesDir() . 'rendering/empty_rubricblock.xml', 'qtism\\data\\content\\RubricBlock'),
-                        array(self::samplesDir() . 'rendering/rubricblock_1.xml', 'qtism\\data\\content\\RubricBlock'),
-                        array(self::samplesDir() . 'rendering/rubricblock_2.xml', 'qtism\\data\\content\\RubricBlock'),
-                        array(self::samplesDir() . 'rendering/rubricblock_3.xml', 'qtism\\data\\content\\RubricBlock'),
-                        array(self::samplesDir() . 'rendering/math_1.xml', 'qtism\\data\\AssessmentItem'),
-                        array(self::samplesDir() . 'rendering/math_2.xml', 'qtism\\data\\AssessmentItem'),
-                        array(self::samplesDir() . 'rendering/math_3.xml', 'qtism\\data\\AssessmentItem'),
-                        array(self::samplesDir() . 'rendering/math_4.xml', 'qtism\\data\\Content\\RubricBlock'),
-                        array(self::samplesDir() . 'custom/operators/custom_operator_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
-                        array(self::samplesDir() . 'custom/operators/custom_operator_2.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
-                        array(self::samplesDir() . 'custom/operators/custom_operator_3.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
-                        array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
-                        array(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', 'qtism\\data\\AssessmentItem')
+            array(self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/arbitrary_weighting_of_item_outcomes/arbitrary_weighting_of_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/basic_statistics_as_outcomes/basic_statistics_as_outcomes.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/branching_based_on_the_response_to_an_assessmentitem/branching_based_on_the_response_to_an_assessmentitem.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/controlling_the_duration_of_an_item_attempt/controlling_the_duration_of_an_item_attempt.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/controlling_item_feedback_in_relation_to_the_test/controlling_item_feedback_in_relation_to_the_test.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/early_termination_of_test_based_on_accumulated_item_outcomes/early_termination_of_test_based_on_accumulated_item_outcomes.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/feedback_examples_test/feedback_examples_test.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/golden_required_items_and_sections/golden_required_items_and_sections.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/items_arranged_into_sections_within_tests/items_arranged_into_sections_within_tests.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/mapping_item_outcomes_prior_to_aggregation/mapping_item_outcomes_prior_to_aggregation.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/randomizing_the_order_of_items_and_sections/randomizing_the_order_of_items_and_sections.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/sets_of_items_with_leading_material/sets_of_items_with_leading_material.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/simple_feedback_test/simple_feedback_test.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'ims/tests/specifiying_the_number_of_allowed_attempts/specifiying_the_number_of_allowed_attempts.xml', 'qtism\\data\\AssessmentTest'),
+            array(self::samplesDir() . 'rendering/various_content.xml', 'qtism\\data\\content\\RubricBlock'),
+            array(self::samplesDir() . 'rendering/associateinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/choiceinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/choiceinteraction_2.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/drawinginteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/endattemptinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/extendedtextinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/gapmatchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/graphicgapmatchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/graphicorderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/hotspotinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/hottextinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/inlinechoiceinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/itembodywithfeedback_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/matchinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/mediainteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/mediainteraction_2.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/mediainteraction_3.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/orderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/selectpointinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/positionobjectinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/sliderinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/textentryinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/uploadinteraction_1.xml', 'qtism\\data\\content\\ItemBody'),
+            array(self::samplesDir() . 'rendering/itemfeedback_1.xml', 'qtism\\data\\AssessmentItem'),
+            array(self::samplesDir() . 'rendering/empty_object.xml', 'qtism\\data\\content\\xhtml\\Object'),
+            array(self::samplesDir() . 'rendering/empty_rubricblock.xml', 'qtism\\data\\content\\RubricBlock'),
+            array(self::samplesDir() . 'rendering/rubricblock_1.xml', 'qtism\\data\\content\\RubricBlock'),
+            array(self::samplesDir() . 'rendering/rubricblock_2.xml', 'qtism\\data\\content\\RubricBlock'),
+            array(self::samplesDir() . 'rendering/rubricblock_3.xml', 'qtism\\data\\content\\RubricBlock'),
+            array(self::samplesDir() . 'rendering/math_1.xml', 'qtism\\data\\AssessmentItem'),
+            array(self::samplesDir() . 'rendering/math_2.xml', 'qtism\\data\\AssessmentItem'),
+            array(self::samplesDir() . 'rendering/math_3.xml', 'qtism\\data\\AssessmentItem'),
+            array(self::samplesDir() . 'rendering/math_4.xml', 'qtism\\data\\Content\\RubricBlock'),
+            array(self::samplesDir() . 'custom/operators/custom_operator_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
+            array(self::samplesDir() . 'custom/operators/custom_operator_2.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
+            array(self::samplesDir() . 'custom/operators/custom_operator_3.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
+            array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
+            array(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', 'qtism\\data\\AssessmentItem')
         );
     }
 }

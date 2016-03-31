@@ -1,11 +1,8 @@
 <?php
 
 use qtism\common\enums\BaseType;
-
 use qtism\common\enums\Cardinality;
-
 use qtism\data\storage\xml\XmlDocument;
-
 use qtism\data\View;
 use qtism\data\AssessmentItem;
 
@@ -23,6 +20,17 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		$assessmentItem = $doc->getDocumentComponent();
 		$this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
 	}
+    
+    /**
+	 * @dataProvider validFileProvider
+	 */
+    public function testLoadFromString($uri) {
+        $doc = new XmlDocument('2.1');
+		$doc->loadFromString(file_get_contents($uri));
+		
+		$assessmentItem = $doc->getDocumentComponent();
+		$this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+    }
 	
 	/**
 	 * @dataProvider validFileProvider
@@ -44,6 +52,27 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		// Nobody else touched it?
 		$this->assertFalse(file_exists($file));
 	}
+    
+    /**
+	 * @dataProvider validFileProvider
+	 */
+    public function testSaveToString($uri) {
+        $doc = new XmlDocument('2.1');
+		$doc->load($uri);
+		
+		$assessmentItem = $doc->getDocumentComponent();
+		$this->assertInstanceOf('qtism\\data\\AssessmentItem', $assessmentItem);
+		
+		$file = tempnam('/tmp', 'qsm');
+		file_put_contents($file, $doc->saveToString());
+		
+		$this->assertTrue(file_exists($file));
+		$this->testLoadFromString($file);
+		
+		unlink($file);
+		// Nobody else touched it?
+		$this->assertFalse(file_exists($file));
+    }
 	
 	public function testLoad21() {
 		$file = self::samplesDir() . 'ims/items/2_1/associate.xml';
