@@ -131,11 +131,11 @@ class MapResponseProcessor extends ExpressionProcessor {
                                 $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
                                 
                                 if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
-                                    $val = mb_strtolower($val->getValue(), 'UTF-8');
+                                    $processedVal = mb_strtolower($val->getValue(), 'UTF-8');
                                     $mapKey = mb_strtolower($mapKey, 'UTF-8');
                                 }
                                 
-                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || $val === $mapKey) {
+                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || (isset($processedVal) && $processedVal === $mapKey)) {
                                     if (in_array($rawMapKey, $mapped, true) === false) {
                                         $result += $mapEntries[$i]->getMappedValue();
                                         $mapped[] = $rawMapKey;
