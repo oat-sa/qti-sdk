@@ -129,13 +129,14 @@ class MapResponseProcessor extends ExpressionProcessor {
                             for ($i = 0; $i < count($mapEntries); $i++) {
                                 
                                 $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
-                                
+
+                                $processedVal = null;
                                 if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
                                     $processedVal = mb_strtolower($val->getValue(), 'UTF-8');
                                     $mapKey = mb_strtolower($mapKey, 'UTF-8');
                                 }
                                 
-                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || (isset($processedVal) && $processedVal === $mapKey)) {
+                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || $processedVal === $mapKey) {
                                     if (in_array($rawMapKey, $mapped, true) === false) {
                                         $result += $mapEntries[$i]->getMappedValue();
                                         $mapped[] = $rawMapKey;
