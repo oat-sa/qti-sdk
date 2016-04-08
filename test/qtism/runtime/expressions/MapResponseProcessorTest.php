@@ -1,15 +1,11 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
-
-use qtism\common\datatypes\Integer;
-
-use qtism\data\expressions\MapResponse;
-
-use qtism\runtime\common\RecordContainer;
-
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\Integer;
+use qtism\data\expressions\MapResponse;
+use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\ResponseVariable;
@@ -201,6 +197,12 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('choice7'), new Identifier('identifierX')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(-21.0, $result->getValue());
+        
+        // Response is 'choice1', 'choice7'. As entries 'Choice1' and 'Choice7' are marked
+        // as case insensitive, they will be matched.
+        $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('choice7'), new Identifier('choice1')));
+        $result = $mapResponseProcessor->process();
+        $this->assertEquals(-18.0, $result->getValue());
 	    
 	    // Empty state.
 	    // An exception is raised because no RESPONSE variable found.
