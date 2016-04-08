@@ -143,8 +143,8 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	                <value>Choice7</value>
 	            </correctResponse>
 	            <mapping>
-	                <mapEntry mapKey="Choice1" mappedValue="2"/>
-	                <mapEntry mapKey="Choice6" mappedValue="20"/>
+	                <mapEntry mapKey="Choice1" mappedValue="2" caseSensitive="false"/>
+	                <mapEntry mapKey="Choice6" mappedValue="20" caseSensitive="false"/>
                     <mapEntry mapKey="Choice9" mappedValue="20"/>
 	                <mapEntry mapKey="Choice2" mappedValue="-20"/>
 	                <mapEntry mapKey="Choice3" mappedValue="-20"/>
