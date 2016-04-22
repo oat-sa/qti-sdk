@@ -1547,4 +1547,28 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	    $this->assertFalse($session->isTimeout());
 	}
+    
+    public function testGetRouteCountAllWithResponseDeclaration() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/route_count/all_with_responsedeclaration.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        $session->beginTestSession();
+        
+        $this->assertEquals(3, $session->getRouteCount());
+        $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
+        $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
+    }
+    
+    public function testGetRouteCountMissingResponseDeclaration() {
+	    $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/route_count/missing_responsedeclaration.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        $session->beginTestSession();
+        
+        $this->assertEquals(3, $session->getRouteCount());
+        $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
+        $this->assertEquals(2, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
+    }
 }
