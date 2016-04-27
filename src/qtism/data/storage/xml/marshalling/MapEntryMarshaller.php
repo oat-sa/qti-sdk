@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -117,32 +117,26 @@ class MapEntryMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($mapKey = static::getDOMElementAttributeAs($element, 'mapKey')) !== null) {
+        try {
+            $mapKey = static::getDOMElementAttributeAs($element, 'mapKey');
+            $mapKey = Utils::stringToDatatype($mapKey, $this->getBaseType());
 
-            try {
-                $mapKey = Utils::stringToDatatype($mapKey, $this->getBaseType());
+            if (($mappedValue = static::getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
 
-                if (($mappedValue = static::getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
+                $object = new MapEntry($mapKey, $mappedValue);
 
-                    $object = new MapEntry($mapKey, $mappedValue);
-
-                    if (Version::compare($this->getVersion(), '2.0.0', '>') && ($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
-                        $object->setCaseSensitive($caseSensitive);
-                    }
-
-                    return $object;
-                } else {
-                    $msg = "The mandatory 'mappedValue' attribute is missing from element '" . $element->nodName . "'.";
-                    throw new UnmarshallingException($msg, $element);
+                if (Version::compare($this->getVersion(), '2.0.0', '>') && ($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+                    $object->setCaseSensitive($caseSensitive);
                 }
-            } catch (UnexpectedValueException $e) {
-                $msg = "The value of the 'mapKey' attribute '${mapKey}' could not be converted to qti:valueType.";
-                throw new UnmarshallingException($msg, $element, $e);
-            }
 
-        } else {
-            $msg = "The mandatory 'mapKey' attribute is missing from the '" . $element->localName . "' element";
-            throw new    UnmarshallingException($msg, $element);
+                return $object;
+            } else {
+                $msg = "The mandatory 'mappedValue' attribute is missing from element '" . $element->nodeName . "'.";
+                throw new UnmarshallingException($msg, $element);
+            }
+        } catch (UnexpectedValueException $e) {
+            $msg = "The value '${mapKey}' of the 'mapKey' attribute could not be converted to a '" . BaseType::getNameByConstant($this->getBaseType()) . "' value.";
+            throw new UnmarshallingException($msg, $element, $e);
         }
     }
 

@@ -4,6 +4,7 @@ namespace qtismtest\runtime\expressions;
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
 use qtism\data\expressions\MapResponse;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -93,7 +94,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
 	}
 	
-	public function testIndentifier() {
+	public function testIdentifier() {
 	    $variableDeclaration = $this->createComponentFromXml('
 	        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                 <correctResponse>
@@ -221,5 +222,46 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		
 		$mapResponseProcessor->setState(new State(array($variable)));
 		$mapResponseProcessor->process();
+	}
+    
+    public function testEmptyMapEntryForStringSingleCardinality() {
+		$variableDeclaration = $this->createComponentFromXml('
+			<responseDeclaration identifier="response1" baseType="string" cardinality="single">
+				<mapping lowerBound="-1" defaultValue="0">
+					<mapEntry mapKey="" mappedValue="-1"/>
+					<mapEntry mapKey="Correct" mappedValue="1"/>
+				</mapping>
+			</responseDeclaration>
+		');
+		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
+		$mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="response1"/>');
+		
+		$state = new State();
+		$state->setVariable($variable);
+		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
+		$mapResponseProcessor->setState($state);
+		
+        // No response provided, so the null value is equal to empty string...
+		$result = $mapResponseProcessor->process();
+		$this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(-1, $result->getValue());
+        
+        // Empty string response provided. Expected is the same result as above...
+        $state['response1'] = new QtiString('');
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(-1, $result->getValue());
+        
+        // Non empty string (with match). Expected is 1.
+        $state['response1'] = new QtiString('Correct');
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(1, $result->getValue());
+        
+        // Non empty string (without match). Expected is 1.
+        $state['response1'] = new QtiString('Incorrect');
+        $result = $mapResponseProcessor->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $result);
+        $this->assertEquals(0, $result->getValue());
 	}
 }

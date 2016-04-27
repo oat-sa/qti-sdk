@@ -39,6 +39,47 @@ class MapEntryMarshallerTest extends QtiSmTestCase {
 		$this->assertInternalType('boolean', $component->isCaseSensitive());
 		$this->assertEquals(true, $component->isCaseSensitive());
 	}
+    
+    public function testUnmarshall21EmptyMapKeyForString() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::STRING));
+        $component = $marshaller->unmarshall($element);
+        
+        $this->assertInstanceOf('qtism\\data\\state\MapEntry', $component);
+        $this->assertEquals('', $component->getMapKey());
+        $this->assertEquals(-1.0, $component->getMappedValue());
+    }
+    
+    public function testUnmarshall21EmptyMapKeyForInteger() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The value '' of the 'mapKey' attribute could not be converted to a 'integer' value."
+        );
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::INTEGER));
+        $component = $marshaller->unmarshall($element);
+    }
+    
+    public function testUnmarshall21EmptyMapKeyForIdentifier() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value."
+        );
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, array(BaseType::IDENTIFIER));
+        $component = $marshaller->unmarshall($element);
+    }
 	
 	public function testMarshall20() {
 	    // No caseSensitive attribute in QTI 2.0. Check that no caseSensitive attribute goes out.

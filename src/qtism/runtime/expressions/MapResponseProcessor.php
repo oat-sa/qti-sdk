@@ -93,12 +93,11 @@ class MapResponseProcessor extends ExpressionProcessor
                             $val = mb_strtolower($val->getValue(), 'UTF-8');
                             $mapKey = mb_strtolower($mapKey, 'UTF-8');
                         }
-
+                        
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
-                            // relevant mapping found.
-                            $mappedValue = $mapEntry->getMappedValue();
-
-                            return new QtiFloat($mappedValue);
+                            return new QtiFloat($mapEntry->getMappedValue());
+                        } elseif ($val === null && $mapKey === '') {
+                            return new QtiFloat($mapEntry->getMappedValue());
                         }
                     }
 
