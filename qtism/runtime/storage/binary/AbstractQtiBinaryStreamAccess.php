@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -24,6 +24,7 @@
  */
 namespace qtism\runtime\storage\binary;
 
+use qtism\common\datatypes\files\FileManager;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -65,18 +66,45 @@ use qtism\common\storage\BinaryStreamAccess;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
-    
+class QtiBinaryStreamAccess extends BinaryStreamAccess {
+
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
+
     /**
      * Create a new QtiBinaryStreamAccess object.
      * 
      * @param IStream $stream The IStream object to be accessed.
+     * @param FileManager $fileManager The FileManager object to handle file variable.
      * @throws BinaryStreamAccessException If $stream is not open yet.
      */
-    public function __construct(IStream $stream) {
+    public function __construct(IStream $stream, FileManager $fileManager) {
         parent::__construct($stream);
+        $this->setFileManager($fileManager);
     }
-    
+
+    /**
+     * Set file manager
+     * @param $fileManager
+     * @return $this
+     */
+    public function setFileManager(FileManager $fileManager)
+    {
+        $this->fileManager = $fileManager;
+        return $this;
+    }
+
+    /**
+     * Get file manager
+     * @return FileManager
+     */
+    public function getFileManager()
+    {
+        return $this->fileManager;
+    }
+
     /**
      * Read and fill the Variable $variable with its value contained
      * in the current stream.
@@ -459,22 +487,6 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::URI, $e);
         }
     }
-    
-    /**
-     * Read a File from the current binary stream.
-     *
-     * @throws QtiBinaryStreamAccessException
-     * @return File A File object
-     */
-    abstract public function readFile();
-    
-    /**
-     * Write A file composed by some $binaryContent into the current binary stream.
-     * 
-     * @param File $file A File object
-     * @throws QtiBinaryStreamAccessException
-     */
-    abstract public function writeFile(File $file);
     
     /**
      * Read an intOrIdentifier from the current binary stream.
@@ -863,5 +875,38 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
     		$msg = "A QTI component position could not be found in the assessmentTest tree structure.";
     		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
     	}
+    }
+
+    /**
+     * Write a QtiFile object in the current binary stream.
+     *
+     * @return File
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function writeFile(QtiFile $file)
+    {
+        try {
+            $this->writeString($file->getIdentifier());
+        } catch (QtiBinaryStreamAccessException $e) {
+            $msg = "An error occured while reading a QTI File.";
+         throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
+        }
+    }
+
+    /**
+     * Read a QtiFile object from the current binary stream.
+     *
+     * @return File
+     * @throws QtiBinaryStreamAccessException
+     */
+    public function readFile()
+    {
+        try {
+            $id = $this->readString();
+            return $this->getFileManager()->retrieve($id);
+        } catch (\Exception $e) {
+            $msg = "An error occured while writing a QTI File.";
+            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
+        }
     }
 }
