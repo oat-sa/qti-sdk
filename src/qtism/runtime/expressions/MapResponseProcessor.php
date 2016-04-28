@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\expressions;
 
+use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\Comparable;
@@ -82,6 +83,7 @@ class MapResponseProcessor extends ExpressionProcessor
                     return new QtiFloat(0.0);
                 }
 
+                // Single cardinality behaviour.
                 if ($variable->isSingle()) {
 
                     foreach ($mapping->getMapEntries() as $mapEntry) {
@@ -96,71 +98,65 @@ class MapResponseProcessor extends ExpressionProcessor
                         
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
                             return new QtiFloat($mapEntry->getMappedValue());
-                        } elseif ($val === null && $mapKey === '') {
+                        } elseif ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '') {
                             return new QtiFloat($mapEntry->getMappedValue());
                         }
                     }
 
                     // No relevant mapping found, return mapping default.
                     return new QtiFloat($mapping->getDefaultValue());
+                    
+                // Multiple cardinality behaviour.
                 } elseif ($variable->isMultiple()) {
 
                     $result = 0.0;
+                    $variableValue = (count($variable->getValue()) === 0) ? array(null) : $variable->getValue();
 
-                    if (!is_null($variable->getValue())) {
-                        $mapped = array(); // already mapped keys.
-                        $mapEntries = $mapping->getMapEntries();
+                    $mapped = array(); // already mapped keys.
+                    $mapEntries = $mapping->getMapEntries();
 
-                        foreach ($variable->getValue() as $val) {
+                    foreach ($variableValue as $val) {
 
-                            for ($i = 0; $i < count($mapEntries); $i++) {
+                        for ($i = 0; $i < count($mapEntries); $i++) {
 
-                                $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
-                                $processedVal = null;
-                                if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
-                                    $processedVal = mb_strtolower($val->getValue(), 'UTF-8');
-                                    $mapKey = mb_strtolower($mapKey, 'UTF-8');
-                                }
-
-                                if (($val instanceof Comparable && $val->equals($mapKey) === true) || $processedVal === $mapKey) {
-                                    if (in_array($rawMapKey, $mapped, true) === false) {
-                                        $result += $mapEntries[$i]->getMappedValue();
-                                        $mapped[] = $rawMapKey;
-
-                                    }
-                                    // else...
-                                    // This value has already been mapped.
-
-                                    break;
-                                }
+                            $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
+                            if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
+                                $val = new QtiString(mb_strtolower($val->getValue(), 'UTF-8'));
+                                $mapKey = mb_strtolower($mapKey, 'UTF-8');
                             }
 
-                            if ($i >= count($mapEntries)) {
-                                // No explicit mapping found for source value $val.
-                                $result += $mapping->getDefaultValue();
+                            if (($val instanceof Comparable && $val->equals($mapKey) === true) || ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '')) {
+                                if (in_array($rawMapKey, $mapped, true) === false) {
+                                    $result += $mapEntries[$i]->getMappedValue();
+                                    $mapped[] = $rawMapKey;
+                                }
+                                // else...
+                                // This value has already been mapped.
+                                break;
                             }
                         }
 
-                        // When mapping a container, try to apply lower or upper bound.
-                        if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-                            return new QtiFloat($mapping->getLowerBound());
-                        } elseif ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-                            return new QtiFloat($mapping->getUpperBound());
-                        } else {
-                            return new QtiFloat($result);
+                        if ($i >= count($mapEntries)) {
+                            // No explicit mapping found for source value $val.
+                            $result += $mapping->getDefaultValue();
                         }
-                    } else {
-                        // Returns a 0.0 result.
-                        return new QtiFloat($result);
                     }
 
+                    // When mapping a container, try to apply lower or upper bound.
+                    if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
+                        return new QtiFloat($mapping->getLowerBound());
+                    } elseif ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
+                        return new QtiFloat($mapping->getUpperBound());
+                    } else {
+                        return new QtiFloat($result);
+                    }
                 } else {
-                    $msg = "MapResponse cannot be applied on a RECORD container.";
+                    $msg = "MapResponse cannot be applied on a Record container.";
                     throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
                 
             } else {
-                $msg = "The target variable must be a ResponseVariable, OutcomeVariable given while processing MapResponse.";
+                $msg = "The target variable of a MapResponse expression must be a ResponseVariable.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
             }
         } else {
