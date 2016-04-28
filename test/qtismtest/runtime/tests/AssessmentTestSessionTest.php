@@ -1390,11 +1390,15 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->beginAttempt();
 	    $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('true'))));
 	    $session->endAttempt($responses);
-        // The ModalFeedback must not be shown because the number of attempts is not > 1.
-	    $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
+        // The ModalFeedback must be shown because even if the last attempt has been consumed, showFeedback is true.
+	    $this->assertEquals(AssessmentItemSessionState::MODAL_FEEDBACK, $session->getCurrentAssessmentItemSession()->getState());
 	    
 	    // -- Move from Q01 to Q02.
+        $tempItemSession = $session->getCurrentAssessmentItemSession();
 	    $session->moveNext();
+        
+        // Just check that Q01 closed.
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $tempItemSession->getState());
 	    
 	    // -- Q02 nonAdaptive, maxAttempts = 0, showFeedback = false.
 	    // Here, the maxAttempts is 0 i.e. no limit. Moreover, feedback is shown only if the answer is wrong.

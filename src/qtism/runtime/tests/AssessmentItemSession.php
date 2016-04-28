@@ -1293,6 +1293,15 @@ class AssessmentItemSession extends State
         // This [showFeedback] constraint affects the visibility of feedback after the end of the last attempt. If it 
         // is false then feedback is not shown. This includes both Modal Feedback and Integrated Feedback even if the 
         // candidate has access to the review state. The default is false.
+        // 
+        // QTI-SDK Developers:
+        // The following sentence from the specification is problematic: "A value of maxAttempts greater than 1, by definition, 
+        // indicates that any applicable feedback must be shown." In other words, we can read that if the value of maxAttempts
+        // is lesser or equal to 1, no feedback must be shown. This is very problematic in case of a linear test, where it is logic
+        // to set the maxAttempts to 1, because the number of attempts is defacto 1 in such a linear test. In such a context, no
+        // feedbacks can be shown. QTI-SDK Developers decided that it was more sensitive to show feedbacks if maxAttempts is lesser
+        // or equal to 1. However, "once the maximum number of allowed attempts have been used whether or not the feeback is shown
+        // is still controlled by the showFeedback constraint.
         
         $mustModalFeedback = false;
         $itemSessionControl = $this->getItemSessionControl();
@@ -1301,13 +1310,7 @@ class AssessmentItemSession extends State
             return $mustModalFeedback;
         }
         
-        // Feedback is never shown in SIMULTANEOUS submission mode, nor if showFeedback is disabled.
-        $maxAttempts = $itemSessionControl->getMaxAttempts();
-        if ($this->getAssessmentItem()->isAdaptive() === true) {
-            $maxAttempts = 0;
-        }
-        
-        if (($maxAttempts === 0 || $maxAttempts > 1) && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
 
             foreach ($this->getAssessmentItem()->getModalFeedbackRules() as $rule) {
             
