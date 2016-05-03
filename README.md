@@ -15,18 +15,18 @@ __This implementation of QTI is under constant enhancement. The API of the maste
 
 ## Features
 
-* Targets QTI 2.0, 2.1 and 2.2
+* Targets QTI 2.0, 2.1 and partially 2.2
 * Complete QTI Information Model
 * Complete QTI Rule Engine Support
-* Custom Operator Hooks through PSR-0
+* Custom Operator Hooks through PSR-0/PSR-4
 * [Wilbert Kraan's](http://blogs.cetis.ac.uk/wilbert/2013/11/06/using-standards-to-make-assessment-in-e-textbooks-scalable-engaging-but-robust) / [Steve Lay's](http://swl10.blogspot.co.uk/2013/09/transforming-qti-v2-into-xhtml-5.html) Goldilocks Rendering
 * CSS Parser for direct QTI Information Model mapping at rendering time
-* Item Sessions (with lightning fast binary persistence)
-* Test Sessions (with lightning fast binary persistence)
+* Item & Test Sessions (with lightning fast binary persistence)
 * Nice and Clean API for QTI Document manipulation/traversal
-* PreConditions and Branching
+* PreConditions & Branching
+* Selection & Ordering
 * Response/Outcome Processing
-* Unit Testing Driven from PHP 5.3 to 7.0
+* Unit test driven from PHP 5.5 to 7.0
 
 ## Installation (developers)
 
