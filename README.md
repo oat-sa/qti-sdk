@@ -54,7 +54,9 @@ We are always looking for people to feed the project with:
 
 [Please make yourself known](https://github.com/bugalot)!
 
-## QTI Item Session Example
+## QTI Item Session Management
+
+### Introduction Example
 
 The following example demonstrates how to instantiate an item session for a given QTI XML item document. The item
 in use in this example is the [*"Composition of Water"*](http://www.imsglobal.org/question/qtiv2p1/examples/items/choice_multiple.xml) item, from the [QTI 2.1 Implementation Guide](http://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html).
@@ -128,6 +130,115 @@ echo 'SCORE: ' . $itemSession['SCORE'] . "\n";
 // completionStatus: completed
 // RESPONSE: ['H'; 'O']
 // SCORE: 2
+
+// End the current item session.
+$itemSession->endItemSession();
+```
+
+### Multiple Attempts Example
+
+As per the QTI specification, item sessions allow a single attempt to be performed by default. Trying to begin an
+attempt that will make the item session exceeding the maximum number of attempts will lead to a PHP exception, as in
+the following example.
+
+```php
+<?php
+use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSession;
+use qtism\runtime\tests\AssessmentItemSessionException;
+
+$itemDoc = new XmlDocument('2.1');
+$itemDoc->load('choice_multiple.xml');
+$item = $itemDoc->getDocumentComponent();
+
+$itemSession = new AssessmentItemSession($item);
+$itemSession->beginItemSession();
+
+// Begin 1st attempt.
+$itemSession->beginAttempt();
+// End attempt by providing an empty response...
+$itemSession->endAttempt(new State());
+
+// Begin 2nd attempt, but by default, maximum number of attempts is 1.
+try {
+    $itemSession->beginAttempt();
+} catch (AssessmentItemSessionException $e) {
+    echo $e->getMessage();
+    // A new attempt for item 'choiceMultiple' is not allowed. The maximum number of attempts (1) is reached.
+}
+```
+
+If multiple attempts are permitted on a given assessmentItem, the `itemSessionControl`'s `maxAttempts` attribute 
+can be modified to allow multiple or unlimited attempts that can be performed by a candidate.
+
+```php
+<?php
+use qtism\data\ItemSessionControl;
+use qtism\data\storage\xml\XmlDocument;
+use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentItemSession;
+
+$itemDoc = new XmlDocument('2.1');
+$itemDoc->load('choice_multiple.xml');
+$item = $itemDoc->getDocumentComponent();
+$itemSession = new AssessmentItemSession($item);
+
+// Set the maximum number of attempts to 0 (means unlimited).
+$itemSessionControl = new ItemSessionControl();
+$itemSessionControl->setMaxAttempts(0);
+$itemSession->setItemSessionControl($itemSessionControl);
+
+// Performing multiple attempts will not lead to a PHP exception anymore, because the maximum number
+// of attemps is unlimited!
+$itemSession->beginItemSession();
+
+// 1st attempt will be an incorrect response from the candidate (['H'; 'Cl']).
+$responses = new State(
+    array(
+        new ResponseVariable(
+            'RESPONSE',
+            Cardinality::MULTIPLE,
+            BaseType::IDENTIFIER,
+            new MultipleContainer(
+                BaseType::IDENTIFIER,
+                array(
+                    new QtiIdentifier('H'),
+                    new QtiIdentifier('Cl')
+                )
+            )
+        )
+    )
+);
+
+$itemSession->endAttempt($responses);
+
+echo "numAttempts: " . $itemSession['numAttempts'] . "\n";
+echo "completionStatus: " . $itemSession['completionStatus'] . "\n";
+echo "RESPONSE: " . $itemSession['RESPONSE'] . "\n";
+echo "SCORE: " . $itemSession['SCORE'] . "\n";
+
+// numAttempts: 1
+// completionStatus: completed
+// RESPONSE: ['H'; 'N']
+// SCORE: 0
+
+// 2nd attempt will send a correct response this time (['H'; 'O'])!
+$itemSession->beginAttempt();
+$responses['RESPONSE'][1]->setValue('O');
+$itemSession->endAttempt();
+
+echo "numAttempts: " . $itemSession['numAttempts'] . "\n";
+echo "completionStatus: " . $itemSession['completionStatus'] . "\n";
+echo "RESPONSE: " . $itemSession['RESPONSE'] . "\n";
+echo "SCORE: " . $itemSession['SCORE'] . "\n";
+
+// numAttempts: 2
+// completionStatus: completed
+// RESPONSE: ['H'; 'O']
+// SCORE: 2
+
+$itemSession->endItemSession();
 ```
 
 ## QTI Rendering
