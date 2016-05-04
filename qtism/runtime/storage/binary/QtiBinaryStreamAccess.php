@@ -25,6 +25,7 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\datatypes\files\FileManager;
+use qtism\common\storage\BinaryStreamAccessException;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\File;
 use qtism\data\ExtendedAssessmentItemRef;
@@ -58,6 +59,8 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Variable;
 use qtism\common\storage\IStream;
 use qtism\common\storage\BinaryStreamAccess;
+use \InvalidArgumentException;
+use \OutOfBoundsException;
 
 /**
  * The QtiBinaryStreamAccess aims at providing access to QTI data stored
@@ -878,12 +881,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
     }
 
     /**
-     * Write a QtiFile object in the current binary stream.
+     * Write a File object in the current binary stream.
      *
      * @return File
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeFile(QtiFile $file)
+    public function writeFile(File $file)
     {
         try {
             $this->writeString($file->getIdentifier());
@@ -894,7 +897,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
     }
 
     /**
-     * Read a QtiFile object from the current binary stream.
+     * Read a File object from the current binary stream.
      *
      * @return File
      * @throws QtiBinaryStreamAccessException
