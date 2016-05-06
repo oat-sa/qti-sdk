@@ -20,14 +20,6 @@
                 <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
                 <templateDeclaration identifier="GOODSCORE" cardinality="single" baseType="float"/>
                 <templateDeclaration identifier="WRONGSCORE" cardinality="single" baseType="float"/>
-                <templateProcessing>
-                    <setTemplateValue identifier="GOODSCORE">
-                        <default identifier="GOODSCORE"/>
-                    </setTemplateValue>
-                    <setTemplateValue identifier="WRONGSCORE">
-                        <default identifier="WRONGSCORE"/>
-                    </setTemplateValue>
-                </templateProcessing>
                 <responseProcessing>
 			        <responseCondition>
 			            <responseIf>
@@ -63,14 +55,6 @@
                 <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
                 <templateDeclaration identifier="GOODSCORE" cardinality="single" baseType="float"/>
                 <templateDeclaration identifier="WRONGSCORE" cardinality="single" baseType="float"/>
-                <templateProcessing>
-                    <setTemplateValue identifier="GOODSCORE">
-                        <default identifier="GOODSCORE"/>
-                    </setTemplateValue>
-                    <setTemplateValue identifier="WRONGSCORE">
-                        <default identifier="WRONGSCORE"/>
-                    </setTemplateValue>
-                </templateProcessing>
                 <responseProcessing>
                     <responseCondition>
                         <responseIf>

@@ -903,6 +903,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // TPL1's responses should be applied their default values if any at the
         // beginning of the first attempt.
         $this->assertEquals(null, $session['QTPL1.RESPONSE']);
+        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
     
         // Noisy persistence ...
         $storage->persist($session);

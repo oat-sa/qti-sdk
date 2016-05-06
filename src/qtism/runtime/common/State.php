@@ -163,7 +163,7 @@ class State extends AbstractCollection
     }
 
     /**
-	 * Reset all test-level outcome variables to their defaults.
+	 * Reset all outcome variables to their defaults.
 	 *
 	 * @param boolean $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
 	 */
@@ -178,6 +178,22 @@ class State extends AbstractCollection
                 } else {
                     $data[$k]->applyDefaultValue();
                 }
+            }
+        }
+    }
+    
+    /**
+     * Reset all template variables to their defaults.
+     * 
+     * @return void
+     */
+    public function resetTemplateVariables()
+    {
+        $data = &$this->getDataPlaceHolder();
+        
+        foreach (array_keys($data) as $k) {
+            if ($data[$k] instanceof TemplateVariable) {
+                $data[$k]->applyDefaultValue();
             }
         }
     }

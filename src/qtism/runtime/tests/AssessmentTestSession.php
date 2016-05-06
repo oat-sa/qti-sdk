@@ -1871,6 +1871,7 @@ class AssessmentTestSession extends State
                 if (is_null($variable) === false) {
                     $val = $expressionEngine->process();
                     $variable->setDefaultValue($val);
+                    $variable->applyDefaultValue();
                 }
             }
         }

@@ -634,21 +634,17 @@ class AssessmentItemSession extends State
             }
         }
         
+        // Apply default values to Template variables.
+        $this->resetTemplateVariables();
+        
         // Apply templateProcessing if needed.
         $templateProcessing = false;
         if ($this->mustAutoTemplateProcessing() === true) {
             $templateProcessing = $this->templateProcessing();
-        
-            foreach ($data as $identifier => $variable) {
-                if (in_array($identifier, $filter) === false) {
-                
-                    // Outcome variables are applied their default value if any.
-                    if ($variable instanceof OutcomeVariable || ($variable instanceof TemplateVariable && $templateProcessing === false)) {
-                        $variable->applyDefaultValue();
-                    }
-                }
-            }
         }
+        
+        // Apply default values of outcomes variables.
+        $this->resetOutcomeVariables();
         
         // The session gets the INITIAL state, ready for a first attempt, and
         // built-in variables get their initial value set.
