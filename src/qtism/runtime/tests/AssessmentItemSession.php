@@ -643,7 +643,9 @@ class AssessmentItemSession extends State
             $templateProcessing = $this->templateProcessing();
         }
         
-        // Apply default values of outcomes variables.
+        // Apply default values of outcomes variables. We do it at this stage
+        // as templateProcessing could have change the default value of some
+        // Outcome Variables.
         $this->resetOutcomeVariables();
         
         // The session gets the INITIAL state, ready for a first attempt, and
@@ -1342,6 +1344,13 @@ class AssessmentItemSession extends State
         if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
             $templateProcessingEngine = new TemplateProcessingEngine($templateProcessing, $this);
             $templateProcessingEngine->process();
+            
+            if ($this->mustAutoTemplateProcessing() === false) {
+                // Apply default values of outcomes variables. We do it at this stage
+                // as templateProcessing could have change the default value of some
+                // Outcome Variables.
+                $this->resetOutcomeVariables();
+            }
             
             return true;
         } else {

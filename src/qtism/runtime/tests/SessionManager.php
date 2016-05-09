@@ -26,7 +26,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 
 /**
- * An SessionManager implementation that creates default AssessmentTestSession and
+ * A SessionManager implementation that creates default AssessmentTestSession and
  * AssessmentItemSession objects.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
@@ -56,6 +56,8 @@ class SessionManager extends AbstractSessionManager
      */
     protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
     {
-        return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
+        // When instantiating an AssessmentItemSession for a test, template processing must not occur automatically.
+        // is always false.
+        return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, false);
     }
 }

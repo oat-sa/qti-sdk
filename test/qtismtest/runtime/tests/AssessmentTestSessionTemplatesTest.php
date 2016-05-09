@@ -13,7 +13,7 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase {
 	
     public function testSimpleTemplating() {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_test_simple.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple.xml');
         $session->beginTestSession();
         // We are in linear mode with no branching/preconditions, so the sessions are alive...
         // But the templateDefaults/templateProcessings will only occur at the beginning of the

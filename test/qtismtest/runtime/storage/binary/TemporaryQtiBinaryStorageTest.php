@@ -700,12 +700,14 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $QTPL1Sessions = $session->getAssessmentItemSessions('QTPL1');
         $QTPL1Session = $QTPL1Sessions[0];
         
-        // The default values should be correctly initialized within their respective item sessions...
+        // The GOODSCORE and WRONGSCORE variable values should not have changed yet. Indeed,
+        // we are in a linear test part. In such a context, template processing occurs
+        // just prior the first attempt.
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
-        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
-        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
+        $this->assertNull($QTPL1Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertEquals(0.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL1Session['GOODSCORE']->getValue());
         $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
         $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
         
@@ -713,25 +715,28 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $QTPL2Session = $QTPL2Sessions[0];
         
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
-        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
-        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
-        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL2Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertEquals(0.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL2Session['GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL2.WRONGSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL2Session['WRONGSCORE']->getValue());
         
         // Now let's make sure the persistence works correctly when templating is in force...
-        // We do this by testing again that default values are correctly initialized within their respective
-        // item sessions...
+        // We do this by testing again that default values and values are stil the same after
+        // persistence.
         $storage->persist($session);
         unset($session);
         $session = $storage->retrieve($test, $sessionId);
         
+        $QTPL1Sessions = $session->getAssessmentItemSessions('QTPL1');
+        $QTPL1Session = $QTPL1Sessions[0];
+        
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL1Session->getState());
-        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
-        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
+        $this->assertNull($QTPL1Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertEquals(0.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL1Session['GOODSCORE']->getValue());
         $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
         $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
         
@@ -739,15 +744,30 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $QTPL2Session = $QTPL2Sessions[0];
         
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $QTPL2Session->getState());
-        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
-        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
-        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
-        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
-        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
+        $this->assertNull($QTPL2Session->getVariable('GOODSCORE')->getDefaultValue());
+        $this->assertNull($QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue());
+        $this->assertEquals(0.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL2Session['GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL2.WRONGSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL2Session['WRONGSCORE']->getValue());
         
-        // It seems to be ok! Let's take the test!
+        // It seems to be ok! Let's take the test! By beginning the first attempt,
+        // template processing is applied on QTPL1. However, anything related to QTPL2 should not
+        // have changed.
         $session->beginAttempt();
+        
+        // Let's check the values. Q01 should be affected by template processing, QTPL2 should not.
+        $QTPL1Sessions = $session->getAssessmentItemSessions('QTPL1');
+        $QTPL1Session = $QTPL1Sessions[0];
+        
+        $this->assertEquals(AssessmentItemSessionState::INTERACTING, $QTPL1Session->getState());
+        $this->assertEquals(1.0, $QTPL1Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(0.0, $QTPL1Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(1.0, $QTPL1Session['GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
+        $this->assertEquals(0.0, $QTPL1Session['WRONGSCORE']->getValue());
+        
         // TPL1's responses should be applied their default values if any at the
         // beginning of the first attempt.
         $this->assertEquals('ChoiceB', $session['QTPL1.RESPONSE']->getValue());
@@ -783,6 +803,18 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // -- TPL2 - Correct response.
         $session->beginAttempt();
+        
+        // QTPL2 should now be affected by Templat eProcessing.
+        $QTPL2Sessions = $session->getAssessmentItemSessions('QTPL2');
+        $QTPL2Session = $QTPL2Sessions[0];
+        
+        $this->assertEquals(AssessmentItemSessionState::INTERACTING, $QTPL2Session->getState());
+        $this->assertEquals(2.0, $QTPL2Session->getVariable('GOODSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session->getVariable('WRONGSCORE')->getDefaultValue()->getValue());
+        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(2.0, $QTPL2Session['GOODSCORE']->getValue());
+        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
+        $this->assertEquals(-1.0, $QTPL2Session['WRONGSCORE']->getValue());
         
         // TPL2's responses should be at their default values if any at
         // the beginning of the first attempt.
@@ -826,7 +858,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
     public function testTemplateDefault1() {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/templates/template_test_simple.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple.xml');
         $test = $doc->getDocumentComponent();
     
         $sessionManager = new SessionManager($doc->getDocumentComponent());
