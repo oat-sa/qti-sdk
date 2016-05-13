@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Shape;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;

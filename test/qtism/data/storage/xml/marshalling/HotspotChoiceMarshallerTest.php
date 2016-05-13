@@ -2,7 +2,7 @@
 
 use qtism\data\ShowHide;
 use qtism\data\content\interactions\HotspotChoice;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Shape;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -12,7 +12,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
 	    
 	    $shape = Shape::CIRCLE;
-	    $coords = new Coords($shape, array(0, 0, 5));
+	    $coords = new QtiCoords($shape, array(0, 0, 5));
 	    $hotspotLabel = "This is a circle.";
 	    $hotspotChoice = new HotspotChoice('hotspotchoice1', $shape, $coords, 'my-hotspotchoice');
 	    $hotspotChoice->setFixed(true);
@@ -60,6 +60,6 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('r_50', $component->getIdentifier());
 	    $this->assertFalse($component->isFixed());
 	    $this->assertEquals(Shape::CIRCLE, $component->getShape());
-	    $this->assertTrue($component->getCoords()->equals(new Coords(Shape::CIRCLE, array(128, 222, 18))));
+	    $this->assertTrue($component->getCoords()->equals(new QtiCoords(Shape::CIRCLE, array(128, 222, 18))));
 	}
 }

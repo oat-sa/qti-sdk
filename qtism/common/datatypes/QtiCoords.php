@@ -36,7 +36,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Coords extends IntegerCollection implements QtiDatatype, Comparable {
+class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable {
 	
     /**
      * A value from the Shape enumeration.
@@ -177,7 +177,7 @@ class Coords extends IntegerCollection implements QtiDatatype, Comparable {
 	}
 	
 	public function equals($obj) {
-	    return $obj instanceof Coords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
+	    return $obj instanceof QtiCoords && $this->getShape() === $obj->getShape() && $this->getArrayCopy() == $obj->getArrayCopy();
 	}
 	
 	public function getBaseType() {

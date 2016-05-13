@@ -3,7 +3,7 @@
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
 use qtism\data\content\interactions\AssociableHotspotCollection;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Shape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\content\xhtml\Object;
@@ -22,10 +22,10 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 	    
 	    $object = new Object('myimg.png', 'image/png');
 	    
-	    $choice1 = new AssociableHotspot('choice1', 2, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(0, 0, 15)));
+	    $choice1 = new AssociableHotspot('choice1', 2, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(0, 0, 15)));
 	    $choice1->setMatchMin(1);
-	    $choice2 = new AssociableHotspot('choice2', 1, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(2, 2, 15)));
-	    $choice3 = new AssociableHotspot('choice3', 1, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(4, 4, 15)));
+	    $choice2 = new AssociableHotspot('choice2', 1, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(2, 2, 15)));
+	    $choice3 = new AssociableHotspot('choice3', 1, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(4, 4, 15)));
 	    $choices = new AssociableHotspotCollection(array($choice1, $choice2, $choice3));
 	    
 	    $graphicAssociateInteraction = new GraphicAssociateInteraction('RESPONSE', $object, $choices, 'prout');
@@ -64,18 +64,18 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(2, $choices[0]->getMatchMax());
         $this->assertEquals(1, $choices[0]->getMatchMin());
         $this->assertEquals(Shape::CIRCLE, $choices[0]->getShape());
-        $this->assertTrue($choices[0]->getCoords()->equals(new Coords(Shape::CIRCLE, array(0, 0, 15))));
+        $this->assertTrue($choices[0]->getCoords()->equals(new QtiCoords(Shape::CIRCLE, array(0, 0, 15))));
         
         $this->assertEquals('choice2', $choices[1]->getIdentifier());
         $this->assertEquals(1, $choices[1]->getMatchMax());
         $this->assertEquals(0, $choices[1]->getMatchMin());
         $this->assertEquals(Shape::CIRCLE, $choices[1]->getShape());
-        $this->assertTrue($choices[1]->getCoords()->equals(new Coords(Shape::CIRCLE, array(2, 2, 15))));
+        $this->assertTrue($choices[1]->getCoords()->equals(new QtiCoords(Shape::CIRCLE, array(2, 2, 15))));
         
         $this->assertEquals('choice3', $choices[2]->getIdentifier());
         $this->assertEquals(1, $choices[2]->getMatchMax());
         $this->assertEquals(0, $choices[2]->getMatchMin());
         $this->assertEquals(Shape::CIRCLE, $choices[2]->getShape());
-        $this->assertTrue($choices[2]->getCoords()->equals(new Coords(Shape::CIRCLE, array(4, 4, 15))));
+        $this->assertTrue($choices[2]->getCoords()->equals(new QtiCoords(Shape::CIRCLE, array(4, 4, 15))));
 	}
 }

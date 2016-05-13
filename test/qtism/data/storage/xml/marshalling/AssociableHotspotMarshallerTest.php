@@ -2,7 +2,7 @@
 
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Shape;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -11,7 +11,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
         $shape = Shape::RECT;
-        $coords = new Coords($shape, array(92, 19, 261, 66));
+        $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 2;
 	    $matchMin = 1;
 	    $fixed = true;

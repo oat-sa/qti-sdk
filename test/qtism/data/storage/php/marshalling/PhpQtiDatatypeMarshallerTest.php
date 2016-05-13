@@ -5,7 +5,7 @@ use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 
@@ -35,7 +35,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
 
     public function marshallDataProvider() {
         return array(
-            array("\$array_0 = array(10, 10, 5);\n\$coords_0 = new qtism\\common\\datatypes\\Coords(2, \$array_0);\n", new Coords(Shape::CIRCLE, array(10, 10, 5))),
+            array("\$array_0 = array(10, 10, 5);\n\$coords_0 = new qtism\\common\\datatypes\\Coords(2, \$array_0);\n", new QtiCoords(Shape::CIRCLE, array(10, 10, 5))),
             array("\$pair_0 = new qtism\\common\\datatypes\\Pair(\"A\", \"B\");\n", new Pair('A', 'B')),
             array("\$directedpair_0 = new qtism\\common\\datatypes\\DirectedPair(\"A\", \"B\");\n", new DirectedPair('A', 'B')),
             array("\$duration_0 = new qtism\\common\\datatypes\\Duration(\"PT30S\");\n", new Duration("PT30S")),

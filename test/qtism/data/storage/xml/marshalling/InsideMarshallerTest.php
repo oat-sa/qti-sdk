@@ -3,7 +3,7 @@
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\Variable;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -16,7 +16,7 @@ class InsideMarshallerTest extends QtiSmTestCase {
 		$subs[] = new Variable('pointVariable');
 		
 		$shape = Shape::RECT;
-		$coords = new Coords($shape, array(0, 0, 100, 20));
+		$coords = new QtiCoords($shape, array(0, 0, 100, 20));
 		
 		$component = new Inside($subs, $shape, $coords);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);

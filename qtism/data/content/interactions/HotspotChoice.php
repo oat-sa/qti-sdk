@@ -24,7 +24,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
@@ -81,7 +81,7 @@ class HotspotChoice extends Choice implements Hotspot {
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($identifier, $shape, Coords $coords, $id = '', $class = '', $lang = '', $label = '') {
+    public function __construct($identifier, $shape, QtiCoords $coords, $id = '', $class = '', $lang = '', $label = '') {
         parent::__construct($identifier, $id, $class, $lang, $label);
         $this->setShape($shape);
         $this->setCoords($coords);
@@ -116,7 +116,7 @@ class HotspotChoice extends Choice implements Hotspot {
      *
      * @param Coords $coords A Coords object.
      */
-    public function setCoords(Coords $coords) {
+    public function setCoords(QtiCoords $coords) {
         $this->coords = $coords;
     }
     

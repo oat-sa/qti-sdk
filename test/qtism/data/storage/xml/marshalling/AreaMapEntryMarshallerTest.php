@@ -2,7 +2,7 @@
 
 use qtism\data\state\AreaMapEntry;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -11,7 +11,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
 		$mappedValue = 1.337;
 		$shape = Shape::RECT;
-		$coords = new Coords($shape, array(0, 20, 100, 0));
+		$coords = new QtiCoords($shape, array(0, 20, 100, 0));
 		$component = new AreaMapEntry($shape, $coords, $mappedValue);
 		
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);

@@ -6,7 +6,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Point;
 use qtism\runtime\expressions\operators\InsideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -14,7 +14,7 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testRect() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new Point(0, 0); // 0, 0 is inside.
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -35,7 +35,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testPoly() {
-		$coords = new Coords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
+		$coords = new QtiCoords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
 		$point = new Point(0, 8); // 0, 8 is inside.
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -56,7 +56,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testCircle() {
-		$coords = new Coords(Shape::CIRCLE, array(5, 5, 5));
+		$coords = new QtiCoords(Shape::CIRCLE, array(5, 5, 5));
 		$point = new Point(3, 3); // 3,3 is inside
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -77,7 +77,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testNull() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = null;
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -87,7 +87,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testWrongBaseTypeOne() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new Duration('P1D');
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -97,7 +97,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testWrongBaseTypeTwo() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new Integer(10);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -107,7 +107,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testWrongCardinality() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
@@ -117,7 +117,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testNotEnoughOperands() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new Point(1, 2);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection();
@@ -126,7 +126,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	}
 	
 	public function testTooMuchOperands() {
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		$point = new Point(1, 2);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array(new Point(1, 2), new Point(2, 3)));
@@ -134,9 +134,9 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$processor = new InsideProcessor($expression, $operands);
 	}
 	
-	public function createFakeExpression($point = null, Coords $coords = null) {
+	public function createFakeExpression($point = null, QtiCoords $coords = null) {
 		$point = (is_null($point) || !$point instanceof Point) ? new Point(2, 2) : $point;
-		$coords = (is_null($coords)) ? new Coords(Shape::RECT, array(0, 0, 5, 3)) : $coords;
+		$coords = (is_null($coords)) ? new QtiCoords(Shape::RECT, array(0, 0, 5, 3)) : $coords;
 		
 		return $this->createComponentFromXml('
 			<inside shape="' . Shape::getNameByConstant($coords->getShape()) . '" coords="' . $coords . '">

@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\content\FlowStaticCollection;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\content\interactions\HotspotInteraction;
 use qtism\data\content\xhtml\Object;
 use qtism\common\datatypes\Shape;
@@ -19,9 +19,9 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
         
-        $choice1 = new HotspotChoice('hotspotchoice1', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(77, 115, 8)));
-        $choice2 = new HotspotChoice('hotspotchoice2', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(118, 184, 8)));
-        $choice3 = new HotspotChoice('hotspotchoice3', Shape::CIRCLE, new Coords(Shape::CIRCLE, array(150, 235, 8)));
+        $choice1 = new HotspotChoice('hotspotchoice1', Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(77, 115, 8)));
+        $choice2 = new HotspotChoice('hotspotchoice2', Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(118, 184, 8)));
+        $choice3 = new HotspotChoice('hotspotchoice3', Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(150, 235, 8)));
         
         $object = new Object('./img/img.png', 'image/png');
 	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');

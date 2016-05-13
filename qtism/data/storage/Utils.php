@@ -32,7 +32,7 @@ use qtism\common\utils\Format;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 use \UnexpectedValueException;
 
@@ -208,7 +208,7 @@ class Utils {
 			
 			// Maybe it was accepted has coords, but is it buildable with
 			// the given shape?
-			return new Coords($shape, $intCoords);
+			return new QtiCoords($shape, $intCoords);
 		}
 		else {
 			throw new UnexpectedValueException("'${string}' cannot be converted to Coords.");

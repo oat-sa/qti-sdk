@@ -30,7 +30,7 @@ use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 
 class PhpQtiDatatypeMarshaller extends PhpMarshaller {
@@ -44,7 +44,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
         $toMarshall = $this->getToMarshall();
 
         try {
-            if ($toMarshall instanceof Coords) {
+            if ($toMarshall instanceof QtiCoords) {
                 $this->marshallCoords();
                 return;
             }

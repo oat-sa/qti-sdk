@@ -28,7 +28,7 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use qtism\data\expressions\operators\Inside;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\storage\Utils;
 use \DOMElement;
 

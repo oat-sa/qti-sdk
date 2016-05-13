@@ -3,13 +3,13 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Point;
 
 class CoordsTest extends QtiSmTestCase {
 
 	public function testInsideCircle() {
-		$coords = new Coords(Shape::CIRCLE, array(5, 5, 5));
+		$coords = new QtiCoords(Shape::CIRCLE, array(5, 5, 5));
 		
 		$point = new Point(1, 1); // 1,1 is outside
 		$this->assertFalse($coords->inside($point));
@@ -26,7 +26,7 @@ class CoordsTest extends QtiSmTestCase {
 	
 	public function testInsideRectangle() {
 		// Do not forget (x1, y1) -> left top corner, (x2, y2) -> right bottom corner. 
-		$coords = new Coords(Shape::RECT, array(0, 0, 5, 3));
+		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
 		
 		$point = new Point(0, 0); // 0, 0 is inside.
 		$this->assertTrue($coords->inside($point));
@@ -45,7 +45,7 @@ class CoordsTest extends QtiSmTestCase {
 	}
 	
 	public function testInsidePolygon() {
-		$coords = new Coords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
+		$coords = new QtiCoords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
 		
 		$point = new Point(0, 8); // 0, 8 is inside.
 		$this->assertTrue($coords->inside($point));
@@ -68,7 +68,7 @@ class CoordsTest extends QtiSmTestCase {
 	
 	public function testInsideDefault() {
 		// always true.
-		$coords = new Coords(Shape::DEF);
+		$coords = new QtiCoords(Shape::DEF);
 		$this->assertTrue($coords->inside(new Point(0, 0)));
 		$this->assertTrue($coords->inside(new Point(100, 200)));
 		$this->assertTrue($coords->inside(new Point(-200, -100)));

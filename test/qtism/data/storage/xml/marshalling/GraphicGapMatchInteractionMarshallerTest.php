@@ -3,7 +3,7 @@
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\content\interactions\AssociableHotspotCollection;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\Shape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\content\interactions\GapImgCollection;
@@ -32,9 +32,9 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase {
 	    $gapImg3 = new GapImg('gapImg3', 1, $img3);
 	    $gapImgs = new GapImgCollection(array($gapImg1, $gapImg2, $gapImg3));
 	    
-	    $choice1 = new AssociableHotspot('choice1', 1, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(0, 0, 15)));
-	    $choice2 = new AssociableHotspot('choice2', 1, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(2, 2, 15)));
-	    $choice3 = new AssociableHotspot('choice3', 1, Shape::CIRCLE, new Coords(Shape::CIRCLE, array(4, 4, 15)));
+	    $choice1 = new AssociableHotspot('choice1', 1, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(0, 0, 15)));
+	    $choice2 = new AssociableHotspot('choice2', 1, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(2, 2, 15)));
+	    $choice3 = new AssociableHotspot('choice3', 1, Shape::CIRCLE, new QtiCoords(Shape::CIRCLE, array(4, 4, 15)));
 	    $choices = new AssociableHotspotCollection(array($choice1, $choice2, $choice3));
 	    
 	    $graphicGapMatchInteraction = new GraphicGapMatchInteraction('RESPONSE', $object, $gapImgs, $choices, 'my-gaps');
