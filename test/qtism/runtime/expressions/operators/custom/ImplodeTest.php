@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
@@ -36,7 +36,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new QtiInteger(2), new Point(0, 0)));
+		$operands = new OperandsCollection(array(new QtiInteger(2), new QtiPoint(0, 0)));
 		$processor = new Implode($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 		                            "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts operands with a string baseType.",

@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\Stack;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -454,7 +454,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::POINT)) {
 				return false;
 			}
-			else if (!$v instanceof Point && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof QtiPoint && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}

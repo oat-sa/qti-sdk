@@ -1,7 +1,7 @@
 <?php
 
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
@@ -87,7 +87,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Q07.1
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(100, 100)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(100, 100)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.1.SCORE']->getValue());
 	    $this->assertEquals(5, $processor->process()->getValue());
@@ -96,7 +96,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Q07.2
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(10, 10)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(10, 10)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(0, $session['Q07.2.SCORE']->getValue());
 	    $this->assertEquals(6, $processor->process()->getValue());
@@ -105,7 +105,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Q07.3
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(1, $session['Q07.3.SCORE']->getValue());
 	    $this->assertEquals(7, $processor->process()->getValue());

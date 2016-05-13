@@ -16,7 +16,7 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\data\storage\xml\XmlCompactDocument;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\Comparable;
@@ -140,12 +140,12 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR), "\x00" . "\x00" . pack('S', 0), new MultipleContainer(BaseType::DIRECTED_PAIR));
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('my', 'pair')))), "\x01", null);
         
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new Point(0, 1)), "\x01", null);
-        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::POINT), "\x00" . "\x01" . pack('S', 0) . pack('S', 0), new Point(0, 0));
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT), "\x00" . "\x00" . pack('S', 3) . "\x00" . pack('S', 4) . pack('S', 3) . "\x01" . "\x00" . pack('S', 2) . pack('S', 1), new MultipleContainer(BaseType::POINT, array(new Point(4, 3), null, new Point(2, 1))));
-        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT), "\x00" . "\x00" . pack('S', 1) . "\x00" . pack('S', 6) . pack('S', 1234), new OrderedContainer(BaseType::POINT, array(new Point(6, 1234))));
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(0, 1)), "\x01", null);
+        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::POINT), "\x00" . "\x01" . pack('S', 0) . pack('S', 0), new QtiPoint(0, 0));
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT), "\x00" . "\x00" . pack('S', 3) . "\x00" . pack('S', 4) . pack('S', 3) . "\x01" . "\x00" . pack('S', 2) . pack('S', 1), new MultipleContainer(BaseType::POINT, array(new QtiPoint(4, 3), null, new QtiPoint(2, 1))));
+        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::POINT), "\x00" . "\x00" . pack('S', 1) . "\x00" . pack('S', 6) . pack('S', 1234), new OrderedContainer(BaseType::POINT, array(new QtiPoint(6, 1234))));
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT), "\x00" . "\x00" . pack('S', 0), new MultipleContainer(BaseType::POINT));
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(1, 1)))), "\x01", null);
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 1)))), "\x01", null);
         
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new QtiIntOrIdentifier(45)), "\x01", null);
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER), "\x00" . "\x01" . "\x01" . pack('l', 45), 45);
@@ -336,18 +336,18 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), null, new QtiDirectedPair('C', 'D'), null, new QtiDirectedPair('E', 'F'))))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::DIRECTED_PAIR, new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), null, new QtiDirectedPair('D', 'E'), null, new QtiDirectedPair('F', 'G'))))),
                         
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new Point(50, 50))),
+            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 50))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::POINT)),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT)),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 0), new Point(100, 50), new Point(150, 3), new Point(50, 50))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(50, 50), new Point(0, 35), new Point(30, 50), new Point(40, 55), new Point(0, 0))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new QtiPoint(50, 50))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new QtiPoint(50, 50), new QtiPoint(0, 0), new QtiPoint(100, 50), new QtiPoint(150, 3), new QtiPoint(50, 50))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(50, 50), new QtiPoint(0, 35), new QtiPoint(30, 50), new QtiPoint(40, 55), new QtiPoint(0, 0))))),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(null)))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new Point(30, 50), null, new Point(20, 50), null, new Point(45, 32))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(20, 11), null, new Point(36, 43), null, new Point(50, 44))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::POINT, new MultipleContainer(BaseType::POINT, array(new QtiPoint(30, 50), null, new QtiPoint(20, 50), null, new QtiPoint(45, 32))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(20, 11), null, new QtiPoint(36, 43), null, new QtiPoint(50, 44))))),
                         
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new QtiIntOrIdentifier(26))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::INT_OR_IDENTIFIER, new QtiIntOrIdentifier('Q01'))),

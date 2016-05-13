@@ -48,7 +48,7 @@ use qtism\runtime\common\Utils;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
@@ -305,7 +305,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readPoint() {
         try {
-            return new Point($this->readShort(), $this->readShort());
+            return new QtiPoint($this->readShort(), $this->readShort());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a point.";
@@ -319,7 +319,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param Point $point A Point object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writePoint(Point $point) {
+    public function writePoint(QtiPoint $point) {
        try {
            $this->writeShort($point->getX());
            $this->writeShort($point->getY());

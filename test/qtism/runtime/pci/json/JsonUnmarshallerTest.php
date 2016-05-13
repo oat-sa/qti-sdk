@@ -12,7 +12,7 @@ use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -150,7 +150,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     public function unmarshallComplexProvider() {
         $returnValue = array();
         
-        $returnValue[] = array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }');
+        $returnValue[] = array(new QtiPoint(10, 20), '{ "base" : { "point" : [10, 20] } }');
         $returnValue[] = array(new QtiPair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
         $returnValue[] = array(new QtiDirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
         $returnValue[] = array(new QtiDuration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
@@ -196,7 +196,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "string" : ["Another", "And Another"] } }';
         $returnValue[] = array($container, $json);
 
-        $container = new MultipleContainer(BaseType::POINT, array(new Point(123, 456), new Point(640, 480)));
+        $container = new MultipleContainer(BaseType::POINT, array(new QtiPoint(123, 456), new QtiPoint(640, 480)));
         $json = '{ "list" : { "point" : [[123, 456], [640, 480]] } }';
         $returnValue[] = array($container, $json);
         

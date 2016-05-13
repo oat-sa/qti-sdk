@@ -7,7 +7,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 
 class RecordContainerTest extends QtiSmTestCase {
 	
@@ -15,13 +15,13 @@ class RecordContainerTest extends QtiSmTestCase {
 		$record = new RecordContainer();
 		$this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $record);
 		
-		$record = new RecordContainer(array('key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new Point(10, 10)));
+		$record = new RecordContainer(array('key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new QtiPoint(10, 10)));
 		$this->assertEquals(3, count($record));
 		$this->assertEquals($record['key1']->getValue(), 1);
 		$this->assertEquals($record['key2']->getValue(), 'a string');
-		$this->assertTrue($record['key3']->equals(new Point(10, 10)));
+		$this->assertTrue($record['key3']->equals(new QtiPoint(10, 10)));
 		$this->assertEquals(1, $record->occurences(new QtiInteger(1)));
-		$this->assertEquals(1, $record->occurences(new Point(10, 10)));
+		$this->assertEquals(1, $record->occurences(new QtiPoint(10, 10)));
 	}
 	
 	public function testEquals() {

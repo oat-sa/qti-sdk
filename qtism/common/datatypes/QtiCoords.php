@@ -113,7 +113,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable {
 	 * @param Point $point A Point object.
 	 * @return boolean
 	 */
-	public function inside(Point $point) {
+	public function inside(QtiPoint $point) {
 		if ($this->getShape() === Shape::DEF) {
 			return true;
 		}

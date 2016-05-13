@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
@@ -74,7 +74,7 @@ class IndexProcessorTest extends QtiSmTestCase {
 		$processor = new IndexProcessor($expression, $operands);
 		
 		$state = new State();
-		$state->setVariable(new OutcomeVariable('variable1', Cardinality::SINGLE, BaseType::POINT, new Point(1, 2)));
+		$state->setVariable(new OutcomeVariable('variable1', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(1, 2)));
 		$processor->setState($state);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;

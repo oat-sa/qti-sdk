@@ -11,7 +11,7 @@ use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 
 class ContainerTest extends QtiSmTestCase {
@@ -112,7 +112,7 @@ class ContainerTest extends QtiSmTestCase {
 			array(new QtiBoolean(true)),
 			array(new QtiBoolean(false)),
 			array(new QtiDuration('P1D')),
-			array(new Point(20, 20)),
+			array(new QtiPoint(20, 20)),
 			array(new QtiPair('A', 'B')),
 			array(new QtiDirectedPair('C', 'D')),
 			array(null)
@@ -164,7 +164,7 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Container(array(new QtiString('string'), new QtiInteger(2), new QtiString('str'), new QtiString('string'), new QtiString('string'))), new QtiString('string'), 3),
 			array(new Container(array(new QtiString('null'), null)), null, 1),
 			array(new Container(array(new QtiInteger(14), new QtiInteger(15), new QtiInteger(16))), true, 0),
-			array(new Container(array(new QtiString('string'), new QtiInteger(1), new QtiBoolean(true), new QtiFloat(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
+			array(new Container(array(new QtiString('string'), new QtiInteger(1), new QtiBoolean(true), new QtiFloat(14.3), new QtiPoint(20, 20), new QtiPoint(20, 21))), new QtiPoint(20, 20), 1)
 		);
 	}
 	
@@ -185,7 +185,7 @@ class ContainerTest extends QtiSmTestCase {
 	
 	public function testClone() {
 		$container = $this->getContainer();
-		$container[] = new Point(10, 20);
+		$container[] = new QtiPoint(10, 20);
 		$container[] = new QtiDuration('P2D'); // 2 days.
 		$container[] = new QtiPair('A', 'B');
 		$container[] = new QtiDirectedPair('C', 'D');
@@ -229,7 +229,7 @@ class ContainerTest extends QtiSmTestCase {
 		$returnValue[] = array(new Container(), '[]');
 		$returnValue[] = array(new Container(array(new QtiInteger(10))), '[10]');
 		$returnValue[] = array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), '[true; false]');
-		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new Point(10, 15), new QtiPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
+		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new QtiPoint(10, 15), new QtiPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		
 		return $returnValue;
 	}

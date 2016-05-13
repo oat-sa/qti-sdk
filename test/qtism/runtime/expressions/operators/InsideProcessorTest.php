@@ -7,7 +7,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\InsideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -15,7 +15,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testRect() {
 		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
-		$point = new Point(0, 0); // 0, 0 is inside.
+		$point = new QtiPoint(0, 0); // 0, 0 is inside.
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);
@@ -24,7 +24,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$point = new Point(-1, -1); // -1, -1 is outside.
+		$point = new QtiPoint(-1, -1); // -1, -1 is outside.
 		$operands = new OperandsCollection(array($point));
 		$expression = $this->createFakeExpression($point, $coords);
 		$processor->setExpression($expression);
@@ -36,7 +36,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testPoly() {
 		$coords = new QtiCoords(Shape::POLY, array(0, 8, 7, 4, 2, 2, 8, -4, -2, 1));
-		$point = new Point(0, 8); // 0, 8 is inside.
+		$point = new QtiPoint(0, 8); // 0, 8 is inside.
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);
@@ -45,7 +45,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 	
-		$point = new Point(10, 9); // 10, 9 is outside.
+		$point = new QtiPoint(10, 9); // 10, 9 is outside.
 		$operands = new OperandsCollection(array($point));
 		$expression = $this->createFakeExpression($point, $coords);
 		$processor->setExpression($expression);
@@ -57,7 +57,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testCircle() {
 		$coords = new QtiCoords(Shape::CIRCLE, array(5, 5, 5));
-		$point = new Point(3, 3); // 3,3 is inside
+		$point = new QtiPoint(3, 3); // 3,3 is inside
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);
@@ -66,7 +66,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 	
-		$point = new Point(1, 1); // 1,1 is outside
+		$point = new QtiPoint(1, 1); // 1,1 is outside
 		$operands = new OperandsCollection(array($point));
 		$expression = $this->createFakeExpression($point, $coords);
 		$processor->setExpression($expression);
@@ -108,7 +108,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
-		$point = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
+		$point = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)));
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);
@@ -118,7 +118,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEnoughOperands() {
 		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
-		$point = new Point(1, 2);
+		$point = new QtiPoint(1, 2);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection();
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -127,15 +127,15 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
-		$point = new Point(1, 2);
+		$point = new QtiPoint(1, 2);
 		$expression = $this->createFakeExpression($point, $coords);
-		$operands = new OperandsCollection(array(new Point(1, 2), new Point(2, 3)));
+		$operands = new OperandsCollection(array(new QtiPoint(1, 2), new QtiPoint(2, 3)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new InsideProcessor($expression, $operands);
 	}
 	
 	public function createFakeExpression($point = null, QtiCoords $coords = null) {
-		$point = (is_null($point) || !$point instanceof Point) ? new Point(2, 2) : $point;
+		$point = (is_null($point) || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
 		$coords = (is_null($coords)) ? new QtiCoords(Shape::RECT, array(0, 0, 5, 3)) : $coords;
 		
 		return $this->createComponentFromXml('

@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -39,7 +39,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
             array("\$pair_0 = new qtism\\common\\datatypes\\Pair(\"A\", \"B\");\n", new QtiPair('A', 'B')),
             array("\$directedpair_0 = new qtism\\common\\datatypes\\DirectedPair(\"A\", \"B\");\n", new QtiDirectedPair('A', 'B')),
             array("\$duration_0 = new qtism\\common\\datatypes\\Duration(\"PT30S\");\n", new QtiDuration("PT30S")),
-            array("\$point_0 = new qtism\\common\\datatypes\\Point(10, 15);\n", new Point(10, 15))
+            array("\$point_0 = new qtism\\common\\datatypes\\Point(10, 15);\n", new QtiPoint(10, 15))
         );
     }
 }

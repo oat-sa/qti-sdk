@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
@@ -66,7 +66,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
@@ -74,11 +74,11 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(3, 4), new Point(5, 6)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(3, 4), new QtiPoint(5, 6)));
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new RecordContainer(array('a' => new QtiBoolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new QtiInteger(24), 'e' => new QtiFloat(23.3)));
+		$operands[] = new RecordContainer(array('a' => new QtiBoolean(true),  'b' => null,  'c' => new QtiPoint(1, 2), 'd' => new QtiInteger(24), 'e' => new QtiFloat(23.3)));
 		$this->assertFalse($processor->process()->getValue());
 	}
 	

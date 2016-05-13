@@ -7,7 +7,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\RepeatProcessor;
@@ -44,15 +44,15 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	public function testMixed() {
 		$expression = $this->createFakeExpression(2);
 		$operands = new OperandsCollection();
-		$operands[] = new Point(0, 0);
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 3), new Point(3, 4)));
-		$operands[] = new Point(10, 10);
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(4, 5)));
+		$operands[] = new QtiPoint(0, 0);
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)));
+		$operands[] = new QtiPoint(10, 10);
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(4, 5)));
 		
 		$processor = new RepeatProcessor($expression, $operands);
 		$result = $processor->process();
 		
-		$comparison = new OrderedContainer(BaseType::POINT, array(new Point(0, 0), new Point(1, 2), new Point(2, 3), new Point(3, 4), new Point(10, 10), new Point(4, 5), new Point(0, 0), new Point(1, 2), new Point(2, 3), new Point(3, 4), new Point(10, 10), new Point(4, 5)));
+		$comparison = new OrderedContainer(BaseType::POINT, array(new QtiPoint(0, 0), new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4), new QtiPoint(10, 10), new QtiPoint(4, 5), new QtiPoint(0, 0), new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4), new QtiPoint(10, 10), new QtiPoint(4, 5)));
 		$this->assertTrue($comparison->equals($result));
 	}
 	

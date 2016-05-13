@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -50,7 +50,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testComplexOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(1, 1), new Point(2, 2), new Point(3, 3)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 1), new QtiPoint(2, 2), new QtiPoint(3, 3)));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Point', $result);
@@ -61,7 +61,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testOnlyOneInContainer() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(22, 33)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(22, 33)));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Point', $result);

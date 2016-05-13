@@ -25,7 +25,7 @@ namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\content\xhtml\Object;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use \InvalidArgumentException;
 
 /**
@@ -120,7 +120,7 @@ class PositionObjectInteraction extends Interaction {
      * 
      * @param Point $centerPoint A Point object or null.
      */
-    public function setCenterPoint(Point $centerPoint = null) {
+    public function setCenterPoint(QtiPoint $centerPoint = null) {
         $this->centerPoint = $centerPoint;
     }
     

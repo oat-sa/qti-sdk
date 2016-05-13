@@ -4,7 +4,7 @@ use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\datatypes\QtiFloat;
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\Cardinality;
@@ -79,7 +79,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S03.Q07.1 - set an incorrect but in shape response '105 105', SCORE = 1
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(105, 105))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(105, 105))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.1.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.1.SCORE']->getValue());
@@ -87,7 +87,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S03.Q07.2 - set a perfectly correct response '102 113', SCORE = 1
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.2.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
@@ -95,7 +95,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S03.Q07.3 - set an absolutely incorrect response '13 37', SCORE = 0
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(13, 37))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(13, 37))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.3.SCORE']);
 		$this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());

@@ -11,7 +11,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 
 class OrderedProcessorTest extends QtiSmTestCase {
 	
@@ -86,30 +86,30 @@ class OrderedProcessorTest extends QtiSmTestCase {
 	public function testContainer() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 3)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 3)));
 		$operands[] = new OrderedContainer(BaseType::POINT);
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(3, 4)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(3, 4)));
 		$processor = new OrderedProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
 		$this->assertEquals(3, count($result));
-		$this->assertTrue($result[0]->equals(new Point(1, 2)));
-		$this->assertTrue($result[1]->equals(new Point(2, 3)));
-		$this->assertTrue($result[2]->equals(new Point(3, 4)));
+		$this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+		$this->assertTrue($result[1]->equals(new QtiPoint(2, 3)));
+		$this->assertTrue($result[2]->equals(new QtiPoint(3, 4)));
 	}
 	
 	public function testMixed() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$operands[] = null;
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(3, 4)));
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(3, 4)));
 		$processor = new OrderedProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
 		$this->assertEquals(2, count($result));
-		$this->assertTrue($result[0]->equals(new Point(1, 2)));
-		$this->assertTrue($result[1]->equals(new Point(3, 4)));
+		$this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+		$this->assertTrue($result[1]->equals(new QtiPoint(3, 4)));
 	}
 	
 	public function testWrongBaseTypeOne() {
@@ -127,7 +127,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$operands[] = new QtiDuration('P2D');
 		$operands[] = null;
 		$operands[] = new QtiInteger(10);

@@ -6,7 +6,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\DivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -86,7 +86,7 @@ class DivideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Point(1, 2), new QtiBoolean(true)));
+		$operands = new OperandsCollection(array(new QtiPoint(1, 2), new QtiBoolean(true)));
 		$processor = new DivideProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

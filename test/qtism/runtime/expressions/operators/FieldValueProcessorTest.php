@@ -6,7 +6,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\FieldValueProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -64,7 +64,7 @@ class FieldValueProcessorTest extends QtiSmTestCase {
 		// primitive QTI (Point, Duration, ...)
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$processor = new FieldValueProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -73,7 +73,7 @@ class FieldValueProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityThree() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)));
 		
 		// Wrong container (Multiple, Ordered)
 		$processor = new FieldValueProcessor($expression, $operands);

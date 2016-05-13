@@ -9,7 +9,7 @@ use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -95,7 +95,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
-		$operands[] = new Point(1, 10);
+		$operands[] = new QtiPoint(1, 10);
 		$this->assertFalse($operands->exclusivelyNumeric());
 		unset($operands[3]);
 		$this->assertTrue($operands->exclusivelyNumeric());
@@ -134,7 +134,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyInteger());
 		
-		$operands[] = new Point(1, 10);
+		$operands[] = new QtiPoint(1, 10);
 		$this->assertFalse($operands->exclusivelyInteger());
 		unset($operands[3]);
 		$this->assertTrue($operands->exclusivelyInteger());
@@ -158,8 +158,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyPoint());
 	
-		$operands[] = new Point(1, 2);
-		$operands[] = new Point(3, 4);
+		$operands[] = new QtiPoint(1, 2);
+		$operands[] = new QtiPoint(3, 4);
 		$this->assertTrue($operands->exclusivelyPoint());
 	
 		$operands[] = new QtiString('');
@@ -175,7 +175,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$mult = new MultipleContainer(BaseType::POINT);
 		$operands[] = $mult;
 		$this->assertFalse($operands->exclusivelyPoint());
-		$mult[] = new Point(1, 3);
+		$mult[] = new QtiPoint(1, 3);
 		$this->assertTrue($operands->exclusivelyPoint());
 	
 		$operands[] = new RecordContainer();
@@ -200,7 +200,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyDuration());
 	
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$this->assertFalse($operands->exclusivelyDuration());
 		unset($operands[3]);
 		$this->assertTrue($operands->exclusivelyDuration());
@@ -233,7 +233,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiFloat(10.11);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new Point(1, 1);
+		$operands[] = new QtiPoint(1, 1);
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new QtiString('');
@@ -306,7 +306,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
-		$operands[] = new Point(10, 20);
+		$operands[] = new QtiPoint(10, 20);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
 		$operands[] = new MultipleContainer(BaseType::INTEGER);
@@ -327,7 +327,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
-		$operands[] = new Point(10, 20);
+		$operands[] = new QtiPoint(10, 20);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
 		$operands[] = new OrderedContainer(BaseType::INTEGER);
@@ -395,7 +395,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(null, new QtiInteger(10), new QtiInteger(10)));
 		$this->assertFalse($operands->sameCardinality());
 		
-		$operands = new OperandsCollection(array(new QtiInteger(0), new QtiBoolean(false), new QtiInteger(16), new QtiBoolean(true), new Point(1, 1)));
+		$operands = new OperandsCollection(array(new QtiInteger(0), new QtiBoolean(false), new QtiInteger(16), new QtiBoolean(true), new QtiPoint(1, 1)));
 		$this->assertTrue($operands->sameCardinality());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(20), new OrderedContainer(BaseType::INTEGER)));

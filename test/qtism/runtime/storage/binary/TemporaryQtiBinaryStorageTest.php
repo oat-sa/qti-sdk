@@ -10,7 +10,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\MultipleContainer;
@@ -146,7 +146,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         sleep(1);
         $s02Duration = $session['S02.duration'];
         $this->assertTrue($session['S03.duration']->round()->equals(new QtiDuration('PT1S')));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 114)))));
         $session->moveNext();
     
         // We now test the lastOccurence update for this multi-occurence item.
@@ -161,7 +161,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
         sleep(1);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(200, 200)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(200, 200)))));
         
         // Check that S02.duration was not updated.
         $this->assertTrue($session['S02.duration']->round()->equals($s02Duration->round()));
@@ -179,7 +179,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
         $session->moveNext();
     
         // End of test, outcome processing performed.
@@ -275,29 +275,29 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q07.1 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
         $session->moveNext();
     
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
+        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
         $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
     
         // Q07.2 - Incorrect but in the circle
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 114)))));
         $session->moveNext();
     
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 114)));
+        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 114)));
         $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
     
         // Q07.3 - Incorrect and out of the circle
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(30, 13)))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(30, 13)))));
         $session->moveNext();
     
         $storage->persist($session);
@@ -306,7 +306,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // Response processing should have taken place beauce this is the end of the current test part.
         // The Pending Response Store should be then flushed and now empty.
         $this->assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(30, 13)));
+        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(30, 13)));
         $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);

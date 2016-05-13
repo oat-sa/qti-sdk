@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\SubtractProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -41,7 +41,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new QtiInteger(10), new Point(1, 2)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiPoint(1, 2)));
 		$processor = new SubtractProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

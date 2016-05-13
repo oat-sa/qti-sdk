@@ -19,7 +19,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
@@ -321,26 +321,26 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q07.1 - Correct.
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
 	    $session->moveNext();
-	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new Point(102, 113)));
+	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
 	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.1.SCORE']);
 	    $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
 	    $this->assertEquals(7, count($session->getPendingResponses()));
 	    
 	    // Q07.2 - Incorrect (but SCORE = 1).
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 113)))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 113)))));
 	    $session->moveNext();
-	    $this->assertTrue($session['Q07.2.RESPONSE']->equals(new Point(103, 113)));
+	    $this->assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 113)));
 	    $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
 	    $this->assertEquals(8, count($session->getPendingResponses()));
 	    
 	    // Q07.3 - Incorrect (and SCORE = 0).
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(50, 60)))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 60)))));
 	    $session->moveNext();
-	    $this->assertTrue($session['Q07.3.RESPONSE']->equals(new Point(50, 60)));
+	    $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(50, 60)));
 	    $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
 	    
 	    // This is the end of the test. Then, the pending responses were flushed.
@@ -413,9 +413,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'Sp'), new QtiDirectedPair('G2', 'Su')))))); // SCORE = 0 - Incorrect
 	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D'), new QtiPair('B', 'D')))))); // SCORE = 1 - Incorrect
 	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
-	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(105, 105)))); // SCORE = 1 - Incorrect
-	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
-	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(13, 37)))); // SCORE = 0 - Incorrect
+	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(105, 105)))); // SCORE = 1 - Incorrect
+	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(13, 37)))); // SCORE = 0 - Incorrect
 	    
 	    $test = array($responses, $outcomes);
 	    $returnValue[] = $test;
@@ -429,9 +429,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))); // SCORE = 3 - Correct
 	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D')))))); // SCORE = 2 - Correct
 	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
-	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
-	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
-	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 0 - Correct
+	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))); // SCORE = 1 - Correct
+	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))); // SCORE = 0 - Correct
 	     
 	    $test = array($responses, $outcomes);
 	    $returnValue[] = $test;
@@ -705,7 +705,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(1, $session->getCurrentAssessmentItemRefOccurence());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 102)))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 102)))));
 	    $session->moveNext();
 	    $this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
 	    

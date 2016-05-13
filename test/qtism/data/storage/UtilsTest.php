@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\Utils;
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\Shape;
@@ -280,9 +280,9 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validPointProvider() {
 		return array(
-			array('20 30', new Point(20, 30)),
-			array('240 30', new Point(240, 30)),
-			array('-10 3', new Point(-10, 3))
+			array('20 30', new QtiPoint(20, 30)),
+			array('240 30', new QtiPoint(240, 30)),
+			array('-10 3', new QtiPoint(-10, 3))
 		);
 	}
 	

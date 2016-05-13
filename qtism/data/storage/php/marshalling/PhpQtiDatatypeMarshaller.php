@@ -27,7 +27,7 @@ use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
 use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiCoords;
@@ -56,7 +56,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
                 $this->marshallDuration();
                 return;
             }
-            else if ($toMarshall instanceof Point) {
+            else if ($toMarshall instanceof QtiPoint) {
                 $this->marshallPoint();
                 return;
             }

@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\DeleteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
@@ -66,26 +66,26 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(2, 4);
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 4), new Point(3, 4)));
+		$operands[] = new QtiPoint(2, 4);
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 4), new QtiPoint(3, 4)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
 		$this->assertEquals(2, count($result));
-		$this->assertTrue($result->contains(new Point(1, 2)));
-		$this->assertTrue($result->contains(new Point(3, 4)));
-		$this->assertFalse($result->contains(new Point(2, 4)));
+		$this->assertTrue($result->contains(new QtiPoint(1, 2)));
+		$this->assertTrue($result->contains(new QtiPoint(3, 4)));
+		$this->assertFalse($result->contains(new QtiPoint(2, 4)));
 	
 		// Check that ALL the occurences of the first sub-expression are removed.
 		$operands->reset();
-		$operands[] = new Point(2, 4);
-		$operands[] = new OrderedContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 4), new Point(2, 4), new Point(3, 4)));
+		$operands[] = new QtiPoint(2, 4);
+		$operands[] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 4), new QtiPoint(2, 4), new QtiPoint(3, 4)));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
 		$this->assertEquals(2, count($result));
-		$this->assertTrue($result->contains(new Point(1, 2)));
-		$this->assertTrue($result->contains(new Point(3, 4)));
-		$this->assertFalse($result->contains(new Point(2, 4)));
+		$this->assertTrue($result->contains(new QtiPoint(1, 2)));
+		$this->assertTrue($result->contains(new QtiPoint(3, 4)));
+		$this->assertFalse($result->contains(new QtiPoint(2, 4)));
 	}
 	
 	public function testNull() {

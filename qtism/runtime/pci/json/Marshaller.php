@@ -38,7 +38,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\Scalar;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\State;
@@ -235,7 +235,7 @@ class Marshaller {
         if (is_null($complex) === true) {
             return $complex;
         }
-        else if ($complex instanceof Point) {
+        else if ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
         }
         else if ($complex instanceof QtiDirectedPair) {
@@ -341,7 +341,7 @@ class Marshaller {
      * @param Point $point
      * @return array
      */
-    protected function marshallPoint(Point $point) {
+    protected function marshallPoint(QtiPoint $point) {
         return array('base' => array('point' => array($point->getX(), $point->getY())));
     }
     

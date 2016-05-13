@@ -24,7 +24,7 @@
 
 namespace qtism\data\storage;
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\expressions\BaseValue;
 use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
@@ -168,7 +168,7 @@ class Utils {
 				case BaseType::POINT:
 					if (Format::isPoint($string)) {
 						$parts = explode("\x20", $string);
-						return new Point(intval($parts[0]), intval($parts[1]));
+						return new QtiPoint(intval($parts[0]), intval($parts[1]));
 					}
 					else {
 						$msg = "'${string}' is not valid point.";

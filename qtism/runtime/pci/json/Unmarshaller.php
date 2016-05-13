@@ -27,7 +27,7 @@ namespace qtism\runtime\pci\json;
 
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiIntOrIdentifier;
@@ -356,7 +356,7 @@ class Unmarshaller {
      * @return Point
      */
     protected function unmarshallPoint(array $unit) {
-        return new Point($unit['base']['point'][0], $unit['base']['point'][1]);
+        return new QtiPoint($unit['base']['point'][0], $unit['base']['point'][1]);
     }
     
     /**

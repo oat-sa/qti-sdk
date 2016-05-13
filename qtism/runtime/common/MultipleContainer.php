@@ -28,7 +28,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\data\state\ValueCollection;
 use qtism\common\utils\Format;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;

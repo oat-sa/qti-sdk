@@ -12,7 +12,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\MapResponseProcessor;
 use qtism\common\datatypes\QtiPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\ExpressionProcessingException;
@@ -639,25 +639,25 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(1.0, $result->getValue());
         
         // No match, should have 1.
-        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new Point(-2, 2)));
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(-2, 2)));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1.0, $result->getValue());
         
         // No match, two times, should have 2.
-        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new Point(-2, 2), new Point(100, 100)));
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(-2, 2), new QtiPoint(100, 100)));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(2.0, $result->getValue());
         
         // One is not matched, the other is. Should have 2.5.
-        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new Point(-2, 2), new Point(0, 0)));
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(-2, 2), new QtiPoint(0, 0)));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(2.5, $result->getValue());
         
         // Both matched but there is an upperBound. Should have 3.0.
-        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new Point(10, 10), new Point(0, 0)));
+        $state['response1'] = new OrderedContainer(BaseType::POINT, array(new QtiPoint(10, 10), new QtiPoint(0, 0)));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(3.0, $result->getValue());

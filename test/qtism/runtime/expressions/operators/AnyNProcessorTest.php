@@ -8,7 +8,7 @@ use qtism\runtime\common\State;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\AnyNProcessor;
@@ -58,7 +58,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression(2, 3);
-		$operands = new OperandsCollection(array(new Point(1, 2)));
+		$operands = new OperandsCollection(array(new QtiPoint(1, 2)));
 		$processor = new AnyNProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

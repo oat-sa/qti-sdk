@@ -12,7 +12,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
@@ -130,7 +130,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $samples = self::samplesDir();
         
         $returnValue = array();
-        $returnValue[] = array(new Point(10, 20), json_encode(array('base' => array('point' => array(10, 20)))));
+        $returnValue[] = array(new QtiPoint(10, 20), json_encode(array('base' => array('point' => array(10, 20)))));
         $returnValue[] = array(new QtiPair('A', 'B'), json_encode(array('base' => array('pair' => array('A', 'B')))));
         $returnValue[] = array(new QtiDirectedPair('a', 'b'), json_encode(array('base' => array('directedPair' => array('a', 'b')))));
         $returnValue[] = array(new QtiDuration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
@@ -183,7 +183,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // point multiple(point(123, 456), point(640, 480)).
-        $container = new MultipleContainer(BaseType::POINT, array(new Point(123, 456), new Point(640, 480)));
+        $container = new MultipleContainer(BaseType::POINT, array(new QtiPoint(123, 456), new QtiPoint(640, 480)));
         $json = json_encode(array('list' => array('point' => array(array(123, 456), array(640, 480)))));
         $returnValue[] = array($container, $json);
         
@@ -265,7 +265,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($record, $json);
         
         // miscellaneous record.
-        $record = new RecordContainer(array('numeric' => new QtiFloat(1337.1337), 'null' => null, 'coordinates' => new Point(10, 20)));
+        $record = new RecordContainer(array('numeric' => new QtiFloat(1337.1337), 'null' => null, 'coordinates' => new QtiPoint(10, 20)));
         $json = json_encode(array('record' => array(array('name' => 'numeric', 'base' => array('float' => 1337.1337)), array('name' => 'null', 'base' => null), array('name' => 'coordinates', 'base' => array('point' => array(10, 20))))));
         $returnValue[] = array($record, $json);
         
@@ -296,7 +296,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         // complex state 2.
         $state = new State();
         $state->setVariable(new OutcomeVariable('OUTCOME1', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(10.10)))));
-        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new Point(10, 20)))));
+        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::ORDERED, BaseType::POINT, new OrderedContainer(BaseType::POINT, array(new QtiPoint(10, 20)))));
         $json = json_encode(array('OUTCOME1' => array('list' => array('float' => array(0.0, 10.10))), 'RESPONSE1' => array('list' => array('point' => array(array(10, 20))))));
         $returnValue[] = array($state, $json);
         

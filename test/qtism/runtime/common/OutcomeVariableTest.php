@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -259,7 +259,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$outcome = new OutcomeVariable('var1', Cardinality::RECORD);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value['point1'] = new Point(100, 200);
+		$value['point1'] = new QtiPoint(100, 200);
 		$this->assertFalse($outcome->isNull());
 	}
 }

@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\IntegerToFloatProcessor;
@@ -84,7 +84,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$processor = new IntegerToFloatProcessor($expression, $operands);
 	
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
@@ -40,14 +40,14 @@ class MultipleContainerTest extends QtiSmTestCase {
 	
 	public function testCreationWithWrongValues() {
 		$this->setExpectedException('\\InvalidArgumentException');
-		$data = array(new Point(20, 20));
+		$data = array(new QtiPoint(20, 20));
 		$container = new MultipleContainer(BaseType::DURATION, $data);
 	}
 	
 	public function testCreateFromDataModel() {
 		$valueCollection = new ValueCollection();
-		$valueCollection[] = new Value(new Point(10, 30), BaseType::POINT);
-		$valueCollection[] = new Value(new Point(20, 40), BaseType::POINT);
+		$valueCollection[] = new Value(new QtiPoint(10, 30), BaseType::POINT);
+		$valueCollection[] = new Value(new QtiPoint(20, 40), BaseType::POINT);
 		
 		$container = MultipleContainer::createFromDataModel($valueCollection, BaseType::POINT);
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $container);
@@ -78,7 +78,7 @@ class MultipleContainerTest extends QtiSmTestCase {
 		$returnValue = array();
 		
 		$valueCollection = new ValueCollection();
-		$valueCollection[] = new Value(new Point(20, 30), BaseType::POINT);
+		$valueCollection[] = new Value(new QtiPoint(20, 30), BaseType::POINT);
 		$valueCollection[] = new Value(10, BaseType::INTEGER);
 		$returnValue[] = array(BaseType::INTEGER, $valueCollection);
 		

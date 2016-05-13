@@ -2,7 +2,7 @@
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\AndProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
@@ -24,7 +24,7 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Point(1, 2)));
+		$operands = new OperandsCollection(array(new QtiPoint(1, 2)));
 		$processor = new AndProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

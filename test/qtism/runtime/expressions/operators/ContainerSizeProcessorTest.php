@@ -11,7 +11,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\runtime\expressions\operators\ContainerSizeProcessor;
 use qtism\data\expressions\operators\ContainerSize; 
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -74,7 +74,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(1, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2), new Point(2, 3), new Point(3, 4)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
 		$this->assertEquals(3, $result->getValue());

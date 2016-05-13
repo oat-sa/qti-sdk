@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Statistics;
 use qtism\runtime\expressions\operators\StatsOperatorProcessor;
@@ -199,7 +199,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function wrongBaseTypeProvider() {
 		return array(
-			array(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2))))),
+			array(array(new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2))))),
 			array(array(new OrderedContainer(BaseType::STRING, array(new QtiString('String!')))))		
 		);
 	}

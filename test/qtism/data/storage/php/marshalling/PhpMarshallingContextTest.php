@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\Shape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\storage\MemoryStream;
@@ -113,8 +113,8 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         
         $this->assertEquals('coords_0', $ctx->generateVariableName(new QtiCoords(Shape::CIRCLE, array(10, 10, 5))));
         $this->assertEquals('coords_1', $ctx->generateVariableName(new QtiCoords(Shape::CIRCLE, array(10, 10, 3))));
-        $this->assertEquals('point_0', $ctx->generateVariableName(new Point(0, 0)));
-        $this->assertEquals('point_1', $ctx->generateVariableName(new Point(0, 1)));
+        $this->assertEquals('point_0', $ctx->generateVariableName(new QtiPoint(0, 0)));
+        $this->assertEquals('point_1', $ctx->generateVariableName(new QtiPoint(0, 1)));
         $this->assertEquals('coords_2', $ctx->generateVariableName(new QtiCoords(Shape::CIRCLE, array(5, 5, 3))));
     }
 }

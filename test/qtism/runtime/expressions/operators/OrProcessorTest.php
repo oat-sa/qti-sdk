@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\OrProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
@@ -23,7 +23,7 @@ class OrProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Point(1, 2)));
+		$operands = new OperandsCollection(array(new QtiPoint(1, 2)));
 		$processor = new OrProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

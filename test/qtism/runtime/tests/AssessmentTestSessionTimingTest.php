@@ -3,7 +3,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionException;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
@@ -103,7 +103,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         sleep(2);
          
         try {
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
             $this->assertTrue(false);
         }
         catch (AssessmentTestSessionException $e) {

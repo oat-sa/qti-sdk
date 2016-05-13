@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\expressions\operators\NotProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 
@@ -27,7 +27,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)))));
 		$processor = new NotProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

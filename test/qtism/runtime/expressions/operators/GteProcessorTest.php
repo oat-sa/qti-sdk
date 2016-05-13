@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\expressions\operators\GteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -59,7 +59,7 @@ class GteProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(1, 2);
+		$operands[] = new QtiPoint(1, 2);
 		$operands[] = new QtiInteger(2);
 		$processor = new GteProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
