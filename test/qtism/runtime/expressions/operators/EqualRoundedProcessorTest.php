@@ -8,7 +8,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\runtime\expressions\operators\EqualRoundedProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -78,7 +78,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
-		$operands = new OperandsCollection(array(new Pair('A', 'B'), new QtiInteger(3)));
+		$operands = new OperandsCollection(array(new QtiPair('A', 'B'), new QtiInteger(3)));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

@@ -4,7 +4,7 @@ use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -13,8 +13,8 @@ class MatchTableMarshallerTest extends QtiSmTestCase {
 	public function testMarshall() {
 
 		$matchTableEntryCollection = new MatchTableEntryCollection();
-		$matchTableEntryCollection[] = new MatchTableEntry(1, new Pair('A', 'B'));
-		$matchTableEntryCollection[] = new MatchTableEntry(2, new Pair('A', 'C'));
+		$matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
+		$matchTableEntryCollection[] = new MatchTableEntry(2, new QtiPair('A', 'C'));
 		
 		$component = new MatchTable($matchTableEntryCollection);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component, array(BaseType::PAIR));

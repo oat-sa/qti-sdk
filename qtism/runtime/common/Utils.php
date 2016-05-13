@@ -34,7 +34,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;

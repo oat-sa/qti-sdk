@@ -39,7 +39,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Pair implements Comparable, QtiDatatype {
+class QtiPair implements Comparable, QtiDatatype {
 	
 	/**
 	 * The first identifier of the Pair.

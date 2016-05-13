@@ -8,7 +8,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\ResponseVariable;
@@ -96,7 +96,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('S01', $session->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'M')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'M')))))));
         $session->moveNext();
     
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
@@ -228,12 +228,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q02 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')))))));
         $session->moveNext();
     
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))));
+        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')))));
         $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
         $this->assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
     

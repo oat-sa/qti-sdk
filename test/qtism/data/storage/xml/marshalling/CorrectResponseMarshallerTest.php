@@ -4,7 +4,7 @@ use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -12,7 +12,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 		$interpretation = 'It is up to you to interpret...';
-		$pair = new Pair('id1', 'id2');
+		$pair = new QtiPair('id1', 'id2');
 		$values = new ValueCollection();
 		$values[] = new Value($pair);
 		$component = new CorrectResponse($values, $interpretation);

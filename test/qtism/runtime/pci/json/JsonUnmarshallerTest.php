@@ -7,7 +7,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiIntOrIdentifier;
@@ -151,7 +151,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $returnValue = array();
         
         $returnValue[] = array(new Point(10, 20), '{ "base" : { "point" : [10, 20] } }');
-        $returnValue[] = array(new Pair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
+        $returnValue[] = array(new QtiPair('A', 'B'), '{ "base" : { "pair" : ["A", "B"] } }');
         $returnValue[] = array(new QtiDirectedPair('a', 'b'), '{ "base" : { "directedPair" : ["a", "b"] } }');
         $returnValue[] = array(new QtiDuration('PT3S'), '{ "base" : { "duration" : "PT3S" } }');
 
@@ -200,7 +200,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "point" : [[123, 456], [640, 480]] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('D', 'C')));
+        $container = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('D', 'C')));
         $json = '{ "list" : { "pair" : [["A", "B"], ["D", "C"]] } }';
         $returnValue[] = array($container, $json);
         

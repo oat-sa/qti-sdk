@@ -3,7 +3,7 @@
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -45,7 +45,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Q02
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('D', 'L')))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(3, $session['Q02.SCORE']->getValue());  // just for fun...
 	    $processor->setExpression($overallResponded);

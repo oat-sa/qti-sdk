@@ -6,7 +6,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -122,7 +122,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 		$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 		
-		$pair = new Pair('A', 'B');
+		$pair = new QtiPair('A', 'B');
 		$this->assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
 	}
 	
@@ -143,8 +143,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $defaultValue);
 		$this->assertEquals(2, count($defaultValue));
 		$this->assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
-		$this->assertTrue($defaultValue[0]->equals(new Pair('A', 'B')));
-		$this->assertTrue($defaultValue[1]->equals(new Pair('B', 'C')));
+		$this->assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
+		$this->assertTrue($defaultValue[1]->equals(new QtiPair('B', 'C')));
 	}
 	
 	public function testCreateFromVariableDeclarationDefaultValueRecordCardinality() {
@@ -208,7 +208,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($matchTableEntries));
 		$this->assertEquals(0, $matchTableEntries[0]->getSourceValue());
 		$targetValue = $matchTableEntries[0]->getTargetValue();
-		$this->assertTrue($targetValue->equals(new Pair('E', 'F')));
+		$this->assertTrue($targetValue->equals(new QtiPair('E', 'F')));
 	}
 	
 	public function testIsNull() {

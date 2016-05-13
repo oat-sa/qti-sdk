@@ -6,7 +6,7 @@ use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -39,7 +39,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S01.Q02 - set an incorrect response but close to the correct one ['A P', 'D L'], SCORE = 3
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L'))))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('D', 'L'))))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
 		$this->assertEquals(3.0, $session['Q02.SCORE']->getValue());
@@ -63,7 +63,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S02.Q05 - set an incorrect response ['C B', 'C D', 'B D'], SCORE = 1 (max = 2)
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D'), new Pair('B', 'D'))))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D'), new QtiPair('B', 'D'))))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q05.SCORE']);
 		$this->assertEquals(1.0, $session['Q05.SCORE']->getValue());

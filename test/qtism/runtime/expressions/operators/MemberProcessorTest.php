@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -35,15 +35,15 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Pair('A', 'B');
-		$ordered = new OrderedContainer(BaseType::PAIR, array(new Pair('B', 'C')));
+		$operands[] = new QtiPair('A', 'B');
+		$ordered = new OrderedContainer(BaseType::PAIR, array(new QtiPair('B', 'C')));
 		$operands[] = $ordered;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertEquals(false, $result->getValue());
 		
-		$ordered[] = new Pair('A', 'B');
+		$ordered[] = new QtiPair('A', 'B');
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertEquals(true, $result->getValue());
@@ -82,7 +82,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Pair('A', 'B');
+		$operands[] = new QtiPair('A', 'B');
 		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
 		$processor = new MemberProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

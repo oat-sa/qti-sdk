@@ -9,7 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\runtime\common\Container;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDuration;
@@ -113,7 +113,7 @@ class ContainerTest extends QtiSmTestCase {
 			array(new QtiBoolean(false)),
 			array(new QtiDuration('P1D')),
 			array(new Point(20, 20)),
-			array(new Pair('A', 'B')),
+			array(new QtiPair('A', 'B')),
 			array(new QtiDirectedPair('C', 'D')),
 			array(null)
 		);
@@ -187,7 +187,7 @@ class ContainerTest extends QtiSmTestCase {
 		$container = $this->getContainer();
 		$container[] = new Point(10, 20);
 		$container[] = new QtiDuration('P2D'); // 2 days.
-		$container[] = new Pair('A', 'B');
+		$container[] = new QtiPair('A', 'B');
 		$container[] = new QtiDirectedPair('C', 'D');
 		$container[] = new QtiInteger(20);
 		$container[] = new QtiFloat(20.1);
@@ -207,10 +207,10 @@ class ContainerTest extends QtiSmTestCase {
 	}
 	
 	public function testContains() {
-		$pair = new Pair('A', 'B');
+		$pair = new QtiPair('A', 'B');
 		$container = $this->getContainer();
 		$container[] = $pair;
-		$this->assertTrue($container->contains(new Pair('A', 'B')));
+		$this->assertTrue($container->contains(new QtiPair('A', 'B')));
 	}
 	
 	/**
@@ -229,7 +229,7 @@ class ContainerTest extends QtiSmTestCase {
 		$returnValue[] = array(new Container(), '[]');
 		$returnValue[] = array(new Container(array(new QtiInteger(10))), '[10]');
 		$returnValue[] = array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), '[true; false]');
-		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
+		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new Point(10, 15), new QtiPair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		
 		return $returnValue;
 	}

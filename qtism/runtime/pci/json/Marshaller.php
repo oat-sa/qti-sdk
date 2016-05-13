@@ -30,7 +30,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
@@ -241,7 +241,7 @@ class Marshaller {
         else if ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
         }
-        else if ($complex instanceof Pair) {
+        else if ($complex instanceof QtiPair) {
             return $this->marshallPair($complex);
         }
         else if ($complex instanceof QtiDuration) {
@@ -361,7 +361,7 @@ class Marshaller {
      * @param Pair $pair
      * @return array
      */
-    protected function marshallPair(Pair $pair) {
+    protected function marshallPair(QtiPair $pair) {
         return array('base' => array('pair' => array($pair->getFirst(), $pair->getSecond())));
     }
     

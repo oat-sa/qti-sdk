@@ -11,7 +11,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\expressions\MapResponseProcessor;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -79,18 +79,18 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(1.0, $result->getValue());
 		
-		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B')));
+		$state['response1'] = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(1.5, $result->getValue());
 		
-		$state['response1'][] = new Pair('C', 'D');
+		$state['response1'][] = new QtiPair('C', 'D');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(4, $result->getValue());
 		
 		// mapEntries must be taken into account only once, as per QTI 2.1 spec.
-		$state['response1'][] = new Pair('C', 'D');
+		$state['response1'][] = new QtiPair('C', 'D');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
@@ -599,17 +599,17 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$state->setVariable($variable);
 		$mapResponseProcessor->setState($state);
         
-        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B')));
+        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B')));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1.5, $result->getValue());
         
-        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D')));
+        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('C', 'D')));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(4.0, $result->getValue());
         
-        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new Pair('C', 'D'), new Pair('A', 'B')));
+        $state['response1'] = new OrderedContainer(BaseType::PAIR, array(new QtiPair('C', 'D'), new QtiPair('A', 'B')));
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(4.0, $result->getValue());

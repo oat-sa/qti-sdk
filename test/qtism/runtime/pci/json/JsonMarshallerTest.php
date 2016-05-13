@@ -11,7 +11,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
@@ -131,7 +131,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         
         $returnValue = array();
         $returnValue[] = array(new Point(10, 20), json_encode(array('base' => array('point' => array(10, 20)))));
-        $returnValue[] = array(new Pair('A', 'B'), json_encode(array('base' => array('pair' => array('A', 'B')))));
+        $returnValue[] = array(new QtiPair('A', 'B'), json_encode(array('base' => array('pair' => array('A', 'B')))));
         $returnValue[] = array(new QtiDirectedPair('a', 'b'), json_encode(array('base' => array('directedPair' => array('a', 'b')))));
         $returnValue[] = array(new QtiDuration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
         
@@ -188,7 +188,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // pair multiple(pair(A, B), pair(C, D)).
-        $container = new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('D', 'C')));
+        $container = new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('D', 'C')));
         $json = json_encode(array('list' => array('pair' => array(array('A', 'B'), array('D', 'C')))));
         $returnValue[] = array($container, $json);
         

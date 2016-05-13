@@ -2,7 +2,7 @@
 
 use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -42,7 +42,7 @@ class ValueMarshallerTest extends QtiSmTestCase {
 	
 	public function testMarshallNoBaseType() {
 		
-		$value = new Pair('id1', 'id2');
+		$value = new QtiPair('id1', 'id2');
 		
 		$component = new Value($value);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);

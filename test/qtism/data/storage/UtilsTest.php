@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Point;
 use qtism\data\storage\Utils;
@@ -323,8 +323,8 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validPairProvider() {
 		return array(
-			array('Bidule Trucmuche', new Pair('Bidule', 'Trucmuche')),
-			array('C D', new Pair('C', 'D'))
+			array('Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')),
+			array('C D', new QtiPair('C', 'D'))
 		);
 	}
 	

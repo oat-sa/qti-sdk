@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -36,14 +36,14 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $state['outcome1']);
 		$processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
-		$this->assertTrue($state['outcome1']->equals(new Pair('C', 'D')));
+		$this->assertTrue($state['outcome1']->equals(new QtiPair('C', 'D')));
 		
 		// Try to get the default value.
 		$expr = $rule->getExpression();
 		$expr->setValue(5);
 		$processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
-		$this->assertTrue($state['outcome1']->equals(new Pair('Y', 'Z')));
+		$this->assertTrue($state['outcome1']->equals(new QtiPair('Y', 'Z')));
 	}
 	
 	public function testLookupOutcomeValueSimpleInterpolationTable() {

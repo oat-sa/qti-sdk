@@ -21,7 +21,7 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
 
 class AssessmentTestSessionTest extends QtiSmTestCase {
@@ -287,9 +287,9 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q02 - Incorrect (but SCORE = 3)
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))))));
 	    $session->moveNext();
-	    $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M')))));
+	    $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))));
 	    $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
 	    $this->assertEquals(2, count($session->getPendingResponses()));
 	    
@@ -408,10 +408,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $outcomes = array('NCORRECTS01' => new QtiInteger(2), 'NCORRECTS02' => new QtiInteger(1), 'NCORRECTS03' => new QtiInteger(1), 'NINCORRECT' => new QtiInteger(5), 'NRESPONSED' => new QtiInteger(9), 'NPRESENTED' => new QtiInteger(9), 'NSELECTED' => new QtiInteger(9), 'PERCENT_CORRECT' => new QtiFloat(44.44));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
-	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))))); // SCORE = 3 - Incorrect
+	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('D', 'L')))))); // SCORE = 3 - Incorrect
 	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))); // SCORE = 2 - Correct
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'Sp'), new QtiDirectedPair('G2', 'Su')))))); // SCORE = 0 - Incorrect
-	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D'), new Pair('B', 'D')))))); // SCORE = 1 - Incorrect
+	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D'), new QtiPair('B', 'D')))))); // SCORE = 1 - Incorrect
 	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
 	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(105, 105)))); // SCORE = 1 - Incorrect
 	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
@@ -424,10 +424,10 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $outcomes = array('NCORRECTS01' => new QtiInteger(3), 'NCORRECTS02' => new QtiInteger(3), 'NCORRECTS03' => new QtiInteger(3), 'NINCORRECT' => new QtiInteger(0), 'NRESPONSED' => new QtiInteger(9), 'NPRESENTED' => new QtiInteger(9), 'NSELECTED' => new QtiInteger(9), 'PERCENT_CORRECT' => new QtiFloat(100.00));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
-	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))); // SCORE = 4 - Correct
+	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')))))); // SCORE = 4 - Correct
 	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))); // SCORE = 2 - Correct
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))); // SCORE = 3 - Correct
-	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D')))))); // SCORE = 2 - Correct
+	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D')))))); // SCORE = 2 - Correct
 	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
 	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
 	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
@@ -684,7 +684,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Autoforward enabled so we are at Q02.
 	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))))));
 	    $session->moveNext();
 	    $this->assertEquals(2.0, $session['Q02.SCORE']->getValue());
 	    
@@ -759,7 +759,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Autoforward enabled so we are at Q02.
 	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))))));
 	    $session->moveNext();
 	     
 	    // Q03 Again because of autoforward.
@@ -923,7 +923,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q02.
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))))));
 	    $session->moveNext();
 	    
 	    // Q03.

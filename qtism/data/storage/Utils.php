@@ -29,7 +29,7 @@ use qtism\data\expressions\BaseValue;
 use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiCoords;
@@ -128,7 +128,7 @@ class Utils {
 				case BaseType::PAIR:
 					if (Format::isPair($string)) {
 						$pair = explode("\x20", $string);
-						return new Pair($pair[0], $pair[1]);
+						return new QtiPair($pair[0], $pair[1]);
 					}
 					else {
 						$msg = "'${string}' is not a valid pair.";
