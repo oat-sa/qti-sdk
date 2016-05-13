@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\expressions\operators\OrderedProcessor;
@@ -115,8 +115,8 @@ class OrderedProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeOne() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2')));
-	    $operands[] = new Identifier('identifier3');
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), new QtiIdentifier('identifier2')));
+	    $operands[] = new QtiIdentifier('identifier3');
 	    $operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('string1'), new QtiString('string2')));
 	    $operands[] = null;
 	    $processor = new OrderedProcessor($expression, $operands);

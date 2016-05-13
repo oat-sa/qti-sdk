@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\datatypes\QtiFloat;
 
@@ -363,7 +363,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
 	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('identifier3'), new QtiString('identifier4'), null, new QtiString('identifier2')));
-	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier3'), new Identifier('identifier2')));
+	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier3'), new QtiIdentifier('identifier2')));
 	    $processor = new ContainsProcessor($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 	    $processor->process();

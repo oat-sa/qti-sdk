@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\MultipleContainer;
@@ -77,7 +77,7 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	    $expression = $this->createFakeExpression(1);
 	    $operands = new OperandsCollection();
 	    $operands[] = null;
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('id1'), new Identifier('id2')));
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('id1'), new QtiIdentifier('id2')));
 	    $operands[] = new OrderedContainer(BaseType::URI, array(new Uri('id3'), new Uri('id4')));
 	    $operands[] = new Uri('http://www.taotesting.com');
 	    $operands[] = new OrderedContainer(BaseType::STRING);

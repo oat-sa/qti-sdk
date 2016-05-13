@@ -15,7 +15,7 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
@@ -118,7 +118,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
             array(new QtiFloat(1337.1337), json_encode(array('base' => array('float' => 1337.1337)))),
             array(new QtiString("String!"), json_encode(array('base' => array('string' => "String!")))),
             array(new QtiString(""), json_encode(array('base' => array('string' => "")))),
-            array(new Identifier("RESP_X32"), json_encode(array('base' => array('identifier' => "RESP_X32")))),
+            array(new QtiIdentifier("RESP_X32"), json_encode(array('base' => array('identifier' => "RESP_X32")))),
             array(new IntOrIdentifier("RESP_X33"), json_encode(array('base' => array('intOrIdentifier' => "RESP_X33")))),
             array(new IntOrIdentifier(1337), json_encode(array('base' => array('intOrIdentifier' => 1337)))),
             array(new Uri('http://www.taotesting.com'), json_encode(array('base' => array('uri' => 'http://www.taotesting.com')))),
@@ -213,7 +213,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // identifier multiple('_id1', 'id2', 'ID3').
-        $container = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('_id1'), new Identifier('id2'), new Identifier('ID3')));
+        $container = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('_id1'), new QtiIdentifier('id2'), new QtiIdentifier('ID3')));
         $json = json_encode(array('list' => array('identifier' => array('_id1', 'id2', 'ID3'))));
         $returnValue[] = array($container, $json);
         
@@ -281,15 +281,15 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($state, $json);
         
         // simple state.
-        $state = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $state = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $json = json_encode(array('RESPONSE' => array('base' => array('identifier' => 'ChoiceA'))));
         $returnValue[] = array($state, $json);
         
         // complex state 1.
         $state = new State();
-        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+        $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')));
         $state->setVariable(new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::DURATION));
-        $state->setVariable(new ResponseVariable('RESPONSE3', Cardinality::RECORD, -1, new RecordContainer(array('A' => new Identifier('A'), 'B' => new Identifier('B')))));
+        $state->setVariable(new ResponseVariable('RESPONSE3', Cardinality::RECORD, -1, new RecordContainer(array('A' => new QtiIdentifier('A'), 'B' => new QtiIdentifier('B')))));
         $json = json_encode(array('RESPONSE1' => array('base' => array('identifier' => 'ChoiceA')), 'RESPONSE2' => array('base' => null), 'RESPONSE3' => array('record' => array(array('name' => 'A', 'base' => array('identifier' => 'A')), array('name' => 'B', 'base' => array('identifier' => 'B'))))));
         $returnValue[] = array($state, $json);
         

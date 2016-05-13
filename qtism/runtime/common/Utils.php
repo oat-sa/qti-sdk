@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\common;
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiString;
@@ -347,7 +347,7 @@ class Utils {
 	        else if (is_string($v) === true) {
 	            
 	            if ($baseType === BaseType::IDENTIFIER) {
-	                return new Identifier($v);
+	                return new QtiIdentifier($v);
 	            }
 	            if ($baseType === -1 || $baseType === BaseType::STRING) {
 	                return new QtiString($v);

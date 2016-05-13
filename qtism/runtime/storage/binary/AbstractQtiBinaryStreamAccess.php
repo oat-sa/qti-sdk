@@ -28,7 +28,7 @@ use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\QtiFile;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Integer;
 use qtism\data\state\Value;
 use qtism\data\AssessmentSectionCollection;
@@ -550,7 +550,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
                 $session['numAttempts'] = new Integer($this->readTinyInt());
                 $session['duration'] = $this->readDuration();
-                $session['completionStatus'] = new Identifier($this->readString());
+                $session['completionStatus'] = new QtiIdentifier($this->readString());
                 
                 if ($session['numAttempts']->getValue() > 0) {
                     $session->setTimeReference($this->readDateTime());

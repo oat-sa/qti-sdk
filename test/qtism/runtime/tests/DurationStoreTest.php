@@ -3,7 +3,7 @@ use qtism\runtime\common\ResponseVariable;
 
 use qtism\runtime\common\MultipleContainer;
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -33,7 +33,7 @@ class DurationStoreTest extends QtiSmTestCase {
     public function testInstantiationWrongBaseType() {
         $data = array();
         $data[] = new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S'));
-        $data[] = new OutcomeVariable('duration2', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('identifier'));
+        $data[] = new OutcomeVariable('duration2', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('identifier'));
         $data[] = new OutcomeVariable('duration3', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT2S'));
         
         $this->setExpectedException('\\InvalidArgumentException', "The DurationStore only aims at storing OutcomeVariable objects with a 'duration' baseType, 'identifier' baseType given for variable 'duration2'.");
@@ -71,7 +71,7 @@ class DurationStoreTest extends QtiSmTestCase {
         $durations = new DurationStore();
         
         $this->setExpectedException('\\InvalidArgumentException', "The DurationStore only aims at storing OutcomeVariable objects with a 'duration' baseType, 'identifier' baseType given for variable 'duration1'");
-        $durations->setVariable(new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('identifier')));
+        $durations->setVariable(new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('identifier')));
     }
     
     public function testSetVariableWrongCardinality() {

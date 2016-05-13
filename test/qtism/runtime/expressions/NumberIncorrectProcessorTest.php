@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
@@ -34,7 +34,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State();
 		// Correct!
-		$responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+		$responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')));
 		$session->endAttempt($responses);
 		$processor->setExpression($overallCorrect);
 	    $this->assertEquals(0, $processor->process()->getValue());
@@ -82,7 +82,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A')));
+	    $responses->setVariable(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(3, $processor->process()->getValue());
 	    $session->moveNext();

@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiDuration;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -71,7 +71,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         $session->beginAttempt();
         sleep(1);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $this->assertTrue($session['itemsubset.duration']->round()->equals(new QtiDuration('PT1S')));
         $this->assertTrue($session['P01.duration']->round()->equals(new QtiDuration('PT1S')));
         $this->assertTrue($session['S01.duration']->round()->equals(new QtiDuration('PT1S')));
@@ -217,7 +217,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         // Q01 - Correct
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $session->moveNext();
     
         $storage->persist($session);

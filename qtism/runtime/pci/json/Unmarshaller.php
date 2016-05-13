@@ -29,7 +29,7 @@ use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiDuration;
@@ -429,6 +429,6 @@ class Unmarshaller {
      * @return Identifier
      */
     protected function unmarshallIdentifier(array $unit) {
-        return new Identifier($unit['base']['identifier']);
+        return new QtiIdentifier($unit['base']['identifier']);
     }
 }

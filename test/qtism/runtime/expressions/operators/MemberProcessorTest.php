@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
@@ -72,7 +72,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
 	    $operands[] = new QtiString('String1');
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('String2'), new Identifier('String1'), null));
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('String2'), new QtiIdentifier('String1'), null));
 	    $processor = new MemberProcessor($expression, $operands);
 	    
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

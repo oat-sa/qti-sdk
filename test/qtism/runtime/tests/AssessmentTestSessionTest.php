@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\AssessmentTestPlace;
@@ -220,7 +220,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $assessmentTestSession->beginAttempt();
 	    $this->assertTrue($assessmentTestSession->isCurrentAssessmentItemInteracting());
 	    $responses = new State();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')));
 	    $assessmentTestSession->endAttempt($responses);
 	    $assessmentTestSession->moveNext();
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemInteracting());
@@ -229,7 +229,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $assessmentTestSession->beginAttempt();
 	    $responses = new State();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))); // -> incorrect x)
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))); // -> incorrect x)
 	    $assessmentTestSession->endAttempt($responses);
 	    $assessmentTestSession->moveNext();
 	    
@@ -237,7 +237,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $assessmentTestSession->beginAttempt();
 	    $responses = new State();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC')));
 	    $assessmentTestSession->endAttempt($responses);
 	    $assessmentTestSession->moveNext();
 	    
@@ -276,7 +276,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q01 - Correct.
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 	    $session->moveNext();
 	    
 	    // !!! The Response must be stored in the session, but no score must be computed.
@@ -407,12 +407,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Test 1.
 	    $outcomes = array('NCORRECTS01' => new Integer(2), 'NCORRECTS02' => new Integer(1), 'NCORRECTS03' => new Integer(1), 'NINCORRECT' => new Integer(5), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(44.44));
 	    $responses = array();
-	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))); // SCORE = 1 - Correct
+	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))))); // SCORE = 3 - Incorrect
-	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))); // SCORE = 2 - Correct
+	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))); // SCORE = 2 - Correct
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'Sp'), new QtiDirectedPair('G2', 'Su')))))); // SCORE = 0 - Incorrect
 	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D'), new Pair('B', 'D')))))); // SCORE = 1 - Incorrect
-	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A')))); // SCORE = 1 - Correct
+	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
 	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(105, 105)))); // SCORE = 1 - Incorrect
 	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
 	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(13, 37)))); // SCORE = 0 - Incorrect
@@ -423,12 +423,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Test 2 (full correct).
 	    $outcomes = array('NCORRECTS01' => new Integer(3), 'NCORRECTS02' => new Integer(3), 'NCORRECTS03' => new Integer(3), 'NINCORRECT' => new Integer(0), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(100.00));
 	    $responses = array();
-	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))); // SCORE = 1 - Correct
+	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))); // SCORE = 4 - Correct
-	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))); // SCORE = 2 - Correct
+	    $responses['Q03'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))); // SCORE = 2 - Correct
 	    $responses['Q04'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))); // SCORE = 3 - Correct
 	    $responses['Q05'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('C', 'B'), new Pair('C', 'D')))))); // SCORE = 2 - Correct
-	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A')))); // SCORE = 1 - Correct
+	    $responses['Q06'] = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A')))); // SCORE = 1 - Correct
 	    $responses['Q07.1'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
 	    $responses['Q07.2'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 1 - Correct
 	    $responses['Q07.3'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))); // SCORE = 0 - Correct
@@ -449,7 +449,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		
 		$this->assertFalse($assessmentTestSession->whichLastOccurenceUpdate($doc->getDocumentComponent()->getComponentByIdentifier('Q01')));
 		
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
 		$assessmentTestSession->beginAttempt();
 		$assessmentTestSession->endAttempt($responses);
 		$assessmentTestSession->moveNext();
@@ -670,14 +670,14 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))));
 	    $session->moveNext();
 	    $this->assertEquals(2.0, $session['Q03.SCORE']->getValue());
 	    
 	    // Come back at Q01.
 	    $session->jumpTo(0);
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 	    $session->moveNext();
 	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
 	    
@@ -747,13 +747,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->jumpTo(2);
 	    $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))));
 	    $session->moveNext();
 	     
 	    // Come back at Q01.
 	    $session->jumpTo(0);
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 	    $session->moveNext();
 	     
 	    // Autoforward enabled so we are at Q02.
@@ -918,7 +918,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q01.
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 	    $session->moveNext();
 	    
 	    // Q02.
@@ -928,7 +928,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Q03.
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('O')))))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('O')))))));
 	    $session->moveNext();
 	    
 	    // Q04.
@@ -968,7 +968,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $session->beginAttempt();
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    
 	    $session->moveNext();
@@ -1000,7 +1000,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getCurrentAssessmentItemSession()->getState());
 	    
 	    // Finally answer the question :) !
-	    $responses = new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceA'))));
+	    $responses = new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA'))));
 	    $session->endAttempt($responses);
 	    $session->moveNext();
 	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
@@ -1422,7 +1422,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA')))));
 	    $session->moveNext();
 	    
 	    $this->assertEquals('I am still preserved!', $session['PRESERVED']->getValue());
@@ -1430,7 +1430,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    $this->assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceB')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceB')))));
 	    $session->moveNext();
 	    
 	    $this->assertEquals('I am still preserved!', $session['PRESERVED']->getValue());

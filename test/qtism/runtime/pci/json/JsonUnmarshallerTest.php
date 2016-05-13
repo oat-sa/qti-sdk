@@ -9,7 +9,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiDatatype;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Point;
@@ -120,9 +120,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $this->assertEquals(4, count($state));
         $this->assertEquals(array('RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'), array_keys($state));
         
-        $response1 = new Identifier('ChoiceA');
-        $response2 = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('_id1'), new Identifier('id2'), new Identifier('ID3')));
-        $response3 = new RecordContainer(array('rock' => new Identifier('Paper')));
+        $response1 = new QtiIdentifier('ChoiceA');
+        $response2 = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('_id1'), new QtiIdentifier('id2'), new QtiIdentifier('ID3')));
+        $response3 = new RecordContainer(array('rock' => new QtiIdentifier('Paper')));
         $response4 = null;
 
         $this->assertTrue($response1->equals($state['RESPONSE1']));
@@ -142,7 +142,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
             array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
             array(new IntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
-            array(new Identifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
+            array(new QtiIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
             array(null, '{ "base": null }')
         );
     }

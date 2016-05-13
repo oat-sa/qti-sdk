@@ -1,7 +1,7 @@
 <?php
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
@@ -106,7 +106,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     public function testEvolutionBasicMultipleAttempts() {
     
         $count = 5;
-        $attempts = array(new Identifier('ChoiceA'), new Identifier('ChoiceB'), new Identifier('ChoiceC'), new Identifier('ChoiceD'), new Identifier('ChoiceE'));
+        $attempts = array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'), new QtiIdentifier('ChoiceD'), new QtiIdentifier('ChoiceE'));
         $expected = array(new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(0.0), new QtiFloat(0.0), new QtiFloat(0.0));
     
         $itemSession = self::instantiateBasicAssessmentItemSession();
@@ -158,7 +158,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginItemSession();
     
         $itemSession->beginAttempt();
-        $itemSession['RESPONSE'] = new Identifier('ChoiceB');
+        $itemSession['RESPONSE'] = new QtiIdentifier('ChoiceB');
         sleep(2);
     
         // No exception because late submission is allowed.
@@ -205,7 +205,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT0S')));
     
         try {
-            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
             // Must be rejected, no more time remaining!!!
             $this->assertFalse(true);
         }
@@ -223,12 +223,12 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $this->assertFalse($itemSession->getRemainingTime());
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $this->assertEquals('incomplete', $itemSession['completionStatus']->getValue());
          
         $this->assertFalse($itemSession->getRemainingTime());
         $itemSession->beginAttempt();
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
         $this->assertFalse($itemSession->getRemainingTime());
     }
@@ -243,7 +243,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         // reach max time...
         sleep(2);
         
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))), true, true);
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))), true, true);
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
         $this->assertEquals(1, $itemSession['SCORE']->getValue());
     }

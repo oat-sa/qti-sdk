@@ -26,7 +26,7 @@ namespace qtism\runtime\tests;
 
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Integer;
 use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
@@ -268,7 +268,7 @@ class AssessmentItemSession extends State {
 		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
 	}
 	
 	/**

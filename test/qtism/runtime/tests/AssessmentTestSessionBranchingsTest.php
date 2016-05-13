@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -57,7 +57,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         // Q01 - We answer correct to bypass Q02.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         
         // Correct? Then we should go to Q03.
@@ -67,14 +67,14 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         // Q03 - Are we there? We answer incorrect to take Q04.
         $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceZ'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceZ'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // Q04 - Last item, nothing special.
         $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
@@ -97,13 +97,13 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         
         // Q01 - We answer correct to move to Q03.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
         // Q03 - We want to reach the EXIT_TEST target.
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
@@ -130,7 +130,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
         $testSession->endAttempt($responses);
         $testSession->moveNext();
         
@@ -167,9 +167,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase {
     
     public function branchingMultipleOccurencesProvider() {
         return array(
-            array(new Identifier('goto21'), 'Q02', 0),
-            array(new Identifier('goto22'), 'Q02', 1),
-            array(new Identifier('goto23'), 'Q02', 2),
+            array(new QtiIdentifier('goto21'), 'Q02', 0),
+            array(new QtiIdentifier('goto22'), 'Q02', 1),
+            array(new QtiIdentifier('goto23'), 'Q02', 2),
             array(null, 'Q02', 3)              
         );
     }

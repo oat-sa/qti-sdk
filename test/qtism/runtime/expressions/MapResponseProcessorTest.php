@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
 use qtism\data\expressions\MapResponse;
@@ -109,7 +109,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
             </responseDeclaration>
 	    ');
 	    $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-	    $variable->setValue(new Identifier('Choice_3'));
+	    $variable->setValue(new QtiIdentifier('Choice_3'));
 	    $mapResponseExpr = $this->createComponentFromXml('<mapResponse identifier="RESPONSE"/>');
 	    $mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
 	    $mapResponseProcessor->setState(new State(array($variable)));
@@ -147,7 +147,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor = new MapResponseProcessor($mapResponseExpr);
 		
         $state = new State(array($variable));
-        $state['response1'] = new Identifier('correct_identifier');
+        $state['response1'] = new QtiIdentifier('correct_identifier');
         $mapResponseProcessor->setState($state);
 		$result = $mapResponseProcessor->process();
         $this->assertEquals(0.0, $result->getValue());
@@ -198,7 +198,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	    
 	    // RESPONSE is Choice 6, Choice 8.
 	    // Note that Choice 8 has not mapping, the mapping's default value (0) must be then used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('Choice6'), new Identifier('Choice8')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(20.0, $result->getValue());
 	    
@@ -207,14 +207,14 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 	    $mapping->setDefaultValue(-1.0);
 	    $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
 	    $state->setVariable($responseVariable);
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('Choice6'), new Identifier('Choice8')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('Choice6'), new QtiIdentifier('Choice8')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(19.0, $result->getValue());
 	    
 	    // Response is 'choice7', and 'identifierX'. choice7 is in lower case but its
 	    // associated entry is case insensitive. It must be then matched.
 	    // 'identifierX' will not be matched at all, the mapping's default value (still -1) will be used.
-	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('choice7'), new Identifier('identifierX')));
+	    $state['RESPONSE'] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('choice7'), new QtiIdentifier('identifierX')));
 	    $result = $mapResponseProcessor->process();
 	    $this->assertEquals(-21.0, $result->getValue());
 	    

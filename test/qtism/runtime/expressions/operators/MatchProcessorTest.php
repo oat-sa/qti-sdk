@@ -6,7 +6,7 @@ use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
@@ -75,7 +75,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseType() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('txt1'), new Identifier('txt2')));
+	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('txt1'), new QtiIdentifier('txt2')));
 	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('txt1'), new QtiString('txt2')));
 	    $processor = new MatchProcessor($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

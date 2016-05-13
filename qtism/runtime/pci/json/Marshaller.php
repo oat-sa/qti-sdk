@@ -34,7 +34,7 @@ use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\IntOrIdentifier;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
@@ -196,7 +196,7 @@ class Marshaller {
             else if ($scalar instanceof QtiFloat) {
                 return $this->marshallFloat($scalar);
             }
-            else if ($scalar instanceof Identifier) {
+            else if ($scalar instanceof QtiIdentifier) {
                 return $this->marshallIdentifier($scalar);
             }
             else if ($scalar instanceof Uri) {
@@ -301,7 +301,7 @@ class Marshaller {
      * @param Identifier $identifier
      * @return array
      */
-    protected function marshallIdentifier(Identifier $identifier) {
+    protected function marshallIdentifier(QtiIdentifier $identifier) {
         return array('base' => array('identifier' => $identifier->getValue()));
     }
     

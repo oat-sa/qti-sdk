@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\datatypes\QtiFloat;
 
@@ -31,7 +31,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S01.Q01 - set a correct response 'ChoiceA', scoring = 1.0
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA'))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
 		$this->assertEquals(1.0, $session['Q01.scoring']->getValue());
@@ -47,7 +47,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S01.Q03 - set a correct response ['H', '0'], SCORE = 2
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O'))))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O'))))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q03.SCORE']);
 		$this->assertEquals(2.0, $session['Q03.SCORE']->getValue());
@@ -71,7 +71,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S02.Q06 - set an correct response 'A', mySc0r3 = 1
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A'))));
+		$responses = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A'))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q06.mySc0r3']);
 		$this->assertEquals(1.0, $session['Q06.mySc0r3']->getValue());
@@ -131,9 +131,9 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 	        array(self::getTestVariables('SCORE', BaseType::FLOAT, '', '', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(3.0), new QtiFloat(0.0)))),
 	        array(self::getTestVariables('SCORE', -1, 'W01', 'S01', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(6.0)))),
 	        array(self::getTestVariables('RESPONSE'), new MultipleContainer(BaseType::FLOAT)),
-	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER), new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('ChoiceA'), new Identifier('A')))), // Do not forget it only matches if Cardinality = SINGLE
-	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER, 'W01'), new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('ChoiceA'), new Identifier('A')))), // Weight only applies if baseType is ommited or FLOAT.
-	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER, 'W01', 'S01'), new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('ChoiceA')))), // Weight only applies if baseType is ommited or FLOAT.
+	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER), new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('A')))), // Do not forget it only matches if Cardinality = SINGLE
+	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER, 'W01'), new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('A')))), // Weight only applies if baseType is ommited or FLOAT.
+	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER, 'W01', 'S01'), new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA')))), // Weight only applies if baseType is ommited or FLOAT.
 	    );
 	}
 	
