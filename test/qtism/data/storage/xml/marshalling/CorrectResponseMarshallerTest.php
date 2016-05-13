@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\DirectedPair;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
@@ -77,7 +78,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 		foreach ($component->getValues() as $value) {
 			$this->assertInstanceOf('qtism\\data\\state\\Value', $value);
 			$this->assertEquals(BaseType::DIRECTED_PAIR, $value->getBaseType());
-			$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value->getValue());
+			$this->assertInstanceOf(DirectedPair::class, $value->getValue());
 			$this->assertFalse($value->isPartOfRecord());
 		}
 	}

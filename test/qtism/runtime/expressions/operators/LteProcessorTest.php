@@ -18,21 +18,21 @@ class LteProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiInteger(1);
 		$processor = new LteProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiInteger(1);
 		$operands[] = new QtiFloat(0.5);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiInteger(1);
 		$operands[] = new QtiInteger(1);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 	}
 	

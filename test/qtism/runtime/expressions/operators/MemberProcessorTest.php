@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
@@ -23,12 +24,12 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = $mult;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(false, $result->getValue());
 		
 		$mult[] = new QtiFloat(10.1);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(true, $result->getValue());
 	}
 	
@@ -40,12 +41,12 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands[] = $ordered;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(false, $result->getValue());
 		
 		$ordered[] = new QtiPair('A', 'B');
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(true, $result->getValue());
 	}
 	

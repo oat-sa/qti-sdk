@@ -62,7 +62,7 @@ class NotProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiBoolean(true)));
 		$processor = new NotProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertSame(false, $result->getValue());
 	}
 	

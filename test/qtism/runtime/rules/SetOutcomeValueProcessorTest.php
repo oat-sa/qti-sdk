@@ -135,7 +135,7 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 		
 		$processor->setState($state);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $state['myBool']);
+		$this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
 		$this->assertTrue($state['myBool']->getValue());
 	}
 }

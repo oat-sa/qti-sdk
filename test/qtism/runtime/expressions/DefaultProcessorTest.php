@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
@@ -48,7 +49,7 @@ class DefaultProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 	}
 	

@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPoint;
@@ -126,7 +127,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToDirectedPairValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value);
+		$this->assertInstanceOf(DirectedPair::class, $value);
 		$this->assertEquals($expected->getFirst(), $value->getFirst());
 		$this->assertEquals($expected->getSecond(), $value->getSecond());
 	}

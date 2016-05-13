@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -17,13 +18,13 @@ class DurationLTProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiDuration('P1D'), new QtiDuration('P2D')));
 		$processor = new DurationLTProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiDuration('P2D'), new QtiDuration('P1D')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 	}
 	

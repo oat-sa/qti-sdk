@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
@@ -20,25 +21,25 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(10)));
 		$processor = new EqualProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(0), new QtiInteger(1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(10.0)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(10.1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 	}
 	
@@ -48,32 +49,32 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(10)));
 		$processor = new EqualProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		// -- lowerBound = 1; upperBound = 19
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(19)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(19.1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(20)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(0)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		// -- do not include upper bound.
@@ -83,13 +84,13 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(19)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		// do not include lower bound.
@@ -99,7 +100,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiFloat(10.0), new QtiFloat(0.9999)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 	}
 	
@@ -108,25 +109,25 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(9.9)));
 		$processor = new EqualProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(10.2)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(9.8)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(10.3)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 	}
 	
@@ -141,7 +142,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(9.8)));
@@ -159,7 +160,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(13)));
