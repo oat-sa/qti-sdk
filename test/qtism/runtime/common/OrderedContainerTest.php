@@ -10,7 +10,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 
@@ -52,7 +52,7 @@ class OrderedContainerTest extends QtiSmTestCase {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(30)))),
 			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.tao.lu'), new Uri('http://www.taotesting.com')))),
-			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('def', 'abc')))),
+			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('def', 'abc')))),
 		);
 	}
 }

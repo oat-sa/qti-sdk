@@ -31,7 +31,7 @@ use qtism\common\utils\Format;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use \InvalidArgumentException;

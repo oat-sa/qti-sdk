@@ -33,7 +33,7 @@ use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
@@ -376,7 +376,7 @@ class Unmarshaller {
      * @return DirectedPair
      */
     protected function unmarshallDirectedPair(array $unit) {
-        return new DirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
+        return new QtiDirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
     }
     
     /**

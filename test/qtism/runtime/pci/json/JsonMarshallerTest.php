@@ -10,7 +10,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Uri;
@@ -132,7 +132,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue = array();
         $returnValue[] = array(new Point(10, 20), json_encode(array('base' => array('point' => array(10, 20)))));
         $returnValue[] = array(new Pair('A', 'B'), json_encode(array('base' => array('pair' => array('A', 'B')))));
-        $returnValue[] = array(new DirectedPair('a', 'b'), json_encode(array('base' => array('directedPair' => array('a', 'b')))));
+        $returnValue[] = array(new QtiDirectedPair('a', 'b'), json_encode(array('base' => array('directedPair' => array('a', 'b')))));
         $returnValue[] = array(new Duration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
         
         $file = new FileSystemFile($samples . 'datatypes/file/text-plain_text_data.txt');
@@ -193,7 +193,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // pair multiple(pair(A, B), pair(C, D)).
-        $container = new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('A', 'B'), new DirectedPair('D', 'C')));
+        $container = new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('A', 'B'), new QtiDirectedPair('D', 'C')));
         $json = json_encode(array('list' => array('directedPair' => array(array('A', 'B'), array('D', 'C')))));
         $returnValue[] = array($container, $json);
         

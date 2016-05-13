@@ -3,7 +3,7 @@
 use qtism\common\datatypes\Identifier;
 
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
@@ -68,7 +68,7 @@ class NumberCorrectProcessorTest extends QtiSmItemSubsetTestCase {
 	    // Correct!
 	    $responses->reset();
 	    $session->beginAttempt();
-	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
+	    $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))));
 	    $session->endAttempt($responses);
 	    $this->assertEquals(2, $processor->process()->getValue());
 	    $session->moveNext();

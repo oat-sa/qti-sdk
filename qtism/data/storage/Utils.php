@@ -30,7 +30,7 @@ use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
@@ -139,7 +139,7 @@ class Utils {
 				case BaseType::DIRECTED_PAIR:
 					if (Format::isDirectedPair($string)) {
 						$pair = explode("\x20", $string);
-						return new DirectedPair($pair[0], $pair[1]);
+						return new QtiDirectedPair($pair[0], $pair[1]);
 					}
 					else {
 						$msg = "'${string}' is not a valid directed pair.";

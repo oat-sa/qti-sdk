@@ -32,7 +32,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Duration;
 use qtism\common\collections\AbstractCollection;

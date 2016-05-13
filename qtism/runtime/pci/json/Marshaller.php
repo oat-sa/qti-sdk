@@ -29,7 +29,7 @@ use qtism\common\datatypes\File;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Uri;
@@ -238,7 +238,7 @@ class Marshaller {
         else if ($complex instanceof Point) {
             return $this->marshallPoint($complex);
         }
-        else if ($complex instanceof DirectedPair) {
+        else if ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
         }
         else if ($complex instanceof Pair) {
@@ -351,7 +351,7 @@ class Marshaller {
      * @param DirectedPair $directedPair
      * @return array
      */
-    protected function marshallDirectedPair(DirectedPair $directedPair) {
+    protected function marshallDirectedPair(QtiDirectedPair $directedPair) {
         return array('base' => array('directedPair' => array($directedPair->getFirst(), $directedPair->getSecond())));
     }
     

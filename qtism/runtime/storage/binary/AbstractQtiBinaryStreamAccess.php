@@ -46,7 +46,7 @@ use qtism\runtime\tests\PendingResponses;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
 use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\OrderedContainer;
@@ -371,7 +371,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readDirectedPair() {
         try {
-            return new DirectedPair($this->readString(), $this->readString());
+            return new QtiDirectedPair($this->readString(), $this->readString());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a directedPair.";
@@ -385,7 +385,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param DirectedPair $directedPair A DirectedPair object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeDirectedPair(DirectedPair $directedPair) {
+    public function writeDirectedPair(QtiDirectedPair $directedPair) {
         try {
             $this->writeString($directedPair->getFirst());
             $this->writeString($directedPair->getSecond());

@@ -5,7 +5,7 @@ use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -55,7 +55,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		
 		// S02.Q04 - set an incorrect response ['W Sp', 'G2 Su'], SCORE = 0
 		$session->beginAttempt();
-		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'Sp'), new DirectedPair('G2', 'Su'))))));
+		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'Sp'), new QtiDirectedPair('G2', 'Su'))))));
 		$session->endAttempt($responses);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
 		$this->assertEquals(0.0, $session['Q04.SCORE']->getValue());

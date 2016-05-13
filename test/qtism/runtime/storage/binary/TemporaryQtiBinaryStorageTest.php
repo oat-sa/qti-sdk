@@ -9,7 +9,7 @@ use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -116,14 +116,14 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
         $this->assertEquals(AssessmentTestSessionState::INTERACTING, $session->getState());
         $session->beginAttempt();
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))));
         $session->moveNext();
     
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new DirectedPair('W', 'G1'), new DirectedPair('Su', 'G2')))));
+        $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))));
     
         // Q05 - Skip.
         $session->beginAttempt();

@@ -37,7 +37,7 @@ use qtism\common\enums\BaseType;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class DirectedPair extends Pair {
+class QtiDirectedPair extends Pair {
 	
 	
 	public function equals($obj) {
