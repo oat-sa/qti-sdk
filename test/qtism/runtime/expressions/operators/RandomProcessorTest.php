@@ -42,7 +42,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::DURATION, array(new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $result);
+		$this->assertInstanceOf(QtiDuration::class, $result);
 		$this->assertGreaterThanOrEqual(1, $result->getDays());
 		$this->assertLessThanOrEqual(3, $result->getDays());
 	}

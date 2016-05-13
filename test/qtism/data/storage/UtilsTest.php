@@ -86,7 +86,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToDurationValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::DURATION);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $value);
+		$this->assertInstanceOf(QtiDuration::class, $value);
 		$this->assertEquals($value->getDays(), $expected->getDays());
 		$this->assertEquals($value->getYears(), $expected->getYears());
 		$this->assertEquals($value->getHours(), $expected->getHours());

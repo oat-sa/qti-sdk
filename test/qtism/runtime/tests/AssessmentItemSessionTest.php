@@ -56,7 +56,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(0, $itemSession['numAttempts']->getValue());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('duration'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $itemSession['duration']);
+        $this->assertInstanceOf(QtiDuration::class, $itemSession['duration']);
         $this->assertEquals('PT0S', $itemSession['duration']->__toString());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('completionStatus'));
