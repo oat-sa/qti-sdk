@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -49,7 +49,7 @@ class PowerProcessorTest extends QtiSmTestCase {
 		
 		$operands->reset();
 		$operands[] = new Integer(20);
-		$operands[] = new Float(3.4);
+		$operands[] = new QtiFloat(3.4);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(26515, intval($result->getValue()));
@@ -73,7 +73,7 @@ class PowerProcessorTest extends QtiSmTestCase {
 	
 	public function testInfinite() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Float(INF), new Float(INF)));
+		$operands = new OperandsCollection(array(new QtiFloat(INF), new QtiFloat(INF)));
 		$processor = new PowerProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertTrue(is_infinite($result->getValue()));
@@ -82,7 +82,7 @@ class PowerProcessorTest extends QtiSmTestCase {
 	public function testNull() {
 		// exp as a float is NaN when negative base is used.
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(-20), new Float(3.4)));
+		$operands = new OperandsCollection(array(new Integer(-20), new QtiFloat(3.4)));
 		$processor = new PowerProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);

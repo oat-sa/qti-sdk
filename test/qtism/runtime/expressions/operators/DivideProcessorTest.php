@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
@@ -38,7 +38,7 @@ class DivideProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(6, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(1), new Float(0.5)));
+		$operands = new OperandsCollection(array(new Integer(1), new QtiFloat(0.5)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
@@ -55,13 +55,13 @@ class DivideProcessorTest extends QtiSmTestCase {
 	
 	public function testDivisionByInfinite() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Float(INF)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(INF)));
 		$processor = new DivideProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(0, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(-1), new Float(INF)));
+		$operands = new OperandsCollection(array(new Integer(-1), new QtiFloat(INF)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
@@ -70,7 +70,7 @@ class DivideProcessorTest extends QtiSmTestCase {
 	
 	public function testInfiniteDividedByInfinite() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Float(INF), new Float(INF)));
+		$operands = new OperandsCollection(array(new QtiFloat(INF), new QtiFloat(INF)));
 		$processor = new DivideProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);

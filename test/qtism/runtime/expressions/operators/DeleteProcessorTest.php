@@ -1,5 +1,5 @@
 <?php
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Integer;
 
@@ -107,7 +107,7 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseType() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Float(10.1);
+		$operands[] = new QtiFloat(10.1);
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

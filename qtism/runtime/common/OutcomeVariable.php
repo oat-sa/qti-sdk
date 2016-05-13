@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\common;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\data\state\OutcomeDeclaration;
@@ -227,7 +227,7 @@ class OutcomeVariable extends Variable {
 				$this->setValue(new Integer(0));
 			}
 			else if ($this->getBaseType() === BaseType::FLOAT) {
-				$this->setValue(new Float(0.0));
+				$this->setValue(new QtiFloat(0.0));
 			}
 		}
 	}

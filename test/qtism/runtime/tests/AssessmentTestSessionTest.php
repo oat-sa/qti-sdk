@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -123,13 +123,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Change the value of the global SCORE.
 	    $this->assertEquals(0.0, $assessmentTestSession['SCORE']->getValue());
-	    $assessmentTestSession['SCORE'] = new Float(20.0);
+	    $assessmentTestSession['SCORE'] = new QtiFloat(20.0);
 	    $this->assertEquals(20.0, $assessmentTestSession['SCORE']->getValue());
 	    
 	    // the assessment test session has no variable MAXSCORE.
 	    $this->assertSame(null, $assessmentTestSession['MAXSCORE']);
 	    try {
-	        $assessmentTestSession['MAXSCORE'] = new Float(20.0);
+	        $assessmentTestSession['MAXSCORE'] = new QtiFloat(20.0);
 	        // An exception must be thrown in this case!
 	        $this->assertTrue(false);
 	    }
@@ -139,13 +139,13 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // Change the value of Q01.SCORE.
 	    $this->assertEquals(0.0, $assessmentTestSession['Q01.SCORE']->getValue());
-	    $assessmentTestSession['Q01.SCORE'] = new Float(1.0);
+	    $assessmentTestSession['Q01.SCORE'] = new QtiFloat(1.0);
 	    $this->assertEquals(1.0, $assessmentTestSession['Q01.SCORE']->getValue());
 	    
 	    // Q01 has no 'MAXSCORE' variable.
 	    $this->assertSame(null, $assessmentTestSession['Q01.MAXSCORE']);
 	    try {
-	        $assessmentTestSession['Q01.MAXSCORE'] = new Float(1.0);
+	        $assessmentTestSession['Q01.MAXSCORE'] = new QtiFloat(1.0);
 	        // An exception must be thrown !
 	        $this->assertTrue(false);
 	    }
@@ -156,7 +156,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // No item Q04.
 	    $this->assertSame(null, $assessmentTestSession['Q04.SCORE']);
 	    try {
-	        $assessmentTestSession['Q04.SCORE'] = new Float(1.0);
+	        $assessmentTestSession['Q04.SCORE'] = new QtiFloat(1.0);
 	        // Because no such item, outofbounds.
 	        $this->assertTrue(false);
 	    }
@@ -405,7 +405,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $returnValue = array();
 	    
 	    // Test 1.
-	    $outcomes = array('NCORRECTS01' => new Integer(2), 'NCORRECTS02' => new Integer(1), 'NCORRECTS03' => new Integer(1), 'NINCORRECT' => new Integer(5), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new Float(44.44));
+	    $outcomes = array('NCORRECTS01' => new Integer(2), 'NCORRECTS02' => new Integer(1), 'NCORRECTS03' => new Integer(1), 'NINCORRECT' => new Integer(5), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(44.44));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))))); // SCORE = 3 - Incorrect
@@ -421,7 +421,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $returnValue[] = $test;
 	    
 	    // Test 2 (full correct).
-	    $outcomes = array('NCORRECTS01' => new Integer(3), 'NCORRECTS02' => new Integer(3), 'NCORRECTS03' => new Integer(3), 'NINCORRECT' => new Integer(0), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new Float(100.00));
+	    $outcomes = array('NCORRECTS01' => new Integer(3), 'NCORRECTS02' => new Integer(3), 'NCORRECTS03' => new Integer(3), 'NINCORRECT' => new Integer(0), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(100.00));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))); // SCORE = 4 - Correct

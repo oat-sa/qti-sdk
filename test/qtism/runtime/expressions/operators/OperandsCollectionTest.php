@@ -1,7 +1,7 @@
 <?php
 use qtism\common\datatypes\QtiString;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Boolean;
 
@@ -51,7 +51,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->containsNull());
 		
 		$operands[] = new Boolean(true);
-		$operands[] = new Float(0.4);
+		$operands[] = new QtiFloat(0.4);
 		$operands[] = new QtiString('string');
 		$operands[] = new Duration('P1D');
 		$this->assertFalse($operands->containsNull());
@@ -66,7 +66,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$this->assertTrue($operands->containsNull());
 		
-		$operands[0][] = new Float(15.3);
+		$operands[0][] = new QtiFloat(15.3);
 		$this->assertFalse($operands->containsNull());
 		
 		$operands[] = new QtiString('');
@@ -87,7 +87,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyNumeric());
 		
 		$operands[] = new Integer(14);
-		$operands[] = new Float(15.3);
+		$operands[] = new QtiFloat(15.3);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
 		$operands[] = new QtiString('');
@@ -109,7 +109,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$ord = new OrderedContainer(BaseType::FLOAT);
 		$operands[] = $ord;
 		$this->assertFalse($operands->exclusivelyNumeric());
-		$ord[] = new Float(15.5);
+		$ord[] = new QtiFloat(15.5);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
 		$operands[] = new RecordContainer();
@@ -230,7 +230,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Integer(10);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new Float(10.11);
+		$operands[] = new QtiFloat(10.11);
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new Point(1, 1);
@@ -381,7 +381,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($operands->sameBaseType());
 		
 		// - Misc
-		$operands = new Operandscollection(array(new Integer(0), new Integer(10), new Float(10.0)));
+		$operands = new Operandscollection(array(new Integer(0), new Integer(10), new QtiFloat(10.0)));
 		$this->assertFalse($operands->sameBaseType());
 	}
 	

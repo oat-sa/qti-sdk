@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Duration;
@@ -18,7 +18,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testPrimitiveMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(2.0), new Float(3.0)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(3.0)));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);

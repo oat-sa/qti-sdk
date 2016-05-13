@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\Expression;
@@ -140,7 +140,7 @@ class RoundToProcessor extends OperatorProcessor {
 			}
 			
 			if ($operand->getValue() == 0) {
-				return new Float(0.0);
+				return new QtiFloat(0.0);
 			}
 			
 			$d = ceil(log10($operand->getValue() < 0 ? -$operand->getValue() : $operand->getValue()));
@@ -148,7 +148,7 @@ class RoundToProcessor extends OperatorProcessor {
 			
 			$magnitude = pow(10, $power);
 			$shifted = round($operand->getValue() * $magnitude);
-			return new Float(floatval($shifted / $magnitude));
+			return new QtiFloat(floatval($shifted / $magnitude));
 		}
 		else {
 			
@@ -158,7 +158,7 @@ class RoundToProcessor extends OperatorProcessor {
 				throw new OperatorProcessingException($msg, $this);
 			}
 			
-			return new Float(round($operand->getValue(), $figures));
+			return new QtiFloat(round($operand->getValue(), $figures));
 		}
 	}
 }

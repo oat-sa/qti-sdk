@@ -6,7 +6,7 @@ use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
 use qtism\data\SubmissionMode;
@@ -88,12 +88,12 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER), "\x00" . "\x00" . pack('S', 0), new MultipleContainer(BaseType::INTEGER));
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(1)))), "\x01", null);
         
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(45.5)), "\x01", null);
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(45.5)), "\x01", null);
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT), "\x00" . "\x01" . pack('d', 45.5), 45.5);
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT), "\x00" . "\x00" . pack('S', 3) . "\x00" . pack('d', 0.0) . "\x00" . pack('d', -20.666) . "\x00" . pack('d', 65000.56), new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-20.666), new Float(65000.56))));
-        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT), "\x00" . "\x00" . pack('S', 1) . "\x00" . pack('d', 1337.666), new OrderedContainer(BaseType::FLOAT, array(new Float(1337.666))));
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT), "\x00" . "\x00" . pack('S', 3) . "\x00" . pack('d', 0.0) . "\x00" . pack('d', -20.666) . "\x00" . pack('d', 65000.56), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-20.666), new QtiFloat(65000.56))));
+        $returnValue[] = array(new ResponseVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT), "\x00" . "\x00" . pack('S', 1) . "\x00" . pack('d', 1337.666), new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(1337.666))));
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT), "\x00" . "\x00" . pack('S', 0), new MultipleContainer(BaseType::FLOAT));
-        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0)))), "\x01", null);
+        $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0)))), "\x01", null);
         
         $returnValue[] = array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)), "\x01", null);
         $returnValue[] = array(new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN), "\x00" . "\x01" . "\x01", true);
@@ -241,19 +241,19 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000))))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(0), null, new Integer(1), null, new Integer(200000))))),
                         
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(26.1))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new Float(-34455.0))),
+            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(26.1))),
+            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(-34455.0))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::FLOAT)),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT)),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(-21474.654))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(21474.3))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), new Float(-1.1), new Float(1.1), new Float(-200000.005), new Float(200000.005))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(-21474.654))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(21474.3))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(-1.1), new QtiFloat(1.1), new QtiFloat(-200000.005), new QtiFloat(200000.005))))),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(null)))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(0.0), null, new Float(1.1), null, new Float(200000.005))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), null, new QtiFloat(1.1), null, new QtiFloat(200000.005))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(0.0), null, new QtiFloat(1.1), null, new QtiFloat(200000.005))))),
                         
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false))),
@@ -369,7 +369,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
                         
             array(new OutcomeVariable('VAR', Cardinality::RECORD)),
             array(new OutcomeVariable('VAR', Cardinality::RECORD, -1, new RecordContainer(array('key1' => null)))),
-            array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new Float(25.5), 'key3' => new Integer(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new Boolean(true)))))
+            array(new OutcomeVariable('Var', Cardinality::RECORD, -1, new RecordContainer(array('key1' => new Duration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new Integer(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new Boolean(true)))))
         );
     }
     

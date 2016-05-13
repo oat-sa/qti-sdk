@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
@@ -106,8 +106,8 @@ class MultipleContainerTest extends QtiSmTestCase {
 	}
 	
 	public function testEqualsTwo() {
-	    $c1 = new MultipleContainer(BaseType::FLOAT, array(new Float(2.75), new Float(1.65)));
-	    $c2 = new MultipleContainer(BaseType::FLOAT, array(new Float(2.75), new Float(1.65)));
+	    $c1 = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.75), new QtiFloat(1.65)));
+	    $c2 = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.75), new QtiFloat(1.65)));
 	    $this->assertTrue($c1->equals($c2));
 	}
 }

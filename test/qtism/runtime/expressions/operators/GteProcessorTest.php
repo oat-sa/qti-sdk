@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
@@ -15,14 +15,14 @@ class GteProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Integer(1);
-		$operands[] = new Float(0.5);
+		$operands[] = new QtiFloat(0.5);
 		$processor = new GteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Float(0.5);
+		$operands[] = new QtiFloat(0.5);
 		$operands[] = new Integer(1);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);

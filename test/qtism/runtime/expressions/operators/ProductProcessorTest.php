@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -39,7 +39,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		$product = $this->createFakeProductComponent();
 		
 		$operands = new OperandsCollection(array(new Integer(-1), new Integer(1)));
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(2.1), new Float(4.3)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.1), new QtiFloat(4.3)));
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(15)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();

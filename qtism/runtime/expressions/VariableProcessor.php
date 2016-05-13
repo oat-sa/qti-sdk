@@ -28,7 +28,7 @@ use qtism\runtime\common\OrderedContainer;
 
 use qtism\runtime\common\MultipleContainer;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\VariableIdentifier;
@@ -131,7 +131,7 @@ class VariableProcessor extends ExpressionProcessor {
 					if (!empty($weight) && ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT)) {
 					
 						if ($cardinality === Cardinality::SINGLE) {
-							return new Float($variableValue->getValue() * $weight->getValue());
+							return new QtiFloat($variableValue->getValue() * $weight->getValue());
 						}
 						else if ($cardinality === Cardinality::MULTIPLE || $cardinality === Cardinality::ORDERED) {
 								
@@ -140,7 +140,7 @@ class VariableProcessor extends ExpressionProcessor {
 							$finalValue = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer(BaseType::FLOAT) : new OrderedContainer(BaseType::FLOAT);
 							for ($i = 0; $i < count($variableValue); $i++) {
 							    if ($variableValue[$i] !== null) {
-							        $finalValue[] = new Float($variableValue[$i]->getValue() * $weight->getValue()) ;
+							        $finalValue[] = new QtiFloat($variableValue[$i]->getValue() * $weight->getValue()) ;
 							    }
 							    else {
 							        $finalValue[] = null;

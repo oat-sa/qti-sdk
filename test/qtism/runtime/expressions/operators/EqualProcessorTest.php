@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -29,13 +29,13 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(10.0)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(10.0)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(10.1)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(10.1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -58,7 +58,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(19.1)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(19.1)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -96,7 +96,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(ToleranceMode::RELATIVE, array(90), false, false);
 		$processor->setExpression($expression);
 		
-		$operands = new OperandsCollection(array(new Float(10.0), new Float(0.9999)));
+		$operands = new OperandsCollection(array(new QtiFloat(10.0), new QtiFloat(0.9999)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -105,25 +105,25 @@ class EqualProcessorTest extends QtiSmTestCase {
 	
 	public function testAbsolute() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array(0.1, 0.2));
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.9)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.9)));
 		$processor = new EqualProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(10.2)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(10.2)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.8)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.8)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(10.3)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(10.3)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -132,19 +132,19 @@ class EqualProcessorTest extends QtiSmTestCase {
 	
 	public function testWithVariableRef() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0', 't1'));
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.9)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.9)));
 		$processor = new EqualProcessor($expression, $operands);
 		
 		$state = new State();
-		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new Float(0.1)));
-		$state->setVariable(new OutcomeVariable('t1', Cardinality::SINGLE, BaseType::FLOAT, new Float(0.1)));
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.1)));
+		$state->setVariable(new OutcomeVariable('t1', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.1)));
 		$processor->setState($state);
 		
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.8)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.8)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertFalse($result->getValue());
@@ -155,7 +155,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 		$processor = new EqualProcessor($expression, $operands);
 		
 		$state = new State();
-		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new Float(2.0)));
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(2.0)));
 		$processor->setState($state);
 		
 		$result = $processor->process();
@@ -178,7 +178,7 @@ class EqualProcessorTest extends QtiSmTestCase {
 	
 	public function testNoVariableRef() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0'));
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.9)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.9)));
 		$processor = new EqualProcessor($expression, $operands);
 		
 		$state = new State();
@@ -189,16 +189,16 @@ class EqualProcessorTest extends QtiSmTestCase {
 	
 	public function testNoSecondVariableRef() {
 		$expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, array('t0', 't1'));
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.9)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.9)));
 		$processor = new EqualProcessor($expression, $operands);
 		
 		$state = new State();
-		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new Float(0.1)));
+		$state->setVariable(new OutcomeVariable('t0', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.1)));
 		$processor->setState($state);
 		$result = $processor->process();
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Float(9.8)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(9.8)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertFalse($result->getValue());

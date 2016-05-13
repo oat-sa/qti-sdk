@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\QtiString;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Integer;
 
@@ -59,7 +59,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new Float(1.0), '2' => new Integer(2)))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new QtiFloat(1.0), '2' => new Integer(2)))));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

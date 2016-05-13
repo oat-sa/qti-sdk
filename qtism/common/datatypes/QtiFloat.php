@@ -29,7 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
-class Float extends Scalar implements QtiDatatype {
+class QtiFloat extends Scalar implements QtiDatatype {
     
     protected function checkType($value) {
         if (is_double($value) !== true) {

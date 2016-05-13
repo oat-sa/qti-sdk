@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\Identifier;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Integer;
 
@@ -373,7 +373,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(25.0)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(25.0)));
 		$processor = new ContainsProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

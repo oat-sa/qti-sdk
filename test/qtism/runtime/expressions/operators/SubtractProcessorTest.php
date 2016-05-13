@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\Point;
@@ -19,7 +19,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
 		$this->assertEquals(-246, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Float(-5.0), new Integer(-10)));
+		$operands = new OperandsCollection(array(new QtiFloat(-5.0), new Integer(-10)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);

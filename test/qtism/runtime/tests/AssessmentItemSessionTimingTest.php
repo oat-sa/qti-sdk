@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Identifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -107,7 +107,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
         $count = 5;
         $attempts = array(new Identifier('ChoiceA'), new Identifier('ChoiceB'), new Identifier('ChoiceC'), new Identifier('ChoiceD'), new Identifier('ChoiceE'));
-        $expected = array(new Float(0.0), new Float(1.0), new Float(0.0), new Float(0.0), new Float(0.0));
+        $expected = array(new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(0.0), new QtiFloat(0.0), new QtiFloat(0.0));
     
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();

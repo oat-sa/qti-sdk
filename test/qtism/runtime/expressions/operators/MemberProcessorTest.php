@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
@@ -18,15 +18,15 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Float(10.1);
-		$mult = new MultipleContainer(BaseType::FLOAT, array(new Float(1.1), new Float(2.1), new Float(3.1)));
+		$operands[] = new QtiFloat(10.1);
+		$mult = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.1), new QtiFloat(2.1), new QtiFloat(3.1)));
 		$operands[] = $mult;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertEquals(false, $result->getValue());
 		
-		$mult[] = new Float(10.1);
+		$mult[] = new QtiFloat(10.1);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertEquals(true, $result->getValue());

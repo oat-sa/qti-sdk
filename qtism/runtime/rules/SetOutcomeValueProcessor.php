@@ -28,7 +28,7 @@ use qtism\common\enums\Cardinality;
 
 use qtism\common\datatypes\Integer;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OutcomeVariable;
@@ -116,11 +116,11 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		    if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
 		        $baseType = $var->getBaseType();
 		        
-		        if ($baseType === BaseType::INTEGER && $val instanceof Float) {
+		        if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
 		            $val = new Integer(intval($val->getValue()));
 		        }
 		        else if ($baseType === BaseType::FLOAT && $val instanceof Integer) {
-		            $val = new Float(floatval($val->getValue()));
+		            $val = new QtiFloat(floatval($val->getValue()));
 		        }
 		    }
 		    

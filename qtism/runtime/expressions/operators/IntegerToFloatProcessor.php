@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\IntegerToFloat;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -78,6 +78,6 @@ class IntegerToFloatProcessor extends OperatorProcessor {
 		}
 		
 		$operand = $operands[0];
-		return new Float(floatval($operand->getValue()));
+		return new QtiFloat(floatval($operand->getValue()));
 	}
 }

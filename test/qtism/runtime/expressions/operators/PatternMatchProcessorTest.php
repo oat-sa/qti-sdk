@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\RecordContainer;
@@ -64,7 +64,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array(new Float(255.34)));
+		$operands = new OperandsCollection(array(new QtiFloat(255.34)));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();

@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Boolean;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\expressions\operators\Equal;
@@ -123,7 +123,7 @@ class EqualProcessor extends OperatorProcessor {
 					$msg = "The variable with name '${tolerance0Name}' could not be resolved.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 				}
-				else if (!$varValue instanceof Float) {
+				else if (!$varValue instanceof QtiFloat) {
 					$msg = "The variable with name '${tolerance0Name}' is not a float.";
 					throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 				}
@@ -134,7 +134,7 @@ class EqualProcessor extends OperatorProcessor {
 					// A second variableRef to handle.
 					$tolerance1Name = ProcessingUtils::sanitizeVariableRef($strTolerance[1]);
 					
-					if (($varValue = $state[$tolerance1Name]) !== null && $varValue instanceof Float) {
+					if (($varValue = $state[$tolerance1Name]) !== null && $varValue instanceof QtiFloat) {
 						$tolerance[] = $varValue->getValue();
 					}
 				}

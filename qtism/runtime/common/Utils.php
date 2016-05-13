@@ -29,7 +29,7 @@ use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
@@ -360,7 +360,7 @@ class Utils {
 	            }
 	        }
 	        else if (is_float($v) === true) {
-	            return new Float($v);
+	            return new QtiFloat($v);
 	        }
 	        else if (is_bool($v) === true) {
 	            return new Boolean($v);

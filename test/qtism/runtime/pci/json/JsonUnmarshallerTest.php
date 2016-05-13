@@ -14,7 +14,7 @@ use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Boolean;
 use qtism\runtime\pci\json\Unmarshaller;
@@ -136,8 +136,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             array(new Boolean(true), '{ "base" : {"boolean" : true } }'),
             array(new Boolean(false), '{ "base" : {"boolean" : false } }'),
             array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
-            array(new Float(23.23), '{ "base" : {"float" : 23.23 } }'),
-            array(new Float(6.0), '{ "base" : {"float" : 6 } }'),
+            array(new QtiFloat(23.23), '{ "base" : {"float" : 23.23 } }'),
+            array(new QtiFloat(6.0), '{ "base" : {"float" : 6 } }'),
             array(new QtiString('string'), '{ "base" : {"string" : "string" } }'),
             array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
             array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
@@ -188,7 +188,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "integer" : [2, 3, 5, 7, 11, 13] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::FLOAT, array(new Float(3.1415926), new Float(12.34), new Float(98.76)));
+        $container = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(3.1415926), new QtiFloat(12.34), new QtiFloat(98.76)));
         $json = '{ "list" : { "float" : [3.1415926, 12.34, 98.76] } }';
         $returnValue[] = array($container, $json);
         

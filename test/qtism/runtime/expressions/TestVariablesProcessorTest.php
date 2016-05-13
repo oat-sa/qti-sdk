@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\Identifier;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\DirectedPair;
@@ -112,24 +112,24 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 	
 	public function testVariablesProvider() {
 	    return array(
-	        array(self::getTestVariables('SCORE'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(3.0), new Float(2.0), new Float(0.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(0.0)))),
+	        array(self::getTestVariables('SCORE'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0), new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)))),
 	        array(self::getTestVariables('scoring'), new MultipleContainer(BaseType::FLOAT)),
-	        array(self::getTestVariables('SCORE', -1, '', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(3.0), new Float(2.0)))),
-	        array(self::getTestVariables('SCORE', -1, '', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(1.0), new Float(1.0)))),
-	        array(self::getTestVariables('SCORE', -1, '', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(1.0), new Float(0.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W01'), new MultipleContainer(BaseType::FLOAT, array(new Float(2.0), new Float(6.0), new Float(4.0), new Float(0.0), new Float(2.0), new Float(2.0), new Float(2.0), new Float(2.0), new Float(0.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W01', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new Float(2.0), new Float(6.0), new Float(4.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W01', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(2.0), new Float(2.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W01', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new Float(2.0), new Float(2.0), new Float(0.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W0X'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(3.0), new Float(2.0), new Float(0.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(0.0)))), // Weight not found, no weight applied
-	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(3.0), new Float(2.0)))), // same as previous
-	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new Float(0.0), new Float(1.0), new Float(1.0)))), // same as previous
-	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(1.0), new Float(0.0)))), // same as previous
-	        array(self::getTestVariables('SCORE', BaseType::FLOAT), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(3.0), new Float(2.0), new Float(0.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(1.0), new Float(0.0)))),
+	        array(self::getTestVariables('SCORE', -1, '', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0)))),
+	        array(self::getTestVariables('SCORE', -1, '', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0)))),
+	        array(self::getTestVariables('SCORE', -1, '', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W01'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.0), new QtiFloat(6.0), new QtiFloat(4.0), new QtiFloat(0.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(0.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W01', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.0), new QtiFloat(6.0), new QtiFloat(4.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W01', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(2.0), new QtiFloat(2.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W01', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.0), new QtiFloat(2.0), new QtiFloat(0.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W0X'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0), new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)))), // Weight not found, no weight applied
+	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S01'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0)))), // same as previous
+	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S02'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0)))), // same as previous
+	        array(self::getTestVariables('SCORE', -1, 'W0X', 'S03'), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)))), // same as previous
+	        array(self::getTestVariables('SCORE', BaseType::FLOAT), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0), new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)))),
 	        array(self::getTestVariables('SCORE', BaseType::INTEGER), new MultipleContainer(BaseType::FLOAT, array())),
-	        array(self::getTestVariables('SCORE', BaseType::FLOAT, '', '', new IdentifierCollection(array('mathematics'))), new MultipleContainer(BaseType::FLOAT, array(new Float(1.0), new Float(2.0), new Float(1.0)))),
-	        array(self::getTestVariables('SCORE', BaseType::FLOAT, '', '', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(3.0), new Float(0.0)))),
-	        array(self::getTestVariables('SCORE', -1, 'W01', 'S01', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new Float(6.0)))),
+	        array(self::getTestVariables('SCORE', BaseType::FLOAT, '', '', new IdentifierCollection(array('mathematics'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(1.0)))),
+	        array(self::getTestVariables('SCORE', BaseType::FLOAT, '', '', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(3.0), new QtiFloat(0.0)))),
+	        array(self::getTestVariables('SCORE', -1, 'W01', 'S01', null, new IdentifierCollection(array('mathematics', 'minimum'))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(6.0)))),
 	        array(self::getTestVariables('RESPONSE'), new MultipleContainer(BaseType::FLOAT)),
 	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER), new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('ChoiceA'), new Identifier('A')))), // Do not forget it only matches if Cardinality = SINGLE
 	        array(self::getTestVariables('RESPONSE', BaseType::IDENTIFIER, 'W01'), new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('ChoiceA'), new Identifier('A')))), // Weight only applies if baseType is ommited or FLOAT.

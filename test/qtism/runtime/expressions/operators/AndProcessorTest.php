@@ -9,7 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 
 class AndProcessorTest extends QtiSmTestCase {
@@ -40,7 +40,7 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT, array(new Float(25.0)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(25.0)))));
 		$processor = new AndProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\OrderedContainer;
@@ -20,7 +20,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = new Integer(-10);
 		$operands[] = new QtiString('String');
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(10.0)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0)));
 		$processor = new MinProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -29,7 +29,7 @@ class MinProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Float(-245.30);
+		$operands[] = new QtiFloat(-245.30);
 		$rec =  new RecordContainer(); // will be at a first glance considered as NULL.
 		$operands[] = $rec;
 		$processor = new MinProcessor($expression, $operands);
@@ -46,7 +46,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$operands[] = new Integer(10);
 		$operands[] = new OrderedContainer(BaseType::FLOAT); // null
-		$operands[] = new Float(-0.5);
+		$operands[] = new QtiFloat(-0.5);
 		$processor = new MinProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -79,7 +79,7 @@ class MinProcessorTest extends QtiSmTestCase {
 	
 	public function testMixed() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Float(26.4), new Integer(-4), new Float(25.3)));
+		$operands = new OperandsCollection(array(new Integer(10), new QtiFloat(26.4), new Integer(-4), new QtiFloat(25.3)));
 		$processor = new MinProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
@@ -87,8 +87,8 @@ class MinProcessorTest extends QtiSmTestCase {
 		
 		$operands->reset();
 		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(2), new Integer(3), new Integer(1), new Integer(4), new Integer(5)));
-		$operands[] = new Float(2.4);
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(245.4), new Float(1337.1337)));
+		$operands[] = new QtiFloat(2.4);
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(245.4), new QtiFloat(1337.1337)));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(1.0, $result->getValue());

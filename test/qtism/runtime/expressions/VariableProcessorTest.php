@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\ResponseVariable;
@@ -97,7 +97,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(1337, $result->getValue());
 		
 		// -- multiple cardinality test.
-		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(new Float(10.1), new Float(12.1)));
+		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.1), new QtiFloat(12.1)));
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var2" weightIdentifier="weight1"/>');
 		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();

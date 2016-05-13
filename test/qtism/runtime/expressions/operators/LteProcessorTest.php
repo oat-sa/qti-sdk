@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
 use qtism\runtime\expressions\operators\LteProcessor;
@@ -14,7 +14,7 @@ class LteProcessorTest extends QtiSmTestCase {
 	public function testLte() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Float(0.5);
+		$operands[] = new QtiFloat(0.5);
 		$operands[] = new Integer(1);
 		$processor = new LteProcessor($expression, $operands);
 		$result = $processor->process();
@@ -23,7 +23,7 @@ class LteProcessorTest extends QtiSmTestCase {
 		
 		$operands->reset();
 		$operands[] = new Integer(1);
-		$operands[] = new Float(0.5);
+		$operands[] = new QtiFloat(0.5);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());

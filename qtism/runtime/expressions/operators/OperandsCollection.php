@@ -28,7 +28,7 @@ use qtism\common\datatypes\Boolean;
 
 use qtism\common\datatypes\QtiString;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\collections\Stack;
 use qtism\common\datatypes\Point;
@@ -117,7 +117,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
 				return false;
 			}
-			else if (!$v instanceof Integer && !$v instanceof Float && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof Integer && !$v instanceof QtiFloat && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}

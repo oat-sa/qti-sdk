@@ -28,7 +28,7 @@ namespace qtism\runtime\pci\json;
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
@@ -336,7 +336,7 @@ class Unmarshaller {
             $unit['base']['float'] = floatval($unit['base']['float']);
         }  
         
-        return new Float($unit['base']['float']);
+        return new QtiFloat($unit['base']['float']);
     }
     
     /**

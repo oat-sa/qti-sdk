@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Identifier;
 use qtism\runtime\common\ResponseVariable;
 use qtism\common\enums\BaseType;
@@ -74,10 +74,10 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 	
 	public function responseConditionMatchCorrectProvider() {
 		return array(
-			array(new Identifier('ChoiceA'), new Float(1.0)),
-			array(new Identifier('ChoiceB'), new Float(0.0)),
-			array(new Identifier('ChoiceC'), new Float(0.0)),
-			array(new Identifier('ChoiceD'), new Float(0.0))
+			array(new Identifier('ChoiceA'), new QtiFloat(1.0)),
+			array(new Identifier('ChoiceB'), new QtiFloat(0.0)),
+			array(new Identifier('ChoiceC'), new QtiFloat(0.0)),
+			array(new Identifier('ChoiceD'), new QtiFloat(0.0))
 		);
 	}
 }

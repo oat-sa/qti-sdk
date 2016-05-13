@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\State;
@@ -113,7 +113,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testMinReferenceWrongBaseType() {
 		$expression = $this->createFakeExpression('min', 4);
-		$min = new OutcomeVariable('min', Cardinality::SINGLE, BaseType::FLOAT, new Float(2.3));
+		$min = new OutcomeVariable('min', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(2.3));
 		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(true), new Boolean(true), null));
 		$state = new State();
 		$state->setVariable($min);
@@ -125,7 +125,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testMaxReferenceWrongBaseType() {
 		$expression = $this->createFakeExpression(3, 'max');
-		$max = new OutcomeVariable('max', Cardinality::SINGLE, BaseType::FLOAT, new Float(4.5356));
+		$max = new OutcomeVariable('max', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(4.5356));
 		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(true), new Boolean(true), null));
 		$state = new State();
 		$state->setVariable($max);

@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -17,12 +17,12 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testSignificantFigures() {
 		$expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 3);
-		$operands = new OperandsCollection(array(new Float(3.175), new Float(3.183)));
+		$operands = new OperandsCollection(array(new QtiFloat(3.175), new QtiFloat(3.183)));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(true, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Float(3.175), new Float(3.1749)));
+		$operands = new OperandsCollection(array(new QtiFloat(3.175), new QtiFloat(3.1749)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertSame(false, $result->getValue());
@@ -30,12 +30,12 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testDecimalPlaces() {
 		$expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
-		$operands = new OperandsCollection(array(new Float(1.68572), new Float(1.69)));
+		$operands = new OperandsCollection(array(new QtiFloat(1.68572), new QtiFloat(1.69)));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(true, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Float(1.68572), new Float(1.68432)));
+		$operands = new OperandsCollection(array(new QtiFloat(1.68572), new QtiFloat(1.68432)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertSame(false, $result->getValue());
@@ -43,7 +43,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testNull() {
 		$expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
-		$operands = new OperandsCollection(array(new Float(1.68572), null));
+		$operands = new OperandsCollection(array(new QtiFloat(1.68572), null));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -51,7 +51,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testVariableRef() {
 		$expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 'var1');
-		$operands = new OperandsCollection(array(new Float(3.175), new Float(3.183)));
+		$operands = new OperandsCollection(array(new QtiFloat(3.175), new QtiFloat(3.183)));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		
 		$state = new State();
@@ -64,7 +64,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase {
 	
 	public function testUnknownVariableRef() {
 		$expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 'var1');
-		$operands = new OperandsCollection(array(new Float(3.175), new Float(3.183)));
+		$operands = new OperandsCollection(array(new QtiFloat(3.175), new QtiFloat(3.183)));
 		$processor = new EqualRoundedProcessor($expression, $operands);
 		
 		$state = new State();

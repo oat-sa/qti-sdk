@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
@@ -78,7 +78,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new RecordContainer(array('a' => new Boolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new Integer(24), 'e' => new Float(23.3)));
+		$operands[] = new RecordContainer(array('a' => new Boolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new Integer(24), 'e' => new QtiFloat(23.3)));
 		$this->assertFalse($processor->process()->getValue());
 	}
 	

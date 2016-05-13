@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\QtiString;
@@ -97,7 +97,7 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new Float(10.3)));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new QtiFloat(10.3)));
 		$processor = new RepeatProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

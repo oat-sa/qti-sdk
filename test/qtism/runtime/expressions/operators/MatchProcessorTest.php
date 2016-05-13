@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\QtiString;
@@ -108,7 +108,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20), new Integer(30), new Integer(40)));
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0), new Float(30.0), new Float(40.0)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), new QtiFloat(20.0), new QtiFloat(30.0), new QtiFloat(40.0)));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -118,7 +118,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new QtiString('String!');
-		$operands[] = new OrderedContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0)));
+		$operands[] = new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(10.0), new QtiFloat(20.0)));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -170,7 +170,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	
 	public function testNullScalar() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Float(15.0), null));
+		$operands = new OperandsCollection(array(new QtiFloat(15.0), null));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->assertSame(null, $processor->process());
 	}
