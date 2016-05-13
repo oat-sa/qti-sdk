@@ -9,7 +9,7 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
@@ -133,7 +133,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array(new Point(10, 20), json_encode(array('base' => array('point' => array(10, 20)))));
         $returnValue[] = array(new Pair('A', 'B'), json_encode(array('base' => array('pair' => array('A', 'B')))));
         $returnValue[] = array(new QtiDirectedPair('a', 'b'), json_encode(array('base' => array('directedPair' => array('a', 'b')))));
-        $returnValue[] = array(new Duration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
+        $returnValue[] = array(new QtiDuration('P3DT4H'), json_encode(array('base' => array('duration' => 'P3DT4H'))));
         
         $file = new FileSystemFile($samples . 'datatypes/file/text-plain_text_data.txt');
         $returnValue[] = array($file, json_encode(array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()), 'name' => 'text.txt')))));
@@ -198,7 +198,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // duration multiple("P3Y6M4DT12H30M5S", "P4Y").
-        $container = new MultipleContainer(BaseType::DURATION, array(new Duration('PT4M10S'), new Duration('P4Y')));
+        $container = new MultipleContainer(BaseType::DURATION, array(new QtiDuration('PT4M10S'), new QtiDuration('P4Y')));
         $json = json_encode(array('list' => array('duration' => array('PT4M10S', 'P4Y'))));
         $returnValue[] = array($container, $json);
         

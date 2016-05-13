@@ -10,7 +10,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\OrderedContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
@@ -59,7 +59,7 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(new QtiFloat(0.0), BaseType::FLOAT);
 		$returnValue[] = array(new MultipleContainer(BaseType::DURATION), BaseType::DURATION);
 		$returnValue[] = array(new OrderedContainer(BaseType::BOOLEAN), BaseType::BOOLEAN);
-		$returnValue[] = array(new Duration('P1D'), BaseType::DURATION);
+		$returnValue[] = array(new QtiDuration('P1D'), BaseType::DURATION);
 		$returnValue[] = array(new Point(1, 1), BaseType::POINT);
 		$returnValue[] = array(new Pair('A', 'B'), BaseType::PAIR);
 		$returnValue[] = array(new QtiDirectedPair('A', 'B'), BaseType::DIRECTED_PAIR);
@@ -85,7 +85,7 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(new Point(1, 1), Cardinality::SINGLE);
 		$returnValue[] = array(new Pair('A', 'B'), Cardinality::SINGLE);
 		$returnValue[] = array(new QtiDirectedPair('A', 'B'), Cardinality::SINGLE);
-		$returnValue[] = array(new Duration('P1D'), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiDuration('P1D'), Cardinality::SINGLE);
 		
 		return $returnValue;
 	}

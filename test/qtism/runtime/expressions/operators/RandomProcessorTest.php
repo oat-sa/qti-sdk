@@ -6,7 +6,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -39,7 +39,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testComplexMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::DURATION, array(new Duration('P1D'), new Duration('P2D'), new Duration('P3D')));
+		$operands[] = new MultipleContainer(BaseType::DURATION, array(new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $result);

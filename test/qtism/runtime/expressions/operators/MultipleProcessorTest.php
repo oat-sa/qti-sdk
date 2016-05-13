@@ -10,7 +10,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Point;
 
 class MultipleProcessorTest extends QtiSmTestCase {
@@ -128,7 +128,7 @@ class MultipleProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Point(1, 2);
-		$operands[] = new Duration('P2D');
+		$operands[] = new QtiDuration('P2D');
 		$operands[] = null;
 		$operands[] = new Integer(10);
 		$processor = new MultipleProcessor($expression, $operands);

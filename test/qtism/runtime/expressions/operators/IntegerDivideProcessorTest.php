@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\IntegerDivideProcessor;
@@ -60,7 +60,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(5), new Duration('P1D')));
+		$operands = new OperandsCollection(array(new Integer(5), new QtiDuration('P1D')));
 		$processor = new IntegerDivideProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

@@ -42,7 +42,7 @@ use qtism\common\enums\Cardinality;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Duration implements Comparable, QtiDatatype {
+class QtiDuration implements Comparable, QtiDatatype {
 	
     /**
      * Internally, the Duration class always
@@ -111,7 +111,7 @@ class Duration implements Comparable, QtiDatatype {
 	}
 	
 	static public function createFromDateInterval(\DateInterval $interval) {
-	    $duration = new Duration('PT0S');
+	    $duration = new QtiDuration('PT0S');
 	    $duration->setInterval($interval);
 	    return $duration;
 	}
@@ -301,10 +301,10 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is shorter
 	 * than the one described by $duration.
 	 * 
-	 * @param Duration $duration A Duration object to compare with this one.
+	 * @param QtiDuration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
-	public function shorterThan(Duration $duration) {
+	public function shorterThan(QtiDuration $duration) {
 		if ($this->getYears() < $duration->getYears()) {
 			return true;
 		}
@@ -335,10 +335,10 @@ class Duration implements Comparable, QtiDatatype {
 	 * Whether the duration described by this Duration object is longer than or
 	 * equal to the one described by $duration.
 	 * 
-	 * @param Duration $duration A Duration object to compare with this one.
+	 * @param QtiDuration $duration A Duration object to compare with this one.
 	 * @return boolean
 	 */
-	public function longerThanOrEquals(Duration $duration) {
+	public function longerThanOrEquals(QtiDuration $duration) {
 		if ($this->getYears() < $duration->getYears()) {
 			return false;
 		}
@@ -370,16 +370,16 @@ class Duration implements Comparable, QtiDatatype {
 	 * 
 	 * For instance, PT1S + PT1S = PT2S.
 	 * 
-	 * @param Duration|DateInterval $duration A Duration or DateInterval object.
+	 * @param QtiDuration|DateInterval $duration A Duration or DateInterval object.
 	 */
 	public function add($duration) {
 		$d1 = $this->refDate; 
 		$d2 = clone $d1;
 		
-		if ($duration instanceof Duration) {
+		if ($duration instanceof QtiDuration) {
 		    $toAdd = $duration;
 		} else {
-		    $toAdd = new Duration('PT0S');
+		    $toAdd = new QtiDuration('PT0S');
 		    $toAdd->setInterval($duration);
 		}
 
@@ -396,7 +396,7 @@ class Duration implements Comparable, QtiDatatype {
 	 * 
 	 * For instance P2S - P1S = P1S
 	 */
-	public function sub(Duration $duration) {
+	public function sub(QtiDuration $duration) {
 	    if ($duration->longerThanOrEquals($this) === true) {
 	        $this->setInterval(new DateInterval('PT0.0S'));
 	    } else {

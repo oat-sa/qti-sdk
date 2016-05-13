@@ -28,7 +28,7 @@ use qtism\data\state\Value;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\state\InterpolationTable;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
@@ -117,7 +117,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor {
 			$targetVal = $table->getDefaultValue();
 			
 			if ($table instanceof InterpolationTable) {
-				if (!$val instanceof QtiFloat && !$val instanceof Integer && !$val instanceof Duration) {
+				if (!$val instanceof QtiFloat && !$val instanceof Integer && !$val instanceof QtiDuration) {
 					$msg = "The value of variable '${identifier}' must be integer, float or duration when used with an interpolationTable";
 					throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
 				}

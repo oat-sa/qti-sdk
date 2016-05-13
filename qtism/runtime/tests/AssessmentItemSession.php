@@ -38,7 +38,7 @@ use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\ItemSessionControl;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -265,7 +265,7 @@ class AssessmentItemSession extends State {
 		
 		// -- Create the built-in response variables.
 		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
-		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
 		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
@@ -521,7 +521,7 @@ class AssessmentItemSession extends State {
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
-		$this['duration'] = new Duration('PT0S');
+		$this['duration'] = new QtiDuration('PT0S');
 		$this['numAttempts']->setValue(0);
 		$this['completionStatus']->setValue(self::COMPLETION_STATUS_NOT_ATTEMPTED);
 	}
@@ -579,7 +579,7 @@ class AssessmentItemSession extends State {
 				}
 			}
 			
-			$this['duration'] = new Duration('PT0S');
+			$this['duration'] = new QtiDuration('PT0S');
 			$this['numAttempts'] = new Integer(0);
 		}
 		
@@ -812,7 +812,7 @@ class AssessmentItemSession extends State {
 	        $this->setTimeReference($now);
 	        
 	        foreach ($this->onDurationUpdate as $callBack) {
-	            call_user_func_array($callBack, array($this, Duration::createFromDateInterval($diff)));
+	            call_user_func_array($callBack, array($this, QtiDuration::createFromDateInterval($diff)));
 	        }
 	    }
 	}
@@ -1044,7 +1044,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @return Duration $duration + acceptable latency.
 	 */
-	protected function getDurationWithLatency(Duration $duration) {
+	protected function getDurationWithLatency(QtiDuration $duration) {
 	    $duration = clone $duration;
 	    $duration->add($this->getAcceptableLatency());
 	    return $duration;

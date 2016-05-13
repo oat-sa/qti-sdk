@@ -12,7 +12,7 @@ use qtism\runtime\common\Container;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 
 class ContainerTest extends QtiSmTestCase {
 
@@ -111,7 +111,7 @@ class ContainerTest extends QtiSmTestCase {
 			array(new QtiString('super')),
 			array(new QtiBoolean(true)),
 			array(new QtiBoolean(false)),
-			array(new Duration('P1D')),
+			array(new QtiDuration('P1D')),
 			array(new Point(20, 20)),
 			array(new Pair('A', 'B')),
 			array(new QtiDirectedPair('C', 'D')),
@@ -186,7 +186,7 @@ class ContainerTest extends QtiSmTestCase {
 	public function testClone() {
 		$container = $this->getContainer();
 		$container[] = new Point(10, 20);
-		$container[] = new Duration('P2D'); // 2 days.
+		$container[] = new QtiDuration('P2D'); // 2 days.
 		$container[] = new Pair('A', 'B');
 		$container[] = new QtiDirectedPair('C', 'D');
 		$container[] = new Integer(20);
@@ -229,7 +229,7 @@ class ContainerTest extends QtiSmTestCase {
 		$returnValue[] = array(new Container(), '[]');
 		$returnValue[] = array(new Container(array(new Integer(10))), '[10]');
 		$returnValue[] = array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), '[true; false]');
-		$returnValue[] = array(new Container(array(new Duration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
+		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		
 		return $returnValue;
 	}

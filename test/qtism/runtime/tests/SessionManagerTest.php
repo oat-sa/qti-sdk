@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
@@ -49,11 +49,11 @@ class SessionManagerTest extends QtiSmTestCase {
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertTrue($session->mustConsiderMinTime());
-        $this->assertTrue($session->getAcceptableLatency()->equals(new Duration('PT0S')), 'The default acceptable latency must be PT0S');
+        $this->assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT0S')), 'The default acceptable latency must be PT0S');
     }
     
     public function testParametricAssessmentTestSessionCreation() {
-        $acceptableLatency = new Duration('PT5S');
+        $acceptableLatency = new QtiDuration('PT5S');
         $considerMinTime = false;
         
         $manager = new SessionManager();
@@ -64,6 +64,6 @@ class SessionManagerTest extends QtiSmTestCase {
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);
         $this->assertFalse($session->mustConsiderMinTime());
-        $this->assertTrue($session->getAcceptableLatency()->equals(new Duration('PT5S')), 'The custom acceptable latency must be PT5S');
+        $this->assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT5S')), 'The custom acceptable latency must be PT5S');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Point;
 use qtism\data\storage\Utils;
 use qtism\common\enums\BaseType;
@@ -301,13 +301,13 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validDurationProvider() {
 		return array(
-			array('P1D', new Duration('P1D')), // 1 day
-			array('P2W', new Duration('P2W')), // 2 weeks
-			array('P3M', new Duration('P3M')), // 3 months
-			array('P4Y', new Duration('P4Y')), // 4 years
-			array('P1Y1D', new Duration('P1Y1D')), // 1 year + 1 day
-			array('P1DT12H', new Duration('P1DT12H')), // 1 day + 12 hours
-			array('PT3600S', new Duration('PT3600S')) // 3600 seconds
+			array('P1D', new QtiDuration('P1D')), // 1 day
+			array('P2W', new QtiDuration('P2W')), // 2 weeks
+			array('P3M', new QtiDuration('P3M')), // 3 months
+			array('P4Y', new QtiDuration('P4Y')), // 4 years
+			array('P1Y1D', new QtiDuration('P1Y1D')), // 1 year + 1 day
+			array('P1DT12H', new QtiDuration('P1DT12H')), // 1 day + 12 hours
+			array('PT3600S', new QtiDuration('PT3600S')) // 3600 seconds
 		);
 	}
 	

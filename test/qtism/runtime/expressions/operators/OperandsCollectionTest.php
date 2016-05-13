@@ -14,7 +14,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
 class OperandsCollectionProcessorTest extends QtiSmTestCase {
@@ -53,7 +53,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiBoolean(true);
 		$operands[] = new QtiFloat(0.4);
 		$operands[] = new QtiString('string');
-		$operands[] = new Duration('P1D');
+		$operands[] = new QtiDuration('P1D');
 		$this->assertFalse($operands->containsNull());
 		
 		$operands[] = null;
@@ -78,7 +78,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new RecordContainer();
 		$this->assertTrue($operands->containsNull());
 		
-		$operands[2]['date'] = new Duration('P2D');
+		$operands[2]['date'] = new QtiDuration('P2D');
 		$this->assertFalse($operands->containsNull());
 	}
 	
@@ -167,7 +167,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyPoint());
 	
-		$operands[] = new Duration('P1D');
+		$operands[] = new QtiDuration('P1D');
 		$this->assertFalse($operands->exclusivelyPoint());
 		unset($operands[3]);
 		$this->assertTrue($operands->exclusivelyPoint());
@@ -191,8 +191,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyDuration());
 	
-		$operands[] = new Duration('P1D');
-		$operands[] = new Duration('P2D');
+		$operands[] = new QtiDuration('P1D');
+		$operands[] = new QtiDuration('P2D');
 		$this->assertTrue($operands->exclusivelyDuration());
 	
 		$operands[] = new Integer(10);
@@ -208,7 +208,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$mult = new MultipleContainer(BaseType::DURATION);
 		$operands[] = $mult;
 		$this->assertFalse($operands->exclusivelyDuration());
-		$mult[] = new Duration('P1DT2S');
+		$mult[] = new QtiDuration('P1DT2S');
 		$this->assertTrue($operands->exclusivelyDuration());
 	
 		$operands[] = new RecordContainer();

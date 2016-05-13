@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\TruncateProcessor;
@@ -130,7 +130,7 @@ class TruncateProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Duration('P1D');
+		$operands[] = new QtiDuration('P1D');
 		$processor = new TruncateProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

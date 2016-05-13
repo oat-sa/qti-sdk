@@ -28,7 +28,7 @@ namespace qtism\runtime\pci\json;
 use qtism\common\datatypes\File;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
@@ -244,7 +244,7 @@ class Marshaller {
         else if ($complex instanceof Pair) {
             return $this->marshallPair($complex);
         }
-        else if ($complex instanceof Duration) {
+        else if ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
         }
         else if ($complex instanceof File) {
@@ -371,7 +371,7 @@ class Marshaller {
      * @param Duration $duration
      * @return array
      */
-    protected function marshallDuration(Duration $duration) {
+    protected function marshallDuration(QtiDuration $duration) {
         return array('base' => array('duration' => $duration->__toString()));
     }
     

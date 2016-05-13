@@ -31,7 +31,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
@@ -835,7 +835,7 @@ class AssessmentTestSession extends State {
 	 * @param AssessmentItemSession $assessmentItemSession
 	 * @param Duration $diff
 	 */
-	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, Duration $diff) {
+	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, QtiDuration $diff) {
 	    $routeItem = $this->getCurrentRouteItem();
 	    $durationStore = $this->getDurationStore();
 	    
@@ -867,7 +867,7 @@ class AssessmentTestSession extends State {
 	        $ids = array_merge(array($assessmentTestId), array($testPartId), $assessmentSectionIds);
 	        foreach ($ids as $id) {
 	            if (isset($durationStore[$id]) === false) {
-	                $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+	                $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 	            }
 	        }
 	    }

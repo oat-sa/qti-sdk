@@ -32,7 +32,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
@@ -386,7 +386,7 @@ class Unmarshaller {
      * @return Duration
      */
     protected function unmarshallDuration(array $unit) {
-        return new Duration($unit['base']['duration']);
+        return new QtiDuration($unit['base']['duration']);
     }
     
     /**

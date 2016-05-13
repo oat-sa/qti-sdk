@@ -34,7 +34,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\utils\Format;
 use qtism\common\Comparable;

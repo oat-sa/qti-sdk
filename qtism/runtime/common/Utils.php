@@ -33,7 +33,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Point;

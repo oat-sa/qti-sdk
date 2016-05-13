@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\Identifier;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\enums\BaseType;
@@ -72,12 +72,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->beginAttempt();
         sleep(1);
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
-        $this->assertTrue($session['itemsubset.duration']->round()->equals(new Duration('PT1S')));
-        $this->assertTrue($session['P01.duration']->round()->equals(new Duration('PT1S')));
-        $this->assertTrue($session['S01.duration']->round()->equals(new Duration('PT1S')));
-        $this->assertTrue($session['S02.duration']->round()->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S03.duration']->round()->equals(new Duration('PT0S')));
-        $this->assertTrue($session['Q01.duration']->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($session['itemsubset.duration']->round()->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['P01.duration']->round()->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['S01.duration']->round()->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['S02.duration']->round()->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['S03.duration']->round()->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['Q01.duration']->round()->equals(new QtiDuration('PT1S')));
         
         $session->moveNext();
     
@@ -145,7 +145,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->beginAttempt();
         sleep(1);
         $s02Duration = $session['S02.duration'];
-        $this->assertTrue($session['S03.duration']->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($session['S03.duration']->round()->equals(new QtiDuration('PT1S')));
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(103, 114)))));
         $session->moveNext();
     
@@ -165,7 +165,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         
         // Check that S02.duration was not updated.
         $this->assertTrue($session['S02.duration']->round()->equals($s02Duration->round()));
-        $this->assertTrue($session['S03.duration']->round()->equals(new Duration('PT2S')));
+        $this->assertTrue($session['S03.duration']->round()->equals(new QtiDuration('PT2S')));
         $session->moveNext();
     
         $this->assertFalse($session->isLastOccurenceUpdate($session->getCurrentAssessmentItemRef(), 0));

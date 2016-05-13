@@ -5,7 +5,7 @@ use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\Identifier;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 use qtism\runtime\common\State;

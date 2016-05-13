@@ -31,7 +31,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiDirectedPair;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 use \UnexpectedValueException;
@@ -149,7 +149,7 @@ class Utils {
 				
 				case BaseType::DURATION:
 					if (Format::isDuration($string)) {
-						return new Duration($string);
+						return new QtiDuration($string);
 					}
 					else {
 						$msg = "'${string}' is not a valid duration.";

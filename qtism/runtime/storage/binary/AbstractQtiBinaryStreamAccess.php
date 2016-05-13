@@ -45,7 +45,7 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\PendingResponses;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
@@ -404,7 +404,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readDuration() {
         try {
-            return new Duration($this->readString());
+            return new QtiDuration($this->readString());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a duration.";
@@ -418,7 +418,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param Duration $duration A Duration object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeDuration(Duration $duration) {
+    public function writeDuration(QtiDuration $duration) {
         try {
             $this->writeString($duration->__toString());
         }
