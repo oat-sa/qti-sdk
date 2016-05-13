@@ -90,13 +90,13 @@ class TruncateProcessorTest extends QtiSmTestCase {
 		$operands->reset();
 		$operands[] = new QtiFloat(-INF);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-INF, $result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiFloat(INF);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(INF, $result->getValue());
 	}
 	

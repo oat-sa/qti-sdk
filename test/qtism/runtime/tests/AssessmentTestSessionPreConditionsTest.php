@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\enums\BaseType;
@@ -54,7 +55,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         // Because of the autoforward, the test is finished.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']);
         $this->assertSame(null, $testSession['Q03.SCORE']);
@@ -72,7 +73,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         
         // Incorrect answer = end of test.
         $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $testSession['Q01.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
         
         // Other items could not be instantiated.

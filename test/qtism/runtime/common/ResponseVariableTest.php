@@ -58,7 +58,7 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\state\\Mapping', $mapping);
 		$mapEntries = $mapping->getMapEntries();
 		$this->assertEquals(3, count($mapEntries));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $mapEntries[0]->getMapKey());
+		$this->assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 		
 		$areaMapping = $responseVariable->getAreaMapping();
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $areaMapping);

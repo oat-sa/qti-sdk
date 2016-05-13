@@ -33,7 +33,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
 		$this->assertEquals(1.0, $session['Q01.scoring']->getValue());
 		$session->moveNext();
 		
@@ -41,7 +41,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('D', 'L'))))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q02.SCORE']);
 		$this->assertEquals(3.0, $session['Q02.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -49,7 +49,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O'))))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q03.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q03.SCORE']);
 		$this->assertEquals(2.0, $session['Q03.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -57,7 +57,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'Sp'), new QtiDirectedPair('G2', 'Su'))))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
 		$this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -65,7 +65,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'B'), new QtiPair('C', 'D'), new QtiPair('B', 'D'))))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q05.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q05.SCORE']);
 		$this->assertEquals(1.0, $session['Q05.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -73,7 +73,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('answer', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A'))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q06.mySc0r3']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q06.mySc0r3']);
 		$this->assertEquals(1.0, $session['Q06.mySc0r3']->getValue());
 		$session->moveNext();
 		
@@ -81,7 +81,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(105, 105))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.1.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q07.1.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.1.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -89,7 +89,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.2.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q07.2.SCORE']);
 		$this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
 		$session->moveNext();
 		
@@ -97,7 +97,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase {
 		$session->beginAttempt();
 		$responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(13, 37))));
 		$session->endAttempt($responses);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.3.SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $session['Q07.3.SCORE']);
 		$this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
 		$session->moveNext();
 		

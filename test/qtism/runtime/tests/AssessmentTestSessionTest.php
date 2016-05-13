@@ -81,7 +81,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    
 	    // test-level outcome variables should be initialized
 	    // with their default values.
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $assessmentTestSession['SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['SCORE']);
 	    $this->assertEquals(0.0, $assessmentTestSession['SCORE']->getValue());
 	    
 	    // No session ID should be set, this is the role of AssessmentTestSession Storage Services.
@@ -100,7 +100,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	        if ($i === 1) {
 	            $score = $assessmentTestSession["Q01.${i}.SCORE"];
 	            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-	            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $score);
+	            $this->assertInstanceOf(QtiFloat::class, $score);
 	            $this->assertEquals(0.0, $score->getValue());
 	            $this->assertSame(null, $response);
 	        }
@@ -244,21 +244,21 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    // Check the final state of the test session.
 	    // - Q01
 	    $this->assertEquals('ChoiceA', $assessmentTestSession['Q01.RESPONSE']->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $assessmentTestSession['Q01.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q01.SCORE']);
 	    $this->assertEquals(1.0, $assessmentTestSession['Q01.SCORE']->getValue());
 	    $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $assessmentTestSession['Q01.numAttempts']);
 	    $this->assertEquals(1, $assessmentTestSession['Q01.numAttempts']->getValue());
 	    
 	    // - Q02
 	    $this->assertEquals('ChoiceC', $assessmentTestSession['Q02.RESPONSE']->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $assessmentTestSession['Q02.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q02.SCORE']);
 	    $this->assertEquals(0.0, $assessmentTestSession['Q02.SCORE']->getValue());
 	    $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $assessmentTestSession['Q02.numAttempts']);
 	    $this->assertEquals(1, $assessmentTestSession['Q02.numAttempts']->getValue());
 	    
 	    // - Q03
 	    $this->assertEquals('ChoiceC', $assessmentTestSession['Q03.RESPONSE']->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $assessmentTestSession['Q03.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $assessmentTestSession['Q03.SCORE']);
 	    $this->assertEquals(1.0, $assessmentTestSession['Q03.SCORE']->getValue());
 	    $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $assessmentTestSession['Q03.numAttempts']);
 	    $this->assertEquals(1, $assessmentTestSession['Q03.numAttempts']->getValue());
@@ -324,7 +324,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
 	    $session->moveNext();
 	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.1.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q07.1.SCORE']);
 	    $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
 	    $this->assertEquals(7, count($session->getPendingResponses()));
 	    
@@ -390,7 +390,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	    
 	    foreach ($outcomes as $outcomeIdentifier => $outcomeValue) {
-	        $this->assertInstanceOf(($outcomeValue instanceof QtiInteger) ? 'qtism\\common\\datatypes\\Integer' : 'qtism\\common\\datatypes\\Float', $assessmentTestSession[$outcomeIdentifier]);
+	        $this->assertInstanceOf(($outcomeValue instanceof QtiInteger) ? 'qtism\\common\\datatypes\\Integer' : QtiFloat::class, $assessmentTestSession[$outcomeIdentifier]);
 	        
 	        if ($outcomeIdentifier !== 'PERCENT_CORRECT') {
 	            $this->assertEquals($outcomeValue->getValue(), $assessmentTestSession[$outcomeIdentifier]->getValue());
@@ -717,15 +717,15 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->moveNext();
 	    
 	    // End of test, everything ok?
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q03.SCORE']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q02.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q03.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']); // Because auto forward = true, Q04 was selected as eligible after Q03's endAttempt. However, it was never attempted.
 	    $this->assertSame(0.0, $session['Q05.SCORE']->getValue());
 	    $this->assertSame(0.0, $session['Q06.mySc0r3']->getValue());
 	    $this->assertSame(0.0, $session['Q07.1.SCORE']->getValue());
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.2.SCORE']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.3.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q07.2.SCORE']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['Q07.3.SCORE']);
 	    
 	    $this->assertEquals(5, $session['NPRESENTED']->getValue());
 	    $this->assertEquals(9, $session['NSELECTED']->getValue());
@@ -900,7 +900,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->moveNext();
 	    
 	    // OutcomeProcessing?
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['PERCENT_CORRECT']);
+	    $this->assertInstanceOf(QtiFloat::class, $session['PERCENT_CORRECT']);
 	    $this->assertEquals(0.0, $session['PERCENT_CORRECT']->getValue());
 	    $this->assertEquals(9, $session['NSELECTED']->getValue());
 	}

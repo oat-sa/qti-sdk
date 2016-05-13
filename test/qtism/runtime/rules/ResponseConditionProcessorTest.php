@@ -68,7 +68,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		$processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $state['SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
 		$this->assertTrue($expectedScore->equals($state['SCORE']));
 	}
 	

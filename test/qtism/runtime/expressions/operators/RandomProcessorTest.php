@@ -21,7 +21,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.0), new QtiFloat(2.0), new QtiFloat(3.0)));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertGreaterThanOrEqual(1.0, $result->getValue());
 		$this->assertLessThanOrEqual(3.0, $result->getValue());
 	}

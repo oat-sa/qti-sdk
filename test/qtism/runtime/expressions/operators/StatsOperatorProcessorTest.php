@@ -141,7 +141,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 			$this->assertTrue($value === null);
 		}
 		else {
-			$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $value);
+			$this->assertInstanceOf(QtiFloat::class, $value);
 			$this->assertSame(round($expected, 3), round($value->getValue(), 3));
 		}
 	}

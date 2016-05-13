@@ -1,4 +1,5 @@
 <?php
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentTestPlace;
@@ -137,7 +138,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $session->moveNext();
             
             $this->assertTrue($forceLateSubmission, '$forceLateSubmission is false but the attempt dit not raised an exception.');
-            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $session['Q01.SCORE']);
             $this->assertEquals(1.0, $session['Q01.SCORE']->getValue());
             $this->assertFalse($session->isRunning());
             

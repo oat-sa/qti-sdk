@@ -66,7 +66,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
         $this->assertEquals(2, $itemSession['numAttempts']->getValue());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
     }
     
@@ -125,7 +125,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
-            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
             $this->assertTrue($expected[$i]->equals($itemSession['SCORE']));
             $this->assertEquals($i + 1, $itemSession['numAttempts']->getValue());
     
@@ -244,7 +244,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         sleep(2);
         
         $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))), true, true);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(1, $itemSession['SCORE']->getValue());
     }
 }

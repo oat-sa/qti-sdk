@@ -19,25 +19,25 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 		$processor = new IntegerToFloatProcessor($expression, $operands);
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(10.0, $result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiInteger(-10);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-10.0, $result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiInteger(0);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(0.0, $result->getValue());
 		
 		$operands->reset();
 		$operands[] = new QtiInteger(-0);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-0.0, $result->getValue());
 	}
 	

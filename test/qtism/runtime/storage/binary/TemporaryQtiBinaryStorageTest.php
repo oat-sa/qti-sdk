@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiDuration;
@@ -65,7 +66,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         }
     
         // Q01 - Correct response.
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
         $this->assertSame(null, $session['Q01.RESPONSE']);
     
@@ -87,7 +88,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
     
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
     
@@ -99,7 +100,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('C', 'M')))))));
         $session->moveNext();
     
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q02.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q02.SCORE']);
         $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
     
         // Q03 - Skip.
@@ -119,7 +120,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::DIRECTED_PAIR, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))))));
         $session->moveNext();
     
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
@@ -196,7 +197,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(6, $session['NRESPONSED']->getValue());
         $this->assertEquals(9, $session['NPRESENTED']->getValue());
         $this->assertEquals(9, $session['NSELECTED']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['PERCENT_CORRECT']);
+        $this->assertInstanceOf(QtiFloat::class, $session['PERCENT_CORRECT']);
         $this->assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
     
@@ -314,17 +315,17 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         // Let's check the overall Assessment Test Session state.
         $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this->assertEquals(4.0, $session['Q02.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q03.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q03.SCORE']);
         $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q04.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
         $this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q05.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q05.SCORE']);
         $this->assertEquals(0.0, $session['Q05.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q06.mySc0r3']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q06.mySc0r3']);
         $this->assertEquals(0.0, $session['Q06.mySc0r3']->getValue());
         $this->assertEquals(1.0, $session['Q07.1.SCORE']->getValue());
         $this->assertEquals(1.0, $session['Q07.2.SCORE']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q07.3.SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $session['Q07.3.SCORE']);
         $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         $this->assertEquals(2, $session['NCORRECTS01']->getValue());
         $this->assertEquals(0, $session['NCORRECTS02']->getValue());

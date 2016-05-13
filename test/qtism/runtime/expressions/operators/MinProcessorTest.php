@@ -82,7 +82,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiFloat(26.4), new QtiInteger(-4), new QtiFloat(25.3)));
 		$processor = new MinProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-4.0, $result->getValue());
 		
 		$operands->reset();
@@ -90,7 +90,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiFloat(2.4);
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(245.4), new QtiFloat(1337.1337)));
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(1.0, $result->getValue());
 	}
 	

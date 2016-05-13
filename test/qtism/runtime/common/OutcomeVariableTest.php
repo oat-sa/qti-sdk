@@ -164,8 +164,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
 	    $this->assertEquals(2, count($defaultValue));
 	    
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $defaultValue['A']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $defaultValue['B']);
+	    $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
+	    $this->assertInstanceOf(QtiFloat::class, $defaultValue['B']);
 	}
 	
 	public function testCreateFromVariableDeclarationExtended() {

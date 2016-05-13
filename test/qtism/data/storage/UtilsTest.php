@@ -108,7 +108,7 @@ class UtilsTest extends QtiSmTestCase {
 	 */
 	public function testStringToPairValid($string, $expected) {
 		$value = Utils::stringToDatatype($string, BaseType::PAIR);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $value);
+		$this->assertInstanceOf(QtiPair::class, $value);
 		$this->assertEquals($expected->getFirst(), $value->getFirst());
 		$this->assertEquals($expected->getSecond(), $value->getSecond());
 	}

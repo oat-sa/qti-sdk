@@ -44,7 +44,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-1354.5, $result->getValue());
 	}
 	

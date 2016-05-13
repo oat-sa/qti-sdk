@@ -408,7 +408,7 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
         $this->assertEquals('PT0S', $session['duration']->__toString());
         $this->assertEquals('incomplete', $session['completionStatus']->getValue());
         $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $session->getVariable('scoring'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['scoring']);
+        $this->assertInstanceOf(QtiFloat::class, $session['scoring']);
         $this->assertEquals(1.0, $session['scoring']->getValue());
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $session->getVariable('RESPONSE'));
         $this->assertEquals(BaseType::IDENTIFIER, $session->getVariable('RESPONSE')->getBaseType());

@@ -35,14 +35,14 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		
 		$this->assertSame(null, $state['outcome1']);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
+		$this->assertInstanceOf(QtiPair::class, $state['outcome1']);
 		$this->assertTrue($state['outcome1']->equals(new QtiPair('C', 'D')));
 		
 		// Try to get the default value.
 		$expr = $rule->getExpression();
 		$expr->setValue(5);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
+		$this->assertInstanceOf(QtiPair::class, $state['outcome1']);
 		$this->assertTrue($state['outcome1']->equals(new QtiPair('Y', 'Z')));
 	}
 	

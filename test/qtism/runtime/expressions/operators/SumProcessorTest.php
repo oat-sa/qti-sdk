@@ -44,7 +44,7 @@ class SumProcessorTest extends QtiSmTestCase {
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(31.4, $result->getValue());
 	}
 	
@@ -55,7 +55,7 @@ class SumProcessorTest extends QtiSmTestCase {
 	    $sumProcessor = new SumProcessor($sum, $operands);
 	    $result = $sumProcessor->process();
 	    
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf(QtiFloat::class, $result);
 	    $this->assertEquals(6.0, $result->getValue());
 	}
 	
