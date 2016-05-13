@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiIntOrIdentifier;
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
@@ -409,7 +409,7 @@ class Unmarshaller {
      * @return Uri
      */
     protected function unmarshallUri(array $unit) {
-        return new Uri($unit['base']['uri']);
+        return new QtiUri($unit['base']['uri']);
     }
     
     /**

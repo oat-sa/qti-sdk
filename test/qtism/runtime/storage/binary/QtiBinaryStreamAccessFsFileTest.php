@@ -2,7 +2,7 @@
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiBoolean;
@@ -283,19 +283,19 @@ class QtiBinaryStreamAccessFsFileTest extends QtiSmTestCase {
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), null, new QtiIdentifier('identifier2'), null, new QtiIdentifier('identifier3'))))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('identifier1'), null, new QtiIdentifier('identifier2'), null, new QtiIdentifier('identifier3'))))),
                         
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri'))),
-            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new Uri('http://www.my.uri'))),
+            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new QtiUri('http://www.my.uri'))),
+            array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI, new QtiUri('http://www.my.uri'))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::URI)),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI)),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI)),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri'))))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri6'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), new Uri('http://www.my.uri2'), new Uri('http://www.my.uri3'), new Uri('http://www.my.uri4'), new Uri('http://www.my.uri5'))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri'))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.my.uri'))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), new QtiUri('http://www.my.uri2'), new QtiUri('http://www.my.uri3'), new QtiUri('http://www.my.uri4'), new QtiUri('http://www.my.uri6'))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), new QtiUri('http://www.my.uri2'), new QtiUri('http://www.my.uri3'), new QtiUri('http://www.my.uri4'), new QtiUri('http://www.my.uri5'))))),
             array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(null)))),
             array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(null)))),
-            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3'))))),
-            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.my.uri1'), null, new Uri('http://www.my.uri2'), null, new Uri('http://www.my.uri3'))))),
+            array(new OutcomeVariable('VAR', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3'))))),
+            array(new OutcomeVariable('VAR', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.my.uri1'), null, new QtiUri('http://www.my.uri2'), null, new QtiUri('http://www.my.uri3'))))),
                         
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('P3DT2H1S'))),
             array(new OutcomeVariable('VAR', Cardinality::SINGLE, BaseType::DURATION)),

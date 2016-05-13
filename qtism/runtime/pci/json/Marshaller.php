@@ -32,7 +32,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -199,7 +199,7 @@ class Marshaller {
             else if ($scalar instanceof QtiIdentifier) {
                 return $this->marshallIdentifier($scalar);
             }
-            else if ($scalar instanceof Uri) {
+            else if ($scalar instanceof QtiUri) {
                 return $this->marshallUri($scalar);
             }
             else if ($scalar instanceof QtiString) {
@@ -311,7 +311,7 @@ class Marshaller {
      * @param Uri $uri
      * @return array
      */
-    protected function marshallUri(Uri $uri) {
+    protected function marshallUri(QtiUri $uri) {
         return array('base' => array('uri' => $uri->getValue()));
     }
     

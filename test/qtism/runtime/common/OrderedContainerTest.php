@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 
 use qtism\common\datatypes\QtiInteger;
 
@@ -43,7 +43,7 @@ class OrderedContainerTest extends QtiSmTestCase {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER), new OrderedContainer(BaseType::INTEGER)),
 			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20)))),
-			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu')))),
+			array(new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu')))),
 			array(new OrderedContainer(BaseType::PAIR, array(new QtiPair('abc', 'def'))), new OrderedContainer(BaseType::PAIR, array(new QtiPair('def', 'abc'))))
 		);
 	}
@@ -51,7 +51,7 @@ class OrderedContainerTest extends QtiSmTestCase {
 	public function equalsInvalidProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(30)))),
-			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.tao.lu'), new Uri('http://www.taotesting.com')))),
+			array(new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.taotesting.com'), new QtiUri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new QtiUri('http://www.tao.lu'), new QtiUri('http://www.taotesting.com')))),
 			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('def', 'abc')))),
 		);
 	}

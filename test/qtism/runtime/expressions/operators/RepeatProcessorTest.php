@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
@@ -78,8 +78,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	    $operands = new OperandsCollection();
 	    $operands[] = null;
 	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('id1'), new QtiIdentifier('id2')));
-	    $operands[] = new OrderedContainer(BaseType::URI, array(new Uri('id3'), new Uri('id4')));
-	    $operands[] = new Uri('http://www.taotesting.com');
+	    $operands[] = new OrderedContainer(BaseType::URI, array(new QtiUri('id3'), new QtiUri('id4')));
+	    $operands[] = new QtiUri('http://www.taotesting.com');
 	    $operands[] = new OrderedContainer(BaseType::STRING);
 	    
 	    $processor = new RepeatProcessor($expression, $operands);

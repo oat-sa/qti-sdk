@@ -13,7 +13,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
-use qtism\common\datatypes\Uri;
+use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
@@ -121,7 +121,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
             array(new QtiIdentifier("RESP_X32"), json_encode(array('base' => array('identifier' => "RESP_X32")))),
             array(new QtiIntOrIdentifier("RESP_X33"), json_encode(array('base' => array('intOrIdentifier' => "RESP_X33")))),
             array(new QtiIntOrIdentifier(1337), json_encode(array('base' => array('intOrIdentifier' => 1337)))),
-            array(new Uri('http://www.taotesting.com'), json_encode(array('base' => array('uri' => 'http://www.taotesting.com')))),
+            array(new QtiUri('http://www.taotesting.com'), json_encode(array('base' => array('uri' => 'http://www.taotesting.com')))),
             array(null, json_encode(array('base' => null)))
         );
     }
@@ -203,7 +203,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // uri multiple("file:///aFile.txt", "file:///abc.txt").
-        $container = new MultipleContainer(BaseType::URI, array(new Uri('file:///aFile.txt'), new Uri('file:///abc.txt')));
+        $container = new MultipleContainer(BaseType::URI, array(new QtiUri('file:///aFile.txt'), new QtiUri('file:///abc.txt')));
         $json = json_encode(array('list' => array('uri' => array('file:///aFile.txt', 'file:///abc.txt'))));
         $returnValue[] = array($container, $json);
         
