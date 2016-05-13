@@ -3,6 +3,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
@@ -62,7 +63,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('PT0S', $itemSession['duration']->__toString());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('completionStatus'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\String', $itemSession['completionStatus']);
+        $this->assertInstanceOf(QtiString::class, $itemSession['completionStatus']);
         $this->assertEquals('not_attempted', $itemSession['completionStatus']->getValue());
         $this->assertEquals(BaseType::IDENTIFIER, $itemSession->getVariable('completionStatus')->getBaseType());
         

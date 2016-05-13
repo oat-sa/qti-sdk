@@ -115,6 +115,6 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         $this->assertEquals('qticoords_1', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(10, 10, 3))));
         $this->assertEquals('qtipoint_0', $ctx->generateVariableName(new QtiPoint(0, 0)));
         $this->assertEquals('qtipoint_1', $ctx->generateVariableName(new QtiPoint(0, 1)));
-        $this->assertEquals('qitcoords_2', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(5, 5, 3))));
+        $this->assertEquals('qticoords_2', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(5, 5, 3))));
     }
 }

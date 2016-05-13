@@ -79,7 +79,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	    $processor = new Implode($expression, $operands);
 	    $result = $processor->process();
 	    
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\String', $result);
+	    $this->assertInstanceOf(QtiString::class, $result);
 	    $this->assertEquals('Hello-World', $result->getValue());
 	}
 	
