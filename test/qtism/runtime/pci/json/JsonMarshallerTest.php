@@ -14,7 +14,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
@@ -119,8 +119,8 @@ class JsonMarshallerTest extends QtiSmTestCase {
             array(new QtiString("String!"), json_encode(array('base' => array('string' => "String!")))),
             array(new QtiString(""), json_encode(array('base' => array('string' => "")))),
             array(new QtiIdentifier("RESP_X32"), json_encode(array('base' => array('identifier' => "RESP_X32")))),
-            array(new IntOrIdentifier("RESP_X33"), json_encode(array('base' => array('intOrIdentifier' => "RESP_X33")))),
-            array(new IntOrIdentifier(1337), json_encode(array('base' => array('intOrIdentifier' => 1337)))),
+            array(new QtiIntOrIdentifier("RESP_X33"), json_encode(array('base' => array('intOrIdentifier' => "RESP_X33")))),
+            array(new QtiIntOrIdentifier(1337), json_encode(array('base' => array('intOrIdentifier' => 1337)))),
             array(new Uri('http://www.taotesting.com'), json_encode(array('base' => array('uri' => 'http://www.taotesting.com')))),
             array(null, json_encode(array('base' => null)))
         );
@@ -208,7 +208,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // intOrIdentifier multiple(2, "_id").
-        $container = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier(2), new IntOrIdentifier('_id')));
+        $container = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier(2), new QtiIntOrIdentifier('_id')));
         $json = json_encode(array('list' => array('intOrIdentifier' => array(2, '_id'))));
         $returnValue[] = array($container, $json);
         

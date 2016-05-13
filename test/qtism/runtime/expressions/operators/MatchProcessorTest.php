@@ -5,7 +5,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
@@ -85,7 +85,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeCompliance() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier('txt1'), new IntOrIdentifier('txt2')));
+	    $operands[] = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new QtiIntOrIdentifier('txt1'), new QtiIntOrIdentifier('txt2')));
 	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('txt1'), new QtiString('txt2')));
 	    $processor = new MatchProcessor($expression, $operands);
 	    

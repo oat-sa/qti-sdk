@@ -30,7 +30,7 @@ use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiDirectedPair;
@@ -419,7 +419,7 @@ class Unmarshaller {
      * @return IntOrIdentifier
      */
     protected function unmarshallIntOrIdentifier(array $unit) {
-        return new IntOrIdentifier($unit['base']['intOrIdentifier']);
+        return new QtiIntOrIdentifier($unit['base']['intOrIdentifier']);
     }
     
     /**

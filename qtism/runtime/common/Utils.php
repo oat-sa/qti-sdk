@@ -25,7 +25,7 @@
 namespace qtism\runtime\common;
 
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiBoolean;
@@ -341,7 +341,7 @@ class Utils {
 	                return new QtiInteger($v);
 	            }
 	            else if ($baseType === BaseType::INT_OR_IDENTIFIER) {
-	                return new IntOrIdentifier($v);
+	                return new QtiIntOrIdentifier($v);
 	            }
 	        }
 	        else if (is_string($v) === true) {
@@ -356,7 +356,7 @@ class Utils {
 	                return new Uri($v);
 	            }
 	            else if ($baseType === BaseType::INT_OR_IDENTIFIER) {
-	                return new IntOrIdentifier($v);
+	                return new QtiIntOrIdentifier($v);
 	            }
 	        }
 	        else if (is_float($v) === true) {

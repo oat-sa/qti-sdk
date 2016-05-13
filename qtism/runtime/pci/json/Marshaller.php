@@ -33,7 +33,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
@@ -205,7 +205,7 @@ class Marshaller {
             else if ($scalar instanceof QtiString) {
                 return $this->marshallString($scalar);
             }
-            else if ($scalar instanceof IntOrIdentifier) {
+            else if ($scalar instanceof QtiIntOrIdentifier) {
                 return $this->marshallIntOrIdentifier($scalar);
             }
         }
@@ -331,7 +331,7 @@ class Marshaller {
      * @param IntOrIdentifier $intOrIdentifier
      * @return array
      */
-    protected function marshallIntOrIdentifier(IntOrIdentifier $intOrIdentifier) {
+    protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier) {
         return array('base' => array('intOrIdentifier' => $intOrIdentifier->getValue()));
     }
     

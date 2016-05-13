@@ -10,7 +10,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\IntOrIdentifier;
+use qtism\common\datatypes\QtiIntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiString;
@@ -140,8 +140,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             array(new QtiFloat(6.0), '{ "base" : {"float" : 6 } }'),
             array(new QtiString('string'), '{ "base" : {"string" : "string" } }'),
             array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
-            array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
-            array(new IntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
+            array(new QtiIntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
+            array(new QtiIntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
             array(new QtiIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
             array(null, '{ "base": null }')
         );
