@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\Gte;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -78,6 +78,6 @@ class GteProcessor extends OperatorProcessor {
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 		}
 		
-		return new Boolean($operands[0]->getValue() >= $operands[1]->getValue());
+		return new QtiBoolean($operands[0]->getValue() >= $operands[1]->getValue());
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 
 use qtism\common\datatypes\Integer;
 
@@ -81,7 +81,7 @@ class StateTest extends QtiSmTestCase {
 	    $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::INTEGER, new Integer(25)));
 	    $this->assertEquals(1, count($state->getAllVariables()));
 	    
-	    $state->setVariable(new OutcomeVariable('SCORE1', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)));
+	    $state->setVariable(new OutcomeVariable('SCORE1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
 	    $this->assertEquals(2, count($state->getAllVariables()));
 	    
 	    unset($state['RESPONSE1']);

@@ -26,7 +26,7 @@ namespace qtism\runtime\common;
 
 use qtism\common\datatypes\File;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 
 use qtism\common\datatypes\QtiString;
 use qtism\data\state\ValueCollection;
@@ -237,7 +237,7 @@ class Container extends AbstractCollection implements Comparable {
 			else if ($d instanceof QtiString) {
 				$strings[] = "'${d}'";
 			}
-			else if ($d instanceof Boolean) {
+			else if ($d instanceof QtiBoolean) {
 				// PHP boolean primitive type.
 				$strings[] = ($d->getValue() === true) ? 'true' : 'false';
 			}

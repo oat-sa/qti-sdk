@@ -8,7 +8,7 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 
@@ -57,7 +57,7 @@ class AndProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		// Two NULL values, 'null' && new RecordContainer().
-		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false), new Boolean(true), null, new RecordContainer()));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true), null, new RecordContainer()));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -65,13 +65,13 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testTrue() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true)));
 		$processor = new AndProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertSame(true, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(true), new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -80,13 +80,13 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testFalse() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false)));
 		$processor = new AndProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertSame(false, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Boolean(false), new Boolean(true), new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(false)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);

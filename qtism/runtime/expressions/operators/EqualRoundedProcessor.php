@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\BaseValue;
@@ -135,6 +135,6 @@ class EqualRoundedProcessor extends OperatorProcessor {
 			}
 		}
 		
-		return new Boolean($rounded[0]->getValue() == $rounded[1]->getValue());
+		return new QtiBoolean($rounded[0]->getValue() == $rounded[1]->getValue());
 	}
 }

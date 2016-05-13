@@ -25,7 +25,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\Expression;
@@ -105,7 +105,7 @@ class EqualProcessor extends OperatorProcessor {
 		$expression = $this->getExpression();
 		
 		if ($expression->getToleranceMode() === ToleranceMode::EXACT) {
-			return new Boolean($operand1->getValue() == $operand2->getValue());
+			return new QtiBoolean($operand1->getValue() == $operand2->getValue());
 		}
 		else {
 			$tolerance = $expression->getTolerance();
@@ -148,7 +148,7 @@ class EqualProcessor extends OperatorProcessor {
 				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
 				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
 					
-				return new Boolean($moreThanLower && $lessThanUpper);
+				return new QtiBoolean($moreThanLower && $lessThanUpper);
 			}
 			else {
 				// Tolerance mode RELATIVE
@@ -159,7 +159,7 @@ class EqualProcessor extends OperatorProcessor {
 				$moreThanLower = ($expression->doesIncludeLowerBound()) ? $operand2->getValue() >= $t0 : $operand2->getValue() > $t0;
 				$lessThanUpper = ($expression->doesIncludeUpperBound()) ? $operand2->getValue() <= $t1 : $operand2->getValue() < $t1;
 					
-				return new Boolean($moreThanLower && $lessThanUpper);
+				return new QtiBoolean($moreThanLower && $lessThanUpper);
 			}
 		}
 	}

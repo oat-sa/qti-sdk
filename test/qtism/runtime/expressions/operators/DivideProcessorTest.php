@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
@@ -78,7 +78,7 @@ class DivideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new QtiString('string!'), new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiString('string!'), new QtiBoolean(true)));
 		$processor = new DivideProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -86,7 +86,7 @@ class DivideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Point(1, 2), new Boolean(true)));
+		$operands = new OperandsCollection(array(new Point(1, 2), new QtiBoolean(true)));
 		$processor = new DivideProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

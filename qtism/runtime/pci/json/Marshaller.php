@@ -37,7 +37,7 @@ use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Scalar;
 use qtism\runtime\common\MultipleContainer;
@@ -187,7 +187,7 @@ class Marshaller {
             return $scalar;
         }
         else if ($scalar instanceof QtiDatatype) {
-            if ($scalar instanceof Boolean) {
+            if ($scalar instanceof QtiBoolean) {
                 return $this->marshallBoolean($scalar);
             }
             else if ($scalar instanceof Integer) {
@@ -271,7 +271,7 @@ class Marshaller {
      * @param Boolean $boolean
      * @return array
      */
-    protected function marshallBoolean(Boolean $boolean) {
+    protected function marshallBoolean(QtiBoolean $boolean) {
         return array('base' => array('boolean' => $boolean->getValue()));
     }
     

@@ -26,7 +26,7 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\runtime\common\Container;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\OrOperator;
 use \InvalidArgumentException;
@@ -78,7 +78,7 @@ class OrProcessor extends OperatorProcessor {
 	            continue;
 	        }
 	        else {
-	            if (!$op instanceof Boolean) {
+	            if (!$op instanceof QtiBoolean) {
 	                $msg = "The Or Expression only accept operands with boolean baseType.";
 	                throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 	            }
@@ -96,10 +96,10 @@ class OrProcessor extends OperatorProcessor {
 		
 		foreach ($operands as $operand) {
 			if ($operand !== null && $operand->getValue() === true) {
-				return new Boolean(true);
+				return new QtiBoolean(true);
 			}
 		}
 		
-		return new Boolean(false);
+		return new QtiBoolean(false);
 	}
 }

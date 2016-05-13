@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\MultipleContainer;
@@ -137,7 +137,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}

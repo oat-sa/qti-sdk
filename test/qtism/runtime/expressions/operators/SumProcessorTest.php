@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
@@ -64,7 +64,7 @@ class SumProcessorTest extends QtiSmTestCase {
 		
 		$this->setExpectedException('\\RuntimeException');
 		
-		$operands = new OperandsCollection(array(new Boolean(true), new Integer(14), new Integer(10)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new Integer(14), new Integer(10)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		$result = $sumProcessor->process();
 	}
@@ -72,7 +72,7 @@ class SumProcessorTest extends QtiSmTestCase {
 	public function testInvalidOperandsTwo() {
 		$sum = $this->createFakeSumComponent();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false)));
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false)));
 		$sumProcessor = new SumProcessor($sum, $operands);
 		
 		$this->setExpectedException('\\RuntimeException');

@@ -3,7 +3,7 @@ use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\QtiFloat;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 
 use qtism\common\datatypes\Integer;
 
@@ -50,7 +50,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$this->assertFalse($operands->containsNull());
 		
-		$operands[] = new Boolean(true);
+		$operands[] = new QtiBoolean(true);
 		$operands[] = new QtiFloat(0.4);
 		$operands[] = new QtiString('string');
 		$operands[] = new Duration('P1D');
@@ -242,13 +242,13 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new QtiString('string');
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new Boolean(true);
+		$operands[] = new QtiBoolean(true);
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20)));
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
+		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true)));
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new RecordContainer();
@@ -286,7 +286,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		unset($operands[5]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 		
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(false);
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		unset($operands[6]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
@@ -303,7 +303,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Integer(10);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
 		
 		$operands[] = new Point(10, 20);
@@ -324,7 +324,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Integer(10);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelySingleOrMultiple());
 	
 		$operands[] = new Point(10, 20);
@@ -364,10 +364,10 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->sameBaseType());
 		
 		// Test Exclusively boolean
-		$operands = new OperandsCollection(array(new Boolean(true), new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(false)));
 		$this->assertTrue($operands->sameBaseType());
 		
-		$operands = new Operandscollection(array(new Boolean(false)));
+		$operands = new Operandscollection(array(new QtiBoolean(false)));
 		$this->assertTrue($operands->sameBaseType());
 		
 		// Test Exclusively int
@@ -395,7 +395,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(null, new Integer(10), new Integer(10)));
 		$this->assertFalse($operands->sameCardinality());
 		
-		$operands = new OperandsCollection(array(new Integer(0), new Boolean(false), new Integer(16), new Boolean(true), new Point(1, 1)));
+		$operands = new OperandsCollection(array(new Integer(0), new QtiBoolean(false), new Integer(16), new QtiBoolean(true), new Point(1, 1)));
 		$this->assertTrue($operands->sameCardinality());
 		
 		$operands = new OperandsCollection(array(new Integer(10), new Integer(20), new OrderedContainer(BaseType::INTEGER)));
@@ -406,40 +406,40 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		$this->assertFalse($operands->exclusivelyBoolean());
 
-		$operands[] = new Boolean(true);
+		$operands[] = new QtiBoolean(true);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
 		$container = new MultipleContainer(BaseType::BOOLEAN);
 		$operands[] = $container;
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
-		$container[] = new Boolean(false);
+		$container[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = new Boolean(true);
+		$operands[] = new QtiBoolean(true);
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = null;
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
+		$operands[] = new OrderedContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true)));
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = new MultipleContainer(BaseType::BOOLEAN);
 		$this->assertFalse($operands->exclusivelyBoolean());
 		
 		$operands = new OperandsCollection();
-		$operands[] = new Boolean(true);
-		$operands[] = new Boolean(false);
+		$operands[] = new QtiBoolean(true);
+		$operands[] = new QtiBoolean(false);
 		$this->assertTrue($operands->exclusivelyBoolean());
-		$operands[] = new RecordContainer(array('b1' => new Boolean(true), 'b2' => new Boolean(false)));
+		$operands[] = new RecordContainer(array('b1' => new QtiBoolean(true), 'b2' => new QtiBoolean(false)));
 		
 		$operands = new OperandsCollection();
-		$operands[] = new Boolean(true);
-		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true)));
+		$operands[] = new QtiBoolean(true);
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true)));
 		$this->assertTrue($operands->exclusivelyBoolean());
 		$operands[] = new RecordContainer();
 		$this->assertFalse($operands->exclusivelyBoolean());

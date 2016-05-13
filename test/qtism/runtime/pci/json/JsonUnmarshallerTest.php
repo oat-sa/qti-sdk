@@ -16,7 +16,7 @@ use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\pci\json\Unmarshaller;
 use qtism\common\datatypes\Scalar;
 
@@ -133,8 +133,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     
     public function unmarshallScalarProvider() {
         return array(
-            array(new Boolean(true), '{ "base" : {"boolean" : true } }'),
-            array(new Boolean(false), '{ "base" : {"boolean" : false } }'),
+            array(new QtiBoolean(true), '{ "base" : {"boolean" : true } }'),
+            array(new QtiBoolean(false), '{ "base" : {"boolean" : false } }'),
             array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
             array(new QtiFloat(23.23), '{ "base" : {"float" : 23.23 } }'),
             array(new QtiFloat(6.0), '{ "base" : {"float" : 6 } }'),
@@ -180,7 +180,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
     public function unmarshallListProvider() {
         $returnValue = array();
         
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(true)));
         $json = '{ "list" : { "boolean" : [true, false, true, true] } }';
         $returnValue[] = array($container, $json);
         
@@ -212,7 +212,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "duration" : ["PT5S", "PT10S"] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), null, new Boolean(false)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), null, new QtiBoolean(false)));
         $json = '{ "list" : { "boolean": [true, null, false] } }';
         $returnValue[] = array($container, $json);
         

@@ -21,7 +21,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\runtime\pci\json\Marshaller;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -112,8 +112,8 @@ class JsonMarshallerTest extends QtiSmTestCase {
     
     public function marshallScalarProvider() {
         return array(
-            array(new Boolean(true), json_encode(array('base' => array('boolean' => true)))),
-            array(new Boolean(false), json_encode(array('base' => array('boolean' => false)))),
+            array(new QtiBoolean(true), json_encode(array('base' => array('boolean' => true)))),
+            array(new QtiBoolean(false), json_encode(array('base' => array('boolean' => false)))),
             array(new Integer(1337), json_encode(array('base' => array('integer' => 1337)))),
             array(new QtiFloat(1337.1337), json_encode(array('base' => array('float' => 1337.1337)))),
             array(new QtiString("String!"), json_encode(array('base' => array('string' => "String!")))),
@@ -153,12 +153,12 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // bool multiple(true, false, true).
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true)));
         $json = json_encode(array('list' => array('boolean' => array(true, false, true))));
         $returnValue[] = array($container, $json);
         
         // bool multiple(true, null, false).
-        $container = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), null, new Boolean(false)));
+        $container = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), null, new QtiBoolean(false)));
         $json = json_encode(array('list' => array('boolean' => array(true, null, false))));
         $returnValue[] = array($container, $json);
         
@@ -229,12 +229,12 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // bool multiple(true, false, true).
-        $container = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true)));
+        $container = new OrderedContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(true)));
         $json = json_encode(array('list' => array('boolean' => array(true, false, true))));
         $returnValue[] = array($container, $json);
         
         // bool multiple(true, null, false)
-        $container = new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), null, new Boolean(false)));
+        $container = new OrderedContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), null, new QtiBoolean(false)));
         $json = json_encode(array('list' => array('boolean' => array(true, null, false))));
         $returnValue[] = array($container, $json);
         
@@ -255,7 +255,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($record, $json);
         
         // single boolean value record.
-        $record = new RecordContainer(array('rock' => new Boolean(true)));
+        $record = new RecordContainer(array('rock' => new QtiBoolean(true)));
         $json = json_encode(array('record' => array(array('name' => 'rock', 'base' => array('boolean' => true)))));
         $returnValue[] = array($record, $json);
         

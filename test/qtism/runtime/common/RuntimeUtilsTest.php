@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiString;
@@ -54,7 +54,7 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(null, false);
 		$returnValue[] = array(new QtiString(''), BaseType::STRING);
 		$returnValue[] = array(new QtiString('String!'), BaseType::STRING);
-		$returnValue[] = array(new Boolean(false), BaseType::BOOLEAN);
+		$returnValue[] = array(new QtiBoolean(false), BaseType::BOOLEAN);
 		$returnValue[] = array(new Integer(0), BaseType::INTEGER);
 		$returnValue[] = array(new QtiFloat(0.0), BaseType::FLOAT);
 		$returnValue[] = array(new MultipleContainer(BaseType::DURATION), BaseType::DURATION);
@@ -81,7 +81,7 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(new QtiString('String!'), Cardinality::SINGLE);
 		$returnValue[] = array(new Integer(0), Cardinality::SINGLE);
 		$returnValue[] = array(new QtiFloat(0.0), Cardinality::SINGLE);
-		$returnValue[] = array(new Boolean(false), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiBoolean(false), Cardinality::SINGLE);
 		$returnValue[] = array(new Point(1, 1), Cardinality::SINGLE);
 		$returnValue[] = array(new Pair('A', 'B'), Cardinality::SINGLE);
 		$returnValue[] = array(new DirectedPair('A', 'B'), Cardinality::SINGLE);

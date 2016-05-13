@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Duration;
@@ -98,7 +98,7 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Boolean(true);
+		$operands[] = new QtiBoolean(true);
 		$processor = new RoundProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

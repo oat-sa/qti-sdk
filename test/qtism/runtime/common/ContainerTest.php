@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
@@ -109,8 +109,8 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Integer(0)),
 			array(new QtiString('')),
 			array(new QtiString('super')),
-			array(new Boolean(true)),
-			array(new Boolean(false)),
+			array(new QtiBoolean(true)),
+			array(new QtiBoolean(false)),
 			array(new Duration('P1D')),
 			array(new Point(20, 20)),
 			array(new Pair('A', 'B')),
@@ -128,7 +128,7 @@ class ContainerTest extends QtiSmTestCase {
 	
 	public function validEqualsPrimitiveProvider() {
 		return array(
-			array(new Container(array(new Boolean(true), new Boolean(false))), new Container(array(new Boolean(false), new Boolean(true)))),
+			array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), new Container(array(new QtiBoolean(false), new QtiBoolean(true)))),
 			array(new Container(array(new Integer(14), new Integer(13))), new Container(array(new Integer(13), new Integer(14)))),
 			array(new Container(array(null)), new Container(array(null))),
 			array(new Container(array(new Integer(0))), new Container(array(new Integer(0)))),
@@ -145,7 +145,7 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Container(array(new Integer(14))), new Container(array(new QtiString('string')))),
 			array(new Container(array(null)), new Container(array(new Integer(0)))),
 			array(new Container(), new Container(array(new Integer(13)))),
-			array(new Container(array(new Boolean(true))), new Boolean(true)),
+			array(new Container(array(new QtiBoolean(true))), new QtiBoolean(true)),
 		);
 	}
 	
@@ -153,18 +153,18 @@ class ContainerTest extends QtiSmTestCase {
 		return array(
 			array(new Container(array(new Integer(15))), new Integer(15), 1),
 			array(new Container(array(new QtiFloat(14.3))), new QtiFloat(14.3), 1),
-			array(new Container(array(new Boolean(true))), new Boolean(true), 1),
-			array(new Container(array(new Boolean(false))), new Boolean(false), 1),
+			array(new Container(array(new QtiBoolean(true))), new QtiBoolean(true), 1),
+			array(new Container(array(new QtiBoolean(false))), new QtiBoolean(false), 1),
 			array(new Container(array(new QtiString('string'))), new QtiString('string'), 1),
 			array(new Container(array(new Integer(0))), new Integer(0), 1),
 			array(new Container(array(null)), null, 1),
 			array(new Container(array(new Integer(15), new QtiString('string'), new Integer(15))), new Integer(15), 2),
 			array(new Container(array(new QtiFloat(14.3), new Integer(143), new QtiFloat(14.3))), new QtiFloat(14.3),  2),
-			array(new Container(array(new Boolean(true), new Boolean(false), new Boolean(false))), new Boolean(false), 2),
+			array(new Container(array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(false))), new QtiBoolean(false), 2),
 			array(new Container(array(new QtiString('string'), new Integer(2), new QtiString('str'), new QtiString('string'), new QtiString('string'))), new QtiString('string'), 3),
 			array(new Container(array(new QtiString('null'), null)), null, 1),
 			array(new Container(array(new Integer(14), new Integer(15), new Integer(16))), true, 0),
-			array(new Container(array(new QtiString('string'), new Integer(1), new Boolean(true), new QtiFloat(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
+			array(new Container(array(new QtiString('string'), new Integer(1), new QtiBoolean(true), new QtiFloat(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
 		);
 	}
 	
@@ -191,7 +191,7 @@ class ContainerTest extends QtiSmTestCase {
 		$container[] = new DirectedPair('C', 'D');
 		$container[] = new Integer(20);
 		$container[] = new QtiFloat(20.1);
-		$container[] = new Boolean(true);
+		$container[] = new QtiBoolean(true);
 		$container[] = new QtiString('String!');
 		
 		$clone = clone $container;
@@ -228,7 +228,7 @@ class ContainerTest extends QtiSmTestCase {
 		
 		$returnValue[] = array(new Container(), '[]');
 		$returnValue[] = array(new Container(array(new Integer(10))), '[10]');
-		$returnValue[] = array(new Container(array(new Boolean(true), new Boolean(false))), '[true; false]');
+		$returnValue[] = array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), '[true; false]');
 		$returnValue[] = array(new Container(array(new Duration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new DirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		
 		return $returnValue;

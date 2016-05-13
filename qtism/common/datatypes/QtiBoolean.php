@@ -29,7 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
-class Boolean extends Scalar implements QtiDatatype {
+class QtiBoolean extends Scalar implements QtiDatatype {
     
     protected function checkType($value) {
         if (is_bool($value) !== true) {

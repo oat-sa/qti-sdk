@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -128,7 +128,7 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 		');
 		
 		$processor = new SetOutcomeValueProcessor($rule);
-		$myBool = new OutcomeVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(false));
+		$myBool = new OutcomeVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false));
 		$state = new State(array($myBool));
 		$this->assertFalse($state['myBool']->getValue());
 		

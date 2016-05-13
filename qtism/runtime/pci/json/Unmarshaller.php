@@ -37,7 +37,7 @@ use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -311,7 +311,7 @@ class Unmarshaller {
      * @return Boolean
      */
     protected function unmarshallBoolean(array $unit) {
-        return new Boolean($unit['base']['boolean']);
+        return new QtiBoolean($unit['base']['boolean']);
     }
     
     /**

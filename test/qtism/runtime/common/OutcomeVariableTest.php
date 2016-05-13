@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
@@ -239,15 +239,15 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new Boolean(true));
+		$outcome->setValue(new QtiBoolean(true));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Boolean(false));
+		$outcome->setValue(new QtiBoolean(false));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = new Boolean(true);
+		$value[] = new QtiBoolean(true);
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::STRING);

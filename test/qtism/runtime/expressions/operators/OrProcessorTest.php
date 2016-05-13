@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Point;
@@ -50,18 +50,18 @@ class OrProcessorTest extends QtiSmTestCase {
 	    
 	    // As per specs, If one or more sub-expressions are NULL and all the others 
 	    // are false then the operator also results in NULL.
-	    $operands = new OperandsCollection(array(new Boolean(false), null));
+	    $operands = new OperandsCollection(array(new QtiBoolean(false), null));
 	    $processor = new OrProcessor($expression, $operands);
 	    $result = $processor->process();
 	    $this->assertSame(null, $result);
 	    
-	    $operands = new OperandsCollection(array(new Boolean(false), null, new Boolean(false)));
+	    $operands = new OperandsCollection(array(new QtiBoolean(false), null, new QtiBoolean(false)));
 	    $processor->setOperands($operands);
 	    $result = $processor->process();
 	    $this->assertSame(null, $result);
 	    
 	    // On the other hand...
-	    $operands = new OperandsCollection(array(new Boolean(false), null, new Boolean(true)));
+	    $operands = new OperandsCollection(array(new QtiBoolean(false), null, new QtiBoolean(true)));
 	    $processor->setOperands($operands);
 	    $result = $processor->process();
 	    $this->assertTrue($result->getValue());
@@ -69,13 +69,13 @@ class OrProcessorTest extends QtiSmTestCase {
 	
 	public function testTrue() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(true)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true)));
 		$processor = new OrProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertSame(true, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Boolean(false), new Boolean(true), new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(false)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -84,13 +84,13 @@ class OrProcessorTest extends QtiSmTestCase {
 	
 	public function testFalse() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false)));
 		$processor = new OrProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertSame(false, $result->getValue());
 		
-		$operands = new OperandsCollection(array(new Boolean(false), new Boolean(false), new Boolean(false)));
+		$operands = new OperandsCollection(array(new QtiBoolean(false), new QtiBoolean(false), new QtiBoolean(false)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);

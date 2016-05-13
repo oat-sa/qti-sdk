@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\Integer;
 use qtism\data\expressions\operators\AnyN;
 use qtism\data\expressions\Expression;
@@ -125,7 +125,7 @@ class AnyNProcessor extends OperatorProcessor {
 				$nullCount++;
 				continue;
 			}
-			else if ($operand instanceof Boolean) {
+			else if ($operand instanceof QtiBoolean) {
 				if ($operand->getValue() === true) {
 					$trueCount++;
 				}
@@ -138,7 +138,7 @@ class AnyNProcessor extends OperatorProcessor {
 		}
 		
 		if ($trueCount >= $min && $trueCount <= $max) {
-			return new Boolean(true);
+			return new QtiBoolean(true);
 		}
 		else {
 			// Should we return false or null?
@@ -147,7 +147,7 @@ class AnyNProcessor extends OperatorProcessor {
 				return null;
 			}
 			else {
-				return new Boolean(false);
+				return new QtiBoolean(false);
 			}
 		}
 	}

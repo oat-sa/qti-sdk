@@ -28,7 +28,7 @@ use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiDatatype;
@@ -363,7 +363,7 @@ class Utils {
 	            return new QtiFloat($v);
 	        }
 	        else if (is_bool($v) === true) {
-	            return new Boolean($v);
+	            return new QtiBoolean($v);
 	        }
 	        
 	    }
