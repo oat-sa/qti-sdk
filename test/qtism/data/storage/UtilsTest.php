@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\storage\Utils;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
@@ -187,27 +187,27 @@ class UtilsTest extends QtiSmTestCase {
 	
 	public function validCoordsProvider() {
 		return array(
-			array('30, 30, 60, 30', Shape::RECT),
-			array('10, 10, 10', Shape::CIRCLE),
-			array('10,10,10', Shape::CIRCLE),
-			array('0,8,7,4,2,2,8,-4,-2,1', Shape::POLY),
-		    array('30.1, 30, 50, 30.1', Shape::RECT),
-		    array('184,237,18.38', Shape::CIRCLE),
-		    array('-184 ,237, -18.38', Shape::CIRCLE)
+			array('30, 30, 60, 30', QtiShape::RECT),
+			array('10, 10, 10', QtiShape::CIRCLE),
+			array('10,10,10', QtiShape::CIRCLE),
+			array('0,8,7,4,2,2,8,-4,-2,1', QtiShape::POLY),
+		    array('30.1, 30, 50, 30.1', QtiShape::RECT),
+		    array('184,237,18.38', QtiShape::CIRCLE),
+		    array('-184 ,237, -18.38', QtiShape::CIRCLE)
 		);
 	}
 	
 	public function invalidCoordsProvider() {
 		return array(
-			array('invalid', SHAPE::RECT),
-			array('20;40;30', SHAPE::CIRCLE),
-		    array('184.456,237.,18', SHAPE::CIRCLE),
+			array('invalid', QtiShape::RECT),
+			array('20;40;30', QtiShape::CIRCLE),
+		    array('184.456,237.,18', QtiShape::CIRCLE),
 		);
 	}
 	
 	public function invalidShapeProvider() {
 		return array(
-			array('10, 10, 10', SHAPE::DEF),
+			array('10, 10, 10', QtiShape::DEF),
 			array('10', 25)
 		);
 	}

@@ -27,7 +27,7 @@ namespace qtism\data\storage\xml\marshalling;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
 use qtism\data\expressions\operators\Inside;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\storage\Utils;
 use \DOMElement;
@@ -50,7 +50,7 @@ class InsideMarshaller extends OperatorMarshaller {
 	 */
 	protected function marshallChildrenKnown(QtiComponent $component, array $elements) {
 		$element = self::getDOMCradle()->createElement($component->getQtiClassName());
-		self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
+		self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
 		self::setDOMElementAttribute($element, 'coords', $component->getCoords());
 		
 		foreach ($elements as $elt) {
@@ -73,7 +73,7 @@ class InsideMarshaller extends OperatorMarshaller {
 			
 			if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null ) {
 				
-				$shape = Shape::getConstantByName($shape);
+				$shape = QtiShape::getConstantByName($shape);
 				$coords = Utils::stringToCoords($coords, $shape);
 				
 				$object = new Inside($children, $shape, $coords);

@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\state\AreaMapEntry;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -10,7 +10,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 		$mappedValue = 1.337;
-		$shape = Shape::RECT;
+		$shape = QtiShape::RECT;
 		$coords = new QtiCoords($shape, array(0, 20, 100, 0));
 		$component = new AreaMapEntry($shape, $coords, $mappedValue);
 		
@@ -35,7 +35,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapEntry', $component);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $component->getCoords());
 		$this->assertEquals(array(0, 20, 100, 0), $component->getCoords()->getArrayCopy());
-		$this->assertEquals(Shape::RECT, $component->getShape());
+		$this->assertEquals(QtiShape::RECT, $component->getShape());
 		$this->assertInternalType('float', $component->getMappedValue());
 		$this->assertEquals(1.337, $component->getMappedValue());
 	}

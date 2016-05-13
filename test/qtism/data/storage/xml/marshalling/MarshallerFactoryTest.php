@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\QtiCoords;
 
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 
 use qtism\data\state\AreaMapEntry;
 
@@ -24,7 +24,7 @@ class MarshallerFactyoryTest extends QtiSmTestCase {
 	}
 	
 	public function testFromQtiComponent() {
-		$shape = Shape::RECT;
+		$shape = QtiShape::RECT;
 		$coords = new QtiCoords($shape, array(0, 20, 100, 0));
 		$component = new AreaMapEntry($shape, $coords, 1.337);
 		

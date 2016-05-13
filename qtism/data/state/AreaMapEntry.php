@@ -26,7 +26,7 @@ namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 
@@ -90,7 +90,7 @@ class AreaMapEntry extends QtiComponent {
 	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
-		if (in_array($shape, Shape::asArray())) {
+		if (in_array($shape, QtiShape::asArray())) {
 			$this->shape = $shape;
 		}
 		else {

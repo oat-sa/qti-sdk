@@ -1,7 +1,7 @@
 <?php
 
 use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\AreaMapEntry;
 use qtism\data\state\AreaMapEntryCollection;
@@ -14,7 +14,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase {
 		$defaultValue = 6.66;
 		$areaMapEntries = new AreaMapEntryCollection();
 		
-		$shape = Shape::RECT;
+		$shape = QtiShape::RECT;
 		$coords = new QtiCoords($shape, array(0, 20, 100, 0));
 		$mappedValue = 1.377;
 		$areaMapEntries[] = new AreaMapEntry($shape, $coords, $mappedValue);

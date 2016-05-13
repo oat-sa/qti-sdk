@@ -26,7 +26,7 @@ namespace qtism\data\storage\php\marshalling;
 use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiPair;

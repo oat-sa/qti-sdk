@@ -24,7 +24,7 @@
 
 namespace qtism\data\expressions\operators;
 
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\ExpressionCollection;
 use \InvalidArgumentException;
@@ -84,7 +84,7 @@ class Inside extends Operator {
 	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
-		if (in_array($shape, Shape::asArray())) {
+		if (in_array($shape, QtiShape::asArray())) {
 			$this->shape = $shape;
 		}
 		else {

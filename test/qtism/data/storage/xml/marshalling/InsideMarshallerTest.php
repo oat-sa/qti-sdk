@@ -2,7 +2,7 @@
 
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\Variable;
 
@@ -15,7 +15,7 @@ class InsideMarshallerTest extends QtiSmTestCase {
 		$subs = new ExpressionCollection();
 		$subs[] = new Variable('pointVariable');
 		
-		$shape = Shape::RECT;
+		$shape = QtiShape::RECT;
 		$coords = new QtiCoords($shape, array(0, 0, 100, 20));
 		
 		$component = new Inside($subs, $shape, $coords);
@@ -46,7 +46,7 @@ class InsideMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $component->getCoords());
 		$this->assertInternalType('integer', $component->getShape());
-		$this->assertEquals(Shape::RECT, $component->getShape());
+		$this->assertEquals(QtiShape::RECT, $component->getShape());
 		$this->assertEquals(1, count($component->getExpressions()));
 	}
 }

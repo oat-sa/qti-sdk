@@ -57,28 +57,28 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable {
 		$this->setShape($shape);
 		
 		switch ($this->getShape()) {
-			case Shape::DEF:
+			case QtiShape::DEF:
 				if (count($this->getDataPlaceHolder()) > 0) {
 					$msg = "No coordinates should be given when the default shape is used.";
 					throw new InvalidArgumentException($msg);
 				}
 			break;
 			
-			case Shape::RECT:
+			case QtiShape::RECT:
 				if (count($this->getDataPlaceHolder()) != 4) {
 					$msg = "The rectangle coordinates must be composed by 4 values (x1, y1, x2, y2).";
 					throw new InvalidArgumentException($msg);
 				}
 			break;
 			
-			case Shape::CIRCLE:
+			case QtiShape::CIRCLE:
 				if (count($this->getDataPlaceHolder()) != 3) {
 					$msg = "The circle coordinates must be composed by 3 values (x, y, r).";
 					throw new InvalidArgumentException($msg);
 				}
 			break;
 			
-			case Shape::POLY:
+			case QtiShape::POLY:
 				if (count($this->getDataPlaceHolder()) % 2 > 0) {
 					$msg = "The polygon coordinates must be composed by a pair amount of values (x1, y1, x2, y2, ...).";
 					throw new InvalidArgumentException($msg);
@@ -88,7 +88,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable {
 	}
 	
 	protected function setShape($shape) {
-		if (in_array($shape, Shape::asArray())) {
+		if (in_array($shape, QtiShape::asArray())) {
 			$this->shape = $shape;
 		}
 		else {
@@ -114,13 +114,13 @@ class QtiCoords extends IntegerCollection implements QtiDatatype, Comparable {
 	 * @return boolean
 	 */
 	public function inside(QtiPoint $point) {
-		if ($this->getShape() === Shape::DEF) {
+		if ($this->getShape() === QtiShape::DEF) {
 			return true;
 		}
-		else if ($this->getShape() === Shape::RECT) {
+		else if ($this->getShape() === QtiShape::RECT) {
 			return $point->getX() >= $this[0] && $point->getX() <= $this[2] && $point->getY() >= $this[1] && $point->getY() <= $this[3];
 		}
-		else if ($this->getShape() === Shape::CIRCLE) {
+		else if ($this->getShape() === QtiShape::CIRCLE) {
 			return pow($point->getX() - $this[0], 2) + pow($point->getY() - $this[1], 2) < pow($this[2], 2);
 		}
 		else {

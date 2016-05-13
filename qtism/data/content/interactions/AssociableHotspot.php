@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
@@ -169,7 +169,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot {
 	 * @param integer $shape A value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
-	    if (in_array($shape, Shape::asArray()) === true) {
+	    if (in_array($shape, QtiShape::asArray()) === true) {
 	        $this->shape = $shape;
 	    }
 		else {

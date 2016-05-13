@@ -3,7 +3,7 @@
 use qtism\data\ShowHide;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -11,7 +11,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 	    
-	    $shape = Shape::CIRCLE;
+	    $shape = QtiShape::CIRCLE;
 	    $coords = new QtiCoords($shape, array(0, 0, 5));
 	    $hotspotLabel = "This is a circle.";
 	    $hotspotChoice = new HotspotChoice('hotspotchoice1', $shape, $coords, 'my-hotspotchoice');
@@ -38,7 +38,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
 	    
 	    $this->assertEquals('hotspotchoice1', $component->getIdentifier());
-	    $this->assertEquals(Shape::CIRCLE, $component->getShape());
+	    $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
 	    $this->assertEquals('0,0,5', $component->getCoords()->__toString());
 	    $this->assertTrue($component->isFixed());
 	    $this->assertEquals('mytpl1', $component->getTemplateIdentifier());
@@ -59,7 +59,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\HotspotChoice', $component);
 	    $this->assertEquals('r_50', $component->getIdentifier());
 	    $this->assertFalse($component->isFixed());
-	    $this->assertEquals(Shape::CIRCLE, $component->getShape());
-	    $this->assertTrue($component->getCoords()->equals(new QtiCoords(Shape::CIRCLE, array(128, 222, 18))));
+	    $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
+	    $this->assertTrue($component->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, array(128, 222, 18))));
 	}
 }

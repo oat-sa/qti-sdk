@@ -26,7 +26,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\QtiComponent;
 use \DOMDocumentFragment;
 
@@ -43,7 +43,7 @@ abstract class HotspotRenderer extends ChoiceRenderer {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-hotspot');
         
-        $fragment->firstChild->setAttribute('data-shape', Shape::getNameByConstant($component->getShape()));
+        $fragment->firstChild->setAttribute('data-shape', QtiShape::getNameByConstant($component->getShape()));
         $fragment->firstChild->setAttribute('data-coords', $component->getCoords()->__toString());
         
         if ($component->hasHotspotLabel() === true) {
