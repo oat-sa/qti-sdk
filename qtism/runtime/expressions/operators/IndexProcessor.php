@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\Index;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils as ProcessingUtils;
@@ -81,7 +81,7 @@ class IndexProcessor extends OperatorProcessor {
 			// The value of $n comes from the state.
 			$state = $this->getState();
 			if (($index = $state[ProcessingUtils::sanitizeVariableRef($n)]) !== null) {
-				if ($index instanceof Integer) {
+				if ($index instanceof QtiInteger) {
 					$n = $index->getValue();
 				}
 				else {

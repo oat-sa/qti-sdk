@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
@@ -69,7 +69,7 @@ class ContainerTest extends QtiSmTestCase {
 		
 		$this->assertTrue($container->isNull());
 		
-		$container[] = new Integer(1);
+		$container[] = new QtiInteger(1);
 		$this->assertFalse($container->isNull());
 	}
 	
@@ -104,9 +104,9 @@ class ContainerTest extends QtiSmTestCase {
 	
 	public function validValueProvider() {
 		return array(
-			array(new Integer(25)),
+			array(new QtiInteger(25)),
 			array(new QtiFloat(25.3)),
-			array(new Integer(0)),
+			array(new QtiInteger(0)),
 			array(new QtiString('')),
 			array(new QtiString('super')),
 			array(new QtiBoolean(true)),
@@ -129,9 +129,9 @@ class ContainerTest extends QtiSmTestCase {
 	public function validEqualsPrimitiveProvider() {
 		return array(
 			array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), new Container(array(new QtiBoolean(false), new QtiBoolean(true)))),
-			array(new Container(array(new Integer(14), new Integer(13))), new Container(array(new Integer(13), new Integer(14)))),
+			array(new Container(array(new QtiInteger(14), new QtiInteger(13))), new Container(array(new QtiInteger(13), new QtiInteger(14)))),
 			array(new Container(array(null)), new Container(array(null))),
-			array(new Container(array(new Integer(0))), new Container(array(new Integer(0)))),
+			array(new Container(array(new QtiInteger(0))), new Container(array(new QtiInteger(0)))),
 			array(new Container(array(new QtiString('string'))), new Container(array(new QtiString('string')))),
 			array(new Container(array(new QtiFloat(14.5))), new Container(array(new QtiFloat(14.5)))),
 			array(new Container(array(new QtiString('string1'), new QtiString('string2'))), new Container(array(new QtiString('string1'), new QtiString('string2')))),
@@ -141,30 +141,30 @@ class ContainerTest extends QtiSmTestCase {
 	
 	public function invalidEqualsPrimitiveProvider() {
 		return array(
-			array(new Container(array(new Integer(14))), new Container(array(new Integer(13)))),
-			array(new Container(array(new Integer(14))), new Container(array(new QtiString('string')))),
-			array(new Container(array(null)), new Container(array(new Integer(0)))),
-			array(new Container(), new Container(array(new Integer(13)))),
+			array(new Container(array(new QtiInteger(14))), new Container(array(new QtiInteger(13)))),
+			array(new Container(array(new QtiInteger(14))), new Container(array(new QtiString('string')))),
+			array(new Container(array(null)), new Container(array(new QtiInteger(0)))),
+			array(new Container(), new Container(array(new QtiInteger(13)))),
 			array(new Container(array(new QtiBoolean(true))), new QtiBoolean(true)),
 		);
 	}
 	
 	public function occurencesProvider() {
 		return array(
-			array(new Container(array(new Integer(15))), new Integer(15), 1),
+			array(new Container(array(new QtiInteger(15))), new QtiInteger(15), 1),
 			array(new Container(array(new QtiFloat(14.3))), new QtiFloat(14.3), 1),
 			array(new Container(array(new QtiBoolean(true))), new QtiBoolean(true), 1),
 			array(new Container(array(new QtiBoolean(false))), new QtiBoolean(false), 1),
 			array(new Container(array(new QtiString('string'))), new QtiString('string'), 1),
-			array(new Container(array(new Integer(0))), new Integer(0), 1),
+			array(new Container(array(new QtiInteger(0))), new QtiInteger(0), 1),
 			array(new Container(array(null)), null, 1),
-			array(new Container(array(new Integer(15), new QtiString('string'), new Integer(15))), new Integer(15), 2),
-			array(new Container(array(new QtiFloat(14.3), new Integer(143), new QtiFloat(14.3))), new QtiFloat(14.3),  2),
+			array(new Container(array(new QtiInteger(15), new QtiString('string'), new QtiInteger(15))), new QtiInteger(15), 2),
+			array(new Container(array(new QtiFloat(14.3), new QtiInteger(143), new QtiFloat(14.3))), new QtiFloat(14.3),  2),
 			array(new Container(array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(false))), new QtiBoolean(false), 2),
-			array(new Container(array(new QtiString('string'), new Integer(2), new QtiString('str'), new QtiString('string'), new QtiString('string'))), new QtiString('string'), 3),
+			array(new Container(array(new QtiString('string'), new QtiInteger(2), new QtiString('str'), new QtiString('string'), new QtiString('string'))), new QtiString('string'), 3),
 			array(new Container(array(new QtiString('null'), null)), null, 1),
-			array(new Container(array(new Integer(14), new Integer(15), new Integer(16))), true, 0),
-			array(new Container(array(new QtiString('string'), new Integer(1), new QtiBoolean(true), new QtiFloat(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
+			array(new Container(array(new QtiInteger(14), new QtiInteger(15), new QtiInteger(16))), true, 0),
+			array(new Container(array(new QtiString('string'), new QtiInteger(1), new QtiBoolean(true), new QtiFloat(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
 		);
 	}
 	
@@ -189,7 +189,7 @@ class ContainerTest extends QtiSmTestCase {
 		$container[] = new QtiDuration('P2D'); // 2 days.
 		$container[] = new Pair('A', 'B');
 		$container[] = new QtiDirectedPair('C', 'D');
-		$container[] = new Integer(20);
+		$container[] = new QtiInteger(20);
 		$container[] = new QtiFloat(20.1);
 		$container[] = new QtiBoolean(true);
 		$container[] = new QtiString('String!');
@@ -227,7 +227,7 @@ class ContainerTest extends QtiSmTestCase {
 		$returnValue = array();
 		
 		$returnValue[] = array(new Container(), '[]');
-		$returnValue[] = array(new Container(array(new Integer(10))), '[10]');
+		$returnValue[] = array(new Container(array(new QtiInteger(10))), '[10]');
 		$returnValue[] = array(new Container(array(new QtiBoolean(true), new QtiBoolean(false))), '[true; false]');
 		$returnValue[] = array(new Container(array(new QtiDuration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new QtiDirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		

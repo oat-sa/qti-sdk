@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\expressions\operators\MathOperator;
@@ -363,13 +363,13 @@ class MathOperatorProcessor extends OperatorProcessor {
 			return null;
 		}
 		else if ($operand->getValue() < 0) {
-			return new Integer(-1);
+			return new QtiInteger(-1);
 		}
 		else if ($operand->getValue() > 0) {
-			return new Integer(1);
+			return new QtiInteger(1);
 		}
 		else {
-			return new Integer(0);
+			return new QtiInteger(0);
 		}
 	}
 	
@@ -387,7 +387,7 @@ class MathOperatorProcessor extends OperatorProcessor {
 			return new QtiFloat(-INF);
 		}
 		
-		return new Integer(intval(floor($operand->getValue())));
+		return new QtiInteger(intval(floor($operand->getValue())));
 	}
 	
 	protected function processCeil() {
@@ -404,7 +404,7 @@ class MathOperatorProcessor extends OperatorProcessor {
 			return new QtiFloat(-INF);
 		}
 		
-		return new Integer(intval(ceil($operand->getValue())));
+		return new QtiInteger(intval(ceil($operand->getValue())));
 	}
 	
 	protected function processToDegrees() {

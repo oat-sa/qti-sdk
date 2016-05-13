@@ -4,7 +4,7 @@ use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\custom\Explode;
@@ -36,7 +36,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(2), new Point(0, 0)));
+		$operands = new OperandsCollection(array(new QtiInteger(2), new Point(0, 0)));
 		$processor = new Explode($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 		                            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with a string baseType.",

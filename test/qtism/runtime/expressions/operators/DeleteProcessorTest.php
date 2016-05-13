@@ -1,7 +1,7 @@
 <?php
 use qtism\common\datatypes\QtiFloat;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -18,35 +18,35 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
+		$operands[] = new QtiInteger(10);
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
 		$this->assertEquals(3, count($result));
-		$this->assertTrue($result->contains(new Integer(0)));
-		$this->assertTrue($result->contains(new Integer(20)));
-		$this->assertTrue($result->contains(new Integer(30)));
-		$this->assertFalse($result->contains(new Integer(10)));
+		$this->assertTrue($result->contains(new QtiInteger(0)));
+		$this->assertTrue($result->contains(new QtiInteger(20)));
+		$this->assertTrue($result->contains(new QtiInteger(30)));
+		$this->assertFalse($result->contains(new QtiInteger(10)));
 		
 		// Check that ALL the occurences of the first sub-expression are removed.
 		$operands->reset();
-		$operands[] = new Integer(10);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(10), new Integer(10), new Integer(30)));
+		$operands[] = new QtiInteger(10);
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(10), new QtiInteger(10), new QtiInteger(30)));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
 		$this->assertEquals(3, count($result));
-		$this->assertTrue($result->contains(new Integer(0)));
-		$this->assertTrue($result->contains(new Integer(20)));
-		$this->assertTrue($result->contains(new Integer(30)));
-		$this->assertFalse($result->contains(new Integer(10)));
+		$this->assertTrue($result->contains(new QtiInteger(0)));
+		$this->assertTrue($result->contains(new QtiInteger(20)));
+		$this->assertTrue($result->contains(new QtiInteger(30)));
+		$this->assertFalse($result->contains(new QtiInteger(10)));
 	}
 	
 	public function testMultipleNotMatch() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(60);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
+		$operands[] = new QtiInteger(60);
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertTrue($operands[1]->equals($result));
@@ -55,8 +55,8 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testEverythingRemoved() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(60);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(60), new Integer(60), new Integer(60), new Integer(60)));
+		$operands[] = new QtiInteger(60);
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(60), new QtiInteger(60), new QtiInteger(60), new QtiInteger(60)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
@@ -92,13 +92,13 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = null;
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 		
 		$operands->reset();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$operands[] = new MultipleContainer(BaseType::INTEGER);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -108,7 +108,7 @@ class DeleteProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new QtiFloat(10.1);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -117,8 +117,8 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(0), new Integer(10), new Integer(20), new Integer(30)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)));
 		$processor = new DeleteProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -127,8 +127,8 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
+		$operands[] = new QtiInteger(10);
 		$processor = new DeleteProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -144,9 +144,9 @@ class DeleteProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10)));
+		$operands[] = new QtiInteger(10);
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DeleteProcessor($expression, $operands);
 	}

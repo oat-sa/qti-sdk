@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -107,7 +107,7 @@ class MinProcessor extends OperatorProcessor {
 			    }
 			    
 				$valueCount++;
-				$integerCount += ($v instanceof Integer) ? 1 : 0;
+				$integerCount += ($v instanceof QtiInteger) ? 1 : 0;
 				
 				if ($v->getValue() < $min) {
 					$min = $v->getValue();
@@ -115,6 +115,6 @@ class MinProcessor extends OperatorProcessor {
 			}
 		}
 		
-		return ($integerCount === $valueCount) ? new Integer(intval($min)) : new QtiFloat(floatval($min));
+		return ($integerCount === $valueCount) ? new QtiInteger(intval($min)) : new QtiFloat(floatval($min));
 	}
 }

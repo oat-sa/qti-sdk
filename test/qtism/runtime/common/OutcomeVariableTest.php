@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Pair;
 use qtism\runtime\common\OrderedContainer;
@@ -42,8 +42,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertFalse($variable->getMasteryValue());
 		$this->assertTrue(null === $variable->getLookupTable());
 		
-		$variable->setValue(new Integer(16));
-		$variable->setDefaultValue(new Integer(-1));
+		$variable->setValue(new QtiInteger(16));
+		$variable->setDefaultValue(new QtiInteger(-1));
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
 		$this->assertEquals(16, $variable->getValue()->getValue());
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getDefaultValue());
@@ -90,7 +90,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		
 		// Try to set up a value with an incorrect cardinality (2).
 		try {
-		    $variable->setValue(new Integer(25));
+		    $variable->setValue(new QtiInteger(25));
 		    $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
 		}
 		catch (InvalidArgumentException $e) {
@@ -221,11 +221,11 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new Integer(0));
+		$outcome->setValue(new QtiInteger(0));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Integer(-1));
+		$outcome->setValue(new QtiInteger(-1));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Integer(100));
+		$outcome->setValue(new QtiInteger(100));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::FLOAT);

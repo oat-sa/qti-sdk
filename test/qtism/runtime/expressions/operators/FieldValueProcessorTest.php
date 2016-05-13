@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -54,7 +54,7 @@ class FieldValueProcessorTest extends QtiSmTestCase {
 		// primitive PHP.
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$processor = new FieldValueProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -85,7 +85,7 @@ class FieldValueProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression('B');
 		
 		$operands = new OperandsCollection();
-		$operands[] = new RecordContainer(array('A' => new Integer(1), 'B' => new Integer(2), 'C' => new Integer(3)));
+		$operands[] = new RecordContainer(array('A' => new QtiInteger(1), 'B' => new QtiInteger(2), 'C' => new QtiInteger(3)));
 		$processor = new FieldValueProcessor($expression, $operands);
 		
 		$result = $processor->process();

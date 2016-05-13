@@ -25,7 +25,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\RoundTo;
@@ -124,7 +124,7 @@ class RoundToProcessor extends OperatorProcessor {
 				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is null or nonexisting.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (!$figures instanceof Integer) {
+			else if (!$figures instanceof QtiInteger) {
 				$msg = "The variable '${figuresIdentifier}' used to set up the 'figures' attribute is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}

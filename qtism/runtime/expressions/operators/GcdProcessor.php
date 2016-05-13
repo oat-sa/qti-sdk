@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
@@ -123,7 +123,7 @@ class GcdProcessor extends OperatorProcessor {
 		
 		if ($zeroCount === $valueCount) {
 			// All arguments of gcd() are 0.
-			return new Integer(0);
+			return new QtiInteger(0);
 		}
 		else {
 			$g = $flatCollection[0];
@@ -131,7 +131,7 @@ class GcdProcessor extends OperatorProcessor {
 			$i = 0;
 			
 			while ($i < $loopLimit) {
-				$g = new Integer(Utils::gcd($g->getValue(), $flatCollection[$i + 1]->getValue()));
+				$g = new QtiInteger(Utils::gcd($g->getValue(), $flatCollection[$i + 1]->getValue()));
 				$i++;
 			}
 			

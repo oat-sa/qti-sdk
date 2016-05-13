@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\State;
 use qtism\common\enums\Cardinality;
@@ -73,7 +73,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testWithMinFromVariableReference() {
 		$expression = $this->createFakeExpression('var1', 4);
-		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new Integer(3));
+		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(3));
 		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(false), new QtiBoolean(false), null));
 		$state = new State();
 		$state->setVariable($var1);
@@ -85,7 +85,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testWithMaxFromVariableReference() {
 		$expression = $this->createFakeExpression(3, 'var1');
-		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new Integer(4));
+		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(4));
 		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true), null));
 		$state = new State();
 		$state->setVariable($var1);

@@ -4,7 +4,7 @@ use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\QtiFloat;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -28,8 +28,8 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(26)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(26)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainerSizeProcessor($expression, $operands);
 	}
@@ -51,7 +51,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(25)));
+		$operands = new OperandsCollection(array(new QtiInteger(25)));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -59,7 +59,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new QtiFloat(1.0), '2' => new Integer(2)))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('1' => new QtiFloat(1.0), '2' => new QtiInteger(2)))));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

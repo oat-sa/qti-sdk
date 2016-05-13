@@ -5,7 +5,7 @@ require_once (dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\OperatorProcessorFactory;
 use qtism\data\expressions\operators\Operator;
@@ -34,7 +34,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		);
 		
 		$factory = new OperatorProcessorFactory();
-		$operands = new OperandsCollection(array(new Integer(2), new Integer(2)));
+		$operands = new OperandsCollection(array(new QtiInteger(2), new QtiInteger(2)));
 		$processor = $factory->createProcessor($expression, $operands);
 		$this->assertInstanceOf('qtism\\runtime\\expressions\\operators\\SumProcessor', $processor);
 		$this->assertEquals('sum', $processor->getExpression()->getQtiClassName());

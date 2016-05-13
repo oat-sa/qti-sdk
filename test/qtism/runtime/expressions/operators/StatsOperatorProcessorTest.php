@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\Container;
@@ -131,7 +131,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression(Statistics::MEAN);
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0)))));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0)))));
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new StatsOperatorProcessor($expression, $operands);
 	}
@@ -149,7 +149,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	public function meanProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(10.0), new QtiFloat(20.0), new QtiFloat(30.0))), 20.0),
-			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(0))), 0.0),
+			array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(0))), 0.0),
 			array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), null, new QtiFloat(23.3))), null), // contains a null value
 			array(null, null)
 		);
@@ -158,7 +158,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	public function sampleVarianceProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(10.0))), null), // fails because containerSize <= 1
-			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 27130),
+			array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(600), new QtiInteger(470), new QtiInteger(170), new QtiInteger(430), new QtiInteger(300))), 27130),
 			array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), null, new QtiFloat(23.3))), null), // contains a null value
 			array(null, null)
 		);
@@ -166,8 +166,8 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function sampleSDProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), null), // containerSize <= 1
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 164.712),
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), null), // containerSize <= 1
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(600), new QtiInteger(470), new QtiInteger(170), new QtiInteger(430), new QtiInteger(300))), 164.712),
 			array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), null, new QtiFloat(23.3))), null), // contains a null value
 			array(null, null)
 		);
@@ -175,15 +175,15 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function popVarianceProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), 0), // containerSize <= 1 but applied on a population -> OK.
-			array(new MultipleContainer(BaseType::INTEGER, array(new Integer(600), new Integer(470), new Integer(170), new Integer(430), new Integer(300))), 21704),
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), 0), // containerSize <= 1 but applied on a population -> OK.
+			array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(600), new QtiInteger(470), new QtiInteger(170), new QtiInteger(430), new QtiInteger(300))), 21704),
 			array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), null, new QtiFloat(23.33333))), null), // contains a null value
 		);
 	}
 	
 	public function popSDProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), 0), // containerSize <= 1 but applied on population
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), 0), // containerSize <= 1 but applied on population
 			array(new OrderedContainer(BaseType::FLOAT, array(new QtiFloat(600.0), new QtiFloat(470.0), new QtiFloat(170.0), new QtiFloat(430.0), new QtiFloat(300.0))), 147.323),
 			array(new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), null, new QtiFloat(23.33333))), null), // contains a null value
 		);
@@ -192,8 +192,8 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	public function wrongCardinalityProvider() {
 		return array(
 			array(array(new QtiFloat(25.3))),
-			array(array(new Integer(-10))),
-			array(array(new RecordContainer(array('A' => new Integer(1))))),
+			array(array(new QtiInteger(-10))),
+			array(array(new RecordContainer(array('A' => new QtiInteger(1))))),
 		);
 	}
 	

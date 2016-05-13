@@ -4,7 +4,7 @@ use qtism\common\datatypes\QtiIdentifier;
 
 use qtism\common\datatypes\QtiFloat;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 use qtism\common\datatypes\QtiString;
 
@@ -348,12 +348,12 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 	public function testNull() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(null, new MultipleContainer(BaseType::INTEGER, array(new Integer(25)))));
+		$operands = new OperandsCollection(array(null, new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)))));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 		
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER, array(new Integer(25)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)))));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -372,7 +372,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	public function testNotSameBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(25.0)));
 		$processor = new ContainsProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -382,8 +382,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	public function testNotSameCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(25)));
 		$processor = new ContainsProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -392,8 +392,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new RecordContainer(array('1' => new Integer(1), '2' => new Integer(2)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new RecordContainer(array('1' => new QtiInteger(1), '2' => new QtiInteger(2)));
 		$processor = new ContainsProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -409,9 +409,9 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(25)));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(25)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(25)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(25)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new ContainsProcessor($expression, $operands);
 	}

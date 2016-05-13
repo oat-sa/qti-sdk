@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\expressions\operators\OrderedProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\common\enums\BaseType;
@@ -29,7 +29,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 		
-		$operands = new OperandsCollection(array(null, new Integer(25), new OrderedContainer(BaseType::INTEGER)));
+		$operands = new OperandsCollection(array(null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
@@ -37,7 +37,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(BaseType::INTEGER, $result->getBaseType());
 		$this->assertEquals(25, $result[0]->getValue());
 		
-		$operands = new OperandsCollection(array(null, new Integer(25), new OrderedContainer(BaseType::INTEGER, array(new Integer(26)))));
+		$operands = new OperandsCollection(array(null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(26)))));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
@@ -46,7 +46,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(25, $result[0]->getValue());
 		$this->assertEquals(26, $result[1]->getValue());
 		
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER), new Integer(25), new OrderedContainer(BaseType::INTEGER, array(new Integer(26)))));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER), new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(26)))));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $result);
@@ -130,7 +130,7 @@ class OrderedProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(1, 2);
 		$operands[] = new QtiDuration('P2D');
 		$operands[] = null;
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$processor = new OrderedProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -139,9 +139,9 @@ class OrderedProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$operands[] = null;
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(10)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10)));
 		$processor = new OrderedProcessor($expression, $operands);
 		$result = $processor->process();
 		

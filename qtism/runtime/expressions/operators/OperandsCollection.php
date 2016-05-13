@@ -29,7 +29,7 @@ use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\collections\Stack;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiDuration;
@@ -117,7 +117,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || ($v->getBaseType() !== BaseType::FLOAT && $v->getBaseType() !== BaseType::INTEGER))) {
 				return false;
 			}
-			else if (!$v instanceof Integer && !$v instanceof QtiFloat && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof QtiInteger && !$v instanceof QtiFloat && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}
@@ -247,7 +247,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::INTEGER)) {
 				return false;
 			}
-			else if (!$v instanceof Integer && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
+			else if (!$v instanceof QtiInteger && !$v instanceof MultipleContainer && !$v instanceof OrderedContainer) {
 				return false;
 			}
 		}

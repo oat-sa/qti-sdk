@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\utils\Reflection;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
@@ -24,7 +24,7 @@ class ReflectionTest extends QtiSmTestCase {
             array("Class", "\\My\\Super\\Class"),
                         
             array("stdClass", new \stdClass()),
-            array("Integer", new Integer(10)),
+            array("Integer", new QtiInteger(10)),
                         
             array("My_Stupid_Class", "My_Stupid_Class"),
             array(false, 12),

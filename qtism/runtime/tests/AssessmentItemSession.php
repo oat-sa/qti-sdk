@@ -27,7 +27,7 @@ namespace qtism\runtime\tests;
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
 use qtism\runtime\expressions\CorrectProcessor;
@@ -264,7 +264,7 @@ class AssessmentItemSession extends State {
 		$this->setSessionManager($sessionManager);
 		
 		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(0)));
 		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
@@ -580,7 +580,7 @@ class AssessmentItemSession extends State {
 			}
 			
 			$this['duration'] = new QtiDuration('PT0S');
-			$this['numAttempts'] = new Integer(0);
+			$this['numAttempts'] = new QtiInteger(0);
 		}
 		
 		$this['numAttempts']->setValue($this['numAttempts']->getValue() + 1);

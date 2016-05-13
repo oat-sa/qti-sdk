@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\expressions\operators\NotProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -35,7 +35,7 @@ class NotProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(25)));
+		$operands = new OperandsCollection(array(new QtiInteger(25)));
 		$processor = new NotProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

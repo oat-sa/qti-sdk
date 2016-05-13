@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
@@ -15,29 +15,29 @@ class RecordContainerTest extends QtiSmTestCase {
 		$record = new RecordContainer();
 		$this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $record);
 		
-		$record = new RecordContainer(array('key1' => new Integer(1), 'key2' => new QtiString('a string'), 'key3' => new Point(10, 10)));
+		$record = new RecordContainer(array('key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new Point(10, 10)));
 		$this->assertEquals(3, count($record));
 		$this->assertEquals($record['key1']->getValue(), 1);
 		$this->assertEquals($record['key2']->getValue(), 'a string');
 		$this->assertTrue($record['key3']->equals(new Point(10, 10)));
-		$this->assertEquals(1, $record->occurences(new Integer(1)));
+		$this->assertEquals(1, $record->occurences(new QtiInteger(1)));
 		$this->assertEquals(1, $record->occurences(new Point(10, 10)));
 	}
 	
 	public function testEquals() {
-		$record1 = new RecordContainer(array('one' => new Integer(1), 'two' => new Integer(2)));
-		$record2 = new RecordContainer(array('two' => new Integer(2), 'one' => new Integer(1)));
+		$record1 = new RecordContainer(array('one' => new QtiInteger(1), 'two' => new QtiInteger(2)));
+		$record2 = new RecordContainer(array('two' => new QtiInteger(2), 'one' => new QtiInteger(1)));
 		$this->assertTrue($record1->equals($record2));
 		$this->assertTrue($record2->equals($record1));
 		
-		$record3 = new RecordContainer(array('three' => new Integer(3), 'four' => new Integer(4)));
+		$record3 = new RecordContainer(array('three' => new QtiInteger(3), 'four' => new QtiInteger(4)));
 		$this->assertFalse($record1->equals($record3));
 		$this->assertFalse($record3->equals($record1));
 	}
 	
 	public function testInvalidInstantiationOne() {
 		$this->setExpectedException('\\InvalidArgumentException');
-		$record = new RecordContainer(array(new Integer(1), new Integer(2), new Integer(3)));
+		$record = new RecordContainer(array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)));
 	}
 	
 	public function testInvalidUseOne() {

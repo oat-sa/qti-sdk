@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -15,7 +15,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testSimple() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(1), new Integer(1)));
+		$operands = new OperandsCollection(array(new QtiInteger(1), new QtiInteger(1)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		
@@ -27,7 +27,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testNary() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(24), new Integer(-4), new Integer(1)));
+		$operands = new OperandsCollection(array(new QtiInteger(24), new QtiInteger(-4), new QtiInteger(1)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 
@@ -38,9 +38,9 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testComplex() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(-1), new Integer(1)));
+		$operands = new OperandsCollection(array(new QtiInteger(-1), new QtiInteger(1)));
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.1), new QtiFloat(4.3)));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(15)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(15)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		
@@ -53,7 +53,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		
 		$this->setExpectedException('\\RuntimeException');
 		
-		$operands = new OperandsCollection(array(new QtiBoolean(true), new Integer(14), new Integer(10)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 	}
@@ -70,7 +70,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	
 	public function testNullInvolved() {
 		$product = $this->createFakeProductComponent();
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(10), null));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(10), null));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		$this->assertTrue($result === null);

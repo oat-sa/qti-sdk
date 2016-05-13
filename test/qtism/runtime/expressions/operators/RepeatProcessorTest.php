@@ -5,7 +5,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
@@ -16,7 +16,7 @@ use qtism\runtime\expressions\operators\OperandsCollection;
 class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testRepeatScalarOnly() {
-		$initialVal = array(new Integer(1), new Integer(2), new Integer(3));
+		$initialVal = array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3));
 		$expression = $this->createFakeExpression(1);
 		$operands = new OperandsCollection($initialVal);
 		$processor = new RepeatProcessor($expression, $operands);
@@ -31,13 +31,13 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testOrderedOnly() {
 		$expression = $this->createFakeExpression(2);
-		$ordered1 = new OrderedContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3)));
-		$ordered2 = new OrderedContainer(BaseType::INTEGER, array(new Integer(4)));
+		$ordered1 = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)));
+		$ordered2 = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(4)));
 		$operands = new OperandsCollection(array($ordered1, $ordered2));
 		$processor = new RepeatProcessor($expression, $operands);
 		$result = $processor->process();
 		
-		$comparison = new OrderedContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(1), new Integer(2), new Integer(3), new Integer(4)));
+		$comparison = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4)));
 		$this->assertTrue($comparison->equals($result));
 	}
 	
@@ -89,7 +89,7 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(10)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)))));
 		$processor = new RepeatProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -97,7 +97,7 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new Integer(10))), new QtiFloat(10.3)));
+		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), new QtiFloat(10.3)));
 		$processor = new RepeatProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

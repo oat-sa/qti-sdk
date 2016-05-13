@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiIdentifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\data\expressions\MapResponse;
 use qtism\runtime\common\RecordContainer;
@@ -41,17 +41,17 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		// The variable has no value so the default mapping value is returned.
 		$this->assertEquals(0, $result->getValue()); 
 		
-		$state['response1'] = new Integer(0);
+		$state['response1'] = new QtiInteger(0);
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(1, $result->getValue());
 		
-		$state['response1'] = new Integer(1);
+		$state['response1'] = new QtiInteger(1);
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(2, $result->getValue());
 		
-		$state['response1'] = new Integer(240);
+		$state['response1'] = new QtiInteger(240);
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(0, $result->getValue());

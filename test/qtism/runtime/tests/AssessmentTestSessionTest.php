@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
@@ -390,7 +390,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	    
 	    foreach ($outcomes as $outcomeIdentifier => $outcomeValue) {
-	        $this->assertInstanceOf(($outcomeValue instanceof Integer) ? 'qtism\\common\\datatypes\\Integer' : 'qtism\\common\\datatypes\\Float', $assessmentTestSession[$outcomeIdentifier]);
+	        $this->assertInstanceOf(($outcomeValue instanceof QtiInteger) ? 'qtism\\common\\datatypes\\Integer' : 'qtism\\common\\datatypes\\Float', $assessmentTestSession[$outcomeIdentifier]);
 	        
 	        if ($outcomeIdentifier !== 'PERCENT_CORRECT') {
 	            $this->assertEquals($outcomeValue->getValue(), $assessmentTestSession[$outcomeIdentifier]->getValue());
@@ -405,7 +405,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $returnValue = array();
 	    
 	    // Test 1.
-	    $outcomes = array('NCORRECTS01' => new Integer(2), 'NCORRECTS02' => new Integer(1), 'NCORRECTS03' => new Integer(1), 'NINCORRECT' => new Integer(5), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(44.44));
+	    $outcomes = array('NCORRECTS01' => new QtiInteger(2), 'NCORRECTS02' => new QtiInteger(1), 'NCORRECTS03' => new QtiInteger(1), 'NINCORRECT' => new QtiInteger(5), 'NRESPONSED' => new QtiInteger(9), 'NPRESENTED' => new QtiInteger(9), 'NSELECTED' => new QtiInteger(9), 'PERCENT_CORRECT' => new QtiFloat(44.44));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('D', 'L')))))); // SCORE = 3 - Incorrect
@@ -421,7 +421,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $returnValue[] = $test;
 	    
 	    // Test 2 (full correct).
-	    $outcomes = array('NCORRECTS01' => new Integer(3), 'NCORRECTS02' => new Integer(3), 'NCORRECTS03' => new Integer(3), 'NINCORRECT' => new Integer(0), 'NRESPONSED' => new Integer(9), 'NPRESENTED' => new Integer(9), 'NSELECTED' => new Integer(9), 'PERCENT_CORRECT' => new QtiFloat(100.00));
+	    $outcomes = array('NCORRECTS01' => new QtiInteger(3), 'NCORRECTS02' => new QtiInteger(3), 'NCORRECTS03' => new QtiInteger(3), 'NINCORRECT' => new QtiInteger(0), 'NRESPONSED' => new QtiInteger(9), 'NPRESENTED' => new QtiInteger(9), 'NSELECTED' => new QtiInteger(9), 'PERCENT_CORRECT' => new QtiFloat(100.00));
 	    $responses = array();
 	    $responses['Q01'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))); // SCORE = 1 - Correct
 	    $responses['Q02'] = new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new Pair('A', 'P'), new Pair('C', 'M'), new Pair('D', 'L')))))); // SCORE = 4 - Correct

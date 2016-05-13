@@ -30,7 +30,7 @@ use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\QtiDuration;
@@ -338,7 +338,7 @@ class Utils {
 	        if (is_int($v) === true) {
 	             
 	            if ($baseType === -1 || $baseType === BaseType::INTEGER) {
-	                return new Integer($v);
+	                return new QtiInteger($v);
 	            }
 	            else if ($baseType === BaseType::INT_OR_IDENTIFIER) {
 	                return new IntOrIdentifier($v);

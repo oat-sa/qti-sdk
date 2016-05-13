@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
@@ -59,7 +59,7 @@ class RoundProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(-6, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(0);
+		$operands[] = new QtiInteger(0);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
 		$this->assertEquals(0, $result->getValue());
@@ -123,7 +123,7 @@ class RoundProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$operands[] = new QtiFloat(1.1);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RoundProcessor($expression, $operands);

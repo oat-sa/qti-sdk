@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\Pair;
 use qtism\common\datatypes\Point;
@@ -54,7 +54,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		
 		// second operand is null.
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$operands[] = new OrderedContainer(BaseType::INTEGER);
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
@@ -63,7 +63,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		// fist operand is null.
 		$operands->reset();
 		$operands[] = null;
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)));
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 	}

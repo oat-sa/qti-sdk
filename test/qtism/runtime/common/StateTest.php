@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\QtiBoolean;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
@@ -78,7 +78,7 @@ class StateTest extends QtiSmTestCase {
 	    $state = new State();
 	    $this->assertEquals(0, count($state->getAllVariables()));
 	    
-	    $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::INTEGER, new Integer(25)));
+	    $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25)));
 	    $this->assertEquals(1, count($state->getAllVariables()));
 	    
 	    $state->setVariable(new OutcomeVariable('SCORE1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));

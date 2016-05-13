@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -21,7 +21,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -36,7 +36,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);;
+		$this->assertTrue(!$result instanceof QtiInteger);;
 	}
 	
 	/**
@@ -51,7 +51,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -96,7 +96,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -111,7 +111,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -127,7 +127,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -142,7 +142,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -157,7 +157,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -187,7 +187,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -202,7 +202,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -232,7 +232,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -247,7 +247,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -277,7 +277,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -292,7 +292,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -322,7 +322,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -380,7 +380,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	/**
@@ -395,7 +395,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$processor = new MathOperatorProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEqualsRounded($expected, $result);
-		$this->assertTrue(!$result instanceof Integer);
+		$this->assertTrue(!$result instanceof QtiInteger);
 	}
 	
 	protected function assertEqualsRounded($expected, $value) {
@@ -424,7 +424,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function cosProvider() {
 		return array(
-			array(new Integer(25), 0.99120281),
+			array(new QtiInteger(25), 0.99120281),
 			array(new QtiFloat(INF), null), // falls outside the domain.
 		);
 	}
@@ -456,27 +456,27 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function asinProvider() {
 		return array(
-			array(new Integer(2), null),
-			array(new Integer(1), 1.570796),
+			array(new QtiInteger(2), null),
+			array(new QtiInteger(1), 1.570796),
 			array(new QtiFloat(1.1), null)
 		);
 	}
 	
 	public function atan2Provider() {
 		return array(
-			array(new QtiFloat(NAN), new Integer(10), null),
-			array(new Integer(+0), new Integer(25), 0),
-			array(new Integer(25), new QtiFloat(+INF), 0),
-			array(new Integer(-0), new Integer(25), 0),
-			array(new Integer(-25), new QtiFloat(+INF), 0),
-			array(new Integer(+0), new Integer(-25), M_PI),
-			array(new Integer(25), new QtiFloat(-INF), M_PI),
+			array(new QtiFloat(NAN), new QtiInteger(10), null),
+			array(new QtiInteger(+0), new QtiInteger(25), 0),
+			array(new QtiInteger(25), new QtiFloat(+INF), 0),
+			array(new QtiInteger(-0), new QtiInteger(25), 0),
+			array(new QtiInteger(-25), new QtiFloat(+INF), 0),
+			array(new QtiInteger(+0), new QtiInteger(-25), M_PI),
+			array(new QtiInteger(25), new QtiFloat(-INF), M_PI),
 			//array(-0, -19, -M_PI), Cannot be tested, because no valid way to express negative zero in PHP.
-			array(new Integer(-25), new QtiFloat(-INF), -M_PI),
-			array(new Integer(25), new Integer(-0), M_PI_2),
-			array(new QtiFloat(INF), new Integer(25), M_PI_2),
-			array(new Integer(-10), new Integer(+0), -M_PI_2),
-			array(new QtiFloat(-INF), new Integer(14), -M_PI_2),
+			array(new QtiInteger(-25), new QtiFloat(-INF), -M_PI),
+			array(new QtiInteger(25), new QtiInteger(-0), M_PI_2),
+			array(new QtiFloat(INF), new QtiInteger(25), M_PI_2),
+			array(new QtiInteger(-10), new QtiInteger(+0), -M_PI_2),
+			array(new QtiFloat(-INF), new QtiInteger(14), -M_PI_2),
 			array(new QtiFloat(INF), new QtiFloat(INF), M_PI_4),
 			array(new QtiFloat(INF), new QtiFloat(-INF), 3 * M_PI_4),
 			array(new QtiFloat(-INF), new QtiFloat(INF), -M_PI_4),
@@ -486,8 +486,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function asecProvider() {
 		return array(
-			array(new Integer(-5), 1.7721),
-			array(new Integer(0), null),
+			array(new QtiInteger(-5), 1.7721),
+			array(new QtiInteger(0), null),
 			array(new QtiFloat(0.45), null),
 			array(new QtiFloat(-0.45), null)
 		);
@@ -495,24 +495,24 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function acscProvider() {
 		return array(
-			array(new Integer(-5), -0.20135),
-			array(new Integer(0), null),
+			array(new QtiInteger(-5), -0.20135),
+			array(new QtiInteger(0), null),
 			array(new QtiFloat(-0.45), null)
 		);
 	}
 	
 	public function acotProvider() {
 		return array(
-			array(new Integer(-5), -0.197396),
-			array(new Integer(-0), M_PI_2)
+			array(new QtiInteger(-5), -0.197396),
+			array(new QtiInteger(-0), M_PI_2)
 		);
 	}
 	
 	public function sinhProvider() {
 		return array(
-			array(new Integer(5), 74.203210578),
-			array(new Integer(-5), -74.203210578),
-			array(new Integer(0), 0),
+			array(new QtiInteger(5), 74.203210578),
+			array(new QtiInteger(-5), -74.203210578),
+			array(new QtiInteger(0), 0),
 			array(new QtiFloat(INF), INF),
 			array(new QtiFloat(-INF), -INF)
 		);
@@ -520,8 +520,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function coshProvider() {
 		return array(
-			array(new Integer(0), 1),
-			array(new Integer(1), 1.543080),
+			array(new QtiInteger(0), 1),
+			array(new QtiInteger(1), 1.543080),
 			array(new QtiFloat(NAN), null),
 			array(null, null),
 			array(new QtiFloat(INF), INF),
@@ -531,8 +531,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function tanhProvider() {
 		return array(
-			array(new Integer(0), 0),
-			array(new Integer(1), 0.761594155956),
+			array(new QtiInteger(0), 0),
+			array(new QtiInteger(1), 0.761594155956),
 			array(new QtiFloat(-1.5), -0.905148253645),
 			array(new QtiFloat(INF), 1),
 			array(new QtiFloat(-INF), -1)		
@@ -544,9 +544,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
 			array(new QtiFloat(-INF), 0),
-			array(new Integer(0), null),
-			array(new Integer(-0), null),
-			array(new Integer(1), 0.64805)		
+			array(new QtiInteger(0), null),
+			array(new QtiInteger(-0), null),
+			array(new QtiInteger(1), 0.64805)		
 		);
 	}
 	
@@ -555,9 +555,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
 			array(new QtiFloat(-INF), 0),
-			array(new Integer(0), null),
-			array(new Integer(-0), null),
-			array(new Integer(1), 0.850918)
+			array(new QtiInteger(0), null),
+			array(new QtiInteger(-0), null),
+			array(new QtiInteger(1), 0.850918)
 		);
 	}
 	
@@ -566,9 +566,9 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
 			array(new QtiFloat(-INF), 0),
-			array(new Integer(0), null),
-			array(new Integer(-0), null),
-			array(new Integer(1), 1.31304),
+			array(new QtiInteger(0), null),
+			array(new QtiInteger(-0), null),
+			array(new QtiInteger(1), 1.31304),
 			array(new QtiFloat(-2.1), -1.03045)
 		);
 	}
@@ -577,8 +577,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		return array(
 			array(new QtiFloat(-0.5), null),
 			array(new QtiFloat(INF), INF),
-			array(new Integer(0), -INF),
-			array(new Integer(112), 2.049218)
+			array(new QtiInteger(0), -INF),
+			array(new QtiInteger(112), 2.049218)
 		);
 	}
 	
@@ -586,8 +586,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		return array(
 			array(new QtiFloat(-0.5), null),
 			array(new QtiFloat(INF), INF),
-			array(new Integer(0), -INF),
-			array(new Integer(10), 2.30258)
+			array(new QtiInteger(0), -INF),
+			array(new QtiInteger(10), 2.30258)
 		);
 	}
 	
@@ -597,34 +597,34 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(null, null),
 			array(new QtiFloat(INF), INF)	,
 			array(new QtiFloat(-INF), 0),
-			array(new Integer(3), 20.08554),
-			array(new Integer(-3), 0.04979)
+			array(new QtiInteger(3), 20.08554),
+			array(new QtiInteger(-3), 0.04979)
 		);
 	}
 	
 	public function absProvider() {
 		return array(
-			array(new Integer(0), 0),
-			array(new Integer(-0), 0),
+			array(new QtiInteger(0), 0),
+			array(new QtiInteger(-0), 0),
 			array(new QtiFloat(INF), INF),
 			array(new QtiFloat(-INF), INF),
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(25.3), 25.3),
-			array(new Integer(24), 24),
+			array(new QtiInteger(24), 24),
 			array(new QtiFloat(-25.3), 25.3),
-			array(new Integer(-24), 24),
+			array(new QtiInteger(-24), 24),
 			array(null, null)
 		);
 	}
 	
 	public function signumProvider() {
 		return array(
-			array(new Integer(0), 0)	,
-			array(new Integer(-0), 0),
+			array(new QtiInteger(0), 0)	,
+			array(new QtiInteger(-0), 0),
 			array(new QtiFloat(0.1), 1),
-			array(new Integer(25), 1),
+			array(new QtiInteger(25), 1),
 			array(new QtiFloat(-0.1), -1),
-			array(new Integer(-25), -1),
+			array(new QtiInteger(-25), -1),
 			array(null, null),
 			array(new QtiFloat(NAN), null)
 		);
@@ -632,8 +632,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function floorProvider() {
 		return array(
-			array(new Integer(10), 10),
-			array(new Integer(-10), -10),
+			array(new QtiInteger(10), 10),
+			array(new QtiInteger(-10), -10),
 			array(new QtiFloat(4.3), 4),
 			array(new QtiFloat(9.999), 9),
 			array(new QtiFloat(-3.14), -4),
@@ -646,8 +646,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	
 	public function ceilProvider() {
 		return array(
-			array(new Integer(10), 10),
-			array(new Integer(-10), -10),
+			array(new QtiInteger(10), 10),
+			array(new QtiInteger(-10), -10),
 			array(new QtiFloat(4.3), 5),
 			array(new QtiFloat(9.999), 10),
 			array(new QtiFloat(-3.14), -3),
@@ -666,7 +666,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(null, null),
 			array(new QtiFloat(2.1), 120.321),
 			array(new QtiFloat(-2.1), -120.321),
-			array(new Integer(0), 0.0)
+			array(new QtiInteger(0), 0.0)
 		);
 	}
 	
@@ -676,11 +676,11 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			array(new QtiFloat(INF), INF)	,
 			array(new QtiFloat(-INF), -INF),
 			array(null, null),
-			array(new Integer(0), 0.0),
-			array(new Integer(90), 1.571),
-			array(new Integer(180), 3.142),
-			array(new Integer(270), 4.712),
-			array(new Integer(360), 6.283)
+			array(new QtiInteger(0), 0.0),
+			array(new QtiInteger(90), 1.571),
+			array(new QtiInteger(180), 3.142),
+			array(new QtiInteger(270), 4.712),
+			array(new QtiInteger(360), 6.283)
 		);
 	}
 	

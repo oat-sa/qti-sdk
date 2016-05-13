@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\Point;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -15,7 +15,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 	public function testIntegerToFloat() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$processor = new IntegerToFloatProcessor($expression, $operands);
 		
 		$result = $processor->process();
@@ -23,19 +23,19 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(10.0, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(-10);
+		$operands[] = new QtiInteger(-10);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(-10.0, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(0);
+		$operands[] = new QtiInteger(0);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(0.0, $result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(-0);
+		$operands[] = new QtiInteger(-0);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(-0.0, $result->getValue());
@@ -64,7 +64,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)));
 		$processor = new IntegerToFloatProcessor($expression, $operands);
 		
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -101,8 +101,8 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
-		$operands[] = new Integer(-10);
+		$operands[] = new QtiInteger(10);
+		$operands[] = new QtiInteger(-10);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new IntegerToFloatProcessor($expression, $operands);
 	}

@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
@@ -124,11 +124,11 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase {
 	
 	public function testOutcomeConditionComplexProvider() {
 		return array(
-			array(new Integer(1), new Integer(1), 'A', 'C', null),
-			array(new Integer(1), new Integer(0), 'B', 'C', null),
-			array(new Integer(2), new Integer(0), null, 'A', 'B'),
-			array(new Integer(3), new Integer(0), 'V', null, null),
-			array(new Integer(4), new Integer(1), 'Z', null, null)
+			array(new QtiInteger(1), new QtiInteger(1), 'A', 'C', null),
+			array(new QtiInteger(1), new QtiInteger(0), 'B', 'C', null),
+			array(new QtiInteger(2), new QtiInteger(0), null, 'A', 'B'),
+			array(new QtiInteger(3), new QtiInteger(0), 'V', null, null),
+			array(new QtiInteger(4), new QtiInteger(1), 'Z', null, null)
 		);
 	}
 }

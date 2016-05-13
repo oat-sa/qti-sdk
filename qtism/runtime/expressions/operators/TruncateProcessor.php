@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\Truncate;
 use qtism\data\expressions\Expression;
@@ -91,7 +91,7 @@ class TruncateProcessor extends OperatorProcessor {
 		    return new QtiFloat(INF);
 		}
 		else {
-		    return new Integer(intval($operand->getValue()));
+		    return new QtiInteger(intval($operand->getValue()));
 		}
 	}
 }

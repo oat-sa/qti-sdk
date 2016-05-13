@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -19,7 +19,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 		');
 		
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(1239451);
+		$operands[] = new QtiInteger(1239451);
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
@@ -37,13 +37,13 @@ class RoundToProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(round(0.0681, 4), round($result->getValue(), 4));
 		
-		$operands[0] = new Integer(5);
+		$operands[0] = new QtiInteger(5);
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
 		$this->assertEquals(5, $result->getValue());
 		
-		$operands[0] = new Integer(0);
+		$operands[0] = new QtiInteger(0);
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
@@ -124,7 +124,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(new Integer(4), new Integer(4)));
+		$operands = new OperandsCollection(array(new QtiInteger(4), new QtiInteger(4)));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}
@@ -150,7 +150,7 @@ class RoundToProcessorTest extends QtiSmTestCase {
 				<baseValue baseType="float">3.4</baseValue>
 			</roundTo>
 		');
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new Integer(20), new Integer(30), new Integer(40)))));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(20), new QtiInteger(30), new QtiInteger(40)))));
 		$processor = new RoundToProcessor($expr, $operands);
 		$result = $processor->process();
 	}

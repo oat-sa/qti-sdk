@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
@@ -56,7 +56,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array(new RecordContainer(array('A' => new Integer(1)))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('A' => new QtiInteger(1)))));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();

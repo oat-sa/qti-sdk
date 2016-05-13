@@ -25,7 +25,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\BaseValue;
 use qtism\data\expressions\operators\RoundTo;
@@ -110,7 +110,7 @@ class EqualRoundedProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (!$varValue instanceof Integer) {
+			else if (!$varValue instanceof QtiInteger) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}

@@ -18,7 +18,7 @@ use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\runtime\pci\json\Marshaller;
 use qtism\common\datatypes\QtiBoolean;
@@ -106,7 +106,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
     
     public function testMarshallAsArray() {
         $marshaller = new Marshaller();
-        $data = $marshaller->marshall(new Integer(12), Marshaller::MARSHALL_ARRAY);
+        $data = $marshaller->marshall(new QtiInteger(12), Marshaller::MARSHALL_ARRAY);
         $this->assertEquals(12, $data['base']['integer']);
     }
     
@@ -114,7 +114,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         return array(
             array(new QtiBoolean(true), json_encode(array('base' => array('boolean' => true)))),
             array(new QtiBoolean(false), json_encode(array('base' => array('boolean' => false)))),
-            array(new Integer(1337), json_encode(array('base' => array('integer' => 1337)))),
+            array(new QtiInteger(1337), json_encode(array('base' => array('integer' => 1337)))),
             array(new QtiFloat(1337.1337), json_encode(array('base' => array('float' => 1337.1337)))),
             array(new QtiString("String!"), json_encode(array('base' => array('string' => "String!")))),
             array(new QtiString(""), json_encode(array('base' => array('string' => "")))),
@@ -168,7 +168,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // integer multiple(2, 3, 5, 7, 11, 13).
-        $container = new MultipleContainer(BaseType::INTEGER, array(new Integer(2), new Integer(3), new Integer(5), new Integer(7), new Integer(11), new Integer(13)));
+        $container = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(2), new QtiInteger(3), new QtiInteger(5), new QtiInteger(7), new QtiInteger(11), new QtiInteger(13)));
         $json = json_encode(array('list' => array('integer' => array(2, 3, 5, 7, 11, 13))));
         $returnValue[] = array($container, $json);
         

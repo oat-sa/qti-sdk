@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -21,7 +21,7 @@ class PendingResponseStoreTest extends QtiSmTestCase {
         
         $state1 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true))));
         $state2 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false))));
-        $state3 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER, new Integer(1337))));
+        $state3 = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1337))));
         
         $store = new PendingResponseStore();
         $store->addPendingResponses(new PendingResponses($state1, $itemRef1));

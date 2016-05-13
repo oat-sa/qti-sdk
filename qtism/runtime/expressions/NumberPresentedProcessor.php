@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 use qtism\data\expressions\NumberPresented;
 use qtism\data\expressions\Expression;
@@ -80,6 +80,6 @@ class NumberPresentedProcessor extends ItemSubsetProcessor {
 	        }
 	    }
 	    
-	    return new Integer($numberPresented);
+	    return new QtiInteger($numberPresented);
 	}
 }

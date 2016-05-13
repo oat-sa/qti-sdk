@@ -15,7 +15,7 @@ use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\pci\json\Unmarshaller;
 use qtism\common\datatypes\Scalar;
@@ -135,7 +135,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         return array(
             array(new QtiBoolean(true), '{ "base" : {"boolean" : true } }'),
             array(new QtiBoolean(false), '{ "base" : {"boolean" : false } }'),
-            array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
+            array(new QtiInteger(123), '{ "base" : {"integer" : 123 } }'),
             array(new QtiFloat(23.23), '{ "base" : {"float" : 23.23 } }'),
             array(new QtiFloat(6.0), '{ "base" : {"float" : 6 } }'),
             array(new QtiString('string'), '{ "base" : {"string" : "string" } }'),
@@ -184,7 +184,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "boolean" : [true, false, true, true] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::INTEGER, array(new Integer(2), new Integer(3), new Integer(5), new Integer(7), new Integer(11), new Integer(13)));
+        $container = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(2), new QtiInteger(3), new QtiInteger(5), new QtiInteger(7), new QtiInteger(11), new QtiInteger(13)));
         $json = '{ "list" : { "integer" : [2, 3, 5, 7, 11, 13] } }';
         $returnValue[] = array($container, $json);
         

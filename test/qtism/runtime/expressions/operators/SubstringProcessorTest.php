@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -95,7 +95,7 @@ class SubstringProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression(false);
 		$operands = new OperandsCollection();
 		$operands[] = new QtiString('10');
-		$operands[] = new Integer(100);
+		$operands[] = new QtiInteger(100);
 		$processor = new SubstringProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

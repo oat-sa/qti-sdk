@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
@@ -98,7 +98,7 @@ class InsideProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeTwo() {
 		$coords = new QtiCoords(Shape::RECT, array(0, 0, 5, 3));
-		$point = new Integer(10);
+		$point = new QtiInteger(10);
 		$expression = $this->createFakeExpression($point, $coords);
 		$operands = new OperandsCollection(array($point));
 		$processor = new InsideProcessor($expression, $operands);

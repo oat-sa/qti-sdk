@@ -25,7 +25,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\Scalar;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -99,6 +99,6 @@ class ProductProcessor extends OperatorProcessor {
 			}
 		}
 		
-		return (is_int($returnValue)) ? new Integer($returnValue) : new QtiFloat($returnValue);
+		return (is_int($returnValue)) ? new QtiInteger($returnValue) : new QtiFloat($returnValue);
 	}
 }

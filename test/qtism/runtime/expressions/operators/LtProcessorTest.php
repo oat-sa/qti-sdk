@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
@@ -15,22 +15,22 @@ class LtProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new QtiFloat(0.5);
-		$operands[] = new Integer(1);
+		$operands[] = new QtiInteger(1);
 		$processor = new LtProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(1);
+		$operands[] = new QtiInteger(1);
 		$operands[] = new QtiFloat(0.5);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(1);
-		$operands[] = new Integer(1);
+		$operands[] = new QtiInteger(1);
+		$operands[] = new QtiInteger(1);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
@@ -39,7 +39,7 @@ class LtProcessorTest extends QtiSmTestCase {
 	public function testNull() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(1);
+		$operands[] = new QtiInteger(1);
 		$operands[] = null;
 		$processor = new LtProcessor($expression, $operands);
 		$result = $processor->process();
@@ -49,7 +49,7 @@ class LtProcessorTest extends QtiSmTestCase {
 	public function testWrongBaseTypeOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(1);
+		$operands[] = new QtiInteger(1);
 		$operands[] = new QtiBoolean(true);
 		$processor = new LtProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -60,7 +60,7 @@ class LtProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Point(1, 2);
-		$operands[] = new Integer(2);
+		$operands[] = new QtiInteger(2);
 		$processor = new LtProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -69,8 +69,8 @@ class LtProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new RecordContainer(array('A' => new Integer(1)));
-		$operands[] = new Integer(2);
+		$operands[] = new RecordContainer(array('A' => new QtiInteger(1)));
+		$operands[] = new QtiInteger(2);
 		$processor = new LtProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -85,7 +85,7 @@ class LtProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(1), new Integer(2), new Integer(3)));
+		$operands = new OperandsCollection(array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new LtProcessor($expression, $operands);
 	}

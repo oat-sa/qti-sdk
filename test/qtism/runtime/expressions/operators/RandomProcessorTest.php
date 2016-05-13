@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\common\RecordContainer;
@@ -81,7 +81,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$processor = new RandomProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -90,7 +90,7 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new RecordContainer(array('A' => new Integer(1)));
+		$operands[] = new RecordContainer(array('A' => new QtiInteger(1)));
 		$processor = new RandomProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

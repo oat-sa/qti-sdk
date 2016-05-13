@@ -8,7 +8,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -20,11 +20,11 @@ class MatchProcessorTest extends QtiSmTestCase {
 	
 	public function testScalar() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(10)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(10)));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->assertTrue($processor->process()->getValue() === true);
 		
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(11)));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(11)));
 		$processor->setOperands($operands);
 		$this->assertFalse($processor->process()->getValue() === true);
 	}
@@ -32,15 +32,15 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testContainer() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(5), new Integer(4), new Integer(3), new Integer(2), new Integer(1)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(5), new QtiInteger(4), new QtiInteger(3), new QtiInteger(2), new QtiInteger(1)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)));
 		$processor = new MatchProcessor($expression, $operands);
 		
 		$this->assertTrue($processor->process()->getValue() === true);
 		
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(5), new Integer(4), new Integer(3), new Integer(2), new Integer(1)));
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(6), new Integer(7), new Integer(8), new Integer(5)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(5), new QtiInteger(4), new QtiInteger(3), new QtiInteger(2), new QtiInteger(1)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(6), new QtiInteger(7), new QtiInteger(8), new QtiInteger(5)));
 		$processor->setOperands($operands);
 		$this->assertFalse($processor->process()->getValue() === true);
 	}
@@ -97,7 +97,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypesScalar() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Integer(15);
+		$operands[] = new QtiInteger(15);
 		$operands[] = new QtiString('String!');
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -107,7 +107,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypesContainer() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20), new Integer(30), new Integer(40)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40)));
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.0), new QtiFloat(20.0), new QtiFloat(30.0), new QtiFloat(40.0)));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -156,14 +156,14 @@ class MatchProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(15)));
+		$operands = new OperandsCollection(array(new QtiInteger(15)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MatchProcessor($expression, $operands);
 	}
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(25), new Integer(25), new Integer(25)));
+		$operands = new OperandsCollection(array(new QtiInteger(25), new QtiInteger(25), new QtiInteger(25)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MatchProcessor($expression, $operands);
 	}
@@ -178,7 +178,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testNullContainer() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(20)));
 		$operands[] = new MultipleContainer(BaseType::INTEGER);
 		$processor = new MatchProcessor($expression, $operands);
 		$this->assertSame(null, $processor->process());

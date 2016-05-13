@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\RecordContainer;
@@ -52,7 +52,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEmpty() {
 		$expression = $this->getFakeExpression();
-		$operands = new OperandsCollection(array(new Integer(0)));
+		$operands = new OperandsCollection(array(new QtiInteger(0)));
 		
 		$processor = new IsNullProcessor($expression, $operands);
 		$this->assertFalse($processor->process()->getValue());
@@ -62,7 +62,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new Integer(-1);
+		$operands[] = new QtiInteger(-1);
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
@@ -70,7 +70,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(25)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(25)));
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
@@ -78,7 +78,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($processor->process()->getValue());
 		
 		$operands->reset();
-		$operands[] = new RecordContainer(array('a' => new QtiBoolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new Integer(24), 'e' => new QtiFloat(23.3)));
+		$operands[] = new RecordContainer(array('a' => new QtiBoolean(true),  'b' => null,  'c' => new Point(1, 2), 'd' => new QtiInteger(24), 'e' => new QtiFloat(23.3)));
 		$this->assertFalse($processor->process()->getValue());
 	}
 	
@@ -94,7 +94,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	public function testMoreThanNeededOperands() {
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		
-		$operands = new OperandsCollection(array(new Integer(25), null));
+		$operands = new OperandsCollection(array(new QtiInteger(25), null));
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);
 		$result = $processor->process();

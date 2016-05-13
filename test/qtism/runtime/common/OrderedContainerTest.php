@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\Uri;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
@@ -42,7 +42,7 @@ class OrderedContainerTest extends QtiSmTestCase {
 	public function equalsValidProvider() {
 		return array(
 			array(new OrderedContainer(BaseType::INTEGER), new OrderedContainer(BaseType::INTEGER)),
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(20)))),
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20)))),
 			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu')))),
 			array(new OrderedContainer(BaseType::PAIR, array(new Pair('abc', 'def'))), new OrderedContainer(BaseType::PAIR, array(new Pair('def', 'abc'))))
 		);
@@ -50,7 +50,7 @@ class OrderedContainerTest extends QtiSmTestCase {
 	
 	public function equalsInvalidProvider() {
 		return array(
-			array(new OrderedContainer(BaseType::INTEGER, array(new Integer(20))), new OrderedContainer(BaseType::INTEGER, array(new Integer(30)))),
+			array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(20))), new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(30)))),
 			array(new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.tao.lu'))), new OrderedContainer(BaseType::URI, array(new Uri('http://www.tao.lu'), new Uri('http://www.taotesting.com')))),
 			array(new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('abc', 'def'))), new OrderedContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('def', 'abc')))),
 		);

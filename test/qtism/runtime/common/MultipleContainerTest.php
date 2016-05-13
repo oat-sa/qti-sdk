@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\Value;
 use qtism\common\datatypes\Point;
@@ -20,7 +20,7 @@ class MultipleContainerTest extends QtiSmTestCase {
 	}
 	
 	public function testCreationWithValues() {
-		$data = array(new Integer(10), new Integer(20), new Integer(20), new Integer(30), new Integer(40), new Integer(50));
+		$data = array(new QtiInteger(10), new QtiInteger(20), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40), new QtiInteger(50));
 		$container = new MultipleContainer(BaseType::INTEGER, $data);
 		$this->assertEquals(6, count($container));
 		$this->assertEquals(BaseType::INTEGER, $container->getBaseType());
@@ -100,8 +100,8 @@ class MultipleContainerTest extends QtiSmTestCase {
 	}
 	
 	public function testEquals() {
-		$c1 = new MultipleContainer(BaseType::INTEGER, array(new Integer(5), new Integer(4), new Integer(3), new Integer(2), new Integer(1)));
-		$c2 = new MultipleContainer(BaseType::INTEGER, array(new Integer(1), new Integer(6), new Integer(7), new Integer(8), new Integer(5)));
+		$c1 = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(5), new QtiInteger(4), new QtiInteger(3), new QtiInteger(2), new QtiInteger(1)));
+		$c2 = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(6), new QtiInteger(7), new QtiInteger(8), new QtiInteger(5)));
 		$this->assertFalse($c1->equals($c2));
 	}
 	
