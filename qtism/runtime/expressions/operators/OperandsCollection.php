@@ -26,7 +26,7 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\Boolean;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
@@ -86,7 +86,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if ($v instanceof Container && $v->isNull()) {
 				return true;
 			}
-			else if (($v instanceof String && $v->getValue() === '') || is_null($v)) {
+			else if (($v instanceof QtiString && $v->getValue() === '') || is_null($v)) {
 				return true;
 			}
 		}
@@ -198,7 +198,7 @@ class OperandsCollection extends AbstractCollection implements Stack {
 			if (($v instanceof MultipleContainer || $v instanceof OrderedContainer) && ($v->isNull() || $v->getBaseType() !== BaseType::STRING)) {
 				return false;
 			}
-			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!$v instanceof String || $v->getValue() === '')) {
+			else if (!$v instanceof MultipleContainer && !$v instanceof OrderedContainer && (!$v instanceof QtiString || $v->getValue() === '')) {
 				return false;
 			}
 		}

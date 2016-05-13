@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -19,7 +19,7 @@ class MinProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Integer(-10);
-		$operands[] = new String('String');
+		$operands[] = new QtiString('String');
 		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(10.0)));
 		$processor = new MinProcessor($expression, $operands);
 		$result = $processor->process();

@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LcmProcessor;
@@ -34,7 +34,7 @@ class LcmProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new String('String!'))), new Integer(10)));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new QtiString('String!'))), new Integer(10)));
 		$processor = new LcmProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();

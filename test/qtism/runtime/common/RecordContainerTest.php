@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
@@ -15,7 +15,7 @@ class RecordContainerTest extends QtiSmTestCase {
 		$record = new RecordContainer();
 		$this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $record);
 		
-		$record = new RecordContainer(array('key1' => new Integer(1), 'key2' => new String('a string'), 'key3' => new Point(10, 10)));
+		$record = new RecordContainer(array('key1' => new Integer(1), 'key2' => new QtiString('a string'), 'key3' => new Point(10, 10)));
 		$this->assertEquals(3, count($record));
 		$this->assertEquals($record['key1']->getValue(), 1);
 		$this->assertEquals($record['key2']->getValue(), 'a string');
@@ -43,13 +43,13 @@ class RecordContainerTest extends QtiSmTestCase {
 	public function testInvalidUseOne() {
 		$this->setExpectedException('\\RuntimeException');
 		$record = new RecordContainer();
-		$record[] = new String('string');
+		$record[] = new QtiString('string');
 	}
 	
 	public function testInvalidUseTwo() {
 		$this->setExpectedException('\\RuntimeException');
 		$record = new RecordContainer();
-		$record[111] = new String('string');
+		$record[111] = new QtiString('string');
 	}
 	
 	public function testInvalidUseThree() {

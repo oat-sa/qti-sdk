@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\data\expressions\MapResponse;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -265,19 +265,19 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string response provided. Expected is the same result as above...
-        $state['response1'] = new String('');
+        $state['response1'] = new QtiString('');
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
         
         // Non empty string (with match). Expected is 1.
-        $state['response1'] = new String('Correct');
+        $state['response1'] = new QtiString('Correct');
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1, $result->getValue());
         
         // Non empty string (without match). Expected is 1.
-        $state['response1'] = new String('Incorrect');
+        $state['response1'] = new QtiString('Incorrect');
         $result = $mapResponseProcessor->process();
         $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(0, $result->getValue());
@@ -306,7 +306,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string provided, so we expect the same result as with null.
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
@@ -329,22 +329,22 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String(''), new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('Correct'), new String('Correct')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('Correct')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('Correct'), new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(0, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String(''), new String('Correct'), null));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('Correct'), null));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(0, $result->getValue());
@@ -373,7 +373,7 @@ class MapResponseProcessorTest extends QtiSmTestCase {
         $this->assertEquals(-1, $result->getValue());
         
         // Empty string provided, so we expect the same result as with null.
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
@@ -396,32 +396,32 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String(''), new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('Correct')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('correct')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('Correct'), new String('correct')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('correct')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String('Correct'), new String('')));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString('Correct'), new QtiString('')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(0, $result->getValue());
         
-        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new String(''), new String('correct'), null));
+        $state['response1'] = new MultipleContainer(BaseType::STRING, array(new QtiString(''), new QtiString('correct'), null));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(0, $result->getValue());
@@ -446,13 +446,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
         // Should just "touch" the lower bound...
-        $state['RESPONSE'] = new String('incorrect_1');
+        $state['RESPONSE'] = new QtiString('incorrect_1');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1.0, $result->getValue());
         
         // Should go below the lower bound because when using a single cardinality value, the lower bound is ignored (only used with container mapping)...
-        $state['RESPONSE'] = new String('incorrect_2');
+        $state['RESPONSE'] = new QtiString('incorrect_2');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-2.0, $result->getValue());
@@ -477,13 +477,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
         // Should just "touch" the lower bound...
-        $state['RESPONSE'] = new String('incorrect_1');
+        $state['RESPONSE'] = new QtiString('incorrect_1');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1.0, $result->getValue());
         
         // Should go below the lower bound because when using a single cardinality value, the lower bound is ignored (only used with container mapping)...
-        $state['RESPONSE'] = new String('incorrect_2');
+        $state['RESPONSE'] = new QtiString('incorrect_2');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-2.0, $result->getValue());
@@ -508,13 +508,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
         // Should just "touch" the lower bound...
-        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new String('incorrect_1')));
+        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('incorrect_1')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1.0, $result->getValue());
         
         // Lower bound is the limit as we are mapping a container (multiple cardinality string).
-        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new String('incorrect_2')));
+        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('incorrect_2')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(-1.0, $result->getValue());
@@ -539,13 +539,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
         // Should just "touch" the upperBound...
-        $state['RESPONSE'] = new String('correct_1');
+        $state['RESPONSE'] = new QtiString('correct_1');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1.0, $result->getValue());
         
         // Should go above the upper bound because when using a single cardinality value, the upper bound is ignored (only used with container mapping)...
-        $state['RESPONSE'] = new String('correct_2');
+        $state['RESPONSE'] = new QtiString('correct_2');
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(2.0, $result->getValue());
@@ -570,13 +570,13 @@ class MapResponseProcessorTest extends QtiSmTestCase {
 		$mapResponseProcessor->setState($state);
 		
         // Should just "touch" the upper bound...
-        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new String('correct_1')));
+        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct_1')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1.0, $result->getValue());
         
         // Upper bound is the limit as we are mapping a container (multiple cardinality string).
-        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new String('correct_2')));
+        $state['RESPONSE'] = new MultipleContainer(BaseType::STRING, array(new QtiString('correct_2')));
 		$result = $mapResponseProcessor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
         $this->assertEquals(1.0, $result->getValue());

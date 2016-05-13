@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\Point;
@@ -65,11 +65,11 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertSame(null, $result);
 		
 		// Any sub-expressions evaluating to NULL are ignored.
-		$operands = new OperandsCollection(array(null, new String('String1'), new OrderedContainer(BaseType::STRING, array(new String('String2'), null)), new String('String3')));
+		$operands = new OperandsCollection(array(null, new QtiString('String1'), new OrderedContainer(BaseType::STRING, array(new QtiString('String2'), null)), new QtiString('String3')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		
-		$comparison = new OrderedContainer(BaseType::STRING, array(new String('String1'), new String('String2'), null, new String('String3')));
+		$comparison = new OrderedContainer(BaseType::STRING, array(new QtiString('String1'), new QtiString('String2'), null, new QtiString('String3')));
 		$this->assertTrue($result->equals($comparison));
 	}
 	

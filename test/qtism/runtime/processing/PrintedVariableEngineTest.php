@@ -5,7 +5,7 @@ use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
@@ -58,8 +58,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new OutcomeVariable('nullValue', Cardinality::SINGLE, BaseType::BOOLEAN, null));
         
         // Scalar values.
-        $state->setVariable(new OutcomeVariable('nonEmptyString', Cardinality::SINGLE, BaseType::STRING, new String('Non Empty String')));
-        $state->setVariable(new OutcomeVariable('emptyString', Cardinality::SINGLE, BaseType::STRING, new String('')));
+        $state->setVariable(new OutcomeVariable('nonEmptyString', Cardinality::SINGLE, BaseType::STRING, new QtiString('Non Empty String')));
+        $state->setVariable(new OutcomeVariable('emptyString', Cardinality::SINGLE, BaseType::STRING, new QtiString('')));
         $state->setVariable(new TemplateVariable('positiveInteger', Cardinality::SINGLE, BaseType::INTEGER, new Integer(25)));
         $state->setVariable(new TemplateVariable('zeroInteger', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
         $state->setVariable(new TemplateVariable('negativeInteger', Cardinality::SINGLE, BaseType::INTEGER, new Integer(-25)));
@@ -83,7 +83,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $state->setVariable(new TemplateVariable('multipleIntegerSingle', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(10)))));
         $state->setVariable(new TemplateVariable('multipleInteger', Cardinality::MULTIPLE, BaseType::INTEGER, new MultipleContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20), new Integer(-1)))));
         $state->setVariable(new OutcomeVariable('multipleFloat', Cardinality::MULTIPLE, BaseType::FLOAT, new MultipleContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0), new Float(-1.0)))));
-        $state->setVariable(new OutcomeVariable('multipleString', Cardinality::MULTIPLE, BaseType::STRING, new MultipleContainer(BaseType::STRING, array(new String('Ta'), new String('Daaa'), new String('h'), new String('')))));
+        $state->setVariable(new OutcomeVariable('multipleString', Cardinality::MULTIPLE, BaseType::STRING, new MultipleContainer(BaseType::STRING, array(new QtiString('Ta'), new QtiString('Daaa'), new QtiString('h'), new QtiString('')))));
         $state->setVariable(new OutcomeVariable('multipleBoolean', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)))));
         $state->setVariable(new OutcomeVariable('multipleURI', Cardinality::MULTIPLE, BaseType::URI, new MultipleContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.rdfabout.com')))));
         $state->setVariable(new OutcomeVariable('multipleIdentifier', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('9thing'), new Identifier('woot-woot')))));
@@ -97,7 +97,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         // -- Ordered containers, no value for the 'index' attribute.
         $state->setVariable(new TemplateVariable('orderedInteger', Cardinality::ORDERED, BaseType::INTEGER, new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(20), new Integer(-1)))));
         $state->setVariable(new OutcomeVariable('orderedFloat', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0), new Float(-1.0)))));
-        $state->setVariable(new OutcomeVariable('orderedString', Cardinality::ORDERED, BaseType::STRING, new OrderedContainer(BaseType::STRING, array(new String('Ta'), new String('Daaa'), new String('h'), new String('')))));
+        $state->setVariable(new OutcomeVariable('orderedString', Cardinality::ORDERED, BaseType::STRING, new OrderedContainer(BaseType::STRING, array(new QtiString('Ta'), new QtiString('Daaa'), new QtiString('h'), new QtiString('')))));
         $state->setVariable(new OutcomeVariable('orderedBoolean', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)))));
         $state->setVariable(new OutcomeVariable('orderedURI', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.rdfabout.com')))));
         $state->setVariable(new OutcomeVariable('orderedIdentifier', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('9thing'), new Identifier('woot-woot')))));
@@ -113,9 +113,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         // The field is extracted from a variable ref.
         $state->setVariable(new OutcomeVariable('fieldVariableRefInteger', Cardinality::SINGLE, BaseType::INTEGER, new Integer(1)));
         // Set up a wrong variable reference for 'index' value.
-        $state->setVariable(new OutcomeVariable('fieldVariableRefString', Cardinality::SINGLE, BaseType::STRING, new String('index')));
+        $state->setVariable(new OutcomeVariable('fieldVariableRefString', Cardinality::SINGLE, BaseType::STRING, new QtiString('index')));
         $state->setVariable(new OutcomeVariable('orderedIndexedFloat', Cardinality::ORDERED, BaseType::FLOAT, new OrderedContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0), new Float(-1.0)))));
-        $state->setVariable(new OutcomeVariable('orderedIndexedString', Cardinality::ORDERED, BaseType::STRING, new OrderedContainer(BaseType::STRING, array(new String('Ta'), new String('Daaa'), new String('h'), new String('')))));
+        $state->setVariable(new OutcomeVariable('orderedIndexedString', Cardinality::ORDERED, BaseType::STRING, new OrderedContainer(BaseType::STRING, array(new QtiString('Ta'), new QtiString('Daaa'), new QtiString('h'), new QtiString('')))));
         $state->setVariable(new OutcomeVariable('orderedIndexedBoolean', Cardinality::ORDERED, BaseType::BOOLEAN, new OrderedContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(true)))));
         $state->setVariable(new OutcomeVariable('orderedIndexedURI', Cardinality::ORDERED, BaseType::URI, new OrderedContainer(BaseType::URI, array(new Uri('http://www.taotesting.com'), new Uri('http://www.rdfabout.com')))));
         $state->setVariable(new OutcomeVariable('orderedIndexedIdentifier', Cardinality::ORDERED, BaseType::IDENTIFIER, new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('9thing'), new Identifier('woot-woot')))));
@@ -126,7 +126,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         
         // -- Record containers.
         $state->setVariable(new OutcomeVariable('recordSingle', Cardinality::RECORD, -1, new RecordContainer(array('a' => new Float(25.3)))));
-        $state->setVariable(new OutcomeVariable('recordMultiple', Cardinality::RECORD, -1, new RecordContainer(array('a' => new Integer(-3), 'b' => new Float(3.3), 'c' => new Boolean(true), 'd' => new Boolean(false), 'e' => new String('string'), 'f' => new Uri('http://www.rdfabout.com'), 'g' => new Duration('PT3M'), 'h' => new Pair('A', 'B'), 'i' => new DirectedPair('C', 'D')))));
+        $state->setVariable(new OutcomeVariable('recordMultiple', Cardinality::RECORD, -1, new RecordContainer(array('a' => new Integer(-3), 'b' => new Float(3.3), 'c' => new Boolean(true), 'd' => new Boolean(false), 'e' => new QtiString('string'), 'f' => new Uri('http://www.rdfabout.com'), 'g' => new Duration('PT3M'), 'h' => new Pair('A', 'B'), 'i' => new DirectedPair('C', 'D')))));
         $state->setVariable(new TemplateVariable('recordEmpty', Cardinality::RECORD, -1, new RecordContainer()));
         $state->setVariable(new OutcomeVariable('recordContainsNull', Cardinality::RECORD, -1, new RecordContainer(array('a' => new Integer(-3), 'b' => null, 'c' => new Boolean(true)))));
         

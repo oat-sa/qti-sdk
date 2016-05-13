@@ -7,7 +7,7 @@ use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
@@ -76,7 +76,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
 	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('txt1'), new Identifier('txt2')));
-	    $operands[] = new MultipleContainer(BaseType::STRING, array(new String('txt1'), new String('txt2')));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('txt1'), new QtiString('txt2')));
 	    $processor = new MatchProcessor($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 	    $processor->process();
@@ -86,7 +86,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
 	    $operands[] = new MultipleContainer(BaseType::INT_OR_IDENTIFIER, array(new IntOrIdentifier('txt1'), new IntOrIdentifier('txt2')));
-	    $operands[] = new MultipleContainer(BaseType::STRING, array(new String('txt1'), new String('txt2')));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('txt1'), new QtiString('txt2')));
 	    $processor = new MatchProcessor($expression, $operands);
 	    
 	    // Unfortunately, INT_OR_IDENTIFIER cannot be considered as compliant with STRING.
@@ -98,7 +98,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new Integer(15);
-		$operands[] = new String('String!');
+		$operands[] = new QtiString('String!');
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -117,7 +117,7 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypesMixed() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new String('String!');
+		$operands[] = new QtiString('String!');
 		$operands[] = new OrderedContainer(BaseType::FLOAT, array(new Float(10.0), new Float(20.0)));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -127,8 +127,8 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentCardinalitiesOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new String('String!');
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('String!')));
+		$operands[] = new QtiString('String!');
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('String!')));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -137,8 +137,8 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentCardinalitiesTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('String!')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('String!')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('String!')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('String!')));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -147,8 +147,8 @@ class MatchProcessorTest extends QtiSmTestCase {
 	public function testDifferentCardinalitiesThree() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('String!')));
-		$operands[] = new RecordContainer(array('entry1' => new String('String!')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('String!')));
+		$operands[] = new RecordContainer(array('entry1' => new QtiString('String!')));
 		$processor = new MatchProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

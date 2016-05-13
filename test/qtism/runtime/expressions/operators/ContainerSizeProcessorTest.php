@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\Float;
 
@@ -68,7 +68,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase {
 	public function testSize() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('String!')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('String!')));
 		$processor = new ContainerSizeProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertEquals(1, $result->getValue());

@@ -29,7 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
-class Identifier extends String {
+class Identifier extends QtiString {
     
     protected function checkType($value) {
         if (is_string($value) !== true) {

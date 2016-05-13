@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\common\RecordContainer;
@@ -200,7 +200,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase {
 	public function wrongBaseTypeProvider() {
 		return array(
 			array(array(new MultipleContainer(BaseType::POINT, array(new Point(1, 2))))),
-			array(array(new OrderedContainer(BaseType::STRING, array(new String('String!')))))		
+			array(array(new OrderedContainer(BaseType::STRING, array(new QtiString('String!')))))		
 		);
 	}
 	

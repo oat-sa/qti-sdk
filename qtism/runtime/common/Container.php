@@ -28,7 +28,7 @@ use qtism\common\datatypes\File;
 
 use qtism\common\datatypes\Boolean;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Point;
@@ -234,7 +234,7 @@ class Container extends AbstractCollection implements Comparable {
 			if (is_null($d) === true) {
 			    $strings[] = 'NULL';
 			}
-			else if ($d instanceof String) {
+			else if ($d instanceof QtiString) {
 				$strings[] = "'${d}'";
 			}
 			else if ($d instanceof Boolean) {

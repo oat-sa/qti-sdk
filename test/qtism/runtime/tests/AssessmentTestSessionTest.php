@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
@@ -36,7 +36,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 		
 		$sessionManager = new SessionManager();
 		$this->state = $sessionManager->createAssessmentTestSession($xml->getDocumentComponent());
-		$this->state['OUTCOME1'] = new String('String!');
+		$this->state['OUTCOME1'] = new QtiString('String!');
 	}
 	
 	public function tearDown() {
@@ -1416,7 +1416,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $session->beginTestSession();
 	    
 	    $this->assertEquals('I will be preserved!', $session['PRESERVED']->getValue());
-	    $session['PRESERVED'] = new String('I am still preserved!');
+	    $session['PRESERVED'] = new QtiString('I am still preserved!');
 	    
 	    $this->assertEquals(0, $session['NOTPRESERVED']->getValue());
 

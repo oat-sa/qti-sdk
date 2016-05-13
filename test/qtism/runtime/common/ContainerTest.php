@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
@@ -107,8 +107,8 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Integer(25)),
 			array(new Float(25.3)),
 			array(new Integer(0)),
-			array(new String('')),
-			array(new String('super')),
+			array(new QtiString('')),
+			array(new QtiString('super')),
 			array(new Boolean(true)),
 			array(new Boolean(false)),
 			array(new Duration('P1D')),
@@ -132,9 +132,9 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Container(array(new Integer(14), new Integer(13))), new Container(array(new Integer(13), new Integer(14)))),
 			array(new Container(array(null)), new Container(array(null))),
 			array(new Container(array(new Integer(0))), new Container(array(new Integer(0)))),
-			array(new Container(array(new String('string'))), new Container(array(new String('string')))),
+			array(new Container(array(new QtiString('string'))), new Container(array(new QtiString('string')))),
 			array(new Container(array(new Float(14.5))), new Container(array(new Float(14.5)))),
-			array(new Container(array(new String('string1'), new String('string2'))), new Container(array(new String('string1'), new String('string2')))),
+			array(new Container(array(new QtiString('string1'), new QtiString('string2'))), new Container(array(new QtiString('string1'), new QtiString('string2')))),
 			array(new Container(), new Container()),
 		);
 	}
@@ -142,7 +142,7 @@ class ContainerTest extends QtiSmTestCase {
 	public function invalidEqualsPrimitiveProvider() {
 		return array(
 			array(new Container(array(new Integer(14))), new Container(array(new Integer(13)))),
-			array(new Container(array(new Integer(14))), new Container(array(new String('string')))),
+			array(new Container(array(new Integer(14))), new Container(array(new QtiString('string')))),
 			array(new Container(array(null)), new Container(array(new Integer(0)))),
 			array(new Container(), new Container(array(new Integer(13)))),
 			array(new Container(array(new Boolean(true))), new Boolean(true)),
@@ -155,16 +155,16 @@ class ContainerTest extends QtiSmTestCase {
 			array(new Container(array(new Float(14.3))), new Float(14.3), 1),
 			array(new Container(array(new Boolean(true))), new Boolean(true), 1),
 			array(new Container(array(new Boolean(false))), new Boolean(false), 1),
-			array(new Container(array(new String('string'))), new String('string'), 1),
+			array(new Container(array(new QtiString('string'))), new QtiString('string'), 1),
 			array(new Container(array(new Integer(0))), new Integer(0), 1),
 			array(new Container(array(null)), null, 1),
-			array(new Container(array(new Integer(15), new String('string'), new Integer(15))), new Integer(15), 2),
+			array(new Container(array(new Integer(15), new QtiString('string'), new Integer(15))), new Integer(15), 2),
 			array(new Container(array(new Float(14.3), new Integer(143), new Float(14.3))), new Float(14.3),  2),
 			array(new Container(array(new Boolean(true), new Boolean(false), new Boolean(false))), new Boolean(false), 2),
-			array(new Container(array(new String('string'), new Integer(2), new String('str'), new String('string'), new String('string'))), new String('string'), 3),
-			array(new Container(array(new String('null'), null)), null, 1),
+			array(new Container(array(new QtiString('string'), new Integer(2), new QtiString('str'), new QtiString('string'), new QtiString('string'))), new QtiString('string'), 3),
+			array(new Container(array(new QtiString('null'), null)), null, 1),
 			array(new Container(array(new Integer(14), new Integer(15), new Integer(16))), true, 0),
-			array(new Container(array(new String('string'), new Integer(1), new Boolean(true), new Float(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
+			array(new Container(array(new QtiString('string'), new Integer(1), new Boolean(true), new Float(14.3), new Point(20, 20), new Point(20, 21))), new Point(20, 20), 1)
 		);
 	}
 	
@@ -192,7 +192,7 @@ class ContainerTest extends QtiSmTestCase {
 		$container[] = new Integer(20);
 		$container[] = new Float(20.1);
 		$container[] = new Boolean(true);
-		$container[] = new String('String!');
+		$container[] = new QtiString('String!');
 		
 		$clone = clone $container;
 		$this->assertFalse($clone === $container);
@@ -229,7 +229,7 @@ class ContainerTest extends QtiSmTestCase {
 		$returnValue[] = array(new Container(), '[]');
 		$returnValue[] = array(new Container(array(new Integer(10))), '[10]');
 		$returnValue[] = array(new Container(array(new Boolean(true), new Boolean(false))), '[true; false]');
-		$returnValue[] = array(new Container(array(new Duration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new DirectedPair('C', 'D'), new String('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
+		$returnValue[] = array(new Container(array(new Duration('P2DT2S'), new Point(10, 15), new Pair('A', 'B'), new DirectedPair('C', 'D'), new QtiString('String!'))), '[P2DT2S; 10 15; A B; C D; \'String!\']');
 		
 		return $returnValue;
 	}

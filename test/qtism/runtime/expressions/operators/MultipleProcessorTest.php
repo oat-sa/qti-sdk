@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\runtime\expressions\operators\MultipleProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -64,9 +64,9 @@ class MultipleProcessorTest extends QtiSmTestCase {
 	public function testScalar() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new String('String1');
-		$operands[] = new String('String2');
-		$operands[] = new String('String3');
+		$operands[] = new QtiString('String1');
+		$operands[] = new QtiString('String2');
+		$operands[] = new QtiString('String3');
 		$processor = new MultipleProcessor($expression, $operands);
 		
 		$result = $processor->process();
@@ -76,7 +76,7 @@ class MultipleProcessorTest extends QtiSmTestCase {
 		$this->assertEquals('String2', $result[1]->getValue());
 		$this->assertEquals('String3', $result[2]->getValue());
 		
-		$operands = new OperandsCollection(array(new String('String!')));
+		$operands = new OperandsCollection(array(new QtiString('String!')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $result);
@@ -117,7 +117,7 @@ class MultipleProcessorTest extends QtiSmTestCase {
 	    $operands = new OperandsCollection();
 	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier1'), new Identifier('identifier2')));
 	    $operands[] = new Identifier('identifier3');
-	    $operands[] = new MultipleContainer(BaseType::STRING, array(new String('string1'), new String('string2')));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('string1'), new QtiString('string2')));
 	    $operands[] = null;
 	    $processor = new MultipleProcessor($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

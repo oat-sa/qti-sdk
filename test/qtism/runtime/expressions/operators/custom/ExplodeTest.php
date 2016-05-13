@@ -5,7 +5,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\custom\Explode;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -26,7 +26,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEnoughOperandsTwo() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('Hello-World!')));
+	    $operands = new OperandsCollection(array(new QtiString('Hello-World!')));
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 	                    "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, 1 given.",
 	                    OperatorProcessingException::NOT_ENOUGH_OPERANDS);
@@ -46,7 +46,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new String('String!'))), new String('Hey!')));
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new QtiString('String!'))), new QtiString('Hey!')));
 		$processor = new Explode($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 		                            "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator only accepts operands with single cardinality.",
@@ -66,7 +66,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testExplodeOne() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('-'), new String('Hello-World-This-Is-Me')));
+	    $operands = new OperandsCollection(array(new QtiString('-'), new QtiString('Hello-World-This-Is-Me')));
 	    $processor = new Explode($expression, $operands);
 	    $result = $processor->process();
 	    
@@ -78,7 +78,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	public function testExplodeTwo() {
 	    // Specific case, the delimiter is not found in the original string.
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('-'), new String('Hello World!')));
+	    $operands = new OperandsCollection(array(new QtiString('-'), new QtiString('Hello World!')));
 	    $processor = new Explode($expression, $operands);
 	    $result = $processor->process();
 	    
@@ -89,7 +89,7 @@ class ExplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testExplodeThree() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String(' '), new String('Hello World!')));
+	    $operands = new OperandsCollection(array(new QtiString(' '), new QtiString('Hello World!')));
 	    $processor = new Explode($expression, $operands);
 	    $result = $processor->process();
 	     

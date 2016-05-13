@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;

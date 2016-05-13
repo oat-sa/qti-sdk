@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Point;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -17,7 +17,7 @@ class IsNullProcessorTest extends QtiSmTestCase {
 	
 	public function testWithEmptyString() {
 		$operands = new OperandsCollection();
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		
 		$expression = $this->getFakeExpression();
 		$processor = new IsNullProcessor($expression, $operands);

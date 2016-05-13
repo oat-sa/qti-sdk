@@ -1,5 +1,5 @@
 <?php
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 use qtism\common\datatypes\Float;
 
@@ -52,7 +52,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$operands[] = new Boolean(true);
 		$operands[] = new Float(0.4);
-		$operands[] = new String('string');
+		$operands[] = new QtiString('string');
 		$operands[] = new Duration('P1D');
 		$this->assertFalse($operands->containsNull());
 		
@@ -69,10 +69,10 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[0][] = new Float(15.3);
 		$this->assertFalse($operands->containsNull());
 		
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertTrue($operands->containsNull());
 		
-		$operands[1] = new String('string!');
+		$operands[1] = new QtiString('string!');
 		$this->assertFalse($operands->containsNull());
 		
 		$operands[] = new RecordContainer();
@@ -90,7 +90,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Float(15.3);
 		$this->assertTrue($operands->exclusivelyNumeric());
 		
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertFalse($operands->exclusivelyNumeric());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyNumeric());
@@ -129,7 +129,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Integer(15);
 		$this->assertTrue($operands->exclusivelyInteger());
 		
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertFalse($operands->exclusivelyInteger());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyInteger());
@@ -162,7 +162,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(3, 4);
 		$this->assertTrue($operands->exclusivelyPoint());
 	
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertFalse($operands->exclusivelyPoint());
 		unset($operands[2]);
 		$this->assertTrue($operands->exclusivelyPoint());
@@ -236,10 +236,10 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new Point(1, 1);
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertTrue($operands->anythingButRecord());
 		
-		$operands[] = new String('string');
+		$operands[] = new QtiString('string');
 		$this->assertTrue($operands->anythingButRecord());
 		
 		$operands[] = new Boolean(true);
@@ -281,7 +281,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 		
-		$operands[] = new String('');
+		$operands[] = new QtiString('');
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		unset($operands[5]);
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
@@ -468,7 +468,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 		$operands->reset();
 		$operands[] = $rec;
-		$operands[] = new String('String!');
+		$operands[] = new QtiString('String!');
 		$this->assertFalse($operands->exclusivelyRecord());
 		
 	}
@@ -496,7 +496,7 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 	
 		$operands->reset();
 		$operands[] = $mult;
-		$operands[] = new String('String!');
+		$operands[] = new QtiString('String!');
 		$this->assertFalse($operands->exclusivelyOrdered());
 		
 		$operands->reset();

@@ -23,7 +23,7 @@
  */
 namespace qtism\runtime\expressions\operators\custom;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\CustomOperatorProcessor;
@@ -83,7 +83,7 @@ class Explode extends CustomOperatorProcessor {
 	    
 	    $ordered = new OrderedContainer(BaseType::STRING);
 	    foreach ($strings as $str) {
-	        $ordered[] = new String($str);
+	        $ordered[] = new QtiString($str);
 	    }
 	    
 	    return $ordered;

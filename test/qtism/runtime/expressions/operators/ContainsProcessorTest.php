@@ -6,7 +6,7 @@ use qtism\common\datatypes\Float;
 
 use qtism\common\datatypes\Integer;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 use qtism\runtime\common\RecordContainer;
 
@@ -27,8 +27,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		
 		// For ordered containers [A,B,C] contains [B,C]
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('B'), new String('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('B'), new QtiString('C')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -36,16 +36,16 @@ class ContainsProcessorTest extends QtiSmTestCase {
 		
 		// [A,B,C] does not contain [C,B]
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('C'), new String('B')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('C'), new QtiString('B')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 		
 		// [A,B,C] does not contain [E,F]
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('E'), new String('F')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('E'), new QtiString('F')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
@@ -56,8 +56,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// For ordered containers [A,B,C] contains [A,B]
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -65,8 +65,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// [A,B,C] does not contain [B,A]
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('B'), new String('A')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('B'), new QtiString('A')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
@@ -77,8 +77,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// For ordered containers [A,B,C,D] contains [B]
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('B')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('B')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -86,16 +86,16 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// [A,B,C,D] does not contain [E]
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('E')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('E')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 		
 		// [A,B,C,D] contains [B,C]
 		$operands->reset();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('B'), new String('C')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('B'), new QtiString('C')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
@@ -106,8 +106,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// For multiple containers [A,B,C] contains [B,C]
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('B'), new String('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('B'), new QtiString('C')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -115,16 +115,16 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// [A,B,C] contains [C,B]
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('C'), new String('B')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('C'), new QtiString('B')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
 	
 		// [A,B,C] does not contain [E,F]
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('E'), new String('F')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('E'), new QtiString('F')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
@@ -135,8 +135,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// For ordered containers [A,B,C] contains [A,B]
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -144,8 +144,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// [A,B,C] contains [B,A]
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('B'), new String('A')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('B'), new QtiString('A')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
@@ -156,8 +156,8 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// For ordered containers [A,B,C,D] contains [B]
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('B')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('B')));
 		$processor = new ContainsProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
@@ -165,16 +165,16 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	
 		// [A,B,C,D] does not contain [E]
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('E')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('E')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertFalse($result->getValue());
 	
 		// [A,B,C,D] contains [A,D]
 		$operands->reset();
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('B'), new String('C'), new String('D')));
-		$operands[] = new MultipleContainer(BaseType::STRING, array(new String('A'), new String('D')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')));
+		$operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('A'), new QtiString('D')));
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
 		$this->assertTrue($result->getValue());
@@ -362,7 +362,7 @@ class ContainsProcessorTest extends QtiSmTestCase {
 	public function testNotSameBaseTypeOne() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new MultipleContainer(BaseType::STRING, array(new String('identifier3'), new String('identifier4'), null, new String('identifier2')));
+	    $operands[] = new MultipleContainer(BaseType::STRING, array(new QtiString('identifier3'), new QtiString('identifier4'), null, new QtiString('identifier2')));
 	    $operands[] = new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('identifier3'), new Identifier('identifier2')));
 	    $processor = new ContainsProcessor($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');

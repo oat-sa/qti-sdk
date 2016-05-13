@@ -24,7 +24,7 @@
 namespace qtism\runtime\expressions;
 
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
@@ -91,7 +91,7 @@ class MapResponseProcessor extends ExpressionProcessor
                         $val = $state[$identifier];
                         $mapKey = $mapEntry->getMapKey();
 
-                        if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
+                        if ($val instanceof QtiString && $mapEntry->isCaseSensitive() === false) {
                             $val = mb_strtolower($val->getValue(), 'UTF-8');
                             $mapKey = mb_strtolower($mapKey, 'UTF-8');
                         }
@@ -120,8 +120,8 @@ class MapResponseProcessor extends ExpressionProcessor
                         for ($i = 0; $i < count($mapEntries); $i++) {
 
                             $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
-                            if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
-                                $val = new String(mb_strtolower($val->getValue(), 'UTF-8'));
+                            if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
+                                $val = new QtiString(mb_strtolower($val->getValue(), 'UTF-8'));
                                 $mapKey = mb_strtolower($mapKey, 'UTF-8');
                             }
 

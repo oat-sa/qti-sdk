@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\State;
 use qtism\common\enums\Cardinality;
 use qtism\common\datatypes\Boolean;
@@ -50,7 +50,7 @@ class AnyNProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseTypeOne() {
 		$expression = $this->createFakeExpression(2, 3);
-		$operands = new OperandsCollection(array(new String('String')));
+		$operands = new OperandsCollection(array(new QtiString('String')));
 		$processor = new AnyNProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

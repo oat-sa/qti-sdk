@@ -27,7 +27,7 @@ namespace qtism\runtime\common;
 use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
@@ -350,7 +350,7 @@ class Utils {
 	                return new Identifier($v);
 	            }
 	            if ($baseType === -1 || $baseType === BaseType::STRING) {
-	                return new String($v);
+	                return new QtiString($v);
 	            }
 	            else if ($baseType === BaseType::URI) {
 	                return new Uri($v);

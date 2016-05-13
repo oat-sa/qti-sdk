@@ -13,7 +13,7 @@ use qtism\common\datatypes\Identifier;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Point;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Boolean;
@@ -138,7 +138,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
             array(new Integer(123), '{ "base" : {"integer" : 123 } }'),
             array(new Float(23.23), '{ "base" : {"float" : 23.23 } }'),
             array(new Float(6.0), '{ "base" : {"float" : 6 } }'),
-            array(new String('string'), '{ "base" : {"string" : "string" } }'),
+            array(new QtiString('string'), '{ "base" : {"string" : "string" } }'),
             array(new Uri('http://www.taotesting.com'), '{ "base" : {"uri" : "http://www.taotesting.com" } }'),
             array(new IntOrIdentifier(10), '{ "base" : {"intOrIdentifier" : 10 } }'),
             array(new IntOrIdentifier('_id1'), '{ "base" : {"identifier" : "_id1" } }'),
@@ -192,7 +192,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "list" : { "float" : [3.1415926, 12.34, 98.76] } }';
         $returnValue[] = array($container, $json);
         
-        $container = new MultipleContainer(BaseType::STRING, array(new String('Another'), new String('And Another')));
+        $container = new MultipleContainer(BaseType::STRING, array(new QtiString('Another'), new QtiString('And Another')));
         $json = '{ "list" : { "string" : ["Another", "And Another"] } }';
         $returnValue[] = array($container, $json);
 
@@ -226,11 +226,11 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
         $json = '{ "record" : [] }';
         $returnValue[] = array($record, $json);
         
-        $record = new RecordContainer(array('A' => new String('A')));
+        $record = new RecordContainer(array('A' => new QtiString('A')));
         $json = '{ "record" : [ { "name" : "A", "base" : { "string" : "A" } } ] }';
         $returnValue[] = array($record, $json);
         
-        $record = new RecordContainer(array('A' => new String('A'), 'B' => null));
+        $record = new RecordContainer(array('A' => new QtiString('A'), 'B' => null));
         $json = '{ "record" : [ { "name" : "A", "base" : { "string" : "A" } }, { "name" : "B", "base" : null } ] }';
         $returnValue[] = array($record, $json);
         

@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Pair;
@@ -214,9 +214,9 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	public function testIsNull() {
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new String(''));
+		$outcome->setValue(new QtiString(''));
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new String('String!'));
+		$outcome->setValue(new QtiString('String!'));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
@@ -253,7 +253,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = new String('string!');
+		$value[] = new QtiString('string!');
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::RECORD);

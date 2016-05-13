@@ -10,7 +10,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 class AndProcessorTest extends QtiSmTestCase {
 	
@@ -32,7 +32,7 @@ class AndProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new String('string!')))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new QtiString('string!')))));
 		$processor = new AndProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

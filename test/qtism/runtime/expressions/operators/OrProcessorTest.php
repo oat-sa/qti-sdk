@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Boolean;
 use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Point;
 use qtism\runtime\expressions\operators\OrProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -31,7 +31,7 @@ class OrProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new String('string!')))));
+		$operands = new OperandsCollection(array(new RecordContainer(array('a' => new QtiString('string!')))));
 		$processor = new OrProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();

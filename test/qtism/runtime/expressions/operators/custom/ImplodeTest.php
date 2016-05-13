@@ -7,7 +7,7 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
 use qtism\runtime\expressions\operators\custom\Implode;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -26,7 +26,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testNotEnoughOperandsTwo() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('Hello-World!')));
+	    $operands = new OperandsCollection(array(new QtiString('Hello-World!')));
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 	                    "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator takes 2 sub-expressions as parameters, 1 given.",
 	                    OperatorProcessingException::NOT_ENOUGH_OPERANDS);
@@ -46,7 +46,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new String('String!'))), new String('Hello World!')));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new QtiString('String!'))), new QtiString('Hello World!')));
 		$processor = new Implode($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 		                            "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a first operand with single cardinality.",
@@ -56,7 +56,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinalityTwo() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('-'), new String('Hello-World!')));
+	    $operands = new OperandsCollection(array(new QtiString('-'), new QtiString('Hello-World!')));
 	    $processor = new Implode($expression, $operands);
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException',
 	                    "The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a second operand with multiple or ordered cardinality.",
@@ -67,7 +67,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	public function testNullOperands() {
 		$expression = $this->createFakeExpression();
 		
-		$operands = new OperandsCollection(array(new String(''), null));
+		$operands = new OperandsCollection(array(new QtiString(''), null));
 		$processor = new Implode($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -75,7 +75,7 @@ class ImplodeProcessorTest extends QtiSmTestCase {
 	
 	public function testImplodeOne() {
 	    $expression = $this->createFakeExpression();
-	    $operands = new OperandsCollection(array(new String('-'), new MultipleContainer(BaseType::STRING, array(new String('Hello'), new String('World')))));
+	    $operands = new OperandsCollection(array(new QtiString('-'), new MultipleContainer(BaseType::STRING, array(new QtiString('Hello'), new QtiString('World')))));
 	    $processor = new Implode($expression, $operands);
 	    $result = $processor->process();
 	    

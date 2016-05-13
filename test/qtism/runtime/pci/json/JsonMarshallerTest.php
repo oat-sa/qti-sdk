@@ -16,7 +16,7 @@ use qtism\common\datatypes\Point;
 use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\IntOrIdentifier;
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\QtiDatatype;
@@ -116,8 +116,8 @@ class JsonMarshallerTest extends QtiSmTestCase {
             array(new Boolean(false), json_encode(array('base' => array('boolean' => false)))),
             array(new Integer(1337), json_encode(array('base' => array('integer' => 1337)))),
             array(new Float(1337.1337), json_encode(array('base' => array('float' => 1337.1337)))),
-            array(new String("String!"), json_encode(array('base' => array('string' => "String!")))),
-            array(new String(""), json_encode(array('base' => array('string' => "")))),
+            array(new QtiString("String!"), json_encode(array('base' => array('string' => "String!")))),
+            array(new QtiString(""), json_encode(array('base' => array('string' => "")))),
             array(new Identifier("RESP_X32"), json_encode(array('base' => array('identifier' => "RESP_X32")))),
             array(new IntOrIdentifier("RESP_X33"), json_encode(array('base' => array('intOrIdentifier' => "RESP_X33")))),
             array(new IntOrIdentifier(1337), json_encode(array('base' => array('intOrIdentifier' => 1337)))),
@@ -178,7 +178,7 @@ class JsonMarshallerTest extends QtiSmTestCase {
         $returnValue[] = array($container, $json);
         
         // string multiple("Another", "And Another").
-        $container = new MultipleContainer(BaseType::STRING, array(new String("Another"), new String("And another")));
+        $container = new MultipleContainer(BaseType::STRING, array(new QtiString("Another"), new QtiString("And another")));
         $json = json_encode(array('list' => array('string' => array("Another", "And another"))));
         $returnValue[] = array($container, $json);
         

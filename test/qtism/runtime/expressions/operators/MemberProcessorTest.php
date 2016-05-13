@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Pair;
@@ -71,7 +71,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypeOne() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new String('String1');
+	    $operands[] = new QtiString('String1');
 	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('String2'), new Identifier('String1'), null));
 	    $processor = new MemberProcessor($expression, $operands);
 	    

@@ -2,7 +2,7 @@
 
 use qtism\common\datatypes\Integer;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -37,7 +37,7 @@ class GcdProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new String('String!'))), new Integer(10)));
+		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::STRING, array(new QtiString('String!'))), new Integer(10)));
 		$processor = new GcdProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$result = $processor->process();
@@ -83,7 +83,7 @@ class GcdProcessorTest extends QtiSmTestCase {
 	public function gcdWithNullValuesProvider() {
 		return array(
 			array(array(new Integer(45), null, new Integer(330))),
-			array(array(new String(''), new Integer(550), new Integer(330))),
+			array(array(new QtiString(''), new Integer(550), new Integer(330))),
 			array(array(new Integer(230), new OrderedContainer(BaseType::INTEGER), new Integer(25), new Integer(33))),
 			array(array(new OrderedContainer(BaseType::INTEGER, array(null)))),
 			array(array(new OrderedContainer(BaseType::INTEGER, array(null, null, null)))),

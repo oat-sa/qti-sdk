@@ -3,7 +3,7 @@ require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Float;
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
@@ -49,7 +49,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression('abc');
-		$operands = new OperandsCollection(array(new String('string'), new String('string')));
+		$operands = new OperandsCollection(array(new QtiString('string'), new QtiString('string')));
 		$this->setExpectedException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
 		$processor = new PatternMatchProcessor($expression, $operands);
 	}
@@ -72,7 +72,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function testInternalError() {
 		$expression = $this->createFakeExpression('[');
-		$operands = new OperandsCollection(array(new String('string!')));
+		$operands = new OperandsCollection(array(new QtiString('string!')));
 		$processor = new PatternMatchProcessor($expression, $operands);
 		try {
 			$result = $processor->process();
@@ -86,23 +86,23 @@ class PatternMatchProcessorTest extends QtiSmTestCase {
 	
 	public function patternMatchProvider() {
 		return array(
-			array(new String('string'), 'string', true),
-			array(new String('string'), 'stRing', false),
-			array(new String('string'), 'shell', false),
-			array(new String('stringString'), '.*', true), // in xml schema 2, dot matches white-spaces
-			array(new String('^String$'), 'String', false), // No carret nor dollar in xml schema 2
-			array(new String('^String$'), '^String$', true),
-			array(new String('Str/ing'), 'Str/ing', true),
-			array(new String('Str^ing'), 'Str^ing', true),
-			array(new String('99'), '\d{1,2}', true),
-			array(new String('abc'), '\d{1,2}', false)
+			array(new QtiString('string'), 'string', true),
+			array(new QtiString('string'), 'stRing', false),
+			array(new QtiString('string'), 'shell', false),
+			array(new QtiString('stringString'), '.*', true), // in xml schema 2, dot matches white-spaces
+			array(new QtiString('^String$'), 'String', false), // No carret nor dollar in xml schema 2
+			array(new QtiString('^String$'), '^String$', true),
+			array(new QtiString('Str/ing'), 'Str/ing', true),
+			array(new QtiString('Str^ing'), 'Str^ing', true),
+			array(new QtiString('99'), '\d{1,2}', true),
+			array(new QtiString('abc'), '\d{1,2}', false)
 		);
 	}
 	
 	public function nullProvider() {
 		return array(
 			array(null, '\d{1,2}'),
-			array(new String(''), '\d{1,2}'),
+			array(new QtiString(''), '\d{1,2}'),
 			array(new OrderedContainer(BaseType::STRING), '\d{1,2}')
 		);
 	}

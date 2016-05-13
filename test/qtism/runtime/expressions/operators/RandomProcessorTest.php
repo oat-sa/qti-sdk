@@ -2,7 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Float;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\Point;
@@ -29,11 +29,11 @@ class RandomProcessorTest extends QtiSmTestCase {
 	public function testPrimitiveOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new OrderedContainer(BaseType::STRING, array(new String('s1'), new String('s2'), new String('s3')));
+		$operands[] = new OrderedContainer(BaseType::STRING, array(new QtiString('s1'), new QtiString('s2'), new QtiString('s3')));
 		$processor = new RandomProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $result);
-		$this->assertTrue($result->equals(new String('s1')) || $result->equals(new String('s2')) || $result->equals(new String('s3')));
+		$this->assertTrue($result->equals(new QtiString('s1')) || $result->equals(new QtiString('s2')) || $result->equals(new QtiString('s3')));
 	}
 	
 	public function testComplexMultiple() {

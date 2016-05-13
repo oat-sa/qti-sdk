@@ -35,7 +35,7 @@ use qtism\common\datatypes\Uri;
 use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\DirectedPair;
 use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\Integer;
 use qtism\common\datatypes\Boolean;
 use qtism\runtime\common\RecordContainer;
@@ -346,7 +346,7 @@ class Unmarshaller {
      * @return String
      */
     protected function unmarshallString(array $unit) {
-        return new String($unit['base']['string']);
+        return new QtiString($unit['base']['string']);
     }
     
     /**
