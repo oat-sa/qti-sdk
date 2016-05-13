@@ -25,7 +25,7 @@
 namespace qtism\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\Container;
 use qtism\data\expressions\operators\Gcd;
@@ -90,7 +90,7 @@ class GcdProcessor extends OperatorProcessor {
 		$zeroCount = 0;
 		$valueCount = 0;
 		foreach ($operands as $operand) {
-			if ($operand instanceof Scalar) {
+			if ($operand instanceof QtiScalar) {
 				
 				$valueCount++;
 				

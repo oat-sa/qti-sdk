@@ -33,7 +33,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-abstract class Scalar implements Comparable {
+abstract class QtiScalar implements Comparable {
     
     /**
      * The value of the Scalar object.
@@ -46,17 +46,17 @@ abstract class Scalar implements Comparable {
      * Create a new Scalar object with a given $value as its content.
      * 
      * @param mixed $value
-     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function __construct($value) {
         $this->setValue($value);
     }
     
     /**
-     * Set the PHP value to be encapsulated witin the Scalar object.
+     * Set the PHP value to be encapsulated within the Scalar object.
      * 
      * @param mixed $value
-     * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
+     * @throws \InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
     public function setValue($value) {
         $this->checkType($value);
@@ -77,7 +77,7 @@ abstract class Scalar implements Comparable {
     }
     
     public function equals($obj) {
-        if ($obj instanceof Scalar) {
+        if ($obj instanceof QtiScalar) {
             return $obj->getValue() === $this->getValue();
         }
         else {
@@ -89,8 +89,8 @@ abstract class Scalar implements Comparable {
      * Checks if $value has the correct PHP datatype to
      * be encapsulated withing the Scalar object.
      * 
-     * @param mixed $value A value to be encapsulated whithin the Scalar object.
-     * @throws InvalidArgumentException If $value has a not compliant PHP datatype.
+     * @param mixed $value A value to be encapsulated within the Scalar object.
+     * @throws \InvalidArgumentException If $value has a not compliant PHP datatype.
      */
     abstract protected function checkType($value);
 }

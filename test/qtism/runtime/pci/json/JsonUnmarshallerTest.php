@@ -18,7 +18,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\pci\json\Unmarshaller;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
@@ -34,7 +34,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase {
      * @param Scalar $expectedScalar
      * @param string $json
      */
-    public function testUnmarshallScalar(Scalar $expectedScalar = null, $json) {
+    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json) {
         $unmarshaller = self::createUnmarshaller();
         if (is_null($expectedScalar) === false) {
             $this->assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));

@@ -27,7 +27,7 @@ namespace qtism\runtime\storage\binary;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\common\datatypes\QtiFile;
 use qtism\data\ExtendedAssessmentItemRef;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\data\state\Value;
@@ -180,7 +180,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                     $this->writeBoolean(true);
             
                     // content
-                    $this->$toCall(($value instanceof Scalar) ? $value->getValue() : $value);
+                    $this->$toCall(($value instanceof QtiScalar) ? $value->getValue() : $value);
                 }
                 else {
                     // is-scalar
@@ -193,7 +193,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                     foreach ($value as $v) {
                         if (is_null($v) === false) {
                             $this->writeBoolean(false);
-                            $this->$toCall(($v instanceof Scalar) ? $v->getValue() : $v);
+                            $this->$toCall(($v instanceof QtiScalar) ? $v->getValue() : $v);
                         }
                         else {
                             $this->writeBoolean(true);
@@ -256,7 +256,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
                 
-                call_user_func(array($this, $toCall), ($value instanceof Scalar) ? $value->getValue() : $value);
+                call_user_func(array($this, $toCall), ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         }
         catch (BinaryStreamAccessException $e) {

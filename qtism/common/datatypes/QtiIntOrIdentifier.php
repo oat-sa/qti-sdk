@@ -29,7 +29,7 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use \InvalidArgumentException;
 
-class QtiIntOrIdentifier extends Scalar implements QtiDatatype {
+class QtiIntOrIdentifier extends QtiScalar implements QtiDatatype {
     
     protected function checkType($value) {
         if (is_int($value) !== true && is_string($value) !== true) {

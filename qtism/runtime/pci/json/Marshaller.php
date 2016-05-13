@@ -39,7 +39,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiPoint;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiScalar;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\State;
 use qtism\common\datatypes\QtiDatatype;
@@ -133,7 +133,7 @@ class Marshaller {
         if (is_null($unit) === true) {
             $json = array('base' => null);
         }
-        else if ($unit instanceof Scalar) {
+        else if ($unit instanceof QtiScalar) {
             $json = $this->marshallScalar($unit);
         }
         else if ($unit instanceof MultipleContainer) {
