@@ -42,7 +42,7 @@ use qtism\common\Comparable;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-interface File extends QtiDatatype, Comparable {
+interface QtiFile extends QtiDatatype, Comparable {
     
     /**
      * Get the sequence of bytes composing the file.

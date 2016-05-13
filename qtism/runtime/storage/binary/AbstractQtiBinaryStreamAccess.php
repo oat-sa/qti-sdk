@@ -25,7 +25,7 @@
 namespace qtism\runtime\storage\binary;
 
 use qtism\runtime\tests\AbstractSessionManager;
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\common\datatypes\Scalar;
 use qtism\common\datatypes\Identifier;
@@ -474,7 +474,7 @@ abstract class AbstractQtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param File $file A File object
      * @throws QtiBinaryStreamAccessException
      */
-    abstract public function writeFile(File $file);
+    abstract public function writeFile(QtiFile $file);
     
     /**
      * Read an intOrIdentifier from the current binary stream.

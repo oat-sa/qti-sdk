@@ -25,7 +25,7 @@
 
 namespace qtism\runtime\pci\json;
 
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\QtiDuration;
@@ -247,7 +247,7 @@ class Marshaller {
         else if ($complex instanceof QtiDuration) {
             return $this->marshallDuration($complex);
         }
-        else if ($complex instanceof File) {
+        else if ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
         }
         else {
@@ -381,7 +381,7 @@ class Marshaller {
      * @param File $file
      * @return array
      */
-    protected function marshallFile(File $file) {
+    protected function marshallFile(QtiFile $file) {
         $data = array('base' => array('file' => array('mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()))));
         
         if ($file->hasFilename() === true) {
