@@ -24,7 +24,7 @@ class ReflectionTest extends QtiSmTestCase {
             array("Class", "\\My\\Super\\Class"),
                         
             array("stdClass", new \stdClass()),
-            array("Integer", new QtiInteger(10)),
+            array("QtiInteger", new QtiInteger(10)),
                         
             array("My_Stupid_Class", "My_Stupid_Class"),
             array(false, 12),

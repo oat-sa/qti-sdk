@@ -20,7 +20,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		$result = $productProcessor->process();
 		
 		$this->assertInstanceOf('qtism\\runtime\\common\\Processable', $productProcessor);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(1, $result->getValue());
 	}
 	
@@ -31,7 +31,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(-96, $result->getValue());
 	}
 	

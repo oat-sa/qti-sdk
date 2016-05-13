@@ -44,9 +44,9 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		
 		$variable->setValue(new QtiInteger(16));
 		$variable->setDefaultValue(new QtiInteger(-1));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$this->assertInstanceOf(QtiInteger::class, $variable->getValue());
 		$this->assertEquals(16, $variable->getValue()->getValue());
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getDefaultValue());
+		$this->assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
 		$this->assertEquals(-1, $variable->getDefaultValue()->getValue());
 		
 		// If I reinit the variable, I should see the NULL value inside.
@@ -58,7 +58,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		// was given.
 		$variable->setDefaultValue(null);
 		$variable->applyDefaultValue();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$this->assertInstanceOf(QtiInteger::class, $variable->getValue());
 		$this->assertEquals(0, $variable->getValue()->getValue());
 	}
 	

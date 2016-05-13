@@ -3,6 +3,7 @@ require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -60,7 +61,7 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 	    $processor->setState($state);
 	    $processor->process();
 	     
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\INTEGER', $state['SCORE']);
+	    $this->assertInstanceOf(QtiInteger::class, $state['SCORE']);
 	    $this->assertEquals(4, $state['SCORE']->getValue());
 	}
 	

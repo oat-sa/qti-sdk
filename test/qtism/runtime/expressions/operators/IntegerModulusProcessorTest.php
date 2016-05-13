@@ -16,19 +16,19 @@ class IntegerModulusProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(5)));
 		$processor = new IntegerModulusProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(0, $result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(49), new QtiInteger(-5)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(4, $result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiInteger(36), new QtiInteger(7)));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(1, $result->getValue());
 	}
 	

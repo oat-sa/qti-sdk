@@ -16,7 +16,7 @@ class SubtractProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(256)));
 		$processor = new SubtractProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(-246, $result->getValue());
 		
 		$operands = new OperandsCollection(array(new QtiFloat(-5.0), new QtiInteger(-10)));

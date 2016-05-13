@@ -2,6 +2,7 @@
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -64,7 +65,7 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $areaMapping);
 		$areaMapEntries = $areaMapping->getAreaMapEntries();
 		$this->assertEquals(3, count($areaMapEntries));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $areaMapEntries[0]->getCoords());
+		$this->assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 		
 		$this->assertTrue($responseVariable->hasCorrectResponse());
 		$correctResponse = $responseVariable->getCorrectResponse();

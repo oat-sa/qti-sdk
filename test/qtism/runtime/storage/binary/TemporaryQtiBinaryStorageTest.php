@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiDuration;
@@ -187,11 +188,11 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS01']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS01']);
         $this->assertEquals(1, $session['NCORRECTS01']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS02']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS02']);
         $this->assertEquals(1, $session['NCORRECTS02']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $session['NCORRECTS03']);
+        $this->assertInstanceOf(QtiInteger::class, $session['NCORRECTS03']);
         $this->assertEquals(1, $session['NCORRECTS03']->getValue());
         $this->assertEquals(6, $session['NINCORRECT']->getValue());
         $this->assertEquals(6, $session['NRESPONSED']->getValue());

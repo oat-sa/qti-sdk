@@ -2,6 +2,7 @@
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
@@ -52,7 +53,7 @@ class CorrectProcessorTest extends QtiSmTestCase {
 		$processor->setState(new State(array($variable)));
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(20, $result->getValue());
 	}
 	

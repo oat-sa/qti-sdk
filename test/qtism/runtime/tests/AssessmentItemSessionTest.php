@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
 
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\tests\SessionManager;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
@@ -53,7 +54,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         // Built-in variables instantiated and values initialized correctly?
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('numAttempts'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $itemSession['numAttempts']);
+        $this->assertInstanceOf(QtiInteger::class, $itemSession['numAttempts']);
         $this->assertEquals(0, $itemSession['numAttempts']->getValue());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('duration'));

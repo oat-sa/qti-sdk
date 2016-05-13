@@ -43,7 +43,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		$variableProcessor->setState($state); // State is populated with var1.
 		$result = $variableProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(1337, $result->getValue());
 		
 		// multiple cardinality test.

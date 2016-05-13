@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\DirectedPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\data\state\MatchTable;
 use qtism\data\state\MatchTableEntry;
 use qtism\data\state\MatchTableEntryCollection;
@@ -53,6 +53,6 @@ class MatchTableMarshallerTest extends QtiSmTestCase {
 		$entry = $matchTableEntries[0];
 		$this->assertInstanceOf('qtism\\data\\state\\MatchTableEntry', $entry);
 		$this->assertEquals(1, $entry->getSourceValue());
-		$this->assertInstanceOf(DirectedPair::class, $entry->getTargetValue());
+		$this->assertInstanceOf(QtiDirectedPair::class, $entry->getTargetValue());
 	}
 }
