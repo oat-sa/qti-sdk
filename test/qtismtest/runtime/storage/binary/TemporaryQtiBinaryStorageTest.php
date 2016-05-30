@@ -858,7 +858,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
     public function testTemplateDefault1() {
         $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple.xml');
+        $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $test = $doc->getDocumentComponent();
     
         $sessionManager = new SessionManager($doc->getDocumentComponent());

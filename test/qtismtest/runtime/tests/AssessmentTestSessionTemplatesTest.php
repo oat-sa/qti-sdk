@@ -13,11 +13,10 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase {
 	
     public function testSimpleTemplating() {
-        $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $session->beginTestSession();
-        // We are in linear mode with no branching/preconditions, so the sessions are alive...
-        // But the templateDefaults/templateProcessings will only occur at the beginning of the
-        // very first attempt.
+        // We are in linear mode with no branching/preconditions, so the sessions are instantiated after beginTestSession call.
+        // However, the templateDefaults/templateProcessings will only occur at the beginning of the very first attempt.
         $this->assertNull($session['QTPL1.GOODSCORE']);
         $this->assertNull($session['QTPL1.WRONGSCORE']);
         $this->assertNull($session['QTPL2.GOODSCORE']);
