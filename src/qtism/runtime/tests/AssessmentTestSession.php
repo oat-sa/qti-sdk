@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -1905,11 +1905,9 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Select the eligible items from the current one to the last
-     * following item in the route which is in linear navigation mode.
+     * Select the eligible items from the current one to the last following item in the route which is in linear navigation mode.
      *
-     * AssessmentItemSession objects related to the eligible items
-     * will be instantiated.
+     * AssessmentItemSession objects related to the eligible items will be instantiated.
      *
      */
     protected function selectEligibleItems()
@@ -1970,13 +1968,30 @@ class AssessmentTestSession extends State
                 }
 
                 if ($adaptive === true) {
-                    // We cannot foresee more items to be selected for presentation
-                    // because the rest of the sequence is linear and might contain
+                    // Adaptive Test Case:
+                    // -------------------
+                    // We cannot foresee more items to be selected for presentation because the rest of the sequence is linear and might contain
                     // branching rules or preconditions.
+                    //
+                    // The QTI Specification says, in terms of Item Session Lifecycle, that 
+                    //
+                    // "In an Adaptive Test the items that are to be presented are selected during the session based on the responses and outcomes
+                    // associated with the items presented so far. Items are selected from a large pool and the delivery engine only reports the 
+                    // candidate's interaction with items that have actually been selected."
+                    // 
+                    // In such a context, Item Sessions must be instantiated one by one.
                     break;
                 } else {
-                    // We continue to search for route items that are selectable for
-                    // presentation to the candidate.
+                    // Non Adaptive Test Case:
+                    // -----------------------
+                    // We continue to search for route items that are selectable for presentation to the candidate. The QTI Specification says, in terms
+                    // of Item Session Lifecycle, that
+                    //
+                    // "In a typical non-Adaptive Test the items are selected in advance and the candidate's interaction with all items is reported 
+                    // at the end of the test session, regardless of whether or not the candidate actually attempted all the items. In effect, item sessions 
+                    // are created in the initial state for all items at the start of the test and are maintained in parallel."
+                    //
+                    // In such a context, we just instantiate all the Item Sessions at once.
                     $route->next();
                 }
             }
