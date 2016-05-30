@@ -2716,7 +2716,7 @@ class AssessmentTestSession extends State
         $testPart = $route->current()->getTestPart();
         $testPartIdentifier = $testPart->getIdentifier();
         $visitedTestPartIdentifiers = $this->getVisitedTestPartIdentifiers();
-        if (in_array($testPartIdentifier, $visitedTestPartIdentifiers) === false) {
+        if ($this->isTestPartVisited($testPartIdentifier) === false) {
             // First time we visit this testPart!
             $visitedTestPartIdentifiers[] = $testPartIdentifier;
             $this->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
@@ -2767,5 +2767,22 @@ class AssessmentTestSession extends State
                 }
             }
         }
+    }
+    
+    /**
+     * Whether or not a given $testPart has already been visited by the candidate.
+     * 
+     * @param \qtism\data\TestPart|string A TestPart object or a testPart identifier.
+     * @return boolean
+     */
+    public function isTestPartVisited($testPart) {
+        $visited = false;
+        $visitedTestPartIdentifiers = $this->getVisitedTestPartIdentifiers();
+        
+        if ($testPart instanceof TestPart) {
+            $testPart = $testPart->getIdentifier();
+        }
+        
+        return in_array($testPart, $visitedTestPartIdentifiers);
     }
 }
