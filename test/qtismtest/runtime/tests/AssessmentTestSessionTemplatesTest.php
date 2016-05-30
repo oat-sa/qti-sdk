@@ -12,7 +12,7 @@ use qtism\runtime\tests\AssessmentTestSessionState;
 
 class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase {
 	
-    public function testSimpleTemplating() {
+    public function testSimpleTemplatingLinear() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $session->beginTestSession();
         // We are in linear mode with no branching/preconditions, so the sessions are instantiated after beginTestSession call.
@@ -21,6 +21,37 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $this->assertNull($session['QTPL1.WRONGSCORE']);
         $this->assertNull($session['QTPL2.GOODSCORE']);
         $this->assertNull($session['QTPL2.WRONGSCORE']);
+        
+        // QTPL1 - correct response.
+        $session->beginAttempt();
+        $responses = new State(
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))              
+        );
+        $session->endAttempt($responses);
+        $session->moveNext();
+        
+        // QTPL2 - correct response.
+        $session->beginAttempt();
+        $responses = new State(
+            array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))
+        );
+        $session->endAttempt($responses);
+        $session->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertEquals(1.0, $session['QTPL1.SCORE']->getValue());
+        $this->assertEquals(2.0, $session['QTPL2.SCORE']->getValue());
+    }
+    
+    public function testSimpleTemplatingNonLinear() {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_nonlinear.xml');
+        $session->beginTestSession();
+        // We are in nonlinear mode, so the sessions are instantiated after beginTestSession call.
+        // The templateDefaults/templateProcessings will occur at the beginning of the testPart.
+        $this->assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
+        $this->assertEquals(0.0, $session['QTPL1.WRONGSCORE']->getValue());
+        $this->assertEquals(2.0, $session['QTPL2.GOODSCORE']->getValue());
+        $this->assertEquals(-1.0, $session['QTPL2.WRONGSCORE']->getValue());
         
         // QTPL1 - correct response.
         $session->beginAttempt();
