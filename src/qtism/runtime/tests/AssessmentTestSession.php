@@ -61,9 +61,7 @@ use \UnexpectedValueException;
 use \Exception;
 
 /**
- * The AssessmentTestSession class represents a candidate session
- * for a given AssessmentTest.
- *
+ * The AssessmentTestSession class represents a candidate session for a given AssessmentTest.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -162,12 +160,18 @@ class AssessmentTestSession extends State
     private $timeReference = null;
     
     /**
-     * Whether or not the AssessmentTest to be delivered is
-     * adaptive (preConditions, branchingRules).
+     * Whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
      * 
      * @var boolean
      */
     private $adaptive;
+    
+    /**
+     * An array of testPart identifiers that have been visited by the candidate.
+     * 
+     * @var array
+     */
+    private $visitedTestPartIdentifiers = array();
 
     /**
      * Create a new AssessmentTestSession object.
@@ -555,8 +559,7 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Set whether or not the AssessmentTest to be delivered
-     * is adaptive (preConditions, branchingRules).
+     * Set whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
      * 
      * @param boolean $adaptive
      */
@@ -566,14 +569,33 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Whether or not the AssessmentTest to be delivered is
-     * adaptive (preConditions, branchingRules).
+     * Whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
      * 
      * @return boolean
      */
     protected function isAdaptive()
     {
         return $this->adaptive;
+    }
+    
+    /**
+     * Set the testPart identifiers that have been visited by the candidate.
+     * 
+     * @param array $visitedTestPartIdentifiers An array of strings.
+     */
+    public function setVisitedTestPartIdentifiers(array $visitedTestPartIdentifiers)
+    {
+        $this->visitedTestPartIdentifiers = $visitedTestPartIdentifiers;
+    }
+    
+    /**
+     * Get the testPart identifiers that have been visited by the candidate.
+     * 
+     * @return array An array of strings.
+     */
+    public function getVisitedTestPartIdentifiers()
+    {
+        return $this->visitedTestPartIdentifiers;
     }
     
     /**
@@ -591,6 +613,9 @@ class AssessmentTestSession extends State
     
         // The test session has now begun.
         $this->setState(AssessmentTestSessionState::INTERACTING);
+        
+        // Mark the current testPart as visited.
+        $this->testPartVisit();
     }
     
     /**
@@ -648,7 +673,6 @@ class AssessmentTestSession extends State
         
         if ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR && $session['numAttempts']->getValue() === 0) {
             $this->applyTemplateDefaults($session);
-            $session->templateProcessing();
         }
     
         try {
@@ -793,6 +817,7 @@ class AssessmentTestSession extends State
     
         if ($this->isRunning() === true) {
             $this->interactWithItemSession();
+            $this->testPartVisit();
         }
         // Otherwise, this is the end of the test...
     }
@@ -817,6 +842,7 @@ class AssessmentTestSession extends State
             $this->suspendItemSession();
             $this->previousRouteItem();
             $this->interactWithItemSession();
+            $this->testPartVisit();
         }
     }
     
@@ -844,6 +870,7 @@ class AssessmentTestSession extends State
             $route->setPosition($position);
             $this->selectEligibleItems();
             $this->interactWithItemSession();
+            $this->testPartVisit();
         } catch (AssessmentTestSessionException $e) {
             // Rollback to previous position and re-interact to get the same state as prior to the call.
             $route->setPosition($oldPosition);
@@ -1847,7 +1874,7 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Apply the templateDefault values to the item $session.
+     * Apply the templateDefault values to the current item $session and also apply its templateProcessing.
      * 
      * param \qtism\runtime\tests\AssessmentItemSession $session
      * @throws \qtism\runtime\expressions\ExpressionProcessingException|\qtism\runtime\expressions\operators\OperatorProcessingException If something wrong happens when initializing templateDefaults.
@@ -1874,6 +1901,8 @@ class AssessmentTestSession extends State
                 }
             }
         }
+        
+        $session->templateProcessing();
     }
 
     /**
@@ -1958,12 +1987,6 @@ class AssessmentTestSession extends State
                     }
 
                     $session->beginItemSession();
-                    
-                    // Deal with template defaults and template processing for non linear case.
-                    if ($testPart === $initialTestPart && $initialTestPart->getNavigationMode() === NavigationMode::NONLINEAR && $isInitalRouteItemFirstOfTestPart === true) {
-                        $this->applyTemplateDefaults($session);
-                        $session->templateProcessing();
-                    }
                 }
 
                 if ($adaptive === true) {
@@ -2676,5 +2699,73 @@ class AssessmentTestSession extends State
         }
         
         return $mustShowTestFeedback;
+    }
+    
+    /**
+     * Behaviours to be applied when visiting a test part.
+     * 
+     * Basically, this method checks whether or not the current testPart has already been
+     * visited by the candidate. In addition, if the navigation mode is nonLinear, templateDefaults
+     * and templateProcessing will be applied if necessary to the item sessions that belong to the testPart.
+     */
+    protected function testPartVisit()
+    {
+        $route = $this->getRoute();
+        $initialRoutePosition = $route->getPosition();
+        
+        $testPart = $route->current()->getTestPart();
+        $testPartIdentifier = $testPart->getIdentifier();
+        $visitedTestPartIdentifiers = $this->getVisitedTestPartIdentifiers();
+        if (in_array($testPartIdentifier, $visitedTestPartIdentifiers) === false) {
+            // First time we visit this testPart!
+            $visitedTestPartIdentifiers[] = $testPartIdentifier;
+            $this->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
+            
+            // If we are in non linear navigation mode, get all the item sessions of the current testPart, 
+            // and apply templateDefaults and templateProcessings.
+            if ($testPart->getNavigationMode() === NavigationMode::NONLINEAR) {
+                $route = $this->getRoute();
+                // 1. Get all item sessions prior the current one...
+                $itemSessions = array();
+                
+                if ($route->isFirstOfTestPart() === false) {
+                    $route->previous();
+                    
+                    while ($route->valid() === true) {
+                        $itemSession = $this->getCurrentAssessmentItemSession();
+                        array_unshift($itemSessions, $itemSession);
+                        
+                        if ($route->isFirstOfTestPart() === true) {
+                            break;
+                        }
+                        
+                        $route->previous();
+                    }
+                }
+                
+                // 2. Get the current item session + all item sessions after the current one.
+                $route->setPosition($initialRoutePosition);
+                while($route->valid() === true) {
+                    try {
+                        $itemSession = $this->getCurrentAssessmentItemSession();
+                        array_push($itemSessions, $itemSession);
+                    } catch (OutOfBoundsException $e) {
+                        // Nothing to do...
+                    }
+                    
+                    if ($route->isLastOfTestPart() === true) {
+                        break;
+                    }
+                    
+                    $route->next();
+                }
+                
+                $route->setPosition($initialRoutePosition);
+            
+                foreach ($itemSessions as $itemSession) {
+                    $this->applyTemplateDefaults($itemSession);
+                }
+            }
+        }
     }
 }

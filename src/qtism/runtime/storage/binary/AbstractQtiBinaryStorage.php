@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -147,6 +147,13 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->writeBoolean(true);
                 $access->writeDateTime($timeReference);
             }
+            
+            // persist visited testPart identifiers.
+            $visitedTestPartIdentifiers = $assessmentTestSession->getVisitedTestPartIdentifiers();
+            $access->writeTinyInt(count($visitedTestPartIdentifiers));
+            foreach ($visitedTestPartIdentifiers as $visitedTestPartIdentifier) {
+                $access->writeString($visitedTestPartIdentifier);
+            }
 
             // -- Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
@@ -239,6 +246,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             } else {
                 $timeReference = null;
             }
+            
+            $visitedTestPartIdentifiers = array();
+            $visitedTestPartIdentifiersCount = $access->readTinyInt();
+            for ($i = 0; $i < $visitedTestPartIdentifiersCount; $i++) {
+                $visitedTestPartIdentifiers[] = $access->readString();
+            }
 
             // Build the route and the item sessions.
             $route = new Route();
@@ -281,6 +294,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             $assessmentTestSession->setTimeReference($timeReference);
+            $assessmentTestSession->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).
