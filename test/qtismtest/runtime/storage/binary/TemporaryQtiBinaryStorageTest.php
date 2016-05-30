@@ -2,7 +2,6 @@
 namespace qtismtest\runtime\storage\binary;
 
 use qtism\runtime\tests\AssessmentTestSession;
-
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\common\datatypes\files\FileSystemFile;
@@ -1007,5 +1006,318 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL1Session->getState());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
+    }
+    
+    public function testVisitedTestPartsLinear1TestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
+        $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $session->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertTrue($session->isTestPartVisited('P01'));
+    }
+    
+    public function testVisitedTestPartsLinear2TestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
+        $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->beginTestSession();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter P03 on Q07, which is the first item in P03.
+        $session->jumpTo(6);
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter 03 on Q06, which is the last item in P02.
+        $session->moveBack();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter P03 on Q08, which is the item in the middle of P03.
+        $session->jumpTo(7);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // Enter 03 on Q05, which is the item in the middle of P02.
+        $session->jumpTo(4);
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager();
+        $storage = new TemporaryQtiBinaryStorage($sessionManager, new BinaryAssessmentTestSeeker($test));
+        $session = $storage->instantiate($test);
+        $sessionId = $session->getSessionId();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        // Enter P03 on Q09, which is the item in the middle of P03.
+        $session->jumpTo(8);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter 03 on Q04, which is the first item of P02.
+        $session->jumpTo(3);
+        
+        // Noisy persistence...
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($test, $sessionId);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
 }

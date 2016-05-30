@@ -1575,4 +1575,220 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
         $this->assertEquals(2, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
     }
+    
+    public function testVisitedTestPartsLinear1TestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertTrue($session->isTestPartVisited('P01'));
+    }
+    
+    public function testVisitedTestPartsLinear2TestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        
+        $session->moveNext();
+        
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter P03 on Q07, which is the first item in P03.
+        $session->jumpTo(6);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter 03 on Q06, which is the last item in P02.
+        $session->moveBack();
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter P03 on Q08, which is the item in the middle of P03.
+        $session->jumpTo(7);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter 03 on Q05, which is the item in the middle of P02.
+        $session->jumpTo(4);
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
+	    $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertFalse($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        
+        $session->beginTestSession();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        $session->moveNext();
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertFalse($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter P03 on Q09, which is the item in the middle of P03.
+        $session->jumpTo(8);
+        
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertFalse($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+        
+        // Enter 03 on Q04, which is the first item of P02.
+        $session->jumpTo(3);
+        $this->assertTrue($session->isTestPartVisited('P01'));
+        $this->assertTrue($session->isTestPartVisited('P02'));
+        $this->assertTrue($session->isTestPartVisited('P03'));
+        $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
 }
