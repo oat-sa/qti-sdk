@@ -785,8 +785,7 @@ class AssessmentTestSession extends State
         // Let's see if we have to show a testFeedback...
         elseif ($this->getState() !== AssessmentTestSessionState::MODAL_FEEDBACK && $this->mustShowTestFeedback() === true) {
             $this->setState(AssessmentTestSessionState::MODAL_FEEDBACK);
-            // A new call to moveNext will be necessary to actuall move
-            // next!!!
+            // A new call to moveNext will be necessary to actually move next!!!
             return;
         }
         
