@@ -10,7 +10,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
-use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
+use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
 use qtism\data\storage\php\PhpDocument;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
@@ -35,7 +35,7 @@ function createFactory() {
 }
 
 function createStorage(SessionManager $factory, AssessmentTest $test) {
-    return new TemporaryQtiBinaryStorage($factory, $test);
+    return new LocalQtiBinaryStorage($factory, $test);
 }
 
 function spentTime($start, $end, array &$registration = null) {

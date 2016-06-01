@@ -28,19 +28,61 @@ use qtism\data\AssessmentTest;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\common\storage\MemoryStream;
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\runtime\tests\AbstractSessionManager;
 use \RuntimeException;
 
 /**
  * A Binary AssessmentTestSession Storage Service implementation which stores the binary data related
- * to AssessmentTestSession objects in the temporary directory of the host file system.
+ * to AssessmentTestSession objects on the local file system directory of the host file system.
  *
  * This implementation was created for test purpose and should not be used for production.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
+class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
 {
+    /**
+     * The path on the local file system where persistent data will be stored.
+     * 
+     * @var string
+     */
+    private $path;
+    
+    /**
+     * Create a new LocalQtiBinaryStorage AssessmentTestSssion Storage Service.
+     *
+     * @param \qtism\runtime\tests\AbstractSessionManager $manager
+     * @param \qtism\data\AssessmentTest $test
+     * @param string $path (optional) The path on the local file system to store persistent data about AssessmentTestSession objects. If no path is provided, the default location will be the temporary directory of the Operating System.
+     */
+    public function __construct(AbstractSessionManager $manager, AssessmentTest $test, $path = '')
+    {
+        parent::__construct($manager, $test);
+        $this->setSeeker(new BinaryAssessmentTestSeeker($test));
+        $this->setPath((empty($path) === false) ? $path : sys_get_temp_dir());
+    }
+    
+    /**
+     * Set the path on the local file system where persistent data will be stored.
+     * 
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+    
+    /**
+     * Get the path on the local file system where persistent data will be stored.
+     * 
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+    
     /**
      * Persist the binary stream $stream which contains the binary equivalent of $assessmentTestSession in
      * the temporary directory of the file system.
@@ -53,7 +95,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
     {
         $sessionId = $assessmentTestSession->getSessionId();
 
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
+        $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         $written = @file_put_contents($path, $stream->getBinary());
 
         if ($written === false || $written === 0) {
@@ -72,7 +114,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     protected function getRetrievalStream($sessionId)
     {
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
+        $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
 
         $read = @file_get_contents($path);
 
@@ -97,7 +139,7 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     public function exists($sessionId)
     {
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
+        $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         return @is_readable($path);
     }
     
@@ -106,6 +148,6 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     public function delete($sessionId)
     {
-        return @unlink(sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin');
+        return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin');
     }
 }
