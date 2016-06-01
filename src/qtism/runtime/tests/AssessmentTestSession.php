@@ -2787,4 +2787,39 @@ class AssessmentTestSession extends State
         
         return in_array($testPart, $visitedTestPartIdentifiers);
     }
+    
+    /**
+     * Get all QTI files from the AssessmentTestSession and its AssessmentItemSessions.
+     * 
+     * This method retrieves all the QTI files from the AssessmentTestSession, in addition with
+     * all the QTI files from its AssessmentItemSession. The resulting array will be set with
+     * test level QTI files first, followed by item level QTI files.
+     * 
+     * Please pay attention to the following statement:
+     * Variables with file datatype having null values will not be taken into account.
+     * 
+     * @return array An array of QtiFile objects.
+     */
+    public function getFiles() {
+        $values = array();
+        
+        // Test Session variables.
+        $data = &$this->getDataPlaceHolder();
+        foreach ($data as $variable) {
+            if ($variable->getBaseType() === BaseType::FILE && ($value = $variable->getValue()) !== null) {
+                $values[] = $value;
+            }
+        }
+        
+        // Item Session variables.
+        foreach ($this->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+            foreach ($itemSession as $variable) {
+                if ($variable->getBaseType() === BaseType::FILE && ($value = $variable->getValue()) !== null) {
+                    $values[] = $value;
+                }
+            }
+        }
+        
+        return $values;
+    }
 }

@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
 	identifier="Files" title="Use of Files">
+    <outcomeDeclaration identifier="TEST_FILE" baseType="file" cardinality="single"/>
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
 			<assessmentItemRef identifier="Q01" href="Q01.xml" timeDependent="false">

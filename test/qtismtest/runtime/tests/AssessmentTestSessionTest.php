@@ -34,6 +34,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use \OutOfBoundsException;
 use \InvalidArgumentException;
 
@@ -1790,5 +1791,55 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited('P02'));
         $this->assertTrue($session->isTestPartVisited('P03'));
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testGetFiles() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
+	    $manager = new SessionManager();
+        $fileManager = new FileSystemFileManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        $session->beginTestSession();
+        
+        // Q01.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromData('response1', 'plain/text', 'file1.txt')))));
+        $session->moveNext();
+        
+        $files = $session->getFiles();
+        $this->assertEquals(1, count($files));
+        $this->assertEquals('file1.txt', $files[0]->getFileName());
+        
+        // Q02.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromData('response2', 'plain/text', 'file2.txt')))));
+        $session->moveNext();
+        
+        $files = $session->getFiles();
+        $this->assertEquals(2, count($files));
+        $this->assertEquals('file1.txt', $files[0]->getFileName());
+        $this->assertEquals('file2.txt', $files[1]->getFileName());
+        
+        // Q03.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromData('response3', 'plain/text', 'file3.txt')))));
+        $session->moveNext();
+        
+        $files = $session->getFiles();
+        $this->assertEquals(3, count($files));
+        $this->assertEquals('file1.txt', $files[0]->getFileName());
+        $this->assertEquals('file2.txt', $files[1]->getFileName());
+        $this->assertEquals('file3.txt', $files[2]->getFileName());
+        
+        // Set a file value to the test level "TEST_FILE" outcome variable.
+        $session['TEST_FILE'] = $fileManager->createFromData('testlevel', 'plain/text', 'filetest.txt');
+        $files = $session->getFiles();
+        $this->assertEquals(4, count($files));
+        
+        // Note: test level files always come first in the resulting array.
+        $this->assertEquals('filetest.txt', $files[0]->getFileName());
+        $this->assertEquals('file1.txt', $files[1]->getFileName());
+        $this->assertEquals('file2.txt', $files[2]->getFileName());
+        $this->assertEquals('file3.txt', $files[3]->getFileName());
     }
 }
