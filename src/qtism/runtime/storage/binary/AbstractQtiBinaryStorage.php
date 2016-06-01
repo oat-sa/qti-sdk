@@ -53,44 +53,28 @@ use \InvalidArgumentException;
  */
 abstract class AbstractQtiBinaryStorage extends AbstractStorage
 {
-    /**
-     * The AssessmentTestSeeker object used by this implementation.
-     *
-     * @var \qtism\runtime\storage\common\AssessmentTestSeeker
-     */
-    private $seeker;
+
+    private $seekers;
 
     /**
      * Create a new AbstractQtiBinaryStorage.
      *
      * @param \qtism\runtime\tests\AbstractSessionManager $factory
-     * @param \qtism\runtime\storage\binary\BinaryAssessmentTestSeeker $seeker
      * @throws \InvalidArgumentException If $assessmentTest does not implement the Document interface.
      */
-    public function __construct(AbstractSessionManager $manager, BinaryAssessmentTestSeeker $seeker)
+    public function __construct(AbstractSessionManager $manager)
     {
         parent::__construct($manager);
-        $this->setSeeker($seeker);
+        $this->seekers = new SplObjectStorage();
     }
-
-    /**
-     * Get the AssessmentTestSeeker object used by this implementation.
-     *
-     * @param \qtism\runtime\storage\common\AssessmentTestSeeker $seeker An AssessmentTestSeeker object.
-     */
-    protected function setSeeker(AssessmentTestSeeker $seeker)
+    
+    protected function getSeeker(AssessmentTest $test)
     {
-        $this->seeker = $seeker;
-    }
-
-    /**
-     * Set the AssessmentTestSeeker object used by this implementation.
-     *
-     * @return \qtism\runtime\storage\common\AssessmentTestSeeker An AssessmentTestSeeker object.
-     */
-    protected function getSeeker()
-    {
-        return $this->seeker;
+        if (isset($this->seekers[$test]) === false) {
+            $this->seekers[$test] = new BinaryAssessmentTestSeeker($test);
+        }
+        
+        return $this->seekers[$test];
     }
 
     /**
@@ -161,18 +145,20 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
             $oldRoutePosition = $route->getPosition();
 
+            $seeker = $this->getSeeker($assessmentTestSession->getAssessmentTest());
+
             foreach ($route as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
 
                 // Deal with RouteItem
-                $access->writeRouteItem($this->getSeeker(), $routeItem);
+                $access->writeRouteItem($seeker, $routeItem);
 
                 // Deal with ItemSession related to the previously written RouteItem.
                 try {
                     $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
                     $access->writeBoolean(true);
-                    $access->writeAssessmentItemSession($this->getSeeker(), $itemSession);
+                    $access->writeAssessmentItemSession($seeker, $itemSession);
                     
                     // Deal with last occurence update.
                     $access->writeBoolean($assessmentTestSession->isLastOccurenceUpdate($item, $occurence));
@@ -180,7 +166,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                     // Deal with PendingResponses
                     if (($pendingResponses = $pendingResponseStore->getPendingResponses($item, $occurence)) !== false) {
                         $access->writeBoolean(true);
-                        $access->writePendingResponses($this->getSeeker(), $pendingResponses);
+                        $access->writePendingResponses($seeker, $pendingResponses);
                     } else {
                         $access->writeBoolean(false);
                     }
@@ -262,14 +248,16 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Create the item session factory that will be used to instantiate
             // new item sessions.
+            
+            $seeker = $this->getSeeker($test);
 
             for ($i = 0; $i < $routeCount; $i++) {
-                $routeItem = $access->readRouteItem($this->getSeeker());
+                $routeItem = $access->readRouteItem($seeker);
                 $route->addRouteItemObject($routeItem);
                 
                 // An already instantiated session for this route item?
                 if ($access->readBoolean() === true) {
-                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $this->getSeeker());
+                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker);
                     
                     // last-update
                     if ($access->readBoolean() === true) {
@@ -278,7 +266,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                     
                     // pending-responses
                     if ($access->readBoolean() === true) {
-                        $pendingResponseStore->addPendingResponses($access->readPendingResponses($this->getSeeker()));
+                        $pendingResponseStore->addPendingResponses($access->readPendingResponses($seeker));
                     }
 
                     $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());

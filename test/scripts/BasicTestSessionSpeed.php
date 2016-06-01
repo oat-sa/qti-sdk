@@ -11,7 +11,6 @@ use qtism\runtime\common\State;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\storage\binary\TemporaryQtiBinaryStorage;
-use qtism\runtime\storage\binary\BinaryAssessmentTestSeeker;
 use qtism\data\storage\php\PhpDocument;
 
 require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
@@ -35,8 +34,8 @@ function createFactory() {
     return new SessionManager();
 }
 
-function createStorage(SessionManager $factory, AssessmentTest $test) {
-    return new TemporaryQtiBinaryStorage($factory, new BinaryAssessmentTestSeeker($test));
+function createStorage(SessionManager $factory) {
+    return new TemporaryQtiBinaryStorage($factory);
 }
 
 function spentTime($start, $end, array &$registration = null) {
@@ -115,7 +114,7 @@ $averageNeighbourhood = array();
 $start = microtime();
 
 $test = loadTestDefinition($averageLoad);
-$storage = createStorage(createFactory(), $test);
+$storage = createStorage(createFactory());
 $session = $storage->instantiate($test);
 $sessionId = $session->getSessionId();
 $session->beginTestSession();

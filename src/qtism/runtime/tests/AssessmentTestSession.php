@@ -1933,9 +1933,13 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Select the eligible items from the current one to the last following item in the route which is in linear navigation mode.
+     * Select items that are eligible for the candidate depending on the current test session context.
      *
-     * AssessmentItemSession objects related to the eligible items will be instantiated.
+     * AssessmentItemSession objects related to the eligible items will be instantiated. However, the decision
+     * about whether or not they must be instantiated at a given time depends on the "Adaptivty" of the test definition.
+     * 
+     * * The test is adaptive: an AssessmentItemSession will be instantiated for the current route item only.
+     * * The test is not adaptive: all route items are scanned. If an AssessmentItemSession does not exist for a route item, it is instantiated.
      *
      */
     protected function selectEligibleItems()
@@ -1946,8 +1950,6 @@ class AssessmentTestSession extends State
             
             $oldPosition = $route->getPosition();
             $adaptive = $this->isAdaptive();
-            $initialTestPart = $route->current()->getTestPart();
-            $isInitalRouteItemFirstOfTestPart = $route->isFirstOfTestPart();
 
             // In this loop, we select at least the first routeItem we find as eligible.
             while ($route->valid() === true) {
@@ -1992,8 +1994,8 @@ class AssessmentTestSession extends State
                 if ($adaptive === true) {
                     // Adaptive Test Case:
                     // -------------------
-                    // We cannot foresee more items to be selected for presentation because the rest of the sequence is linear and might contain
-                    // branching rules or preconditions.
+                    // We cannot foresee more items to be selected for presentation because the rest of the sequence is linear and contain
+                    // branching rules and/or preconditions.
                     //
                     // The QTI Specification says, in terms of Item Session Lifecycle, that 
                     //
