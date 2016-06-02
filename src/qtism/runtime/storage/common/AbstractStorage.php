@@ -160,21 +160,20 @@ abstract class AbstractStorage
     /**
      * Delete an AssessmentTestSession object from persistence.
      * 
-     * This method enables you to delete an AssessmentTestSession object bound to a given session ID $sessionId from the
-     * persistent storage.
+     * This method enables you to delete a persistent AssessmentTestSession object from the persistent storage.
      * 
-     * If an AssessmentTestSession object is effectively bound to session ID $sessionId in the
-     * persistent storage, and is deleted successfully, this method returns true. 
+     * If an AssessmentTestSession object is effectively found by its session ID in the
+     * persistent storage, and is deleted successfully, this method returns true.
      * 
-     * However, if no AssessmentTestSession object could be found for $sessionId while deleting under
-     * normal circumstances, the method returns false.
+     * However, if no AssessmentTestSession object could be found from its session ID while deleting under
+     * normal circumstances, this method returns false.
      * 
-     * Finally, if an unexpected error occurs while deleting the AssessmentTestSession object, a StorageException
-     * is thrown.
+     * Finally, if an unexpected error occurs while deleting the AssessmentTestSession object (e.g. network issue, ...), 
+     * a StorageException is thrown.
      * 
-     * @param string $sessionId
+     * @param \qtism\runtime\tests\AssessmentTestSession The AssessmentTestSession object to be deleted.
      * @return boolean
      * @throws \qtism\runtime\storage\common\StorageException If an error occurs while deleting the AssessmentTestSession object.
      */
-    abstract public function delete($sessionId);
+    abstract public function delete(AssessmentTestSession $assessmentTestSession);
 }

@@ -568,12 +568,12 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         // It's instantiated, but not persisted.
         
         // Fun test #1, delete the non-persisted test session.
-        $this->assertFalse($storage->delete($sessionId));
+        $this->assertFalse($storage->delete($session));
         
         $storage->persist($session);
         
         // Fun test#2, delete the persisted test session.
-        $this->assertTrue($storage->delete($sessionId));
+        $this->assertTrue($storage->delete($session));
         
         // Fun test#3, retrieve an unexisting test session.
         try {

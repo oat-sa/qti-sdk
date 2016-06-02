@@ -146,8 +146,8 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     /**
      * @see \qtism\runtime\storage\binary\AbstractStorage::delete()
      */
-    public function delete($sessionId)
+    public function delete(AssessmentTestSession $assessmentTestSession)
     {
-        return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin');
+        return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($assessmentTestSession->getSessionId()) . '.bin');
     }
 }
