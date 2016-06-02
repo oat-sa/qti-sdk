@@ -28,7 +28,9 @@ use qtism\data\AssessmentTest;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\common\storage\MemoryStream;
 use qtism\common\datatypes\files\FileSystemFileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\runtime\tests\AbstractSessionManager;
+use qtism\runtime\storage\common\StorageException;
 use \RuntimeException;
 
 /**
@@ -148,6 +150,19 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     public function delete(AssessmentTestSession $assessmentTestSession)
     {
+        $fileManager = $this->getManager()->getFileManager();
+        foreach ($assessmentTestSession->getFiles() as $file) {
+            try {
+                $fileManager->delete($file);    
+            } catch (FileManagerException $e) {
+                throw new StorageException(
+                    "An unexpected error occured while deleting file '" . $file->getIdentifier() . "' bound to Assessment Test Session '" . $assessmentTestSession->getSessionId() . "'.",
+                    StorageException::DELETION,
+                    $e
+                );
+            }
+        }
+        
         return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($assessmentTestSession->getSessionId()) . '.bin');
     }
 }

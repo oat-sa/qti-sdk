@@ -4,6 +4,7 @@ use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -31,7 +32,7 @@ function loadTestDefinition(array &$average = null) {
 }
 
 function createFactory() {
-    return new SessionManager();
+    return new SessionManager(new FileSystemFileManager());
 }
 
 function createStorage(SessionManager $factory, AssessmentTest $test) {

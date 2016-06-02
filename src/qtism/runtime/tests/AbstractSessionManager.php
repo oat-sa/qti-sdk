@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,7 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\common\datatypes\files\FileManager;
 use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
 use qtism\data\IAssessmentItem;
@@ -32,18 +33,49 @@ use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentItemRef;
 
 /**
- * The AbstractSessionManager class is a bed for instantiating
- * various implementations of AssessmentTestSession and AssessmentItemSession.
+ * The AbstractSessionManager class is a bed for instantiating various implementations of AssessmentTestSession and AssessmentItemSession.
  *
+ * The AbstractSessionManager constructor takes in argument a FileManager object that
+ * will be used to deal with QTI file datatypes during execution.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
 abstract class AbstractSessionManager
 {
-    public function __construct()
+    /**
+     * @var \qtism\common\datatypes\files\FileManager
+     */
+    private $fileManager;
+    
+    /**
+     * Create a new AbstractSessionManager object.
+     * 
+     * @param \qtism\common\datatypes\files\FileManager A FileManager object.
+     */
+    public function __construct(FileManager $fileManager)
     {
-        
+        $this->setFileManager($fileManager);
+    }
+    
+    /**
+     * Set the FileManager object to be used.
+     * 
+     * @param \qtism\common\datatypes\files\FileManager $fileManager
+     */
+    public function setFileManager(FileManager $fileManager)
+    {
+        $this->fileManager = $fileManager;
+    }
+
+    /**
+     * Get the FileManager object in use.
+     * 
+     * @return \qtism\common\datatypes\files\FileManager
+     */
+    public function getFileManager()
+    {
+        return $this->fileManager;
     }
 
     /**

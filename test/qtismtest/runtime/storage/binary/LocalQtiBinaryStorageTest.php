@@ -33,7 +33,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         $test = $doc->getDocumentComponent();
     
-        $sessionManager = new SessionManager();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -408,7 +408,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         $test = $doc->getDocumentComponent();
         
-        $factory = new SessionManager($doc->getDocumentComponent());
+        $factory = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($factory, $test);
         $sessionId = 'linearSimultaneous1337';
         $session = $storage->instantiate($sessionId);
@@ -559,7 +559,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $session->beginTestSession();
@@ -588,7 +588,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $session->beginTestSession();
@@ -676,7 +676,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_processing_test_simple.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -859,7 +859,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $test = $doc->getDocumentComponent();
     
-        $sessionManager = new SessionManager($doc->getDocumentComponent());
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1011,7 +1011,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
         $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1053,7 +1053,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
         $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1117,7 +1117,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
 	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1188,7 +1188,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
 	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
@@ -1253,7 +1253,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
 	    $test = $doc->getDocumentComponent();
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();

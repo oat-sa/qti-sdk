@@ -615,7 +615,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
@@ -685,7 +685,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl'));
         
-        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
         
         $this->assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getState());
@@ -722,7 +722,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
         
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -751,7 +751,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -781,7 +781,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($seeker, $session);
     
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(), $seeker);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
         $this->assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this->assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this->assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -834,7 +834,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
-        $sessionManager = new SessionManager();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
         $testSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
         $routeItem = $testSession->getRoute()->getRouteItemAt(2);
         
@@ -889,7 +889,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->open();
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         
-        $factory = new SessionManager();
+        $factory = new SessionManager(new FileSystemFileManager());
         $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $session->beginTestSession();
         

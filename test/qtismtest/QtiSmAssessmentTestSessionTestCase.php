@@ -2,6 +2,7 @@
 namespace qtismtest;
 
 use qtismtest\QtiSmTestCase;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 
@@ -19,7 +20,7 @@ abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load($url);
 	     
-	    $manager = new SessionManager();
+	    $manager = new SessionManager(new FileSystemFileManager());
 	    return $manager->createAssessmentTestSession($doc->getDocumentComponent());
 	}
 }

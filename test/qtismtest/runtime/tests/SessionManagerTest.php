@@ -3,6 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\AssessmentTest;
 use qtism\runtime\tests\SessionManager;
@@ -41,7 +42,7 @@ class SessionManagerTest extends QtiSmTestCase {
     }
     
     public function testDefaultAssessmentTestSessionCreation() {
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());
         
         $this->assertInstanceOf('qtism\\runtime\\tests\\AssessmentTestSession', $session);

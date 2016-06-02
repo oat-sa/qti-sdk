@@ -3,6 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -19,7 +20,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         
         $route = $testSession->getRoute();
@@ -51,7 +52,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
@@ -91,7 +92,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
         
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
@@ -125,7 +126,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         // Q01 - We answer correct. In linear mode we should go to Q03.
         // However, in non linear mode branch rules are ignored and we go then
         // to Q02.
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         
@@ -146,7 +147,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
         
-        $manager = new SessionManager();
+        $manager = new SessionManager(new FileSystemFileManager());
         $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->beginTestSession();
         

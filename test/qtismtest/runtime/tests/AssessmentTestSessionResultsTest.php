@@ -5,6 +5,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSession;
 use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSessionFactory;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\runtime\tests\TestResultsSubmission;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\common\enums\BaseType;
@@ -20,7 +21,7 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
         $doc->load($file);
-        $factory = new SimpleResultsSubmittableTestSessionFactory();
+        $factory = new SimpleResultsSubmittableTestSessionFactory(new FileSystemFileManager());
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::OUTCOME_PROCESSING);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
@@ -71,7 +72,7 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
         $doc = new XmlCompactDocument();
         $doc->load($file);
-        $factory = new SimpleResultsSubmittableTestSessionFactory();
+        $factory = new SimpleResultsSubmittableTestSessionFactory(new FileSystemFileManager());
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::END);
         $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);

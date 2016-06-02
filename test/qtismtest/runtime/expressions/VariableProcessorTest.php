@@ -5,6 +5,7 @@ use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -74,7 +75,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$testPart = new TestPart('P01', $assessmentSections);
 		$assessmentTest->setTestParts(new TestPartCollection(array($testPart)));
 		
-		$sessionManager = new SessionManager();
+		$sessionManager = new SessionManager(new FileSystemFileManager());
 		$assessmentTestSession = $sessionManager->createAssessmentTestSession($assessmentTest);
 		$assessmentTestSession->beginTestSession();
 		
@@ -114,7 +115,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    $doc = new XmlCompactDocument();
 	    $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    
-	    $sessionManager = new SessionManager();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
 	    $session = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 	    $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.SCORE"/>');
 	    $occurenceVariableExpression = $this->createComponentFromXml('<variable identifier="Q01.1.SCORE"/>');

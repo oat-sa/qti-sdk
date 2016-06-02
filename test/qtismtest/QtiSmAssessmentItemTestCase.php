@@ -3,6 +3,7 @@ namespace qtismtest;
 
 use qtismtest\QtiSmTestCase;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\runtime\tests\SessionManager;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -108,7 +109,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
             </assessmentItemRef>
         ');
 	
-	    $manager = new SessionManager();
+	    $manager = new SessionManager(new FileSystemFileManager());
 	    return new AssessmentItemSession($itemRef);
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\tests\AssessmentTestSessionState;
@@ -13,10 +14,9 @@ $doc->load(dirname(__FILE__) . '/../samples/custom/runtime/selection_single_sect
 $sectionsDistribution = array();
 
 for ($i = 0; $i < $iterations; $i++) {
-    $manager = new SessionManager();
-    var_dump(gc_enabled());
+    $manager = new SessionManager(new FileSystemFileManager());
+    
     echo "Taking test ${i}...\n";
-    echo memory_get_usage(), "\n";
     $sections = array();
 
     $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -38,7 +38,6 @@ for ($i = 0; $i < $iterations; $i++) {
     
     unset($manager);
     unset($session);
-    gc_collect_cycles();
 }
 
 ksort($sectionsDistribution);
