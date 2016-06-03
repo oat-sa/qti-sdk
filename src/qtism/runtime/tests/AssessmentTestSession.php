@@ -123,14 +123,6 @@ class AssessmentTestSession extends State
     private $pendingResponseStore;
 
     /**
-     * Whether the Assessment Test Session must move automatically
-     * to the next RouteItem after ending an attempt.
-     *
-     * @var boolean
-     */
-    private $autoForward = true;
-
-    /**
      * How/When test results must be submitted.
      *
      * @var integer
@@ -160,11 +152,11 @@ class AssessmentTestSession extends State
     private $timeReference = null;
     
     /**
-     * Whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
+     * An array describing which test parts are adaptive/non adaptive.
      * 
-     * @var boolean
+     * @var array
      */
-    private $adaptive;
+    private $adaptivity;
     
     /**
      * An array of testPart identifiers that have been visited by the candidate.
@@ -189,8 +181,7 @@ class AssessmentTestSession extends State
         $this->setAssessmentItemSessionStore(new AssessmentItemSessionStore());
         $this->setLastOccurenceUpdate(new SplObjectStorage());
         $this->setPendingResponseStore(new PendingResponseStore());
-        $durationStore = new DurationStore();
-        $this->setDurationStore($durationStore);
+        $this->setDurationStore(new DurationStore());
 
         // Take the outcomeDeclaration objects of the global scope.
         // Instantiate them with their defaults.
@@ -200,8 +191,18 @@ class AssessmentTestSession extends State
             $this->setVariable($variable);
         }
 
+        // At this time, no session ID.
         $this->setSessionId('no_session_id');
-        $this->setAdaptive($assessmentTest->containsComponentWithClassName(array('branchRule', 'preCondition')));
+        
+        // Build adaptivity map.
+        $adaptivity = array();
+        foreach ($assessmentTest->getTestParts() as $testPartIdentifier => $testPart) {
+            $adaptivity[$testPartIdentifier] = $testPart->containsComponentWithClassName(array('branchRule', 'preCondition'));
+        }
+        
+        $this->setAdaptivity($adaptivity);
+        
+        // Initial state.
         $this->setState(AssessmentTestSessionState::INITIAL);
     }
 
@@ -559,23 +560,24 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Set whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
+     * Set the map of testPart identifiers => adaptive / not adaptive testPart.
      * 
-     * @param boolean $adaptive
+     * @param array $adaptivity
      */
-    protected function setAdaptive($adaptive)
+    protected function setAdaptivity(array $adaptivity)
     {
-        $this->adaptive = $adaptive;
+        $this->adaptivity = $adaptivity;
     }
     
     /**
-     * Whether or not the AssessmentTest to be delivered is adaptive (preConditions, branchingRules).
+     * Whether or not the AssessmentTest or one of its testPart to be delivered is adaptive (preConditions, branchingRules).
      * 
+     * @param string $testPartIdentifier
      * @return boolean
      */
-    protected function isAdaptive()
+    private function isAdaptive($testPartIdentifier = '')
     {
-        return $this->adaptive;
+        return (empty($testPartIdentifier) === true) ? in_array(true, $this->adaptivity, true) : $this->adaptivity[$testPartIdentifier];
     }
     
     /**
@@ -1948,76 +1950,40 @@ class AssessmentTestSession extends State
         
         if ($route->valid() === true) {
             
+            $routeItem = $route->current();
             $oldPosition = $route->getPosition();
-            $adaptive = $this->isAdaptive();
-
-            // In this loop, we select at least the first routeItem we find as eligible.
-            while ($route->valid() === true) {
+            $testPart = $routeItem->getTestPart();
+            
+            if ($this->isAdaptive() === false) {
+                $testPartsArray = $this->getAssessmentTest()->getTestParts()->getArrayCopy();
                 
-                $routeItem = $route->current();
-                $itemRef = $routeItem->getAssessmentItemRef();
-                $occurence = $routeItem->getOccurence();
-                
-                $session = $this->getItemSession($itemRef, $occurence);
-
-                // Does such a session exist for item + occurence?
-                if ($session === false) {
-
-                    // Instantiate the item session...
-                    $testPart = $routeItem->getTestPart();
-                    $navigationMode = $testPart->getNavigationMode();
-                    $submissionMode = $testPart->getSubmissionMode();
-                    
-                    $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
-                    
-                    // Determine the item session control.
-                    if (($control = $routeItem->getItemSessionControl()) !== null) {
-                        $session->setItemSessionControl($control->getItemSessionControl());
+                if ($this->isTestPartVisited($testPartsArray[0]) === false) {
+                    // No testParts at all are adaptive and the first testPart has never been visited.
+                    // Initialize all assessmentItemSessions.
+                    while ($route->valid() === true) {
+                        $this->initializeAssessmentItemSession($route->current());
+                        $route->next();
                     }
-                    
-                    // Determine the time limits.
-                    if ($itemRef->hasTimeLimits() === true) {
-                        $session->setTimeLimits($itemRef->getTimeLimits());
-                    }
-                    
-                    $this->addItemSession($session, $occurence);
-                    
-                    // If we know "what time it is", we transmit
-                    // that information to the eligible item.
-                    if ($this->hasTimeReference() === true) {
-                        $session->setTime($this->getTimeReference());
-                    }
-
-                    $session->beginItemSession();
                 }
-
-                if ($adaptive === true) {
-                    // Adaptive Test Case:
-                    // -------------------
-                    // We cannot foresee more items to be selected for presentation because the rest of the sequence is linear and contain
-                    // branching rules and/or preconditions.
-                    //
-                    // The QTI Specification says, in terms of Item Session Lifecycle, that 
-                    //
-                    // "In an Adaptive Test the items that are to be presented are selected during the session based on the responses and outcomes
-                    // associated with the items presented so far. Items are selected from a large pool and the delivery engine only reports the 
-                    // candidate's interaction with items that have actually been selected."
-                    // 
-                    // In such a context, Item Sessions must be instantiated one by one.
-                    break;
-                } else {
-                    // Non Adaptive Test Case:
-                    // -----------------------
-                    // We continue to search for route items that are selectable for presentation to the candidate. The QTI Specification says, in terms
-                    // of Item Session Lifecycle, that
-                    //
-                    // "In a typical non-Adaptive Test the items are selected in advance and the candidate's interaction with all items is reported 
-                    // at the end of the test session, regardless of whether or not the candidate actually attempted all the items. In effect, item sessions 
-                    // are created in the initial state for all items at the start of the test and are maintained in parallel."
-                    //
-                    // In such a context, we just instantiate all the Item Sessions at once.
+                
+                // Otherwise, nothing to do because there the entirety of the sessions
+                // have already been initialized previously.
+                
+            } elseif ($this->isAdaptive($testPart->getIdentifier()) === true) {
+                // The current testPart is adaptive, but some others are not.
+                // Just initialize a session for the current routeItem.
+                $this->initializeAssessmentItemSession($routeItem);
+            } elseif ($this->isTestPartVisited($testPart) === false) {
+                // The current testPart is not adaptive, but some others are.
+                // Initialize all sessions for routItems that belong to the current testPart.
+                while ($route->valid() && $route->isFirstOfTestPart() === false) {
+                    $route->previous();
+                }
+                
+                do {
+                    $this->initializeAssessmentItemSession($route->current());
                     $route->next();
-                }
+                } while ($route->valid() && $route->isLastOfTestPart() === false);
             }
 
             $route->setPosition($oldPosition);
@@ -2821,5 +2787,43 @@ class AssessmentTestSession extends State
         }
         
         return $values;
+    }
+    
+    protected function initializeAssessmentItemSession(RouteItem $routeItem)
+    {
+        $itemRef = $routeItem->getAssessmentItemRef();
+        $occurence = $routeItem->getOccurence();
+        $session = $this->getItemSession($itemRef, $occurence);
+
+        // Does such a session exist for item + occurence?
+        if ($session === false) {
+
+            // Instantiate the item session...
+            $testPart = $routeItem->getTestPart();
+            $navigationMode = $testPart->getNavigationMode();
+            $submissionMode = $testPart->getSubmissionMode();
+            
+            $session = $this->createAssessmentItemSession($itemRef, $navigationMode, $submissionMode);
+            
+            // Determine the item session control.
+            if (($control = $routeItem->getItemSessionControl()) !== null) {
+                $session->setItemSessionControl($control->getItemSessionControl());
+            }
+            
+            // Determine the time limits.
+            if ($itemRef->hasTimeLimits() === true) {
+                $session->setTimeLimits($itemRef->getTimeLimits());
+            }
+            
+            $this->addItemSession($session, $occurence);
+            
+            // If we know "what time it is", we transmit
+            // that information to the eligible item.
+            if ($this->hasTimeReference() === true) {
+                $session->setTime($this->getTimeReference());
+            }
+
+            $session->beginItemSession();
+        }
     }
 }
