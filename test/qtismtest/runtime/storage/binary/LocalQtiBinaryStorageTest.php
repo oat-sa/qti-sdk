@@ -588,7 +588,8 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
         $test = $doc->getDocumentComponent();
         
-        $sessionManager = new SessionManager(new FileSystemFileManager());
+        $fileManager = new FileSystemFileManager();
+        $sessionManager = new SessionManager($fileManager);
         $storage = new LocalQtiBinaryStorage($sessionManager, $test);
         $session = $storage->instantiate();
         $session->beginTestSession();
@@ -596,13 +597,13 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         
         // --- Q01 - files_1.txt = ('text.txt', 'text/plain', 'Some text...')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/files_1.txt';
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
+        $filepath = self::samplesDir() . 'datatypes/file/raw/files_1.txt';
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/plain', 'text.txt')))));
         $session->moveNext();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
-        $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
+        $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
         
         // Let's persist and retrieve and look if we have the same value in Q01.RESPONSE.
         $storage->persist($session);
@@ -611,17 +612,17 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
-        $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
+        $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
         
         // --- Q02 - files_2.txt = ('', 'text/html', '<img src="/qtism/img.png"/>')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/files_2.txt';
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
+        $filepath = self::samplesDir() . 'datatypes/file/raw/files_2.txt';
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/html')))));
         $session->moveNext();
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
-        $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
+        $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
         
         // Again, we persist and retrieve.
         $storage->persist($session);
@@ -632,17 +633,17 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
-        $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
+        $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
         
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
-        $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
+        $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
         
         // --- Q03 - files_3.txt ('empty.txt', 'text/plain', '')
         $session->beginAttempt();
-        $filepath = self::samplesDir() . 'datatypes/file/files_3.txt';
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::retrieveFile($filepath)))));
+        $filepath = self::samplesDir() . 'datatypes/file/raw/files_3.txt';
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::FILE, $fileManager->createFromFile($filepath, 'text/plain', 'empty.txt')))));
         $session->moveNext();
         $this->assertFalse($session->isRunning());
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
@@ -658,17 +659,32 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q01.RESPONSE']);
         $this->assertEquals('text.txt', $session['Q01.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q01.RESPONSE']->getMimeType());
-        $this->assertEquals('Some text...', $session['Q01.RESPONSE']->getData());
+        $this->assertEquals("Some text...\n", $session['Q01.RESPONSE']->getData());
         
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('', $session['Q02.RESPONSE']->getFilename());
         $this->assertEquals('text/html', $session['Q02.RESPONSE']->getMimeType());
-        $this->assertEquals('<img src="/qtism/img.png"/>', $session['Q02.RESPONSE']->getData());
+        $this->assertEquals("<img src=\"/qtism/img.png\"/>\n", $session['Q02.RESPONSE']->getData());
         
         $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFile', $session['Q02.RESPONSE']);
         $this->assertEquals('empty.txt', $session['Q03.RESPONSE']->getFilename());
         $this->assertEquals('text/plain', $session['Q03.RESPONSE']->getMimeType());
         $this->assertEquals('', $session['Q03.RESPONSE']->getData());
+        
+        // 2nd final big check with deletion of the session.
+        // Related files should also be deleted.
+        
+        // -- Check files exists where they should be on the file system.
+        $this->assertTrue(file_exists($path1 = $session['Q01.RESPONSE']->getPath()));
+        $this->assertTrue(file_exists($path2 = $session['Q02.RESPONSE']->getPath()));
+        $this->assertTrue(file_exists($path3 = $session['Q03.RESPONSE']->getPath()));
+        
+        $storage->delete($session);
+        
+        // -- Check files that files are removed from the file system after deletion of the session.
+        $this->assertFalse(file_exists($path1));
+        $this->assertFalse(file_exists($path2));
+        $this->assertFalse(file_exists($path3));
     }
     
     public function testTemplateProcessingBasic1() {
