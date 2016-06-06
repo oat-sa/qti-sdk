@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,6 +24,8 @@
 namespace qtism\runtime\common;
 
 use qtism\common\collections\AbstractCollection;
+use qtism\common\collections\Container;
+use qtism\common\datatypes\QtiString;
 use \OutOfRangeException;
 use \OutOfBoundsException;
 use \InvalidArgumentException;
@@ -196,6 +198,56 @@ class State extends AbstractCollection
                 $data[$k]->applyDefaultValue();
             }
         }
+    }
+    
+    /**
+     * Whether or not the State contains NULL only values.
+     * 
+     * Please note that in QTI terms, empty containers and empty strings are considered
+     * to be NULL as well.
+     * 
+     * @return boolean
+     */
+    public function containsNullOnly()
+    {
+        $data = $this->getDataPlacerHolder();
+        
+        foreach ($data as $variable) {
+            $value = $variable->getValue();
+            
+            if (is_null($value) || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0)) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Whether or not the State contains only values that are equals to their variable default value only.
+     * 
+     * @return boolean
+     */
+    public function containsValuesEqualToVariableDefaultOnly()
+    {
+        $data = $this->getDataPlacerHolder();
+        
+        foreach ($data as $variable) {
+            $value = $variable->getValue();
+            $default = $variable->getDefaultValue();
+            
+            if (is_null($value) === true) {
+                if (is_null($default) === false) {
+                    return false;
+                }
+            } elseif ($value->equals($default) === false) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     /**
