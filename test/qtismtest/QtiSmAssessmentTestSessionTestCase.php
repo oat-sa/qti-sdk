@@ -16,9 +16,9 @@ abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase {
 	    parent::tearDown();
 	}
 	
-	protected static function instantiate($url) {
+	protected static function instantiate($url, $validate = false) {
 	    $doc = new XmlCompactDocument();
-	    $doc->load($url);
+	    $doc->load($url, $validate);
 	     
 	    $manager = new SessionManager(new FileSystemFileManager());
 	    return $manager->createAssessmentTestSession($doc->getDocumentComponent());
