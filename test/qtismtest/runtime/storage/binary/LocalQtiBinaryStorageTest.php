@@ -156,7 +156,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 10 seconds on Q03 and then skip the item.
         $session->setTime(new DateTime('2014-07-14T13:00:14+00:00', new DateTimeZone('UTC')));
-        $session->skip();
+        $session->endAttempt(new State());
         
         // Are the durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT14S')));
@@ -226,7 +226,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 1 second on Q05.
         $session->setTime(new DateTime('2014-07-14T13:00:21+00:00', new DateTimeZone('UTC')));
-        $session->skip();
+        $session->endAttempt(new State());
         
         // Are the durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT21S')));
@@ -251,7 +251,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         
         // The candidate spends 2 seconds on Q06.
         $session->setTime(new DateTime('2014-07-14T13:00:26+00:00', new DateTimeZone('UTC')));
-        $session->skip();
+        $session->endAttempt(new State());
         
         // Are the durations correct?
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT26S')));

@@ -794,6 +794,15 @@ class AssessmentItemSession extends State
             }
         }
         
+        // If the current submission mode is individual, check allowSkipping.
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false && ($responses === null || $responses->containsNullOnly() === true || $responses->containsValuesEqualToVariableDefaultOnly() === true)) {
+            throw new AssessmentItemSessionException(
+                "Skipping item '" . $this->getAssessmentItem()->getIdentifier() . "' is not allowed.",
+                $this,
+                AssessmentItemSessionException::SKIPPING_FORBIDDEN
+            );
+        }
+        
         // Apply the responses (if provided) to the current state.
         if ($responses !== null) {
             $this->mergeResponses($responses);
@@ -996,31 +1005,6 @@ class AssessmentItemSession extends State
 
         $this->setState(AssessmentItemSessionState::CLOSED);
         $this->setAttempting(false);
-    }
-
-    /**
-     * Skip the item of the current item session. All response variables involved in the item session
-     * will be set to their default value or NULL and submitted.
-     *
-     * @throws \qtism\runtime\tests\AssessmentItemSessionException If skipping is not allowed with respect to the current itemSessionControl.
-     */
-    public function skip()
-    {
-        // allowSkipping is taken into account only if submission mode is INDIVIDUAL.
-        if ($this->getItemSessionControl()->doesAllowSkipping() === false && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
-            // Skipping not allowed.
-            $itemIdentifier = $this->getAssessmentItem()->getIdentifier();
-            $msg = "Skipping item '${itemIdentifier}' is not allowed.";
-            throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::SKIPPING_FORBIDDEN);
-        } else {
-            // Detect all response variables and submit them with their default value or NULL.
-            foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
-                $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
-            }
-
-            // End the attempt with a null state.
-            $this->endAttempt(null, true);
-        }
     }
 
     /**

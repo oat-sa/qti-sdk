@@ -47,7 +47,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
             $session->beginAttempt();
             
             if ($identifier === 'skip') {
-                $session->skip();
+                $session->endAttempt(new State());
             }
             else if ($identifier === 'moveNext') {
                 $session->moveNext();

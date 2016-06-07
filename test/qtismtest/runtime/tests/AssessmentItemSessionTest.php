@@ -205,7 +205,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $itemSession->beginAttempt();
         try {
-            $itemSession->skip();
+            $itemSession->endAttempt(new State());
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
@@ -218,7 +218,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();
-        $itemSession->skip();
+        $itemSession->endAttempt(new State());
         
         $this->assertEquals($itemSession->getState(), AssessmentItemSessionState::CLOSED);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
@@ -368,7 +368,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $itemSession->beginAttempt();
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
-        $itemSession->skip();
+        $itemSession->endAttempt(new State());
         
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
     }

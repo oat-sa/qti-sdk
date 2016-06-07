@@ -60,7 +60,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         // The candidate spends 3 second on the item.
         $session->setTime(self::createDate('2014-07-14 13:00:07'));
-        $session->skip();
+        $session->endAttempt(new State());
         $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT7S')));
         $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT7S')));
         $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT7S')));
@@ -107,7 +107,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         // The candidate spends 2 seconds on item Q02 and skip the item.
         $session->setTime(self::createDate('2014-07-14 13:00:04'));
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         // Check if the maximum remaining time for the test part is indeed 1 second (2 seconds on Q01 + 2 seconds on Q02).
@@ -391,7 +391,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         // The candidate takes 1 second to respond.
         $session->setTime(self::createDate('2014-07-14 13:00:01'));
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         // Begin the Q01.2 item 3 seconds after the beginning of the test session.
@@ -400,7 +400,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         // The candidate takes 4 seconds to respond.
         $session->setTime(self::createDate('2014-07-14 13:00:07'));
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         // Begin Q01.3 and do it lightning fast (0 seconds).
@@ -409,7 +409,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         // The candidate takes 0 seconds to respond.
         $session->setTime(self::createDate('2014-07-14 13:00:07'));
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         $this->assertEquals(1, $session['Q01.1.duration']->getSeconds(true));

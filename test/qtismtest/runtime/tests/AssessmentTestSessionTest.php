@@ -170,7 +170,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $assessmentTestSession->beginAttempt();
-	    $assessmentTestSession->skip();
+	    $assessmentTestSession->endAttempt(new State());
 	    $assessmentTestSession->moveNext();
 	    $this->assertEquals('Q02', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
@@ -178,14 +178,14 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    
 	    $this->assertEquals(1, $assessmentTestSession->getCurrentRemainingAttempts());
 	    $assessmentTestSession->beginAttempt();
-	    $assessmentTestSession->skip();
+	    $assessmentTestSession->endAttempt(new State());
 	    $assessmentTestSession->moveNext();
 	    $this->assertEquals('Q03', $assessmentTestSession->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(0, $assessmentTestSession->getCurrentAssessmentItemRefOccurence());
 	    $this->assertFalse($assessmentTestSession->isCurrentAssessmentItemAdaptive());
 	    
 	    $assessmentTestSession->beginAttempt();
-	    $assessmentTestSession->skip();
+	    $assessmentTestSession->endAttempt(new State());
 	    $assessmentTestSession->moveNext();
 	    
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
@@ -460,9 +460,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 		
 		$assessmentTestSession->beginAttempt();
-		$assessmentTestSession->skip();
+		$assessmentTestSession->endAttempt(new State());
 		$assessmentTestSession->moveNext();
-		$this->assertEquals(0, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
+		$this->assertEquals(1, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 		
 		$assessmentTestSession->beginAttempt();
 		$assessmentTestSession->endAttempt($responses);
@@ -477,7 +477,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    
 	    foreach (array('Q01', 'Q02', 'Q03') as $identifier) {
 	        $assessmentTestSession->beginAttempt();
-	        $assessmentTestSession->skip();
+	        $assessmentTestSession->endAttempt(new State());
 	        $assessmentTestSession->moveNext();
 	        $sessions = $assessmentTestSession->getAssessmentItemSessions($identifier);
 	        $this->assertEquals(1, count($sessions));
@@ -506,7 +506,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    
 	    for ($i = 0; $i < 3; $i++) {
 	        $assessmentTestSession->beginAttempt();
-	        $assessmentTestSession->skip();
+	        $assessmentTestSession->endAttempt(new State());
 	        $assessmentTestSession->moveNext();
 	    }
 	    
@@ -543,7 +543,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    // The session has begun, the candidate is able to jump anywhere in testPart 'P01'.
 	    for ($i = 0; $i < 6; $i++) {
 	        $session->beginAttempt();
-	        $session->skip();
+	        $session->endAttempt(new State());
 	        $session->moveNext();
 	    }
 	    
@@ -567,7 +567,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    
 	    for ($i = 0; $i < 3; $i++) {
 	        $session->beginAttempt();
-	        $session->skip();
+	        $session->endAttempt(new State());
 	        $session->moveNext();
 	    }
 	    
@@ -644,7 +644,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
 	    $session->beginAttempt();
-	    $session->skip();
+	    $session->endAttempt(new State());
 	    $session->moveNext();
 	    
 	    // End of test, everything ok?
@@ -786,34 +786,34 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    // We should still be on Q01.
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->skip();
+	    $session->endAttempt(new State());
 	    $session->moveNext(); // Q02
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q03
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q04
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q05
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q06
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q07.1
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q07.2
 	    $session->beginAttempt();
-	    $session->skip(); 
+	    $session->endAttempt(new State()); 
 	    $session->moveNext();// Q07.3
 	    
 	    $this->assertEquals('Q07', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $this->assertEquals(2, $session->getCurrentAssessmentItemRefOccurence());
 	    $session->beginAttempt();
-	    $session->skip();
+	    $session->endAttempt(new State());
 	    $session->moveNext();
 	    
 	    // OutcomeProcessing?
@@ -872,7 +872,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    $session->beginAttempt();
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
-	    $session->skip();
+	    $session->endAttempt(new State());
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	    
 	    $session->beginAttempt();
@@ -1249,7 +1249,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    // First section contains a single item.
 	    $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
 	    $session->beginAttempt();
-	    $session->skip();
+	    $session->endAttempt(new State());
 	    $session->moveNext();
 	    
 	    // The second section is empty, moveNext() goes to the end of the current route,

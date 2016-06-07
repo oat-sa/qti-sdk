@@ -757,38 +757,6 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Skip the current item.
-     *
-     * @throws \qtism\runtime\tests\AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
-     */
-    public function skip()
-    {
-        if ($this->isRunning() === false) {
-            $msg = "Cannot skip the current item while the state of the test session is INITIAL or CLOSED.";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-        }
-        else if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
-            $msg = "Cannot skip an item while the current submission mode is SIMULTANEOUS";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
-        }
-    
-        $this->checkTimeLimits();
-    
-        $item = $this->getCurrentAssessmentItemRef();
-        $occurence = $this->getCurrentAssessmentItemRefOccurence();
-        $session = $this->getItemSession($item, $occurence);
-    
-        try {
-            // Might throw an AssessmentItemSessionException.
-            $session->skip();
-            $this->submitItemResults($session, $occurence);
-            $this->outcomeProcessing();
-        } catch (Exception $e) {
-            throw $this->transformException($e);
-        }
-    }
-    
-    /**
      * Ask the test session to move to next RouteItem in the Route sequence.
      *
      * If there is no more following RouteItems in the Route sequence, the test session ends gracefully.

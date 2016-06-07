@@ -145,7 +145,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // -- Skip Q03.
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         $this->assertEquals(1, $session->numberCorrect());
@@ -250,7 +250,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         
         // Skip Q04.3
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $session->moveNext();
         
         $this->assertEquals(2, $session->numberCorrect());
