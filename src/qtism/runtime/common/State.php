@@ -204,13 +204,14 @@ class State extends AbstractCollection
      * Whether or not the State contains NULL only values.
      * 
      * Please note that in QTI terms, empty containers and empty strings are considered
-     * to be NULL as well.
+     * to be NULL as well. Moreover, if the State is empty of any variable, the method
+     * will return true.
      * 
      * @return boolean
      */
     public function containsNullOnly()
     {
-        $data = $this->getDataPlacerHolder();
+        $data = $this->getDataPlaceHolder();
         
         foreach ($data as $variable) {
             $value = $variable->getValue();
@@ -232,7 +233,7 @@ class State extends AbstractCollection
      */
     public function containsValuesEqualToVariableDefaultOnly()
     {
-        $data = $this->getDataPlacerHolder();
+        $data = $this->getDataPlaceHolder();
         
         foreach ($data as $variable) {
             $value = $variable->getValue();
