@@ -216,9 +216,7 @@ class State extends AbstractCollection
         foreach ($data as $variable) {
             $value = $variable->getValue();
             
-            if (is_null($value) || ($value instanceof QtiString && $value->getValue() === '') || ($value instanceof Container && count($value) === 0)) {
-                continue;
-            } else {
+            if ($variable->isNull() === false) {
                 return false;
             }
         }
@@ -239,8 +237,8 @@ class State extends AbstractCollection
             $value = $variable->getValue();
             $default = $variable->getDefaultValue();
             
-            if (is_null($value) === true) {
-                if (is_null($default) === false) {
+            if (Utils::isNull($value) === true) {
+                if (Utils::isNull($default) === false) {
                     return false;
                 }
             } elseif ($value->equals($default) === false) {

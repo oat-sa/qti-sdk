@@ -66,14 +66,14 @@ abstract class Variable
     /**
 	 * The value of the variable.
 	 *
-	 * @var int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container
+	 * @var null|\qtism\common\datatypes\QtiDatatype
 	 */
     private $value;
 
     /**
 	 * The default value of the variable.
 	 *
-	 * @var int|float|double|boolean|string|Duration|Point|Pair|DirectedPair|Container
+	 * @var null|\qtism\common\datatypes\QtiDatatype
 	 */
     private $defaultValue = null;
 

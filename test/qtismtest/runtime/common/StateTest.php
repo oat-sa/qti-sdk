@@ -92,6 +92,9 @@ class StateTest extends QtiSmTestCase {
     
     /**
      * @dataProvider containsNullOnlyProvider
+     * 
+     * @param boolean $expected
+     * @param \qtism\runtime\common\State $state
      */
     public function testContainsNullOnly($expected, State $state) {
         $this->assertEquals($expected, $state->containsNullOnly());
@@ -109,6 +112,58 @@ class StateTest extends QtiSmTestCase {
             array(false, new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25))))),
             
             array(false, new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(0)), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::INTEGER)))),
+        );
+    }
+    
+    /**
+     * @dataProvider containsValuesEqualToVariableDefaultOnlyProvider
+     * 
+     * @param boolean $expected
+     * @param \qtism\runtime\common\State $state
+     */
+    public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state) {
+        $this->assertEquals($expected, $state->containsValuesEqualToVariableDefaultOnly());
+    }
+    
+    public function containsValuesEqualToVariableDefaultOnlyProvider() {
+        $booleanNotDefault = new ResponseVariable('BOOLEAN_NOT_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
+        $booleanNotDefault->setDefaultValue(new QtiBoolean(false));
+        
+        $booleanDefault = new ResponseVariable('BOOLEAN_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
+        $booleanDefault->setDefaultValue(new QtiBoolean(true));
+        
+        $nullDefault = new ResponseVariable('NULL_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN);
+        
+        $stringDefaultEmptyString = new ResponseVariable('STRING_DEFAULT_EMPTY_STRING', Cardinality::SINGLE, BaseType::STRING);
+        $stringDefaultEmptyString->setDefaultValue(new QtiString(''));
+        
+        $stringDefaultEmptyString2 = new ResponseVariable('STRING_DEFAULT_EMPTY_STRING2', Cardinality::SINGLE, BaseType::STRING, new QtiString(''));
+        $stringDefaultEmptyString2->setDefaultValue(null);
+        
+        $containerDefaultEmptyContainer = new ResponseVariable('CONTAINER_DEFAULT_EMPTY_CONTAINER', Cardinality::MULTIPLE, BaseType::BOOLEAN);
+        $containerDefaultEmptyContainer->setDefaultValue(new MultipleContainer(BaseType::BOOLEAN));
+        
+        $containerNotDefault = new ResponseVariable('CONTAINER_NOT_DEFAULT', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(false))));
+        $containerNotDefault->setDefaultValue(new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true))));
+        
+        $containerDefault = new ResponseVariable('CONTAINER_DEFAULT', Cardinality::MULTIPLE, BaseType::BOOLEAN, new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true))));
+        $containerDefault->setDefaultValue(new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true))));
+        
+        return array(
+            array(false, new State(array($booleanNotDefault))),
+            array(false, new State(array($booleanDefault, $booleanNotDefault))),
+            array(false, new State(array($booleanDefault, $booleanNotDefault, $nullDefault))),
+            array(false, new State(array($booleanNotDefault, $stringDefaultEmptyString))),
+            array(false, new State(array($containerNotDefault))),
+            
+            array(true, new State(array($booleanDefault))),
+            array(true, new State(array($nullDefault))),
+            array(true, new State(array($nullDefault, $booleanDefault))),
+            array(true, new State(array($stringDefaultEmptyString))),
+            array(true, new State(array($stringDefaultEmptyString2))),
+            array(true, new State(array($stringDefaultEmptyString, $stringDefaultEmptyString2))),
+            array(true, new State(array($containerDefaultEmptyContainer))),
+            array(true, new State(array($containerDefault)))
         );
     }
 }
