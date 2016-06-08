@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" 
+            identifier="default_value" title="Default Value" label="" xml:lang="en-US" adaptive="false" timeDependent="false">
+    <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+        <defaultValue>
+            <value>ChoiceA</value>
+        </defaultValue>
+    </responseDeclaration>
+    <itemBody>
+        <choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="1" minChoices="0">
+            <prompt>
+                A question
+            </prompt>
+            <simpleChoice identifier="ChoiceA">A</simpleChoice>
+            <simpleChoice identifier="ChoiceB">B</simpleChoice>
+            <simpleChoice identifier="ChoiceC">C</simpleChoice>
+        </choiceInteraction>
+    </itemBody>
+</assessmentItem>
