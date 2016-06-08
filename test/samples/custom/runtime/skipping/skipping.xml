@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+	identifier="skipping" title="Skipping">
+	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S01" title="Section1" visible="true">
+            <!-- Do not allow skipping for section S01. -->
+            <itemSessionControl allowSkipping="false"/>
+            
+            <!-- Item with a single interaction, bound to RESPONSE variable with no default value. -->
+			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceA</value>
+					</correctResponse>
+				</responseDeclaration>
+			</assessmentItemRef>
+            
+            <!-- Item with a single interaction, bound to RESPONSE variable with a default value. -->
+            <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>ChoiceA</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+            
+            <!-- Item bound to two interactions. -->
+            <assessmentItemRef identifier="Q03" href="./Q02.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+				</responseDeclaration>
+                <responseDeclaration identifier="RESPONSE2" cardinality="single" baseType="string">
+					<correctResponse>
+						<value>correct</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>default</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+		</assessmentSection>
+        
+        <!-- S02 is exactly the same as S01, but allowSkipping is true. -->
+        <assessmentSection identifier="S02" title="Section2" visible="true">
+            <!-- Allow skipping for section S02. -->
+            <itemSessionControl allowSkipping="true"/>
+			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceA</value>
+					</correctResponse>
+				</responseDeclaration>
+			</assessmentItemRef>
+            <assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>ChoiceA</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+            <assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+				</responseDeclaration>
+                <responseDeclaration identifier="RESPONSE2" cardinality="single" baseType="string">
+					<correctResponse>
+						<value>correct</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>default</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+		</assessmentSection>
+	</testPart>
+    <testPart identifier="P02" navigationMode="linear" submissionMode="simultaneous">
+        <!-- S03 is exactly the same as S01. However, it is in a testPart with simultaneous submission mode.
+        In such a context, allowSkipping is not taken into consideration and we can skip. -->
+        <assessmentSection identifier="S03" title="Section3" visible="true">
+            <!-- Do not allow skipping for section S03 (disabled by testPart's simultaneous submission mode). -->
+            <itemSessionControl allowSkipping="false"/>
+			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceA</value>
+					</correctResponse>
+				</responseDeclaration>
+			</assessmentItemRef>
+            <assessmentItemRef identifier="Q08" href="./Q08.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>ChoiceA</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+            <assessmentItemRef identifier="Q09" href="./Q09.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceB</value>
+					</correctResponse>
+				</responseDeclaration>
+                <responseDeclaration identifier="RESPONSE2" cardinality="single" baseType="string">
+					<correctResponse>
+						<value>correct</value>
+					</correctResponse>
+                    <defaultValue>
+                        <value>default</value>
+                    </defaultValue>
+				</responseDeclaration>
+			</assessmentItemRef>
+		</assessmentSection>
+    </testPart>
+</assessmentTest>
