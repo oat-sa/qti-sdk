@@ -794,17 +794,9 @@ class AssessmentItemSession extends State
             }
         }
         
-        // If the current submission mode is individual, check allowSkipping.
-        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false && ($responses === null || $responses->containsNullOnly() === true || $responses->containsValuesEqualToVariableDefaultOnly() === true)) {
-            throw new AssessmentItemSessionException(
-                "Skipping item '" . $this->getAssessmentItem()->getIdentifier() . "' is not allowed.",
-                $this,
-                AssessmentItemSessionException::SKIPPING_FORBIDDEN
-            );
-        }
-        
         // Apply the responses (if provided) to the current state.
         if ($responses !== null) {
+            $this->checkAllowSkipping($responses);
             $this->mergeResponses($responses);
         }
 
@@ -1340,6 +1332,30 @@ class AssessmentItemSession extends State
         } else {
             
             return false;
+        }
+    }
+    
+    private function checkAllowSkipping(State $responses)
+    {
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false) {
+            
+            $session = clone $this;
+            
+            foreach ($responses as $identifier => $value) {
+                if (isset($session[$identifier]) === true) {
+                    $session[$identifier] = $value->getValue();
+                }
+            }
+            
+            $state = $session->getResponseVariables(false);
+            
+            if ($state->containsNullOnly() === true || $state->containsValuesEqualToVariableDefaultOnly() === true) {
+                throw new AssessmentItemSessionException(
+                    "Skipping item '" . $this->getAssessmentItem()->getIdentifier() . "' is not allowed.",
+                    $this,
+                    AssessmentItemSessionException::SKIPPING_FORBIDDEN
+                );
+            }
         }
     }
 

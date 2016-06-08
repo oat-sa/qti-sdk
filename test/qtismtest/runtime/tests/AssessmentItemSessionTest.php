@@ -196,7 +196,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testSkippingForbidden() {
+    public function testSkippingForbiddenSimple() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
@@ -204,16 +204,74 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginItemSession();
         
         $itemSession->beginAttempt();
+        
+        // Test with empty state...
         try {
             $itemSession->endAttempt(new State());
             $this->assertTrue(false);
         }
         catch (AssessmentItemSessionException $e) {
+            $this->assertEquals("Skipping item 'Q01' is not allowed.", $e->getMessage());
+            $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
+        }
+        
+        // Test with null value for RESPONSE...
+        try {
+            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER))));
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals("Skipping item 'Q01' is not allowed.", $e->getMessage());
             $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
         }
     }
     
-    public function testSkippingAllowed() {
+    public function testSkippingForbiddenDefaultValue() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/skipping/default_value.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setAllowSkipping(false);
+        $itemSessionControl->setMaxAttempts(0);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        // Test with empty state...
+        try {
+            $itemSession->endAttempt(new State());
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals("Skipping item 'default_value' is not allowed.", $e->getMessage());
+            $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
+            $this->assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
+        }
+        
+        // Test with a value equal to default value...
+        try {
+            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+            $this->assertTrue(false);
+        }
+        catch (AssessmentItemSessionException $e) {
+            $this->assertEquals("Skipping item 'default_value' is not allowed.", $e->getMessage());
+            $this->assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
+            $this->assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
+        }
+        
+        // Finally, with a value different than default value, we can end the attempt.
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
+        $this->assertEquals('ChoiceB', $itemSession['RESPONSE']->getValue());
+        
+        // Finally bis, by allowing skipping, we can skip.
+        $itemSessionControl->setAllowSkipping(true);
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER))));
+        $this->assertNull($itemSession['RESPONSE']);
+    }
+    
+    public function testSkippingAllowedSimple() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
