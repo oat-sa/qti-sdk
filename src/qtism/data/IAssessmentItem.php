@@ -32,8 +32,7 @@ use qtism\data\processing\ResponseProcessing;
 use \InvalidArgumentException;
 
 /**
- * Any clas that claims to represent An AssessmentItem must implement
- * this interface.
+ * Any clas that claims to represent An AssessmentItem must implement this interface.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *

@@ -99,10 +99,10 @@ class Shuffling extends QtiComponent
     public function setShufflingGroups(ShufflingGroupCollection $shufflingGroups) 
     {
         if (count($shufflingGroups) === 0) {
-            $msg = "A Shuffling object must composed of at least 1 ShufflingGroup object. None given";
+            $msg = "A Shuffling object must be composed of at least 1 ShufflingGroup object. None given";
             throw new InvalidArgumentException($msg);
         } elseif (($c = count($shufflingGroups)) > 2) {
-            $msg = "A Shuffling object must composed of at most 2 ShufflingGroup objects. ${c} given.";
+            $msg = "A Shuffling object must be composed of at most 2 ShufflingGroup objects. ${c} given.";
             throw new InvalidArgumentException($msg);
         } else {
             $this->shufflingGroups = $shufflingGroups;
