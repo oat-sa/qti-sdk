@@ -25,8 +25,7 @@ namespace qtism\data;
 use \Iterator;
 
 /**
- * An Iterator that makes you able to loop on the QtiComponent objects
- * contained by a given QtiComponent object.
+ * An Iterator that makes you able to loop on the QtiComponent objects contained by a given QtiComponent object.
  *
  * The following example demonstrates how QtiComponentIterator works:
  *
@@ -61,8 +60,7 @@ use \Iterator;
 class QtiComponentIterator implements Iterator
 {
     /**
-	 * The QtiComponent object which contains the QtiComponent objects
-	 * to be traversed.
+	 * The QtiComponent object which contains the QtiComponent objects to be traversed.
 	 *
 	 * @var \qtism\data\QtiComponent
 	 */

@@ -38,12 +38,30 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		$sum = new Sum($baseValues);
 		$iterator = new QtiComponentIterator($sum);
 
+        // Iterate twice...
+        for ($j = 0; $j < 2; $j++) {
+            $iterations = 0;
+            foreach ($iterator as $i) {
+                $this->assertEquals('baseValue', $i->getQtiClassName());
+                $iterations++;
+            }
+            $this->assertEquals(1, $iterations);
+        }
+	}
+    
+    public function testOneChildComponentsByClassName() {
+        $baseValues = new ExpressionCollection();
+		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
+		$sum = new Sum($baseValues);
+		$iterator = new QtiComponentIterator($sum, array('baseValue'));
+
 		$iterations = 0;
-		foreach ($iterator as $k => $i) {
+		foreach ($iterator as $i) {
+            $this->assertEquals('baseValue', $i->getQtiClassName());
 			$iterations++;
 		}
 		$this->assertEquals(1, $iterations);
-	}
+    }
 
 	public function testNoChildComponents() {
 		$baseValue = new BaseValue(BaseType::FLOAT, 10);
@@ -76,18 +94,44 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		$this->assertEquals($iterations, 4);
 	}
 	
-	public function testClassSelection() {
+    /**
+     * @dataProvider testClassSelectionProvider
+     * 
+     * @param integer $iterations
+     * @param array $classNames
+     */
+	public function testClassSelection($file, $iterations, array $classNames) {
 	    $doc = new XmlCompactDocument();
-	    $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+	    $doc->load($file);
 	    
-	    $iterator = new QtiComponentIterator($doc->getDocumentComponent(), array('responseProcessing'));
-	    $i = 0;
+	    $iterator = new QtiComponentIterator($doc->getDocumentComponent(), $classNames);
+        
+        // We check that we can iterate twice, so that we are sure that the whole implementation
+        // of Iterator is working well...
+        $j = 0;
+        for ($j = 0; $j < 2; $j++) {
+            $i = 0;
 	    
-	    foreach ($iterator as $responseProcessing) {
-	        $this->assertEquals($iterator->key(), 'responseProcessing');
-	        $i++;
-	    }
-	    
-	    $this->assertEquals(7, $i);
+            foreach ($iterator as $responseProcessing) {
+                $this->assertTrue(in_array($iterator->key(), $classNames));
+                $i++;
+            }
+            
+            $this->assertEquals($iterations, $i);
+        }
 	}
+    
+    public function testClassSelectionProvider() {
+        $dir = self::samplesDir();
+        
+        return array(
+            array("${dir}custom/runtime/itemsubset.xml", 7, array('responseProcessing')),
+            array("${dir}custom/runtime/itemsubset.xml", 1, array('testPart')),
+            array("${dir}custom/runtime/itemsubset.xml", 3, array('assessmentSection')),
+            array("${dir}custom/runtime/itemsubset.xml", 11, array('responseProcessing', 'testPart','assessmentSection')),
+            array("${dir}custom/runtime/itemsubset.xml", 15, array('outcomeDeclaration')),
+            array("${dir}custom/runtime/itemsubset.xml", 0, array('x')),
+            array("${dir}custom/runtime/itemsubset.xml", 0, array('x', 'y')),
+        );
+    }
 }
