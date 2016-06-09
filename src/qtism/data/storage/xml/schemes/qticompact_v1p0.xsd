@@ -18,6 +18,7 @@
 	    				<xs:element name="responseProcessing" minOccurs="0" maxOccurs="1"/>
 	    				<xs:element name="modalFeedbackRule" type="ModalFeedbackRule.Type" minOccurs="0" maxOccurs="unbounded"/>
 	    				<xs:element name="shuffling" type="Shuffling.Type" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="responseValidityConstraint" type="ResponseValidityConstraint.Type" minOccurs="0" maxOccurs="unbounded"/>
 	    			</xs:sequence>
 	    			<xs:attribute name="adaptive" default="false" use="optional" type="xs:boolean"/>
 	    			<xs:attribute name="timeDependent" use="required" type="xs:boolean"/>
