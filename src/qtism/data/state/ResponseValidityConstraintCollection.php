@@ -22,7 +22,7 @@
 
 namespace qtism\data\state;
 
-use qtism\data\QtiCollection;
+use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
 
 /**
@@ -31,7 +31,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class ResponseValidityConstraintCollection extends QtiCollection
+class ResponseValidityConstraintCollection extends QtiComponentCollection
 {
     /**
 	 * Check if a given $value is an instance of ResponseValidityConstraint.

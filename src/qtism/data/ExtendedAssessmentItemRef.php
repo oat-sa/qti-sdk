@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -32,15 +32,18 @@ use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\processing\TemplateProcessing;
 use qtism\common\collections\IdentifierCollection;
 use \InvalidArgumentException;
 
 /**
- * The ExtendedAssessmentItemRef class is an extended representation of the QTI
- * assessmentItemRef class. It gathers together the assessmentItemRef + the
- * outcome/responseDeclarations of the referenced item in a single component.
+ * The ExtendedAssessmentItemRef class is an extended representation of the QTI assessmentItemRef class. 
+ * 
+ * It gathers together the assessmentItemRef + the outcome/responseDeclarations of the referenced item 
+ * in a single component.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -96,8 +99,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $timeDependent = false;
     
     /**
-     * A collection of QTI identifiers identifying response variables bound
-     * to endAttemptInteractions contained in the item content.
+     * A collection of QTI identifiers identifying response variables bound to endAttemptInteractions contained in the item content.
      * 
      * @var \qtism\common\collections\IdentifierCollection
      * @qtism-bean-property
@@ -123,13 +125,20 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * The Shuffling components.
      * 
-     * The Shuffling components indicate what are the identifiers involved
-     * in interaction's choice shuffling.
+     * The Shuffling components indicate what are the identifiers involved in interaction's choice shuffling.
      * 
      * @var \qtism\data\state\ShufflingCollection
      * @qtism-bean-property
      */
     private $shufflings;
+    
+    /**
+     * The response validity constraints related to the item content.
+     * 
+     * @var \qtism\data\state\ResponseValidityConstraintCollection
+     * @qtism-bean-property
+     */
+    private $responseValidityConstraints;
 
     /**
      * Create a new instance of CompactAssessmentItem
@@ -149,6 +158,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         $this->setModalFeedbackRules(new ModalFeedbackRuleCollection());
         $this->setEndAttemptIdentifiers(new IdentifierCollection());
         $this->setShufflings(new ShufflingCollection());
+        $this->setResponseValidityConstraints(new ResponseValidityConstraintCollection());
     }
 
     /**
@@ -464,7 +474,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * 
      * @param \qtism\common\collections\IdentifierCollection $endAttemptIdentifiers
      */
-    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers) {
+    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers) 
+    {
         $this->endAttemptIdentifiers = $endAttemptIdentifiers;
     }
     
@@ -473,8 +484,49 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * 
      * @return \qtism\common\collections\IdentifierCollection
      */
-    public function getEndAttemptIdentifiers() {
+    public function getEndAttemptIdentifiers() 
+    {
         return $this->endAttemptIdentifiers;
+    }
+    
+    /**
+     * Set the response validity constraints related to the item content.
+     * 
+     * @param \qtism\data\state\ResponseValidityConstraintCollection $responseValidityConstraint
+     */
+    public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints)
+    {
+        $this->responseValidityConstraints = $responseValidityConstraints;
+    }
+    
+    /**
+     * Get the response validity constraints related to the item content.
+     * 
+     * @return \qtism\data\state\ResponseValidityConstraintCollection
+     */
+    public function getResponseValidityConstraints()
+    {
+        return $this->responseValidityConstraints;
+    }
+    
+    /**
+     * Add a response validity constraint related to item content.
+     * 
+     * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
+     */
+    public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
+    {
+        $this->getResponseValidityConstraints()->attach($responseValidityConstraints);
+    }
+    
+    /**
+     * Remove a response validity constraint related to item content.
+     * 
+     * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
+     */
+    public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
+    {
+        $this->getResponseValidityConstraints()->detach($responseValidityConstraint);
     }
 
     /**
@@ -520,7 +572,11 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
             $components[] = $this->getResponseProcessing();
         }
         
-        $components = array_merge($components, $this->getModalFeedbackRules()->getArrayCopy());
+        $components = array_merge($components, 
+            $this->getModalFeedbackRules()->getArrayCopy(),
+            $this->getShufflings()->getArrayCopy(),
+            $this->getResponseValidityConstraints()->getArrayCopy()
+        );
 
         return new QtiComponentCollection($components);
     }

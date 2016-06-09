@@ -38,6 +38,7 @@ class ResponseValidityConstraint extends QtiComponent
      * The identifier of the response the validity constraint applies to.
      * 
      * @var string
+     * @qtism-bean-property
      */
     private $responseIdentifier;
     
@@ -45,11 +46,15 @@ class ResponseValidityConstraint extends QtiComponent
      * The minimum cardinality the value to be set to the response must have.
      * 
      * @var integer
+     * @qtism-bean-property
      */
     private $minConstraint;
     
     /**
      * The maximum cardinality the value to be set the response must have.
+     * 
+     * @var integer
+     * @qtism-bean-property
      */
     private $maxConstraint;
     

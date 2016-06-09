@@ -28,6 +28,7 @@ use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -85,6 +86,11 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         foreach ($component->getShufflings() as $shuffling) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($shuffling);
             $element->appendChild($marshaller->marshall($shuffling));
+        }
+        
+        foreach ($component->getResponseValidityConstraints() as $responseValidityConstraint) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseValidityConstraint);
+            $element->appendChild($marshaller->marshall($responseValidityConstraint));
         }
         
         self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
@@ -181,6 +187,15 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $shufflings[] = $marshaller->unmarshall($shufflingElt);
         }
         $compactAssessmentItemRef->setShufflings($shufflings);
+        
+        // ResponseValidityConstraints.
+        $responseValidityConstraintElts = self::getChildElementsByTagName($element, 'responseValidityConstraint');
+        $responseValidityConstraints = new ResponseValidityConstraintCollection();
+        foreach ($responseValidityConstraintElts as $responseValidityConstraintElt) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseValidityConstraintElt);
+            $responseValidityConstraints[] = $marshaller->unmarshall($responseValidityConstraintElt);
+        }
+        $compactAssessmentItemRef->setResponseValidityConstraints($responseValidityConstraints);
 
         if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);

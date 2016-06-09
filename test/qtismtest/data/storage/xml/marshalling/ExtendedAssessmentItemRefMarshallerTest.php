@@ -26,6 +26,8 @@ use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use \DOMDocument;
 
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
@@ -378,5 +380,70 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(2, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this->assertEquals(array('id4', 'id5', 'id6'), $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
+    }
+    
+    /**
+     * @depends testMarshallMinimal
+     */
+    public function testMarshallResponseValidityConstraints() {
+        $factory = new CompactMarshallerFactory();
+	    $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
+	    
+        $responseValidityConstraints = new ResponseValidityConstraintCollection(
+            array(
+                new ResponseValidityConstraint('RESPONSE', 0, 1),
+                new ResponseValidityConstraint('RESPONSE2', 1, 2)
+            )
+        );
+        
+        $component->setResponseValidityConstraints($responseValidityConstraints);
+        
+	    $marshaller = $factory->createMarshaller($component);
+	    $element = $marshaller->marshall($component);
+	    
+	    $this->assertInstanceOf('\\DOMElement', $element);
+	    $this->assertEquals('assessmentItemRef', $element->nodeName);
+	    $this->assertEquals('Q01', $element->getAttribute('identifier'));
+	    $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+	    
+        $responseValidityConstraintElts = $element->getElementsByTagName('responseValidityConstraint');
+        $this->assertEquals(2, $responseValidityConstraintElts->length);
+        
+        $this->assertEquals('RESPONSE', $responseValidityConstraintElts->item(0)->getAttribute('responseIdentifier'));
+        $this->assertEquals('0', $responseValidityConstraintElts->item(0)->getAttribute('minConstraint'));
+        $this->assertEquals('1', $responseValidityConstraintElts->item(0)->getAttribute('maxConstraint'));
+        
+        $this->assertEquals('RESPONSE2', $responseValidityConstraintElts->item(1)->getAttribute('responseIdentifier'));
+        $this->assertEquals('1', $responseValidityConstraintElts->item(1)->getAttribute('minConstraint'));
+        $this->assertEquals('2', $responseValidityConstraintElts->item(1)->getAttribute('maxConstraint'));
+    }
+    
+    /**
+     * @depends testUnmarshallMinimal
+     */
+    public function testUnmarshallResponseValidityConstraints() {
+        $factory = new CompactMarshallerFactory();
+	    $dom = new DOMDocument('1.0', 'UTF-8');
+	    $dom->loadXML('
+            <assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" href="./q01.xml" timeDependent="true">
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE2" minConstraint="1" maxConstraint="2"/>
+            </assessmentItemRef>
+        ');
+	    $element = $dom->documentElement;
+	    $marshaller = $factory->createMarshaller($element);
+	    $component = $marshaller->unmarshall($element);
+        
+        $responseValidityConstraints = $component->getResponseValidityConstraints();
+        
+        $this->assertEquals(2, count($responseValidityConstraints));
+        
+        $this->assertEquals('RESPONSE', $responseValidityConstraints[0]->getResponseIdentifier());
+        $this->assertEquals(0, $responseValidityConstraints[0]->getMinConstraint());
+        $this->assertEquals(1, $responseValidityConstraints[0]->getMaxConstraint());
+        
+        $this->assertEquals('RESPONSE2', $responseValidityConstraints[1]->getResponseIdentifier());
+        $this->assertEquals(1, $responseValidityConstraints[1]->getMinConstraint());
+        $this->assertEquals(2, $responseValidityConstraints[1]->getMaxConstraint());
     }
 }
