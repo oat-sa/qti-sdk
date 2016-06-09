@@ -369,6 +369,11 @@ class XmlDocument extends QtiDocument {
 				$qtiSuffix = 'v2p0';
 				$xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
 			break;
+            
+            case '2.2':
+                $qtiSuffix = 'v2p2';
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
+            break;
 		}
 		
 		$rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
