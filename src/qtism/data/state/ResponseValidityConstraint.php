@@ -98,14 +98,14 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Set the minimum cardinality the value to be set to the response must have.
      * 
-     * @param integer $minConstraint A positive (>= 0) integer value.
-     * @throws \InvalidArgumentException If $minConstraint is not a positive (>= 0) integer value.
+     * @param integer $minConstraint A non negative integer (>= 0) integer value.
+     * @throws \InvalidArgumentException If $minConstraint is not a non negative (>= 0) integer value.
      */
     public function setMinConstraint($minConstraint)
     {
         if (is_int($minConstraint) === false || $minConstraint < 0) {
             throw new InvalidArgumentException(
-                "The 'minConstraint' argument must be a positive (>= 0) integer."
+                "The 'minConstraint' argument must be non negative (>= 0) integer."
             );
         }
         
@@ -115,7 +115,7 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Get the minimum cardinality the value to be set to the response must have.
      * 
-     * @return integer A positive (>= 0) integer value.
+     * @return integer A non negative (>= 0) integer value.
      */
     public function getMinConstraint()
     {
