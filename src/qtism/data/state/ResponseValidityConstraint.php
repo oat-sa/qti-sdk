@@ -92,7 +92,7 @@ class ResponseValidityConstraint extends QtiComponent
      */
     public function getResponseIdentifier()
     {
-        return $this->getResponseIdentifier;
+        return $this->responseIdentifier;
     }
     
     /**
@@ -134,9 +134,9 @@ class ResponseValidityConstraint extends QtiComponent
             throw new InvalidArgumentException(
                 "The 'maxConstraint' argument must be an integer."
             );
-        } elseif ($maxConstraint <= ($maxConstraint = $this->getMinConstraint())) {
+        } elseif ($maxConstraint <= ($minConstraint = $this->getMinConstraint())) {
             throw new InvalidArgumentException(
-                "The 'maxConstraint' argument must be greather than the 'minConstraint' in place.";
+                "The 'maxConstraint' argument must be greather than the 'minConstraint' in place."
             );
         }
         
