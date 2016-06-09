@@ -342,7 +342,10 @@ class QtiComponentIterator implements Iterator
         $root = $this->getRootComponent();
         $this->pushOnTrail($root, $root->getComponents());
 
+        $hasTrail = false;
+        $foundClass = false;
         while (count($this->getTrail()) > 0) {
+            $hasTrail = true;
             $trailEntry = $this->popFromTrail();
 
             $this->setValid(true);
@@ -352,11 +355,12 @@ class QtiComponentIterator implements Iterator
             $this->pushOnTrail($this->currentComponent, $this->currentComponent->getComponents());
 
             if (empty($classes) === true || in_array($this->currentComponent->getQtiClassName(), $classes) === true) {
+                $foundClass = true;
                 break;
             }
         }
 
-        if (count($this->trail) === 0) {
+        if (count($this->trail) === 0 && (($hasTrail && !$foundClass) || (!$hasTrail))) {
             $this->isValid = false;
             $this->currentComponent = null;
             $this->currentContainer = null;

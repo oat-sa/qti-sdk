@@ -31,7 +31,20 @@ class QtiComponentIteratorTest extends QtiSmTestCase {
 		
 		$this->assertSame(null, $iterator->parent());
 	}
-	
+
+	public function testOneChildComponents() {
+		$baseValues = new ExpressionCollection();
+		$baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
+		$sum = new Sum($baseValues);
+		$iterator = new QtiComponentIterator($sum);
+
+		$iterations = 0;
+		foreach ($iterator as $k => $i) {
+			$iterations++;
+		}
+		$this->assertEquals(1, $iterations);
+	}
+
 	public function testNoChildComponents() {
 		$baseValue = new BaseValue(BaseType::FLOAT, 10);
 		$iterator = new QtiComponentIterator($baseValue);
