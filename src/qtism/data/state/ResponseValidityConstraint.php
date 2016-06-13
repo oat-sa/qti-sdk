@@ -110,7 +110,7 @@ class ResponseValidityConstraint extends QtiComponent
     {
         if (is_int($minConstraint) === false || $minConstraint < 0) {
             throw new InvalidArgumentException(
-                "The 'minConstraint' argument must be non negative (>= 0) integer."
+                "The 'minConstraint' argument must be a non negative (>= 0) integer."
             );
         }
         
@@ -130,8 +130,10 @@ class ResponseValidityConstraint extends QtiComponent
     /**
      * Set the maximum cardinality the value to be set the response must have.
      * 
+     * Please note that 0 indicates no constraint.
+     * 
      * @param integer $maxConstraint An integer value which is greater than the 'minConstraint' in place.
-     * @throws \InvalidArgumentException If $maxConstraint is not an integer greater than the 'minConstraint' in place.
+     * @throws \InvalidArgumentException If $maxConstraint is not an integer greater or equal to the 'minConstraint' in place.
      */
     public function setMaxConstraint($maxConstraint)
     {
@@ -139,9 +141,13 @@ class ResponseValidityConstraint extends QtiComponent
             throw new InvalidArgumentException(
                 "The 'maxConstraint' argument must be an integer."
             );
-        } elseif ($maxConstraint <= ($minConstraint = $this->getMinConstraint())) {
+        } else if ($maxConstraint < 0) { 
             throw new InvalidArgumentException(
-                "The 'maxConstraint' argument must be greather than the 'minConstraint' in place."
+                "The 'maxConstraint' argument must be a non negative (>= 0) integer."
+            );
+        } elseif ($maxConstraint !== 0 && $maxConstraint < ($minConstraint = $this->getMinConstraint())) {
+            throw new InvalidArgumentException(
+                "The 'maxConstraint' argument must be greather or equal to than the 'minConstraint' in place."
             );
         }
         
@@ -150,6 +156,8 @@ class ResponseValidityConstraint extends QtiComponent
     
     /**
      * Get the maximum cardinality the value to be set the response must have.
+     * 
+     * Please note that 0 indicates no constraint.
      * 
      * @return integer
      */

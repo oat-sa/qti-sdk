@@ -62,7 +62,7 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
     
     public function testUnmarshallInvalidMaxConstraintOne() {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>');
+        $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="-2"/>');
         $element = $dom->documentElement;
         $factory = new CompactMarshallerFactory();
         
