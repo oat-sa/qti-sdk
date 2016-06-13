@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -21,7 +21,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // If we get correct to the first question, we should EXIT_SECTION. We should
         // then be redirected to S02.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         // We should arrive at section 2.
         $testSession->moveNext();
@@ -38,7 +38,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // be then redirected to the end of the test, because S01 is the unique section
         // of the test.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         // We should be at the end of the test.
         $testSession->moveNext();
@@ -61,7 +61,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // be then redirected to the end of the test, because Q03 has a precondition
         // which is never satisfied (return always false).
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         // We should be at the end of the test.
         $testSession->moveNext();
@@ -83,7 +83,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // If we get correct to the first question, we should EXIT_TESTPART. We should
         // then be redirected to P02.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
     
         // We should arrive at testPart 2
         $testSession->moveNext();
@@ -100,7 +100,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // be then redirected to the end of the test, because T01 is the unique testPart
         // of the test.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
     
         // We should be at the end of the test.
         $testSession->moveNext();
@@ -123,7 +123,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // be then redirected to the end of the test, because Q03 has a precondition
         // which is never satisfied (return always false).
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
     
         // We should be at the end of the test.
         $testSession->moveNext();
@@ -145,7 +145,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase {
         // If we get correct to the first question, we should EXIT_TEST. We should
         // then be redirected to end of the test.
         $testSession->beginAttempt();
-        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $testSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
     
         // We should arrive at section 2.
         $testSession->moveNext();

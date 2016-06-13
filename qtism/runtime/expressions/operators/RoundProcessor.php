@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\Round;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -83,6 +83,6 @@ class RoundProcessor extends OperatorProcessor {
 		
 		$operand = $operands[0];
 		$mode = ($operand->getValue() >= 0) ? PHP_ROUND_HALF_UP : PHP_ROUND_HALF_DOWN;
-		return new Integer(intval(round($operand->getValue(), 0, $mode)));
+		return new QtiInteger(intval(round($operand->getValue(), 0, $mode)));
 	}
 }

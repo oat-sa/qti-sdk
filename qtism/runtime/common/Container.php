@@ -24,17 +24,17 @@
  */
 namespace qtism\runtime\common;
 
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiString;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\collections\AbstractCollection;
 use qtism\common\utils\Format;
 use qtism\common\Comparable;
@@ -234,14 +234,14 @@ class Container extends AbstractCollection implements Comparable {
 			if (is_null($d) === true) {
 			    $strings[] = 'NULL';
 			}
-			else if ($d instanceof String) {
+			else if ($d instanceof QtiString) {
 				$strings[] = "'${d}'";
 			}
-			else if ($d instanceof Boolean) {
+			else if ($d instanceof QtiBoolean) {
 				// PHP boolean primitive type.
 				$strings[] = ($d->getValue() === true) ? 'true' : 'false';
 			}
-			else if ($d instanceof File) {
+			else if ($d instanceof QtiFile) {
 			    $strings[] = $d->getFilename();
 			}
 			else{

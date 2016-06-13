@@ -1,5 +1,6 @@
 <?php
 
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\state\MapEntryCollection;
 use qtism\data\state\MapEntry;
 use qtism\data\state\Mapping;
@@ -159,10 +160,10 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($values));
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[0]->getValue());
+		$this->assertInstanceOf(QtiDuration::class, $values[0]->getValue());
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[1]->getValue());
+		$this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
 	}
 	
 	public function testUnmarshallMatchTable() {

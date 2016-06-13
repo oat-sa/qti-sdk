@@ -24,8 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\AnyN;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\Utils as ProcessingUtils;
@@ -89,7 +89,7 @@ class AnyNProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (!$varValue instanceof Integer) {
+			else if (!$varValue instanceof QtiInteger) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
 			}
@@ -108,7 +108,7 @@ class AnyNProcessor extends OperatorProcessor {
 				$msg = "The variable with name '${varName}' could not be resolved or is null.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
 			}
-			else if (!$varValue instanceof Integer) {
+			else if (!$varValue instanceof QtiInteger) {
 				$msg = "The variable with name '${varName}' is not an integer.";
 				throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
 			}
@@ -125,7 +125,7 @@ class AnyNProcessor extends OperatorProcessor {
 				$nullCount++;
 				continue;
 			}
-			else if ($operand instanceof Boolean) {
+			else if ($operand instanceof QtiBoolean) {
 				if ($operand->getValue() === true) {
 					$trueCount++;
 				}
@@ -138,7 +138,7 @@ class AnyNProcessor extends OperatorProcessor {
 		}
 		
 		if ($trueCount >= $min && $trueCount <= $max) {
-			return new Boolean(true);
+			return new QtiBoolean(true);
 		}
 		else {
 			// Should we return false or null?
@@ -147,7 +147,7 @@ class AnyNProcessor extends OperatorProcessor {
 				return null;
 			}
 			else {
-				return new Boolean(false);
+				return new QtiBoolean(false);
 			}
 		}
 	}

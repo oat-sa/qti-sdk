@@ -1,10 +1,11 @@
 <?php
 
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -12,7 +13,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 		$interpretation = 'It is up to you to interpret...';
-		$pair = new Pair('id1', 'id2');
+		$pair = new QtiPair('id1', 'id2');
 		$values = new ValueCollection();
 		$values[] = new Value($pair);
 		$component = new CorrectResponse($values, $interpretation);
@@ -77,7 +78,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase {
 		foreach ($component->getValues() as $value) {
 			$this->assertInstanceOf('qtism\\data\\state\\Value', $value);
 			$this->assertEquals(BaseType::DIRECTED_PAIR, $value->getBaseType());
-			$this->assertInstanceOf('qtism\\common\\datatypes\\DirectedPair', $value->getValue());
+			$this->assertInstanceOf(QtiDirectedPair::class, $value->getValue());
 			$this->assertFalse($value->isPartOfRecord());
 		}
 	}

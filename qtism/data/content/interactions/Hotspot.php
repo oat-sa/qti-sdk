@@ -23,7 +23,7 @@
 
 namespace qtism\data\content\interactions;
 
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 
 /**
@@ -57,7 +57,7 @@ interface Hotspot {
 	 * 
 	 * @param Coords $coords A Coords object.
 	 */
-	public function setCoords(Coords $coords);
+	public function setCoords(QtiCoords $coords);
 	
 	/**
 	 * Get the coords of the hotspot.

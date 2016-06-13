@@ -1,7 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
@@ -39,9 +40,9 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
 		$engine = new ResponseProcessingEngine($responseProcessing, $context);
 		
 		// --> answer as a correct response.
-		$context['RESPONSE'] = new Identifier('ChoiceA');
+		$context['RESPONSE'] = new QtiIdentifier('ChoiceA');
 		$engine->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $context['SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
 		$this->assertEquals(1.0, $context['SCORE']->getValue());
 	}
 	

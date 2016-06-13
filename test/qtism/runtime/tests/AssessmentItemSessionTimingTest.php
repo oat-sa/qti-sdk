@@ -1,12 +1,12 @@
 <?php
 
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\TimeLimits;
@@ -25,7 +25,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession->setItemSessionControl($itemSessionControl);
     
         // No late submission allowed.
-        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
+        $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'));
         $itemSession->setTimeLimits($timeLimits);
         $itemSession->beginItemSession();
     
@@ -66,18 +66,18 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
         $this->assertEquals(2, $itemSession['numAttempts']->getValue());
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
     }
     
     public function testAcceptableLatency() {
-        $itemSession = self::instantiateBasicAssessmentItemSession(new Duration('PT1S'));
+        $itemSession = self::instantiateBasicAssessmentItemSession(new QtiDuration('PT1S'));
     
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts(3);
         $itemSession->setItemSessionControl($itemSessionControl);
     
-        $timeLimits = new TimeLimits(new Duration('PT1S'), new Duration('PT2S'));
+        $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'));
         $itemSession->setTimeLimits($timeLimits);
     
         $itemSession->beginItemSession();
@@ -106,8 +106,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     public function testEvolutionBasicMultipleAttempts() {
     
         $count = 5;
-        $attempts = array(new Identifier('ChoiceA'), new Identifier('ChoiceB'), new Identifier('ChoiceC'), new Identifier('ChoiceD'), new Identifier('ChoiceE'));
-        $expected = array(new Float(0.0), new Float(1.0), new Float(0.0), new Float(0.0), new Float(0.0));
+        $attempts = array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'), new QtiIdentifier('ChoiceD'), new QtiIdentifier('ChoiceE'));
+        $expected = array(new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(0.0), new QtiFloat(0.0), new QtiFloat(0.0));
     
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
@@ -125,7 +125,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();
-            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
             $this->assertTrue($expected[$i]->equals($itemSession['SCORE']));
             $this->assertEquals($i + 1, $itemSession['numAttempts']->getValue());
     
@@ -152,13 +152,13 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
     public function testAllowLateSubmissionNonAdaptive() {
         $itemSession = self::instantiateBasicAssessmentItemSession();
     
-        $timeLimits = new TimeLimits(null, new Duration('PT1S'), true);
+        $timeLimits = new TimeLimits(null, new QtiDuration('PT1S'), true);
         $itemSession->setTimeLimits($timeLimits);
     
         $itemSession->beginItemSession();
     
         $itemSession->beginAttempt();
-        $itemSession['RESPONSE'] = new Identifier('ChoiceB');
+        $itemSession['RESPONSE'] = new QtiIdentifier('ChoiceB');
         sleep(2);
     
         // No exception because late submission is allowed.
@@ -185,33 +185,33 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $this->assertFalse($itemSession->getRemainingTime());
         $timeLimits = new TimeLimits();
-        $timeLimits->setMaxTime(new Duration('PT3S'));
+        $timeLimits->setMaxTime(new QtiDuration('PT3S'));
         $itemSession->setTimeLimits($timeLimits);
         $itemSession->beginItemSession();
         $this->assertEquals(1, $itemSession->getRemainingAttempts());
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT3S')));
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT3S')));
     
         $itemSession->beginAttempt();
         sleep(2);
         $itemSession->updateDuration();
-        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new QtiDuration('PT1S')));
         sleep(1);
         $itemSession->updateDuration();
-        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new Duration('PT0S')));
+        $this->assertTrue($itemSession->getRemainingTime()->round()->equals(new QtiDuration('PT0S')));
         sleep(1);
         $itemSession->updateDuration();
 
         // It is still 0...
-        $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+        $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT0S')));
     
         try {
-            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+            $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
             // Must be rejected, no more time remaining!!!
             $this->assertFalse(true);
         }
         catch (AssessmentItemSessionException $e) {
             $this->assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
-            $this->assertTrue($itemSession->getRemainingTime()->equals(new Duration('PT0S')));
+            $this->assertTrue($itemSession->getRemainingTime()->equals(new QtiDuration('PT0S')));
         }
     }
     
@@ -223,19 +223,19 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $this->assertFalse($itemSession->getRemainingTime());
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $this->assertEquals('incomplete', $itemSession['completionStatus']->getValue());
          
         $this->assertFalse($itemSession->getRemainingTime());
         $itemSession->beginAttempt();
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
         $this->assertFalse($itemSession->getRemainingTime());
     }
     
     public function testForceLateSubmission() {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
-        $timeLimits = new TimeLimits(null, new Duration('PT1S'));
+        $timeLimits = new TimeLimits(null, new QtiDuration('PT1S'));
         
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
@@ -243,8 +243,8 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase {
         // reach max time...
         sleep(2);
         
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))), true, true);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))), true, true);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(1, $itemSession['SCORE']->getValue());
     }
 }

@@ -26,11 +26,11 @@ namespace qtism\data\storage\php\marshalling;
 use qtism\data\storage\php\PhpVariable;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 
 class PhpQtiDatatypeMarshaller extends PhpMarshaller {
@@ -44,19 +44,19 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller {
         $toMarshall = $this->getToMarshall();
 
         try {
-            if ($toMarshall instanceof Coords) {
+            if ($toMarshall instanceof QtiCoords) {
                 $this->marshallCoords();
                 return;
             }
-            else if ($toMarshall instanceof Pair) {
+            else if ($toMarshall instanceof QtiPair) {
                 $this->marshallPair();
                 return;
             }
-            else if ($toMarshall instanceof Duration) {
+            else if ($toMarshall instanceof QtiDuration) {
                 $this->marshallDuration();
                 return;
             }
-            else if ($toMarshall instanceof Point) {
+            else if ($toMarshall instanceof QtiPoint) {
                 $this->marshallPoint();
                 return;
             }

@@ -1,11 +1,14 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmAssessmentItemTestCase.php');
 
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\SessionManager;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\SubmissionMode;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\TimeLimits;
 use qtism\data\ItemSessionControl;
 use qtism\runtime\common\State;
@@ -47,20 +50,20 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         // Outcome variables instantiated and set to their default if any?
         $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('SCORE'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
         
         // Built-in variables instantiated and values initialized correctly?
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('numAttempts'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $itemSession['numAttempts']);
+        $this->assertInstanceOf(QtiInteger::class, $itemSession['numAttempts']);
         $this->assertEquals(0, $itemSession['numAttempts']->getValue());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\ResponseVariable', $itemSession->getVariable('duration'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $itemSession['duration']);
+        $this->assertInstanceOf(QtiDuration::class, $itemSession['duration']);
         $this->assertEquals('PT0S', $itemSession['duration']->__toString());
         
         $this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $itemSession->getVariable('completionStatus'));
-        $this->assertInstanceOf('qtism\\common\\datatypes\\String', $itemSession['completionStatus']);
+        $this->assertInstanceOf(QtiString::class, $itemSession['completionStatus']);
         $this->assertEquals('not_attempted', $itemSession['completionStatus']->getValue());
         $this->assertEquals(BaseType::IDENTIFIER, $itemSession->getVariable('completionStatus')->getBaseType());
         
@@ -94,7 +97,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         // Note: here we provide a State object for the responses, but the value of the 'RESPONSE'
         // variable can also be set manually on the item session prior calling endAttempt(). This
         // is a matter of choice.
-        $resp = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB'));
+        $resp = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'));
         $itemSession->endAttempt(new State(array($resp)));
         $this->assertTrue($itemSession->isResponded());
         
@@ -165,21 +168,21 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         $itemSession->beginAttempt();
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
-        $itemSession['RESPONSE'] = new Identifier('ChoiceE');
+        $itemSession['RESPONSE'] = new QtiIdentifier('ChoiceE');
         $itemSession->endAttempt();
         $this->assertEquals(-1, $itemSession->getRemainingAttempts());
         
         $this->assertEquals(1, $itemSession['numAttempts']->getValue());
         $this->assertEquals('incomplete', $itemSession['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
         
         $itemSession->beginAttempt();
         // Second attempt, give the correct answer to be allowed to go to the next item.
-        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(1.0, $itemSession['SCORE']->getValue());
         
         // If you now try to attempt again, exception because already completed.
@@ -205,7 +208,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->beginAttempt();
         // Set an invalid response.
         $responses = new State();
-        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceC')));
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC')));
         
         try {
             $this->assertFalse($itemSession->isAttemptable());
@@ -259,7 +262,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $itemSession->beginAttempt();
         $responses = new State();
-        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceD')));
+        $responses->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD')));
         $itemSession->endAttempt($responses);
     }
     
@@ -277,14 +280,14 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertFalse($itemSession->isCorrect());
         
         $state = new State();
-        $state->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')));
+        $state->setVariable(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')));
         $itemSession->endAttempt($state);
         
         // Wrong answer ('ChoiceB' is the correct one), the session is not correct.
         $this->assertEquals('incomplete', $itemSession['completionStatus']->getValue());
         $this->assertFalse($itemSession->isCorrect());
         
-        $state['RESPONSE'] = new Identifier('ChoiceB');
+        $state['RESPONSE'] = new QtiIdentifier('ChoiceB');
         $itemSession->beginAttempt();
         $itemSession->endAttempt($state);
         
@@ -300,9 +303,9 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('A'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A'))));
         $itemSession->endAttempt($responses);
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(1.0, $itemSession['SCORE']->getValue());
     }
     
@@ -313,10 +316,10 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
-        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $itemSession['SCORE']);
+        $this->assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
         
-        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('Choice_3'))));
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('Choice_3'))));
         $itemSession->endAttempt($responses);
         $this->assertEquals(6.0, $itemSession['SCORE']->getValue());
     }

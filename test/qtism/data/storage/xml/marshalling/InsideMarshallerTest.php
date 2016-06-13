@@ -2,8 +2,8 @@
 
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Inside;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\Variable;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
@@ -15,8 +15,8 @@ class InsideMarshallerTest extends QtiSmTestCase {
 		$subs = new ExpressionCollection();
 		$subs[] = new Variable('pointVariable');
 		
-		$shape = Shape::RECT;
-		$coords = new Coords($shape, array(0, 0, 100, 20));
+		$shape = QtiShape::RECT;
+		$coords = new QtiCoords($shape, array(0, 0, 100, 20));
 		
 		$component = new Inside($subs, $shape, $coords);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);
@@ -44,9 +44,9 @@ class InsideMarshallerTest extends QtiSmTestCase {
 		$component = $marshaller->unmarshall($element);
 		
 		$this->assertInstanceOf('qtism\\data\\expressions\\operators\\Inside', $component);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $component->getCoords());
+		$this->assertInstanceOf(QtiCoords::class, $component->getCoords());
 		$this->assertInternalType('integer', $component->getShape());
-		$this->assertEquals(Shape::RECT, $component->getShape());
+		$this->assertEquals(QtiShape::RECT, $component->getShape());
 		$this->assertEquals(1, count($component->getExpressions()));
 	}
 }

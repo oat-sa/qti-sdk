@@ -1,7 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiString;
 use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -35,15 +36,15 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		
 		$this->assertSame(null, $state['outcome1']);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
-		$this->assertTrue($state['outcome1']->equals(new Pair('C', 'D')));
+		$this->assertInstanceOf(QtiPair::class, $state['outcome1']);
+		$this->assertTrue($state['outcome1']->equals(new QtiPair('C', 'D')));
 		
 		// Try to get the default value.
 		$expr = $rule->getExpression();
 		$expr->setValue(5);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $state['outcome1']);
-		$this->assertTrue($state['outcome1']->equals(new Pair('Y', 'Z')));
+		$this->assertInstanceOf(QtiPair::class, $state['outcome1']);
+		$this->assertTrue($state['outcome1']->equals(new QtiPair('Y', 'Z')));
 	}
 	
 	public function testLookupOutcomeValueSimpleInterpolationTable() {
@@ -70,7 +71,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		
 		$this->assertSame(null, $state['outcome1']);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertInstanceOf(QtiString::class, $state['outcome1']);
 		$this->assertEquals('Awesome!', $state['outcome1']->getValue());
 		
 		// include the boundary for interpolationTableEntry[1]
@@ -79,14 +80,14 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase {
 		$entries[1]->setIncludeBoundary(true);
 		
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertInstanceOf(QtiString::class, $state['outcome1']);
 		$this->assertEquals('Piece of cake!', $state['outcome1']->getValue());
 		
 		// get the default value.
 		$expr = $rule->getExpression();
 		$expr->setValue(4.0);
 		$processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\String', $state['outcome1']);
+		$this->assertInstanceOf(QtiString::class, $state['outcome1']);
 		$this->assertEquals("What's going on?", $state['outcome1']->getValue());
 	}
 }

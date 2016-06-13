@@ -1,7 +1,7 @@
 <?php
 
 use qtism\data\TimeLimits;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
@@ -9,8 +9,8 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
 
-		$minTime = new Duration('PT50S');
-		$maxTime = new Duration('PT100S');
+		$minTime = new QtiDuration('PT50S');
+		$maxTime = new QtiDuration('PT100S');
 		
 		$component = new TimeLimits($minTime, $maxTime);
 		$marshaller = $this->getMarshallerFactory()->createMarshaller($component);

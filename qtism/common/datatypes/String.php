@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -25,28 +25,9 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
-
-class String extends Scalar implements QtiDatatype {
+/**
+ * Legacy support of String QTI datatype for PHP 5.
+ */
+class String extends QtiString {
     
-    protected function checkType($value) {
-        if (is_string($value) !== true) {
-            $msg = "The String Datatype only accepts to store string values.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-    
-    public function getBaseType() {
-        return BaseType::STRING;
-    }
-    
-    public function getCardinality() {
-        return Cardinality::SINGLE;
-    }
-    
-    public function __toString() {
-        return $this->getValue();
-    }
 }

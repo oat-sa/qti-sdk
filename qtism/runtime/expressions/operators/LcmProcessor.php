@@ -24,8 +24,8 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Scalar;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiScalar;
 use qtism\data\expressions\operators\Lcm;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -85,14 +85,14 @@ class LcmProcessor extends OperatorProcessor {
 		$flatCollection = new OperandsCollection();
 		
 		foreach ($operands as $operand) {
-			if ($operand instanceof Scalar) {
+			if ($operand instanceof QtiScalar) {
 		
 				if ($operand->getValue() !== 0) {
 					$flatCollection[] = $operand;
 				}
 				else {
 					// Operand is 0, return 0.
-					return new Integer(0);
+					return new QtiInteger(0);
 				}
 			}
 			else if ($operand->contains(null)) {
@@ -109,7 +109,7 @@ class LcmProcessor extends OperatorProcessor {
 					}
 					else {
 						// If any of the operand is 0, return 0.
-						return new Integer(0);
+						return new QtiInteger(0);
 					}
 				}
 			}
@@ -120,7 +120,7 @@ class LcmProcessor extends OperatorProcessor {
 		$i = 0;
 			
 		while ($i < $loopLimit) {
-			$g = new Integer(Utils::lcm($g->getValue(), $flatCollection[$i + 1]->getValue()));
+			$g = new QtiInteger(Utils::lcm($g->getValue(), $flatCollection[$i + 1]->getValue()));
 			$i++;
 		}
 			

@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\ContainerSize;
 use \InvalidArgumentException;
@@ -64,7 +64,7 @@ class ContainerSizeProcessor extends OperatorProcessor {
 		$operands = $this->getOperands();
 		
 		if ($operands->containsNull() === true) {
-			return new Integer(0);
+			return new QtiInteger(0);
 		}
 		
 		if ($operands->exclusivelyMultipleOrOrdered() === false) {
@@ -72,6 +72,6 @@ class ContainerSizeProcessor extends OperatorProcessor {
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
-		return new Integer(count($operands[0]));
+		return new QtiInteger(count($operands[0]));
 	}
 }

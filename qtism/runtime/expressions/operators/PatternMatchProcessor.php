@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\data\expressions\operators\PatternMatch;
 use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
@@ -98,10 +98,10 @@ class PatternMatchProcessor extends OperatorProcessor {
 		$result = @preg_match($pattern, $operands[0]->getValue());
 		
 		if ($result === 1) {
-			return new Boolean(true);
+			return new QtiBoolean(true);
 		}
 		else if ($result === 0) {
-			return new Boolean(false);
+			return new QtiBoolean(false);
 		}
 		else {
 			$error = preg_last_error();

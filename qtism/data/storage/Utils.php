@@ -24,15 +24,15 @@
 
 namespace qtism\data\storage;
 
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\data\expressions\BaseValue;
 use qtism\data\state\Value;
 use qtism\common\enums\BaseType;
 use qtism\common\utils\Format;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 use \UnexpectedValueException;
 
@@ -128,7 +128,7 @@ class Utils {
 				case BaseType::PAIR:
 					if (Format::isPair($string)) {
 						$pair = explode("\x20", $string);
-						return new Pair($pair[0], $pair[1]);
+						return new QtiPair($pair[0], $pair[1]);
 					}
 					else {
 						$msg = "'${string}' is not a valid pair.";
@@ -139,7 +139,7 @@ class Utils {
 				case BaseType::DIRECTED_PAIR:
 					if (Format::isDirectedPair($string)) {
 						$pair = explode("\x20", $string);
-						return new DirectedPair($pair[0], $pair[1]);
+						return new QtiDirectedPair($pair[0], $pair[1]);
 					}
 					else {
 						$msg = "'${string}' is not a valid directed pair.";
@@ -149,7 +149,7 @@ class Utils {
 				
 				case BaseType::DURATION:
 					if (Format::isDuration($string)) {
-						return new Duration($string);
+						return new QtiDuration($string);
 					}
 					else {
 						$msg = "'${string}' is not a valid duration.";
@@ -168,7 +168,7 @@ class Utils {
 				case BaseType::POINT:
 					if (Format::isPoint($string)) {
 						$parts = explode("\x20", $string);
-						return new Point(intval($parts[0]), intval($parts[1]));
+						return new QtiPoint(intval($parts[0]), intval($parts[1]));
 					}
 					else {
 						$msg = "'${string}' is not valid point.";
@@ -208,7 +208,7 @@ class Utils {
 			
 			// Maybe it was accepted has coords, but is it buildable with
 			// the given shape?
-			return new Coords($shape, $intCoords);
+			return new QtiCoords($shape, $intCoords);
 		}
 		else {
 			throw new UnexpectedValueException("'${string}' cannot be converted to Coords.");

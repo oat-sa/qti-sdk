@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -25,28 +25,9 @@
 
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-use \InvalidArgumentException;
-
-class Integer extends Scalar implements QtiDatatype {
+/**
+ * Legacy support of Integer QTI datatype for PHP 5.
+ */
+class Integer extends QtiInteger {
     
-    protected function checkType($value) {
-        if (Utils::isQtiInteger($value) !== true) {
-            $msg = "The Integer Datatype only accepts to store integer values.";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-    
-    public function getBaseType() {
-        return BaseType::INTEGER;
-    }
-    
-    public function getCardinality() {
-        return Cardinality::SINGLE;
-    }
-    
-    public function __toString() {
-        return '' . $this->getValue();
-    }
 }

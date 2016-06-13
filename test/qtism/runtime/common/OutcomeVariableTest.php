@@ -1,12 +1,12 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -42,11 +42,11 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertFalse($variable->getMasteryValue());
 		$this->assertTrue(null === $variable->getLookupTable());
 		
-		$variable->setValue(new Integer(16));
-		$variable->setDefaultValue(new Integer(-1));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$variable->setValue(new QtiInteger(16));
+		$variable->setDefaultValue(new QtiInteger(-1));
+		$this->assertInstanceOf(QtiInteger::class, $variable->getValue());
 		$this->assertEquals(16, $variable->getValue()->getValue());
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getDefaultValue());
+		$this->assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
 		$this->assertEquals(-1, $variable->getDefaultValue()->getValue());
 		
 		// If I reinit the variable, I should see the NULL value inside.
@@ -58,7 +58,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		// was given.
 		$variable->setDefaultValue(null);
 		$variable->applyDefaultValue();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $variable->getValue());
+		$this->assertInstanceOf(QtiInteger::class, $variable->getValue());
 		$this->assertEquals(0, $variable->getValue()->getValue());
 	}
 	
@@ -90,7 +90,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		
 		// Try to set up a value with an incorrect cardinality (2).
 		try {
-		    $variable->setValue(new Integer(25));
+		    $variable->setValue(new QtiInteger(25));
 		    $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
 		}
 		catch (InvalidArgumentException $e) {
@@ -122,7 +122,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 		$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 		
-		$pair = new Pair('A', 'B');
+		$pair = new QtiPair('A', 'B');
 		$this->assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
 	}
 	
@@ -143,8 +143,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\runtime\\common\\MultipleContainer', $defaultValue);
 		$this->assertEquals(2, count($defaultValue));
 		$this->assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
-		$this->assertTrue($defaultValue[0]->equals(new Pair('A', 'B')));
-		$this->assertTrue($defaultValue[1]->equals(new Pair('B', 'C')));
+		$this->assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
+		$this->assertTrue($defaultValue[1]->equals(new QtiPair('B', 'C')));
 	}
 	
 	public function testCreateFromVariableDeclarationDefaultValueRecordCardinality() {
@@ -164,8 +164,8 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\runtime\\common\\RecordContainer', $defaultValue);
 	    $this->assertEquals(2, count($defaultValue));
 	    
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $defaultValue['A']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $defaultValue['B']);
+	    $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
+	    $this->assertInstanceOf(QtiFloat::class, $defaultValue['B']);
 	}
 	
 	public function testCreateFromVariableDeclarationExtended() {
@@ -208,58 +208,58 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($matchTableEntries));
 		$this->assertEquals(0, $matchTableEntries[0]->getSourceValue());
 		$targetValue = $matchTableEntries[0]->getTargetValue();
-		$this->assertTrue($targetValue->equals(new Pair('E', 'F')));
+		$this->assertTrue($targetValue->equals(new QtiPair('E', 'F')));
 	}
 	
 	public function testIsNull() {
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new String(''));
+		$outcome->setValue(new QtiString(''));
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new String('String!'));
+		$outcome->setValue(new QtiString('String!'));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new Integer(0));
+		$outcome->setValue(new QtiInteger(0));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Integer(-1));
+		$outcome->setValue(new QtiInteger(-1));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Integer(100));
+		$outcome->setValue(new QtiInteger(100));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::FLOAT);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new Float(0.25));
+		$outcome->setValue(new QtiFloat(0.25));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Float(-1.2));
+		$outcome->setValue(new QtiFloat(-1.2));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Float(100.12));
+		$outcome->setValue(new QtiFloat(100.12));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
-		$outcome->setValue(new Boolean(true));
+		$outcome->setValue(new QtiBoolean(true));
 		$this->assertFalse($outcome->isNull());
-		$outcome->setValue(new Boolean(false));
+		$outcome->setValue(new QtiBoolean(false));
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::BOOLEAN);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = new Boolean(true);
+		$value[] = new QtiBoolean(true);
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::STRING);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value[] = new String('string!');
+		$value[] = new QtiString('string!');
 		$this->assertFalse($outcome->isNull());
 		
 		$outcome = new OutcomeVariable('var1', Cardinality::RECORD);
 		$this->assertTrue($outcome->isNull());
 		$value = $outcome->getValue();
-		$value['point1'] = new Point(100, 200);
+		$value['point1'] = new QtiPoint(100, 200);
 		$this->assertFalse($outcome->isNull());
 	}
 }

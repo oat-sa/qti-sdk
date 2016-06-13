@@ -1,12 +1,13 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -18,34 +19,34 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testMultiple() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Float(10.1);
-		$mult = new MultipleContainer(BaseType::FLOAT, array(new Float(1.1), new Float(2.1), new Float(3.1)));
+		$operands[] = new QtiFloat(10.1);
+		$mult = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.1), new QtiFloat(2.1), new QtiFloat(3.1)));
 		$operands[] = $mult;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(false, $result->getValue());
 		
-		$mult[] = new Float(10.1);
+		$mult[] = new QtiFloat(10.1);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(true, $result->getValue());
 	}
 	
 	public function testOrdered() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Pair('A', 'B');
-		$ordered = new OrderedContainer(BaseType::PAIR, array(new Pair('B', 'C')));
+		$operands[] = new QtiPair('A', 'B');
+		$ordered = new OrderedContainer(BaseType::PAIR, array(new QtiPair('B', 'C')));
 		$operands[] = $ordered;
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(false, $result->getValue());
 		
-		$ordered[] = new Pair('A', 'B');
+		$ordered[] = new QtiPair('A', 'B');
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertEquals(true, $result->getValue());
 	}
 	
@@ -54,7 +55,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$operands = new OperandsCollection();
 		
 		// second operand is null.
-		$operands[] = new Integer(10);
+		$operands[] = new QtiInteger(10);
 		$operands[] = new OrderedContainer(BaseType::INTEGER);
 		$processor = new MemberProcessor($expression, $operands);
 		$result = $processor->process();
@@ -63,7 +64,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		// fist operand is null.
 		$operands->reset();
 		$operands[] = null;
-		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new Integer(10)));
+		$operands[] = new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)));
 		$result = $processor->process();
 		$this->assertSame(null, $result);
 	}
@@ -71,8 +72,8 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypeOne() {
 	    $expression = $this->createFakeExpression();
 	    $operands = new OperandsCollection();
-	    $operands[] = new String('String1');
-	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new Identifier('String2'), new Identifier('String1'), null));
+	    $operands[] = new QtiString('String1');
+	    $operands[] = new OrderedContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('String2'), new QtiIdentifier('String1'), null));
 	    $processor = new MemberProcessor($expression, $operands);
 	    
 	    $this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
@@ -82,8 +83,8 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testDifferentBaseTypeTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Pair('A', 'B');
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
+		$operands[] = new QtiPair('A', 'B');
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)));
 		$processor = new MemberProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -92,8 +93,8 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityOne() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(13, 37)));
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(13, 37)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)));
 		$processor = new MemberProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -102,8 +103,8 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testWrongCardinalityTwo() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(13, 37);
-		$operands[] = new Point(13, 38);
+		$operands[] = new QtiPoint(13, 37);
+		$operands[] = new QtiPoint(13, 38);
 		$processor = new MemberProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -112,7 +113,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testNotEnoughOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(13, 37);
+		$operands[] = new QtiPoint(13, 37);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MemberProcessor($expression, $operands);
 	}
@@ -120,9 +121,9 @@ class MemberProcessorTest extends QtiSmTestCase {
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
-		$operands[] = new Point(13, 37);
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(1, 2)));
-		$operands[] = new MultipleContainer(BaseType::POINT, array(new Point(3, 4)));
+		$operands[] = new QtiPoint(13, 37);
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(1, 2)));
+		$operands[] = new MultipleContainer(BaseType::POINT, array(new QtiPoint(3, 4)));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MemberProcessor($expression, $operands);
 	}

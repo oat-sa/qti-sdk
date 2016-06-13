@@ -24,8 +24,8 @@
 namespace qtism\runtime\expressions;
 
 use qtism\common\enums\BaseType;
-use qtism\common\datatypes\String;
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiString;
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\Comparable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\data\expressions\Expression;
@@ -80,7 +80,7 @@ class MapResponseProcessor extends ExpressionProcessor
                 $mapping = $variable->getMapping();
 
                 if (is_null($mapping)) {
-                    return new Float(0.0);
+                    return new QtiFloat(0.0);
                 }
 
                 // Single cardinality behaviour.
@@ -91,20 +91,20 @@ class MapResponseProcessor extends ExpressionProcessor
                         $val = $state[$identifier];
                         $mapKey = $mapEntry->getMapKey();
 
-                        if ($val instanceof String && $mapEntry->isCaseSensitive() === false) {
+                        if ($val instanceof QtiString && $mapEntry->isCaseSensitive() === false) {
                             $val = mb_strtolower($val->getValue(), 'UTF-8');
                             $mapKey = mb_strtolower($mapKey, 'UTF-8');
                         }
                         
                         if ($val instanceof Comparable && $val->equals($mapKey) || $val === $mapKey) {
-                            return new Float($mapEntry->getMappedValue());
+                            return new QtiFloat($mapEntry->getMappedValue());
                         } elseif ($variable->getBaseType() === BaseType::STRING && $val === null && $mapKey === '') {
-                            return new Float($mapEntry->getMappedValue());
+                            return new QtiFloat($mapEntry->getMappedValue());
                         }
                     }
 
                     // No relevant mapping found, return mapping default.
-                    return new Float($mapping->getDefaultValue());
+                    return new QtiFloat($mapping->getDefaultValue());
                     
                 // Multiple cardinality behaviour.
                 } elseif ($variable->isMultiple()) {
@@ -120,8 +120,8 @@ class MapResponseProcessor extends ExpressionProcessor
                         for ($i = 0; $i < count($mapEntries); $i++) {
 
                             $mapKey = $rawMapKey = $mapEntries[$i]->getMapKey();
-                            if ($val instanceof String && $mapEntries[$i]->isCaseSensitive() === false) {
-                                $val = new String(mb_strtolower($val->getValue(), 'UTF-8'));
+                            if ($val instanceof QtiString && $mapEntries[$i]->isCaseSensitive() === false) {
+                                $val = new QtiString(mb_strtolower($val->getValue(), 'UTF-8'));
                                 $mapKey = mb_strtolower($mapKey, 'UTF-8');
                             }
 
@@ -144,11 +144,11 @@ class MapResponseProcessor extends ExpressionProcessor
 
                     // When mapping a container, try to apply lower or upper bound.
                     if ($mapping->hasLowerBound() && $result < $mapping->getLowerBound()) {
-                        return new Float($mapping->getLowerBound());
+                        return new QtiFloat($mapping->getLowerBound());
                     } elseif ($mapping->hasUpperBound() && $result > $mapping->getUpperBound()) {
-                        return new Float($mapping->getUpperBound());
+                        return new QtiFloat($mapping->getUpperBound());
                     } else {
-                        return new Float($result);
+                        return new QtiFloat($result);
                     }
                 } else {
                     $msg = "MapResponse cannot be applied on a Record container.";

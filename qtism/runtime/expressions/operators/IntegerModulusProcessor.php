@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\IntegerModulus;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -87,6 +87,6 @@ class IntegerModulusProcessor extends OperatorProcessor {
 			return null;
 		}
 		
-		return new Integer(intval($operand1->getValue() % $operand2->getValue()));
+		return new QtiInteger(intval($operand1->getValue() % $operand2->getValue()));
 	}
 }

@@ -28,7 +28,7 @@ namespace qtism\data\storage\xml\marshalling;
 use qtism\data\storage\Utils;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\AssociableHotspot;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiShape;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponent;
 use \DOMElement;
@@ -51,7 +51,7 @@ class HotspotMarshaller extends Marshaller {
 	protected function marshall(QtiComponent $component) {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'shape', Shape::getNameByConstant($component->getShape()));
+        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
         self::setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());
         
         if ($component->isFixed() === true) {
@@ -97,7 +97,7 @@ class HotspotMarshaller extends Marshaller {
 	            
 	            if (($coords = self::getDOMElementAttributeAs($element, 'coords')) !== null) {
 	                
-	                $shape = Shape::getConstantByName($shape);
+	                $shape = QtiShape::getConstantByName($shape);
 	                if ($shape === false) {
 	                    $msg = "The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration.";
 	                    throw new UnmarshallingException($msg, $element);
