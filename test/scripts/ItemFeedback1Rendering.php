@@ -8,7 +8,7 @@ use qtism\runtime\common\OutcomeVariable;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 $doc->load('../samples/rendering/itemfeedback_1.xml');

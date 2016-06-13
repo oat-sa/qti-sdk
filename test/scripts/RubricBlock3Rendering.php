@@ -6,7 +6,7 @@ use qtism\data\ViewCollection;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 $doc->load('../samples/rendering/rubricblock_3.xml');

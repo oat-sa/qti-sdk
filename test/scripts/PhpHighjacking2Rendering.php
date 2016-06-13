@@ -5,7 +5,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
 $doc->load('../samples/rendering/php_highjacking_2.xml', true);
