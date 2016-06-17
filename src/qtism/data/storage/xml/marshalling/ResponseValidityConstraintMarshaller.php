@@ -47,6 +47,10 @@ class ResponseValidityConstraintMarshaller extends Marshaller
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         self::setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
         self::setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
+        
+        if (($patternMask = $component->getPatternMask()) !== '') {
+            self::setDOMElementAttribute($element, 'patternMask', $patternMask);
+        }
 
         return $element;
     }
@@ -66,8 +70,12 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                 
                 if (($maxConstraint = self::getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
                     
+                    if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) === null) {
+                        $patternMask = '';
+                    }
+                    
                     try {
-                        return new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint);
+                        return new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
                             "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",

@@ -19,6 +19,20 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(0, $component->getMinConstraint());
         $this->assertEquals(1, $component->getMaxConstraint());
+        $this->assertEquals('', $component->getPatternMask());
+    }
+    
+    /**
+     * @depends testUnmarshallSimple
+     */
+    public function testUnmarshallWithPatternMask() {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="/.+/ui"/>');
+        $element = $dom->documentElement;
+        $factory = new CompactMarshallerFactory();
+        $component = $factory->createMarshaller($element)->unmarshall($element);
+        
+        $this->assertEquals('/.+/ui', $component->getPatternMask());
     }
     
     public function testUnmarshallNoResponseIdentifier() {
@@ -84,5 +98,16 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase {
             "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information."
         );
         $component = $factory->createMarshaller($element)->unmarshall($element);
+    }
+    
+    public function testMarshallSimple() {
+        $component = new ResponseValidityConstraint('RESPONSE', 0, 1, '/.+/ui');
+        $factory = new CompactMarshallerFactory();
+        
+        $element = $factory->createMarshaller($component)->marshall($component);
+        $this->assertEquals('RESPONSE', $element->getAttribute('responseIdentifier'));
+        $this->assertEquals('0', $element->getAttribute('minConstraint'));
+        $this->assertEquals('1', $element->getAttribute('maxConstraint'));
+        $this->assertEquals('/.+/ui', $element->getAttribute('patternMask'));
     }
 }
