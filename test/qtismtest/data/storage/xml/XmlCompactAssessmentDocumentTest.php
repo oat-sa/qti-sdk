@@ -14,15 +14,6 @@ use \DOMDocument;
 
 class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	
-	public function testSchemaValid() {
-		$doc = new DOMDocument('1.0', 'UTF-8');
-		$file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
-		$doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
-		
-		$schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
-		$this->assertTrue($doc->schemaValidate($schema));
-	}
-	
 	public function testLoad(XmlCompactDocument $doc = null) {
 		if (empty($doc)) {
 			
@@ -399,42 +390,26 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    
 	    unlink($file);
 	}
-	
-	/**
-	 * @depends testSchemaValid
-	 */
-	public function testSchemaValid2() {
-	    $doc = new DOMDocument('1.0', 'UTF-8');
-	    $file = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
-	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
-	    
-	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
-	    $this->assertTrue($doc->schemaValidate($schema));
+    
+    /**
+     * @dataProvider testSchemaValidProvider
+     */
+    public function testSchemaValid($path) {
+		$doc = new DOMDocument('1.0', 'UTF-8');
+		$doc->load($path, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
+		
+		$schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
+		$this->assertTrue($doc->schemaValidate($schema));
 	}
-	
-	/**
-	 * @depends testSchemaValid
-	 */
-	public function testSchemaValid3() {
-	    $doc = new DOMDocument('1.0', 'UTF-8');
-	    $file = self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml';
-	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
-	     
-	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
-	    $this->assertTrue($doc->schemaValidate($schema));
-	}
-	
-	/**
-	 * @depends testSchemaValid
-	 */
-	public function testSchemaValid4() {
-	    $doc = new DOMDocument('1.0', 'UTF-8');
-	    $file = self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml';
-	    $doc->load($file, LIBXML_COMPACT|LIBXML_NONET|LIBXML_XINCLUDE);
-	    
-	    $schema = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes/qticompact_v1p0.xsd';
-	    $this->assertTrue($doc->schemaValidate($schema));
-	}
+    
+    public function testSchemaValidProvider() {
+        return array(
+            array(self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml'),
+            array(self::samplesDir() . 'custom/runtime/test_feedback_refs.xml'),
+            array(self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml'),
+            array(self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml'),
+        );
+    }
 	
 	public function testTestFeedbackRefLoad() {
 	    $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
