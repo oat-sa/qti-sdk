@@ -191,6 +191,7 @@
         <xs:attributeGroup ref="responseIdentifier.ResponseValidityConstraint.Attr"/>
         <xs:attributeGroup ref="minConstraint.ResponseValidityConstraint.Attr"/>
         <xs:attributeGroup ref="maxConstraint.ResponseValidityConstraint.Attr"/>
+        <xs:attributeGroup ref="patternMask.ResponseValidityConstraint.Attr"/>
     </xs:complexType>
     
     <xs:attributeGroup name="responseIdentifier.ResponseValidityConstraint.Attr">
@@ -204,4 +205,15 @@
     <xs:attributeGroup name="maxConstraint.ResponseValidityConstraint.Attr">
         <xs:attribute name="maxConstraint" use="required" type="xs:nonNegativeInteger"/>
     </xs:attributeGroup>
+    
+    <xs:attributeGroup name="patternMask.ResponseValidityConstraint.Attr">
+        <xs:attribute name="patternMask" use="optional" type="NonEmptyString"/>
+    </xs:attributeGroup>
+    
+    <!-- Non empty string type. -->
+    <xs:simpleType name="NonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
