@@ -408,6 +408,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
             array(self::samplesDir() . 'custom/runtime/test_feedback_refs.xml'),
             array(self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml'),
             array(self::samplesDir() . 'custom/runtime/shuffling/shuffling_groups.xml'),
+            array(self::samplesDir() . 'custom/runtime/response_validity_constraints.xml'),
         );
     }
 	
