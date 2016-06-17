@@ -59,18 +59,31 @@ class ResponseValidityConstraint extends QtiComponent
     private $maxConstraint;
     
     /**
+     * An XML Schema regular expression representing a constraint to be applied on all string values contained by the variable described in the $responseIdentifier.
+     * 
+     * @var string
+     * @qtism-bean-property
+     */
+    private $patternMask;
+    
+    /**
 	 * Create a new ResponseValidityConstraint object.
+     * 
+     * If the $patternMask attribute is provided, it represent a constraint to be applied on all string 
+     * values contained by the variable described in the $responseÏdentifier variable.
 	 *
      * @param string $responseIdentifier The identifier of the response the validity constraint applies to.
      * @param integer $minConstraint The minimum cardinality the value to be set to the response must have.
      * @param integer $maxConstraint The maximum cardinality the value to be set the response must have.
+     * @param string $patternMask (optional) A XML Schema regular expression.
      * @throws \InvalidArgumentException If one or more of the arguments above are invalid.
 	 */
-    public function __construct($responseIdentifier, $minConstraint, $maxConstraint)
+    public function __construct($responseIdentifier, $minConstraint, $maxConstraint, $patternMask = '')
     {
         $this->setResponseIdentifier($responseIdentifier);
         $this->setMinConstraint($minConstraint);
         $this->setMaxConstraint($maxConstraint);
+        $this->setPatternMask($patternMask);
     }
     
     /**
@@ -164,6 +177,40 @@ class ResponseValidityConstraint extends QtiComponent
     public function getMaxConstraint()
     {
         return $this->maxConstraint;
+    }
+    
+    /**
+     * Set the PatternMask for the ResponseValidityConstraint.
+     * 
+     * Set the XML Schema regular expression representing a constraint to be applied on all string 
+     * values contained by the variable described in the $responseÏdentifier variable. Providing an empty
+     * string as the $patternMask means there is no constraint to be applied.
+     * 
+     * @param string $patternMask An XML Schema regular expression.
+     */
+    public function setPatternMask($patternMask)
+    {
+        if (is_string($patternMask) === false) {
+            throw new InvalidArgumentException(
+                "The 'patternMask' argument must be a string, '" . gettype($patternMask) . "' given."
+            );
+        }
+        
+        $this->patternMask = $patternMask;
+    }
+    
+    /**
+     * Get the PatternMask for the ResponseValidityConstraint.
+     * 
+     * Get the XML Schema regular expression representing a constraint to be applied on all string
+     * values contained by the variable described in the $responseIdentifier variable. The method
+     * returns an empty string when there is no constraint to be applied.
+     * 
+     * @return string an XML Schema regulax expression.
+     */
+    public function getPatternMask()
+    {
+        return $this->patternMask;
     }
 
     /**
