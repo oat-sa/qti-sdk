@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -24,6 +24,7 @@ namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\content\xhtml\Object;
+use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
 
 /**
@@ -221,6 +222,17 @@ class GraphicOrderInteraction extends GraphicInteraction
     public function hasMaxChoices()
     {
         return $this->getMaxChoices() > -1;
+    }
+    
+    /**
+     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     */
+    public function getResponseValidityConstraint()
+    {
+        return new ResponseValidityConstraint(
+            ($this->hasMinChoices() === true) ? $this->getMinChoices() : count($this->getSimpleChoices()),
+            ($this->hasMinChoices() === false) ? 0 : ($this->hasMaxChoices() === true) ? $this->getMaxChoices() : 0
+        );
     }
 
     /**

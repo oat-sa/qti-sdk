@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
 
 /**
@@ -200,9 +201,11 @@ class ChoiceInteraction extends BlockInteraction
 
     /**
      * Set the minimum number of choices that the candidate is required to select.
+     * 
+     * A value of 0 means the candidate is not required to select any choices.
      *
-     * @param integer $minChoices A positive (> 0) integer.
-     * @throws \InvalidArgumentException If $minChoices is not a positive (> 0) integer.
+     * @param integer $minChoices A positive (>= 0) integer.
+     * @throws \InvalidArgumentException If $minChoices is not a positive (>= 0) integer.
      */
     public function setMinChoices($minChoices)
     {
@@ -248,6 +251,17 @@ class ChoiceInteraction extends BlockInteraction
     public function getOrientation()
     {
         return $this->orientation;
+    }
+    
+    /**
+     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     */
+    public function getResponseValidityConstraint()
+    {
+        return new ResponseValidityConstraint(
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**

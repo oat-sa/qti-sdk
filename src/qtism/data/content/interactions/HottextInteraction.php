@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\content\BlockStaticCollection;
+use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
 
 /**
@@ -185,6 +186,17 @@ class HottextInteraction extends BlockInteraction
     public function getContent()
     {
         return $this->content;
+    }
+    
+    /**
+     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     */
+    public function getResponseValidityConstraint()
+    {
+        return new ResponseValidityConstraint(
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**
