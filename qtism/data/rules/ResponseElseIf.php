@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -61,7 +61,6 @@ class ResponseElseIf extends QtiComponent {
 	 * 
 	 * @param Expression $expression An expression to be evaluated with the Else If statement.
 	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function __construct(Expression $expression, ResponseRuleCollection $responseRules) {
 		$this->setExpression($expression);
@@ -101,16 +100,9 @@ class ResponseElseIf extends QtiComponent {
 	 * to the Else If statement returns true.
 	 * 
 	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function setResponseRules(ResponseRuleCollection $responseRules) {
-		if (count($responseRules) > 0) {
-			$this->responseRules = $responseRules;
-		}
-		else {
-			$msg = "A ResponseElseIf object must be bound to at lease one ResponseRule object.";
-			throw new InvalidArgumentException($msg);
-		}
+        $this->responseRules = $responseRules;
 	}
 	
 	public function getQtiClassName() {

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -67,7 +67,6 @@ class ResponseIf extends QtiComponent {
 	 * 
 	 * @param Expression $expression The expression to be evaluated with the If statement.
 	 * @param ResponseRuleCollection $responseRules A collection of sub expressions to be evaluated if the Expression returns true.
-	 * @throws InvalidArgumentException If $responseRules does not contain any ResponseRule object.
 	 */
 	public function __construct(Expression $expression, ResponseRuleCollection $responseRules) {
 		$this->setExpression($expression);
@@ -97,16 +96,9 @@ class ResponseIf extends QtiComponent {
 	 * evaluated with the If statement returns true.
 	 * 
 	 * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
-	 * @throws InvalidArgumentException If $responseRules is an empty collection.
 	 */
 	public function setResponseRules(ResponseRuleCollection $responseRules) {
-		if (count($responseRules) > 0) {
-			$this->responseRules = $responseRules;
-		}
-		else {
-			$msg = "A ResponseIf object must be bound to at least one ResponseRule.";
-			throw new InvalidArgumentException($msg);
-		}
+        $this->responseRules = $responseRules;
 	}
 	
 	/**
@@ -124,8 +116,10 @@ class ResponseIf extends QtiComponent {
 	}
 	
 	public function getComponents() {
-		$comp = array_merge(array($this->getExpression()), 
-							$this->getResponseRules()->getArrayCopy());
+		$comp = array_merge(
+            array($this->getExpression()), 
+            $this->getResponseRules()->getArrayCopy()
+        );
 		
 		return new QtiComponentCollection($comp);
 	}
