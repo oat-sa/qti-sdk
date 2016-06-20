@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -33,6 +33,7 @@ use qtism\data\state\TemplateDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use qtism\data\state\Utils as StateUtils;
 use qtism\data\processing\ResponseProcessing;
 use qtism\common\utils\Format;
@@ -730,6 +731,35 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         }
         
         return $shufflings;
+    }
+    
+    /**
+     * @see \qtism\data\IAssessmentItem::getResponseValidityConstraints()
+     */
+    public function getResponseValidityConstraints()
+    {
+        $classNames = array(
+            'choiceInteraction',
+            'orderInteraction',
+            'associateInteraction',
+            'matchInteraction',
+            'inlineChoiceInteraction',
+            'textEntryInteraction',
+            'extendedTextInteraction',
+            'hottextInteraction',
+            'hotspotInteraction',
+            'selectPointInteraction',
+            'graphicOrderInteraction',
+            'graphicAssociateInteraction',
+            'positionObjectInteraction'
+        );
+        
+        $responseValidityConstraints = new ResponseValidityConstraintCollection();
+        foreach ($this->getComponentsByClassName($classNames) as $component) {
+            $responseValidityConstraints[] = $component;
+        }
+        
+        return $responseValidityConstraints;
     }
 
     /**

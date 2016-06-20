@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -159,4 +159,14 @@ interface IAssessmentItem extends QtiIdentifiable
      * @return \qtism\data\state\ShufflingCollection
      */
     public function getShufflings();
+    
+    /**
+     * Get the ResponseValidityConstraintCollection object.
+     * 
+     * The ResponseValidityConstraint objects returned describes how the responses provided to make
+     * an attempt on the item should be validated.
+     * 
+     * @return \qtism\data\state\ResponseValidityConstraintCollection
+     */
+    public function getResponseValidityConstraints();
 }
