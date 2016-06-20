@@ -44,6 +44,61 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $context['SCORE']);
 		$this->assertEquals(1.0, $context['SCORE']->getValue());
 	}
+    
+    public function testResponseProcessingNoResponseRule() {
+		$responseProcessing = $this->createComponentFromXml('
+			<responseProcessing>
+                <responseCondition>
+                    <responseIf>
+                        <match>
+                            <variable identifier="RESPONSE"/>
+                            <baseValue baseType="identifier">ChoiceA</baseValue>
+                        </match>
+                        <!-- Do nothing... -->
+                    </responseIf>
+                    <responseElseIf>
+                        <match>
+                            <variable identifier="RESPONSE"/>
+                            <baseValue baseType="identifier">ChoiceB</baseValue>
+                        </match>
+                        <!-- Do nothing... -->
+                    </responseElseIf>
+                    <responseElse>
+                        <setOutcomeValue identifier="SCORE">
+                            <baseValue baseType="float">1.0</baseValue>
+                        </setOutcomeValue>
+                    </responseElse>
+                </responseCondition>
+            </responseProcessing>
+		');
+		
+		$responseDeclaration = $this->createComponentFromXml('
+			<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>	
+		');
+		
+		$outcomeDeclaration = $this->createComponentFromXml('
+			<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+		');
+		
+		$respVar = ResponseVariable::createFromDataModel($responseDeclaration);
+		$outVar = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+		$context = new State(array($respVar, $outVar));
+		
+		$engine = new ResponseProcessingEngine($responseProcessing, $context);
+		
+		$context['RESPONSE'] = new Identifier('ChoiceA');
+		$engine->process();
+		$this->assertNull($context['SCORE']);
+        
+        $context['RESPONSE'] = new Identifier('ChoiceB');
+		$engine->process();
+		$this->assertNull($context['SCORE']);
+        
+        $context['RESPONSE'] = new Identifier('ChoiceC');
+        $engine->process();
+        $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $context['SCORE']);
+		$this->assertEquals(1.0, $context['SCORE']->getValue());
+	}
 	
 	public function testResponseProcessingExitResponse() {
 	    $responseProcessing = $this->createComponentFromXml('
