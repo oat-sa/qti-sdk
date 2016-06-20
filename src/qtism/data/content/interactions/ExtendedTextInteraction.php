@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,7 @@
 namespace qtism\data\content\interactions;
 
 use qtism\common\utils\Format;
+use qtism\data\state\ResponseValidityConstraint;
 use \InvalidArgumentException;
 
 /**
@@ -486,6 +487,18 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     public function getFormat()
     {
         return $this->format;
+    }
+    
+    /**
+     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     */
+    public function getResponseValidityConstraint()
+    {
+        return new ResponseValidityConstraint(
+            $this->getMinString(),
+            ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
+            $this->getPatternMask()
+        );
     }
 
     /**
