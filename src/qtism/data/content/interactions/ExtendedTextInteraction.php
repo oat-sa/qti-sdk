@@ -495,7 +495,8 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
-            $this->getMinString(),
+            $this->getResponseIdentifier(),
+            $this->getMinStrings(),
             ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
             $this->getPatternMask()
         );

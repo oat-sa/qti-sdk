@@ -756,7 +756,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         
         $responseValidityConstraints = new ResponseValidityConstraintCollection();
         foreach ($this->getComponentsByClassName($classNames) as $component) {
-            $responseValidityConstraints[] = $component;
+            $responseValidityConstraints[] = $component->getResponseValidityConstraint();
         }
         
         return $responseValidityConstraints;

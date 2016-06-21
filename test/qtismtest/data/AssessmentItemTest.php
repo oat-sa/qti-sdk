@@ -6,6 +6,7 @@ use qtism\data\ShowHide;
 use qtism\data\content\ModalFeedbackCollection;
 use qtism\data\content\ModalFeedback;
 use qtism\data\AssessmentItem;
+use qtism\data\storage\xml\XmlDocument;
 
 class AssessmentItemTest extends QtiSmTestCase {
     
@@ -28,4 +29,99 @@ class AssessmentItemTest extends QtiSmTestCase {
 	    $this->assertEquals('HIDEME', $modalFeedbackRules[1]->getIdentifier());
 	    $this->assertEquals(ShowHide::HIDE, $modalFeedbackRules[1]->getShowHide());
 	}
+    
+    /**
+     * @dataProvider getResponseValidityConstraintsProvider
+     */
+    public function testGetResponseValidityConstraints($path, array $expected) {
+        $doc = new XmlDocument();
+        $doc->load($path);
+        
+        $assessmentItem = $doc->getDocumentComponent();
+        $responseValidityConstraints = $assessmentItem->getResponseValidityConstraints();
+        
+        $this->assertEquals(count($expected), count($responseValidityConstraints));
+        
+        for ($i = 0; $i < count($responseValidityConstraints); $i++) {
+            $this->assertEquals($expected[$i][0], $responseValidityConstraints[$i]->getResponseIdentifier());
+            $this->assertEquals($expected[$i][1], $responseValidityConstraints[$i]->getMinConstraint(), 'minConstraint failed for ' . $expected[$i][0]);
+            $this->assertEquals($expected[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expected[$i][0]);
+            $this->assertEquals($expected[$i][3], $responseValidityConstraints[$i]->getPatternMask());
+        }
+    }
+    
+    public function getResponseValidityConstraintsProvider() {
+        
+        return array(
+            array(
+                self::samplesDir() . 'ims/items/2_2/choice.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/adaptive.xml',
+                array(
+                    array('DOOR', 0, 1, ''),
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/adaptive_template.xml',
+                array(
+                    array('DOOR', 0, 1, ''),
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/associate.xml',
+                array(
+                    array('RESPONSE', 0, 3, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/choice_fixed.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/choice_multiple.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/choice_multiple_rtl.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/extended_text.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/extended_text_rubric.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/feedbackblock_adaptive.xml',
+                array(
+                    array('RESPONSE1', 0, 1, ''),
+                    array('RESPONSE21', 0, 1, ''),
+                    array('RESPONSE22', 0, 1, ''),
+                    array('RESPONSE23', 0, 1, ''),
+                    array('RESPONSE24', 0, 1, ''),
+                    array('RESPONSE25', 0, 1, ''),
+                    array('RESPONSE26', 0, 1, ''),
+                    array('RESPONSE27', 0, 1, ''),
+                )
+            ),
+        );
+    }
 }

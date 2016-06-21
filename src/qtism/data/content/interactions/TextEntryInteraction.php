@@ -316,7 +316,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      */
     public function getResponseValidityConstraint()
     {
-        return new ResponseValidityConstraint(0, 1, $this->getPatternMask());
+        return new ResponseValidityConstraint($this->getResponseIdentifier(), 0, 1, $this->getPatternMask());
     }
 
     /**

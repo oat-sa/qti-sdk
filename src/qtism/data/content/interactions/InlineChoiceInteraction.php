@@ -183,8 +183,9 @@ class InlineChoiceInteraction extends InlineInteraction
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
             ($this->isRequired() === true) ? 1 : 0,
-            ($this->isRequired() === true) ? 1 : 0
+            1
         );
     }
 
