@@ -119,7 +119,75 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE24', 0, 1, ''),
                     array('RESPONSE25', 0, 1, ''),
                     array('RESPONSE26', 0, 1, ''),
-                    array('RESPONSE27', 0, 1, ''),
+                    array('RESPONSE27', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/feedbackblock_solution_random.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/feedbackblock_templateblock.xml',
+                array(
+                    array('RESPONSE1', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/feedbackInline.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/gap_match.xml',
+                array()
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/graphic_associate.xml',
+                array(
+                    array('RESPONSE', 0, 3, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/graphic_gap_match.xml',
+                array()
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/hotspot.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/hottext.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/inline_choice.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/likert.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/match.xml',
+                array(
+                    array('RESPONSE', 0, 4, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/math.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
                 )
             ),
         );

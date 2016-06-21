@@ -250,6 +250,7 @@ class MatchInteraction extends BlockInteraction
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
             $this->getMinAssociations(),
             $this->getMaxAssociations()
         );
