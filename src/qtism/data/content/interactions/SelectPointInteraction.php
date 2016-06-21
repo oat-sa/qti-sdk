@@ -148,6 +148,7 @@ class SelectPointInteraction extends GraphicInteraction
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
             $this->getMinChoices(),
             $this->getMaxChoices()
         );

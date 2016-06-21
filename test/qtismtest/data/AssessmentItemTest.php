@@ -190,6 +190,93 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE', 0, 1, '')
                 )
             ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/mc_calc3.xml',
+                array(
+                    array('RESPONSE0', 1, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/mc_stat2.xml',
+                array(
+                    array('RESPONSE0', 0, 1, ''),
+                    array('RESPONSE1', 0, 1, ''),
+                    array('RESPONSE2', 0, 1, ''),
+                    array('RESPONSE3', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/modalFeedback.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/multi-input.xml',
+                array(
+                    array('RESPONSE1', 0, 1, ''),
+                    array('RESPONSE2', 0, 1, ''),
+                    array('RESPONSE3', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/nested_object.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/order.xml',
+                array(
+                    array('RESPONSE', 3, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/order_rtl.xml',
+                array(
+                    array('RESPONSE', 3, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/orkney1.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/orkney2.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/position_object.xml',
+                array(
+                    array('RESPONSE', 0, 3, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/slider.xml',
+                array()
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/template.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/text_entry.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'ims/items/2_2/select_point.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
         );
     }
 }

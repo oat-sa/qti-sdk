@@ -243,6 +243,7 @@ class PositionObjectInteraction extends Interaction
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
             ($this->hasMinChoices() === true) ? $this->getMinChoices() : 0,
             $this->getMaxChoices()
         );

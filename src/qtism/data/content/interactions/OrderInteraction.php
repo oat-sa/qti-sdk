@@ -302,6 +302,7 @@ class OrderInteraction extends BlockInteraction
     public function getResponseValidityConstraint()
     {
         return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
             ($this->hasMinChoices() === true) ? $this->getMinChoices() : count($this->getSimpleChoices()),
             ($this->hasMinChoices() === false) ? 0 : ($this->hasMaxChoices() === true) ? $this->getMaxChoices() : 0
         );
