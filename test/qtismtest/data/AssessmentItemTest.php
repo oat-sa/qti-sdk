@@ -60,6 +60,24 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                self::samplesDir() . 'custom/items/response_constraints/choice_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 2, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/choice_min.xml',
+                array(
+                    array('RESPONSE', 2, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/choice_default.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
                 self::samplesDir() . 'ims/items/2_2/adaptive.xml',
                 array(
                     array('DOOR', 0, 1, ''),
@@ -77,6 +95,26 @@ class AssessmentItemTest extends QtiSmTestCase {
                 self::samplesDir() . 'ims/items/2_2/associate.xml',
                 array(
                     array('RESPONSE', 0, 3, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/associate_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 3, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/associate_min.xml',
+                array(
+                    // maxConstraint is 1 because by default, maxAssociations = 1 in associateInteraction.
+                    array('RESPONSE', 1, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/associate_default.xml',
+                array(
+                    // maxConstraint is 1 because by default, maxAssociations = 1 in associateInteraction.
+                    array('RESPONSE', 0, 1, '')
                 )
             ),
             array(
@@ -98,9 +136,34 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                // Default for minStrings/maxStrings.
                 self::samplesDir() . 'ims/items/2_2/extended_text.xml',
                 array(
                     array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/extended_text_min.xml',
+                array(
+                    array('RESPONSE', 1, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/extended_text_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 2, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/extended_text_max.xml',
+                array(
+                    array('RESPONSE', 0, 2, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/extended_text_patternmask.xml',
+                array(
+                    array('RESPONSE', 0, 0, '[a-zA-Z\\s]{10,15}')
                 )
             ),
             array(
