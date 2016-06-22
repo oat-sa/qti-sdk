@@ -237,6 +237,24 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                self::samplesDir() . 'custom/items/response_constraints/hotspot_default.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/hotspot_min.xml',
+                array(
+                    array('RESPONSE', 2, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/hotspot_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 2, '')
+                )
+            ),
+            array(
                 self::samplesDir() . 'ims/items/2_2/hottext.xml',
                 array(
                     array('RESPONSE', 0, 1, '')

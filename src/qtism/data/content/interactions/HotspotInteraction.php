@@ -61,7 +61,7 @@ class HotspotInteraction extends GraphicInteraction
      * @var integer
      * @qtism-bean-property
      */
-    private $maxChoices = 1;
+    private $maxChoices = 0;
 
     /**
      * From IMS QTI:
@@ -89,7 +89,6 @@ class HotspotInteraction extends GraphicInteraction
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
      * @param \qtism\data\content\xhtml\Object $object The associated image given as an Object object.
-     * @param integer $maxChoices The maximum number of choices the candidate is allowed to select as a positive (>= 0) integer.
      * @param \qtism\data\content\interactions\HotspotChoiceCollection $hotspotChoices The collection of HotspotChoice objects composing the HotspotInteraction.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -97,10 +96,9 @@ class HotspotInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException
      */
-    public function __construct($responseIdentifier, Object $object, $maxChoices, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, Object $object, HotspotChoiceCollection $hotspotChoices, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
-        $this->setMaxChoices($maxChoices);
         $this->setHotspotChoices($hotspotChoices);
     }
 

@@ -49,45 +49,46 @@ class HotspotInteractionMarshaller extends ContentMarshaller
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
+                
+                try {
+                    $choices = new HotspotChoiceCollection($children->getArrayCopy());
+                } catch (InvalidArgumentException $e) {
+                    $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
+                    throw new UnmarshallingException($msg, $element, $e);
+                }
 
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                if (count($choices) > 0) {
 
-                    try {
-                        $choices = new HotspotChoiceCollection($children->getArrayCopy());
-                    } catch (InvalidArgumentException $e) {
-                        $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
-                        throw new UnmarshallingException($msg, $element, $e);
+                    $fqClass = $this->lookupClass($element);
+                    $component = new $fqClass($responseIdentifier, $object, $choices);
+
+                    if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                        $component->setMinChoices($minChoices);
                     }
-
-                    if (count($choices) > 0) {
-
-                        $fqClass = $this->lookupClass($element);
-                        $component = new $fqClass($responseIdentifier, $object, $maxChoices, $choices);
-
-                        if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
-                            $component->setMinChoices($minChoices);
-                        }
-
-                        if (($xmlBase = self::getXmlBase($element)) !== false) {
-                            $component->setXmlBase($xmlBase);
-                        }
-
-                        $promptElts = self::getChildElementsByTagName($element, 'prompt');
-                        if (count($promptElts) > 0) {
-                            $promptElt = $promptElts[0];
-                            $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
-                            $component->setPrompt($prompt);
-                        }
-
-                        $this->fillBodyElement($component, $element);
-
-                        return $component;
-                    } else {
-                        $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
+                    
+                    if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                        $component->setMaxChoices($maxChoices);
+                    } elseif (Version::compare($version, '2.1.0', '<') === true) {
+                        $msg = "The mandatory 'maxChoices' attribute is missing from the '" . $element->localName . "' element.";
                         throw new UnmarshallingException($msg, $element);
                     }
+
+                    if (($xmlBase = self::getXmlBase($element)) !== false) {
+                        $component->setXmlBase($xmlBase);
+                    }
+
+                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    if (count($promptElts) > 0) {
+                        $promptElt = $promptElts[0];
+                        $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
+                        $component->setPrompt($prompt);
+                    }
+
+                    $this->fillBodyElement($component, $element);
+
+                    return $component;
                 } else {
-                    $msg = "The mandatory 'maxChoices' attribute is missing from the 'hotspotInteraction' element.";
+                    $msg = "An 'hotspotInteraction' element must contain at least one 'hotspotChoice' element, none given";
                     throw new UnmarshallingException($msg, $element);
                 }
 

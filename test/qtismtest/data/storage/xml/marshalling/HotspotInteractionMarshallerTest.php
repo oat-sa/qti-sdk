@@ -25,7 +25,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
         $choice3 = new HotspotChoice('hotspotchoice3', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(150, 235, 8)));
         
         $object = new Object('./img/img.png', 'image/png');
-	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
+	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, new HotspotChoiceCollection(array($choice1, $choice2, $choice3)), 'my-hotspot');
+        $hotspotInteraction->setMaxChoices(1);
 	    $hotspotInteraction->setPrompt($prompt);
 	    $hotspotInteraction->setMinChoices(1);
         
@@ -45,7 +46,8 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase {
 	    $choice1 = new HotspotChoice('hotspotchoice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(77, 115, 8)));
 	    
 	    $object = new Object('./img/img.png', 'image/png');
-	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, 1, new HotspotChoiceCollection(array($choice1)));
+	    $hotspotInteraction = new HotspotInteraction('RESPONSE', $object, new HotspotChoiceCollection(array($choice1)));
+        $hotspotInteraction->setMaxChoices(1);
 	    $hotspotInteraction->setMinChoices(1);
 	    
 	    $element = $this->getMarshallerFactory('2.0.0')->createMarshaller($hotspotInteraction)->marshall($hotspotInteraction);
