@@ -303,6 +303,26 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                // maxAssociations = 1 because default for matchInteraction is 1.
+                self::samplesDir() . 'custom/items/response_constraints/match_default.xml',
+                array(
+                    array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                // maxAssociations = 1 because default for matchInteraction is 1.
+                self::samplesDir() . 'custom/items/response_constraints/match_min.xml',
+                array(
+                    array('RESPONSE', 1, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/match_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 3, '')
+                )
+            ),
+            array(
                 self::samplesDir() . 'ims/items/2_2/math.xml',
                 array(
                     array('RESPONSE', 0, 1, '')
