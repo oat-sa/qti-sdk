@@ -103,7 +103,7 @@ class HottextInteractionMarshaller extends ContentMarshaller
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
 
-        if ($component->getMaxChoices() !== 1) {
+        if ($component->getMaxChoices() !== 0) {
             self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 

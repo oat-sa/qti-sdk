@@ -55,7 +55,7 @@ class HottextInteraction extends BlockInteraction
      * @var integer
      * @qtism-bean-property
      */
-    private $maxChoices = 1;
+    private $maxChoices = 0;
 
     /**
      * From IMS QTI:
@@ -96,7 +96,7 @@ class HottextInteraction extends BlockInteraction
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setContent($content);
-        $this->setMaxChoices(1);
+        $this->setMaxChoices(0);
         $this->setMinChoices(0);
     }
 
@@ -138,11 +138,11 @@ class HottextInteraction extends BlockInteraction
     {
         if (is_int($minChoices) && $minChoices > 0) {
 
-            if ($minChoices <= $this->getMaxChoices()) {
-                $this->minChoices = $minChoices;
-            } else {
-                $msg = "The 'minChoices' argument must respect the limits imposed by maxChoice.";
+            if ($minChoices > $this->getMaxChoices() && $this->getMaxChoices() > 0) {
+                $msg = "The 'minChoices' argument must respect the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
+            } else {
+                $this->minChoices = $minChoices;
             }
         } elseif (is_int($minChoices) && $minChoices === 0) {
             $this->minChoices = $minChoices;

@@ -261,9 +261,33 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                self::samplesDir() . 'custom/items/response_constraints/hottext_default.xml',
+                array(
+                    array('RESPONSE', 0, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/hottext_min.xml',
+                array(
+                    array('RESPONSE', 2, 0, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/hottext_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 2, '')
+                )
+            ),
+            array(
                 self::samplesDir() . 'ims/items/2_2/inline_choice.xml',
                 array(
                     array('RESPONSE', 0, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/inline_choice_required.xml',
+                array(
+                    array('RESPONSE', 1, 1, '')
                 )
             ),
             array(

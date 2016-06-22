@@ -69,7 +69,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase {
         
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf('qtism\\data\\content\\interactions\\HottextInteraction', $component);
-        $this->assertEquals(1, $component->getMaxChoices());
+        $this->assertEquals(0, $component->getMaxChoices());
         $this->assertEquals(0, $component->getMinChoices());
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         
