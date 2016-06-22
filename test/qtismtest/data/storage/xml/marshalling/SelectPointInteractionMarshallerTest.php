@@ -16,9 +16,10 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	    $object = new Object('./myimg.png', 'image/png');
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
-	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object, 1);
+	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object);
 	    $selectPointInteraction->setPrompt($prompt);
 	    $selectPointInteraction->setMinChoices(1);
+        $selectPointInteraction->setMaxChoices(1);
 	    
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($selectPointInteraction)->marshall($selectPointInteraction);
         
@@ -33,8 +34,9 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	public function testMarshall20() {
 	    // Make sure minChoices is not in the output in a QTI 2.0 context.
 	    $object = new Object('./myimg.png', 'image/png');
-	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object, 1);
+	    $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object);
 	    $selectPointInteraction->setMinChoices(1);
+        $selectPointInteraction->setMaxChoices(1);
 	     
 	    $element = $this->getMarshallerFactory('2.0.0')->createMarshaller($selectPointInteraction)->marshall($selectPointInteraction);
 	

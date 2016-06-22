@@ -76,17 +76,16 @@ class SelectPointInteraction extends GraphicInteraction
      *
      * @param string $responseIdentifier The identifier of the response associated to the interaction.
      * @param \qtism\data\content\xhtml\Object $object The associated image as an Object object.
-     * @param integer $maxChoices The maximum number of choices that the candidate is allowed to select as a positive (>= 0) integer.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws \InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($responseIdentifier, Object $object, $maxChoices, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, Object $object, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
-        $this->setMaxChoices($maxChoices);
+        $this->setMaxChoices(0);
         $this->setMinChoices(0);
     }
 

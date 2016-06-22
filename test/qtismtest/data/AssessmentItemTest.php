@@ -445,6 +445,24 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE', 0, 1)
                 )
             ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/select_point_default.xml',
+                array(
+                    array('RESPONSE', 0, 0)
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/select_point_min.xml',
+                array(
+                    array('RESPONSE', 2, 0)
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/select_point_min_max.xml',
+                array(
+                    array('RESPONSE', 3, 4)
+                )
+            ),
         );
     }
 }
