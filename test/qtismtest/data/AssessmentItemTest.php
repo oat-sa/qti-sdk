@@ -163,7 +163,7 @@ class AssessmentItemTest extends QtiSmTestCase {
             array(
                 self::samplesDir() . 'custom/items/response_constraints/extended_text_patternmask.xml',
                 array(
-                    array('RESPONSE', 0, 0, '[a-zA-Z\\s]{10,15}')
+                    array('RESPONSE', 0, 0, '[\S]{10,15}')
                 )
             ),
             array(
@@ -211,6 +211,19 @@ class AssessmentItemTest extends QtiSmTestCase {
                 self::samplesDir() . 'ims/items/2_2/graphic_associate.xml',
                 array(
                     array('RESPONSE', 0, 3, '')
+                )
+            ),
+            array(
+                // maxConstraint is 1 because by default, maxAssociations = 1 in graphicAssociateInteraction.
+                self::samplesDir() . 'custom/items/response_constraints/graphic_associate_min.xml',
+                array(
+                    array('RESPONSE', 1, 1, '')
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/graphic_associate_min_max.xml',
+                array(
+                    array('RESPONSE', 1, 3, '')
                 )
             ),
             array(
