@@ -6,7 +6,7 @@
 	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
 		<assessmentSection identifier="S01" title="Section1" visible="true">
             <!-- Do not allow skipping for section S01. -->
-            <itemSessionControl allowSkipping="false"/>
+            <itemSessionControl allowSkipping="false" maxAttempts="0"/>
             
             <!-- Item with a single interaction, bound to RESPONSE variable with no default value. -->
 			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
