@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -50,7 +50,10 @@ class PositionObjectInteractionMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement('positionObjectInteraction');
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
         self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        
+        if ($component->getMaxChoices() > 0) {
+            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+        }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasMinChoices() === true) {
             self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());

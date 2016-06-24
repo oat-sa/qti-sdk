@@ -418,6 +418,24 @@ class AssessmentItemTest extends QtiSmTestCase {
                 )
             ),
             array(
+                self::samplesDir() . 'custom/items/response_constraints/position_object_min_max.xml',
+                array(
+                    array('RESPONSE', 2, 3)
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/position_object_min.xml',
+                array(
+                    array('RESPONSE', 2, 0)
+                )
+            ),
+            array(
+                self::samplesDir() . 'custom/items/response_constraints/position_object_default.xml',
+                array(
+                    array('RESPONSE', 0, 0)
+                )
+            ),
+            array(
                 self::samplesDir() . 'ims/items/2_2/slider.xml',
                 array()
             ),

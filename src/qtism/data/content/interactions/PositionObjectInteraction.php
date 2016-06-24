@@ -67,13 +67,13 @@ class PositionObjectInteraction extends Interaction
      * From IMS QTI:
      *
      * The maximum number of positions (on the stage) that the image can be placed.
-     * If matchChoices is 0 there is no limit. If maxChoices is greater than 1 (or 0)
+     * If maxChoices is 0 there is no limit. If maxChoices is greater than 1 (or 0)
      * then the interaction must be bound to a response with multiple cardinality.
      *
      * @var integer
      * @qtism-bean-property
      */
-    private $maxChoices = 1;
+    private $maxChoices = 0;
 
     /**
      * From IMS QTI:
@@ -88,7 +88,7 @@ class PositionObjectInteraction extends Interaction
      * @var integer
      * @qtism-bean-property
      */
-    private $minChoices = -1;
+    private $minChoices = 0;
 
     /**
      * The image to be positioned on the stage by the candidate.
@@ -182,9 +182,9 @@ class PositionObjectInteraction extends Interaction
      */
     public function setMinChoices($minChoices)
     {
-        if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
+        if (is_int($minChoices) && $minChoices >= 0) {
 
-            if ($minChoices > $this->getMaxChoices()) {
+            if (($maxChoices = $this->getMaxChoices()) > 0 && $minChoices > $maxChoices) {
                 $msg = "The 'minChoices' argument must be less than or equal to the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
             }
@@ -244,7 +244,7 @@ class PositionObjectInteraction extends Interaction
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
-            ($this->hasMinChoices() === true) ? $this->getMinChoices() : 0,
+            $this->getMinChoices(),
             $this->getMaxChoices()
         );
     }
