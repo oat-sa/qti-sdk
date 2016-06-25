@@ -27,6 +27,8 @@ use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\ResponseValidityConstraint;
 use qtism\runtime\common\Utils as RuntimeUtils;
+use qtism\runtime\expressions\operators\Utils as OperatorUtils;
+use \RuntimeException;
 
 /**
  * Utility methods for Tests.
@@ -36,6 +38,18 @@ use qtism\runtime\common\Utils as RuntimeUtils;
  */
 class Utils
 {
+    /**
+     * Wheter or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
+     * 
+     * Please note that pattern masks described by the $constraint will only be applied on variables with the
+     * QTI String baseType. Moreover, null values given as a $response will be considered to have no cardinality
+     * i.e. count($response) = 0.
+     * 
+     * @param \qtism\common\datatypes\QtiDatatype $response
+     * @param \qtism\data\state\ResponseValidityConstraint $constraint
+     * @throws \RuntimeException If An error occured while validating a patternMask.
+     * @return boolean
+     */
     static public function isResponseValid(QtiDatatype $response = null, ResponseValidityConstraint $constraint)
     {
         $min = $constraint->getMinConstraint();
@@ -50,8 +64,21 @@ class Utils
             $count = count($response);
         }
         
+        // Cardinality check...
         if ($count < $min || ($max !== 0 && $count > $max)) {
             return false;
+        }
+        
+        // Pattern Mask check...
+        if (($patternMask = $constraint->getPatternMask()) !== '' && is_null($response) === false && $response->getBaseType() === BaseType::STRING) {
+            $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
+            $result = @preg_match($patternMask, $response->getValue());
+            
+            if ($result === 0) {
+                return false;
+            } elseif ($result === false) {
+                throw new \RuntimeException(OperatorUtils::lastPregErrorMessage());
+            }
         }
         
         return true;

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -43,7 +43,7 @@ class Utils
 	 * @param integer $b A positive integer
 	 * @return integer The GCD of $a and $b.
 	 */
-    public static function gcd($a, $b)
+    static public function gcd($a, $b)
     {
         $a = abs($a);
         $b = abs($b);
@@ -67,7 +67,7 @@ class Utils
 	 * @param integer $b
 	 * @return integer the LCM of $a and $b.
 	 */
-    public static function lcm($a, $b)
+    static public function lcm($a, $b)
     {
         $a = abs($a);
         $b = abs($b);
@@ -87,7 +87,7 @@ class Utils
 	 * @param array An array of numeric values.
 	 * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
 	 */
-    public static function mean(array $sample)
+    static public function mean(array $sample)
     {
         $count = count($sample);
         if ($count === 0) {
@@ -124,7 +124,7 @@ class Utils
 	 * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
 	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
 	 */
-    public static function variance(array $sample, $correction = true)
+    static public function variance(array $sample, $correction = true)
     {
         $mean = static::mean($sample);
 
@@ -169,7 +169,7 @@ class Utils
 	 * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
 	 * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
 	 */
-    public static function standardDeviation(array $sample, $correction = true)
+    static public function standardDeviation(array $sample, $correction = true)
     {
         $sampleVariance = static::variance($sample, $correction);
 
@@ -188,7 +188,7 @@ class Utils
 	 *
 	 * @return string|boolean The delimited string or false if no appropriate delimiters can be found.
 	 */
-    public static function pregAddDelimiter($string)
+    static public function pregAddDelimiter($string)
     {
         return '/' . static::escapeSymbols($string, '/') . '/';
     }
@@ -200,7 +200,7 @@ class Utils
 	 * @param integer $offset
 	 * @return integer
 	 */
-    public static function getPrecedingBackslashesCount($string, $offset)
+    static public function getPrecedingBackslashesCount($string, $offset)
     {
         $count = 0;
 
@@ -224,7 +224,7 @@ class Utils
 	 * @param array|string $symbols An array of symbols or a single symbol.
 	 * @return string The escaped string.
 	 */
-    public static function escapeSymbols($string, $symbols)
+    static public function escapeSymbols($string, $symbols)
     {
         if (!is_array($symbols)) {
             $symbols = array($symbols);
@@ -259,7 +259,7 @@ class Utils
 	 * @param string $class A custom operator class name where namespace separator is '.' (dot).
 	 * @return boolean|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
 	 */
-    public static function customOperatorClassToPhpClass($class)
+    static public function customOperatorClassToPhpClass($class)
     {
         if (is_string($class) === false) {
             return false;
@@ -286,5 +286,67 @@ class Utils
 
             return implode("\\", $tokens);
         }
+    }
+    
+    /**
+     * Get a meaningful message for the last PREG error that occured.
+     * 
+     * The following PREG error codes are considered by this method:
+     * 
+     * * PREG_INTERNAL_ERROR
+     * * PREG_BACKTRACK_LIMIT_ERROR
+     * * PREG_RECURSION_LIMIT_ERROR
+     * * PREG_BAD_UTF8_ERROR
+     * * PREG_BAD_UTF8_OFFSET_ERROR
+     * 
+     * @return string
+     */
+    static public function lastPregErrorMessage()
+    {
+        $error = preg_last_error();
+        $errorType = 'PCRE Engine compilation error';
+
+        switch ($error) {
+            case PREG_INTERNAL_ERROR:
+                $errorType = "PCRE Engine internal error";
+                break;
+
+            case PREG_BACKTRACK_LIMIT_ERROR:
+                $errorType = "PCRE Engine backtrack limit exceeded";
+                break;
+
+            case PREG_RECURSION_LIMIT_ERROR:
+                $errorType = "PCRE Engine recursion limit exceeded";
+                break;
+
+            case PREG_BAD_UTF8_ERROR:
+                $errorType = "PCRE Engine malformed UTF-8";
+                break;
+
+            case PREG_BAD_UTF8_OFFSET_ERROR:
+                $errorType = "PCRE Engine UTF-8 offset error";
+                break;
+        }
+        
+        return $errorType;
+    }
+    
+    /**
+     * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
+     * 
+     * @return string
+     */
+    static public function prepareXsdPatternForPcre($pattern)
+    {
+        // XML schema always implicitly anchors the entire regular expression
+        // because there is no carret (^) nor dollar ($) signs.
+        // see http://www.regular-expressions.info/xml.html
+        $pattern = self::escapeSymbols($pattern, array('$', '^'));
+        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+
+        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+        $pattern .= 's';
+        
+        return $pattern;
     }
 }

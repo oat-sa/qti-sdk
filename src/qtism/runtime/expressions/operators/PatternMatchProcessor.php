@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -28,7 +28,7 @@ use qtism\data\expressions\Expression;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
 
 /**
- * The PatternProcessor class aims at processing Pattern expressions.
+ * The PatternMatchProcessor class aims at processing Pattern expressions.
  *
  * Please not that this implementation of PatternMatch does not support character class subtraction as
  * in XML Schema 2 specification. Moreover, \i \I \c \C are not supported. Except that,
@@ -73,16 +73,8 @@ class PatternMatchProcessor extends OperatorProcessor
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
         }
 
-        // XML schema always implicitly anchors the entire regular expression
-        // because there is no carret (^) nor dollar ($) signs.
-        // see http://www.regular-expressions.info/xml.html
         $rawPattern = $this->getExpression()->getPattern();
-        $pattern = OperatorUtils::escapeSymbols($rawPattern, array('$', '^'));
-        $pattern = OperatorUtils::pregAddDelimiter('^' . $pattern . '$');
-
-        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
-
+        $pattern = OperatorUtils::prepareXsdPatternForPcre($rawPattern);
         $result = @preg_match($pattern, $operands[0]->getValue());
 
         if ($result === 1) {
@@ -90,31 +82,7 @@ class PatternMatchProcessor extends OperatorProcessor
         } elseif ($result === 0) {
             return new QtiBoolean(false);
         } else {
-            $error = preg_last_error();
-            $errorType = 'PCRE Engine compilation error';
-
-            switch ($error) {
-                case PREG_INTERNAL_ERROR:
-                    $errorType = "PCRE Engine internal error";
-                break;
-
-                case PREG_BACKTRACK_LIMIT_ERROR:
-                    $errorType = "PCRE Engine backtrack limit exceeded";
-                break;
-
-                case PREG_RECURSION_LIMIT_ERROR:
-                    $errorType = "PCRE Engine recursion limit exceeded";
-                break;
-
-                case PREG_BAD_UTF8_ERROR:
-                    $errorType = "PCRE Engine malformed UTF-8";
-                break;
-
-                case PREG_BAD_UTF8_OFFSET_ERROR:
-                    $errorType = "PCRE Engine UTF-8 offset error";
-                break;
-            }
-
+            $errorType = OperatorUtils::lastPregErrorMessage();
             $msg = "An internal error occured while processing the regular expression '${rawPattern}': ${errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
