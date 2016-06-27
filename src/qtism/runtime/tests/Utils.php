@@ -25,6 +25,7 @@ namespace qtism\runtime\tests;
 
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 use qtism\data\state\ResponseValidityConstraint;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\expressions\operators\Utils as OperatorUtils;
@@ -41,9 +42,16 @@ class Utils
     /**
      * Wheter or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
      * 
+     * Min and Max constraints will be checked first, followed by the patternMask check.
+     * 
      * Please note that pattern masks described by the $constraint will only be applied on variables with the
-     * QTI String baseType. Moreover, null values given as a $response will be considered to have no cardinality
-     * i.e. count($response) = 0.
+     * QTI String baseType. In case of a patternMask to be applied on a Multiple or Ordered Container, the patternMask
+     * will be applied on all String values within the Container. All String values have to comply with the patternMask
+     * to see the whole Container being validated. In case of an Empty Multiple or Ordered Container with a PatternMask,
+     * the method will return true as there is no String values to be validated. PatternMask are not checked against Record
+     * Containers.
+     * 
+     * Moreover, null values given as a $response will be considered to have no cardinality i.e. count($response) = 0.
      * 
      * @param \qtism\common\datatypes\QtiDatatype $response
      * @param \qtism\data\state\ResponseValidityConstraint $constraint
@@ -71,13 +79,17 @@ class Utils
         
         // Pattern Mask check...
         if (($patternMask = $constraint->getPatternMask()) !== '' && is_null($response) === false && $response->getBaseType() === BaseType::STRING) {
+            $values = ($cardinality === Cardinality::SINGLE) ? array($response->getValue()) : $response->getArrayCopy();
             $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
-            $result = @preg_match($patternMask, $response->getValue());
             
-            if ($result === 0) {
-                return false;
-            } elseif ($result === false) {
-                throw new \RuntimeException(OperatorUtils::lastPregErrorMessage());
+            foreach ($values as $value) {
+                $result = @preg_match($patternMask, $value);
+            
+                if ($result === 0) {
+                    return false;
+                } elseif ($result === false) {
+                    throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
+                }
             }
         }
         
