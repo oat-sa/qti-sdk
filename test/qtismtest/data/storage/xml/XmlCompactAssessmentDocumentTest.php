@@ -495,4 +495,18 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $doc->load($file);
 	    $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 	}
+    
+    public function testCreateFromAssessmentTestResponseValidityConstraints() {
+        $doc = new XmlDocument('2.1');
+        $file = self::samplesDir() . 'custom/tests/response_validity_constraints.xml';
+        $doc->load($file);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+        
+        $assessmentItemRefs = $compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef');
+        
+        $this->assertEquals(1, count($assessmentItemRefs[0]->getResponseValidityConstraints()));
+        $this->assertEquals('RESPONSE', $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getResponseIdentifier());
+        $this->assertEquals(0, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMinConstraint());
+        $this->assertEquals(1, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMaxConstraint());
+    }
 }
