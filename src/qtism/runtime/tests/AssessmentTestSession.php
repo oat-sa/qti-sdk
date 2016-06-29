@@ -632,8 +632,8 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
     
-        // If there are still pending responses to be sent, apply a deffered response processing + outcomeProcessing.
-        $this->defferedResponseProcessing();
+        // If there are still pending responses to be sent, apply a deffered response submission + outcomeProcessing.
+        $this->defferedResponseSubmission();
     
         if ($this->getTestResultsSubmission() === TestResultsSubmission::END) {
             $this->submitTestResults();
@@ -2063,13 +2063,12 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Apply the response processing on pending responses due to
-     * the simultaneous submission mode in force.
+     * Submit responses due to the simultaneous submission mode in force.
      *
      * @return \qtism\runtime\tests\PendingResponsesCollection The collection of PendingResponses objects that were processed.
      * @throws \qtism\runtime\tests\AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
      */
-    protected function defferedResponseProcessing()
+    protected function defferedResponseSubmission()
     {
         $itemSessionStore = $this->getAssessmentItemSessionStore();
         $pendingResponses = $this->getPendingResponses();
@@ -2080,22 +2079,19 @@ class AssessmentTestSession extends State
             $item = $pendingResponse->getAssessmentItemRef();
             $occurence = $pendingResponse->getOccurence();
             $itemSession = $itemSessionStore->getAssessmentItemSession($item, $occurence);
-            $responseProcessing = $item->getResponseProcessing();
 
             // If the item has a processable response processing...
-            if (is_null($responseProcessing) === false && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
-                try {
-                    $itemSession->endAttempt($pendingResponse->getState(), true, true);
-                    $pendingResponsesProcessed++;
-                    $this->submitItemResults($itemSession, $occurence);
-                } catch (ProcessingException $e) {
-                    $msg = "An error occured during postponed response processing.";
-                    throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
-                } catch (AssessmentTestSessionException $e) {
-                    // An error occured while transmitting the results.
-                    $msg = "An error occured while transmitting item results to the appropriate data source.";
-                    throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
-                }
+            try {
+                $itemSession->endAttempt($pendingResponse->getState(), true, true);
+                $pendingResponsesProcessed++;
+                $this->submitItemResults($itemSession, $occurence);
+            } catch (ProcessingException $e) {
+                $msg = "An error occured during postponed response processing.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESPONSE_PROCESSING_ERROR, $e);
+            } catch (AssessmentTestSessionException $e) {
+                // An error occured while transmitting the results.
+                $msg = "An error occured while transmitting item results to the appropriate data source.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::RESULT_SUBMISSION_ERROR, $e);
             }
         }
 
@@ -2143,11 +2139,11 @@ class AssessmentTestSession extends State
         }
 
         // If the submitted responses are the one of the last
-        // item of the test part, apply deffered response processing.
+        // item of the test part, apply deffered response submission.
         if ($this->getRoute()->isLastOfTestPart() === true && $this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
 
-            // The testPart is complete so deffered response processing must take place.
-            $this->defferedResponseProcessing();
+            // The testPart is complete so deffered response submission must take place.
+            $this->defferedResponseSubmission();
         }
 
         $route = $this->getRoute();
