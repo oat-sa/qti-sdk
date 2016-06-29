@@ -26,6 +26,7 @@ namespace qtism\runtime\tests;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\runtime\processing\TemplateProcessingEngine;
 use qtism\runtime\common\Utils;
+use qtism\runtime\tests\Utils as TestUtils;
 use qtism\runtime\common\TemplateVariable;
 use qtism\data\ShowHide;
 use qtism\common\datatypes\QtiScalar;
@@ -796,6 +797,7 @@ class AssessmentItemSession extends State
         
         // Apply the responses (if provided) to the current state.
         if ($responses !== null) {
+            $this->checkResponseValidityConstraints($responses);
             $this->checkAllowSkipping($responses);
             $this->mergeResponses($responses);
         }
@@ -1335,6 +1337,15 @@ class AssessmentItemSession extends State
         }
     }
     
+    /**
+     * Check whether or not the item can be skipped.
+     * 
+     * This method checks whether or not the item can be skipped depending on the current itemSessionControl
+     * configuration and the $responses provided to end the attempt.
+     * 
+     * @param \qtism\runtime\common\State $state
+     * @throws \qtism\runtime\tests\AssessmentItemSessionException If itemSessionControl->allowSkipping is false and the item is being skipped.
+     */
     private function checkAllowSkipping(State $responses)
     {
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false) {
@@ -1358,6 +1369,42 @@ class AssessmentItemSession extends State
                     $this,
                     AssessmentItemSessionException::SKIPPING_FORBIDDEN
                 );
+            }
+        }
+    }
+    
+    /**
+     * Check Response Validity Constraints of the item.
+     * 
+     * This method checks wheter or not a set of $responses are all valid against the Response Validity Constraints
+     * in force for the item managed by the AssessmentItemSession.
+     * 
+     * @throws \qtism\runtime\tests\AssessmentItemSessionException In case of a Response Validity Constraint is not respected.
+     */
+    public function checkResponseValidityConstraints(State $responses)
+    {
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustValidateResponses() === true) {
+            $session = clone $this;
+            
+            foreach ($responses as $identifier => $value) {
+                if (isset($session[$identifier]) === true) {
+                    $session[$identifier] = $value->getValue();
+                }
+            }
+            
+            $state = $session->getResponseVariables(false);
+            
+            foreach ($this->getAssessmentItem()->getResponseValidityConstraints() as $constraint) {
+                $responseIdentifier = $constraint->getResponseIdentifier();
+                $value = $state[$responseIdentifier];
+                
+                if (TestUtils::isResponseValid($value, $constraint) === false) {
+                    throw new AssessmentItemSessionException(
+                        "Response '${responseIdentifier}' is invalid against the constraints described in the interaction it is bound to.",
+                        $this,
+                        AssessmentItemSessionException::INVALID_RESPONSE
+                    );
+                }
             }
         }
     }
