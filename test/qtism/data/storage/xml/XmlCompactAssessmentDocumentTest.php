@@ -215,6 +215,17 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    $this->assertFalse(file_exists($path));
 	    
 	    unlink($file);
+        
+        // Check rubricBlockRefs.
+        $rubricBlockRefs = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlockRef');
+        $this->assertEquals(3, count($rubricBlockRefs));
+        
+        $this->assertEquals('./R01.xml', $rubricBlockRefs[0]->getHref());
+        $this->assertEquals('R01', $rubricBlockRefs[0]->getIdentifier());
+        $this->assertEquals('./rubricBlock_RB_S01_1.xml', $rubricBlockRefs[1]->getHref());
+        $this->assertEquals('RB_S01_1', $rubricBlockRefs[1]->getIdentifier());
+        $this->assertEquals('./rubricBlock_RB_S01_2.xml', $rubricBlockRefs[2]->getHref());
+        $this->assertEquals('RB_S01_2', $rubricBlockRefs[2]->getIdentifier());
 	}
     
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution() {
