@@ -119,13 +119,13 @@ class XmlCompactDocument extends XmlDocument {
 	    // File resolution.
 	    if (is_null($itemResolver) === true) {
 	        $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-	    } elseif ($itemResolver instanceof LocalFileResolver) {
+	    } elseif ($itemResolver instanceof FileResolver) {
 	        $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
 	    }
         
         if (is_null($sectionResolver) === true) {
             $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-        } elseif ($sectionResolver instanceof LocalFileResolver) {
+        } elseif ($sectionResolver instanceof FileResolver) {
             $sectionResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
         }
 	
@@ -174,8 +174,11 @@ class XmlCompactDocument extends XmlDocument {
 	                        if ($component instanceof XmlDocument && $component->getDocumentComponent() instanceof AssessmentSection) {
 	                            $baseUri = $component->getUrl();
 	                        }
-	                        	
-	                        $itemResolver->setBasePath($baseUri);
+                            
+                            if ($itemResolver instanceof FileResolver) {
+                                $itemResolver->setBasePath($baseUri);
+                            }
+	                        
 	                        self::resolveAssessmentItemRef($compactRef, $itemResolver);
 	                        
 	                        $previousParts->replace($component, $compactRef);
@@ -222,10 +225,10 @@ class XmlCompactDocument extends XmlDocument {
 	 * outcome/responseDeclarations to the compact one.
 	 *
 	 * @param ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
-	 * @param FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
+	 * @param Resolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver) {
+	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, Resolver $resolver) {
 	    try {
 	        $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 	        	
@@ -257,11 +260,11 @@ class XmlCompactDocument extends XmlDocument {
 	 * Dereference the file referenced by an assessmentSectionRef.
 	 *
 	 * @param AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
-	 * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
+	 * @param Resolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
 	 * @return XmlAssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
 	 */
-	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver) {
+	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, Resolver $resolver) {
 	    try {
 	        $href = $resolver->resolve($assessmentSectionRef->getHref());
 	        	
