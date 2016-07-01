@@ -35,6 +35,7 @@ use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\LocalFileResolver;
+use qtism\common\Resolver;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
@@ -96,10 +97,12 @@ class XmlCompactDocument extends XmlDocument {
 	 * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
 	 *
 	 * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
+     * @param Resolver $itemResolver (optional) A Resolver object aiming at resolving assessmentItemRefs. If not provided, fallback will be a LocalFileResolver.
+     * @param Resolver $sectionResolver (optional) A Resolver object aiming at resolving assessmentSectionRefs. If not provided, fallback will be a LocalFileResolver.
 	 * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
 	 * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
-	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
+	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null) {
 	    $compactAssessmentTest = new XmlCompactDocument();
 	    $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
 	    $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
@@ -114,14 +117,17 @@ class XmlCompactDocument extends XmlDocument {
 	    $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 	
 	    // File resolution.
-	    $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-	
 	    if (is_null($itemResolver) === true) {
 	        $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-	    }
-	    else {
+	    } elseif ($itemResolver instanceof LocalFileResolver) {
 	        $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
 	    }
+        
+        if (is_null($sectionResolver) === true) {
+            $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
+        } elseif ($sectionResolver instanceof LocalFileResolver) {
+            $sectionResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
+        }
 	
 	    // It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
 	    $trail = array(); // trailEntry[0] = a component, trailEntry[1] = from where we are coming (parent).
