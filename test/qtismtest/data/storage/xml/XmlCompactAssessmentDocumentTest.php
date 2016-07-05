@@ -509,4 +509,32 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         $this->assertEquals(0, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMinConstraint());
         $this->assertEquals(1, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMaxConstraint());
     }
+    
+    public function testLoadResponseValidityConstraints() {
+        $doc = new XmlCompactDocument('2.1');
+        $file = self::samplesDir() . 'custom/runtime/validate_response/nonlinear_simultaneous.xml';
+        $doc->load($file, true);
+        
+        $assessmentItemRefs = $doc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef');
+        
+        $this->assertEquals(1, count($assessmentItemRefs[0]->getResponseValidityConstraints()));
+        $this->assertEquals('RESPONSE', $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getResponseIdentifier());
+        $this->assertEquals(0, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMinConstraint());
+        $this->assertEquals(1, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMaxConstraint());
+        
+        $this->assertEquals(1, count($assessmentItemRefs[1]->getResponseValidityConstraints()));
+        $this->assertEquals('RESPONSE', $assessmentItemRefs[1]->getResponseValidityConstraints()[0]->getResponseIdentifier());
+        $this->assertEquals(1, $assessmentItemRefs[1]->getResponseValidityConstraints()[0]->getMinConstraint());
+        $this->assertEquals(1, $assessmentItemRefs[1]->getResponseValidityConstraints()[0]->getMaxConstraint());
+        $this->assertEquals('[a-z]{1,5}', $assessmentItemRefs[1]->getResponseValidityConstraints()[0]->getPatternMask());
+        
+        $this->assertEquals(2, count($assessmentItemRefs[2]->getResponseValidityConstraints()));
+        $this->assertEquals('RESPONSE1', $assessmentItemRefs[2]->getResponseValidityConstraints()[0]->getResponseIdentifier());
+        $this->assertEquals(0, $assessmentItemRefs[2]->getResponseValidityConstraints()[0]->getMinConstraint());
+        $this->assertEquals(1, $assessmentItemRefs[2]->getResponseValidityConstraints()[0]->getMaxConstraint());
+        $this->assertEquals('RESPONSE2', $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getResponseIdentifier());
+        $this->assertEquals(1, $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getMinConstraint());
+        $this->assertEquals(1, $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getMaxConstraint());
+        $this->assertEquals('[a-z]{1,5}', $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getPatternMask());
+    }
 }
