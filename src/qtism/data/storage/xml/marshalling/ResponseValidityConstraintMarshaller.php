@@ -24,6 +24,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
 use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\AssociationValidityConstraintCollection;
 use \DOMElement;
 use \InvalidArgumentException;
 
@@ -51,6 +52,11 @@ class ResponseValidityConstraintMarshaller extends Marshaller
         if (($patternMask = $component->getPatternMask()) !== '') {
             self::setDOMElementAttribute($element, 'patternMask', $patternMask);
         }
+        
+        foreach ($component->getAssociationValidityConstraints() as $associationValidityConstraint) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraint);
+            $element->appendChild($marshaller->marshall($associationValidityConstraint));
+        }
 
         return $element;
     }
@@ -73,9 +79,18 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                     if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) === null) {
                         $patternMask = '';
                     }
-                    
                     try {
-                        return new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
+                        $component = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
+                    
+                        // Find child associationValidityConstraint elements if any.
+                        $associationValidityConstraintElts = static::getChildElementsByTagName($element, 'associationValidityConstraint');
+                            
+                        foreach ($associationValidityConstraintElts as $associationValidityConstraintElt) {
+                            $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraintElt);
+                            $component->addAssociationValidityConstraint($marshaller->unmarshall($associationValidityConstraintElt));
+                        }
+                        
+                        return $component;
                     } catch (InvalidArgumentException $e) {
                         throw new UnmarshallingException(
                             "An error occured while unmarshalling a 'responseValidityConstraint'. See chained exceptions for more information.",
