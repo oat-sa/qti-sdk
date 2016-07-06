@@ -93,6 +93,32 @@ class Utils
             }
         }
         
+        // Associations check...
+        if (is_null($response) === false && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
+            $toCheck = ($cardinality === Cardinality::SINGLE) ? array($response) : $response->getArrayCopy();
+            
+            foreach ($constraint->getAssociationValidityConstraints() as $associationConstraint) {
+                $associations = 0;
+                $identifier = $associationConstraint->getIdentifier();
+                
+                foreach ($toCheck as $pair) {
+                    if ($pair->getFirst() === $identifier) {
+                        $associations++;
+                    }
+                    
+                    if ($pair->getSecond() === $identifier) {
+                        $associations++;
+                    }
+                }
+                
+                $min = $associationConstraint->getMinConstraint();
+                $max = $associationConstraint->getMaxConstraint();
+                if ($associations < $min || ($max !== 0 && $associations > $max)) {
+                    return false;
+                }
+            }
+        }
+        
         return true;
     }
 }
