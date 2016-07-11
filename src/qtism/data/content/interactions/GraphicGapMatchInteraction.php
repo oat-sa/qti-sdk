@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,6 +23,8 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\AssociationValidityConstraint;
 use \InvalidArgumentException;
 
 /**
@@ -144,6 +146,30 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     public function getAssociableHotspots()
     {
         return $this->associableHotspots;
+    }
+    
+    /**
+     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     */
+    public function getResponseValidityConstraint()
+    {
+        $responseValidityConstraint = new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            0,
+            0
+        );
+        
+        foreach ($this->getComponentsByClassName(array('gapImg', 'gapText')) as $gapChoice) {
+            $responseValidityConstraint->addAssociationValidityConstraint(
+                new AssociationValidityConstraint(
+                    $gapChoice->getIdentifier(),
+                    $gapChoice->getMatchMin(),
+                    $gapChoice->getMatchMax()
+                )
+            );
+        }
+        
+        return $responseValidityConstraint;
     }
 
     /**

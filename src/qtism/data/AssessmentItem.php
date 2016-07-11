@@ -751,7 +751,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
             'selectPointInteraction',
             'graphicOrderInteraction',
             'graphicAssociateInteraction',
-            'positionObjectInteraction'
+            'positionObjectInteraction',
+            'gapMatchInteraction',
+            'graphicGapMatchInteraction'
         );
         
         $responseValidityConstraints = new ResponseValidityConstraintCollection();
