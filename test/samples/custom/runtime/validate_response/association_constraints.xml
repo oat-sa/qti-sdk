@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v1p0.xsd"
+identifier="association-constraints" title="Association Constraints">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <itemSessionControl maxAttempts="1" allowSkipping="false" validateResponses="false"/>
+        <assessmentSection identifier="S01" title="Section1" visible="true">
+            <assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="2" maxConstraint="2">
+                    <associationValidityConstraint identifier="H" minConstraint="1" maxConstraint="1"/>
+                    <associationValidityConstraint identifier="O" minConstraint="1" maxConstraint="1"/>
+                </responseValidityConstraint>
+            </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

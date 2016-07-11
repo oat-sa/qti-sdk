@@ -188,6 +188,9 @@
     </xs:attributeGroup>
     
     <xs:complexType name="ResponseValidityConstraint.Type" mixed="false">
+        <xs:sequence>
+            <xs:element name="associationValidityConstraint" type="AssociationValidityConstraint.Type" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
         <xs:attributeGroup ref="responseIdentifier.ResponseValidityConstraint.Attr"/>
         <xs:attributeGroup ref="minConstraint.ResponseValidityConstraint.Attr"/>
         <xs:attributeGroup ref="maxConstraint.ResponseValidityConstraint.Attr"/>
@@ -208,6 +211,24 @@
     
     <xs:attributeGroup name="patternMask.ResponseValidityConstraint.Attr">
         <xs:attribute name="patternMask" use="optional" type="NonEmptyString"/>
+    </xs:attributeGroup>
+    
+    <xs:complexType name="AssociationValidityConstraint.Type" mixed="false">
+        <xs:attributeGroup ref="identifier.AssociationValidityConstraint.Attr"/>
+        <xs:attributeGroup ref="minConstraint.AssociationValidityConstraint.Attr"/>
+        <xs:attributeGroup ref="maxConstraint.AssociationValidityConstraint.Attr"/>
+    </xs:complexType>
+    
+    <xs:attributeGroup name="identifier.AssociationValidityConstraint.Attr">
+        <xs:attribute name="identifier" use="required" type="xs:normalizedString"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="minConstraint.AssociationValidityConstraint.Attr">
+        <xs:attribute name="minConstraint" use="required" type="xs:nonNegativeInteger"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="maxConstraint.AssociationValidityConstraint.Attr">
+        <xs:attribute name="maxConstraint" use="required" type="xs:nonNegativeInteger"/>
     </xs:attributeGroup>
     
     <!-- Non empty string type. -->

@@ -274,6 +274,8 @@ class ResponseValidityConstraint extends QtiComponent
 	 */
     public function getComponents()
     {
-        return new QtiComponentCollection();
+        return new QtiComponentCollection(
+            $this->getAssociationValidityConstraints()->getArrayCopy()
+        );
     }
 }
