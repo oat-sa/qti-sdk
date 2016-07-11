@@ -33,23 +33,23 @@ class AssessmentItemTest extends QtiSmTestCase {
     /**
      * @dataProvider getResponseValidityConstraintsProvider
      */
-    public function testGetResponseValidityConstraints($path, array $expectedResponseValidityConstraints, array $expectedAssociationValidityConstraints) {
+    public function testGetResponseValidityConstraints($path, array $expected) {
         $doc = new XmlDocument();
         $doc->load($path);
         
         $assessmentItem = $doc->getDocumentComponent();
         $responseValidityConstraints = $assessmentItem->getResponseValidityConstraints();
         
-        $this->assertEquals(count($expectedResponseValidityConstraints), count($responseValidityConstraints));
+        $this->assertEquals(count($expected), count($responseValidityConstraints));
         
         for ($i = 0; $i < count($responseValidityConstraints); $i++) {
-            $this->assertEquals($expectedResponseValidityConstraints[$i][0], $responseValidityConstraints[$i]->getResponseIdentifier());
-            $this->assertEquals($expectedResponseValidityConstraints[$i][1], $responseValidityConstraints[$i]->getMinConstraint(), 'minConstraint failed for ' . $expectedResponseValidityConstraints[$i][0]);
-            $this->assertEquals($expectedResponseValidityConstraints[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expectedResponseValidityConstraints[$i][0]);
+            $this->assertEquals($expected[$i][0], $responseValidityConstraints[$i]->getResponseIdentifier());
+            $this->assertEquals($expected[$i][1], $responseValidityConstraints[$i]->getMinConstraint(), 'minConstraint failed for ' . $expected[$i][0]);
+            $this->assertEquals($expected[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expected[$i][0]);
             
             // patternMask ...
             if (isset($expected[$i][4]) === true) {
-                $this->assertEquals($expectedResponseValidityConstraints[$i][3], $responseValidityConstraints[$i]->getPatternMask());
+                $this->assertEquals($expected[$i][3], $responseValidityConstraints[$i]->getPatternMask());
             }
         }
     }
@@ -61,139 +61,120 @@ class AssessmentItemTest extends QtiSmTestCase {
                 self::samplesDir() . 'ims/items/2_2/choice.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/choice_min_max.xml',
                 array(
                     array('RESPONSE', 2, 2)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/choice_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/choice_default.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/adaptive.xml',
                 array(
                     array('DOOR', 0, 1),
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/adaptive_template.xml',
                 array(
                     array('DOOR', 0, 1),
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/associate.xml',
                 array(
                     array('RESPONSE', 0, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/associate_min_max.xml',
                 array(
                     array('RESPONSE', 2, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/associate_min.xml',
                 array(
                     // maxConstraint is 1 because by default, maxAssociations = 1 in associateInteraction.
                     array('RESPONSE', 1, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/associate_default.xml',
                 array(
                     // maxConstraint is 1 because by default, maxAssociations = 1 in associateInteraction.
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/choice_fixed.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/choice_multiple.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/choice_multiple_rtl.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 // Default for minStrings/maxStrings.
                 self::samplesDir() . 'ims/items/2_2/extended_text.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/extended_text_min.xml',
                 array(
                     array('RESPONSE', 1, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/extended_text_min_max.xml',
                 array(
                     array('RESPONSE', 2, 2)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/extended_text_max.xml',
                 array(
                     array('RESPONSE', 0, 2, '')
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/extended_text_patternmask.xml',
                 array(
                     array('RESPONSE', 0, 0, '[\S]{10,15}')
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/extended_text_rubric.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/feedbackblock_adaptive.xml',
@@ -206,182 +187,156 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE25', 0, 1),
                     array('RESPONSE26', 0, 1),
                     array('RESPONSE27', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/feedbackblock_solution_random.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/feedbackblock_templateblock.xml',
                 array(
                     array('RESPONSE1', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/feedbackInline.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/gap_match.xml',
-                array(),
                 array()
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/graphic_associate.xml',
                 array(
                     array('RESPONSE', 0, 3)
-                ),
-                array()
+                )
             ),
             array(
                 // maxConstraint is 1 because by default, maxAssociations = 1 in graphicAssociateInteraction.
                 self::samplesDir() . 'custom/items/response_constraints/graphic_associate_min.xml',
                 array(
                     array('RESPONSE', 1, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/graphic_associate_min_max.xml',
                 array(
                     array('RESPONSE', 1, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/graphic_gap_match.xml',
-                array(),
                 array()
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/hotspot.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hotspot_default.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hotspot_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hotspot_min_max.xml',
                 array(
                     array('RESPONSE', 2, 2)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/hottext.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hottext_default.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hottext_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/hottext_min_max.xml',
                 array(
                     array('RESPONSE', 2, 2)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/inline_choice.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/inline_choice_required.xml',
                 array(
                     array('RESPONSE', 1, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/likert.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/match.xml',
                 array(
                     array('RESPONSE', 0, 4)
-                ),
-                array()
+                )
             ),
             array(
                 // maxAssociations = 1 because default for matchInteraction is 1.
                 self::samplesDir() . 'custom/items/response_constraints/match_default.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 // maxAssociations = 1 because default for matchInteraction is 1.
                 self::samplesDir() . 'custom/items/response_constraints/match_min.xml',
                 array(
                     array('RESPONSE', 1, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/match_min_max.xml',
                 array(
                     array('RESPONSE', 2, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/math.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/mc_calc3.xml',
                 array(
                     array('RESPONSE0', 1, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/mc_stat2.xml',
@@ -390,15 +345,13 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE1', 0, 1),
                     array('RESPONSE2', 0, 1),
                     array('RESPONSE3', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/modalFeedback.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/multi-input.xml',
@@ -406,36 +359,31 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE1', 0, 1),
                     array('RESPONSE2', 0, 1),
                     array('RESPONSE3', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/nested_object.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/order.xml',
                 array(
                     array('RESPONSE', 3, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/order_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/order_min_max.xml',
                 array(
                     array('RESPONSE', 2, 3)
-                ),
-                array()
+                )
             ),
             array(
                 // Very special case. As per specs, in OrderInteraction, if minChoices is not specified,
@@ -443,111 +391,95 @@ class AssessmentItemTest extends QtiSmTestCase {
                 self::samplesDir() . 'custom/items/response_constraints/order_max.xml',
                 array(
                     array('RESPONSE', 3, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/order_rtl.xml',
                 array(
                     array('RESPONSE', 3, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/orkney1.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/orkney2.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/position_object.xml',
                 array(
                     array('RESPONSE', 0, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/position_object_min_max.xml',
                 array(
                     array('RESPONSE', 2, 3)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/position_object_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/position_object_default.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/slider.xml',
-                array(),
                 array()
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/template.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/text_entry.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/text_entry_patternmask.xml',
                 array(
                     array('RESPONSE', 0, 1, '[a-zA-Z]+')
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'ims/items/2_2/select_point.xml',
                 array(
                     array('RESPONSE', 0, 1)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/select_point_default.xml',
                 array(
                     array('RESPONSE', 0, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/select_point_min.xml',
                 array(
                     array('RESPONSE', 2, 0)
-                ),
-                array()
+                )
             ),
             array(
                 self::samplesDir() . 'custom/items/response_constraints/select_point_min_max.xml',
                 array(
                     array('RESPONSE', 3, 4)
-                ),
-                array()
+                )
             ),
         );
     }
