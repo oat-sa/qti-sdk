@@ -63,7 +63,11 @@ class TestUtilsTest extends QtiSmTestCase {
             array(false, new OrderedContainer(BaseType::STRING, array(new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
             array(true, new MultipleContainer(BaseType::STRING), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
             array(true, new RecordContainer(), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
-            array(true, new RecordContainer(array('key' => new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string'))
+            array(true, new RecordContainer(array('key' => new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            // -> Extreme edge-cases where the engine detects that the Record is in use with a stringInteraction (the 'stringValue' key is set).
+            array(false, new RecordContainer(array('stringValue' => new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            array(false, new RecordContainer(array('stringValue' => new QtiString(''))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            array(true, new RecordContainer(array('stringValue' => null)), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
         );
             
         // Associations tests.

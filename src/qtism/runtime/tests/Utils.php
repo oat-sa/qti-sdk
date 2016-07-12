@@ -64,7 +64,7 @@ class Utils
         $max = $constraint->getMaxConstraint();
         $cardinality = (is_null($response) === true) ? Cardinality::SINGLE : $response->getCardinality();
         
-        if (RuntimeUtils::isNull($response) === true) {
+        if (($isNull = RuntimeUtils::isNull($response)) === true) {
             $count = 0;
         } elseif ($cardinality === Cardinality::SINGLE || $cardinality === Cardinality::RECORD) {
             $count = 1;
@@ -78,8 +78,16 @@ class Utils
         }
         
         // Pattern Mask check...
-        if (($patternMask = $constraint->getPatternMask()) !== '' && is_null($response) === false && $response->getBaseType() === BaseType::STRING) {
-            $values = ($cardinality === Cardinality::SINGLE) ? array($response->getValue()) : $response->getArrayCopy();
+        if (($patternMask = $constraint->getPatternMask()) !== '' && $isNull === false && ($response->getBaseType() === BaseType::STRING || $response->getBaseType() === -1 && isset($response['stringValue']))) {
+            
+            if ($response->getCardinality() === Cardinality::RECORD) {
+                // Record cadinality, only used in conjunction with stringInteraction in core QTI (edge-case).
+                $values = array($response['stringValue']);
+            } else {
+                // Single, Multiple, or Ordered cardinality.
+                $values = ($cardinality === Cardinality::SINGLE) ? array($response->getValue()) : $response->getArrayCopy();
+            }
+            
             $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
             
             foreach ($values as $value) {
