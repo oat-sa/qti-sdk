@@ -3,6 +3,7 @@ namespace qtismtest\runtime\tests;
 
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -241,7 +242,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             $this->assertNull($testSession['Q03.RESPONSE2']);
         }
         
-        // Q03 - By providing a valid response for RESPONSE1, but no RESPONSE2 variable, I will get an exception.
+        // Q03 - By providing an invalid response for RESPONSE1, but no RESPONSE2 variable, I will get an exception.
         $testSession->beginAttempt();
         try {
             $testSession->endAttempt(
@@ -300,6 +301,66 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
         $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA')))));
         $this->assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('aaaaa')));
+        
+        $testSession->moveNext();
+        
+        // - Q04  (minConstraint = 1, maxConstraint = 4, identifier "ChoiceA" can only appear 1 or 2 times)
+        
+        // Q04 - By providing an invalid response, I will get an exception because I have 3 times "ChoiceA".
+        $testSession->beginAttempt();
+        try {
+            $testSession->endAttempt(
+                new State(
+                    array(
+                        new ResponseVariable(
+                            'RESPONSE',
+                            Cardinality::MULTIPLE,
+                            BaseType::PAIR,
+                            new MultipleContainer(
+                                BaseType::PAIR,
+                                array(
+                                    new QtiPair('ChoiceA', 'ChoiceB'),
+                                    new QtiPair('ChoiceA', 'ChoiceC'),
+                                    new QtiPair('ChoiceA', 'ChoiceD')
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+            
+            $this->assertFalse(true, "An exception should be thrown (Q04).");
+            
+        } catch (AssessmentTestSessionException $e) {
+            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this->assertEquals("An invalid response was given for Item Session 'Q04.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this->assertNull($testSession['Q04.RESPONSE']);
+        }
+        
+        // Q04 - Provide a valid responses to Q04 in order to end the attempt.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(
+            new State(
+                array(
+                    new ResponseVariable(
+                        'RESPONSE',
+                        Cardinality::MULTIPLE,
+                        BaseType::PAIR,
+                        new MultipleContainer(
+                            BaseType::PAIR,
+                            array(
+                                new QtiPair('ChoiceA', 'ChoiceB'),
+                                new QtiPair('ChoiceA', 'ChoiceC')
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this->assertTrue($testSession['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('ChoiceA', 'ChoiceB'), new QtiPair('ChoiceA', 'ChoiceC')))));
         
         $testSession->moveNext();
         
