@@ -67,6 +67,11 @@ class ResponseValidityConstraint extends QtiComponent
     private $patternMask;
     
     /**
+     * The collection of nested AssociationValidityConstraints objects.
+     */
+    private $associationValidityConstraints;
+    
+    /**
 	 * Create a new ResponseValidityConstraint object.
      * 
      * If the $patternMask attribute is provided, it represent a constraint to be applied on all string 
@@ -84,6 +89,7 @@ class ResponseValidityConstraint extends QtiComponent
         $this->setMinConstraint($minConstraint);
         $this->setMaxConstraint($maxConstraint);
         $this->setPatternMask($patternMask);
+        $this->setAssociationValidityConstraints(new AssociationValidityConstraintCollection());
     }
     
     /**
@@ -212,6 +218,48 @@ class ResponseValidityConstraint extends QtiComponent
     {
         return $this->patternMask;
     }
+    
+    /**
+     * Set the collection of nested AssociationValidityConstraints objects.
+     * 
+     * @param \qtism\data\state\AssociationValidityConstraintCollection $associationValidityConstraints
+     */
+    public function setAssociationValidityConstraints(AssociationValidityConstraintCollection $associationValidityConstraints)
+    {
+        $this->associationValidityConstraints = $associationValidityConstraints;
+    }
+    
+    /**
+     * Get the collection of nested AssociationValidityConstraints objects.
+     * 
+     * @return \qtism\data\state\AssociationValidityConstraintCollection
+     */
+    public function getAssociationValidityConstraints()
+    {
+        return $this->associationValidityConstraints;
+    }
+    
+    /**
+     * Attach a given $associationValidityConstraint object.
+     * 
+     * @param \qtism\data\state\AssociationValidityConstraint $associationValidityConstraint
+     */
+    public function addAssociationValidityConstraint(AssociationValidityConstraint $associationValidityConstraint)
+    {
+        $this->getAssociationValidityConstraints()->attach($associationValidityConstraint);
+    }
+    
+    /**
+     * Remove a given $associationValidityConstraint object.
+     * 
+     * If $associationValidityConstraint is not part of the ResponseValidityConstraint, nothing happens.
+     * 
+     * @param \qtism\data\state\AssociationValidityConstraint $associationValidityConstraint
+     */
+    public function removeAssociationValidityConstraint(AssociationValidityConstraint $associationValidityConstraint)
+    {
+        $this->getAssociationValidityConstraints()->remove($associationValidityConstraint);
+    }
 
     /**
 	 * @see \qtism\data\QtiComponent::getQtiClassName()
@@ -226,6 +274,8 @@ class ResponseValidityConstraint extends QtiComponent
 	 */
     public function getComponents()
     {
-        return new QtiComponentCollection();
+        return new QtiComponentCollection(
+            $this->getAssociationValidityConstraints()->getArrayCopy()
+        );
     }
 }

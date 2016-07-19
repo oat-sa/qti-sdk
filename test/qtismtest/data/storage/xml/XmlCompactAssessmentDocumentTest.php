@@ -537,4 +537,35 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         $this->assertEquals(1, $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getMaxConstraint());
         $this->assertEquals('[a-z]{1,5}', $assessmentItemRefs[2]->getResponseValidityConstraints()[1]->getPatternMask());
     }
+    
+    /**
+     * @depends testLoadResponseValidityConstraints
+     */
+    public function testLoadAssociationValidityConstraints() {
+        $doc = new XmlCompactDocument('2.1');
+        $file = self::samplesDir() . 'custom/runtime/validate_response/association_constraints.xml';
+        $doc->load($file, true);
+        
+        $assessmentItemRefs = $doc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef');
+        $this->assertEquals(1, count($assessmentItemRefs));
+        
+        $associationValidityConstraints = $assessmentItemRefs[0]->getComponentsByClassName('associationValidityConstraint');
+        $this->assertEquals(2, count($associationValidityConstraints));
+        
+        $this->assertEquals('H', $associationValidityConstraints[0]->getIdentifier());
+        $this->assertEquals(1, $associationValidityConstraints[0]->getMinConstraint());
+        $this->assertEquals(1, $associationValidityConstraints[0]->getMaxConstraint());
+        
+        $this->assertEquals('O', $associationValidityConstraints[1]->getIdentifier());
+        $this->assertEquals(1, $associationValidityConstraints[1]->getMinConstraint());
+        $this->assertEquals(1, $associationValidityConstraints[1]->getMaxConstraint());
+    }
+    
+    public function testLoadAssociationValidityConstraintsInvalidAgainstXsd() {
+        $this->setExpectedException('qtism\\data\\storage\\xml\\XmlStorageException');
+        
+        $doc = new XmlCompactDocument('2.1');
+        $file = self::samplesDir() . 'custom/runtime/validate_response/association_constraints_xsd_invalid.xml';
+        $doc->load($file, true);
+    }
 }

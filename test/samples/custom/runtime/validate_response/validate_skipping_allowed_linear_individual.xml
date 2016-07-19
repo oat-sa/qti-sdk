@@ -20,6 +20,12 @@ identifier="validate-skipping-allowed-linear-individual" title="Validate Skippin
                 <responseValidityConstraint responseIdentifier="RESPONSE1" minConstraint="0" maxConstraint="1"/>
                 <responseValidityConstraint responseIdentifier="RESPONSE2" minConstraint="1" maxConstraint="1" patternMask="[a-z]{1,5}"/>
             </assessmentItemRef>
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="1" maxConstraint="4">
+                    <associationValidityConstraint identifier="ChoiceA" minConstraint="1" maxConstraint="2"/>
+                </responseValidityConstraint>
+            </assessmentItemRef>
         </assessmentSection>
     </testPart>
 </assessmentTest>

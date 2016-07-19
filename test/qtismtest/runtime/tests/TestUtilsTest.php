@@ -6,10 +6,13 @@ use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\AssociationValidityConstraint;
 use qtism\runtime\tests\Utils as TestUtils;
 
 class TestUtilsTest extends QtiSmTestCase {
@@ -22,7 +25,7 @@ class TestUtilsTest extends QtiSmTestCase {
     }
     
     public function isResponseValidProvider() {
-        return array(
+        $tests = array(
             // Null values tests.
             array(true, null, new ResponseValidityConstraint('RESPONSE', 0, 0)),
             array(true, null, new ResponseValidityConstraint('RESPONSE', 0, 1)),
@@ -61,7 +64,37 @@ class TestUtilsTest extends QtiSmTestCase {
             array(true, new MultipleContainer(BaseType::STRING), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
             array(true, new RecordContainer(), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
             array(true, new RecordContainer(array('key' => new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            // -> Extreme edge-cases where the engine detects that the Record is in use with a stringInteraction (the 'stringValue' key is set).
+            array(false, new RecordContainer(array('stringValue' => new QtiString('strong'))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            array(false, new RecordContainer(array('stringValue' => new QtiString(''))), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
+            array(true, new RecordContainer(array('stringValue' => null)), new ResponseValidityConstraint('RESPONSE', 0, 1, 'string')),
         );
+            
+        // Associations tests.
+        $constraint1 = new ResponseValidityConstraint('RESPONSE', 1, 1);
+        $constraint1->addAssociationValidityConstraint(new AssociationValidityConstraint('ID1', 1, 1));
+        
+        $tests[] = array(true, new QtiPair('ID1', 'ID2'), $constraint1);
+        $tests[] = array(true, new MultipleContainer(BaseType::PAIR, array(new QtiPair('ID1', 'ID2'))), $constraint1);
+        $tests[] = array(false, new MultipleContainer(BaseType::PAIR, array(new QtiPair('ID1', 'ID2'), new QtiPair('ID1', 'ID3'))), $constraint1);
+        $tests[] = array(false, null, $constraint1);
+        $tests[] = array(false, new MultipleContainer(BaseType::PAIR), $constraint1);
+        
+        $tests[] = array(true, new QtiDirectedPair('ID1', 'ID2'), $constraint1);
+        $tests[] = array(true, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('ID1', 'ID2'))), $constraint1);
+        $tests[] = array(false, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('ID1', 'ID2'), new QtiDirectedPair('ID1', 'ID3'))), $constraint1);
+        
+        $constraint2 = new ResponseValidityConstraint('RESPONSE', 1, 0);
+        $constraint2->addAssociationValidityConstraint(new AssociationValidityConstraint('ID1', 2, 0));
+        $tests[] = array(false, null, $constraint2);
+        $tests[] = array(false, new QtiPair('ID1', 'ID2'), $constraint2);
+        $tests[] = array(true, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('ID1', 'ID1'), new QtiDirectedPair('ID1', 'ID1'))), $constraint2);
+        
+        $constraint3 = new ResponseValidityConstraint('RESPONSE', 1, 0);
+        $constraint3->addAssociationValidityConstraint(new AssociationValidityConstraint('ID1', 4, 0));
+        $tests[] = array(true, new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('ID1', 'ID1'), new QtiDirectedPair('ID1', 'ID1'))), $constraint3);
+        
+        return $tests;
     }
     
     public function testIsResponseValidRuntimeException() {

@@ -37,6 +37,7 @@ namespace qtism\data\storage\xml\marshalling;
  * * ShufflingMarshaller
  * * ShufflingGroupMarshaller
  * * ResponseValidityConstraintMarshaller
+ * * AssociationValidityConstraintMarshaller
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -60,5 +61,6 @@ class CompactMarshallerFactory extends Qti21MarshallerFactory
         $this->addMappingEntry('shuffling', 'qtism\\data\\storage\\xml\\marshalling\\ShufflingMarshaller');
         $this->addMappingEntry('shufflingGroup', 'qtism\\data\\storage\\xml\\marshalling\\ShufflingGroupMarshaller');
         $this->addMappingEntry('responseValidityConstraint', 'qtism\\data\\storage\\xml\\marshalling\\ResponseValidityConstraintMarshaller');
+        $this->addMappingEntry('associationValidityConstraint', 'qtism\\data\\storage\\xml\\marshalling\\AssociationValidityConstraintMarshaller');
     }
 }

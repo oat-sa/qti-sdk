@@ -24,6 +24,8 @@ namespace qtism\data\content\interactions;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\AssociationValidityConstraint;
+use qtism\data\state\AssociationValidityConstraintCollection;
 use \InvalidArgumentException;
 
 /**
@@ -247,11 +249,24 @@ class AssociateInteraction extends BlockInteraction
      */
     public function getResponseValidityConstraint()
     {
-        return new ResponseValidityConstraint(
+        $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
             $this->getMinAssociations(),
             $this->getMaxAssociations()
         );
+        
+        $simpleAssociableChoices = $this->getComponentsByClassName('simpleAssociableChoice');
+        foreach ($simpleAssociableChoices as $simpleAssociableChoice) {
+            $responseValidityConstraint->addAssociationValidityConstraint(
+                new AssociationValidityConstraint(
+                    $simpleAssociableChoice->getIdentifier(),
+                    $simpleAssociableChoice->getMatchMin(),
+                    $simpleAssociableChoice->getMatchMax()
+                )
+            );
+        }
+        
+        return $responseValidityConstraint;
     }
 
     /**

@@ -64,7 +64,7 @@ class Utils
         $max = $constraint->getMaxConstraint();
         $cardinality = (is_null($response) === true) ? Cardinality::SINGLE : $response->getCardinality();
         
-        if (RuntimeUtils::isNull($response) === true) {
+        if (($isNull = RuntimeUtils::isNull($response)) === true) {
             $count = 0;
         } elseif ($cardinality === Cardinality::SINGLE || $cardinality === Cardinality::RECORD) {
             $count = 1;
@@ -78,8 +78,16 @@ class Utils
         }
         
         // Pattern Mask check...
-        if (($patternMask = $constraint->getPatternMask()) !== '' && is_null($response) === false && $response->getBaseType() === BaseType::STRING) {
-            $values = ($cardinality === Cardinality::SINGLE) ? array($response->getValue()) : $response->getArrayCopy();
+        if (($patternMask = $constraint->getPatternMask()) !== '' && $isNull === false && ($response->getBaseType() === BaseType::STRING || $response->getBaseType() === -1 && isset($response['stringValue']))) {
+            
+            if ($response->getCardinality() === Cardinality::RECORD) {
+                // Record cadinality, only used in conjunction with stringInteraction in core QTI (edge-case).
+                $values = array($response['stringValue']);
+            } else {
+                // Single, Multiple, or Ordered cardinality.
+                $values = ($cardinality === Cardinality::SINGLE) ? array($response->getValue()) : $response->getArrayCopy();
+            }
+            
             $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
             
             foreach ($values as $value) {
@@ -89,6 +97,32 @@ class Utils
                     return false;
                 } elseif ($result === false) {
                     throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
+                }
+            }
+        }
+        
+        // Associations check...
+        if (is_null($response) === false && $cardinality !== Cardinality::RECORD && ($response->getBaseType() === BaseType::PAIR || $response->getBaseType() === BaseType::DIRECTED_PAIR)) {
+            $toCheck = ($cardinality === Cardinality::SINGLE) ? array($response) : $response->getArrayCopy();
+            
+            foreach ($constraint->getAssociationValidityConstraints() as $associationConstraint) {
+                $associations = 0;
+                $identifier = $associationConstraint->getIdentifier();
+                
+                foreach ($toCheck as $pair) {
+                    if ($pair->getFirst() === $identifier) {
+                        $associations++;
+                    }
+                    
+                    if ($pair->getSecond() === $identifier) {
+                        $associations++;
+                    }
+                }
+                
+                $min = $associationConstraint->getMinConstraint();
+                $max = $associationConstraint->getMaxConstraint();
+                if ($associations < $min || ($max !== 0 && $associations > $max)) {
+                    return false;
                 }
             }
         }
