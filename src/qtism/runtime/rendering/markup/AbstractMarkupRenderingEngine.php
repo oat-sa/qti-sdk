@@ -435,10 +435,6 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         // Put the root $component on the stack.
         if ($this->mustIgnoreComponent($component) === false) {
             $this->getExploration()->push($component);
-            
-            if ($this->hasRootBase() === true) {
-                
-            }
         }
         
         // Number of Interaction objects met during
