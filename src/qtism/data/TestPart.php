@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -113,7 +113,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
 	 *
 	 * The items contained in each testPart are arranged into sections and sub-sections.
 	 *
-	 * @var \qtism\data\AssessmentSectionCollection
+	 * @var \qtism\data\SectionPartCollection
 	 * @qtism-bean-property
 	 */
     private $assessmentSections;
@@ -139,12 +139,12 @@ class TestPart extends QtiComponent implements QtiIdentifiable
 	 * Create a new instance of TestPart.
 	 *
 	 * @param string $identifier A QTI Identifier;
-	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
+	 * @param SectionPartCollection $assessmentSections A collection of AssessmentSection or AssessmentSectionRef objects objects.
 	 * @param int $navigationMode A value of the NavigationMode enumeration.
 	 * @param int $submissionMode A value of the SubmissionMode enumeration.
 	 * @throws \InvalidArgumentException If an argument has the wrong type or format.
 	 */
-    public function __construct($identifier, AssessmentSectionCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
+    public function __construct($identifier, SectionPartCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
         $this->setObservers(new SplObjectStorage());
 
@@ -341,9 +341,9 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Set the AssessmentSection that are part of this Test Part.
+	 * Get the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
 	 *
-	 * @return \qtism\data\AssessmentSectionCollection  A collection of AssessmentSection object.
+	 * @return \qtism\data\SectionPartCollection A collection of AssessmentSection and/or AssessmentSectionRef objects.
 	 */
     public function getAssessmentSections()
     {
@@ -351,14 +351,22 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Set the AssessmentSection that are part of this Test Part.
+	 * Set the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
 	 *
-	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
-	 * @throws \InvalidArgumentException If $assessmentSections is an empty collection.
+	 * @param SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
+	 * @throws \InvalidArgumentException If $assessmentSections is an empty collection or contains something else than AssessmentSection and/or AssessmentSectionRef objects.
 	 */
-    public function setAssessmentSections(AssessmentSectionCollection $assessmentSections)
+    public function setAssessmentSections(SectionPartCollection $assessmentSections)
     {
         if (count($assessmentSections) > 0) {
+            // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
+            foreach ($assessmentSections as $assessmentSection) {
+                if (!$assessmentSection instanceof AssessmentSection && !$assessmentSectionRef instanceof AssessmentSectionRef) {
+                    $msg = "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.";
+                    throw new InvalidArgumentException($msg);
+                }
+            }
+            
             $this->assessmentSections = $assessmentSections;
         } else {
             $msg = 'A TestPart must contain at least one AssessmentSection.';
