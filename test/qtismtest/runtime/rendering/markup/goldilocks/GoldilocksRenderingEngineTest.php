@@ -87,6 +87,42 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
                 GoldilocksRenderingEngine::CSSCLASS_CONCRETE
             ),
+            // gapMatchInteraction-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/gap_match.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/gapMatchInteraction-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // graphicAssociateInteraction-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/graphic_associate.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/graphicAssociateInteraction-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // graphicGapMatch-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/graphic_gap_match.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/graphicGapMatchInteraction-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // graphicGapMatch-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/hotspot.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/hotspotInteraction-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
         );
     }
     
@@ -106,10 +142,10 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $engine->setCssClassPolicy($cssClassPolicy);
         
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'ims/items/2_2/extended_text_rubric.xml');
+        $doc->load(self::samplesDir() . 'ims/items/2_2/hotspot.xml');
         
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
-        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/extendedText-1.html', $strRendered . "\n");
+        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/hotspotInteraction-0.html', $strRendered . "\n");
     }*/
 }
