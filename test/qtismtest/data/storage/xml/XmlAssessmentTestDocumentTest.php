@@ -90,6 +90,13 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\TestPart', $p02);
 	    $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
 	}
+    
+    public function testNestedAssessmentSectionRefs() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+        
+        $this->assertTrue(true);
+    }
 	
 	private static function decorateUri($uri) {
 		return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
