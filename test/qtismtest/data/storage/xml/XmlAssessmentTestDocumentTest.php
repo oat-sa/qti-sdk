@@ -91,11 +91,34 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
 	}
     
-    public function testNestedAssessmentSectionRefs() {
+    public function testAssessmentSectionRefsInTestParts() {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
         
-        $this->assertTrue(true);
+        $testParts = $doc->getDocumentComponent()->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        
+        $sectionParts = $testParts['T01']->getAssessmentSections();
+        $this->assertTrue(isset($sectionParts['SR01']));
+        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['SR01']);
+    }
+    
+    public function testIncludeAssessmentSectionRefsInTestParts() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+        $doc->includeAssessmentSectionRefs();
+        
+        $root = $doc->getDocumentComponent();
+        
+        $testParts = $root->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        
+        // Check that assessmentSectionRef 'SR01' has been resolved.
+        $sectionParts = $testParts['T01']->getAssessmentSections();
+        
+        $this->assertTrue(isset($sectionParts['S01']));
+        $this->assertFalse(isset($sectionParts['SR01']));
+        $this->assertTrue(isset($sectionParts['S01']->getSectionParts()['S02']));
     }
 	
 	private static function decorateUri($uri) {

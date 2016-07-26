@@ -473,6 +473,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 	    
 	    $assessmentItemRef = $assessmentItemRefs[0];
 	    $endAttemptIdentifiers = $assessmentItemRef->getEndAttemptIdentifiers();
+        $this->assertEquals('Q01', $assessmentItemRef->getIdentifier());
 	    $this->assertEquals(1, count($endAttemptIdentifiers));
 	    $this->assertEquals('HINT', $endAttemptIdentifiers[0]);
 	    
