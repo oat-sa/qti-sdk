@@ -331,6 +331,7 @@ class XmlCompactDocument extends XmlDocument
 
             $doc = new XmlDocument();
             $doc->load($href);
+            $doc->xInclude();
 
             return $doc->getDocumentComponent();
         } catch (XmlStorageException $e) {

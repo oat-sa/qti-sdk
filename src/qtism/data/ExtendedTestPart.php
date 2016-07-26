@@ -36,12 +36,12 @@ class ExtendedTestPart extends TestPart
      * Create a new ExtendedTestPart object.
      * 
      * @param string $identifier An identifier.
-     * @param \qtism\data\AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
+     * @param \qtism\data\SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
      * @param integer $navigationMode A value from the NavigationMode enumeration.
      * @param integer $submissionMode A value from the SubmissionMode enumeration.
      * @throws \InvalidArgumentException If any of the arguments is invalid.
      */
-    public function __construct($identifier, AssessmentSectionCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
+    public function __construct($identifier, SectionPartCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
         parent::__construct($identifier, $assessmentSections, $navigationMode, $submissionMode);
         $this->setTestFeedbackRefs(new TestFeedbackRefCollection());
