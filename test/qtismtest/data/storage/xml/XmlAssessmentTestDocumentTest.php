@@ -119,6 +119,17 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertTrue(isset($sectionParts['S01']));
         $this->assertFalse(isset($sectionParts['SR01']));
         $this->assertTrue(isset($sectionParts['S01']->getSectionParts()['S02']));
+        
+        // Check that the final assessmentSection contains the assessmentItemRefs.
+        $assessmentItemRefs = $sectionParts['S01']->getSectionParts()['S02']->getSectionParts();
+        $this->assertEquals(3, count($assessmentItemRefs));
+        
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q01']);
+        $this->assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q02']);
+        $this->assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
+        $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 	
 	private static function decorateUri($uri) {
