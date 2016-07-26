@@ -25,7 +25,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase {
     public function testNotLoaded() {
         $doc = new XmlDocument();
         
-        $this->setExpectedException('\\LogicException', 'Cannot resolve template location loading any file.');
+        $this->setExpectedException('\\LogicException', 'Cannot resolve template location before loading any file.');
         $doc->resolveTemplateLocation();
     }
     
