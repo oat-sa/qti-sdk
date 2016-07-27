@@ -124,7 +124,12 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase {
     
         $this->assertInstanceOf(QtiFloat::class, $session['Q04.SCORE']);
         $this->assertEquals(3.0, $session['Q04.SCORE']->getValue());
+        
+        // Check that after persist, the route position is still the same...
+        $this->assertEquals(4, $session->getRoute()->getPosition());
         $storage->persist($session);
+        $this->assertEquals(4, $session->getRoute()->getPosition());
+        
         $session = $storage->retrieve($test, $sessionId);
         $this->assertTrue($session['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::DIRECTED_PAIR, array(new QtiDirectedPair('W', 'G1'), new QtiDirectedPair('Su', 'G2')))));
     
