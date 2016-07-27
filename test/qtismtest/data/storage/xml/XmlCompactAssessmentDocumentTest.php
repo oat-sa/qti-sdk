@@ -123,6 +123,13 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
 		
 		$assessmentItemRefs = $assessmentSections2ndLvl['Sektion_181865064']->getSectionParts();
 		$this->assertEquals(13, count($assessmentItemRefs));
+        
+        // Globally, we should have only one testPart, 2 sections, 13 items
+        $this->assertEquals(1, count($compactDoc->getDocumentComponent()->getComponentsByClassName('testPart')));
+        $this->assertEquals(2, count($compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection')));
+        $this->assertEquals(13, count($compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef')));
+        // And no more assessmentSectionRef, as they have been resolved!
+        $this->assertEquals(0, count($compactDoc->getDocumentComponent()->getComponentsByClassName('assessmentSectionRef')));
 		
 		// Pick up 4 for a test...
 		$assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
