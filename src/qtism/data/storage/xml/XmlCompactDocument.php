@@ -144,10 +144,11 @@ class XmlCompactDocument extends XmlDocument
 	 * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
 	 *
 	 * @param \qtism\data\storage\xml\XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
+     * @param \qtism\data\storage\FileResolver (optional) $resolver A resolver aiming at resolving assessmentSectionRef and assessmentItemRef components.
 	 * @return \qtism\data\storage\xml\XmlCompactDocument An XmlCompactAssessmentTestDocument object.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null)
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null)
     {
         $compactAssessmentTest = new XmlCompactDocument();
         $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
@@ -162,13 +163,10 @@ class XmlCompactDocument extends XmlDocument
         $assessmentTest->setToolName($xmlAssessmentTestDocument->getDocumentComponent()->getToolName());
         $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 
-        // File resolution.
-        $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-
-        if (is_null($itemResolver) === true) {
-            $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
+        if (is_null($resolver) === true) {
+            $resolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } else {
-            $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
+            $resolver->setBasePath($xmlAssessmentTestDocument->getUrl());
         }
 
         // It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
@@ -216,8 +214,8 @@ class XmlCompactDocument extends XmlDocument
                                 $baseUri = $component->getUrl();
                             }
 
-                            $itemResolver->setBasePath($baseUri);
-                            self::resolveAssessmentItemRef($compactRef, $itemResolver);
+                            $resolver->setBasePath($baseUri);
+                            self::resolveAssessmentItemRef($compactRef, $resolver);
 
                             $previousParts->replace($component, $compactRef);
                             break;
@@ -226,7 +224,7 @@ class XmlCompactDocument extends XmlDocument
                 } elseif ($component instanceof AssessmentSectionRef) {
                     // We follow the unreferenced AssessmentSection as if it was
                     // the 1st pass.
-                    $assessmentSection = self::resolveAssessmentSectionRef($component, $sectionResolver);
+                    $assessmentSection = self::resolveAssessmentSectionRef($component, $resolver);
                     $previousParts = $previous->getSectionParts();
                     foreach ($previousParts as $k => $previousPart) {
                         if ($previousParts[$k] === $component) {
