@@ -28,7 +28,7 @@ use qtism\data\QtiComponent;
 use qtism\data\TestPart;
 use qtism\data\TestFeedbackCollection;
 use qtism\data\ItemSessionControl;
-use qtism\data\AssessmentSectionCollection;
+use qtism\data\SectionPartCollection;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\TimeLimits;
@@ -97,8 +97,8 @@ class TestPartMarshaller extends Marshaller {
 					// We do not use the regular DOMElement::getElementsByTagName method
 					// because it is recursive. We only want the first level elements with
 					// tagname = 'assessmentSection'.
-					$assessmentSectionElts = self::getChildElementsByTagName($element, 'assessmentSection');
-					$assessmentSections = new AssessmentSectionCollection();
+					$assessmentSectionElts = self::getChildElementsByTagName($element, array('assessmentSection', 'assessmentSectionRef'));
+                    $assessmentSections = new SectionPartCollection();
 					foreach ($assessmentSectionElts as $sectElt) {
 						$marshaller = $this->getMarshallerFactory()->createMarshaller($sectElt);
 						$assessmentSections[] = $marshaller->unmarshall($sectElt);
