@@ -30,6 +30,8 @@ use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\AssessmentTest;
+use qtism\data\AssessmentSectionRef;
+use qtism\data\TestPart;
 use qtism\data\content\Flow;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -354,6 +356,54 @@ class XmlDocument extends QtiDocument {
 	        throw new LogicException($msg);
 	    }
 	}
+    
+    public function includeAssessmentSectionRefs($validate = false)
+    {
+        if (($root = $this->getDocumentComponent()) !== null) {
+            
+            $baseUri = str_replace('\\', '/', $this->getDomDocument()->documentElement->baseURI);
+            $pathinfo = pathinfo($baseUri);
+            $basePath = $pathinfo['dirname'];
+            
+            $count = count($root->getComponentsByClassName('assessmentSectionRef'));
+            while ($count > 0) {
+                $iterator = new QtiComponentIterator($root, array('assessmentSectionRef'));
+                foreach ($iterator as $assessmentSectionRef) {
+                    $parent = $iterator->parent();
+                    $href = $assessmentSectionRef->getHref();
+                    
+                    if (Url::isRelative($href) === true) {
+                        $href = Url::rtrim($basePath) . '/' . Url::ltrim($href);
+                        
+                        $doc = new XmlDocument();
+                        $doc->load($href, $validate);
+                        $sectionRoot = $doc->getDocumentComponent();
+                        
+                        foreach ($sectionRoot->getComponentsByClassName(array('assessmentSectionRef', 'assessmentItemRef')) as $sectionPart) {
+                            $newBasePath = Url::ltrim(str_replace($basePath, '', $href));
+                            $pathinfo = pathinfo($newBasePath);
+                            $newHref = $pathinfo['dirname'] . '/' . Url::ltrim($sectionPart->getHref());
+                            $sectionPart->setHref($newHref);
+                        }
+                        
+                        if ($parent instanceof TestPart) {
+                            $collection = $parent->getAssessmentSections();
+                        } else {
+                            $collection = $parent->getSectionParts();
+                        }
+                        
+                        $collection->detach($assessmentSectionRef);
+                        $collection->attach($sectionRoot);
+                    }
+                }
+                
+                $count = count($root->getComponentsByClassName('assessmentSectionRef'));
+            }
+        } else {
+            $msg = "Cannot resolve assessmentSectionRefs before loading any file.";
+            throw new LogicException($msg);
+        }
+    }
 	
 	/**
 	 * Decorate the root element of the XmlAssessmentDocument with the appropriate

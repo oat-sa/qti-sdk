@@ -115,7 +115,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * 
 	 * The items contained in each testPart are arranged into sections and sub-sections.
 	 * 
-	 * @var AssessmentSectionCollection
+	 * @var SectionPartCollection
 	 * @qtism-bean-property
 	 */
 	private $assessmentSections;
@@ -141,12 +141,12 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	 * Create a new instance of TestPart.
 	 * 
 	 * @param string $identifier A QTI Identifier;
-	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
+	 * @param @param SectionPartCollection $assessmentSections A collection of AssessmentSection or AssessmentSectionRef objects objects.
 	 * @param int $navigationMode A value of the NavigationMode enumeration.
 	 * @param int $submissionMode A value of the SubmissionMode enumeration.
 	 * @throws InvalidArgumentException If an argument has the wrong type or format.
 	 */
-	public function __construct($identifier, AssessmentSectionCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
+	public function __construct($identifier, SectionPartCollection $assessmentSections, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL) {
 		$this->setObservers(new SplObjectStorage());
 		
 		$this->setIdentifier($identifier);
@@ -329,22 +329,30 @@ class TestPart extends QtiComponent implements QtiIdentifiable {
 	}
 	
 	/**
-	 * Set the AssessmentSection that are part of this Test Part.
+	 * Get the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
 	 * 
-	 * @return AssessmentSectionCollection  A collection of AssessmentSection object.
+	 * @return \qtism\data\SectionPartCollection A collection of AssessmentSection and/or AssessmentSectionRef objects.
 	 */
 	public function getAssessmentSections() {
 		return $this->assessmentSections;
 	}
 	
 	/**
-	 * Set the AssessmentSection that are part of this Test Part.
+	 * Set the AssessmentSections and/or AssessmentSectionRefs that are part of this Test Part.
 	 * 
-	 * @param AssessmentSectionCollection $assessmentSections A collection of AssessmentSection objects.
-	 * @throws InvalidArgumentException If $assessmentSections is an empty collection.
+	 * @param SectionPartCollection $assessmentSections A collection of AssessmentSection and/or AssessmentSectionRef objects.
+	 * @throws \InvalidArgumentException If $assessmentSections is an empty collection or contains something else than AssessmentSection and/or AssessmentSectionRef objects.
 	 */
-	public function setAssessmentSections(AssessmentSectionCollection $assessmentSections) {
+	public function setAssessmentSections(SectionPartCollection $assessmentSections) {
 		if (count($assessmentSections) > 0) {
+            // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
+            foreach ($assessmentSections as $assessmentSection) {
+                if (!$assessmentSection instanceof AssessmentSection && !$assessmentSection instanceof AssessmentSectionRef) {
+                    $msg = "A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.";
+                    throw new InvalidArgumentException($msg);
+                }
+            }
+            
 			$this->assessmentSections = $assessmentSections;
 		}
 		else {

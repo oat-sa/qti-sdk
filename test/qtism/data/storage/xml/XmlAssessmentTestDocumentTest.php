@@ -90,6 +90,47 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\TestPart', $p02);
 	    $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
 	}
+    
+    public function testAssessmentSectionRefsInTestParts() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+        
+        $testParts = $doc->getDocumentComponent()->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        
+        $sectionParts = $testParts['T01']->getAssessmentSections();
+        $this->assertTrue(isset($sectionParts['SR01']));
+        $this->assertInstanceOf('qtism\\data\\AssessmentSectionRef', $sectionParts['SR01']);
+    }
+    
+    public function testIncludeAssessmentSectionRefsInTestParts() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+        $doc->includeAssessmentSectionRefs();
+        
+        $root = $doc->getDocumentComponent();
+        
+        $testParts = $root->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        
+        // Check that assessmentSectionRef 'SR01' has been resolved.
+        $sectionParts = $testParts['T01']->getAssessmentSections();
+        
+        $this->assertTrue(isset($sectionParts['S01']));
+        $this->assertFalse(isset($sectionParts['SR01']));
+        $this->assertTrue(isset($sectionParts['S01']->getSectionParts()['S02']));
+        
+        // Check that the final assessmentSection contains the assessmentItemRefs.
+        $assessmentItemRefs = $sectionParts['S01']->getSectionParts()['S02']->getSectionParts();
+        $this->assertEquals(3, count($assessmentItemRefs));
+        
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q01']);
+        $this->assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q02']);
+        $this->assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
+        $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
+    }
 	
 	private static function decorateUri($uri) {
 		return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
