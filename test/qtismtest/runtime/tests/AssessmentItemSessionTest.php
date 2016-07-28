@@ -445,4 +445,18 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
+    
+    public function testSetOutcomeValuesWithSumJuggling() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        $responses = new State(array(new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'))))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals(1., $itemSession['score-X']->getValue());
+    }
 }
