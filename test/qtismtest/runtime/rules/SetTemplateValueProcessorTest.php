@@ -97,11 +97,12 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 	    $processor->process();
 	}
 	
-	public function testSetTemplateValueWrongJugglingMultipleTwo() {
+	public function testSetTemplateValueJugglingMultiple() {
 	    $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
 	            <multiple>
 	                <baseValue baseType="float">1337.1337</baseValue>
+                    <baseValue baseType="float">7777.7777</baseValue>
 	            </multiple>
 	        </setTemplateValue>
 	    ');
@@ -111,8 +112,33 @@ class setTemplateValueProcessorTest extends QtiSmTestCase {
 	    $state = new State(array($score));
 	    $processor->setState($state);
 	
-	    $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
 	    $processor->process();
+        // In this case, juggling will put the first entry of the multiple container
+        // in the target single cardinality variable. The float value is then changed into an integer value.
+	    $processor->process();
+        $this->assertEquals(1337, $state['TPL1']->getValue());
+	}
+    
+    public function testSetTemplateValueJugglingOrdered() {
+	    $rule = $this->createComponentFromXml('
+	        <setTemplateValue identifier="TPL1">
+	            <ordered>
+	                <baseValue baseType="float">1337.1337</baseValue>
+                    <baseValue baseType="float">7777.7777</baseValue>
+	            </ordered>
+	        </setTemplateValue>
+	    ');
+	
+	    $processor = new SetTemplateValueProcessor($rule);
+	    $score = new TemplateVariable('TPL1', Cardinality::SINGLE, BaseType::INTEGER);
+	    $state = new State(array($score));
+	    $processor->setState($state);
+	
+	    $processor->process();
+        // In this case, juggling will put the first entry of the multiple container
+        // in the target single cardinality variable. The float value is then changed into an integer value.
+	    $processor->process();
+        $this->assertEquals(1337, $state['TPL1']->getValue());
 	}
 	
 	public function testSetOutcomeValueModerate() {

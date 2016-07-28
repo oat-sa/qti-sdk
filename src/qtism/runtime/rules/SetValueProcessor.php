@@ -82,6 +82,11 @@ abstract class SetValueProcessor extends RuleProcessor
             // juggle a little bit (int -> float, float -> int)
             if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
                 $baseType = $var->getBaseType();
+                
+                // If we are trying to put a container in a scalar, let's make some changes...
+                if (($val->getCardinality() === Cardinality::MULTIPLE || $val->getCardinality() === Cardinality::ORDERED) && count($val) > 0) {
+                    $val = $val[0];
+                }
 
                 if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
                     $val = new QtiInteger(intval($val->getValue()));
