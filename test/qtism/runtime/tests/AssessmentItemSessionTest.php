@@ -19,6 +19,7 @@ use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\runtime\common\MultipleContainer;
 
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
 	
@@ -386,5 +387,33 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->suspend();
         $itemSession->interact();
         $itemSession->endAttempt();
+    }
+    
+    public function testSetOutcomeValuesWithSum() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        $responses = new State(array(new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'))))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals(1., $itemSession['score-X']->getValue());
+    }
+    
+    public function testSetOutcomeValuesWithSumJuggling() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        $responses = new State(array(new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'))))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
 }
