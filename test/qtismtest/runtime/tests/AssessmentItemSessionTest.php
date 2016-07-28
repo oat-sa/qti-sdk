@@ -459,4 +459,48 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
+    
+    public function testSuspendWithResponses() {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        $itemSession->suspend(
+            new State(
+                array(
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))
+                )
+            )
+        );
+        
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSession->getState());
+        $this->assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
+        $this->assertEquals(0., $itemSession['SCORE']->getValue());
+        $this->assertEquals(1, $itemSession['numAttempts']->getValue());
+        
+        $itemSession->beginCandidateSession();
+        
+        $itemSession->suspend(
+            new State(
+                array(
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))
+                )
+            )
+        );
+        
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSession->getState());
+        $this->assertEquals('ChoiceB', $itemSession['RESPONSE']->getValue());
+        $this->assertEquals(0., $itemSession['SCORE']->getValue());
+        $this->assertEquals(1, $itemSession['numAttempts']->getValue());
+        
+        $itemSession->beginCandidateSession();
+        
+        // Finall, the candidates decide to validate its last choice. So no new responses to provided.
+        $itemSession->endAttempt(new State());
+        
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+        $this->assertEquals('ChoiceB', $itemSession['RESPONSE']->getValue());
+        $this->assertEquals(1., $itemSession['SCORE']->getValue());
+        $this->assertEquals(1, $itemSession['numAttempts']->getValue());
+    }
 }

@@ -873,6 +873,7 @@ class AssessmentItemSession extends State
                 $this->suspend();
             } else {
                 $this->setState(AssessmentItemSessionState::MODAL_FEEDBACK);
+                $this->setAttempting(false);
             }
         }
     }
@@ -925,21 +926,21 @@ class AssessmentItemSession extends State
                 $this->setAttempting(false);
             }
         } else {
+            // INTERACTING
             if ($responses !== null) {
-                $this->mergeResponses();
+                $this->mergeResponses($responses);
             }
             
             $this->setState(AssessmentItemSessionState::SUSPENDED);
-            $this->setAttempting(false);
         }
     }
 
     /**
      * Indicate that the candidate is beginning the candidate session. 
      * 
-     * In other words, the candidate makes
-     * the item session go from the SUSPENDED state to the INTERACTING state. To successfuly call this method
-     * without throwing an exception, the SUSPENDED state had to be set via a call to the AssessmentItemSession::endCandidateSession method
+     * In other words, the candidate makes the item session go from the SUSPENDED state to the INTERACTING state. To successfuly call this method
+     * without throwing an exception, the SUSPENDED state had to be set via a call to the AssessmentItemSession::endCandidateSession or
+     * the AssessmentItemSession::suspend methods.
      *
      * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not SUSPENDED.
      */
