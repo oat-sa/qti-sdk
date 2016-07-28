@@ -6,9 +6,12 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\processing\ResponseProcessingEngine;
+use qtism\common\enums\Cardinality;
+use qtism\common\enums\BaseType;
 
 class ResponseProcessingEngineTest extends QtiSmTestCase {
 	
@@ -126,4 +129,75 @@ class ResponseProcessingEngineTest extends QtiSmTestCase {
 	        $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
 	    }
 	}
+    
+    public function testSetOutcomeValueWithSum() {
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing>
+                <responseCondition>
+                  <responseIf>
+                    <isNull>
+                      <variable identifier="response-X" />
+                    </isNull>
+                    <setOutcomeValue identifier="score-X">
+                      <baseValue baseType="integer">0</baseValue>
+                    </setOutcomeValue>
+                  </responseIf>
+                  <responseElseIf>
+                    <match>
+                      <variable identifier="response-X" />
+                      <correct identifier="response-X" />
+                    </match>
+                    <setOutcomeValue identifier="score-X">
+                      <variable identifier="maxscore-X" />
+                    </setOutcomeValue>
+                 </responseElseIf>
+                  <responseElse>
+                    <setOutcomeValue identifier="score-X">
+                      <baseValue baseType="integer">0</baseValue>
+                    </setOutcomeValue>
+                  </responseElse>
+                </responseCondition>
+                <setOutcomeValue identifier="SCORE">
+                  <sum>
+                    <variable identifier="score-X" />
+                  </sum>
+                </setOutcomeValue>
+                <setOutcomeValue identifier="MAXSCORE">
+                  <sum>
+                    <variable identifier="maxscore-X" />
+                  </sum>
+                </setOutcomeValue>
+              </responseProcessing>
+        ');
+        
+        
+        $responseX = new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER);
+        $responseX->setCorrectResponse(new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB'))));
+        
+        $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
+        $maxScore = new OutcomeVariable('MAXSCORE', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
+        $scoreX = new OutcomeVariable('score-X', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(0.));
+        $maxScoreX = new OutcomeVariable('maxscore-X', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(1.));
+        
+        $state = new State(
+            array(
+                $responseX,
+                $score,
+                $maxScore,
+                $scoreX,
+                $maxScoreX
+            )
+        );
+        
+        // Try correct response...
+        $state['response-X'][] = new QtiIdentifier('ChoiceA');
+        $state['response-X'][] = new QtiIdentifier('ChoiceB');
+        
+        $engine = new ResponseProcessingEngine($responseProcessing, $state);
+        $engine->process();
+        
+        $this->assertEquals(1., $state['score-X']->getValue());
+        $this->assertEquals(1., $state['SCORE']->getValue());
+        $this->assertEquals(1., $state['MAXSCORE']->getValue());
+    }
 }
