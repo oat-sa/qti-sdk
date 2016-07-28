@@ -14,6 +14,7 @@ use qtism\runtime\common\State;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
+use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
@@ -429,5 +430,19 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->endAttempt(new State());
         
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
+    }
+    
+    public function testSetOutcomeValuesWithSum() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        
+        $responses = new State(array(new ResponseVariable('response-X', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('ChoiceB'), new QtiIdentifier('ChoiceC'))))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
 }
