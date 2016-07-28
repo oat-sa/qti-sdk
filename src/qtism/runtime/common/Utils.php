@@ -201,54 +201,6 @@ class Utils
     }
 
     /**
-     * Makes $value compliant with baseType $targetBaseType, if $value is compliant. Otherwise,
-     * the original $value is returned.
-     *
-     * @param mixed $value A QTI Runtime compliant value.
-     * @param integer $targetBaseType The target baseType.
-     * @return mixed The juggled value if needed, otherwise the original value of $value.
-     */
-    static public function juggle($value, $targetBaseType)
-    {
-        // A lot of people designing QTI items want to put float values
-        // in integer baseType'd variables... So let's go for type juggling!
-
-        $valueBaseType = self::inferBaseType($value);
-
-        if ($valueBaseType !== $targetBaseType && ($value instanceof MultipleContainer || $value instanceof OrderedContainer)) {
-
-            $class = get_class($value);
-
-            if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                $value = new $class($targetBaseType, self::floatArrayToInteger($value->getArrayCopy()));
-            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                $value = new $class($targetBaseType, self::integerArrayToFloat($value->getArrayCopy()));
-            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::STRING) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::IDENTIFIER) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::STRING) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::STRING && $targetBaseType === BaseType::URI) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::URI && $targetBaseType === BaseType::IDENTIFIER) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            } elseif ($valueBaseType === BaseType::IDENTIFIER && $targetBaseType === BaseType::URI) {
-                $value = new $class($targetBaseType, $value->getArrayCopy());
-            }
-        } elseif ($valueBaseType !== $targetBaseType) {
-            // Scalar value.
-            if ($valueBaseType === BaseType::FLOAT && $targetBaseType === BaseType::INTEGER) {
-                $value = intval($value);
-            } elseif ($valueBaseType === BaseType::INTEGER && $targetBaseType === BaseType::FLOAT) {
-                $value = floatval($value);
-            }
-        }
-
-        return $value;
-    }
-
-    /**
      * Transforms the content of float array to an integer array.
      *
      * @param array $floatArray An array containing float values.
@@ -281,11 +233,11 @@ class Utils
     }
 
     /**
-     * Transform a given PHP runtime value to a QtiDatatype object.
+     * Transform a given PHP scalar value to a QtiScalar equivalent object.
      *
      * @param mixed|null $v
      * @param integer $baseType A value from the BaseType enumeration.
-     * @return \qtism\common\datatypes\Integer|\qtism\common\datatypes\IntOrIdentifier|\qtism\common\datatypes\Identifier|\qtism\common\datatypes\String|\qtism\common\datatypes\Uri|\qtism\common\datatypes\Float|\qtism\common\datatypes\Boolean|null
+     * @return \qtism\common\datatypes\QtiScalar
      */
     static public function valueToRuntime($v, $baseType)
     {

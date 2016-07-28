@@ -97,11 +97,12 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 	    $processor->process();
 	}
 	
-	public function testSetOutcomeValueWrongJugglingMultipleTwo() {
+	public function testSetOutcomeValueJugglingMultiple() {
 	    $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
 	            <multiple>
 	                <baseValue baseType="float">1337.1337</baseValue>
+                    <baseValue baseType="float">7777.7777</baseValue>
 	            </multiple>
 	        </setOutcomeValue>
 	    ');
@@ -110,9 +111,55 @@ class setOutcomeValueProcessorTest extends QtiSmTestCase {
 	    $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
 	    $state = new State(array($score));
 	    $processor->setState($state);
-	
-	    $this->setExpectedException('qtism\\runtime\\rules\\RuleProcessingException');
+        
+        // In this case, juggling will put the first entry of the multiple container
+        // in the target single cardinality variable. The float value is then changed into an integer value.
 	    $processor->process();
+        $this->assertEquals(1337, $state['SCORE']->getValue());
+	}
+    
+    public function testSetOutcomeValueJugglingOrdered() {
+	    $rule = $this->createComponentFromXml('
+	        <setOutcomeValue identifier="SCORE">
+	            <ordered>
+	                <baseValue baseType="float">1337.1337</baseValue>
+                    <baseValue baseType="float">7777.7777</baseValue>
+	            </ordered>
+	        </setOutcomeValue>
+	    ');
+	
+	    $processor = new SetOutcomeValueProcessor($rule);
+	    $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
+	    $state = new State(array($score));
+	    $processor->setState($state);
+        
+        // In this case, juggling will put the first entry of the multiple container
+        // in the target single cardinality variable. The float value is then changed into an integer value.
+	    $processor->process();
+        $this->assertEquals(1337, $state['SCORE']->getValue());
+	}
+    
+    public function testSetOutcomeValueWrongJugglingMultipleBecauseWrongBaseType() {
+	    $rule = $this->createComponentFromXml('
+	        <setOutcomeValue identifier="SCORE">
+	            <multiple>
+	                <baseValue baseType="string">hello</baseValue>
+                    <baseValue baseType="string">world</baseValue>
+	            </multiple>
+	        </setOutcomeValue>
+	    ');
+	
+	    $processor = new SetOutcomeValueProcessor($rule);
+	    $score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::INTEGER);
+	    $state = new State(array($score));
+	    $processor->setState($state);
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\rules\\RuleProcessingException',
+            'Unable to set value hello to variable \'SCORE\' (cardinality = single, baseType = integer).'
+        );
+	    $processor->process();
+        
 	}
 	
 	public function testSetOutcomeValueModerate() {
