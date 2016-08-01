@@ -23,6 +23,7 @@
 namespace qtism\data\content;
 
 use \InvalidArgumentException;
+use qtism\common\utils\Format;
 
 /**
  * The Flow trait.
@@ -39,7 +40,7 @@ trait FlowTrait
      * 
      * @see \qtism\data\content\Flow::setXmlBase()
      */
-    public function setXmlBase($base = '')
+    public function setXmlBase($xmlBase = '')
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
