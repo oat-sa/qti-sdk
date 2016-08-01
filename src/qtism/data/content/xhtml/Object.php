@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -39,13 +39,7 @@ use \InvalidArgumentException;
  */
 class Object extends BodyElement implements FlowStatic, InlineStatic
 {
-    /**
-     * The base URI of the AtomicBlock.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use \qtism\data\content\FlowTrait;
 
     /**
 	 * The content elements of the object.
@@ -235,35 +229,6 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     public function hasHeight()
     {
         return $this->height >= 0;
-    }
-
-    /**
-	 * @see \qtism\data\content\Flow::setXmlBase()
-	 */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-	 * @see \qtism\data\content\Flow::getXmlBase()
-	 */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-	 * @see \qtism\data\content\Flow::hasXmlBase()
-	 */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**

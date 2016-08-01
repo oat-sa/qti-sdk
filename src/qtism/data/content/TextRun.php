@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,7 +23,6 @@
 namespace qtism\data\content;
 
 use qtism\data\QtiComponentCollection;
-
 use qtism\data\QtiComponent;
 
 /**
@@ -38,13 +37,7 @@ use qtism\data\QtiComponent;
  */
 class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVariable
 {
-    /**
-     * The base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use FlowTrait;
 
     /**
      * The characters contained in the TextRun.
@@ -82,37 +75,6 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * Set the base URI.
-     *
-     * @param string $base A URI.
-     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * Get the base URI.
-     *
-     * @return string An empty string or a URI.
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**
