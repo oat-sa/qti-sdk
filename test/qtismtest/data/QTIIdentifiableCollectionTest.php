@@ -37,6 +37,9 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         $this->assertFalse(isset($weights['weightX']));
 	}
     
+    /**
+     * @depends testWithWeights
+     */
     public function testReplace()
     {
         $weight1 = new Weight('weight1', 1.0);
@@ -65,5 +68,30 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
             array('weight1', 'weight4', 'weight3'),
             $weights->getKeys()
         );
+    }
+    
+    public function testEventsUnset()
+    {
+        $weight1 = new Weight('weight1', 1.0);
+        $weight2 = new Weight('weight2', 1.2);
+		$weights = new WeightCollection(array($weight1, $weight2));
+        
+        $this->assertCount(2, $weights);
+        $this->assertTrue(isset($weights['weight1']));
+        $this->assertTrue(isset($weights['weight2']));
+        
+        $weight1->setIdentifier('weightX');
+        $this->assertCount(2, $weights);
+        $this->assertFalse(isset($weights['weight1']));
+        $this->assertTrue(isset($weights['weight2']));
+        $this->assertTrue(isset($weights['weightX']));
+        
+        unset($weights['weightX']);
+        $this->assertCount(1, $weights);
+        $this->assertFalse(isset($weights['weightX']));
+        $this->assertTrue(isset($weights['weight2']));
+        
+        $weight1->setIdentifier('weight2');
+        $this->assertFalse($weight1 === $weights['weight2']);
     }
 }

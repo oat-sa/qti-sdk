@@ -461,6 +461,17 @@ class XmlDocument extends QtiDocument
         }
     }
     
+    /**
+     * Include assessmentSectionRefs component in the current document.
+     * 
+     * This method includes the assessmentSectionRefs components in the current document. The references
+     * to assessmentSections are resolved. assessmentSectionRefs will be replaced with their assessmentSection
+     * content.
+     * 
+     * @param boolean $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
+     * @throws \LogicException If the method is called prior the load or loadFromString method was called.
+     * @throws \qtism\data\storage\xml\XmlStorageException If an error occured while parsing or validating files to be included.
+     */
     public function includeAssessmentSectionRefs($validate = false)
     {
         if (($root = $this->getDocumentComponent()) !== null) {
@@ -496,8 +507,7 @@ class XmlDocument extends QtiDocument
                             $collection = $parent->getSectionParts();
                         }
                         
-                        $collection->detach($assessmentSectionRef);
-                        $collection->attach($sectionRoot);
+                        $collection->replace($assessmentSectionRef, $sectionRoot);
                     }
                 }
                 
