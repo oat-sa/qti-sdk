@@ -770,7 +770,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
     
-        $this->suspendItemSession();
+        $this->suspend();
         
         // If the current state is MODAL_FEEDBACK, it means we are now really moving forward!
         if ($this->getState() === AssessmentTestSessionState::MODAL_FEEDBACK) {
@@ -809,7 +809,7 @@ class AssessmentTestSession extends State
         $route = $this->getRoute();
     
         if ($route->isFirst() === false) {
-            $this->suspendItemSession();
+            $this->suspend();
             $this->previousRouteItem();
             $this->interactWithItemSession();
             $this->testPartVisit();
@@ -831,12 +831,12 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
     
-        $this->suspendItemSession();
+        $this->suspend();
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
     
         try {
-            $this->suspendItemSession();
+            $this->suspend();
             $route->setPosition($position);
             $this->selectEligibleItems();
             $this->interactWithItemSession();
@@ -2424,7 +2424,7 @@ class AssessmentTestSession extends State
      * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
      * @throws \UnexpectedValueException If the current item session cannot be retrieved.
      */
-    protected function suspendItemSession()
+    public function suspend()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot suspend the item session if the test session is not running.";

@@ -103,8 +103,6 @@ class PendingResponseStore
         $entry = $map[$itemRef];
         $entry[$pendingResponses->getOccurence()] = $pendingResponses;
         $map[$itemRef] = $entry;
-
-        $this->getAllPendingResponses()->attach($pendingResponses);
     }
 
     /**
