@@ -165,24 +165,21 @@ class AssessmentItemSession extends State
     const COMPLETION_STATUS_COMPLETED = 'completed';
 
     /**
-     * A timing reference used to compute the duration of
-     * the session.
+     * A timing reference used to compute the duration of the session.
      *
      * @var DateTime
      */
     private $timeReference = null;
 
     /**
-     * The state of the Item Session as described
-     * by the AssessmentItemSessionState enumeration.
+     * The state of the Item Session as described by the AssessmentItemSessionState enumeration.
      *
      * @var integer
      */
     private $state = AssessmentItemSessionState::NOT_SELECTED;
 
     /**
-     * The ItemSessionControl object giving information about how to control
-     * the session.
+     * The ItemSessionControl object giving information about how to control the session.
      *
      * @var ItemSessionControl
      */
@@ -198,6 +195,7 @@ class AssessmentItemSession extends State
 
     /**
      * The navigation mode in use during the item session.
+     * 
      * Default is NavigationMode::LINEAR.
      *
      * @var integer
@@ -206,6 +204,7 @@ class AssessmentItemSession extends State
 
     /**
      * The submission mode in use during the item session.
+     * 
      * Default is SubmissionMode::INDIVIDUAL.
      *
      * @var integer
@@ -213,25 +212,23 @@ class AssessmentItemSession extends State
     private $submissionMode = SubmissionMode::INDIVIDUAL;
 
     /**
-     * The ExtendedAssessmentItemRef describing the item the session
-     * handles.
+     * The ExtendedAssessmentItemRef describing the item the session handles.
      *
      * @var IAssessmentItem
      */
     private $assessmentItem;
 
     /**
-     * Whether or not the session (SUSPENDED or INTERACTING) is
-     * currently attempting an attempt. In other words, a candidate
-     * begun an attempt and did not ended it yet.
+     * Whether or not the session (SUSPENDED or INTERACTING) is currently attempting an attempt. 
+     * 
+     * In other words, a candidate begun an attempt and did not ended it yet.
      *
      * @var boolean
      */
     private $attempting = false;
     
     /**
-     * A collection of Shuffling object representing how the choices involved in shufflable
-     * interactions are actually shuffled.
+     * A collection of Shuffling object representing how the choices involved in shufflable interactions are actually shuffled.
      * 
      * @var \qtism\data\state\ShufflingCollection
      */
@@ -302,8 +299,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Set the state of the current AssessmentItemSession. The state of the session is a value
-     * from the AssessmentItemSessionState enumeration.
+     * Set the state of the current AssessmentItemSession. 
+     * 
+     * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
      * @param integer $state A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
@@ -314,8 +312,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Get the state of the current AssessmentItemSession. The state of the session is a value
-     * from the AssessmentItemSessionState enumeration.
+     * Get the state of the current AssessmentItemSession. 
+     * 
+     * The state of the session is a value from the AssessmentItemSessionState enumeration.
      *
      * @return integer A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
@@ -326,9 +325,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Set the ItemSessionControl object which describes the way to control
-     * the item session. If the current session is in a SIMULTANEOUS submission
-     * mode context, the maxAttempt attribute of $itemSessionControl is
+     * Set the ItemSessionControl object which describes the way to control the item session. 
+     * 
+     * If the current session is in a SIMULTANEOUS submission mode context, the maxAttempt attribute of $itemSessionControl is
      * automatically set to 1.
      *
      * @param \qtism\data\ItemSessionControl $itemSessionControl An ItemSessionControl object.
@@ -369,8 +368,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Set the timing reference. The time reference is used to inform the session
-     * "what time it is" prior to interacting with it.
+     * Set the timing reference. 
+     * 
+     * The time reference is used to inform the session "what time it is" prior to interacting with it.
      *
      * @param \DateTime $timeReference A DateTime object.
      */
@@ -380,8 +380,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Get the timing reference. The time reference is used to inform the session
-     * "what time it is" prior to interacting with it.
+     * Get the timing reference. 
+     * 
+     * The time reference is used to inform the session "what time it is" prior to interacting with it.
      *
      * @return \DateTime A DateTime object.
      */
@@ -401,8 +402,7 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether the session is driven by a TimeLimits object
-     * or not.
+     * Whether or not the session is driven by a TimeLimits object.
      *
      * @return boolean
      */
@@ -482,8 +482,7 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Set the IAssessmentItem object which describes the item to be handled
-     * by the session.
+     * Set the IAssessmentItem object which describes the item to be handled by the session.
      *
      * @param \qtism\data\IAssessmentItem $assessmentItem An IAssessmentItem object.
      */
@@ -493,8 +492,7 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Get the IAssessmentItem object which describes the item to be handled by the
-     * session.
+     * Get the IAssessmentItem object which describes the item to be handled by the session.
      *
      * @return \qtism\data\IAssessmentItem An IAssessmentItem object.
      */
@@ -515,8 +513,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether the candidate is currently performing an attempt. A candidate
-     * can be performing an attempt, even if the session is closed. In this situation,
+     * Whether the candidate is currently performing an attempt. 
+     * 
+     * A candidate can be performing an attempt, even if the session is closed. In this situation,
      * it means that the candidate was interacting with the item, but went in suspend
      * state by ending the candidate session rather than ending the attempt.
      *
@@ -559,6 +558,8 @@ class AssessmentItemSession extends State
     
     /**
      * Know whether or not template processing must occur automatically.
+     * 
+     * @return boolean
      */
     public function mustAutoTemplateProcessing()
     {
@@ -658,7 +659,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * begin an attempt for this item session. The value of the built-in outcome variable 'completionStatus' is set to the 'unknown' value at
+     * begin an attempt for this item session. 
+     * 
+     * The value of the built-in outcome variable 'completionStatus' is set to the 'unknown' value at
      * the beginning of the very first attempt on this session.
      *
      * * If the attempt to begin is the first one of the session, response variables are applied their default value.
@@ -750,8 +753,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * End the attempt by providing the responses of the candidate. If $responses is provided, the values found into it will be merged to 
-     * the current session, and response processing will take place.
+     * End the attempt by providing the responses of the candidate. 
+     * 
+     * When $responses is provided, the values found into it will be merged to the current session, and response processing will take place.
      *
      * * After response processing, if the item is adaptive and the completionStatus is indicated to be 'completed', the item session ends.
      * * After response processing, If the item is non-adaptive, and the maximum number of attempts is reached, the item session ends and the completionStatus is set to 'completed'.
@@ -762,7 +766,7 @@ class AssessmentItemSession extends State
      *
      * @param \qtism\runtime\common\State $responses (optional) A State composed by the candidate's responses to the item.
      * @param boolean $responseProcessing (optional) Whether to execute the responseProcessing or not.
-     * @param boolean $forceLateSubmission Force the acceptance of late response submission. In this case, responses that are received out of the time frame indicated by the time limits in force are accepted anyway.
+     * @param boolean $forceLateSubmission (optional) Force the acceptance of late response submission. In this case, responses that are received out of the time frame indicated by the time limits in force are accepted anyway.
      * @throws \qtism\runtime\tests\AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false)
@@ -869,6 +873,7 @@ class AssessmentItemSession extends State
                 $this->suspend();
             } else {
                 $this->setState(AssessmentItemSessionState::MODAL_FEEDBACK);
+                $this->setAttempting(false);
             }
         }
     }
@@ -887,10 +892,18 @@ class AssessmentItemSession extends State
 
     /**
      * Suspend the item session. The state will switch to SUSPENDED.
+     * 
+     * In case of the current state is MODAL_FEEDBACK, calling this function will
+     * terminate the item session by a call to AssessmentItemSession::endItemSession if there are no more
+     * attempts available to the candidate.
+     * 
+     * Responses provided when suspending the item session will be taken into account only if the current
+     * state is different from MODAL_FEEDBACK.
      *
+     * @param \qtism\runtime\common\State (optiona) A State object containing the responses to be stored in the item session at suspend time.
      * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
      */
-    public function suspend()
+    public function suspend(State $responses = null)
     {
         $state = $this->getState();
         
@@ -913,16 +926,21 @@ class AssessmentItemSession extends State
                 $this->setAttempting(false);
             }
         } else {
+            // INTERACTING
+            if ($responses !== null) {
+                $this->mergeResponses($responses);
+            }
+            
             $this->setState(AssessmentItemSessionState::SUSPENDED);
-            $this->setAttempting(false);
         }
     }
 
     /**
-     * Indicate that the candidate is beginning the candidate session. In other words, the candidate makes
-     * the item session go from the SUSPENDED state to the INTERACTING state. To successfuly call this method
-     * without throwing an exception, the SUSPENDED state had to be set via a call to the endCandidateSession()
-     * method.
+     * Indicate that the candidate is beginning the candidate session. 
+     * 
+     * In other words, the candidate makes the item session go from the SUSPENDED state to the INTERACTING state. To successfuly call this method
+     * without throwing an exception, the SUSPENDED state had to be set via a call to the AssessmentItemSession::endCandidateSession or
+     * the AssessmentItemSession::suspend methods.
      *
      * @throws \qtism\runtime\tests\AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not SUSPENDED.
      */
@@ -986,8 +1004,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Close the item session. The 'completionStatus' built-in outcome variable and the state
-     * of the item session goes to CLOSED.
+     * Close the item session. 
+     * 
+     * The 'completionStatus' built-in outcome variable and the state of the item session goes to CLOSED.
      */
     public function endItemSession()
     {
@@ -1003,6 +1022,7 @@ class AssessmentItemSession extends State
 
     /**
      * Get the number of remaining attempts possible for the item session.
+     * 
      * Be careful! If the item of the session is adaptive but not yet completed or if the maxAttempts is unlimited, -1 is returned
      * because there is no way to determine how much remaining attempts are available.
      *
@@ -1037,11 +1057,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether all non built-in response variables held by the session match their
-     * associated correct response.
+     * Whether all non built-in response variables held by the session match their associated correct response.
      *
-     * If the item session has the NOT_SELECTED state, false is directly returned because
-     * it is certain that there is no correct response yet in the session.
+     * If the item session has the NOT_SELECTED state, false is directly returned because it is certain that there is no correct response yet in the session.
      *
      * @return boolean
      * @throws \qtism\runtime\tests\AssessmentItemSessionException With error code = RUNTIME_ERROR if an error occurs while processing the 'correct' QTI expression on a response variable held by the session.
@@ -1075,8 +1093,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether the item of the session has been attempted (at least once). In other words, items which the user has interacted,
-     * whether or not they provided a response.
+     * Whether the item of the session has been attempted (at least once).
+     * 
+     * In other words, items which the user has interacted, whether or not they provided a response.
      *
      * @return boolean
      */
@@ -1086,8 +1105,7 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether the item of the session has been selected for presentation to the candidate, regardless of whether the candidate
-     * has attempted them or not.
+     * Whether the item of the session has been selected for presentation to the candidate, regardless of whether the candidate has attempted them or not.
      *
      * @return boolean
      */
@@ -1152,8 +1170,9 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Whether or not the maximum time limits in force are reached. If there is
-     * no time limits in force, this method systematically returns false.
+     * Whether or not the maximum time limits in force are reached. 
+     * 
+     * If there is no time limits in force, this method systematically returns false.
      *
      * @return boolean
      */

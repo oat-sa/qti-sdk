@@ -770,7 +770,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
     
-        $this->suspendItemSession();
+        $this->suspend();
         
         // If the current state is MODAL_FEEDBACK, it means we are now really moving forward!
         if ($this->getState() === AssessmentTestSessionState::MODAL_FEEDBACK) {
@@ -809,7 +809,7 @@ class AssessmentTestSession extends State
         $route = $this->getRoute();
     
         if ($route->isFirst() === false) {
-            $this->suspendItemSession();
+            $this->suspend();
             $this->previousRouteItem();
             $this->interactWithItemSession();
             $this->testPartVisit();
@@ -831,12 +831,12 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
     
-        $this->suspendItemSession();
+        $this->suspend();
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
     
         try {
-            $this->suspendItemSession();
+            $this->suspend();
             $route->setPosition($position);
             $this->selectEligibleItems();
             $this->interactWithItemSession();
@@ -1824,6 +1824,35 @@ class AssessmentTestSession extends State
            throw new OutOfRangeException($msg);
         }
     }
+    
+    /**
+     * Get the candidate state of the current item.
+     * 
+     * The candidate state represents the response variables he is allowed to be aware of while taking the current item.
+     * 
+     * @return \qtism\runtime\common\State|false In case of the test session is not running false is returned.
+     */
+    public function getCandidateState()
+    {
+        if ($this->isRunning() === false) {
+            return false;
+        }
+        
+        $itemSession = $this->getCurrentAssessmentItemSession();
+        $responses = $itemSession->getResponseVariables();
+        
+        // Is there something in the pending response store?
+        $pendingResponses = $this->getPendingResponseStore()->getPendingResponses(
+            $this->getCurrentAssessmentItemRef(),
+            $this->getCurrentAssessmentItemRefOccurence()
+        );
+        
+        if ($pendingResponses !== false) {
+            $responses->merge($pendingResponses->getState());
+        }
+        
+        return $responses;
+    }
 
     /**
      * This protected method contains the logic of instantiating a new AssessmentItemSession object.
@@ -2424,7 +2453,7 @@ class AssessmentTestSession extends State
      * @throws \qtism\runtime\tests\AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
      * @throws \UnexpectedValueException If the current item session cannot be retrieved.
      */
-    protected function suspendItemSession()
+    public function suspend()
     {
         if ($this->isRunning() === false) {
             $msg = "Cannot suspend the item session if the test session is not running.";
