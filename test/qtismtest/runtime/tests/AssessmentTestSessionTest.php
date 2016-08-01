@@ -252,118 +252,130 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	}
 	
-	public function testLinearSimultaneousSubmission() {
+    public function testLinearSimultaneousSubmission() {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
-	    $session->beginTestSession();
-	    
-	    // Q01 - Correct.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
-	    // The session must be suspended until the end of the test part.
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    // !!! The Response must be stored in the session, but no score must be computed.
-	    // This is the same for the next items.
-	    $this->assertSame(null, $session['Q01.RESPONSE']);
-	    $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
-	    $this->assertEquals(1, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q02 - Incorrect (but SCORE = 3)
-	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))))));
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertSame(null, $session['Q02.RESPONSE']);
-	    $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
-	    $this->assertEquals(2, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q03 - Skip.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State());
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $session->moveNext();
-	    $this->assertEquals(3, count($session->getPendingResponses()));
-	    
-	    // Q04 - Skip.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State());
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertEquals(4, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q05 - Skip.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State());
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertEquals(5, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q06 - Skip.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State());
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertEquals(6, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q07.1 - Correct.
-	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertSame(null, $session['Q07.1.RESPONSE']);
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.1.SCORE']);
-	    $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
-	    $this->assertEquals(7, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q07.2 - Incorrect (but SCORE = 1).
-	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 113)))));
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertSame(null, $session['Q07.2.RESPONSE']);
-	    $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
-	    $this->assertEquals(8, count($session->getPendingResponses()));
-	    $session->moveNext();
-	    
-	    // Q07.3 - Incorrect (and SCORE = 0).
-	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 60)))));
-	    $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-	    $this->assertSame(null, $session['Q07.3.RESPONSE']);
-	    $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
-	    
-	    // This triggers response processing for the test part in simultaneous mode.
-	    $session->moveNext();
-	    
-	    
-	    
-	    // This is the end of the test. Then, the pending responses were flushed.
-	    // We also have to check if the deffered response processing took place.
-	    $this->assertEquals(0, count($session->getPendingResponses()));
-	    
-	    $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
-	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
-	    
-	    $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))));
-	    $this->assertEquals(3.0, $session['Q02.SCORE']->getValue());
-	    
-	    
-	    $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
-	    $this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
-	    $this->assertEquals(0.0, $session['Q05.SCORE']->getValue());
-	    $this->assertEquals(0.0, $session['Q06.mySc0r3']->getValue());
-	    
-	    $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
-	    $this->assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 113)));
-	    $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(50, 60)));
-	    
-	    // Did the test-level outcome processing take place?
-	    $this->assertEquals(9, $session['NPRESENTED']->getValue());
-	    
-	    // All item sessions now closed?
-	    foreach ($session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
-	        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
-	    }
-	}
+        $session->beginTestSession();
+        
+        // Q01 - Correct.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+        // The session must be suspended until the end of the test part.
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        
+        // !!! The Response must not be stored in the session. Indeed, it is not considered as "submitted" yet.
+        // !!! No score must be computed, as the submission will occur at the end of the test part.
+        // This is the same for the next items.
+        $this->assertSame(null, $session['Q01.RESPONSE']);
+        $this->assertEquals(0.0, $session['Q01.scoring']->getValue());
+        
+        // We must have an entry in pending responses. In addition, we should be able to
+        // access the provided response through the candidate state.
+        $this->assertCount(1, $session->getPendingResponses());
+        
+        $candidateState = $session->getCandidateState();
+        $this->assertCount(3, $candidateState);
+        $this->assertEquals('ChoiceA', $candidateState['RESPONSE']->getValue());
+        $this->assertEquals(1, $candidateState['numAttempts']->getValue());
+        $this->assertEquals('PT0S', $candidateState['duration']->__toString());
+        
+        $session->moveNext();
+        
+        // Q02 - Incorrect (but SCORE = 3)
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))))));
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertSame(null, $session['Q02.RESPONSE']);
+        $this->assertEquals(0.0, $session['Q02.SCORE']->getValue());
+        $this->assertEquals(2, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q03 - Skip.
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $session->moveNext();
+        $this->assertEquals(3, count($session->getPendingResponses()));
+        
+        // Q04 - Skip.
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertEquals(4, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q05 - Skip.
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertEquals(5, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q06 - Skip.
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertEquals(6, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q07.1 - Correct.
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertSame(null, $session['Q07.1.RESPONSE']);
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiFloat', $session['Q07.1.SCORE']);
+        $this->assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
+        $this->assertEquals(7, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q07.2 - Incorrect (but SCORE = 1).
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 113)))));
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertSame(null, $session['Q07.2.RESPONSE']);
+        $this->assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
+        $this->assertEquals(8, count($session->getPendingResponses()));
+        $session->moveNext();
+        
+        // Q07.3 - Incorrect (and SCORE = 0).
+        $session->beginAttempt();
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 60)))));
+        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
+        $this->assertSame(null, $session['Q07.3.RESPONSE']);
+        $this->assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
+        
+        // This triggers response processing for the test part in simultaneous mode.
+        $session->moveNext();
+        
+        
+        
+        // This is the end of the test. Then, the pending responses were flushed.
+        // We also have to check if the deffered response processing took place.
+        $this->assertEquals(0, count($session->getPendingResponses()));
+        
+        $this->assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
+        $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
+        
+        $this->assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P'), new QtiPair('C', 'M')))));
+        $this->assertEquals(3.0, $session['Q02.SCORE']->getValue());
+        
+        
+        $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
+        $this->assertEquals(0.0, $session['Q04.SCORE']->getValue());
+        $this->assertEquals(0.0, $session['Q05.SCORE']->getValue());
+        $this->assertEquals(0.0, $session['Q06.mySc0r3']->getValue());
+        
+        $this->assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
+        $this->assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 113)));
+        $this->assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(50, 60)));
+        
+        // Did the test-level outcome processing take place?
+        $this->assertEquals(9, $session['NPRESENTED']->getValue());
+        
+        // All item sessions now closed?
+        foreach ($session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
+            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+        }
+    }
 	
 	/**
 	 * @dataProvider linearOutcomeProcessingProvider

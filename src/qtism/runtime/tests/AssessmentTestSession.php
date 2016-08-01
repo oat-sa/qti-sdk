@@ -1824,6 +1824,35 @@ class AssessmentTestSession extends State
            throw new OutOfRangeException($msg);
         }
     }
+    
+    /**
+     * Get the candidate state of the current item.
+     * 
+     * The candidate state represents the response variables he is allowed to be aware of while taking the current item.
+     * 
+     * @return \qtism\runtime\common\State|false In case of the test session is not running false is returned.
+     */
+    public function getCandidateState()
+    {
+        if ($this->isRunning() === false) {
+            return false;
+        }
+        
+        $itemSession = $this->getCurrentAssessmentItemSession();
+        $responses = $itemSession->getResponseVariables();
+        
+        // Is there something in the pending response store?
+        $pendingResponses = $this->getPendingResponseStore()->getPendingResponses(
+            $this->getCurrentAssessmentItemRef(),
+            $this->getCurrentAssessmentItemRefOccurence()
+        );
+        
+        if ($pendingResponses !== false) {
+            $responses->merge($pendingResponses->getState());
+        }
+        
+        return $responses;
+    }
 
     /**
      * This protected method contains the logic of instantiating a new AssessmentItemSession object.
