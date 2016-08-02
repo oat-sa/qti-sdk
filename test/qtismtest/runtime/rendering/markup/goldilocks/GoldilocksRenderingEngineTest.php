@@ -78,6 +78,24 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
                 GoldilocksRenderingEngine::CSSCLASS_CONCRETE
             ),
+            // choiceInteraction-5
+            array(
+                self::samplesDir() . 'ims/items/2_2/orkney1.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/choiceInteraction-5.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // choiceInteraction-6
+            array(
+                self::samplesDir() . 'ims/items/2_2/orkney2.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/choiceInteraction-6.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
             // associateInteraction-0
             array(
                 self::samplesDir() . 'ims/items/2_2/associate.xml',
@@ -150,10 +168,46 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
                 GoldilocksRenderingEngine::CSSCLASS_CONCRETE
             ),
+            // math-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/math.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/math-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // nestedObject-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/nested_object.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/nestedObject-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // orderInteraction-0
+            array(
+                self::samplesDir() . 'ims/items/2_2/order.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/orderInteraction-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
+            // orderInteraction-1
+            array(
+                self::samplesDir() . 'ims/items/2_2/order_rtl.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/orderInteraction-1.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
         );
     }
     
-    public function testGenerate() {
+    /*public function testGenerate() {
         $renderingMode = GoldilocksRenderingEngine::CONTEXT_STATIC;
         $xmlBasePolicy = GoldilocksRenderingEngine::XMLBASE_IGNORE;
         $stylesheetPolicy = GoldilocksRenderingEngine::STYLESHEET_INLINE;
@@ -169,10 +223,10 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $engine->setCssClassPolicy($cssClassPolicy);
         
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'ims/items/2_2/match.xml');
+        $doc->load(self::samplesDir() . 'ims/items/2_2/orkney2.xml');
         
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
-        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/matchInteraction-0.html', $strRendered . "\n");
-    }
+        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/choiceInteraction-6.html', $strRendered . "\n");
+    }*/
 }
