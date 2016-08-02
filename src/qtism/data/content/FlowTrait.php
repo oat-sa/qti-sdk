@@ -22,42 +22,51 @@
 
 namespace qtism\data\content;
 
-use qtism\common\utils\Format;
-use qtism\data\QtiComponentCollection;
 use \InvalidArgumentException;
+use qtism\common\utils\Format;
 
 /**
- * The atomicInline QTI abstract class.
+ * The Flow trait.
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
+ * @authorJérôme Bogaerts <jerome@taotesting.com>
+ * @see \qtism\data\content\Flow
  */
-abstract class AtomicInline extends BodyElement implements FlowStatic, InlineStatic
+trait FlowTrait
 {
+    private $xmlBase = '';
     
-    use FlowTrait;
-
     /**
-     * Create a new AtomicInline object.
-     *
-     * @param string $id A QTI identifier.
-     * @param string $class One or more class names separated by spaces.
-     * @param string $lang An RFC3066 language.
-     * @param string $label A label that does not exceed 256 characters.
+     * setXmlBase method implementation.
+     * 
+     * @see \qtism\data\content\Flow::setXmlBase()
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    public function setXmlBase($xmlBase = '')
     {
-        parent::__construct($id, $class, $lang, $label);
+        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
+            $this->xmlBase = $xmlBase;
+        } else {
+            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
+            throw new InvalidArgumentException($msg);
+        }
     }
 
     /**
-     * An atomicInline component does not contain any other component. As
-     * a result, this method always returns an empty QtiComponentCollection object.
-     *
-     * @return \qtism\data\QtiComponentCollection An empty QtiComponentCollection.
+     * getXmlBase method implementation.
+     * 
+     * @see \qtism\data\content\Flow::getXmlBase()
      */
-    public function getComponents()
+    public function getXmlBase()
     {
-        return new QtiComponentCollection();
+        return $this->xmlBase;
+    }
+
+    /**
+     * hasXmlBase method implementation.
+     * 
+     * @see \qtism\data\content\Flow::hasXmlBase()
+     */
+    public function hasXmlBase()
+    {
+        return $this->getXmlBase() !== '';
     }
 }
