@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -29,8 +29,9 @@ use \SplObserver;
 use \SplSubject;
 
 /**
- * This extension of QtiComponentCollection can retrieve items it contains
- * by identifier.
+ * This extension of QtiComponentCollection can retrieve items it contains by QTI identifier.
+ * 
+ * This collection implementation aims at storing QTI components having an "identifier" attribute.
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
@@ -177,7 +178,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 
         if (($search = array_search($object, $this->dataPlaceHolder, true)) !== false) {
             
-            $objectKey = $object->getIdentifier();
+            $objectKey = $search;
             $replacementKey = $replacement->getIdentifier();
             
             if ($objectKey === $replacementKey) {
@@ -215,13 +216,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
     {
         // -- case 1 (QtiIdentifiable)
         // If it is a QtiIdentifiable, it has changed its identifier.
-        $data = &$this->getDataPlaceHolder();
-        foreach (array_keys($data) as $k) {
-            if ($data[$k] === $subject && $k !== $subject->getIdentifier()) {
-                unset($data[$k]);
-                $this->offsetSet(null, $subject);
-            }
-        }
+        $this->replace($subject, $subject);
     }
 
     public function __clone()
