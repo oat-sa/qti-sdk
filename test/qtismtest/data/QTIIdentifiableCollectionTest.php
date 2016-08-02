@@ -56,6 +56,12 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         $this->assertFalse($weight2 === $weights['weight2']);
         $this->assertCount(3, $weights);
         
+        // Is the order still respected?
+        $this->assertSame(
+            array('weight1', 'weight2', 'weight3'),
+            $weights->getKeys()
+        );
+        
         // Let's replace (the new) weight2 with another Weight object having different identifiers.
         $weight4 = new Weight('weight4', 1.4);
         $weights->replace($weights['weight2'], $weight4);
@@ -70,6 +76,9 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         );
     }
     
+    /**
+     * @depends testWithWeights
+     */
     public function testEventsUnset()
     {
         $weight1 = new Weight('weight1', 1.0);
