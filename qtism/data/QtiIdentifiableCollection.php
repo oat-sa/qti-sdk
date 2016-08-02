@@ -27,6 +27,7 @@ namespace qtism\data;
 use \ReflectionClass;
 use \InvalidArgumentException;
 use \OutOfRangeException;
+use \UnexpectedValueException;
 use \SplObserver;
 use \SplSubject;
 
@@ -147,6 +148,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 		if (gettype($offset) === 'string') {
 			$data = &$this->getDataPlaceHolder();
 			if (isset($data[$offset])) {
+                $data[$offset]->detach($this);
 				unset($data[$offset]);
 			}
 		}
@@ -155,6 +157,50 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 			throw new OutOfRangeException($msg);
 		}
 	}
+    
+    /**
+     * Replace an $object in the collection by another $replacement $object.
+     *
+     * @param mixed $object An object to be replaced.
+     * @param mixed $replacement An object to be used as a replacement.
+     * @throws \InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
+     * @throws \UnexpectedValueException If $object is not contained in the collection.
+     */
+    public function replace($object, $replacement)
+    {
+        $this->checkType($object);
+        $this->checkType($replacement);
+
+        if (($search = array_search($object, $this->dataPlaceHolder, true)) !== false) {
+            
+            $objectKey = $search;
+            $replacementKey = $replacement->getIdentifier();
+            
+            if ($objectKey === $replacementKey) {
+                // If they share the same key, just replace.
+                $this->dataPlaceHolder[$objectKey] = $replacement;
+            } else {
+                // Otherwise, we have to insert the $replacement object at the appropriate offset (just before $object),
+                // and then remove the former $object.
+                $objectOffset = array_search($objectKey, array_keys($this->dataPlaceHolder));
+            
+                $this->dataPlaceHolder = array_merge(
+                    array_slice($this->dataPlaceHolder, 0, $objectOffset),
+                    array($replacementKey => $replacement),
+                    array_slice($this->dataPlaceHolder, $objectOffset, null)
+                );
+                
+                $this->offsetUnset($objectKey);
+            }
+            
+            $replacement->attach($this);
+            $object->detach($this);
+            
+        } else {
+            $msg = "The object you want to replace could not be found.";
+            throw new UnexpectedValueException($msg);
+        }
+    }
 	
 	/**
 	 * Implementation of SplObserver::update.
@@ -164,13 +210,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 	public function update(SplSubject $subject) {
 		// -- case 1 (QtiIdentifiable)
 		// If it is a QtiIdentifiable, it has changed its identifier.
-		$data = &$this->getDataPlaceHolder();
-		foreach (array_keys($data) as $k) {
-			if ($data[$k] === $subject && $k !== $subject->getIdentifier()) {
-				unset($data[$k]);
-				$this->offsetSet(null, $subject);
-			}
-		}
+		$this->replace($subject, $subject);
 	}
 	
 	public function __clone() {
