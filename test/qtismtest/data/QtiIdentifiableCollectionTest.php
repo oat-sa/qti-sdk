@@ -103,4 +103,25 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
         $weight1->setIdentifier('weight2');
         $this->assertFalse($weight1 === $weights['weight2']);
     }
+    
+    public function testRenamingOrder()
+    {
+        $weight1 = new Weight('weight1', 1.0);
+        $weight2 = new Weight('weight2', 1.2);
+        $weight3 = new Weight('weight3', 1.2);
+		$weights = new WeightCollection(array($weight1, $weight2, $weight3));
+        
+        // If weight2 gets a new identifier "weight4", it should still be in second position in the collection.
+        $this->assertSame(
+            array('weight1', 'weight2', 'weight3'),
+            $weights->getKeys()
+        );
+        
+        $weight2->setIdentifier('weight4');
+        
+        $this->assertSame(
+            array('weight1', 'weight4', 'weight3'),
+            $weights->getKeys()
+        );
+    }
 }
