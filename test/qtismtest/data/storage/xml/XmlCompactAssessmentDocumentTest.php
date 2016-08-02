@@ -576,4 +576,54 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase {
         $file = self::samplesDir() . 'custom/runtime/validate_response/association_constraints_xsd_invalid.xml';
         $doc->load($file, true);
     }
+    
+    /**
+     * @dataProvider ceateFromAssessmentSectionRefsDataProvider
+     */
+    public function testCreateFromAssessmentSectionRefs($file) {
+        $doc = new XmlDocument();
+        $doc->load($file);
+        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc);
+        
+        $root = $compactDoc->getDocumentComponent();
+        
+        $testParts = $root->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        $this->assertInstanceOf('qtism\\data\\ExtendedTestPart', $testParts['T01']);
+        
+        $this->assertCount(1, $testParts['T01']->getAssessmentSections());
+        $this->assertTrue(isset($testParts['T01']->getAssessmentSections()['S00']));
+        
+        $mainSection = $testParts['T01']->getAssessmentSections()['S00'];
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $mainSection);
+        $sectionParts = $mainSection->getSectionParts();
+        $this->assertCount(5, $sectionParts);
+        $this->assertSame(
+            array('Q01', 'S01', 'Q03', 'S02', 'Q05'),
+            $sectionParts->getKeys()
+        );
+        
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $sectionParts['Q01']);
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $sectionParts['S01']);
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $sectionParts['Q03']);
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentSection', $sectionParts['S02']);
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $sectionParts['Q05']);
+        
+        $section = $sectionParts['S01'];
+        $this->assertCount(1, $section->getSectionParts());
+        $this->assertTrue(isset($section->getSectionParts()['Q02']));
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $section->getSectionParts()['Q02']);
+        
+        $section = $sectionParts['S02'];
+        $this->assertCount(1, $section->getSectionParts());
+        $this->assertTrue(isset($section->getSectionParts()['Q04']));
+        $this->assertInstanceOf('qtism\\data\\ExtendedAssessmentItemRef', $section->getSectionParts()['Q04']);
+    }
+    
+    public function ceateFromAssessmentSectionRefsDataProvider() {
+        return array(
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml'),
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml')
+        );
+    }
 }

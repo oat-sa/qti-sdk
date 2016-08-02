@@ -131,6 +131,54 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $assessmentItemRefs['Q03']);
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
+    
+    /**
+     * @dataProvider testIncludeAssessmentSectionRefsMixedProvider
+     */
+    public function testIncludeAssessmentSectionRefsMixed($file) {
+        $doc = new XmlDocument();
+        $doc->load($file, true);
+        $doc->includeAssessmentSectionRefs(true);
+        
+        $root = $doc->getDocumentComponent();
+        
+        $testParts = $root->getTestParts();
+        $this->assertTrue(isset($testParts['T01']));
+        
+        $this->assertCount(1, $testParts['T01']->getAssessmentSections());
+        $this->assertTrue(isset($testParts['T01']->getAssessmentSections()['S00']));
+        
+        $mainSection = $testParts['T01']->getAssessmentSections()['S00'];
+        $sectionParts = $mainSection->getSectionParts();
+        $this->assertCount(5, $sectionParts);
+        $this->assertSame(
+            array('Q01', 'S01', 'Q03', 'S02', 'Q05'),
+            $sectionParts->getKeys()
+        );
+        
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q01']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $sectionParts['S01']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q03']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentSection', $sectionParts['S02']);
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $sectionParts['Q05']);
+        
+        $section = $sectionParts['S01'];
+        $this->assertCount(1, $section->getSectionParts());
+        $this->assertTrue(isset($section->getSectionParts()['Q02']));
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $section->getSectionParts()['Q02']);
+        
+        $section = $sectionParts['S02'];
+        $this->assertCount(1, $section->getSectionParts());
+        $this->assertTrue(isset($section->getSectionParts()['Q04']));
+        $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $section->getSectionParts()['Q04']);
+    }
+    
+    public function testIncludeAssessmentSectionRefsMixedProvider() {
+        return array(
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml'),
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml')
+        );
+    }
 	
 	private static function decorateUri($uri) {
 		return dirname(__FILE__) . '/../../../../samples/ims/tests/' . $uri;
