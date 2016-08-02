@@ -392,8 +392,7 @@ class XmlDocument extends QtiDocument {
                             $collection = $parent->getSectionParts();
                         }
                         
-                        $collection->detach($assessmentSectionRef);
-                        $collection->attach($sectionRoot);
+                        $collection->replace($assessmentSectionRef, $sectionRoot);
                     }
                 }
                 
