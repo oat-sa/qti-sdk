@@ -132,9 +132,12 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
     
-    public function testIncludeAssessmentSectionRefsMixed() {
+    /**
+     * @dataProvider testIncludeAssessmentSectionRefsMixedProvider
+     */
+    public function testIncludeAssessmentSectionRefsMixed($file) {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test.xml', true);
+        $doc->load($file, true);
         $doc->includeAssessmentSectionRefs(true);
         
         $root = $doc->getDocumentComponent();
@@ -168,6 +171,13 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase {
         $this->assertCount(1, $section->getSectionParts());
         $this->assertTrue(isset($section->getSectionParts()['Q04']));
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $section->getSectionParts()['Q04']);
+    }
+    
+    public function testIncludeAssessmentSectionRefsMixedProvider() {
+        return array(
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml'),
+            array(self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml')
+        );
     }
 	
 	private static function decorateUri($uri) {
