@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+    identifier="T01" title="Linear Non Linear Multiple Test Parts">
+    <testPart navigationMode="linear" submissionMode="individual" identifier="TP01">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
+            <assessmentItemRef identifier="Q01" href="./Q01.xml"/>
+            <assessmentItemRef identifier="Q02" href="./Q02.xml"/>
+            <assessmentItemRef identifier="Q03" href="./Q03.xml"/>
+        </assessmentSection>
+    </testPart>
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
+            <assessmentItemRef identifier="Q04" href="./Q04.xml"/>
+            <assessmentItemRef identifier="Q05" href="./Q05.xml"/>
+            <assessmentItemRef identifier="Q06" href="./Q06.xml"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>
