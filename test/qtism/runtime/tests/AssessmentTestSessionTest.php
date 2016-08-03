@@ -11,6 +11,7 @@ use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
+use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
@@ -1467,11 +1468,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc->load(self::samplesDir() . 'custom/runtime/route_count/all_with_responsedeclaration.xml');
 	    $manager = new SessionManager();
 	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
-        $session->beginTestSession();
         
         $this->assertEquals(3, $session->getRouteCount());
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
+        $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
     
     public function testGetRouteCountMissingResponseDeclaration() {
@@ -1479,10 +1480,23 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $doc->load(self::samplesDir() . 'custom/runtime/route_count/missing_responsedeclaration.xml');
 	    $manager = new SessionManager();
 	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
-        $session->beginTestSession();
         
         $this->assertEquals(3, $session->getRouteCount());
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
         $this->assertEquals(2, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
+        $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
+    }
+    
+    public function testGetRouteCountMixed() {
+        $qti = new XmlDocument();
+        $qti->load(self::samplesDir() . 'custom/tests/linear_nonLinear_multiple_testparts/test.xml');
+        $doc = XmlCompactDocument::createFromXmlAssessmentTestDocument($qti);
+        $manager = new SessionManager();
+	    $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        $this->assertEquals(6, $session->getRouteCount());
+        $this->assertEquals(6, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
+        $this->assertEquals(4, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
+        $this->assertEquals(5, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
 }
