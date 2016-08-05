@@ -37,6 +37,7 @@ use \Iterator;
 use \SplObjectStorage;
 use \OutOfBoundsException;
 use \OutOfRangeException;
+use \InvalidArgumentException;
 
 /**
  * The Route class represents a linear route to be taken accross a given
