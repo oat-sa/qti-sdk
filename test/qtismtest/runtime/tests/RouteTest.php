@@ -484,4 +484,15 @@ class RouteTest extends QtiSmRouteTestCase {
             )
         );
     }
+    
+    public function testGetRouteItemsByTestPartWrongArgumentType() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfRangeException',
+            "The 'testPart' argument must be a string or a TestPart object."
+        );
+        
+        $routeItems = $route->getRouteItemsByTestPart(false);
+    }
 }
