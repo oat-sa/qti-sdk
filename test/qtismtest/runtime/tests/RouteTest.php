@@ -381,4 +381,22 @@ class RouteTest extends QtiSmRouteTestCase {
         $assessmentItemRefs = $route->getAssessmentItemRefsBySection('XXX');
         $this->assertCount(0, $assessmentItemRefs);
     }
+    
+    public function testGetOccurenceCountNoSuchAssessmentItemRef() {
+        $route = self::buildSimpleRoute();
+        $assessmentItemRef = new AssessmentItemRef('Q0X', 'Q0X.xml');
+        $occurenceCount = $route->getOccurenceCount($assessmentItemRef);
+        $this->assertEquals(0, $occurenceCount);
+    }
+    
+    public function testGetRouteItemAtUnknownPosition() {
+        $route = self::buildSimpleRoute();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "No RouteItem object found at position '1337'."
+        );
+        
+        $routeItem = $route->getRouteItemAt(1337);
+    }
 }
