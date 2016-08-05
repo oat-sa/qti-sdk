@@ -64,10 +64,12 @@ class AssessmentTestPlace implements Enumeration
 
     public static function asArray()
     {
-        return array('TEST_PART' => self::TEST_PART,
-                       'ASSESSMENT_SECTION' => self::ASSESSMENT_SECTION,
-                       'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM,
-                       'ASSESSMENT_TEST' => self::ASSESSMENT_TEST);
+        return array(
+            'TEST_PART' => self::TEST_PART,
+            'ASSESSMENT_SECTION' => self::ASSESSMENT_SECTION,
+            'ASSESSMENT_ITEM' => self::ASSESSMENT_ITEM,
+            'ASSESSMENT_TEST' => self::ASSESSMENT_TEST
+        );
     }
 
     public static function getConstantByName($name)

@@ -68,6 +68,10 @@ class MathEnumeration implements Enumeration
             case self::E:
                 return 'e';
             break;
+            
+            default:
+                return false;
+            break;
         }
     }
 
@@ -80,6 +84,10 @@ class MathEnumeration implements Enumeration
 
             case 'e':
                 return self::E;
+            break;
+            
+            default:
+                return false;
             break;
         }
     }

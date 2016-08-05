@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use \stdClass;
 
@@ -40,7 +41,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
             array("\$qtipair_0 = new qtism\\common\\datatypes\\QtiPair(\"A\", \"B\");\n", new QtiPair('A', 'B')),
             array("\$qtidirectedpair_0 = new qtism\\common\\datatypes\\QtiDirectedPair(\"A\", \"B\");\n", new QtiDirectedPair('A', 'B')),
             array("\$qtiduration_0 = new qtism\\common\\datatypes\\QtiDuration(\"PT30S\");\n", new QtiDuration("PT30S")),
-            array("\$qtipoint_0 = new qtism\\common\\datatypes\\QtiPoint(10, 15);\n", new QtiPoint(10, 15))
+            array("\$qtipoint_0 = new qtism\\common\\datatypes\\QtiPoint(10, 15);\n", new QtiPoint(10, 15)),
+            array("\$qtiidentifier_0 = new qtism\\common\\datatypes\\QtiIdentifier(\"my_id\");\n", new QtiIdentifier('my_id'))
         );
     }
 }
