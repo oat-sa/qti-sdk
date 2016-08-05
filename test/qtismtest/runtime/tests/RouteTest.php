@@ -565,4 +565,15 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
     }
+    
+    public function testBranchInvalidTarget() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfRangeException',
+            "The given identifier '|||' is an invalid branching target."
+        );
+        
+        $route->branch('|||');
+    }
 }
