@@ -441,6 +441,47 @@ class RouteTest extends QtiSmRouteTestCase {
             "Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty."
         );
         
-        $lastRouteItem = $route->isFirstOfTestPart();
+        $firstRouteItem = $route->isFirstOfTestPart();
+    }
+    
+    public function testIsInTestPartNoSuchPosition() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "The position '25' is out of the bounds of the route."
+        );
+        
+        $isInTestPart = $route->isInTestPart(
+            25,
+            new TestPart(
+                'TP01',
+                new SectionPartCollection(
+                    array(
+                        new AssessmentSection('S01', 'Section 1', true)
+                    )
+                )
+            )
+        );
+    }
+    
+    public function testGetRouteItemsByTestPartNoSuchTestPart() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "The testPart 'TP0X' is not referenced in the Route."
+        );
+        
+        $routeItems = $route->getRouteItemsByTestPart(
+            new TestPart(
+                'TP0X',
+                new SectionPartCollection(
+                    array(
+                        new AssessmentSection('S0X', 'Section X', true)
+                    )
+                )
+            )
+        );
     }
 }
