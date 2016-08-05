@@ -410,4 +410,15 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $lastRouteItem = $route->getLastRouteItem();
     }
+    
+    public function testGetFirstRouteItemOnEmptyRoute() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "Cannot get the first RouteItem of the Route while it is empty."
+        );
+        
+        $lastRouteItem = $route->getFirstRouteItem();
+    }
 }
