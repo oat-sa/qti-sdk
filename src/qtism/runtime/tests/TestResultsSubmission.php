@@ -73,6 +73,10 @@ class TestResultsSubmission implements Enumeration
             case self::OUTCOME_PROCESSING:
                 return 'outcomeProcessing';
             break;
+            
+            default:
+                return false;
+            break;
         }
     }
 }
