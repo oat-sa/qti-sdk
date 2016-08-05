@@ -530,4 +530,39 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $routeItems = $route->getRouteItemsByAssessmentSection(false);
     }
+    
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionOne() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "No AssessmentItemRef with identifier 'Q0X' found in the Route."
+        );
+        
+        $routeItems = $route->getRouteItemsByAssessmentItemRef('Q0X');
+    }
+    
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionTwo() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "No AssessmentItemRef with 'identifier' Q0X' found in the Route."
+        );
+        
+        $routeItems = $route->getRouteItemsByAssessmentItemRef(
+            new AssessmentItemRef('Q0X', 'Question X')
+        );
+    }
+    
+    public function testGetRouteItemsByAssessmentItemRefWrongArgumentType() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfRangeException',
+            "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object."
+        );
+        
+        $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
+    }
 }
