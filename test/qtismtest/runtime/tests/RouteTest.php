@@ -421,4 +421,15 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $lastRouteItem = $route->getFirstRouteItem();
     }
+    
+    public function testIsLastOfTestPartOnEmptyRoute() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty."
+        );
+        
+        $lastRouteItem = $route->isLastOfTestPart();
+    }
 }
