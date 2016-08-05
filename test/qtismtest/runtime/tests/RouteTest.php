@@ -358,4 +358,21 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->next();
         $this->assertEquals(1, $route->key());
     }
+    
+    public function testGetIdentifierSequence() {
+        $route = self::buildSimpleRoute();
+        $identifiers = $route->getIdentifierSequence(true);
+        
+        $this->assertCount(3, $identifiers);
+        $this->assertEquals('Q1.1', $identifiers[0]);
+        $this->assertEquals('Q2.1', $identifiers[1]);
+        $this->assertEquals('Q3.1', $identifiers[2]);
+        
+        $identifiers = $route->getIdentifierSequence(false);
+        
+        $this->assertCount(3, $identifiers);
+        $this->assertEquals('Q1', $identifiers[0]);
+        $this->assertEquals('Q2', $identifiers[1]);
+        $this->assertEquals('Q3', $identifiers[2]);
+    }
 }
