@@ -10,6 +10,10 @@ use qtism\runtime\tests\RouteItem;
 use qtism\data\SectionPartCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
+use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\ExtendedAssessmentSection;
+use qtism\data\ExtendedTestPart;
+use qtism\data\ExtendedAssessmentTest;
 use qtism\data\AssessmentItem;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TestPart;
@@ -325,5 +329,25 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Q1', $routeItems[0]->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('Q2', $routeItems[1]->getAssessmentItemRef()->getIdentifier());
         $this->assertEquals('Q3', $routeItems[2]->getAssessmentItemRef()->getIdentifier());
+    }
+    
+    public function testGetCategories() {
+        $route = new Route();
+        $assessmentSection = new ExtendedAssessmentSection('S01', 'Section 1', true);
+        $assessmentSections = new AssessmentSectionCollection(array($assessmentSection));
+        $testPart = new ExtendedTestPart('TP01', $assessmentSections);
+        $assessmentTest = new ExtendedAssessmentTest('T01', 'Test 1', new TestPartCollection(array($testPart)));
+        $assessmentSection->getSectionParts()[] = new ExtendedAssessmentItemRef('Q01', 'Q01.xml', new IdentifierCollection(array('Math')));
+        $assessmentSection->getSectionParts()[] = new ExtendedAssessmentItemRef('Q02', 'Q02.xml', new IdentifierCollection(array('ELA')));
+        $assessmentSection->getSectionParts()[] = new ExtendedAssessmentItemRef('Q03', 'Q03.xml', new IdentifierCollection(array('Math')));
+        
+        $route->addRouteItem($assessmentSection->getSectionParts()['Q01'], $assessmentSections, $testPart, $assessmentTest);
+        $route->addRouteItem($assessmentSection->getSectionParts()['Q02'], $assessmentSections, $testPart, $assessmentTest);
+        $route->addRouteItem($assessmentSection->getSectionParts()['Q02'], $assessmentSections, $testPart, $assessmentTest);
+        
+        $categories = $route->getCategories();
+        $this->assertCount(2, $categories);
+        $this->assertEquals('Math', $categories[0]);
+        $this->assertEquals('ELA', $categories[1]);
     }
 }
