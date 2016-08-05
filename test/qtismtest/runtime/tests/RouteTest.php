@@ -375,4 +375,10 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Q2', $identifiers[1]);
         $this->assertEquals('Q3', $identifiers[2]);
     }
+    
+    public function testGetAssessmentItemRefsBySectionWhichDoesNotExist() {
+        $route = self::buildSimpleRoute();
+        $assessmentItemRefs = $route->getAssessmentItemRefsBySection('XXX');
+        $this->assertCount(0, $assessmentItemRefs);
+    }
 }
