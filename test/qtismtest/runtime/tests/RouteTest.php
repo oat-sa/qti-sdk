@@ -350,4 +350,12 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Math', $categories[0]);
         $this->assertEquals('ELA', $categories[1]);
     }
+    
+    public function testKey() {
+        $route = self::buildSimpleRoute();
+        
+        $this->assertEquals(0, $route->key());
+        $route->next();
+        $this->assertEquals(1, $route->key());
+    }
 }
