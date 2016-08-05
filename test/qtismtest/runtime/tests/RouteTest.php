@@ -496,7 +496,7 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByTestPart(false);
     }
     
-    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSection() {
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionOne() {
         $route = new Route();
         
         $this->setExpectedException(
@@ -505,6 +505,19 @@ class RouteTest extends QtiSmRouteTestCase {
         );
         
         $routeItems = $route->getRouteItemsByAssessmentSection('S0X');
+    }
+    
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionTwo() {
+        $route = new Route();
+        
+        $this->setExpectedException(
+            '\OutOfBoundsException',
+            "The assessmentSection 'S0X' is not referenced in the Route."
+        );
+        
+        $routeItems = $route->getRouteItemsByAssessmentSection(
+            new AssessmentSection('S0X', 'Section X', true)
+        );
     }
     
     public function testGetRouteItemsByAssessmentSectionWrongArgumentType() {
