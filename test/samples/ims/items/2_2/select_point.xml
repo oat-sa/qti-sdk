@@ -19,5 +19,5 @@
 		</selectPointInteraction>
 	</itemBody>
 	<responseProcessing
-		template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response_point"/>
+		template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response_point"/>
 </assessmentItem>
