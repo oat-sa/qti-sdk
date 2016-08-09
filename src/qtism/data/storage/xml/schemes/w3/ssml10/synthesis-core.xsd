@@ -11,7 +11,7 @@
  <xsd:annotation>
  <xsd:documentation>Importing dependent namespaces</xsd:documentation>
  </xsd:annotation>
-<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.imsglobal.org/xsd/w3/2001/xml.xsd"/>
+<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../xml.xsd"/>
 <xsd:annotation>
 <xsd:documentation>General Datatypes</xsd:documentation>
 </xsd:annotation>
