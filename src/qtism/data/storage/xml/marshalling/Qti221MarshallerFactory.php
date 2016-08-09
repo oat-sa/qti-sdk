@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -27,16 +27,19 @@ use \ReflectionClass;
 
 /**
  * A MarshallerFactory focusing on instantiating and configuring
- * Marshallers for QTI 2.1.0.
+ * Marshallers for QTI 2.2.1.
  * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Qti21MarshallerFactory extends MarshallerFactory
+class Qti221MarshallerFactory extends Qti22MarshallerFactory
 {
+    /**
+     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
+     */
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        array_unshift($args, '2.1.0');
+        array_unshift($args, '2.2.1');
         return Reflection::newInstance($class, $args);
     }
 }

@@ -120,7 +120,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
             self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
-        if (Version::compare($version, '2.1.0', '<') === true || (Version::compare($version, '2.1.0', '>') && $component->getMaxAssociations() !== 1)) {
+        if (Version::compare($version, '2.1.0', '<') === true || (Version::compare($version, '2.1.0', '>=') && $component->getMaxAssociations() !== 1)) {
             self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 

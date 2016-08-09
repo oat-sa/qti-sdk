@@ -46,11 +46,13 @@ class Utils
         $version = Version::appendPatchVersion($version);
         
         if ($version === '2.1.0') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
         } elseif ($version === '2.1.1') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1p1.xsd';
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1p1' . $dS . 'imsqti_v2p1p1.xsd';
         } elseif ($version === '2.2.0') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p2.xsd';
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
+        } elseif ($version === '2.2.1') {
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2p1' . $dS . 'imsqti_v2p2p1.xsd';
         } else {
             $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
         }
@@ -92,6 +94,8 @@ class Utils
                 
                 if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd') {
                     $version = '2.2.0';
+                } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
+                    $version = '2.2.1';
                 }
             }
         }
