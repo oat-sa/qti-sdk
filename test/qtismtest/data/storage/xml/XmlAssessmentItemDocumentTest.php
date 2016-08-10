@@ -361,7 +361,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             
             // Other miscellaneous items...
             array(self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'),
-            array(self::samplesDir() . 'custom/items/infocontrol.xml', '2.1.0')
+            array(self::samplesDir() . 'custom/items/infocontrol.xml', '2.1.0'),
+            array(self::samplesDir() . 'custom/items/2_2/biditorture1.xml', '2.2.0')
         );
     }
 
