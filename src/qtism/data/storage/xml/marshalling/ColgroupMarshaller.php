@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -49,7 +49,7 @@ class ColgroupMarshaller extends Marshaller
 
         foreach ($component->getContent() as $col) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($col);
-            $element->appendChild($marshaller->marshall());
+            $element->appendChild($marshaller->marshall($col));
         }
 
         $this->fillElement($element, $component);
@@ -68,7 +68,7 @@ class ColgroupMarshaller extends Marshaller
     {
         $component = new Colgroup();
 
-        if ((self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 

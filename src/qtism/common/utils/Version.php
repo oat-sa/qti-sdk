@@ -108,7 +108,7 @@ class Version
      */
     static public function knownVersions()
     {
-        return array('2.0.0', '2.1.0', '2.1.1', '2.2.0');
+        return array('2.0.0', '2.1.0', '2.1.1', '2.2.0', '2.2.1');
     }
     
     /**
