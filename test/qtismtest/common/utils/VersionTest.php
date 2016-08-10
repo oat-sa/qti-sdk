@@ -19,13 +19,13 @@ class VersionTest extends QtiSmTestCase {
     }
     
     public function testVersionCompareInvalidVersion1() {
-        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0'.";
+        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0, 2.2.1'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         Version::compare('2.1.4', '2.1.1', '>');
     }
     
     public function testVersionCompareInvalidVersion2() {
-        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0'.";
+        $msg = "Version '2.1.4' is not a known QTI version. Known versions are '2.0.0, 2.1.0, 2.1.1, 2.2.0, 2.2.1'.";
         $this->setExpectedException('\\InvalidArgumentException', $msg);
         Version::compare('2.1.0', '2.1.4', '<');
     }

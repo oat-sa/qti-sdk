@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -144,6 +144,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('rubricBlock', 'qtism\\data\\storage\\xml\\marshalling\\RubricBlockMarshaller');
         $this->addMappingEntry('object', 'qtism\\data\\storage\\xml\\marshalling\\ObjectMarshaller');
         $this->addMappingEntry('col', 'qtism\\data\\storage\\xml\\marshalling\\ColMarshaller');
+        $this->addMappingEntry('colgroup', 'qtism\\data\\storage\\xml\\marshalling\\ColgroupMarshaller');
         $this->addMappingEntry('equal', 'qtism\\data\\storage\\xml\\marshalling\\EqualMarshaller');
         $this->addMappingEntry('sectionPart', 'qtism\\data\\storage\\xml\\marshalling\\SectionPartMarshaller');
         $this->addMappingEntry('selectPointInteraction', 'qtism\\data\\storage\\xml\\marshalling\\SelectPointInteractionMarshaller');

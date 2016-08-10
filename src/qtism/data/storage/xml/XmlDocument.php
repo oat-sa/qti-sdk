@@ -34,6 +34,7 @@ use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
 use qtism\data\AssessmentTest;
 use qtism\data\content\Flow;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -543,6 +544,11 @@ class XmlDocument extends QtiDocument
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
                 $qtiSuffix = 'v2p2';
             break;
+            
+            case '2.2.1':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
+                $qtiSuffix = 'v2p2';
+            break;
         }
 
         $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
@@ -597,12 +603,14 @@ class XmlDocument extends QtiDocument
         $version = $this->getVersion();
         if ($version === '2.0.0') {
             return new Qti20MarshallerFactory();
-        } else if ($version === '2.1.0') {
+        } elseif ($version === '2.1.0') {
             return new Qti21MarshallerFactory();
-        } else if ($version === '2.1.1') {
+        } elseif ($version === '2.1.1') {
             return new Qti211MarshallerFactory();
-        } else if ($version === '2.2.0') {
+        } elseif ($version === '2.2.0') {
             return new Qti22MarshallerFactory();
+        } elseif ($version === '2.2.1') {
+            return new Qti221MarshallerFactory();
         } else {
             $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
             throw new RuntimeException($msg);

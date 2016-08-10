@@ -20,27 +20,26 @@
  * @license GPLv2
  */
 
-namespace qtism\data\content\xhtml\text;
+namespace qtism\data\storage\xml\marshalling;
 
-use qtism\data\content\SimpleInline;
+use qtism\common\utils\Reflection;
+use \ReflectionClass;
 
 /**
- * The XHTML acronym class.
- *
- * From IMS QTI:
- *
- * Note that the title attribute defined by XHTML is not supported.
- *
+ * A MarshallerFactory focusing on instantiating and configuring
+ * Marshallers for QTI 2.2.1.
+ * 
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Acronym extends SimpleInline
+class Qti221MarshallerFactory extends Qti22MarshallerFactory
 {
     /**
-     * @see \qtism\data\QtiComponent::getQtiClassName()
+     * @see \qtism\data\storage\xml\marshalling\MarshallerFactory::instantiateMarshaller()
      */
-    public function getQtiClassName()
+    protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
-        return 'acronym';
+        array_unshift($args, '2.2.1');
+        return Reflection::newInstance($class, $args);
     }
 }

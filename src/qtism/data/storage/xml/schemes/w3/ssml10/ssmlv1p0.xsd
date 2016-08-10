@@ -8,7 +8,7 @@
             Copyright 1998-2004 W3C (MIT, ERCIM, Keio), All Rights Reserved. Permission to use, copy, modify and distribute the SSML schema and its accompanying documentation for any purpose and without fee is hereby granted in perpetuity, provided that the above copyright notice and this paragraph appear in all copies. The copyright holders make no representation about the suitability of the schema for any purpose. It is provided "as is" without expressed or implied warranty.
         </xsd:documentation>
     </xsd:annotation>
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.imsglobal.org/xsd/w3/2001/xml.xsd"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../xml.xsd"/>
     <xsd:redefine schemaLocation="synthesis-core.xsd">
         <xsd:annotation>
             <xsd:documentation>
