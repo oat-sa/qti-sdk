@@ -45,8 +45,10 @@ class Utils {
 		$dS = DIRECTORY_SEPARATOR;
 	
 		if ($version === '2.1') {
-			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
-		}
+			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
+		} elseif ($version === '2.2') {
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
+        }
 		else {
 			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
 		}

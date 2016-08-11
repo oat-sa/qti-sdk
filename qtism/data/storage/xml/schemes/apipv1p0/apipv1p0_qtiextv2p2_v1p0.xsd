@@ -1,87 +1,51 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <xs:schema xmlns="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0"
      targetNamespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0"
+     xmlns:ssml="http://www.w3.org/2001/10/synthesis"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      version="IMS QTI APIP EXT V1.0"
      elementFormDefault="qualified"
      attributeFormDefault="unqualified">
-    <xs:import namespace= "http://www.w3.org/XML/1998/namespace" schemaLocation = "../w3/xml.xsd"/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../w3/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/10/synthesis" schemaLocation="../w3/ssml10/ssmlv1p0.xsd" />
 
     <xs:annotation>
         <xs:documentation>
             XSD Data File Information
             =========================
             Author:         Colin Smythe
-            Date:           30th April, 2012
+            Date:           31st January, 2014
             Version:        1.0
             Status:         Final Release
-            Description:    This is the data model for the Accessible Portable Item Protocol (APIP) v1.0 .
+            Description:    This is the data model for the Accessible Portable Item Protocol (APIP) v1.0.
                             This defines the set of QTIv2.1 extensions.
 
             History:        Version 1.0 - the first release of this APIP v1.0 PSM data model extensions for QTIv2.1.
 
-            License:        IPR, License and Distribution Notices
+            License:        IPR and Distribution Notices
 
                             This machine readable file is derived from IMS Global specification IMS Accessible Portable Item Protocol (APIP) Version 1.0
                             found at http://www.imsglobal.org/apip and the original IMS Global schema binding or code base
                             http://www.imsglobal.org/apip.
 
-                            Recipients of this document are requested to submit, with their comments, notification of any
-                            relevant patent claims or other intellectual property rights of which they may be aware that might be
-                            infringed by the schema binding contained in this document.
+                            Recipients of this document are requested to submit, with their comments, notification of any relevant 
+                            patent claims or other intellectual property rights of which they may be aware that might be infringed by
+                            any implementation of the specification set forth in this document, and to provide supporting documentation.
 
-                            IMS Global takes no position regarding the validity or scope of any intellectual property or other
-                            rights that might be claimed to pertain to the implementation or use of the technology described in this
-                            document or the extent to which any license under such rights might or might not be available; neither
-                            does it represent that it has made any effort to identify any such rights. Information on IMS Global
-                            procedures with respect to rights in IMS Global specifications can be found at the IMS Global Intellectual Property
-                            Rights web page: http://www.imsglobal.org/ipr/imsipr_policyFinal.pdf.
+                            IMS takes no position regarding the validity or scope of any intellectual property or other rights that might
+                            be claimed to pertain to the implementation or use of the technology described in this document or the extent 
+                            to which any license under such rights might or might not be available; neither does it represent that it has 
+                            made any effort to identify any such rights. Information on IMS procedures with respect to rights in IMS 
+                            specifications can be found at the IMS Global Intellectual Property Rights web page: http://www.imsglobal.org/ipr/imsipr_policyFinal.pdf.
 
-                            Copyright (c) IMS Global Learning Consortium 1999-2013. All Rights Reserved.
+                            Copyright © IMS Global Learning Consortium 1999-2013. All Rights Reserved.
 
-                            License Notice for Users
+                            Use of this specification to develop products or services is governed by the license with IMS found on the IMS website: http://www.imsglobal.org/license.html.
 
-                            Users of products or services that include this document are hereby granted a worldwide, royalty-free, 
-                            non-exclusive license to use this document. 
+                            Permission is granted to all parties to use excerpts from this document as needed in producing requests for proposals.
 
-                            Distribution Notice for Developers
-
-                            Developers of products or services that are not original incorporators of this document and 
-                            have not changed this document, that is, are distributing a software product that incorporates this 
-                            document as is from a third-party source other than IMS, are hereby granted permission to copy,
-                            display and distribute the contents of this document in any medium for any purpose without fee or 
-                            royalty provided that you include this IPR, License and Distribution notice in its entirety on ALL
-                            copies, or portions thereof.
-
-                            Developers of products or services that are original incorporators of this document and wish 
-                            to provide distribution of this document as is or with modifications and developers of products and 
-                            services that are not original incorporators of this document and have changed this document, are
-                            required to register with the IMS Global community on the IMS Global website as described in the following two
-                            paragraphs:-
-
-                            *  If you wish to distribute this document as is, with no modifications, you are hereby granted 
-                               permission to copy, display and distribute the contents of this document in any medium for any 
-                               purpose without fee or royalty provided that you include this IPR, License and Distribution notice in
-                               its entirety on ALL copies, or portions thereof, that you make and you complete a valid license 
-                               registration with IMS and receive an email from IMS granting the license. To register, follow the 
-                               instructions on the IMS website: http://www.imsglobal.org/specificationdownload.cfm. Once 
-                               registered you are granted permission to transfer unlimited distribution rights of this document for the 
-                               purposes of third-party or other distribution of your product or service that incorporates this 
-                               document as long as this IPR, License and Distribution notice remains in place in its entirety; 
-
-                            *  If you wish to create and distribute a derived work from this document, you are hereby 
-                               granted permission to copy, display and distribute the contents of the derived work in any medium for 
-                               any purpose without fee or royalty provided that you include this IPR, License and Distribution 
-                               notice in its entirety on ALL copies, or portions thereof, that you make and you complete a valid 
-                               profile registration with IMS Global and receive an email from IMS Global granting the license. To register, follow
-                               the instructions on the IMS Global website: http://www.imsglobal.org/profile/. Once registered you are 
-                               granted permission to transfer unlimited distribution rights of the derived work for the purposes of 
-                               third-party or other distribution of your product or service that incorporates the derived work as long 
-                               as this IPR, License and Distribution notice remains in place in its entirety. 
-
-                            The limited permissions granted above are perpetual and will not be revoked by IMS Global or its 
-                            successors or assigns.
+                            The limited permissions granted above are perpetual and will not be revoked by IMS or its successors or assigns.
 
                             THIS SPECIFICATION IS BEING OFFERED WITHOUT ANY WARRANTY WHATSOEVER, AND IN PARTICULAR, ANY WARRANTY OF NONINFRINGEMENT IS
                             EXPRESSLY DISCLAIMED. ANY USE OF THIS SPECIFICATION SHALL BE MADE ENTIRELY AT THE IMPLEMENTERS OWN RISK, AND NEITHER THE CONSORTIUM
@@ -93,15 +57,16 @@
             The source file information must be supplied as an XMI file (without diagram layout information).
             The supported UML authoring tools are:
             (a) Poseidon - v6 (and later)
+            (b) Papyrus - v0.9.2 (and later)
 
             Source XSLT File Information
             ============================
             XSL Generator:    Specificationv1p0_GenerationToolv1.xsl
-            XSLT Processor:   Saxon-HE-9.4.0.4
+            XSLT Processor:   Saxon-PE-9.5.0.2
             Release:          1.0
-            Date:             31st January, 2013
+            Date:             31st March, 2013
             Autogen Engineer: Colin Smythe (IMS Global, UK)
-            Autogen Date:     2013-03-22Z
+            Autogen Date:     2014-01-29
 
             IMS Global Auto-generation Binding Tool-kit (I-BAT)
             ===================================================
@@ -137,6 +102,17 @@
                     <sch:assert test="count(apip:calculator) = 0 or count(apip:calculator) = 1">
                         [RULE for Local Attribute 1] Invalid number of "calculator" elements: <sch:value-of select="count(apip:calculator)" />.
                     </sch:assert>
+
+                </sch:rule>
+
+            </sch:pattern>
+            <!-- *************************************************************************** -->
+
+            <!-- RULESET ******************************************************************* -->
+            <sch:pattern abstract="false" id="ExternalSupplementalAccessibility.Type">
+                <sch:title>[RULESET] For the ExternalSupplementalAccessibility.Type complexType.</sch:title>
+
+                <sch:rule abstract="false" context="apip:apipAccessibility/apip:externalSupplementalAccessibility">
 
                 </sch:rule>
 
@@ -384,11 +360,12 @@
     <xs:complexType name="APIPAccessibility.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
-                The APIPAccessibility complexType is the top level container for all of the APIP information used to describe the accessibility features to be added to a QTI XML description of a QTI Item. This optional information consists of: companion materials, the inclusion orders to be used rendering the content in trems of the new accessibility information, and the set of accessibility information itself.
+                The APIPAccessibility complexType is the top level container for all of the APIP information used to describe the accessibility features to be added to a QTI XML description of a QTI Item. This optional information consists of: companion materials, external supplemental accessibility information, the inclusion orders to be used rendering the content in terms of the new accessibility information, and the set of accessibility information itself.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="companionMaterialsInfo" type="CompanionMaterialsInfo.Type" minOccurs="0" maxOccurs="1" />
+            <xs:element name="externalSupplementalAccessibility" type="ExternalSupplementalAccessibility.Type" minOccurs="0" maxOccurs="1" />
             <xs:element name="inclusionOrder" type="InclusionOrder.Type" minOccurs="0" maxOccurs="1" />
             <xs:element name="accessibilityInfo" type="AccessibilityInfo.Type" minOccurs="0" maxOccurs="1" />
             <xs:group ref="grpStrict.any" />
@@ -536,6 +513,19 @@
         <xs:sequence>
             <xs:element name="elementOrder" type="ElementOrder.Type" minOccurs="1" maxOccurs="unbounded" />
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ExternalSupplementalAccessibility.Type" abstract="false" mixed="false">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                This is the container for the supplemental information that can be used to provide further guidance on how to render the alternative accessibility information i.e. the use of the Pronunciation Lexicon Standard (PLS), etc.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs = "0" maxOccurs = "unbounded">
+            <xs:element name="textToSpeechLexicon" type="TextToSpeechSupplement.Type" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="textToSpeechStylesheet" type="TextToSpeechSupplement.Type" minOccurs="0" maxOccurs="unbounded" />
+            <xs:group ref="grpStrict.any" />
+        </xs:choice>
     </xs:complexType>
 
     <xs:complexType name="Guidance.Type" abstract="false" mixed="false">
@@ -811,6 +801,7 @@
             <xs:element name="audioFileInfo" type="AudioFileInfo.Type" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="spokenText" type="LabelledString.Type" minOccurs="0" maxOccurs="1" />
             <xs:element name="textToSpeechPronunciation" type="LabelledString.Type" minOccurs="0" maxOccurs="1" />
+            <xs:element name="textToSpeechPronunciationSSML" type="TextToSpeechSSML.Type" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
     </xs:complexType>
 
@@ -853,6 +844,29 @@
         </xs:choice>
     </xs:complexType>
 
+    <xs:complexType name="TextToSpeechSSML.Type" abstract="false" mixed="true">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                The container for the SSML-based alternative markup for the associated text string.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="ssml:p" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:s" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:say-as" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:phoneme" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:sub" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:voice" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:emphasis" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:break" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:prosody" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:mark" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ssml:audio" minOccurs="1" maxOccurs="1" />
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="USRuleSystem.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
@@ -885,7 +899,7 @@
 
     <!-- Generate the derived ComplexTypes **************************************************************** -->
 
-    <xs:complexType name="LabelledString.Type">
+    <xs:complexType name="LabelledString.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
                 The LabelledString derivedType is the container for the text string labels that have their own content link identifier.
@@ -898,7 +912,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="RadialSIValue.Type">
+    <xs:complexType name="RadialSIValue.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
                 The RadialSIValue derivedType is the container for the radial measurements in terms of SI units.
@@ -917,7 +931,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="RadialUSValue.Type">
+    <xs:complexType name="RadialUSValue.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
                 The RadialUSValue derivedType is the container for the radial measurements in terms of US units.
@@ -938,7 +952,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="SILinearValue.Type">
+    <xs:complexType name="SILinearValue.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
                 The SILinearValue derivedType is the container for the linear measurements in terms of an SI unit.
@@ -960,7 +974,20 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="USLinearValue.Type">
+    <xs:complexType name="TextToSpeechSupplement.Type" abstract="false" mixed="false">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                This provides the source of the supplementary accessibility information.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="EmptyPrimitiveType.Type">
+                <xs:attribute name="source" use="required" type="xs:anyURI" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="USLinearValue.Type" abstract="false" mixed="false">
         <xs:annotation>
             <xs:documentation source="documentation">
                 The USLinearValue derivedType is the container for the linear measurements in terms of US units.
