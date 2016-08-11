@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -73,6 +73,10 @@ class Utils {
 
                 case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
                     return '2.1';		    
+                break;
+                
+                case 'http://www.imsglobal.org/xsd/imsqti_v2p2':
+                    return '2.2';
                 break;
                 
                 case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p2':
