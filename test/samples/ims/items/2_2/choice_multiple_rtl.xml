@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd"
+	identifier="choiceMultiple" title="Composition of Water" adaptive="false" timeDependent="false">
+	<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
+		<correctResponse>
+			<value>H</value>
+			<value>O</value>
+		</correctResponse>
+			<mapping lowerBound="0" upperBound="2" defaultValue="-2">
+			<mapEntry mapKey="H" mappedValue="1"/>
+			<mapEntry mapKey="O" mappedValue="1"/>
+			<mapEntry mapKey="Cl" mappedValue="-1"/>
+		</mapping>
+	</responseDeclaration>
+	<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+	<itemBody>
+	  <div dir="rtl">
+		<choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0">
+			<prompt>איזה מהגורמים הבאים משמשים ליצירת מים</prompt>
+			<simpleChoice identifier="H" fixed="false">מימן</simpleChoice>
+			<simpleChoice identifier="He" fixed="false">הליום</simpleChoice>
+			<simpleChoice identifier="C" fixed="false">פחם</simpleChoice>
+			<simpleChoice identifier="O" fixed="false">חמצן</simpleChoice>
+			<simpleChoice identifier="N" fixed="false">חנקן</simpleChoice>
+			<simpleChoice identifier="Cl" fixed="false">כלור</simpleChoice>
+		</choiceInteraction>
+      </div>
+	</itemBody>
+	<responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/map_response"/>
+</assessmentItem>
