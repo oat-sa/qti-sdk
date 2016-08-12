@@ -8,6 +8,10 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiPair;
+use qtism\data\state\Value;
+use qtism\data\state\ValueCollection;
+use qtism\data\state\DefaultValue;
+use qtism\data\state\VariableDeclaration;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\MultipleContainer;
@@ -102,7 +106,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	
 	public function testCreateFromVariableDeclarationMinimal() {
 		$factory = $this->getMarshallerFactory('2.1.0');
-		$element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="integer" cardinality="single"/>');
+		$element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="integer" cardinality="single"/>');
 		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 		$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 		
@@ -115,7 +119,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	public function testCreateFromVariableDeclarationDefaultValueSingleCardinality() {
 		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="single">
 				<defaultValue>
 					<value>A B</value>
 				</defaultValue>
@@ -131,7 +135,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality() {
 		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="multiple">
 				<defaultValue>
 					<value>A B</value>
 					<value>B C</value>
@@ -173,7 +177,7 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	public function testCreateFromVariableDeclarationExtended() {
 		$factory = $this->getMarshallerFactory('2.1.0');
 		$element = $this->createDOMElement('
-			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
 								identifier="outcome1" 
 								baseType="pair" 
 								cardinality="ordered"
@@ -212,6 +216,63 @@ class OutcomeVariableTest extends QtiSmTestCase {
 		$targetValue = $matchTableEntries[0]->getTargetValue();
 		$this->assertTrue($targetValue->equals(new QtiPair('E', 'F')));
 	}
+    
+    public function testCreateFromVariableDeclarationInconsistentOne() {
+        $factory = $this->getMarshallerFactory('2.1.0');
+		$element = $this->createDOMElement('
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
+								identifier="outcome1" 
+								baseType="integer" 
+								cardinality="single">
+				<defaultValue>
+					<value>1</value>
+                    <value>2</value>
+				</defaultValue>
+			</outcomeDeclaration>
+		');
+		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
+        
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "A Data Model VariableDeclaration with 'single' cardinality must contain a single value, 2 value(s) found"
+        );
+		$outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
+    }
+    
+    public function testCreateFromVariableDeclarationInconsistentTwo() {
+        $factory = $this->getMarshallerFactory('2.1.0');
+		$element = $this->createDOMElement('
+			<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
+								identifier="outcome1" 
+								baseType="integer" 
+								cardinality="single">
+				<defaultValue>
+					<value>bli</value>
+				</defaultValue>
+			</outcomeDeclaration>
+		');
+        
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "'bli' cannot be transformed into integer."
+        );
+        
+		$outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
+    }
+    
+    public function testCreateFromVariableDeclarationInconsistentThree() {
+        $value = new Value('String!', BaseType::STRING);
+        $defaultValue = new DefaultValue(
+            new ValueCollection(array($value))
+        );
+        $variableDeclaration = new VariableDeclaration('var', BaseType::INTEGER, Cardinality::MULTIPLE, $defaultValue);
+        
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "The default value found in the Data Model Variable Declaration is not consistent. The values must have a baseType compliant with the baseType of the VariableDeclaration.If the VariableDeclaration's cardinality is 'record', make sure the values it contains have fieldIdentifiers."
+        );
+        $outcomeVariable = OutcomeVariable::createFromDataModel($variableDeclaration);
+    }
 	
 	public function testIsNull() {
 		$outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::STRING);
@@ -274,4 +335,62 @@ class OutcomeVariableTest extends QtiSmTestCase {
 	    $this->assertNotSame($var->getValue(), $clone->getValue());
 	    $this->assertNotSame($var->getDefaultValue(), $clone->getDefaultValue());
 	}
+    
+    public function testSetNoBaseTypeNotRecord() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            'You are forced to specify a baseType if cardinality is not RECORD.'
+        );
+        $var = new OutcomeVariable('var', Cardinality::MULTIPLE, -1);
+    }
+    
+    public function testIsOrdered() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isOrdered());
+    }
+    
+    public function testIsNumeric() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertTrue($var->isNumeric());
+    }
+    
+    public function testIsBool() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isBool());
+    }
+    
+    public function testIsInteger() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertTrue($var->isInteger());
+    }
+    
+    public function testIsFloat() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isFloat());
+    }
+    
+    public function testIsPoint() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isPoint());
+    }
+    
+    public function testIsPair() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isPair());
+    }
+    
+    public function testIsDirectedPair() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isDirectedPair());
+    }
+    
+    public function testIsDuration() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isDuration());
+    }
+    
+    public function testIsString() {
+        $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $this->assertFalse($var->isString());
+    }
 }
