@@ -165,6 +165,15 @@ class AssessmentTestSession extends State
      * @var array
      */
     private $visitedTestPartIdentifiers = array();
+    
+    /**
+     * Wheter or not to force branch rules to be executed.
+     * 
+     * Branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @var boolean
+     */
+    private $forceBranching = false;
 
     /**
      * Create a new AssessmentTestSession object.
@@ -599,6 +608,26 @@ class AssessmentTestSession extends State
     public function getVisitedTestPartIdentifiers()
     {
         return $this->visitedTestPartIdentifiers;
+    }
+    
+    /**
+     * Set whether or not to force branch rules to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     */
+    public function setForceBranching($forceBranching)
+    {
+        $this->forceBranching = $forceBranching;
+    }
+    
+    /**
+     * Know whether or not branch rules are forced to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     */
+    public function mustForceBranching()
+    {
+        return $this->forceBranching;
     }
     
     /**
@@ -2192,7 +2221,7 @@ class AssessmentTestSession extends State
         while ($route->valid() === true && $stop === false) {
 
             // Branchings?
-            if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+            if ($ignoreBranchings === false && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true) && count($route->current()->getBranchRules()) > 0) {
 
                 $branchRules = $route->current()->getBranchRules();
                 for ($i = 0; $i < count($branchRules); $i++) {

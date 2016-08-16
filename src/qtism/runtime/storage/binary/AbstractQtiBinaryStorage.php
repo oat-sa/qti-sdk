@@ -146,6 +146,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             foreach ($visitedTestPartIdentifiers as $visitedTestPartIdentifier) {
                 $access->writeString($visitedTestPartIdentifier);
             }
+            
+            // persist whether or not to force branching.
+            $access->writeBoolean($assessmentTestSession->mustForceBranching());
 
             // -- Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
@@ -244,6 +247,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             for ($i = 0; $i < $visitedTestPartIdentifiersCount; $i++) {
                 $visitedTestPartIdentifiers[] = $access->readString();
             }
+            
+            $forceBranching = $access->readBoolean();
 
             // Build the route and the item sessions.
             $route = new Route();
@@ -289,6 +294,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             $assessmentTestSession->setTimeReference($timeReference);
             $assessmentTestSession->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
+            $assessmentTestSession->setForceBranching($forceBranching);
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).
