@@ -138,6 +138,27 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
     
+    public function testBranchingSingleSectionNonLinear2() {
+        // This test aims at testing that branch rules are not
+        // ignored in non-linear tests if force branching is in force.
+        $doc = new XmlCompactDocument('2.1');
+        $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml');
+        
+        // Q01 - We answer correct. In linear mode we should go to Q03.
+        // As force branching is in force, it should behave as in linear mode.
+        $manager = new SessionManager(new FileSystemFileManager());
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+        $testSession->setForceBranching(true);
+        $testSession->beginTestSession();
+        
+        $testSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))));
+        $testSession->endAttempt($responses);
+        $testSession->moveNext();
+        
+        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+    }
+    
     /**
      * @dataProvider branchingMultipleOccurencesProvider
      */
