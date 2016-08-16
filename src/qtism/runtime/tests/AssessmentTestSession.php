@@ -169,11 +169,18 @@ class AssessmentTestSession extends State
     /**
      * Wheter or not to force branch rules to be executed.
      * 
-     * Branch rules will be executed even if the current navigation mode is non-linear.
+     * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
      * 
      * @var boolean
      */
     private $forceBranching = false;
+    
+    /**
+     * Whether or not to force preconditions to be executed.
+     * 
+     * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
+     */
+    private $forcePreconditions = false;
 
     /**
      * Create a new AssessmentTestSession object.
@@ -614,6 +621,8 @@ class AssessmentTestSession extends State
      * Set whether or not to force branch rules to be executed.
      * 
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @param boolean $forceBranching
      */
     public function setForceBranching($forceBranching)
     {
@@ -624,10 +633,34 @@ class AssessmentTestSession extends State
      * Know whether or not branch rules are forced to be executed.
      * 
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @return boolean
      */
     public function mustForceBranching()
     {
         return $this->forceBranching;
+    }
+    
+    /**
+     * Set whether or not to force preconditions to be executed.
+     * 
+     * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
+     */
+    public function setForcePreconditions($forcePreconditions)
+    {
+        $this->forcePreconditions = $forcePreconditions;
+    }
+    
+    /**
+     * Know whether or not preconditions are forced to be executed.
+     * 
+     * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
+     * 
+     * @return boolean
+     */
+    public function mustForcePreconditions()
+    {
+        return $this->forcePreconditions;
     }
     
     /**
@@ -2221,7 +2254,7 @@ class AssessmentTestSession extends State
         while ($route->valid() === true && $stop === false) {
 
             // Branchings?
-            if ($ignoreBranchings === false && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true) && count($route->current()->getBranchRules()) > 0) {
+            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true)) {
 
                 $branchRules = $route->current()->getBranchRules();
                 for ($i = 0; $i < count($branchRules); $i++) {
@@ -2254,24 +2287,25 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
-            if ($ignorePreConditions === false && $route->valid() === true) {
-                $preConditions = $route->current()->getPreConditions();
+            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true)) {
 
-                if (count($preConditions) > 0) {
-                    for ($i = 0; $i < count($preConditions); $i++) {
-                        $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-                        $condition = $engine->process();
+                for ($i = 0; $i < count($preConditions); $i++) {
+                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+                    $condition = $engine->process();
 
-                        if ($condition !== null && $condition->getValue() === true) {
-                            // The item must be presented.
-                            $stop = true;
-                            break;
-                        }
+                    if ($condition !== null && $condition->getValue() === true) {
+                        // The item must be presented.
+                        $stop = true;
+                        break;
                     }
-                } else {
-                    $stop = true;
                 }
+            } else {
+                $stop = true;
             }
+            
+            // After a first iteration, we will not performed branching again, as they are executed
+            // as soon as we leave an item. Chains of branch rules are not expected.
+            $ignoreBranchings = true;
         }
 
         if ($route->valid() === false && $this->isRunning() === true) {
