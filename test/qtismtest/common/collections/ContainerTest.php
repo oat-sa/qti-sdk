@@ -11,6 +11,7 @@ use qtism\common\enums\BaseType;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\common\collections\Container;
+use qtism\common\collections\StringCollection;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPoint;
@@ -275,4 +276,101 @@ class ContainerTest extends QtiSmTestCase {
 	    $container = new Container();
 	    $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
 	}
+    
+    public function testDetach() {
+        $object = new QtiBoolean(true);
+        $container = new Container(array($object));
+        
+        $this->assertCount(1, $container);
+        
+        $container->detach($object);
+        
+        $this->assertCount(0, $container);
+    }
+    
+    public function testDetachNotFound() {
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "The object you want to detach could not be found in the collection."
+        );
+        
+        $object = new QtiBoolean(true);
+        $container = new Container(array($object));
+        $container->detach(new QtiBoolean(false));
+    }
+    
+    public function testDetachNotObject() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only detach 'objects' into an AbstractCollection, 'NULL' given."
+        );
+        $container = new Container();
+        $container->detach(null);
+    }
+    
+    public function testReplaceNotFound() {
+        $this->setExpectedException(
+            '\\UnexpectedValueException',
+            "The object you want to replace could not be found."
+        );
+        
+        $object = new QtiBoolean(true);
+        $container = new Container(array($object));
+        $container->replace(new QtiBoolean(false), new QtiBoolean(false));
+    }
+    
+    public function testReplaceToReplaceNotObject() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
+        );
+        
+        $object = new QtiBoolean(true);
+        $container = new Container(array($object));
+        $container->replace(null, new QtiBoolean(false));
+    }
+    
+    public function testReplaceReplacementNotObject() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "You can only replace 'objects' into an AbstractCollection, 'NULL' given."
+        );
+        
+        $object = new QtiBoolean(true);
+        $container = new Container(array($object));
+        $container->replace(new QtiBoolean(false), null);
+    }
+    
+    public function testMergeNotCompliantTypes() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Only collections with compliant types can be merged ('qtism\common\collections\Container' vs 'qtism\common\collections\StringCollection')."
+        );
+        
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->merge($container2);
+    }
+    
+    public function testDiffNotCompliantTypes() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Difference may apply only on two collections of the same type."
+        );
+        
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->diff($container2);
+    }
+    
+    public function testIntersectNotCompliantTypes() {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Intersection may apply only on two collections of the same type."
+        );
+        
+        $container1 = new Container();
+        $container2 = new StringCollection();
+        $container1->intersect($container2);
+    }
 }

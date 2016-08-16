@@ -246,7 +246,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
         $this->checkType($object);
 
         if (gettype($object) !== 'object') {
-            $msg = "You can only attach 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
+            $msg = "You can only detach 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -276,12 +276,12 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
         $this->checkType($replacement);
 
         if (gettype($object) !== 'object') {
-            $msg = "You can only attach 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
+            $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($object) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
         if (gettype($replacement) !== 'object') {
-            $msg = "You can only attach 'objects' into an AbstractCollection, '" . gettype($replacement) . "' given.";
+            $msg = "You can only replace 'objects' into an AbstractCollection, '" . gettype($replacement) . "' given.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -364,7 +364,7 @@ abstract class AbstractCollection implements \Countable, \Iterator, \ArrayAccess
 
             return new static($newData);
         } else {
-            $msg = "Difference may apply only on two collection of the same type.";
+            $msg = "Difference may apply only on two collections of the same type.";
             throw new InvalidArgumentException($msg);
         }
     }
