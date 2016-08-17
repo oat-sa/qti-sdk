@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -159,6 +159,15 @@ class AssessmentTestSession extends State {
 	 * @var array
 	 */
 	private $preservedOutcomeVariables;
+      
+    /**
+     * Wheter or not to force branch rules to be executed.
+     * 
+     * Branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @var boolean
+     */
+    private $forceBranching = false;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -444,6 +453,26 @@ class AssessmentTestSession extends State {
 	public function getPreservedOutcomeVariables() {
 	    return $this->preservedOutcomeVariables;
 	}
+    
+    /**
+     * Set whether or not to force branch rules to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     */
+    public function setForceBranching($forceBranching)
+    {
+        $this->forceBranching = $forceBranching;
+    }
+
+    /**
+     * Know whether or not branch rules are forced to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     */
+    public function mustForceBranching()
+    {
+        return $this->forceBranching;
+    }
 
 	/**
 	 * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
@@ -1595,7 +1624,7 @@ class AssessmentTestSession extends State {
 	    while ($route->valid() === true && $stop === false) {
 	        
 	        // Branchings?
-	        if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+            if ($ignoreBranchings === false && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true) && count($route->current()->getBranchRules()) > 0) {
 	            
 	            $branchRules = $route->current()->getBranchRules();
 	            for ($i = 0; $i < count($branchRules); $i++) {
