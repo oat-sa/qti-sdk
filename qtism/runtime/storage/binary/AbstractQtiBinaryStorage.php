@@ -148,6 +148,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             // persist whether or not to force preconditions.
             $access->writeBoolean($assessmentTestSession->mustForcePreconditions());
             
+            // persist whether or not to use path tracking.
+            $access->writeBoolean($assessmentTestSession->mustTrackPath());
+            
+            // persist path.
+            $access->writePath($assessmentTestSession->getPath());
+            
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
 
@@ -233,6 +239,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
                      
             $forceBranching = ($version >= 6) ? $access->readBoolean() : false;
             $forcePreconditions = ($version >= 6) ? $access->readBoolean() : false;
+            $mustTrackPath = ($version >= 7) ? $access->readBoolean() : false;
+            $path = ($version >= 7) ? $access->readPath() : array();
             
             // Create the item session factory that will be used to instantiate
             // new item sessions.
@@ -265,6 +273,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             $assessmentTestSession->setForceBranching($forceBranching);
             $assessmentTestSession->setForcePreconditions($forcePreconditions);
+            $assessmentTestSession->setPathTracking($mustTrackPath);
+            $assessmentTestSession->setPath($path);
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).
