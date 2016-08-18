@@ -1499,4 +1499,81 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
         $this->assertEquals(4, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE));
         $this->assertEquals(5, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
+    
+    public function testPathTracking() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/nonlinear_5_items_unlimited_attempts.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession->setPathTracking(true);
+        
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->beginTestSession();
+        
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->endAttempt(
+            new State(
+                array(
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))
+                )
+            )
+        );
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0), $assessmentTestSession->getPath());
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        // Try to move back on the very first route item in the flow...
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0), $assessmentTestSession->getPath());
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1), $assessmentTestSession->getPath());
+        $this->assertEquals(2, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3), $assessmentTestSession->getPath());
+        $this->assertEquals(4, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(0, 1, 2), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3), $assessmentTestSession->getPath());
+        $this->assertEquals(4, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3, 4), $assessmentTestSession->getPath());
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+    }
 }

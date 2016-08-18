@@ -173,8 +173,26 @@ class AssessmentTestSession extends State {
      * Whether or not to force preconditions to be executed.
      * 
      * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
+     * 
+     * @var boolean
      */
     private $forcePreconditions = false;
+    
+    /**
+     * Whether or not to store the positions taken in the flow while navigating the test.
+     * 
+     * @var boolean
+     */
+    private $pathTracking = false;
+    
+    /**
+     * An array storing the positions taken in the flow while navigating the test.
+     * 
+     * Populated only if $pathTracking is enabled.
+     * 
+     * @var array
+     */
+    private $path = array();
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -468,8 +486,7 @@ class AssessmentTestSession extends State {
      * 
      * @param boolean $forceBranching
      */
-    public function setForceBranching($forceBranching)
-    {
+    public function setForceBranching($forceBranching) {
         $this->forceBranching = $forceBranching;
     }
 
@@ -480,8 +497,7 @@ class AssessmentTestSession extends State {
      * 
      * @return boolean
      */
-    public function mustForceBranching()
-    {
+    public function mustForceBranching() {
         return $this->forceBranching;
     }
     
@@ -492,8 +508,7 @@ class AssessmentTestSession extends State {
      * 
      * @param boolean $forcePreconditions
      */
-    public function setForcePreconditions($forcePreconditions)
-    {
+    public function setForcePreconditions($forcePreconditions) {
         $this->forcePreconditions = $forcePreconditions;
     }
     
@@ -504,9 +519,58 @@ class AssessmentTestSession extends State {
      * 
      * @return boolean
      */
-    public function mustForcePreconditions()
-    {
+    public function mustForcePreconditions() {
         return $this->forcePreconditions;
+    }
+    
+    /**
+     * Set whether or not to store the positions taken in the flow while navigating the test.
+     * 
+     * If enabled, forward/backward navigation will be considering the previous positions of the candidate
+     * in the item flow, instead of the default route flow.
+     * 
+     * Warning! This method must be called before the Assessment Test Session starts. Otherwise, you may
+     * encounter route item flow isssues during navigation. Moreover, after the Assessment Test Session
+     * has begun using the AssessmentTestSession::beginTestSession() method, path tracking should not
+     * be disable. Otherwise, you may experience issues with route item flow.
+     * 
+     * @param boolean $pathTracking
+     */
+    public function setPathTracking($pathTracking) {
+        $this->pathTracking = $pathTracking;
+    }
+    
+    /**
+     * Whether or not path tracking is enabled.
+     * 
+     * @return boolean
+     */
+    public function mustTrackPath() {
+        return $this->pathTracking;
+    }
+    
+    /**
+     * Set the current path.
+     * 
+     * The value to be specified is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @param array $path
+     */
+    public function setPath(array $path) {
+        $this->path = $path;
+    }
+    
+    /**
+     * Get the current path.
+     * 
+     * The returned value is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @return array
+     */
+    public function getPath() {
+        return $this->path;
     }
 
 	/**
@@ -1532,6 +1596,13 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $this->suspendItemSession();
+        
+        if ($this->mustTrackPath() === true) {
+            $path = $this->getPath();
+            array_push($path, $this->getRoute()->getPosition());
+            $this->setPath($path);
+        }
+        
 	    $this->nextRouteItem();
 	    
 	    while ($this->isRunning() === true) {
@@ -1586,46 +1657,58 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $this->suspendItemSession();
-	    $route = $this->getRoute();
-	    $oldPosition = $route->getPosition();
-	    $this->previousRouteItem();
-	    
-	    while ($route->isFirst() === false) {
-	        
-	        if ($allowTimeout === false) {
-	            try {
-	                // Do not check min times, include item timings.
-	                $this->checkTimeLimits(false, true, false);
-	                
-	                // No exception thrown, return.
-	                $this->interactWithItemSession();
-	                return;
-	            }
-	            catch (AssessmentTestSessionException $e) {
-	                // The item is timed out, let's try the previous route item.
-	                $this->previousRouteItem();
-	            }
-	        }
-	        else {
-	            $this->interactWithItemSession();
-	            return;
-	        }
-	    }
-	    
-	    // If we are here, it means we got moved back to the very first RouteItem.
-	    // Maybe we are not allowed to be here because of the hypothetic timeout
-	    // of the first RouteItem of the test...
-	    if ($allowTimeout === false) {
-	        try {
-	            $this->checkTimeLimits(false, true, false);
-	            $this->interactWithItemSession();
-	        }
-	        catch (AssessmentTestSessionException $e) {
-	            $route->setPosition($oldPosition);
-	            $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
-	            throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
-	        }
-	    }
+        
+        if ($this->mustTrackPath() === true) {
+            // Backward move using path tracking.
+            $path = $this->getPath();
+            if (empty($path) === false) {
+                $jumpPosition = array_pop($path);
+                $this->jumpTo($jumpPosition, $allowTimeout);
+                $this->setPath($path);
+            }
+        } else {
+            // Normal backward move.
+            $route = $this->getRoute();
+            $oldPosition = $route->getPosition();
+            $this->previousRouteItem();
+            
+            while ($route->isFirst() === false) {
+                
+                if ($allowTimeout === false) {
+                    try {
+                        // Do not check min times, include item timings.
+                        $this->checkTimeLimits(false, true, false);
+                        
+                        // No exception thrown, return.
+                        $this->interactWithItemSession();
+                        return;
+                    }
+                    catch (AssessmentTestSessionException $e) {
+                        // The item is timed out, let's try the previous route item.
+                        $this->previousRouteItem();
+                    }
+                }
+                else {
+                    $this->interactWithItemSession();
+                    return;
+                }
+            }
+            
+            // If we are here, it means we got moved back to the very first RouteItem.
+            // Maybe we are not allowed to be here because of the hypothetic timeout
+            // of the first RouteItem of the test...
+            if ($allowTimeout === false) {
+                try {
+                    $this->checkTimeLimits(false, true, false);
+                    $this->interactWithItemSession();
+                }
+                catch (AssessmentTestSessionException $e) {
+                    $route->setPosition($oldPosition);
+                    $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
+                    throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
+                }
+            }
+        }
 	}
 	
 	/**
