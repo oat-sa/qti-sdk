@@ -1439,28 +1439,45 @@ class AssessmentTestSession extends State {
 	    $this->suspendItemSession();
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
+        
+        if ($position !== $oldPosition) {
 	    
-	    try {
-            $route->setPosition($position);
-            $this->selectEligibleItems();
-            
-            // Check the time limits after the jump is trully performed.
-            if ($allowTimeout === false) {
-                $this->checkTimeLimits(false, true);
+            if ($this->mustTrackPath() === true) {
+                $path = $this->getPath();
+                
+                if (($search = array_search($position, $path)) === false && $position !== 0) {
+                    // Forward jump.
+                    array_push($path, $oldPosition);
+                } else {
+                    // Backward jump.
+                    $path = array_slice($path, 0, $search);
+                }
+                
+                $this->setPath($path);
             }
             
-            // No exception thrown, interact!
-            $this->interactWithItemSession();
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        // Rollback to previous position.
-	        $route->setPosition($oldPosition);
-	        throw $e;
-	    }
-	    catch (OutOfBoundsException $e) {
-	        $msg = "Position '${position}' is out of the Route bounds.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
-	    }
+            try {
+                $route->setPosition($position);
+                $this->selectEligibleItems();
+                
+                // Check the time limits after the jump is trully performed.
+                if ($allowTimeout === false) {
+                    $this->checkTimeLimits(false, true);
+                }
+                
+                // No exception thrown, interact!
+                $this->interactWithItemSession();
+            }
+            catch (AssessmentTestSessionException $e) {
+                // Rollback to previous position.
+                $route->setPosition($oldPosition);
+                throw $e;
+            }
+            catch (OutOfBoundsException $e) {
+                $msg = "Position '${position}' is out of the Route bounds.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
+            }
+        }
 	}
     
     /**
@@ -1655,8 +1672,6 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    
-	    $this->suspendItemSession();
         
         if ($this->mustTrackPath() === true) {
             // Backward move using path tracking.
@@ -1664,9 +1679,10 @@ class AssessmentTestSession extends State {
             if (empty($path) === false) {
                 $jumpPosition = array_pop($path);
                 $this->jumpTo($jumpPosition, $allowTimeout);
-                $this->setPath($path);
             }
         } else {
+            $this->suspendItemSession();
+            
             // Normal backward move.
             $route = $this->getRoute();
             $oldPosition = $route->getPosition();
