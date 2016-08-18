@@ -123,6 +123,13 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException {
     const PENDING_RESPONSES = 22;
     
     /**
+     * An error occured while reading/writing path.
+     * 
+     * @var integer
+     */
+    const PATH = 23;
+    
+    /**
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
