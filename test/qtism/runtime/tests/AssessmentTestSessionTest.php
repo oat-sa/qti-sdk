@@ -841,6 +841,34 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
 	    $this->assertEquals(9, $session['NSELECTED']->getValue());
 	    $this->assertEquals(9, $session['NPRESENTED']->getValue());
 	}
+    
+    public function testJumpNotAllowed() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession->beginTestSession();
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\tests\\AssessmentTestSessionException',
+            "Jumps are not allowed in LINEAR navigation mode."
+        );
+        $assessmentTestSession->jumpTo(1);
+    }
+    
+    public function testAlwaysAllowJumps() {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession->beginTestSession();
+        $assessmentTestSession->setAlwaysAllowJumps(true);
+        
+        $assessmentTestSession->jumpTo(1);
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+    }
 	
 	public function testMoveNextAndBackNonLinearIndividual() {
 	    $doc = new XmlCompactDocument();
