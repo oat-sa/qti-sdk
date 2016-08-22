@@ -193,6 +193,15 @@ class AssessmentTestSession extends State {
      * @var array
      */
     private $path = array();
+    
+    /**
+     * Whether or not allowing jump in any case.
+     * 
+     * If enabled, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @var boolean
+     */
+    private $alwaysAllowJumps = false;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -521,6 +530,28 @@ class AssessmentTestSession extends State {
      */
     public function mustForcePreconditions() {
         return $this->forcePreconditions;
+    }
+    
+    /**
+     * Set whether or not to always allow jumps.
+     * 
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @param boolean $alwaysAllowJumps
+     */
+    public function setAlwaysAllowJumps($alwaysAllowJumps) {
+        $this->alwaysAllowJumps = $alwaysAllowJumps;
+    }
+    
+    /**
+     * Know whether or not to always allow jumps.
+     * 
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @return boolean
+     */
+    public function mustAlwaysAllowJumps() {
+        return $this->alwaysAllowJumps;
     }
     
     /**
@@ -1431,7 +1462,8 @@ class AssessmentTestSession extends State {
 	public function jumpTo($position, $allowTimeout = false) {
 	    
 	    // Can we jump?
-	    if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+        $navigationMode = $this->getCurrentNavigationMode();
+	    if ($navigationMode === NavigationMode::LINEAR && $this->mustAlwaysAllowJumps() !== true) {
 	        $msg = "Jumps are not allowed in LINEAR navigation mode.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
 	    }
