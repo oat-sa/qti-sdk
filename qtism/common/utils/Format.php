@@ -355,7 +355,7 @@ class Format {
 	 * @return boolean
 	 */
 	static public function isClass($string) {
-	    $pattern = "/^(?:[^\s]+?(?:\x20){0,1})+$/";
+        $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
 	    return preg_match($pattern, $string) === 1;
 	}
 	
