@@ -148,6 +148,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->writeString($visitedTestPartIdentifier);
             }
             
+            // persist path.
+            $access->writePath($assessmentTestSession->getPath());
+            
             // -- Persist configuration
             $access->writeShort($assessmentTestSession->getConfig());
 
@@ -245,6 +248,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $visitedTestPartIdentifiers[] = $access->readString();
             }
             
+            $path = $access->readPath();
+            
             // -- Session configuration.
             $config = $access->readShort();
 
@@ -292,6 +297,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             $assessmentTestSession->setTimeReference($timeReference);
             $assessmentTestSession->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
+            $assessmentTestSession->setPath($path);
 
             // Build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {

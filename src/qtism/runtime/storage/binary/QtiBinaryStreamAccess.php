@@ -1097,4 +1097,42 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
     }
+    
+    /**
+     * Read the path from the current binary stream.
+     * 
+     * @return array An array of integer values representing flow positions.
+     */
+    public function readPath() {
+        try {
+            $pathCount = $this->readShort();
+            $path = array();
+            
+            for ($i = 0; $i < $pathCount; $i++) {
+                $path[] = $this->readShort();
+            }
+            
+            return $path;
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading the path.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
+        }
+    }
+    
+    /**
+     * Write the path in the current binary stream.
+     * 
+     * @param array $path An array of integer values representing flow positions.
+     */
+    public function writePath(array $path) {
+        try {
+            $this->writeShort(count($path));
+            foreach ($path as $p) {
+                $this->writeShort($p);
+            }
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing the path.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
+        }
+    }
 }
