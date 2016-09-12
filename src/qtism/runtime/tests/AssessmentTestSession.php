@@ -74,6 +74,7 @@ class AssessmentTestSession extends State
     
     const FORCE_BRANCHING = 1;
     const FORCE_PRECONDITIONS = 2;
+    const PATH_TRACKING = 4;
     
     /**
      * A unique ID for this AssessmentTestSession.
@@ -170,20 +171,13 @@ class AssessmentTestSession extends State
     private $visitedTestPartIdentifiers = array();
     
     /**
-     * Wheter or not to force branch rules to be executed.
+     * An array storing the positions taken in the flow while navigating the test.
      * 
-     * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
+     * Populated only if PATH_TRACKING is enabled as a configuration option.
      * 
-     * @var boolean
+     * @var array
      */
-    private $forceBranching = false;
-    
-    /**
-     * Whether or not to force preconditions to be executed.
-     * 
-     * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
-     */
-    private $forcePreconditions = false;
+    private $path = array();
     
     /**
      * The configuration defining the behaviour of the AssessmentTestSession object.
@@ -657,6 +651,43 @@ class AssessmentTestSession extends State
     }
     
     /**
+     * When enabled, forward/backward navigation will be considering the previous positions of the candidate
+     * in the item flow, instead of the default route flow.
+     * 
+     * @return boolean
+     */
+    public function mustTrackPath() 
+    {
+        return (bool) ($this->getConfig() & self::PATH_TRACKING);
+    }
+    
+    /**
+     * Set the current path.
+     * 
+     * The value to be specified is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @param array $path
+     */
+    public function setPath(array $path) 
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * Get the current path.
+     * 
+     * The returned value is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @return array
+     */
+    public function getPath() 
+    {
+        return $this->path;
+    }
+    
+    /**
      * Set the configuration of the AssessmentTestSession object.
      * 
      * @param integer $config
@@ -859,8 +890,15 @@ class AssessmentTestSession extends State
             return;
         }
         
+        // Path tracking management, if enabled.
+        if ($this->mustTrackPath() === true) {
+            $path = $this->getPath();
+            array_push($path, $this->getRoute()->getPosition());
+            $this->setPath($path);
+        }
+        
         $this->nextRouteItem();
-    
+
         if ($this->isRunning() === true) {
             $this->interactWithItemSession();
             $this->testPartVisit();
@@ -881,14 +919,25 @@ class AssessmentTestSession extends State
             $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
-    
-        $route = $this->getRoute();
-    
-        if ($route->isFirst() === false) {
-            $this->suspend();
-            $this->previousRouteItem();
-            $this->interactWithItemSession();
-            $this->testPartVisit();
+        
+        if ($this->mustTrackPath() === true) {
+            // Backward move using path tracking.
+            $path = $this->getPath();
+            if (empty($path) === false) {
+                $jumpPosition = array_pop($path);
+                // Suspend call is delegated to jumpTo.
+                $this->jumpTo($jumpPosition);
+            }
+        } else {
+            // Normal move back.
+            $route = $this->getRoute();
+            
+            if ($route->isFirst() === false) {
+                $this->suspend();
+                $this->previousRouteItem();
+                $this->interactWithItemSession();
+                $this->testPartVisit();
+            }
         }
     }
     
@@ -907,24 +956,42 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
     
-        $this->suspend();
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
     
-        try {
-            $this->suspend();
-            $route->setPosition($position);
-            $this->selectEligibleItems();
-            $this->interactWithItemSession();
-            $this->testPartVisit();
-        } catch (AssessmentTestSessionException $e) {
-            // Rollback to previous position and re-interact to get the same state as prior to the call.
-            $route->setPosition($oldPosition);
-            $this->interactWithItemSession();
-            throw $e;
-        } catch (OutOfBoundsException $e) {
-            $msg = "Position '${position}' is out of the Route bounds.";
-            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
+        if ($position !== $oldPosition) {
+            
+            try {
+                $this->suspend();
+                $route->setPosition($position);
+                $this->selectEligibleItems();
+                $this->interactWithItemSession();
+                $this->testPartVisit();
+                
+                // Path tracking, if required.
+                if ($this->mustTrackPath() === true) {
+                    $path = $this->getPath();
+                    
+                    if (($search = array_search($position, $path)) === false && $position !== 0) {
+                        // Forward jump.
+                        array_push($path, $oldPosition);
+                    } else {
+                        // Backward jump.
+                        $path = array_slice($path, 0, $search);
+                    }
+                    
+                    $this->setPath($path);
+                }
+                
+            } catch (AssessmentTestSessionException $e) {
+                // Rollback to previous position and re-interact to get the same state as prior to the call.
+                $route->setPosition($oldPosition);
+                $this->interactWithItemSession();
+                throw $e;
+            } catch (OutOfBoundsException $e) {
+                $msg = "Position '${position}' is out of the Route bounds.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
+            }
         }
     }
     

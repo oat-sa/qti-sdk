@@ -1890,4 +1890,105 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q09')[0]->getState());
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
+    
+    public function testPathTracking() {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/nonlinear_5_items_unlimited_attempts.xml', false, AssessmentTestSession::PATH_TRACKING);
+        
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->beginTestSession();
+        
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->endAttempt(
+            new State(
+                array(
+                    new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))
+                )
+            )
+        );
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0), $assessmentTestSession->getPath());
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        // Try to move back on the very first route item in the flow...
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0), $assessmentTestSession->getPath());
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+
+        // Jump to the 4th route item in the flow.
+        $assessmentTestSession->jumpTo(3);
+        $this->assertSame(array(0, 1), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+
+        // Jump to the 1st route item in the flow.
+        $assessmentTestSession->jumpTo(0);
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+
+        // Jump to the 1st route item in the flow again.
+        $assessmentTestSession->jumpTo(0);
+        $this->assertSame(array(), $assessmentTestSession->getPath());
+        $this->assertEquals(0, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0), $assessmentTestSession->getPath());
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1), $assessmentTestSession->getPath());
+        $this->assertEquals(2, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        // Jump at the same position.
+        $assessmentTestSession->jumpTo(3);
+        $this->assertSame(array(0, 1, 2), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3), $assessmentTestSession->getPath());
+        $this->assertEquals(4, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveBack();
+        $this->assertSame(array(0, 1, 2), $assessmentTestSession->getPath());
+        $this->assertEquals(3, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3), $assessmentTestSession->getPath());
+        $this->assertEquals(4, $assessmentTestSession->getRoute()->getPosition());
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertSame(array(0, 1, 2, 3, 4), $assessmentTestSession->getPath());
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+    }
 }

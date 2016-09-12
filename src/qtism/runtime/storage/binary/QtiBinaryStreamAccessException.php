@@ -141,6 +141,13 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
     const SHUFFLING_GROUP = 24;
     
     /**
+     * An error occured while reading/writing path.
+     * 
+     * @var integer
+     */
+    const PATH = 25;
+    
+    /**
      * Create a new QtiBinaryStreamAccessException object.
      *
      * @param string $message A human-readable message.
