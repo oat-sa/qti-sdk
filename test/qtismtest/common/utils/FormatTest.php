@@ -221,6 +221,7 @@ class FormatTest extends QtiSmTestCase {
 	        array('a'),
 	        array('my-class'),
 	        array('my-class my-other-class'),
+            array('my-class    my-other-class'),
 	        array('theclass')
 	    );
 	}
