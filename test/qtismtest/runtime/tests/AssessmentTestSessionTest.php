@@ -1991,4 +1991,23 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertSame(array(0, 1, 2, 3, 4), $assessmentTestSession->getPath());
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
     }
+    
+    public function testJumpNotAllowed() {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+        $assessmentTestSession->beginTestSession();
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\tests\\AssessmentTestSessionException',
+            "Jumps are not allowed in LINEAR navigation mode."
+        );
+        $assessmentTestSession->jumpTo(1);
+    }
+
+    public function testAlwaysAllowJumps() {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml', false, AssessmentTestSession::ALWAYS_ALLOW_JUMPS);
+        $assessmentTestSession->beginTestSession();
+        
+        $assessmentTestSession->jumpTo(1);
+        $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+    }
 }
