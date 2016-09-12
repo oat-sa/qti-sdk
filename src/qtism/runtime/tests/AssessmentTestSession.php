@@ -75,6 +75,7 @@ class AssessmentTestSession extends State
     const FORCE_BRANCHING = 1;
     const FORCE_PRECONDITIONS = 2;
     const PATH_TRACKING = 4;
+    const ALWAYS_ALLOW_JUMPS = 8;
     
     /**
      * A unique ID for this AssessmentTestSession.
@@ -662,6 +663,17 @@ class AssessmentTestSession extends State
     }
     
     /**
+     * Know whether or not to always allow jumps.
+     * 
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @return boolean
+     */
+    public function mustAlwaysAllowJumps() {
+        return (bool) ($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
+    }
+    
+    /**
      * Set the current path.
      * 
      * The value to be specified is an array of integer values representing positions in the route item flow
@@ -951,7 +963,8 @@ class AssessmentTestSession extends State
     public function jumpTo($position)
     {
         // Can we jump?
-        if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+        $navigationMode = $this->getCurrentNavigationMode();
+        if ($navigationMode === NavigationMode::LINEAR && $this->mustAlwaysAllowJumps() !== true) {
             $msg = "Jumps are not allowed in LINEAR navigation mode.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
