@@ -222,7 +222,11 @@ class FormatTest extends QtiSmTestCase {
 	        array('my-class'),
 	        array('my-class my-other-class'),
             array('my-class    my-other-class'),
-	        array('theclass')
+	        array('theclass'),
+            array('MYCLASS'),
+            array('MY_CLASS'),
+            array('my_class'),
+            array('My_Class')
 	    );
 	}
 	
@@ -230,6 +234,7 @@ class FormatTest extends QtiSmTestCase {
 	    return array(
 	        array("a\tb"),
 	        array(" "),
+            array('')
 	    );
 	}
 	
