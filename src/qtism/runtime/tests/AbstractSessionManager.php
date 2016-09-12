@@ -81,12 +81,15 @@ abstract class AbstractSessionManager
     /**
      * Create a new AssessmentTestSession object.
      *
+     * @param \qtism\data\AssessmentTest $test The AssessmentTest definition.
+     * @param \qtism\runtime\tests\Route $route (optional) The Route to be taken.
+     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
+     * 
      * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
      */
-    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null)
+    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null, $config = 0)
     {
-        $session = $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route));
-        return $session;
+        return $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route), $config);
     }
     
     /**
@@ -100,8 +103,7 @@ abstract class AbstractSessionManager
      */
     public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
     {
-        $session = $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
-        return $session;
+        return $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
     }
 
     /**
@@ -109,9 +111,10 @@ abstract class AbstractSessionManager
      *
      * @param \qtism\data\AssessmentTest $assessmentTest
      * @param \qtism\runtime\tests\Route $route
+     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
      * @return \qtism\runtime\tests\AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
-    abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route);
+    abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0);
 
     /**
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.

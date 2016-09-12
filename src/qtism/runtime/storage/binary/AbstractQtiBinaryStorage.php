@@ -89,10 +89,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     /**
      * Instantiate a new AssessmentTestSession.
      *
+     * @param integer $config (optional) The configuration to be taken into account for the instantiated AssessmentTestSession object.
      * @param string $sessionId An session ID. If not provided, a new session ID will be generated and given to the AssessmentTestSession.
      * @return \qtism\runtime\tests\AssessmentTestSession An AssessmentTestSession object.
      */
-    public function instantiate($sessionId = '')
+    public function instantiate($config = 0, $sessionId = '')
     {
         // If not provided, generate a session ID.
         if (empty($sessionId) === true) {
@@ -100,7 +101,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
         }
 
         try {
-            $session = $this->getManager()->createAssessmentTestSession($this->getAssessmentTest());
+            $session = $this->getManager()->createAssessmentTestSession($this->getAssessmentTest(), null, $config);
             $session->setSessionId($sessionId);
 
             return $session;
@@ -147,11 +148,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->writeString($visitedTestPartIdentifier);
             }
             
-            // persist whether or not to force branching.
-            $access->writeBoolean($assessmentTestSession->mustForceBranching());
-            
-            // persist whether or not to force preconditions.
-            $access->writeBoolean($assessmentTestSession->mustForcePreconditions());
+            // -- Persist configuration
+            $access->writeShort($assessmentTestSession->getConfig());
 
             // -- Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
@@ -193,10 +191,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             }
             
             $route->setPosition($oldRoutePosition);
-
-            // Deal with test session configuration.
-            // !!! AutoForward (not in use anymore, fake it).
-            $access->writeBoolean(false);
 
             // Persist the test-level global scope.
             foreach ($assessmentTestSession->getKeys() as $outcomeIdentifier) {
@@ -251,8 +245,8 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $visitedTestPartIdentifiers[] = $access->readString();
             }
             
-            $forceBranching = $access->readBoolean();
-            $forcePreconditions = $access->readBoolean();
+            // -- Session configuration.
+            $config = $access->readShort();
 
             // Build the route and the item sessions.
             $route = new Route();
@@ -290,7 +284,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             $route->setPosition($currentPosition);
             $manager = $this->getManager();
-            $assessmentTestSession = $manager->createAssessmentTestSession($this->getAssessmentTest(), $route);
+            $assessmentTestSession = $manager->createAssessmentTestSession($this->getAssessmentTest(), $route, $config);
             $assessmentTestSession->setAssessmentItemSessionStore($itemSessionStore);
             $assessmentTestSession->setSessionId($sessionId);
             $assessmentTestSession->setState($assessmentTestSessionState);
@@ -298,12 +292,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
             $assessmentTestSession->setTimeReference($timeReference);
             $assessmentTestSession->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
-            $assessmentTestSession->setForceBranching($forceBranching);
-            $assessmentTestSession->setForcePreconditions($forcePreconditions);
-
-            // Deal with test session configuration.
-            // -- AutoForward (not in use anymore, consume it anyway).
-            $access->readBoolean();
 
             // Build the test-level global scope, composed of Outcome Variables.
             foreach ($this->getAssessmentTest()->getOutcomeDeclarations() as $outcomeDeclaration) {

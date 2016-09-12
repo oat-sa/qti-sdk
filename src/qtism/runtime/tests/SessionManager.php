@@ -39,11 +39,12 @@ class SessionManager extends AbstractSessionManager
      *
      * @param \qtism\data\AssessmentTest $test
      * @param \qtism\runtime\tests\Route $route An optional route to be set. If not provided, the default instantiation process occurs.
+     * @param integer $config (optional) The configuration of the AssessmentTestSession object.
      * @return \qtism\runtime\tests\AssessmentTestSession
      */
-    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route)
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0)
     {
-        return new AssessmentTestSession($test, $this, $route);
+        return new AssessmentTestSession($test, $this, $route, $config);
     }
 
     /**

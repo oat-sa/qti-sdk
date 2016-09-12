@@ -72,6 +72,9 @@ class AssessmentTestSession extends State
     const ROUTECOUNT_EXCLUDENORESPONSE = 1;
     const ROUTECOUNT_FLOW = 2;
     
+    const FORCE_BRANCHING = 1;
+    const FORCE_PRECONDITIONS = 2;
+    
     /**
      * A unique ID for this AssessmentTestSession.
      *
@@ -181,6 +184,15 @@ class AssessmentTestSession extends State
      * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
      */
     private $forcePreconditions = false;
+    
+    /**
+     * The configuration defining the behaviour of the AssessmentTestSession object.
+     * 
+     * A set of binary flags.
+     * 
+     * @var integer
+     */
+    private $config = 0;
 
     /**
      * Create a new AssessmentTestSession object.
@@ -188,10 +200,13 @@ class AssessmentTestSession extends State
      * @param \qtism\data\AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
      * @param \qtism\runtime\tests\AbstractSessionManager $sessionManager The manager to be used to create new AssessmentItemSession objects.
      * @param \qtism\runtime\tests\Route $route The sequence of items that has to be taken for the session.
+     * @param integer $config (optional) A set of binary flags to configure the behaviour of the AssessmentTestSession object.
      */
-    public function __construct(AssessmentTest $assessmentTest, AbstractSessionManager $sessionManager, Route $route)
+    public function __construct(AssessmentTest $assessmentTest, AbstractSessionManager $sessionManager, Route $route, $config = 0)
     {
         parent::__construct();
+        
+        $this->setConfig($config);
         $this->setAssessmentTest($assessmentTest);
         $this->setSessionManager($sessionManager);
         $this->setRoute($route);
@@ -618,18 +633,6 @@ class AssessmentTestSession extends State
     }
     
     /**
-     * Set whether or not to force branch rules to be executed.
-     * 
-     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
-     * 
-     * @param boolean $forceBranching
-     */
-    public function setForceBranching($forceBranching)
-    {
-        $this->forceBranching = $forceBranching;
-    }
-    
-    /**
      * Know whether or not branch rules are forced to be executed.
      * 
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
@@ -638,17 +641,7 @@ class AssessmentTestSession extends State
      */
     public function mustForceBranching()
     {
-        return $this->forceBranching;
-    }
-    
-    /**
-     * Set whether or not to force preconditions to be executed.
-     * 
-     * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
-     */
-    public function setForcePreconditions($forcePreconditions)
-    {
-        $this->forcePreconditions = $forcePreconditions;
+        return (bool) ($this->getConfig() & self::FORCE_BRANCHING);
     }
     
     /**
@@ -660,7 +653,27 @@ class AssessmentTestSession extends State
      */
     public function mustForcePreconditions()
     {
-        return $this->forcePreconditions;
+        return (bool) ($this->getConfig() & self::FORCE_PRECONDITIONS);
+    }
+    
+    /**
+     * Set the configuration of the AssessmentTestSession object.
+     * 
+     * @param integer $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+    
+    /**
+     * Get the configuration of the AssessmentTestSession object.
+     * 
+     * @return integer
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
     
     /**

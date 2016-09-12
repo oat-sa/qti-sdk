@@ -411,7 +411,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $factory = new SessionManager(new FileSystemFileManager());
         $storage = new LocalQtiBinaryStorage($factory, $test);
         $sessionId = 'linearSimultaneous1337';
-        $session = $storage->instantiate($sessionId);
+        $session = $storage->instantiate(0, $sessionId);
         $session->beginTestSession();
     
         // Nothing in pending responses. The test has just begun.
@@ -1334,5 +1334,26 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase {
         $this->assertTrue($session->isTestPartVisited('P02'));
         $this->assertTrue($session->isTestPartVisited('P03'));
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
+    }
+    
+    public function testConfigPersistence()
+    {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
+	    $test = $doc->getDocumentComponent();
+	    $sessionManager = new SessionManager(new FileSystemFileManager());
+        $storage = new LocalQtiBinaryStorage($sessionManager, $test);
+        $config = AssessmentTestSession::FORCE_BRANCHING | AssessmentTestSession::FORCE_PRECONDITIONS;
+        $session = $storage->instantiate($config);
+        $sessionId = $session->getSessionId();
+        
+        $this->assertEquals($config, $session->getConfig());
+        
+        // Check that after persist/retrieve, the configuration is still the same.
+        $storage->persist($session);
+        unset($session);
+        $session = $storage->retrieve($sessionId);
+        
+        $this->assertEquals($config, $session->getConfig());
     }
 }

@@ -147,8 +147,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         // Q01 - We answer correct. In linear mode we should go to Q03.
         // As force branching is in force, it should behave as in linear mode.
         $manager = new SessionManager(new FileSystemFileManager());
-        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent());
-        $testSession->setForceBranching(true);
+        $testSession = $manager->createAssessmentTestSession($doc->getDocumentComponent(), null, AssessmentTestSession::FORCE_BRANCHING);
         $testSession->beginTestSession();
         
         $testSession->beginAttempt();

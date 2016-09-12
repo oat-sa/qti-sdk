@@ -7,6 +7,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
+use qtism\runtime\tests\AssessmentTestSession;
 
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase {
 	
@@ -80,8 +81,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
     public function testSingleSectionNonLinearForcePreconditions() {
         // This test aims at testing that when forcing preconditions is in force,
         // they are executed even if the current navigation mode is non linear.
-        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml');
-        $testSession->setForcePreconditions(true);
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml', null, AssessmentTestSession::FORCE_PRECONDITIONS);
         $testSession->beginTestSession();
         
         // Q01 - Answer incorrect to be redirected by successive false evaluated preconditions.
