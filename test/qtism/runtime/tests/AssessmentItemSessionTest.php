@@ -416,4 +416,35 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
+    
+    public function testIsRespondedTextEntry() {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'ims/items/2_1/text_entry.xml');
+        
+        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager());
+        $itemSessionControl = $itemSession->getItemSessionControl();
+        $itemSessionControl->setMaxAttempts(0);
+        $itemSession->beginItemSession();
+        
+        // Respond with a null value.
+        $itemSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::STRING)));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertFalse($itemSession->isResponded());
+        
+        // Respond with an empty string.
+        $itemSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::STRING, new QtiString(''))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertFalse($itemSession->isResponded());
+        
+        // Respond with a non-empty string.
+        $itemSession->beginAttempt();
+        $responses = new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::STRING, new QtiString('York'))));
+        $itemSession->endAttempt($responses);
+        
+        $this->assertTrue($itemSession->isResponded());
+    }
 }
