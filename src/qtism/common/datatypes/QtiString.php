@@ -68,6 +68,26 @@ class QtiString extends QtiScalar
     {
         return Cardinality::SINGLE;
     }
+    
+    /**
+     * Wheter or not the current QtiString object is equal to $obj. 
+     * 
+     * Two QtiString objects are considered to be identical if their intrinsic
+     * values are equals. If the current QtiString is an empty string, and $obj
+     * is NULL, the values are considered equal.
+     *
+     * @return boolean
+     */
+    public function equals($obj)
+    {
+        if ($obj instanceof QtiScalar) {
+            return $obj->getValue() === $this->getValue();
+        } elseif ($this->getValue() === '' && $obj === null) {
+            return true;
+        } else {
+            return $this->getValue() === $obj;
+        }
+    }
 
     public function __toString()
     {
