@@ -11,6 +11,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MemberProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -104,7 +105,7 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$operands[] = new QtiPoint(13, 37);
-		$operands[] = new QtiPoint(13, 38);
+		$operands[] = new RecordContainer(array('key' => new QtiString('value')));
 		$processor = new MemberProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -127,6 +128,18 @@ class MemberProcessorTest extends QtiSmTestCase {
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new MemberProcessor($expression, $operands);
 	}
+    
+    public function testSingleCardinalitySecondOperand() {
+        $expression = $this->createFakeExpression();
+		$operands = new OperandsCollection();
+		$operands[] = new QtiPoint(13, 37);
+		$operands[] = new QtiPoint(13, 37);
+		$processor = new MemberProcessor($expression, $operands);
+        $result = $processor->process();
+        
+        $this->assertInstanceOf('qtism\\common\\datatypes\\QtiBoolean', $result);
+        $this->assertTrue($result->getValue());
+    }
 	
 	public function createFakeExpression() {
 		return $this->createComponentFromXml('
