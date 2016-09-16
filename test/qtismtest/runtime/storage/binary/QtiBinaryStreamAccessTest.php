@@ -1073,4 +1073,33 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writeRecordField(array('key', new QtiString('string')));
     }
+    
+    public function testReadIdentifierEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading an identifier.',
+            QtiBinaryStreamAccessException::IDENTIFIER
+        );
+        
+        $access->readIdentifier();
+    }
+    
+    public function testWriteIdentifierClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing an identifier.',
+            QtiBinaryStreamAccessException::IDENTIFIER
+        );
+        
+        $stream->close();
+        $access->writeIdentifier('identifier');
+    }
 }
