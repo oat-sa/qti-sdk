@@ -1058,4 +1058,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $access->readRecordField();
     }
+    
+    public function testWriteRecordFieldClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a Record Field.',
+            QtiBinaryStreamAccessException::RECORDFIELD
+        );
+        
+        $stream->close();
+        $access->writeRecordField(array('key', new QtiString('string')));
+    }
 }

@@ -321,7 +321,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 call_user_func(array($this, $toCall), ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a Record Field.";
+            $msg = "An error occured while writing a Record Field.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD);
         }
     }
