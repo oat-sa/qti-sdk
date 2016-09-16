@@ -303,6 +303,42 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         return $returnValue;
     }
     
+    public function testReadVariableValueEmptyStream() {
+        // Empty stream.
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a Variable value.',
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        
+        $access->readVariableValue(
+            new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::STRING),
+            QtiBinaryStreamAccess::RW_VALUE
+        );
+    }
+    
+    public function testReadVariableValueTypeMismatch() {
+        $bin = "\x00" . "\x01" . pack('S', 1) . '1' . pack('S', 1) . '2';
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            "Datatype mismatch for variable 'VAR'.",
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        
+        $access->readVariableValue(
+            new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::PAIR),
+            QtiBinaryStreamAccess::RW_VALUE
+        );
+    }
+    
     /**
      * @dataProvider writeVariableValueProvider
      * 
@@ -585,6 +621,23 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setCorrectResponse(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)))); $data[] = array($v, $rw_defaultValue);
         
         return $data;
+    }
+    
+    public function testWriteVariableValueClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $var = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $type = QtiBinaryStreamAccess::RW_VALUE;
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a Variable value.',
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        $stream->close();
+        $access->writeVariableValue($var, $type);
     }
     
     public function testReadAssessmentItemSession1() {

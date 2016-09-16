@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -177,6 +177,11 @@ class MemoryStream implements IStream
      */
     public function read($length)
     {
+        if ($this->isOpen() === false) {
+            $msg = "Cannot read from a closed MemoryStream.";
+            throw new MemoryStreamAccess($msg, $this, MemoryStreamException::NOT_OPEN);
+        }
+        
         if ($length === 0) {
             return '';
         }
@@ -208,6 +213,11 @@ class MemoryStream implements IStream
      */
     public function write($data)
     {
+        if ($this->isOpen() === false) {
+            $msg = "Cannot write in a closed MemoryStream.";
+            throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
+        }
+        
         if ($this->length - 1 === $this->position) {
             // simply append.
             $this->binary .= $data;
@@ -285,7 +295,7 @@ class MemoryStream implements IStream
             $this->rewind();
         } else {
             $msg = "Cannot flush a closed MemoryStream.";
-            throw new MemoryStreamAccess($msg, $this, MemoryStreamException::NOT_OPEN);
+            throw new MemoryStreamException($msg, $this, MemoryStreamException::NOT_OPEN);
         }
     }
 }
