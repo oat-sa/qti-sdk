@@ -1328,4 +1328,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $access->readIntOrIdentifier();
     }
+    
+    public function testWriteIntOrIdentifierClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing an intOrIdentifier.',
+            QtiBinaryStreamAccessException::INTORIDENTIFIER
+        );
+        
+        $stream->close();
+        $access->writeIntOrIdentifier(new QtiIntOrIdentifier('identifier'));
+    }
 }
