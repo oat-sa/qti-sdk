@@ -1102,4 +1102,33 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writeIdentifier('identifier');
     }
+    
+    public function testReadPointEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a point.',
+            QtiBinaryStreamAccessException::POINT
+        );
+        
+        $access->readPoint();
+    }
+    
+    public function testWritePointClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a point.',
+            QtiBinaryStreamAccessException::POINT
+        );
+        
+        $stream->close();
+        $access->writePoint(new QtiPoint(0, 0));
+    }
 }
