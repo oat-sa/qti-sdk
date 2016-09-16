@@ -1145,4 +1145,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $access->readPair();
     }
+    
+    public function testWritePairClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a pair.',
+            QtiBinaryStreamAccessException::PAIR
+        );
+        
+        $stream->close();
+        $access->writePair(new QtiPair('A', 'B'));
+    }
 }
