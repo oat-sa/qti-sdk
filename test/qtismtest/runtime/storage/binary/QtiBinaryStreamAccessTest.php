@@ -1256,4 +1256,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writeDirectedPair(new QtiDirectedPair('A', 'B'));
     }
+    
+    public function testReadDurationEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a duration.',
+            QtiBinaryStreamAccessException::DURATION
+        );
+        
+        $access->readDuration();
+    }
 }
