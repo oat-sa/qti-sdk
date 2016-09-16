@@ -981,6 +981,20 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
     
+    public function testReadShufflingGroupEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a shufflingGroup.',
+            QtiBinaryStreamAccessException::SHUFFLING_GROUP
+        );
+        
+        $shufflingGroup = $access->readShufflingGroup();
+    }
+    
     public function testWriteShufflingGroup() {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
