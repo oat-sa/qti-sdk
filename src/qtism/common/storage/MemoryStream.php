@@ -235,7 +235,7 @@ class MemoryStream implements IStream
      */
     public function eof()
     {
-        return $this->getPosition() >= $this->getLength();
+        return $this->isOpen() === false || $this->getPosition() >= $this->getLength();
     }
 
     /**
