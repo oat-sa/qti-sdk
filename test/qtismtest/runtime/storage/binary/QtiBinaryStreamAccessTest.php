@@ -1160,4 +1160,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writePair(new QtiPair('A', 'B'));
     }
+    
+    public function testReadDirectedPairEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a directedPair.',
+            QtiBinaryStreamAccessException::DIRECTEDPAIR
+        );
+        
+        $access->readDirectedPair();
+    }
 }
