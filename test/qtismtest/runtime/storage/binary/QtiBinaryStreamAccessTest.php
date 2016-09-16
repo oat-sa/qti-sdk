@@ -1044,4 +1044,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
+    
+    public function testReadRecordFieldEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a Record Field.',
+            QtiBinaryStreamAccessException::RECORDFIELD
+        );
+        
+        $access->readRecordField();
+    }
 }
