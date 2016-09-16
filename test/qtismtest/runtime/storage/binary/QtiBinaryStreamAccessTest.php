@@ -1270,4 +1270,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $access->readDuration();
     }
+    
+    public function testWriteDurationClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a duration.',
+            QtiBinaryStreamAccessException::DURATION
+        );
+        
+        $stream->close();
+        $access->writeDuration(new QtiDuration('PT0S'));
+    }
 }
