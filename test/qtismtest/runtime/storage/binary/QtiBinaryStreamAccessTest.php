@@ -1285,4 +1285,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writeDuration(new QtiDuration('PT0S'));
     }
+    
+    public function testReadUriEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a URI.',
+            QtiBinaryStreamAccessException::URI
+        );
+        
+        $access->readUri();
+    }
 }
