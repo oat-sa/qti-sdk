@@ -1299,4 +1299,19 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $access->readUri();
     }
+    
+    public function testWriteUriClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a URI.',
+            QtiBinaryStreamAccessException::URI
+        );
+        
+        $stream->close();
+        $access->writeUri(new QtiUri('http://www.taotesting.com'));
+    }
 }
