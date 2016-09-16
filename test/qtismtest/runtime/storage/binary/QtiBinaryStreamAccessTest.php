@@ -1314,4 +1314,18 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $stream->close();
         $access->writeUri(new QtiUri('http://www.taotesting.com'));
     }
+    
+    public function testReadIntOrIdentifierEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading an intOrIdentifier.',
+            QtiBinaryStreamAccessException::INTORIDENTIFIER
+        );
+        
+        $access->readIntOrIdentifier();
+    }
 }
