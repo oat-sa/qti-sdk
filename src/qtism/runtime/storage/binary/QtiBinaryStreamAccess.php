@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -62,6 +62,8 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Variable;
 use qtism\common\storage\IStream;
 use qtism\common\storage\BinaryStreamAccess;
+use qtism\common\storage\BinaryStreamAccessException;
+use \InvalidArgumentException;
 use \Exception;
 
 /**
@@ -184,7 +186,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $msg = "An error occured while reading a Variable value.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         } catch (InvalidArgumentException $e) {
-            $msg = "Datatype mismatch for variable '${varId}'.";
+            $msg = "Datatype mismatch for variable '" . $variable->getIdentifier() . "'.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::VARIABLE, $e);
         }
     }
@@ -319,7 +321,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 call_user_func(array($this, $toCall), ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         } catch (BinaryStreamAccessException $e) {
-            $msg = "An error occured while reading a Record Field.";
+            $msg = "An error occured while writing a Record Field.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::RECORDFIELD);
         }
     }

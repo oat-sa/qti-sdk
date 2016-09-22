@@ -303,6 +303,42 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         return $returnValue;
     }
     
+    public function testReadVariableValueEmptyStream() {
+        // Empty stream.
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a Variable value.',
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        
+        $access->readVariableValue(
+            new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::STRING),
+            QtiBinaryStreamAccess::RW_VALUE
+        );
+    }
+    
+    public function testReadVariableValueTypeMismatch() {
+        $bin = "\x00" . "\x01" . pack('S', 1) . '1' . pack('S', 1) . '2';
+        $stream = new MemoryStream($bin);
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            "Datatype mismatch for variable 'VAR'.",
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        
+        $access->readVariableValue(
+            new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::PAIR),
+            QtiBinaryStreamAccess::RW_VALUE
+        );
+    }
+    
     /**
      * @dataProvider writeVariableValueProvider
      * 
@@ -585,6 +621,23 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $v = new ResponseVariable('Var', Cardinality::RECORD, -1); $v->setCorrectResponse(new RecordContainer(array('key1' => new QtiDuration('PT1S'), 'key2' => new QtiFloat(25.5), 'key3' => new QtiInteger(2), 'key4' => new QtiString('String!'), 'key5' => null, 'key6' => new QtiBoolean(true)))); $data[] = array($v, $rw_defaultValue);
         
         return $data;
+    }
+    
+    public function testWriteVariableValueClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $var = new ResponseVariable('VAR', Cardinality::SINGLE, BaseType::INTEGER);
+        $type = QtiBinaryStreamAccess::RW_VALUE;
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a Variable value.',
+            QtiBinaryStreamAccessException::VARIABLE
+        );
+        $stream->close();
+        $access->writeVariableValue($var, $type);
     }
     
     public function testReadAssessmentItemSession1() {
@@ -928,6 +981,20 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
     
+    public function testReadShufflingGroupEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a shufflingGroup.',
+            QtiBinaryStreamAccessException::SHUFFLING_GROUP
+        );
+        
+        $shufflingGroup = $access->readShufflingGroup();
+    }
+    
     public function testWriteShufflingGroup() {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
@@ -942,6 +1009,24 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroup = $access->readShufflingGroup();
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroup->getIdentifiers()->getArrayCopy());
         $this->assertEquals(array('id2'), $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
+    }
+    
+    public function testWriteShufflingGroupClosedStream() {
+        $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
+        $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
+        
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a shufflingGroup.',
+            QtiBinaryStreamAccessException::SHUFFLING_GROUP
+        );
+        
+        $stream->close();
+        $shufflingGroup = $access->writeShufflingGroup($shufflingGroup);
     }
     
     public function testReadShufflingState() {
@@ -971,6 +1056,20 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
+    public function testReadShufflingStateEmptyStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a shufflingState.',
+            QtiBinaryStreamAccessException::SHUFFLING_STATE
+        );
+        
+        $shufflingGroup = $access->readShufflingState();
+    }
+    
     public function testWriteShufflingState() {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
@@ -990,5 +1089,258 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $shufflingGroups = $shufflingState->getShufflingGroups();
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+    }
+    
+    public function testWriteShufflingStateClosedStream() {
+        $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('id1', 'id2', 'id3')));
+        $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('id2')));
+        $shufflingGroups = new ShufflingGroupCollection(array($shufflingGroup));
+        
+        $shuffling = new Shuffling('RESPONSE', $shufflingGroups);
+        
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a shufflingState.',
+            QtiBinaryStreamAccessException::SHUFFLING_STATE
+        );
+        
+        $stream->close();
+        $shufflingGroup = $access->writeShufflingState($shuffling);
+    }
+    
+    public function testReadRecordFieldEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a Record Field.',
+            QtiBinaryStreamAccessException::RECORDFIELD
+        );
+        
+        $access->readRecordField();
+    }
+    
+    public function testWriteRecordFieldClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a Record Field.',
+            QtiBinaryStreamAccessException::RECORDFIELD
+        );
+        
+        $stream->close();
+        $access->writeRecordField(array('key', new QtiString('string')));
+    }
+    
+    public function testReadIdentifierEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading an identifier.',
+            QtiBinaryStreamAccessException::IDENTIFIER
+        );
+        
+        $access->readIdentifier();
+    }
+    
+    public function testWriteIdentifierClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing an identifier.',
+            QtiBinaryStreamAccessException::IDENTIFIER
+        );
+        
+        $stream->close();
+        $access->writeIdentifier('identifier');
+    }
+    
+    public function testReadPointEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a point.',
+            QtiBinaryStreamAccessException::POINT
+        );
+        
+        $access->readPoint();
+    }
+    
+    public function testWritePointClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a point.',
+            QtiBinaryStreamAccessException::POINT
+        );
+        
+        $stream->close();
+        $access->writePoint(new QtiPoint(0, 0));
+    }
+    
+    public function testReadPairEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a pair.',
+            QtiBinaryStreamAccessException::PAIR
+        );
+        
+        $access->readPair();
+    }
+    
+    public function testWritePairClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a pair.',
+            QtiBinaryStreamAccessException::PAIR
+        );
+        
+        $stream->close();
+        $access->writePair(new QtiPair('A', 'B'));
+    }
+    
+    public function testReadDirectedPairEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a directedPair.',
+            QtiBinaryStreamAccessException::DIRECTEDPAIR
+        );
+        
+        $access->readDirectedPair();
+    }
+    
+    public function testWriteDirectedPairClosedStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a directedPair.',
+            QtiBinaryStreamAccessException::DIRECTEDPAIR
+        );
+        
+        $stream->close();
+        $access->writeDirectedPair(new QtiDirectedPair('A', 'B'));
+    }
+    
+    public function testReadDurationEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a duration.',
+            QtiBinaryStreamAccessException::DURATION
+        );
+        
+        $access->readDuration();
+    }
+    
+    public function testWriteDurationClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a duration.',
+            QtiBinaryStreamAccessException::DURATION
+        );
+        
+        $stream->close();
+        $access->writeDuration(new QtiDuration('PT0S'));
+    }
+    
+    public function testReadUriEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading a URI.',
+            QtiBinaryStreamAccessException::URI
+        );
+        
+        $access->readUri();
+    }
+    
+    public function testWriteUriClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing a URI.',
+            QtiBinaryStreamAccessException::URI
+        );
+        
+        $stream->close();
+        $access->writeUri(new QtiUri('http://www.taotesting.com'));
+    }
+    
+    public function testReadIntOrIdentifierEmptyStream() {
+        $stream = new MemoryStream('');
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while reading an intOrIdentifier.',
+            QtiBinaryStreamAccessException::INTORIDENTIFIER
+        );
+        
+        $access->readIntOrIdentifier();
+    }
+    
+    public function testWriteIntOrIdentifierClosedStream() {
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            'An error occured while writing an intOrIdentifier.',
+            QtiBinaryStreamAccessException::INTORIDENTIFIER
+        );
+        
+        $stream->close();
+        $access->writeIntOrIdentifier(new QtiIntOrIdentifier('identifier'));
     }
 }
