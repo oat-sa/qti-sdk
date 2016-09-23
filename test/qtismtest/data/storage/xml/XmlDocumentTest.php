@@ -397,4 +397,49 @@ class XmlDocumentTest extends QtiSmTestCase {
         
         $doc->schemaValidate('blub');
     }
+    
+    public function testXIncludeNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            '\\LogicException',
+            'Cannot include fragments via XInclude before loading any file.'
+        );
+        $doc->xInclude();
+    }
+    
+    public function testResolveTemplateLocationNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            '\\LogicException',
+            'Cannot resolve template location before loading any file.'
+        );
+        $doc->resolveTemplateLocation();
+    }
+    
+    public function testIncludeAssessmentSectionRefsNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            '\\LogicException',
+            'Cannot resolve assessmentSectionRefs before loading any file.'
+        );
+        $doc->includeAssessmentSectionRefs();
+    }
+    
+    public function testSaveNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            'qtism\data\storage\xml\XmlStorageException',
+            'The document cannot be saved. No document component object to be saved.'
+        );
+        
+        $doc->save('path.xml');
+    }
 }
