@@ -385,4 +385,16 @@ class XmlDocumentTest extends QtiSmTestCase {
         $doc = new XmlDocument('2.1.0');
         $doc->load($uri, true);
     }
+    
+    public function testSchemaValidateUnknownFile()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "Schema 'blub' cannot be read. Does this file exist? Is it readable?"
+        );
+        
+        $doc->schemaValidate('blub');
+    }
 }
