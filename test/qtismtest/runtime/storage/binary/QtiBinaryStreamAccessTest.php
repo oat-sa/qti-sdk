@@ -19,6 +19,10 @@ use qtism\data\NavigationMode;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\state\Shuffling;
+use qtism\data\ItemSessionControl;
+use qtism\data\state\ValueCollection;
+use qtism\data\state\Value;
+use qtism\data\state\CorrectResponse;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -846,6 +850,149 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
         $this->assertSame(null, $session->getTimeReference());
         $this->assertFalse($session->hasTimeReference());
+    }
+    
+    /**
+     * @depends testWriteAssessmentItemSession
+     */
+    public function testWriteAssessmentItemSessionNotDefaultItemSessionControl() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    
+        // Make the item session control a non-default one.
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setMaxAttempts(2);
+        $doc->getDocumentComponent()->getComponentByIdentifier('Q02')->setItemSessionControl($itemSessionControl);
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
+        $session->setItemSessionControl($itemSessionControl);
+        $session->beginItemSession();
+    
+        $access->writeAssessmentItemSession($seeker, $session);
+    
+        $stream->rewind();
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        
+        $this->assertEquals(2, $session->getItemSessionControl()->getMaxAttempts());
+        $this->assertFalse($session->getItemSessionControl()->isDefault());
+    }
+    
+    /**
+     * @depends testWriteAssessmentItemSession
+     */
+    public function testWriteAssessmentItemSessionCorrectResponseChanged() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $doc->getDocumentComponent()->getComponentByIdentifier('Q02')->getResponseDeclarations()['RESPONSE']->setCorrectResponse(
+            new CorrectResponse(
+                new ValueCollection(
+                    array(
+                        new Value(new QtiPair('A', 'P'))
+                    )
+                )
+            )
+        );
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
+        $session->beginItemSession();
+    
+        $access->writeAssessmentItemSession($seeker, $session);
+    
+        $stream->rewind();
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        
+        $this->assertTrue($session->getVariable('RESPONSE')->getCorrectResponse()->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))));
+    }
+    
+    /**
+     * @depends testWriteAssessmentItemSession
+     */
+    public function testWriteAssessmentItemSessionWithShufflingState() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    
+        $shufflingGroup = new ShufflingGroup(new IdentifierCollection(array('ChoiceA', 'ChoiceB', 'ChoiceC')));
+        $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(array('ChoiceB')));
+        $shufflingGroups = new ShufflingGroupCollection(array($shufflingGroup));
+        
+        $shuffling = new Shuffling('RESPONSE', $shufflingGroups);
+        
+        $doc->getDocumentComponent()->getComponentByIdentifier('Q01')->addShuffling($shuffling);
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
+        $session->beginItemSession();
+    
+        $access->writeAssessmentItemSession($seeker, $session);
+    
+        $stream->rewind();
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $this->assertCount(1, $session->getShufflingStates());
+    }
+    
+    /**
+     * @depends testWriteAssessmentItemSession
+     */
+    public function testWriteAssessmentItemSessionWrongSeeker() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $doc2 = new XmlCompactDocument();
+        $doc2->load(self::samplesDir() . 'custom/runtime/empty_section.xml');
+        
+        $wrongSeeker = new AssessmentTestSeeker($doc2->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
+        $session->beginItemSession();
+    
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            "No assessmentItemRef found in the assessmentTest tree structure.",
+            QtiBinaryStreamAccessException::ITEM_SESSION
+        );
+        
+        $access->writeAssessmentItemSession($wrongSeeker, $session);
+    }
+    
+    public function testWriteAssessmentItemSessionClosedStream() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+    
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
+        $session->beginItemSession();
+    
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            "An error occured while writing an assessment item session.",
+            QtiBinaryStreamAccessException::ITEM_SESSION
+        );
+        
+        $access->writeAssessmentItemSession($seeker, $session);
     }
     
     public function testReadRouteItem() {

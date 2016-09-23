@@ -287,6 +287,8 @@ class ItemSessionControl extends QtiComponent
 
     /**
 	 * Is the candidate allowed to skip items?
+     * 
+     * Know whether or not the Delivery Engine allow the candidate to skip items.
 	 *
 	 * @return boolean true if allowed, false if not.
 	 */
@@ -297,6 +299,8 @@ class ItemSessionControl extends QtiComponent
 
     /**
 	 * Set if the candidate is allowed to skip items.
+     * 
+     * Set whether or not the Delivery Engine allows the candidate to skip items.
 	 *
 	 * @param boolean $allowSkipping true if allowed, false otherwise.
 	 * @throws \InvalidArgumentException If $allowSkipping is not a valid boolean.
@@ -312,7 +316,7 @@ class ItemSessionControl extends QtiComponent
     }
 
     /**
-	 * Must validate responses ?
+	 * Must validate responses?
 	 *
 	 * @return boolean true if responses must be validated, false if not.
 	 */
@@ -322,6 +326,8 @@ class ItemSessionControl extends QtiComponent
     }
 
     /**
+     * Is a default Item Session Control?
+     * 
 	 * Whether the values held by the ItemSessionControl are the default ones.
 	 *
 	 * @return boolean
@@ -339,6 +345,8 @@ class ItemSessionControl extends QtiComponent
 
     /**
 	 * Set if the responses must be validated.
+     * 
+     * Set whether or not responses must be validated by the Delivery Engine.
 	 *
 	 * @param boolean $validateResponses true if responses must be validated, false if not.
 	 * @throws \InvalidArgumentException If $validateResponses is not a boolean.
