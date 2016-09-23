@@ -846,35 +846,29 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                         $varNature = 2;
                     }
 
-                    try {
-                        $this->writeShort($varNature);
-                        $this->writeShort($seeker->seekPosition($variableDeclaration));
-                        
-                        // If defaultValue or correct response is different from what's inside
-                        // the variable declaration, just write it.
-                        $hasDefaultValue = !Utils::equals($variable->getDefaultValue(), $var->getDefaultValue());
-                        $hasCorrectResponse = false;
-                        
-                        if ($varNature === 1 && !Utils::equals($variable->getCorrectResponse(), $var->getCorrectResponse())) {
-                            $hasCorrectResponse = true;
-                        }
-                        
-                        $this->writeBoolean($hasDefaultValue);
-                        $this->writeBoolean($hasCorrectResponse);
-                        
-                        $this->writeVariableValue($var, self::RW_VALUE);
-                        
-                        if ($hasDefaultValue === true) {
-                            $this->writeVariableValue($var, self::RW_DEFAULTVALUE);
-                        }
-                        
-                        if ($hasCorrectResponse === true) {
-                            $this->writeVariableValue($var, self::RW_CORRECTRESPONSE);
-                        }
-                        
-                    } catch (OutOfBoundsException $e) {
-                        $msg = "No variable found in the assessmentTest tree structure.";
-                        throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                    $this->writeShort($varNature);
+                    $this->writeShort($seeker->seekPosition($variableDeclaration));
+                    
+                    // If defaultValue or correct response is different from what's inside
+                    // the variable declaration, just write it.
+                    $hasDefaultValue = !Utils::equals($variable->getDefaultValue(), $var->getDefaultValue());
+                    $hasCorrectResponse = false;
+                    
+                    if ($varNature === 1 && !Utils::equals($variable->getCorrectResponse(), $var->getCorrectResponse())) {
+                        $hasCorrectResponse = true;
+                    }
+                    
+                    $this->writeBoolean($hasDefaultValue);
+                    $this->writeBoolean($hasCorrectResponse);
+                    
+                    $this->writeVariableValue($var, self::RW_VALUE);
+                    
+                    if ($hasDefaultValue === true) {
+                        $this->writeVariableValue($var, self::RW_DEFAULTVALUE);
+                    }
+                    
+                    if ($hasCorrectResponse === true) {
+                        $this->writeVariableValue($var, self::RW_CORRECTRESPONSE);
                     }
                 }
             }
