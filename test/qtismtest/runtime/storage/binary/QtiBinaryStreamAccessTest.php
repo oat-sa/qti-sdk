@@ -20,6 +20,9 @@ use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\state\Shuffling;
 use qtism\data\ItemSessionControl;
+use qtism\data\state\ValueCollection;
+use qtism\data\state\Value;
+use qtism\data\state\CorrectResponse;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
@@ -877,6 +880,39 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         
         $this->assertEquals(2, $session->getItemSessionControl()->getMaxAttempts());
         $this->assertFalse($session->getItemSessionControl()->isDefault());
+    }
+    
+    /**
+     * @depends testWriteAssessmentItemSession
+     */
+    public function testWriteAssessmentItemSessionCorrectResponseChanged() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+        
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        
+        $doc->getDocumentComponent()->getComponentByIdentifier('Q02')->getResponseDeclarations()['RESPONSE']->setCorrectResponse(
+            new CorrectResponse(
+                new ValueCollection(
+                    array(
+                        new Value(new QtiPair('A', 'P'))
+                    )
+                )
+            )
+        );
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
+        $session->beginItemSession();
+    
+        $access->writeAssessmentItemSession($seeker, $session);
+    
+        $stream->rewind();
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        
+        $this->assertTrue($session->getVariable('RESPONSE')->getCorrectResponse()->equals(new MultipleContainer(BaseType::PAIR, array(new QtiPair('A', 'P')))));
     }
     
     public function testReadRouteItem() {
