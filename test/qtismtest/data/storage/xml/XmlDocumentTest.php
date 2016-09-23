@@ -430,4 +430,16 @@ class XmlDocumentTest extends QtiSmTestCase {
         );
         $doc->includeAssessmentSectionRefs();
     }
+    
+    public function testSaveNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            'qtism\data\storage\xml\XmlStorageException',
+            'The document cannot be saved. No document component object to be saved.'
+        );
+        
+        $doc->save('path.xml');
+    }
 }
