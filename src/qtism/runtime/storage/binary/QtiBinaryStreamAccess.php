@@ -65,6 +65,7 @@ use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use \InvalidArgumentException;
 use \Exception;
+use \OutOfBoundsException;
 
 /**
  * The QtiBinaryStreamAccess aims at providing access to QTI data stored
