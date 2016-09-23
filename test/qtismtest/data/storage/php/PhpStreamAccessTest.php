@@ -75,6 +75,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeScalar(new stdClass());
     }
     
+    public function testWriteScalarCloseStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            "An error occured while writing the scalar value '10'."
+        );
+        
+        $access->writeScalar(10);
+    }
+    
     public function testWriteEquals() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeEquals();
@@ -85,10 +98,36 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("=", $this->getStream()->getBinary());
     }
     
+    public function testWriteEqualsClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing the PHP equality symbol (=).'
+        );
+        
+        $access->writeEquals();
+    }
+    
     public function testWriteNewline() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeNewline();
         $this->assertEquals("\n", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteNewlineClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a newline escape sequence (\n).'
+        );
+        
+        $access->writeNewline();
     }
     
     public function testWriteOpeningTag() {
@@ -99,6 +138,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->getStream()->flush();
         $access->writeOpeningTag(false);
         $this->assertEquals("<?php", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteOpeningTagClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a PHP opening tag (<?php).'
+        );
+        
+        $access->writeOpeningTag();
     }
     
     public function testWriteClosingTag() {
@@ -112,6 +164,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("?>", $this->getStream()->getBinary());
     }
     
+    public function testWriteClosingTagClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a newline escape sequence (\n).'
+        );
+        
+        $access->writeClosingTag();
+    }
+    
     public function testWriteSemicolon() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeSemicolon();
@@ -122,10 +187,36 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(";", $this->getStream()->getBinary());
     }
     
+    public function testWriteSemicolonClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a semicolon (;).'
+        );
+        
+        $access->writeSemicolon();
+    }
+    
     public function testWriteScopeResolution() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeScopeResolution();
         $this->assertEquals("::", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteScopeResolutionClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a scope resolution operator (::).'
+        );
+        
+        $access->writeScopeResolution();
     }
     
     public function testWriteOpeningParenthesis() {
@@ -134,10 +225,36 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals("(", $this->getStream()->getBinary());
     }
     
+    public function testWriteOpeningParenthesisClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing an opening parenthesis (().'
+        );
+        
+        $access->writeOpeningParenthesis();
+    }
+    
     public function testWriteClosingParenthesis() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeClosingParenthesis();
         $this->assertEquals(")", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteClosingParenthesisClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a closing parenthesis ()).'
+        );
+        
+        $access->writeClosingParenthesis();
     }
     
     public function testWriteComma() {
@@ -150,10 +267,36 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals(",", $this->getStream()->getBinary());
     }
     
+    public function testWriteCommaClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a comma (,).'
+        );
+        
+        $access->writeComma();
+    }
+    
     public function testWriteSpace() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeSpace();
         $this->assertEquals(" ", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteSpaceClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a white space ( ).'
+        );
+        
+        $access->writeSpace();
     }
     
     public function testWriteVariable() {
@@ -162,10 +305,36 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals('$foobar', $this->getStream()->getBinary());
     }
     
+    public function testWriteVariableClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a variable reference.'
+        );
+        
+        $access->writeVariable('foobar');
+    }
+    
     public function testWriteObjectOperator() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeObjectOperator();
         $this->assertEquals("->", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteObjectOperatorClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing an object operator (->).'
+        );
+        
+        $access->writeObjectOperator();
     }
     
     /**
@@ -181,6 +350,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->assertEquals($expected, $this->getStream()->getBinary());
     }
     
+    public function testWriteFunctionCallClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a function call.'
+        );
+        
+        $access->writeFunctionCall('callMe');
+    }
+    
     public function testWriteNew() {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeNew();
@@ -189,6 +371,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $this->getStream()->flush();
         $access->writeNew(false);
         $this->assertEquals('new', $this->getStream()->getBinary());
+    }
+    
+    public function testWriteNewClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a new operator.'
+        );
+        
+        $access->writeNew();
     }
     
     /**
@@ -202,6 +397,19 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeInstantiation($classname, $arguments);
         $this->assertEquals($expected, $this->getStream()->getBinary());
+    }
+    
+    public function testWriteInstantiationClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing an object instantiation.'
+        );
+        
+        $access->writeInstantiation('stdClass');
     }
     
     public function writeScalarDataProvider() {
