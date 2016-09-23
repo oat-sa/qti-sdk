@@ -972,6 +972,29 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase {
         $access->writeAssessmentItemSession($wrongSeeker, $session);
     }
     
+    public function testWriteAssessmentItemSessionClosedStream() {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
+    
+        $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), array('assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl'));
+        $stream = new MemoryStream();
+        $stream->open();
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+    
+        $session = new AssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
+        $session->beginItemSession();
+    
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\storage\\binary\\QtiBinaryStreamAccessException',
+            "An error occured while writing an assessment item session.",
+            QtiBinaryStreamAccessException::ITEM_SESSION
+        );
+        
+        $access->writeAssessmentItemSession($seeker, $session);
+    }
+    
     public function testReadRouteItem() {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
