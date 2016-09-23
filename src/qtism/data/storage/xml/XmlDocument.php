@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -270,9 +270,9 @@ class XmlDocument extends QtiDocument
 	 */
     protected function saveImplementation($uri = '', $formatOutput = true)
     {
-        $assessmentTest = $this->getDocumentComponent();
+        $qtiComponent = $this->getDocumentComponent();
 
-        if (!empty($assessmentTest)) {
+        if (!empty($qtiComponent)) {
             $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
 
             if ($formatOutput == true) {
@@ -323,7 +323,7 @@ class XmlDocument extends QtiDocument
                 throw new XmlStorageException($msg, XmlStorageException::VERSION, $e);
             }
         } else {
-            $msg = "The Assessment Document cannot be saved. No AssessmentTest object provided.";
+            $msg = "The document cannot be saved. No document component object to be saved.";
             throw new XmlStorageException($msg, XmlStorageException::WRITE);
         }
     }
