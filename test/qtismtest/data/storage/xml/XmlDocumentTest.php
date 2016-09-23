@@ -397,4 +397,15 @@ class XmlDocumentTest extends QtiSmTestCase {
         
         $doc->schemaValidate('blub');
     }
+    
+    public function testXIncludeNoComponent()
+    {
+        $doc = new XmlDocument();
+        
+        $this->setExpectedException(
+            '\\LogicException',
+            'Cannot include fragments via XInclude before loading any file.'
+        );
+        $doc->xInclude();
+    }
 }
