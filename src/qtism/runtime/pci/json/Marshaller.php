@@ -147,7 +147,7 @@ class Marshaller
                 $jsonEntry = array();
                 $jsonEntry['name'] = $k;
 
-                if (isset($data['base']) === true || $data['base'] === null) {
+                if (array_key_exists('base', $data) === true) {
                     // Primitive base type.
                     $jsonEntry['base'] = $data['base'];
                 } else {
