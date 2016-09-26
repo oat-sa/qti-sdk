@@ -4,8 +4,10 @@ namespace qtismtest\runtime\expressions\operators;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
+use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiFloat;
+use qtism\common\enums\BaseType;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
 class MathOperatorProcessorTest extends QtiSmTestCase {
@@ -415,6 +417,23 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 			$this->assertEquals(round($expected, 3), round($value->getValue(), 3));
 		}
 	}
+    
+    public function testNonSingleCardinalityOperand() {
+        $expression = $this->createFakeExpression(MathFunctions::CEIL);
+		$operands = new OperandsCollection(
+            array(
+                new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(1.2)))
+            )
+        );
+		$processor = new MathOperatorProcessor($expression, $operands);
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            'The MathOperator operator only accepts operands with a single cardinality.'
+        );
+        
+		$result = $processor->process();
+    }
 	
 	public function sinProvider() {
 		return array(
