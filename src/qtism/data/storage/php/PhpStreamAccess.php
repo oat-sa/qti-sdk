@@ -155,7 +155,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeNewline();
             }
             $this->getStream()->write('?>');
-        } catch (StreamException $e) {
+        } catch (Exception $e) {
             $msg = "An error occured while writing a PHP closing tag (?>).";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
@@ -220,7 +220,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     {
         try {
             $this->writeScopeResolution();
-        } catch (StreamException $e) {
+        } catch (StreamAccessException $e) {
             $msg = "An error occured while writing a Paamayim Nekudotayim.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
@@ -373,7 +373,7 @@ class PhpStreamAccess extends AbstractStreamAccess
             }
 
             $this->writeClosingParenthesis();
-        } catch (StreamException $e) {
+        } catch (Exception $e) {
             $msg = "An error occured while writing a method call.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
@@ -441,7 +441,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                     $this->writeComma();
                 }
             }
-        } catch (StreamException $e) {
+        } catch (Exception $e) {
             $msg = "An error occured while writing a sequence of arguments.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }

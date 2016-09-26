@@ -171,7 +171,7 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         
         $this->setExpectedException(
             'qtism\\common\\storage\\StreamAccessException',
-            'An error occured while writing a newline escape sequence (\n).'
+            'An error occured while writing a PHP closing tag (?>).'
         );
         
         $access->writeClosingTag();
@@ -386,6 +386,25 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         $access->writeNew();
     }
     
+    public function testWriteColon() {
+        $access = new PhpStreamAccess($this->getStream());
+        $access->writeColon();
+        $this->assertEquals(":", $this->getStream()->getBinary());
+    }
+    
+    public function testWriteColonClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a colon (:).'
+        );
+        
+        $access->writeColon();
+    }
+    
     /**
      * 
      * @dataProvider writeInstantiationDataProvider
@@ -410,6 +429,60 @@ class PhpStreamAccessTest extends QtiSmTestCase {
         );
         
         $access->writeInstantiation('stdClass');
+    }
+    
+    public function testWritePaamayimNekudotayim() {
+        $access = new PhpStreamAccess($this->getStream());
+        $access->writePaamayimNekudotayim();
+        $this->assertEquals("::", $this->getStream()->getBinary());
+    }
+    
+    public function testWritePaamayimNekudotayimClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a Paamayim Nekudotayim.'
+        );
+        
+        $access->writePaamayimNekudotayim();
+    }
+    
+    public function testWriteStaticMethodCall() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $access->writeMethodCall('foo', 'bar', null, true);
+        $stream->rewind();
+        $this->assertEquals('$foo::bar()', $stream->getBinary());
+    }
+    
+    public function testWriteStaticMethodCallClosedStream() {
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a method call.'
+        );
+        
+        $access->writeMethodCall('foo', 'bar', null, true);
+    }
+    
+    public function testWriteArgumentsCloseStream() {
+        $arguments = new PhpArgumentCollection(array(new PhpArgument(10)));
+        $stream = $this->getStream();
+        $access = new PhpStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\StreamAccessException',
+            'An error occured while writing a sequence of arguments.'
+        );
+        
+        $access->writeArguments($arguments);
     }
     
     public function writeScalarDataProvider() {
