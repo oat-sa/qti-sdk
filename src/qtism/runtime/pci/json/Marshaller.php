@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -174,35 +174,20 @@ class Marshaller
      */
     protected function marshallScalar($scalar)
     {
-        if (is_null($scalar) === true) {
-            return $scalar;
-        } elseif ($scalar instanceof QtiDatatype) {
-            if ($scalar instanceof QtiBoolean) {
-                return $this->marshallBoolean($scalar);
-            } elseif ($scalar instanceof QtiInteger) {
-                return $this->marshallInteger($scalar);
-            } elseif ($scalar instanceof QtiFloat) {
-                return $this->marshallFloat($scalar);
-            } elseif ($scalar instanceof QtiIdentifier) {
-                return $this->marshallIdentifier($scalar);
-            } elseif ($scalar instanceof QtiUri) {
-                return $this->marshallUri($scalar);
-            } elseif ($scalar instanceof QtiString) {
-                return $this->marshallString($scalar);
-            } elseif ($scalar instanceof QtiIntOrIdentifier) {
-                return $this->marshallIntOrIdentifier($scalar);
-            }
-        } else {
-            $msg = "The '" . get_class($this) . "::marshallScalar' method only accepts to marshall NULL and Scalar QTI Datatypes, '";
-            if (is_object($scalar) === true) {
-                $msg .= get_class($scalar);
-            } else {
-                $msg .= gettype($scalar);
-            }
-
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
+        if ($scalar instanceof QtiBoolean) {
+            return $this->marshallBoolean($scalar);
+        } elseif ($scalar instanceof QtiInteger) {
+            return $this->marshallInteger($scalar);
+        } elseif ($scalar instanceof QtiFloat) {
+            return $this->marshallFloat($scalar);
+        } elseif ($scalar instanceof QtiIdentifier) {
+            return $this->marshallIdentifier($scalar);
+        } elseif ($scalar instanceof QtiUri) {
+            return $this->marshallUri($scalar);
+        } elseif ($scalar instanceof QtiString) {
+            return $this->marshallString($scalar);
+        } elseif ($scalar instanceof QtiIntOrIdentifier) {
+            return $this->marshallIntOrIdentifier($scalar);
         }
     }
 
