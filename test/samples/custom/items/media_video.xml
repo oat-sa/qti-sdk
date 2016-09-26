@@ -2,13 +2,12 @@
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
-    identifier="media-audio" title="Media with Audio" adaptive="false" timeDependent="false">
+    identifier="media-video" title="Media with Video" adaptive="false" timeDependent="false">
     <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="integer"/>
     <itemBody>
-        <p>A Media Interaction with some audio.</p>
+        <p>A Media Interaction with some video.</p>
         <mediaInteraction responseIdentifier="RESPONSE" autostart="true" minPlays="1" maxPlays="1" loop="false">
-            <!-- width and height will be ignored for audio types. -->
-            <object type="audio/ogg" data="audio.ogg" width="640" height="480"/>
+            <object type="video/mp4" data="video.mp4" width="640" height="480"/>
         </mediaInteraction>
     </itemBody>
 </assessmentItem>
