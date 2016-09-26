@@ -285,6 +285,15 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
                 GoldilocksRenderingEngine::CSSCLASS_CONCRETE
             ),
+            // table-0
+            array(
+                self::samplesDir() . 'custom/items/table.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/table-0.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE
+            ),
         );
     }
     
@@ -304,10 +313,10 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase {
         $engine->setCssClassPolicy($cssClassPolicy);
         
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/items/upload.xml');
+        $doc->load(self::samplesDir() . 'custom/items/table.xml');
         
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
-        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/uploadInteraction-0.html', $strRendered . "\n");
+        file_put_contents(self::samplesDir() . 'rendering/goldilocks/rendered/table-0.html', $strRendered . "\n");
     }*/
 }
