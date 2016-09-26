@@ -200,9 +200,7 @@ class Marshaller
      */
     protected function marshallComplex(QtiDatatype $complex)
     {
-        if (is_null($complex) === true) {
-            return $complex;
-        } elseif ($complex instanceof QtiPoint) {
+        if ($complex instanceof QtiPoint) {
             return $this->marshallPoint($complex);
         } elseif ($complex instanceof QtiDirectedPair) {
             return $this->marshallDirectedPair($complex);
