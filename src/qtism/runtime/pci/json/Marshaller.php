@@ -210,17 +210,6 @@ class Marshaller
             return $this->marshallDuration($complex);
         } elseif ($complex instanceof QtiFile) {
             return $this->marshallFile($complex);
-        } else {
-            $msg = "The '" . get_class($this) . "::marshallComplex' method only accepts to marshall Complex QTI Datatypes, '";
-            if (is_object($scalar) === true) {
-                $msg .= get_class($complex);
-            } else {
-                $msg .= gettype($complex);
-            }
-
-            $msg .= "' given.";
-            $code = MarshallingException::NOT_SUPPORTED;
-            throw new MarshallingException($msg, $code);
         }
     }
 
