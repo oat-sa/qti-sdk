@@ -176,6 +176,7 @@ class MediaInteractionRenderer extends InteractionRenderer
         }
 
         $media = null;
+        $isAudio = false;
 
         if (in_array($component->getObject()->getType(), $this->getVideoTypes()) === true) {
             // Transform the object element representing the video.
@@ -190,6 +191,7 @@ class MediaInteractionRenderer extends InteractionRenderer
             $source->setAttribute('type', $component->getObject()->getType());
             $source->setAttribute('src', $component->getObject()->getData());
             $media->appendChild($source);
+            $isAudio = true;
         } elseif (in_array($component->getObject()->getType(), $this->getImageTypes()) === true) {
             $media = $fragment->ownerDocument->createElement('img');
             $media->setAttribute('src', $component->getObject()->getData());
@@ -200,12 +202,14 @@ class MediaInteractionRenderer extends InteractionRenderer
             $objects = $fragment->firstChild->getElementsByTagName('object');
             $fragment->firstChild->replaceChild($media, $objects->item(0));
 
-            if (empty($width) !== true) {
-                $media->setAttribute('width', $width);
-            }
+            if ($isAudio === false) {
+                if (empty($width) !== true) {
+                    $media->setAttribute('width', $width);
+                }
 
-            if (empty($height) !== true) {
-                $media->setAttribute('height', $height);
+                if (empty($height) !== true) {
+                    $media->setAttribute('height', $height);
+                }
             }
         }
     }
