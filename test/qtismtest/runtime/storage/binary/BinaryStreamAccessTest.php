@@ -377,4 +377,102 @@ class BinaryStreamAccessTest extends QtiSmTestCase {
         $this->assertInternalType('float', $val);
         $this->assertEquals(round(M_2_PI, 3), round($val, 3));
     }
+    
+    public function testWriteIntegerClosedStream()
+    {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\BinaryStreamAccessException',
+            "Writing a integer from a closed binary stream is not permitted."
+        );
+        
+        $access->writeInteger(1);
+    }
+    
+    public function testWriteFloatClosedStream()
+    {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\BinaryStreamAccessException',
+            "Writing a double precision float from a closed binary stream is not permitted."
+        );
+        
+        $access->writeFloat(1.);
+    }
+    
+    public function testWriteStringMaxLengthExceeded()
+    {
+        $string = '';
+        for($i = 0; $i < pow(2, 17); $i++) {
+            $string .= 'a';
+        }
+        
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $access->writeString($string);
+        $stream->rewind();
+        
+        // The written string should be 2^16 - 1 long anyway (force by implementation to not break).
+        $this->assertEquals(pow(2, 16) - 1, strlen($access->readString()));
+    }
+    
+    public function testReadBinary()
+    {
+        $stream = new MemoryStream(pack('S', 4) . 'test');
+        $stream->open();
+        $access = new BinaryStreamAccess($stream);
+        
+        $this->assertEquals('test', $access->readBinary());
+    }
+    
+    /**
+     * @depends testReadBinary
+     */
+    public function testWriteBinary()
+    {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $access->writeBinary('test');
+        $stream->rewind();
+        $read = $access->readBinary();
+        
+        $this->assertEquals('test', $read);
+    }
+    
+    /**
+     * @depends testWriteBinary
+     */
+    public function testWriteBinaryClosedStream()
+    {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\BinaryStreamAccessException',
+            "Writing a string from a closed binary stream is not permitted."
+        );
+        
+        $access->writeBinary('test');
+    }
+    
+    public function testWriteDurationCloseStream()
+    {
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $stream->close();
+        
+        $this->setExpectedException(
+            'qtism\\common\\storage\\BinaryStreamAccessException',
+            "Writing a datetime from a closed binary stream is not permitted."
+        );
+        
+        $access->writeDateTime(new DateTime());
+    }
 }
