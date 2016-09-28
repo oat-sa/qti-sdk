@@ -47,6 +47,7 @@
 			</assessmentItemRef>
 			
 			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false" category="maximum">
+			    <weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair">
 					<correctResponse>
 						<value>A P</value>
@@ -64,6 +65,7 @@
 			</assessmentItemRef>
 
 			<assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false" category="mathematics minimum">
+			    <weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
 					<correctResponse>
 						<value>H</value>
@@ -81,6 +83,7 @@
 		</assessmentSection>
 		
 		<assessmentSection identifier="S02" title="Section 2" visible="true">
+		    <weight identifier="W01" value="2.0"/>
 			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false" category="chemistry">
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 					<correctResponse>
@@ -97,6 +100,7 @@
 			</assessmentItemRef>
 			
 			<assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false" category="minimum maximum">
+			    <weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair">
 					<correctResponse>
 						<value>C B</value>
@@ -118,6 +122,7 @@
 			<assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false" category="mathematics minimum">
 				<variableMapping sourceIdentifier="mySc0r3" targetIdentifier="SCORE"/>
 				<variableMapping sourceIdentifier="answer" targetIdentifier="RESPONSE"/>
+				<weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="answer" cardinality="single" baseType="identifier">
 					<correctResponse>
 						<value>A</value>
@@ -148,6 +153,7 @@
 		<assessmentSection identifier="S03" title="Section 3" visible="true">
 			<selection select="3" withReplacement="true"/>
 			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false" category="minimum">
+			    <weight identifier="W01" value="2.0"/>
 				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="point">
 					<correctResponse>
 						<value>102 113</value>
