@@ -71,6 +71,7 @@ class OutcomeMinimum extends ItemSubset {
 	 * @throws InvalidArgumentException If one of the arguments is not a valid QTI Identifier.
 	 */
 	public function __construct($outcomeIdentifier, $weightIdentifier = '') {
+        parent::__construct();
 		$this->setOutcomeIdentifier($outcomeIdentifier);
 		$this->setWeightIdentifier($weightIdentifier);
 	}

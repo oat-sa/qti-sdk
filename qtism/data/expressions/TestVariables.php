@@ -98,6 +98,7 @@ class TestVariables extends ItemSubset {
 	 * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
 	 */
 	public function __construct($variableIdentifier,  $baseType = -1, $weightIdentifier = '') {
+        parent::__construct();
 		$this->setVariableIdentifier($variableIdentifier);
 		$this->setBaseType($baseType);
 		$this->setWeightIdentifier($weightIdentifier);
