@@ -4,12 +4,16 @@ namespace qtismtest\data;
 use qtismtest\QtiSmTestCase;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\TemplateDeclaration;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\ShufflingGroup;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ShowHide;
@@ -100,5 +104,27 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this->assertCount(1, $assessmentItemRef->getModalFeedbackRules());
         $assessmentItemRef->removeModalFeedbackRule($modalFeedbackRule);
         $this->assertCount(0, $assessmentItemRef->getModalFeedbackRules());
+    }
+    
+    public function testRemoveShuffling()
+    {
+        $shuffling = new Shuffling(
+            'RESPONSE',
+            new ShufflingGroupCollection(
+                array(
+                    new ShufflingGroup(
+                        new IdentifierCollection(
+                            array('ID1', 'ID2', 'ID3')
+                        )
+                    )
+                )
+            )
+        );
+        
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $assessmentItemRef->addShuffling($shuffling);
+        $this->assertCount(1, $assessmentItemRef->getShufflings());
+        $assessmentItemRef->removeShuffling($shuffling);
+        $this->assertCount(0, $assessmentItemRef->getShufflings());
     }
 }
