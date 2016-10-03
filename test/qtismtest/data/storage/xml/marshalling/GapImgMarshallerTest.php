@@ -42,6 +42,20 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $element = $dom->importNode($element, true);
 	    $this->assertEquals('<gapImg identifier="gapImg1" matchMax="0"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
 	}
+    
+    /*
+     * @depends testMarshall21
+     */
+    public function testMarshallFixed() {
+        $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $gapImg = new GapImg('gapImg1', 0, $object);
+        $gapImg->setFixed(true);
+	     
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
+	    $element = $marshaller->marshall($gapImg);
+        
+        $this->assertEquals('true', $element->getAttribute('fixed'));
+    }
 	
 	public function testMarshall20() {
 	    $object = new Object('http://imagine.us/myimg.png', "image/png");
