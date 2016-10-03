@@ -121,4 +121,26 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('http://imagine.us/myimg.png', $object->getData());
 	    $this->assertEquals('image/png', $object->getType());
 	}
+    
+    /**
+	 * @depends testUnmarshall21
+	 */
+    public function testUnmarshalMultipleObjects()
+    {
+        $element = $this->createDOMElement('
+	        <gapImg identifier="gapImg1" matchMax="1">
+	          <object data="http://imagine.us/myimg.png" type="image/png"/>
+              <object data="http://imagine.us/myimg2.png" type="image/png"/>
+	        </gapImg>
+	    ');
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'gapImg' element must contain a single 'object' element, 2 given."
+        );
+        
+	    $gapImg = $marshaller->unmarshall($element);
+    }
 }
