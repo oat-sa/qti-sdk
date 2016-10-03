@@ -22,10 +22,10 @@ use qtism\data\TestPartCollection;
 use qtism\data\AssessmentItemRefCollection;
 use \OutOfBoundsException;
 
-class RouteTest extends QtiSmRouteTestCase {
-    
-    public function testRouteTest() {
-        
+class RouteTest extends QtiSmRouteTestCase 
+{
+    public function testRouteTest() 
+    {
         $assessmentSections = new AssessmentSectionCollection();
         $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
         $assessmentSections[] = new AssessmentSection('S2', 'Section 2', true);
@@ -174,7 +174,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertTrue(isset($exclusionRefs['Q6']));
     }
     
-    public function testOccurences() {
+    public function testOccurences() 
+    {
         $assessmentItemRefs = new AssessmentItemRefCollection();
         $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
         $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
@@ -215,7 +216,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals(1, $routeItem4->getOccurence());
     }
     
-    public function testIsX() {
+    public function testIsX() 
+    {
         $route = self::buildSimpleRoute();
         
         // Q1
@@ -248,7 +250,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertFalse($route->valid());
     }
     
-    public function testPreviousNext() {
+    public function testPreviousNext() 
+    {
         $route = self::buildSimpleRoute();
         $this->assertEquals(0, $route->getPosition());
         
@@ -282,7 +285,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertFalse($route->valid());
     }
     
-    public function testGetNext() {
+    public function testGetNext() 
+    {
         $route = self::buildSimpleRoute();
         
         // Q1 - First position.
@@ -300,7 +304,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $nextItem = $route->getNext();
     }
     
-    public function testGetPrevious() {
+    public function testGetPrevious() 
+    {
         $route = self::buildSimpleRoute();
         $route->next();
         
@@ -322,7 +327,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $route->getPrevious();
     }
     
-    public function testGetCurrentTestPartRouteItems() {
+    public function testGetCurrentTestPartRouteItems() 
+    {
         $route = self::buildSimpleRoute();
         $routeItems = $route->getCurrentTestPartRouteItems();
         $this->assertEquals(3, count($routeItems));
@@ -331,7 +337,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Q3', $routeItems[2]->getAssessmentItemRef()->getIdentifier());
     }
     
-    public function testGetCategories() {
+    public function testGetCategories() 
+    {
         $route = new Route();
         $assessmentSection = new ExtendedAssessmentSection('S01', 'Section 1', true);
         $assessmentSections = new AssessmentSectionCollection(array($assessmentSection));
@@ -351,7 +358,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('ELA', $categories[1]);
     }
     
-    public function testKey() {
+    public function testKey() 
+    {
         $route = self::buildSimpleRoute();
         
         $this->assertEquals(0, $route->key());
@@ -359,7 +367,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals(1, $route->key());
     }
     
-    public function testGetIdentifierSequence() {
+    public function testGetIdentifierSequence() 
+    {
         $route = self::buildSimpleRoute();
         $identifiers = $route->getIdentifierSequence(true);
         
@@ -376,20 +385,23 @@ class RouteTest extends QtiSmRouteTestCase {
         $this->assertEquals('Q3', $identifiers[2]);
     }
     
-    public function testGetAssessmentItemRefsBySectionWhichDoesNotExist() {
+    public function testGetAssessmentItemRefsBySectionWhichDoesNotExist() 
+    {
         $route = self::buildSimpleRoute();
         $assessmentItemRefs = $route->getAssessmentItemRefsBySection('XXX');
         $this->assertCount(0, $assessmentItemRefs);
     }
     
-    public function testGetOccurenceCountNoSuchAssessmentItemRef() {
+    public function testGetOccurenceCountNoSuchAssessmentItemRef() 
+    {
         $route = self::buildSimpleRoute();
         $assessmentItemRef = new AssessmentItemRef('Q0X', 'Q0X.xml');
         $occurenceCount = $route->getOccurenceCount($assessmentItemRef);
         $this->assertEquals(0, $occurenceCount);
     }
     
-    public function testGetRouteItemAtUnknownPosition() {
+    public function testGetRouteItemAtUnknownPosition() 
+    {
         $route = self::buildSimpleRoute();
         
         $this->setExpectedException(
@@ -400,7 +412,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItem = $route->getRouteItemAt(1337);
     }
     
-    public function testGetLastRouteItemOnEmptyRoute() {
+    public function testGetLastRouteItemOnEmptyRoute() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -411,7 +424,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $lastRouteItem = $route->getLastRouteItem();
     }
     
-    public function testGetFirstRouteItemOnEmptyRoute() {
+    public function testGetFirstRouteItemOnEmptyRoute() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -422,7 +436,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $lastRouteItem = $route->getFirstRouteItem();
     }
     
-    public function testIsLastOfTestPartOnEmptyRoute() {
+    public function testIsLastOfTestPartOnEmptyRoute() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -433,7 +448,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $lastRouteItem = $route->isLastOfTestPart();
     }
     
-    public function testIsFirstOfTestPartOnEmptyRoute() {
+    public function testIsFirstOfTestPartOnEmptyRoute() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -444,7 +460,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $firstRouteItem = $route->isFirstOfTestPart();
     }
     
-    public function testIsInTestPartNoSuchPosition() {
+    public function testIsInTestPartNoSuchPosition() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -465,7 +482,8 @@ class RouteTest extends QtiSmRouteTestCase {
         );
     }
     
-    public function testGetRouteItemsByTestPartNoSuchTestPart() {
+    public function testGetRouteItemsByTestPartNoSuchTestPart() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -485,7 +503,8 @@ class RouteTest extends QtiSmRouteTestCase {
         );
     }
     
-    public function testGetRouteItemsByTestPartWrongArgumentType() {
+    public function testGetRouteItemsByTestPartWrongArgumentType() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -496,7 +515,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByTestPart(false);
     }
     
-    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionOne() {
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionOne() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -507,7 +527,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByAssessmentSection('S0X');
     }
     
-    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionTwo() {
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionTwo() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -520,7 +541,8 @@ class RouteTest extends QtiSmRouteTestCase {
         );
     }
     
-    public function testGetRouteItemsByAssessmentSectionWrongArgumentType() {
+    public function testGetRouteItemsByAssessmentSectionWrongArgumentType() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -531,7 +553,15 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByAssessmentSection(false);
     }
     
-    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionOne() {
+    public function testGetRouteItemsByAssessmentItemRef()
+    {
+        $route = self::buildSimpleRoute();
+        $routeItems = $route->getRouteItemsByAssessmentItemRef('Q1');
+        $this->assertCount(1, $routeItems);
+    }
+    
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionOne() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -542,7 +572,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByAssessmentItemRef('Q0X');
     }
     
-    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionTwo() {
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionTwo() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -555,7 +586,8 @@ class RouteTest extends QtiSmRouteTestCase {
         );
     }
     
-    public function testGetRouteItemsByAssessmentItemRefWrongArgumentType() {
+    public function testGetRouteItemsByAssessmentItemRefWrongArgumentType() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -566,7 +598,8 @@ class RouteTest extends QtiSmRouteTestCase {
         $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
     }
     
-    public function testBranchInvalidTarget() {
+    public function testBranchInvalidTarget() 
+    {
         $route = new Route();
         
         $this->setExpectedException(
@@ -576,4 +609,6 @@ class RouteTest extends QtiSmRouteTestCase {
         
         $route->branch('|||');
     }
+    
+    
 }
