@@ -139,4 +139,16 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         
         $assessmentItemRef->setAdaptive('true');
     }
+    
+    public function testSetTimeDependentWrongType()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The timeDependent argument must be a boolean value, 'string' given."
+        );
+        
+        $assessmentItemRef->setTimeDependent('true');
+    }
 }
