@@ -127,4 +127,16 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->removeShuffling($shuffling);
         $this->assertCount(0, $assessmentItemRef->getShufflings());
     }
+    
+    public function testSetAdaptiveWrongType()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The adaptive argument must be a boolean value, 'string' given."
+        );
+        
+        $assessmentItemRef->setAdaptive('true');
+    }
 }
