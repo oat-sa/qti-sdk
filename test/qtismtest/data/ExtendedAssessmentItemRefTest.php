@@ -10,7 +10,9 @@ use qtism\data\state\WeightCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\TemplateDeclaration;
+use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\ShowHide;
 
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase 
 {
@@ -87,5 +89,16 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this->assertCount(1, $assessmentItemRef->getTemplateDeclarations());
         $assessmentItemRef->removeTemplateDeclaration($templateDeclaration);
         $this->assertCount(0, $assessmentItemRef->getTemplateDeclarations());
+    }
+    
+    public function testRemoveModalFeedbackRule()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 'MDLF');
+        $assessmentItemRef->addModalFeedbackRule($modalFeedbackRule);
+        
+        $this->assertCount(1, $assessmentItemRef->getModalFeedbackRules());
+        $assessmentItemRef->removeModalFeedbackRule($modalFeedbackRule);
+        $this->assertCount(0, $assessmentItemRef->getModalFeedbackRules());
     }
 }
