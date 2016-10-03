@@ -51,7 +51,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
             $assessmentItemRefs = new AssessmentItemRefCollection();
             
             for ($j = 0; $j < $itemCount; $j++) {
-                $itemNum = $j + 1;
+                $itemNum = $j + 1 + ($itemCount * $i);
                 $assessmentItemRefs[] = new AssessmentItemRef("Q${itemNum}", "Q${itemNum}.xml");
             }
         
@@ -63,7 +63,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
             $testParts[] = new TestPart("T${partNum}", $assessmentSections);
             
             for ($j = 0; $j < count($assessmentItemRefs); $j++) {
-                $itemNum = $j + 1;
+                $itemNum = $j + 1 + ($itemCount * $i);
                 $route->addRouteItem($assessmentItemRefs["Q${itemNum}"], $assessmentSections["S${partNum}"], $testParts["T${partNum}"], $assessmentTest);
             }
         }
