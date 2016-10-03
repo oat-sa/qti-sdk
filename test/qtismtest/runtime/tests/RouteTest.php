@@ -649,6 +649,61 @@ class RouteTest extends QtiSmRouteTestCase
         $this->assertTrue(true);
     }
     
+    public function testBranchToAnotherSection()
+    {
+        $route = new Route();
+        
+        $assessmentItemRef1 = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRef2 = new AssessmentItemRef('Q2', 'Q2.xml');
+        
+        $assessmentSection = new AssessmentSection('MAIN', 'Main Section', true);
+        $assessmentSection1 = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSection1->setSectionParts(new SectionPartCollection(array($assessmentItemRef1)));
+        
+        $assessmentSection2 = new AssessmentSection('S2', 'Section 2', true);
+        $assessmentSection2->setSectionParts(new SectionPartCollection(array($assessmentItemRef2)));
+        
+        $assessmentSection->setSectionParts(new SectionPartCollection(array($assessmentSection1, $assessmentSection2)));
+        
+        $testPart = new TestPart('T1', new AssessmentSectionCollection(array($assessmentSection)));
+        $assessmentTest = new AssessmentTest('Test1', 'Test 1', new TestPartCollection(array($testPart)));
+        
+        $route->addRouteItem($assessmentItemRef1, new AssessmentSectionCollection(array($assessmentSection, $assessmentSection1)), $testPart, $assessmentTest);
+        $route->addRouteItem($assessmentItemRef2, new AssessmentSectionCollection(array($assessmentSection, $assessmentSection2)), $testPart, $assessmentTest);
+        
+        $this->assertEquals(0, $route->getPosition());
+        $route->branch('S2');
+        $this->assertEquals(1, $route->getPosition());
+    }
+    
+    public function testBranchToSectionOutsideOfTestPart()
+    {
+        $route = new Route();
+        
+        $assessmentItemRef1 = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRef2 = new AssessmentItemRef('Q2', 'Q2.xml');
+        
+        $assessmentSection1 = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSection1->setSectionParts(new SectionPartCollection(array($assessmentItemRef1)));
+        
+        $assessmentSection2 = new AssessmentSection('S2', 'Section 2', true);
+        $assessmentSection2->setSectionParts(new SectionPartCollection(array($assessmentItemRef2)));
+        
+        $testPart1 = new TestPart('T1', new AssessmentSectionCollection(array($assessmentSection1)));
+        $testPart2 = new TestPart('T2', new AssessmentSectionCollection(array($assessmentSection2)));
+        $assessmentTest = new AssessmentTest('Test1', 'Test 1', new TestPartCollection(array($testPart1, $testPart2)));
+        
+        $route->addRouteItem($assessmentItemRef1, $assessmentSection1, $testPart1, $assessmentTest);
+        $route->addRouteItem($assessmentItemRef2, $assessmentSection2, $testPart2, $assessmentTest);
+        
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification."
+        );
+        
+        $route->branch('S2');
+    }
+    
     public function testGetRouteItemPositionUnknownRouteItem()
     {
         $route = self::buildSimpleRoute();
