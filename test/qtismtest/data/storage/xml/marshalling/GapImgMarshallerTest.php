@@ -231,4 +231,18 @@ class GapImgMarshallerTest extends QtiSmTestCase {
         
         $gapImg = $marshaller->unmarshall($element);
     }
+    
+    public function testUnmarshallMatchMin20() {
+        $element = $this->createDOMElement('
+	        <gapImg identifier="gapImg1" matchMin="2" matchMax="3">
+	          <object data="http://imagine.us/myimg.png" type="image/png"/>
+	        </gapImg>
+	    ');
+        
+        $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
+        $gapImg = $marshaller->unmarshall($element);
+        
+        // MatchMin should be ignored in QTI 2.0.0.
+        $this->assertEquals(0, $gapImg->getMatchMin());
+    }
 }
