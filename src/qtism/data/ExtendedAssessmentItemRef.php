@@ -516,7 +516,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      */
     public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
     {
-        $this->getResponseValidityConstraints()->attach($responseValidityConstraints);
+        $this->getResponseValidityConstraints()->attach($responseValidityConstraint);
     }
     
     /**

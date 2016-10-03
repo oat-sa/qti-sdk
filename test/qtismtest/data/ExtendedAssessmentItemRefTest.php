@@ -14,6 +14,7 @@ use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingGroupCollection;
 use qtism\data\state\ShufflingGroup;
+use qtism\data\state\ResponseValidityConstraint;
 use qtism\data\content\ModalFeedbackRule;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ShowHide;
@@ -150,5 +151,13 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         );
         
         $assessmentItemRef->setTimeDependent('true');
+    }
+    
+    public function testAddResponseValidityConstraint()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);
+        $assessmentItemRef->addResponseValidityConstraint($responseValidityConstraint);
+        $this->assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
     }
 }
