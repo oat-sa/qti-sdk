@@ -161,4 +161,25 @@ class GapImgMarshallerTest extends QtiSmTestCase {
         
         $this->assertTrue($gapImg->isFixed());
     }
+    
+    /**
+	 * @depends testUnmarshall21
+	 */
+    public function testUnmarshallMissingMatchMax()
+    {
+        $element = $this->createDOMElement('
+	        <gapImg identifier="gapImg1">
+	          <object data="http://imagine.us/myimg.png" type="image/png"/>
+	        </gapImg>
+	    ');
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'matchMax' attribute is missing from the 'simpleChoice' element."
+        );
+        
+        $gapImg = $marshaller->unmarshall($element);
+    }
 }
