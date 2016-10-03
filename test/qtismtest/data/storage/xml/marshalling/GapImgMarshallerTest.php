@@ -76,6 +76,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(0, $gapImg->getMatchMin());
 	    $this->assertEquals(1, $gapImg->getMatchMax());
 	    $this->assertEquals(ShowHide::HIDE, $gapImg->getShowHide());
+        $this->assertFalse($gapImg->isFixed());
 	    
 	    $object = $gapImg->getObject();
 	    $this->assertEquals('http://imagine.us/myimg.png', $object->getData());
@@ -142,5 +143,22 @@ class GapImgMarshallerTest extends QtiSmTestCase {
         );
         
 	    $gapImg = $marshaller->unmarshall($element);
+    }
+    
+    /**
+	 * @depends testUnmarshall21
+	 */
+    public function testUnmarshalFixed()
+    {
+        $element = $this->createDOMElement('
+	        <gapImg identifier="gapImg1" matchMax="1" fixed="true">
+	          <object data="http://imagine.us/myimg.png" type="image/png"/>
+	        </gapImg>
+	    ');
+        
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+	    $gapImg = $marshaller->unmarshall($element);
+        
+        $this->assertTrue($gapImg->isFixed());
     }
 }
