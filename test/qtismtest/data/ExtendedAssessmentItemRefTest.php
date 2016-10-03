@@ -77,4 +77,15 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         
         $this->assertCount(1, $assessmentItemRef->getTemplateDeclarations());
     }
+    
+    public function testRemoveTemplateDeclaration()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $templateDeclaration = new TemplateDeclaration('TEMPLATE', BaseType::IDENTIFIER, Cardinality::SINGLE);
+        $assessmentItemRef->addTemplateDeclaration($templateDeclaration);
+        
+        $this->assertCount(1, $assessmentItemRef->getTemplateDeclarations());
+        $assessmentItemRef->removeTemplateDeclaration($templateDeclaration);
+        $this->assertCount(0, $assessmentItemRef->getTemplateDeclarations());
+    }
 }
