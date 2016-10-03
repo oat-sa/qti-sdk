@@ -8,6 +8,7 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\ResponseDeclaration;
 use qtism\data\ExtendedAssessmentItemRef;
 
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase 
@@ -54,5 +55,16 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this->assertCount(1, $assessmentItemRef->getOutcomeDeclarations());
         $assessmentItemRef->removeOutcomeDeclaration($outcomeDeclaration);
         $this->assertCount(0, $assessmentItemRef->getOutcomeDeclarations());
+    }
+    
+    public function testRemoveResponseDeclaration()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $responseDeclaration = new ResponseDeclaration('OUTCOME', BaseType::IDENTIFIER, Cardinality::SINGLE);
+        $assessmentItemRef->addResponseDeclaration($responseDeclaration);
+        
+        $this->assertCount(1, $assessmentItemRef->getResponseDeclarations());
+        $assessmentItemRef->removeResponseDeclaration($responseDeclaration);
+        $this->assertCount(0, $assessmentItemRef->getResponseDeclarations());
     }
 }
