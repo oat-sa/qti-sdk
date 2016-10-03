@@ -160,4 +160,14 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->addResponseValidityConstraint($responseValidityConstraint);
         $this->assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
     }
+    
+    public function testRemoveResponseValidityConstraint()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);
+        $assessmentItemRef->addResponseValidityConstraint($responseValidityConstraint);
+        $this->assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
+        $assessmentItemRef->removeResponseValidityConstraint($responseValidityConstraint);
+        $this->assertCount(0, $assessmentItemRef->getResponseValidityConstraints());
+    }
 }
