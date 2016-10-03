@@ -2,9 +2,12 @@
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\AssessmentItemRef;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
+use qtism\data\state\OutcomeDeclaration;
 use qtism\data\ExtendedAssessmentItemRef;
 
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase 
@@ -40,5 +43,16 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this->assertCount(1, $weights);
         $this->assertEquals('WEIGHT', $weights['WEIGHT']->getIdentifier());
         $this->assertEquals(2., $weights['WEIGHT']->getValue());
+    }
+    
+    public function testRemoveOutcomeDeclaration()
+    {
+        $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
+        $outcomeDeclaration = new OutcomeDeclaration('OUTCOME', BaseType::IDENTIFIER, Cardinality::SINGLE);
+        $assessmentItemRef->addOutcomeDeclaration($outcomeDeclaration);
+        
+        $this->assertCount(1, $assessmentItemRef->getOutcomeDeclarations());
+        $assessmentItemRef->removeOutcomeDeclaration($outcomeDeclaration);
+        $this->assertCount(0, $assessmentItemRef->getOutcomeDeclarations());
     }
 }
