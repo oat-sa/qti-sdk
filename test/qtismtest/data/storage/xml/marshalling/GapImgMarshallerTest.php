@@ -56,6 +56,20 @@ class GapImgMarshallerTest extends QtiSmTestCase {
         
         $this->assertEquals('true', $element->getAttribute('fixed'));
     }
+    
+    /*
+     * @depends testMarshall21
+     */
+    public function testMarshallObjectLabel() {
+        $object = new Object('http://imagine.us/myimg.png', "image/png");
+	    $gapImg = new GapImg('gapImg1', 0, $object);
+        $gapImg->setObjectLabel('My Label');
+	     
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
+	    $element = $marshaller->marshall($gapImg);
+        
+        $this->assertEquals('My Label', $element->getAttribute('objectLabel'));
+    }
 	
 	public function testMarshall20() {
 	    $object = new Object('http://imagine.us/myimg.png', "image/png");
