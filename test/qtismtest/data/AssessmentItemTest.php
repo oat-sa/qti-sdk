@@ -658,4 +658,89 @@ class AssessmentItemTest extends QtiSmTestCase {
             ),
         );
     }
+    
+    public function testCreateAssessmentItemWrongIdentifier()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier argument must be a valid QTI Identifier, '999' given."
+        );
+        
+        $assessmentItem = new AssessmentItem('999', 'Nine Nine Nine', false);
+    }
+    
+    public function testCreateAssessmentItemWrongTitle()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The title argument must be a string, 'integer' given."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 9, false);
+    }
+    
+    public function testCreateAssessmentItemWrongLanguage()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The lang argument must be a string, 'integer' given."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false, 1337);
+    }
+    
+    public function testSetLabelWrongType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The label argument must be a string with at most 256 characters."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
+        $assessmentItem->setLabel(1337);
+    }
+    
+    public function testSetAdaptiveWrongType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The adaptive argument must be a boolean, 'integer' given."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
+        $assessmentItem->setAdaptive(9999);
+    }
+    
+    public function testSetTimeDependentWrongType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The timeDependent argument must be a boolean, 'integer' given."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
+        $assessmentItem->setTimeDependent(9999);
+    }
+    
+    public function testSetToolNameWrongType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The toolName argument must be a string with at most 256 characters."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
+        $assessmentItem->setToolName(9999);
+    }
+    
+    public function testSetToolVersionWrongType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The toolVersion argument must be a string with at most 256 characters."
+        );
+        
+        $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
+        $assessmentItem->setToolVersion(9999);
+    }
 }
