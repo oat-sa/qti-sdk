@@ -10,6 +10,7 @@ use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\storage\php\marshalling\PhpQtiDatatypeMarshaller;
 use \stdClass;
 
@@ -21,7 +22,8 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
      * @param string $expectedInStream
      * @param QtiDatatype $qtiDatatype
      */
-    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype) {
+    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype) 
+    {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, $qtiDatatype);
         $marshaller->marshall();
@@ -29,13 +31,15 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
         $this->assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
     
-    public function testMarshallWrongDataType() {
+    public function testMarshallWrongDataType() 
+    {
         $this->setExpectedException('\\InvalidArgumentException');
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new stdClass());
     }
 
-    public function marshallDataProvider() {
+    public function marshallDataProvider() 
+    {
         return array(
             array("\$array_0 = array(10, 10, 5);\n\$qticoords_0 = new qtism\\common\\datatypes\\QtiCoords(2, \$array_0);\n", new QtiCoords(QtiShape::CIRCLE, array(10, 10, 5))),
             array("\$qtipair_0 = new qtism\\common\\datatypes\\QtiPair(\"A\", \"B\");\n", new QtiPair('A', 'B')),
@@ -44,5 +48,88 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase {
             array("\$qtipoint_0 = new qtism\\common\\datatypes\\QtiPoint(10, 15);\n", new QtiPoint(10, 15)),
             array("\$qtiidentifier_0 = new qtism\\common\\datatypes\\QtiIdentifier(\"my_id\");\n", new QtiIdentifier('my_id'))
         );
+    }
+    
+    public function testMarshallUnsupported()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiInteger(1337));
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "Cannot deal with QtiDatatype 'qtism\\common\\datatypes\\QtiInteger"
+        );
+        
+        $marshaller->marshall();
+    }
+    
+    public function testMarshallCoordsClosedStream()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiCoords(QtiShape::CIRCLE, array(10, 10, 5)));
+        
+        $this->getStream()->close();
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "An error occured while marshalling a QtiDatatype object."
+        );
+        
+        $marshaller->marshall();
+    }
+    
+    public function testMarshallPairClosedStream()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPair('A', 'B'));
+        
+        $this->getStream()->close();
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "An error occured while marshalling a QtiDatatype object."
+        );
+        
+        $marshaller->marshall();
+    }
+    
+    public function testMarshallDurationClosedStream()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiDuration("PT30S"));
+        
+        $this->getStream()->close();
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "An error occured while marshalling a QtiDatatype object."
+        );
+        
+        $marshaller->marshall();
+    }
+    
+    public function testMarshallIdentifierClosedStream()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiIdentifier("MYID"));
+        
+        $this->getStream()->close();
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "An error occured while marshalling a QtiDatatype object."
+        );
+        
+        $marshaller->marshall();
+    }
+    
+    public function testMarshallPointClosedStream()
+    {
+        $ctx = $this->createMarshallingContext();
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPoint(9, 9));
+        
+        $this->getStream()->close();
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\marshalling\\PhpMarshallingException',
+            "An error occured while marshalling a QtiDatatype object."
+        );
+        
+        $marshaller->marshall();
     }
 }

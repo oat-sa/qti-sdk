@@ -32,6 +32,7 @@ use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiDatatype;
+use qtism\common\storage\StreamAccessException;
 
 /**
  * A PhpMarshaller implementation focusing on marshalling QTI Datatypes.
