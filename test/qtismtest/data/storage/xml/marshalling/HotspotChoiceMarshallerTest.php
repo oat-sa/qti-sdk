@@ -10,8 +10,8 @@ use \DOMDocument;
 
 class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshall() {
-	    
+	public function testMarshall() 
+    {
 	    $shape = QtiShape::CIRCLE;
 	    $coords = new QtiCoords($shape, array(0, 0, 5));
 	    $hotspotLabel = "This is a circle.";
@@ -28,7 +28,8 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall() {
+	public function testUnmarshall() 
+    {
 	    $element = $this->createDOMElement('
 	        <hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>
 	    ');
@@ -50,7 +51,11 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertTrue($component->hasHotspotLabel());
 	}
 	
-	public function testUnmarshallFloatCoords() {
+    /**
+     * @depends testUnmarshall
+     */
+	public function testUnmarshallFloatCoords() 
+    {
 	    // Example taken from a TAO migration issue. Coordinates contain "string-float" values.
 	    $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128, 222  , 18.36"/>
@@ -63,4 +68,106 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
 	    $this->assertTrue($component->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, array(128, 222, 18))));
 	}
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallUnknownShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="unknown" coords="128,222,343"/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration"
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallCoordsDoNotSatisfyShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343,20,50"/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The coordinates 'coords' of element 'hotspotChoice' could not be converted."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallWrongShowHideValue()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343" showHide="bla"/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The value of the 'showHide' attribute of element 'hotspotChoice' is not a value from the 'showHide' enumeration."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingCoords()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle"/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'coords' is missing from element 'hotspotChoice'."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false"/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'shape' is missing from element 'hotspotChoice'."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingIdentifier()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice/>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'identifier' is missing from element 'hotspotChoice'."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
 }

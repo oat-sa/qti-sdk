@@ -31,6 +31,8 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\ShowHide;
 use qtism\data\QtiComponent;
 use \DOMElement;
+use \InvalidArgumentException;
+use \UnexpectedValueException;
 
 /**
  * Marshalling/Unmarshalling implementation for HotspotChoice/AssociableHotspot.
@@ -188,6 +190,7 @@ class HotspotMarshaller extends Marshaller
             }
         } else {
             $msg = "The mandatory attribute 'identifier' is missing from element '" . $element->localName . "'.";
+            throw new UnmarshallingException($msg, $element);
         }
     }
 
