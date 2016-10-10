@@ -20,19 +20,22 @@ use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\Utils;
 use qtism\common\datatypes\QtiDatatype;
 
-class RuntimeUtilsTest extends QtiSmTestCase {
+class RuntimeUtilsTest extends QtiSmTestCase 
+{
 
 	/**
 	 * @dataProvider inferBaseTypeProvider
 	 */
-	public function testInferBaseType($value, $expectedBaseType) {
+	public function testInferBaseType($value, $expectedBaseType) 
+    {
 		$this->assertTrue(Utils::inferBaseType($value) === $expectedBaseType);
 	}
 	
 	/**
 	 * @dataProvider inferCardinalityProvider
 	 */
-	public function testInferCardinality($value, $expectedCardinality) {
+	public function testInferCardinality($value, $expectedCardinality) 
+    {
 		$this->assertTrue(Utils::inferCardinality($value) === $expectedCardinality);
 	}
 	
@@ -42,7 +45,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	 * @param string $string
 	 * @param boolean $expected
 	 */
-	public function testIsValidVariableIdentifier($string, $expected) {
+	public function testIsValidVariableIdentifier($string, $expected) 
+    {
 		$this->assertSame($expected, Utils::isValidVariableIdentifier($string));
 	}
 	
@@ -52,7 +56,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	 * @param QtiDatatype $value
 	 * @param boolean $expected
 	 */
-	public function testIsNull(QtiDatatype $value = null, $expected) {
+	public function testIsNull(QtiDatatype $value = null, $expected) 
+    {
 	    $this->assertSame($expected, Utils::isNull($value));
 	}
 	
@@ -63,11 +68,65 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	 * @param QtiDatatype $b
 	 * @param boolean $expected
 	 */
-	public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected) {
+	public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected) 
+    {
 	    $this->assertSame($expected, Utils::equals($a, $b));
 	}
+    
+    /**
+     * @dataProvider throwTypingErrorProvider
+     */
+    public function testThrowTypingError($value, $expectedMsg)
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            $expectedMsg
+        );
+        
+        Utils::throwTypingError($value);
+    }
+    
+    /**
+     * @dataProvider floatArrayToIntegerProvider
+     */
+    public function testFloatArrayToInteger($floatArray, $integerArray)
+    {
+        $this->assertEquals($integerArray, Utils::floatArrayToInteger($floatArray));
+    }
+    
+    /**
+     * @dataProvider integerArrayToFloatProvider
+     */
+    public function testIntegerArrayToFloat($integerArray, $floatArray)
+    {
+        $this->assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
+    }
+    
+    public function throwTypingErrorProvider()
+    {
+        return array(
+            array(99.9, "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'double' given."),
+            array('blah', "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'string' given."),
+            array(new \stdClass(), "A value is not compliant with the QTI runtime model datatypes: boolean, integer, float, double, string, Duration, Pair, DirectedPair, Point . 'stdClass' given."),
+        );
+    }
+    
+    public function floatArrayToIntegerProvider()
+    {
+        return array(
+            array(array(10.2, 0.0), array(10, 0))
+        );
+    }
+    
+    public function integerArrayToFloatProvider()
+    {
+        return array(
+            array(array(10, 0), array(10., 0.))
+        );
+    }
 	
-	public function inferBaseTypeProvider() {
+	public function inferBaseTypeProvider() 
+    {
 		$returnValue = array();
 		
 		$returnValue[] = array(new RecordContainer(), false);
@@ -90,7 +149,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		return $returnValue;
 	}
 	
-	public function inferCardinalityProvider() {
+	public function inferCardinalityProvider() 
+    {
 		$returnValue = array();
 		
 		$returnValue[] = array(new RecordContainer(), Cardinality::RECORD);
@@ -111,7 +171,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		return $returnValue;
 	}
 	
-	public function isValidVariableIdentifierProvider() {
+	public function isValidVariableIdentifierProvider() 
+    {
 		return array(
 			array('Q01', true),
 			array('Q_01', true),
@@ -139,7 +200,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function isNullDataProvider() {
+	public function isNullDataProvider() 
+    {
 	    return array(
 	        array(new QtiBoolean(true), false),
 	        array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(20))), false),
@@ -152,7 +214,8 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 	    );
 	}
 	
-	public function equalsProvider() {
+	public function equalsProvider() 
+    {
 	    return array(
 	        array(new QtiBoolean(true), null, false),   
 	        array(null, null, true),
