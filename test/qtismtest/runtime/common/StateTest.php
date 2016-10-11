@@ -14,9 +14,10 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 
-class StateTest extends QtiSmTestCase {
-
-	public function testInstantiation() {
+class StateTest extends QtiSmTestCase 
+{
+	public function testInstantiation() 
+    {
 		$state = new State();
 		$this->assertInstanceOf('qtism\\runtime\\common\\State', $state);
 		$this->assertEquals(0, count($state));
@@ -42,12 +43,14 @@ class StateTest extends QtiSmTestCase {
 		$this->assertTrue($state['RESPONSE'] === null);
 	}
 	
-	public function testInstantiationInvalid() {
+	public function testInstantiationInvalid() 
+    {
 		$this->setExpectedException('\\InvalidArgumentException');
 		$state = new State(array(15, 'string', new \stdClass()));
 	}
 	
-	public function testAddressing() {
+	public function testAddressing() 
+    {
 		$state = new State();
 		$response = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER);
 		$score = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT);
@@ -62,19 +65,22 @@ class StateTest extends QtiSmTestCase {
 		$this->assertFalse(isset($state['SCOREX']));
 	}
 	
-	public function testAddressingInvalidOne() {
+	public function testAddressingInvalidOne() 
+    {
 		$this->setExpectedException('\\OutOfBoundsException');
 		$state = new State();
 		$state['var'] = new ResponseDeclaration('var', BaseType::POINT, Cardinality::ORDERED);
 	}
 	
-	public function testAdressingInvalidTwo() {
+	public function testAdressingInvalidTwo() 
+    {
 		$this->setExpectedException('\\OutOfRangeException');
 		$state = new State();
 		$var = $state[3];
 	}
 	
-	public function testGetAllVariables() {
+	public function testGetAllVariables() 
+    {
 	    $state = new State();
 	    $this->assertEquals(0, count($state->getAllVariables()));
 	    
@@ -96,11 +102,13 @@ class StateTest extends QtiSmTestCase {
      * @param boolean $expected
      * @param \qtism\runtime\common\State $state
      */
-    public function testContainsNullOnly($expected, State $state) {
+    public function testContainsNullOnly($expected, State $state) 
+    {
         $this->assertEquals($expected, $state->containsNullOnly());
     }
     
-    public function containsNullOnlyProvider() {
+    public function containsNullOnlyProvider() 
+    {
         return array(
             array(true, new State()),
             array(true, new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER)))),
@@ -121,11 +129,13 @@ class StateTest extends QtiSmTestCase {
      * @param boolean $expected
      * @param \qtism\runtime\common\State $state
      */
-    public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state) {
+    public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state) 
+    {
         $this->assertEquals($expected, $state->containsValuesEqualToVariableDefaultOnly());
     }
     
-    public function containsValuesEqualToVariableDefaultOnlyProvider() {
+    public function containsValuesEqualToVariableDefaultOnlyProvider() 
+    {
         $booleanNotDefault = new ResponseVariable('BOOLEAN_NOT_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
         $booleanNotDefault->setDefaultValue(new QtiBoolean(false));
         
@@ -165,5 +175,64 @@ class StateTest extends QtiSmTestCase {
             array(true, new State(array($containerDefaultEmptyContainer))),
             array(true, new State(array($containerDefault)))
         );
+    }
+    
+    public function testUnsetVariableByString()
+    {
+        $state = new State(
+            array(
+                new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true))
+            )
+        );
+        
+        $this->assertCount(1, $state);
+        $state->unsetVariable('RESPONSE');
+        $this->assertCount(0, $state);
+    }
+    
+    public function testUnsetVariableByVariableObject()
+    {
+        $variable = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
+        $state = new State(array($variable));
+        
+        $this->assertCount(1, $state);
+        $state->unsetVariable($variable);
+        $this->assertCount(0, $state);
+    }
+    
+    public function testUnsetUnexistingVariable()
+    {
+        $state = new State();
+        
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "No Variable object with identifier 'X' found in the current State object."
+        );
+        
+        $state->unsetVariable('X');
+    }
+    
+    public function testUnsetVariableWrongType()
+    {
+        $state = new State();
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The variable argument must be a Variable object or a string, '1' given"
+        );
+        
+        $state->unsetVariable(true);
+    }
+    
+    public function testOffsetSetWrongOffsetType()
+    {
+        $state = new State();
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "A State object can only be adressed by a valid string."
+        );
+        
+        $state[true] = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
     }
 }
