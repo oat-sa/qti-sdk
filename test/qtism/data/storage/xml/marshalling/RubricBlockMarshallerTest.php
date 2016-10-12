@@ -18,8 +18,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
 	public function testUnmarshall() {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor">
-                <h3>Be carefull kiddo !</h3>
-                <p>Read the instructions twice.</p>
+                <h3>Be carefull kiddo !</h3>inner text<p>Read the instructions twice.</p>
                 <stylesheet href="./stylesheet.css" type="text/css" media="screen"/>
             </rubricBlock>
         ');
@@ -31,16 +30,33 @@ class RubricBlockMarshallerTest extends QtiSmTestCase {
         $rubricBlockContent = $rubricBlock->getContent();
         $this->assertEquals(6, count($rubricBlockContent));
         $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\H3', $rubricBlockContent[1]);
+        $this->assertEquals('Be carefull kiddo !', $rubricBlockContent[1]->getContent()[0]->getContent());
         $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $rubricBlockContent[3]);
+        $this->assertEquals('Read the instructions twice.', $rubricBlockContent[3]->getContent()[0]->getContent());
+        $this->assertEquals('inner text', $rubricBlockContent[2]->getContent());
         
         $stylesheets = $rubricBlock->getStylesheets();
         $this->assertEquals(1, count($stylesheets));
         $this->assertEquals('./stylesheet.css', $stylesheets[0]->getHref());
         $this->assertEquals('text/css', $stylesheets[0]->getType());
         $this->assertEquals('screen', $stylesheets[0]->getMedia());
-        
 	}
 	
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallApipAccessibilityInRubricBlock() {
+        $rubricBlock = $this->createComponentFromXml('
+            <rubricBlock class="warning" view="candidate tutor" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+                <h3>Be carefull kiddo !</h3>
+                <p>Read the instructions twice.</p>
+                <stylesheet href="./stylesheet.css" type="text/css" media="screen"/>
+                <apipAccessibility xmlns="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0"/>
+            </rubricBlock>
+        ');
+        
+        $this->assertInstanceOf('qtism\\data\\content\\RubricBlock', $rubricBlock);
+	}
 	
 	public function testMarshall() {
 
