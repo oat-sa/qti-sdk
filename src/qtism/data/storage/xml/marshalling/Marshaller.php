@@ -382,16 +382,17 @@ abstract class Marshaller
 	 *
 	 * @param DOMElement $element A DOMElement object.
 	 * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-	 * @param boolean $exclude Wether the $tagName parameter must be considered as a blacklist.
+	 * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
+     * @param boolean $withText (optional) Wether text nodes must be returned or not.
 	 * @return array An array of DOMElement objects.
 	 */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false)
+    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
         if (!is_array($tagName)) {
             $tagName = array($tagName);
         }
 
-        $rawElts = self::getChildElements($element);
+        $rawElts = self::getChildElements($element, $withText);
         $returnValue = array();
 
         foreach ($rawElts as $elt) {
