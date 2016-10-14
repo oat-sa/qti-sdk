@@ -656,6 +656,13 @@ class AssessmentItemTest extends QtiSmTestCase {
                     array('RESPONSE', 3, 4, '', array())
                 )
             ),
+            // # 68
+            array(
+                self::samplesDir() . 'ims/items/2_2/graphic_order.xml',
+                array(
+                    array('RESPONSE', 4, 0, '', array())
+                )
+            )
         );
     }
     
