@@ -212,6 +212,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
         return array(
             // -- 2.2.1
             array(self::decorateUri('choice.xml', '2.2.1'), '2.2.1'),
+            array(self::decorateUri('graphic_order.xml', '2.2.1'), '2.2.1'),
         
             // -- 2.2.0
             array(self::decorateUri('adaptive_template.xml', '2.2.0'), '2.2.0'),
@@ -230,6 +231,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::decorateUri('gap_match.xml', '2.2.0'), '2.2.0'),
             array(self::decorateUri('graphic_associate.xml', '2.2.0'), '2.2.0'),
             array(self::decorateUri('graphic_gap_match.xml', '2.2.0'), '2.2.0'),
+            array(self::decorateUri('graphic_order.xml', '2.2.0'), '2.2.0'),
             array(self::decorateUri('hotspot.xml', '2.2.0'), '2.2.0'),
             array(self::decorateUri('hottext.xml', '2.2.0'), '2.2.0'),
             array(self::decorateUri('inline_choice.xml', '2.2.0'), '2.2.0'),
@@ -269,6 +271,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::decorateUri('gap_match.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('graphic_associate.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('graphic_gap_match.xml', '2.1.1'), '2.1.1'),
+            array(self::decorateUri('graphic_order.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('hotspot.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('hottext.xml', '2.1.1'), '2.1.1'),
             array(self::decorateUri('inline_choice.xml', '2.1.1'), '2.1.1'),
@@ -307,6 +310,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::decorateUri('gap_match.xml', '2.1'), '2.1.0'),
             array(self::decorateUri('graphic_associate.xml', '2.1'), '2.1.0'),
             array(self::decorateUri('graphic_gap_match.xml', '2.1'), '2.1.0'),
+            array(self::decorateUri('graphic_order.xml', '2.1'), '2.1.0'),
             array(self::decorateUri('hotspot.xml', '2.1'), '2.1.0'),
             array(self::decorateUri('hottext.xml', '2.1'), '2.1.0'),
             array(self::decorateUri('inline_choice.xml', '2.1'), '2.1.0'),
