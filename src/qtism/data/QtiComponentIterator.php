@@ -143,11 +143,6 @@ class QtiComponentIterator implements Iterator
         $this->rootComponent = $rootComponent;
     }
 
-    protected function setCurrentContainer(QtiComponent $currentContainer = null)
-    {
-        $this->currentContainer = $currentContainer;
-    }
-
     public function getCurrentContainer()
     {
         return $this->currentContainer;
@@ -162,26 +157,6 @@ class QtiComponentIterator implements Iterator
     public function getRootComponent()
     {
         return $this->rootComponent;
-    }
-
-    /**
-	 * Set the currently traversed QtiComponent object.
-	 *
-	 * @param \qtism\data\QtiComponent $currentComponent
-	 */
-    protected function setCurrentComponent(QtiComponent $currentComponent = null)
-    {
-        $this->currentComponent = $currentComponent;
-    }
-
-    /**
-	 * Get the currently traversed QtiComponent object.
-	 *
-	 * @return \qtism\data\QtiComponent A QtiComponent object.
-	 */
-    protected function getCurrentComponent()
-    {
-        return $this->currentComponent;
     }
 
     /**
@@ -202,28 +177,6 @@ class QtiComponentIterator implements Iterator
     protected function &getClasses() 
     {
         return $this->classes;
-    }
-    
-    protected function getTrailCount()
-    {
-        return $this->trailCount;
-    }
-    
-    protected function setTrailCount($trailCount)
-    {
-        $this->trailCount = $trailCount;
-    }
-    
-    protected function incrementTrailCount()
-    {
-        $trailCount = $this->getTrailCount() + 1;
-        $this->setTrailCount($trailCount);
-    }
-    
-    protected function decrementTrailCount()
-    {
-        $trailCount = $this->getTrailCount() - 1;
-        $this->setTrailCount($trailCount);
     }
 
     /**
@@ -281,17 +234,6 @@ class QtiComponentIterator implements Iterator
     protected function setTraversed(array &$traversed)
     {
         $this->traversed = $traversed;
-    }
-
-    /**
-	 * Get a reference on the array of QtiComponents which contains the already
-	 * traversed components.
-	 *
-	 * @return array An array of QtiComponent objects.
-	 */
-    protected function &getTraversed() 
-    {
-        return $this->traversed;
     }
 
     /**
