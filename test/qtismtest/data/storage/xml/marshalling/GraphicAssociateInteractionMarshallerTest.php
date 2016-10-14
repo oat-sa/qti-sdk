@@ -14,9 +14,10 @@ use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use \DOMDocument;
 
-class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
-
-	public function testMarshall21() {
+class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase 
+{
+	public function testMarshall21() 
+    {
         
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
@@ -41,11 +42,43 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
         
         $this->assertEquals('<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE" minAssociations="2" maxAssociations="3"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
 	}
+    
+    /**
+     * @depends testMarshall21
+     */
+    public function testMarshall21XmlBase() 
+    {
+        
+	    $prompt = new Prompt();
+	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
+	    
+	    $object = new Object('myimg.png', 'image/png');
+	    
+	    $choice1 = new AssociableHotspot('choice1', 2, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
+	    $choice1->setMatchMin(1);
+	    $choice2 = new AssociableHotspot('choice2', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(2, 2, 15)));
+	    $choice3 = new AssociableHotspot('choice3', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15)));
+	    $choices = new AssociableHotspotCollection(array($choice1, $choice2, $choice3));
+	    
+	    $graphicAssociateInteraction = new GraphicAssociateInteraction('RESPONSE', $object, $choices, 'prout');
+	    $graphicAssociateInteraction->setPrompt($prompt);
+	    $graphicAssociateInteraction->setMaxAssociations(3);
+	    $graphicAssociateInteraction->setMinAssociations(2);
+        $graphicAssociateInteraction->setXmlBase('/home/jerome');
+	    
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($graphicAssociateInteraction)->marshall($graphicAssociateInteraction);
+        
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        
+        $this->assertEquals('<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE" minAssociations="2" maxAssociations="3" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
+	}
 	
 	/**
 	 * @depends testMarshall21
 	 */
-	public function testMarshall20() {
+	public function testMarshall20() 
+    {
 	    // Make sure that maxAssociations is always in the output but never minAssociations.
 	    $object = new Object('myimg.png', 'image/png');
 	     
@@ -67,7 +100,8 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<graphicAssociateInteraction responseIdentifier="RESPONSE" maxAssociations="3"><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall21() {
+	public function testUnmarshall21() 
+    {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
               <prompt>Prompt...</prompt>
@@ -114,8 +148,27 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(QtiShape::CIRCLE, $choices[2]->getShape());
         $this->assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15))));
 	}
+    
+    public function testUnmarshall21InvalidContentIgnored() 
+    {
+        $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
+              <prompt>Prompt...</prompt>
+              <object data="myimg.png" type="image/png"/>
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <simpleChoice identifier="choice3">choice3</simpleChoice>
+            </graphicAssociateInteraction>
+        ');
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this->assertInstanceOf('qtism\\data\\content\\interactions\\GraphicAssociateInteraction', $component);
+        $choices = $component->getAssociableHotspots();
+        $this->assertEquals(2, count($choices));
+	}
 	
-	public function testUnmarshall20() {
+	public function testUnmarshall20() 
+    {
 	    // Make sure minAssociations is not taken into account
 	    // in a QTI 2.0 context.
 	    $element = $this->createDOMElement('
@@ -131,5 +184,111 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase {
 
 	    $this->assertSame(0, $component->getMinAssociations());
 	    $this->assertSame(3, $component->getMaxAssociations());
+	}
+    
+    /**
+     * @depends testUnmarshall20
+     */
+    public function testUnmarshall20NoMaxAssociations() 
+    {
+	    $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2">
+              <object data="myimg.png" type="image/png"/>
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/>
+            </graphicAssociateInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'maxAssociations' attribute is missing from the 'graphicAssociateInteraction' element."
+        );
+	    
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    /**
+     * @depends testUnmarshall20
+     */
+    public function testUnmarshall20NoAssociableHotspot() 
+    {
+	    // Make sure minAssociations is not taken into account
+	    // in a QTI 2.0 context.
+	    $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2">
+              <object data="myimg.png" type="image/png"/>
+            </graphicAssociateInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'graphicAssociateInteraction' element must contain at lease one 'associableHotspot' element, none given."
+        );
+	    
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    /**
+     * @depends testUnmarshall20
+     */
+    public function testUnmarshall20NoObject() 
+    {
+	    $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2">
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/>
+            </graphicAssociateInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'graphicAssociateInteraction' element must contain exactly one 'object' element, none given."
+        );
+	    
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    /**
+     * @depends testUnmarshall20
+     */
+    public function testUnmarshall20XmlBase() 
+    {
+	    // Make sure minAssociations is not taken into account
+	    // in a QTI 2.0 context.
+	    $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2" maxAssociations="3" xml:base="/home/jerome">
+              <object data="myimg.png" type="image/png"/>
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/>
+            </graphicAssociateInteraction>
+        ');
+	    
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+        $this->assertEquals('/home/jerome', $component->getXmlBase());
+	}
+    
+    /**
+     * @depends testUnmarshall20
+     */
+    public function testUnmarshall20NoResponseIdentifier() 
+    {
+	    $element = $this->createDOMElement('
+            <graphicAssociateInteraction minAssociations="2" maxAssociations="3">
+              <object data="myimg.png" type="image/png"/>
+              <associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/>
+              <associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/>
+              <associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/>
+            </graphicAssociateInteraction>
+        ');
+	    
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'responseIdentifier' attribute is missing from the 'graphicAssociateInteraction' element"
+        );
+        
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 	}
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -49,13 +49,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-
-                try {
-                    $choices = new AssociableHotspotCollection($children->getArrayCopy());
-                } catch (InvalidArgumentException $e) {
-                    $msg = "An 'graphicAssociateInteraction' element can only contain 'associableHotspot' choices.";
-                    throw new UnmarshallingException($msg, $element, $e);
-                }
+                $choices = new AssociableHotspotCollection($children->getArrayCopy());
 
                 if (count($choices) > 0) {
 
@@ -89,6 +83,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
                     return $component;
                 } else {
                     $msg = "A 'graphicAssociateInteraction' element must contain at lease one 'associableHotspot' element, none given.";
+                    throw new UnmarshallingException($msg, $element);
                 }
             } else {
                 $msg = "A 'graphicAssociateInteraction' element must contain exactly one 'object' element, none given.";
