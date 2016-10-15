@@ -50,7 +50,7 @@ class ExtendedTestPart extends TestPart
     /**
      * A collection of TestFeedbackRef objects.
      * 
-     * @var \qtism\data\Test
+     * @var \qtism\data\TestFeedbackRefCollection
      * @qtism-bean-property
      */
     private $testFeedbackRefs;
