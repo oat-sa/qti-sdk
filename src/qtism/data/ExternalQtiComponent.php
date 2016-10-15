@@ -91,10 +91,9 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
     }
 
     /**
-     * Set the XML representation of the external component from
-     * an XML string.
+     * Set the XML representation of the external component.
      *
-     * @param string An XML String
+     * @param \DOMDocument $xml An XML Document
      */
     protected function setXml(DOMDocument $xml)
     {
