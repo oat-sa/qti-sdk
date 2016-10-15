@@ -468,60 +468,60 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     {
         return $this->timeDependent;
     }
-    
+
     /**
      * Set the response identifiers related to endAttemptInteractions in the item content.
-     * 
+     *
      * @param \qtism\common\collections\IdentifierCollection $endAttemptIdentifiers
      */
-    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers) 
+    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers)
     {
         $this->endAttemptIdentifiers = $endAttemptIdentifiers;
     }
-    
+
     /**
      * Get the response identifiers related to endAttemptInteractions in the item content.
-     * 
+     *
      * @return \qtism\common\collections\IdentifierCollection
      */
-    public function getEndAttemptIdentifiers() 
+    public function getEndAttemptIdentifiers()
     {
         return $this->endAttemptIdentifiers;
     }
-    
+
     /**
      * Set the response validity constraints related to the item content.
-     * 
-     * @param \qtism\data\state\ResponseValidityConstraintCollection $responseValidityConstraint
+     *
+     * @param \qtism\data\state\ResponseValidityConstraintCollection $responseValidityConstraints
      */
     public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints)
     {
         $this->responseValidityConstraints = $responseValidityConstraints;
     }
-    
+
     /**
      * Get the response validity constraints related to the item content.
-     * 
+     *
      * @return \qtism\data\state\ResponseValidityConstraintCollection
      */
     public function getResponseValidityConstraints()
     {
         return $this->responseValidityConstraints;
     }
-    
+
     /**
      * Add a response validity constraint related to item content.
-     * 
+     *
      * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
      */
     public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
     {
         $this->getResponseValidityConstraints()->attach($responseValidityConstraint);
     }
-    
+
     /**
      * Remove a response validity constraint related to item content.
-     * 
+     *
      * @param \qtism\data\state\ResponseValidityConstraint $responseValidityConstraint
      */
     public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
@@ -564,7 +564,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
             $this->getOutcomeDeclarations()->getArrayCopy(),
             $this->getTemplateDeclarations()->getArrayCopy()
         );
-        
+
         if ($this->hasTemplateProcessing() === true) {
             $components[] = $this->getTemplateProcessing();
         }
@@ -572,8 +572,8 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
         if ($this->hasResponseProcessing() === true) {
             $components[] = $this->getResponseProcessing();
         }
-        
-        $components = array_merge($components, 
+
+        $components = array_merge($components,
             $this->getModalFeedbackRules()->getArrayCopy(),
             $this->getShufflings()->getArrayCopy(),
             $this->getResponseValidityConstraints()->getArrayCopy()
