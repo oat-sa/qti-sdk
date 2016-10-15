@@ -169,7 +169,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * The content body of the item.
      *
-     * @var \qtism\data\ItemBody
+     * @var \qtism\data\content\ItemBody
      * @qtism-bean-property
      */
     private $itemBody = null;
@@ -503,7 +503,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Set the outcome declarations.
      *
-     * @param qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
     {
@@ -533,7 +533,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Get the template declarations.
      *
-     * @return qtism\data\state\TemplateDeclarationCollection A collection of TemplateDeclaration objects.
+     * @return \qtism\data\state\TemplateDeclarationCollection A collection of TemplateDeclaration objects.
      */
     public function getTemplateDeclarations()
     {
