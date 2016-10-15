@@ -255,7 +255,7 @@ class AssessmentSection extends SectionPart
 	 * Get the section rubrics to presented to the candidate with each
 	 * item contained by the section.
 	 *
-	 * @return \qtism\data\rules\RubricBlockCollection A collection of RubricBlock objects.
+	 * @return \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
 	 */
     public function getRubricBlocks()
     {
@@ -266,7 +266,7 @@ class AssessmentSection extends SectionPart
 	 * Set the section rubrics to presented to the candidate with each
 	 * item contained by the section.
 	 *
-	 * @param \qtism\data\rules\RubricBlockCollection A collection of RubricBlock objects.
+	 * @param \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
 	 */
     public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
     {
