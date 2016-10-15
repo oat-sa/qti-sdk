@@ -23,8 +23,6 @@
 namespace qtism\data;
 
 use qtism\common\collections\IdentifierCollection;
-use qtism\data\state\Weight;
-use qtism\data\state\VariableMapping;
 use qtism\data\state\VariableMappingCollection;
 use qtism\data\state\WeightCollection;
 use qtism\data\state\TemplateDefaultCollection;
@@ -72,7 +70,7 @@ class AssessmentItemRef extends SectionPart
     /**
 	 * A collection of Weight objects.
 	 *
-	 * @var qtism\data\state\WeightCollection
+	 * @var \qtism\data\state\WeightCollection
 	 * @qtism-bean-property
 	 */
     private $weights;
@@ -158,7 +156,7 @@ class AssessmentItemRef extends SectionPart
     /**
 	 * Get the Variable Mappings related to the referenced item.
 	 *
-	 * @return qtism\data\state\VariableMappingCollection A collection of VariableMapping objects.
+	 * @return \qtism\data\state\VariableMappingCollection A collection of VariableMapping objects.
 	 */
     public function getVariableMappings()
     {
