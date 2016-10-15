@@ -35,6 +35,7 @@ class AssessmentItemRefCollection extends SectionPartCollection
     /**
 	 * Check if $value is an AssessmentItemRef object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a AssessmentItemRef object.
 	 */
     protected function checkType($value)
