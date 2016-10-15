@@ -35,6 +35,7 @@ class AssessmentSectionCollection extends SectionPartCollection
     /**
 	 * Check if $value is an AssessmentSection object.
 	 *
+     * @param mixed $value
 	 * @throws \InvalidArgumentException If $value is not a AssessmentSection object.
 	 */
     protected function checkType($value)
