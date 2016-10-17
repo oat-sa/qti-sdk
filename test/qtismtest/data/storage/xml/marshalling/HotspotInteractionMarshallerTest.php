@@ -10,7 +10,6 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\content\interactions\HotspotChoiceCollection;
 use qtism\data\content\TextRun;
-use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use \DOMDocument;
 

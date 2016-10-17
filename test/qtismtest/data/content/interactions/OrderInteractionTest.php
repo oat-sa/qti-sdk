@@ -10,8 +10,10 @@ class OrderInteractionTest extends QtiSmTestCase
 {
     public function testNotEnoughChoices()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("An OrderInteraction object must be composed of at lease one SimpleChoice object, none given");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "An OrderInteraction object must be composed of at lease one SimpleChoice object, none given"
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection([])
@@ -20,8 +22,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetShuffleWrongType()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The 'shuffle' argument must be a boolean value, 'string' given");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'shuffle' argument must be a boolean value, 'string' given"
+        );
             
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
@@ -37,8 +41,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetMinChoicesWrongType()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The 'minChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given.");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'minChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given."
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
@@ -54,8 +60,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetMinChoicesChoicesOverflow()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The value of 'minChoices' cannot exceed the number of available choices.");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The value of 'minChoices' cannot exceed the number of available choices."
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
@@ -71,8 +79,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetMaxChoicesWrongType()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The 'maxChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given.");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'maxChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given."
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
@@ -88,8 +98,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetMaxChoicesOverflow()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The 'maxChoices' argument cannot exceed the number of available choices.");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'maxChoices' argument cannot exceed the number of available choices."
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
@@ -106,8 +118,10 @@ class OrderInteractionTest extends QtiSmTestCase
     
     public function testSetOrientationWrongType()
     {
-        $this->expectException('\\InvalidArgumentException');
-        $this->expectExceptionMessage("The 'orientation' argument must be a value from the Orientation enumeration, 'string' given.");
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'orientation' argument must be a value from the Orientation enumeration, 'string' given."
+        );
         
         $orderInteraction = new OrderInteraction(
             'RESPONSE', new SimpleChoiceCollection(
