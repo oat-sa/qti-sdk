@@ -171,7 +171,7 @@ class OrderInteraction extends BlockInteraction
         if (is_bool($shuffle) === true) {
             $this->shuffle = $shuffle;
         } else {
-            $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "given.";
+            $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -278,7 +278,7 @@ class OrderInteraction extends BlockInteraction
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray()) === true) {
+        if (in_array($orientation, Orientation::asArray(), true) === true) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";
@@ -289,7 +289,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * Get the orientation of the choices.
      *
-     * @return A value from the Orientation enumeration.
+     * @return integer A value from the Orientation enumeration.
      */
     public function getOrientation()
     {
@@ -297,7 +297,7 @@ class OrderInteraction extends BlockInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {
