@@ -153,11 +153,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
         $cos = cos($operands[0]->getValue());
-        if ($cos == 0) {
-            return null;
-        } else {
-            return new QtiFloat(1 / $cos);
-        }
+        return ($cos == 0) ? null : new QtiFloat(1 / $cos);
     }
 
     /**
@@ -168,11 +164,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
         $sin = sin($operands[0]->getValue());
-        if ($sin == 0) {
-            return null;
-        } else {
-            return new QtiFloat(1 / $sin);
-        }
+        return ($sin == 0) ? null : new QtiFloat(1 / $sin);
     }
 
     /**
@@ -183,13 +175,7 @@ class MathOperatorProcessor extends OperatorProcessor
     {
         $operands = $this->getOperands();
         $tan = tan($operands[0]->getValue());
-        if (is_infinite($tan)) {
-            return new QtiFloat(0.0);
-        } elseif ($tan == 0) {
-            return null;
-        } else {
-            return new QtiFloat(1 / $tan);
-        }
+        return (is_infinite($tan)) ? new QtiFloat(0.0) : (($tan == 0) ? null : new QtiFloat(1 / $tan));
     }
 
     /**

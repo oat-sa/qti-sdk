@@ -1,6 +1,7 @@
 <?php
 namespace qtismtest\runtime\expressions\operators;
 
+use qtism\common\datatypes\QtiBoolean;
 use qtismtest\QtiSmTestCase;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
@@ -10,15 +11,16 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
-class MathOperatorProcessorTest extends QtiSmTestCase {
-	
+class MathOperatorProcessorTest extends QtiSmTestCase
+{
 	/**
 	 * @dataProvider sinProvider
 	 * 
 	 * @param number $operand operand in radians
 	 * @param number $expected
 	 */
-	public function testSin($operand, $expected) {
+	public function testSin($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::SIN);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -33,7 +35,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCos($operand, $expected) {
+	public function testCos($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::COS);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -48,7 +51,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testTan($operand, $expected) {
+	public function testTan($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::TAN);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -63,7 +67,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testSec($operand, $expected) {
+	public function testSec($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::SEC);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -78,7 +83,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCsc($operand, $expected) {
+	public function testCsc($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::CSC);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -93,7 +99,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCot($operand, $expected) {
+	public function testCot($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::COT);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -108,7 +115,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testAsin($operand, $expected) {
+	public function testAsin($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ASIN);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -124,7 +132,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand2
 	 * @param number $expected
 	 */
-	public function testAtan2($operand1, $operand2, $expected) {
+	public function testAtan2($operand1, $operand2, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ATAN2);
 		$operands = new OperandsCollection(array($operand1, $operand2));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -139,7 +148,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testAsec($operand, $expected) {
+	public function testAsec($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ASEC);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -154,7 +164,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testAcsc($operand, $expected) {
+	public function testAcsc($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ACSC);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -169,7 +180,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testAcot($operand, $expected) {
+	public function testAcot($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ACOT);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -184,7 +196,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testLog($operand, $expected) {
+	public function testLog($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::LOG);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -199,7 +212,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testLn($operand, $expected) {
+	public function testLn($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::LN);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -214,7 +228,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testSinh($operand, $expected) {
+	public function testSinh($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::SINH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -229,7 +244,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCosh($operand, $expected) {
+	public function testCosh($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::COSH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -244,7 +260,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testTanh($operand, $expected) {
+	public function testTanh($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::TANH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -259,7 +276,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testSech($operand, $expected) {
+	public function testSech($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::SECH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -274,7 +292,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCsch($operand, $expected) {
+	public function testCsch($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::CSCH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -289,7 +308,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCoth($operand, $expected) {
+	public function testCoth($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::COTH);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -304,7 +324,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testAbs($operand, $expected) {
+	public function testAbs($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::ABS);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -319,7 +340,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testExp($operand, $expected) {
+	public function testExp($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::EXP);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -334,7 +356,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testSignum($operand, $expected) {
+	public function testSignum($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::SIGNUM);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -349,7 +372,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testFloor($operand, $expected) {
+	public function testFloor($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::FLOOR);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -363,7 +387,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testCeil($operand, $expected) {
+	public function testCeil($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::CEIL);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -377,7 +402,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testToDegrees($operand, $expected) {
+	public function testToDegrees($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::TO_DEGREES);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -392,7 +418,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 	 * @param number $operand
 	 * @param number $expected
 	 */
-	public function testToRadians($operand, $expected) {
+	public function testToRadians($operand, $expected)
+    {
 		$expression = $this->createFakeExpression(MathFunctions::TO_RADIANS);
 		$operands = new OperandsCollection(array($operand));
 		$processor = new MathOperatorProcessor($expression, $operands);
@@ -400,8 +427,41 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		$this->assertEqualsRounded($expected, $result);
 		$this->assertTrue(!$result instanceof QtiInteger);
 	}
+    
+    /**
+     * @dataProvider acosProvider
+     *
+     * @param $operand
+     * @param $expected
+     */
+	public function testAcos($operand, $expected)
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ACOS);
+        $operands = new OperandsCollection(array($operand));
+        $processor = new MathOperatorProcessor($expression, $operands);
+        $result = $processor->process();
+        $this->assertEqualsRounded($expected, $result);
+        $this->assertTrue(!$result instanceof QtiInteger);
+    }
+    
+    /**
+     * @dataProvider atanProvider
+     *
+     * @param $operand
+     * @param $expected
+     */
+    public function testAtan($operand, $expected)
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN);
+        $operands = new OperandsCollection(array($operand));
+        $processor = new MathOperatorProcessor($expression, $operands);
+        $result = $processor->process();
+        $this->assertEqualsRounded($expected, $result);
+        $this->assertTrue(!$result instanceof QtiInteger);
+    }
 	
-	protected function assertEqualsRounded($expected, $value) {
+	protected function assertEqualsRounded($expected, $value)
+    {
 		if (is_null($expected)) {
 			$this->assertSame(null, $value);
 		}
@@ -418,7 +478,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		}
 	}
     
-    public function testNonSingleCardinalityOperand() {
+    public function testNonSingleCardinalityOperand()
+    {
         $expression = $this->createFakeExpression(MathFunctions::CEIL);
 		$operands = new OperandsCollection(
             array(
@@ -434,47 +495,104 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
         
 		$result = $processor->process();
     }
+    
+    public function testNonNumericOperand()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::CEIL);
+        $operands = new OperandsCollection(
+            array(
+                new QtiBoolean(true)
+            )
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+    
+        $this->expectException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectExceptionMessage('The MathOperator operator only accepts operands with an integer or float baseType.');
+    
+        $processor->process();
+    }
+    
+    public function testAtan2SingleOperator()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN2);
+        $operands = new OperandsCollection(
+            array(
+                new QtiFloat(0.0)
+            )
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+        
+        $this->expectException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectExceptionMessage("The atan2 math function of the MathOperator requires 2 operands, 1 operand given.");
+        
+        $processor->process();
+    }
+    
+    public function testAtan2ThreeOperators()
+    {
+        $expression = $this->createFakeExpression(MathFunctions::ATAN2);
+        $operands = new OperandsCollection(
+            array(
+                new QtiFloat(0.0),
+                new QtiFloat(0.0),
+                new QtiFloat(0.0)
+            )
+        );
+        $processor = new MathOperatorProcessor($expression, $operands);
+        
+        $this->expectException('qtism\\runtime\\expressions\\operators\\OperatorProcessingException');
+        $this->expectExceptionMessage("The atan2 math function of the MathOperator requires 2 operands, more than 2 operands given.");
+        
+        $processor->process();
+    }
 	
-	public function sinProvider() {
+	public function sinProvider()
+    {
 		return array(
 			array(new QtiFloat(1.5708), 1),
 			array(new QtiFloat(INF), null), // falls outside the domain.
 		);
 	}
 	
-	public function cosProvider() {
+	public function cosProvider()
+    {
 		return array(
 			array(new QtiInteger(25), 0.99120281),
 			array(new QtiFloat(INF), null), // falls outside the domain.
 		);
 	}
 	
-	public function tanProvider() {
+	public function tanProvider()
+    {
 		return array(
 			array(new QtiFloat(2.65), -0.53543566),
 			array(new QtiFloat(INF), null)
 		);
 	}
 	
-	public function secProvider() {
+	public function secProvider()
+    {
 		return array(
 			array(new QtiFloat(deg2rad(85)), 11.4737)
 		);
 	}
 	
-	public function cscProvider() {
+	public function cscProvider()
+    {
 		return array(
 			array(new QtiFloat(deg2rad(31.67)), 1.904667)
 		);
 	}
 	
-	public function cotProvider() {
+	public function cotProvider()
+    {
 		return array(
 			array(new QtiFloat(2.09), -0.571505)
 		);
 	}
 	
-	public function asinProvider() {
+	public function asinProvider()
+    {
 		return array(
 			array(new QtiInteger(2), null),
 			array(new QtiInteger(1), 1.570796),
@@ -482,7 +600,22 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function atan2Provider() {
+	public function acosProvider()
+    {
+        return array(
+            array(new QtiFloat(0.3), 1.266103673)
+        );
+    }
+    
+    public function atanProvider()
+    {
+        return array(
+            array(new QtiInteger(2), 1.107148718)
+        );
+    }
+	
+	public function atan2Provider()
+    {
 		$data = array(
 			array(new QtiFloat(NAN), new QtiInteger(10), null),
 			array(new QtiInteger(+0), new QtiInteger(25), 0),
@@ -509,7 +642,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
         return $data;
 	}
 	
-	public function asecProvider() {
+	public function asecProvider()
+    {
 		return array(
 			array(new QtiInteger(-5), 1.7721),
 			array(new QtiInteger(0), null),
@@ -518,7 +652,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function acscProvider() {
+	public function acscProvider()
+    {
 		return array(
 			array(new QtiInteger(-5), -0.20135),
 			array(new QtiInteger(0), null),
@@ -526,14 +661,16 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function acotProvider() {
+	public function acotProvider()
+    {
 		return array(
 			array(new QtiInteger(-5), -0.197396),
 			array(new QtiInteger(-0), M_PI_2)
 		);
 	}
 	
-	public function sinhProvider() {
+	public function sinhProvider()
+    {
 		return array(
 			array(new QtiInteger(5), 74.203210578),
 			array(new QtiInteger(-5), -74.203210578),
@@ -543,7 +680,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function coshProvider() {
+	public function coshProvider()
+    {
 		return array(
 			array(new QtiInteger(0), 1),
 			array(new QtiInteger(1), 1.543080),
@@ -554,7 +692,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function tanhProvider() {
+	public function tanhProvider()
+    {
 		return array(
 			array(new QtiInteger(0), 0),
 			array(new QtiInteger(1), 0.761594155956),
@@ -564,7 +703,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function sechProvider() {
+	public function sechProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
@@ -575,7 +715,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function cschProvider() {
+	public function cschProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
@@ -586,7 +727,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function cothProvider() {
+	public function cothProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), 0),
@@ -598,7 +740,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function logProvider() {
+	public function logProvider()
+    {
 		return array(
 			array(new QtiFloat(-0.5), null),
 			array(new QtiFloat(INF), INF),
@@ -607,7 +750,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function lnProvider() {
+	public function lnProvider()
+    {
 		return array(
 			array(new QtiFloat(-0.5), null),
 			array(new QtiFloat(INF), INF),
@@ -616,7 +760,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function expProvider() {
+	public function expProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(null, null),
@@ -627,7 +772,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function absProvider() {
+	public function absProvider()
+    {
 		return array(
 			array(new QtiInteger(0), 0),
 			array(new QtiInteger(-0), 0),
@@ -642,7 +788,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function signumProvider() {
+	public function signumProvider()
+    {
 		return array(
 			array(new QtiInteger(0), 0)	,
 			array(new QtiInteger(-0), 0),
@@ -655,7 +802,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function floorProvider() {
+	public function floorProvider()
+    {
 		return array(
 			array(new QtiInteger(10), 10),
 			array(new QtiInteger(-10), -10),
@@ -669,7 +817,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function ceilProvider() {
+	public function ceilProvider()
+    {
 		return array(
 			array(new QtiInteger(10), 10),
 			array(new QtiInteger(-10), -10),
@@ -683,7 +832,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function toDegreesProvider() {
+	public function toDegreesProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), INF),
@@ -695,7 +845,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function toRadiansProvider() {
+	public function toRadiansProvider()
+    {
 		return array(
 			array(new QtiFloat(NAN), null),
 			array(new QtiFloat(INF), INF)	,
@@ -709,7 +860,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function createFakeExpression($constant) {
+	public function createFakeExpression($constant)
+    {
 		return $this->createComponentFromXml('
 			<mathOperator name="' . MathFunctions::getNameByConstant($constant) . '">
 				<baseValue baseType="float">1.5708</baseValue>
