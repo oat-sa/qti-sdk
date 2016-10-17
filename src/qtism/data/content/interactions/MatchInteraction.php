@@ -95,7 +95,7 @@ class MatchInteraction extends BlockInteraction
         if (is_bool($shuffle) === true) {
             $this->shuffle = $shuffle;
         } else {
-            $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "given.";
+            $msg = "The 'shuffle' argument must be a boolean value, '" . gettype($shuffle) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -122,7 +122,7 @@ class MatchInteraction extends BlockInteraction
         if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
         } else {
-            $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given";
+            $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
