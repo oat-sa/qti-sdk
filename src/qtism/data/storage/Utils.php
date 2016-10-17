@@ -53,7 +53,7 @@ class Utils
 	 */
     public static function stringToDatatype($string, $baseType)
     {
-    if (in_array($baseType, BaseType::asArray())) {
+    if (in_array($baseType, BaseType::asArray(), true)) {
             $value = null;
 
             switch ($baseType) {
@@ -167,10 +167,6 @@ class Utils
                         $msg = "'${string}' is not valid point.";
                         throw new UnexpectedValueException($msg);
                     }
-                break;
-
-                default:
-                    throw new \RuntimeException("Unknown baseType.");
                 break;
             }
         } else {
