@@ -86,7 +86,7 @@ abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Create a DOMElement from an XML string.
 	 * 
-	 * @param unknown_type $xmlString A string containing XML markup
+	 * @param string $xmlString A string containing XML markup
 	 * @return DOMElement The according DOMElement;
 	 */
 	public static function createDOMElement($xmlString) {

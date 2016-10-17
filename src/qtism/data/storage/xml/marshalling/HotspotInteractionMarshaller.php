@@ -49,13 +49,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
-                
-                try {
-                    $choices = new HotspotChoiceCollection($children->getArrayCopy());
-                } catch (InvalidArgumentException $e) {
-                    $msg = "An 'hotspotInteraction' element can only contain 'hotspotChoice' choices.";
-                    throw new UnmarshallingException($msg, $element, $e);
-                }
+                $choices = new HotspotChoiceCollection($children->getArrayCopy());
 
                 if (count($choices) > 0) {
 
