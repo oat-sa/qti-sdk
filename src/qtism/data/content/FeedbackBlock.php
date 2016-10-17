@@ -139,7 +139,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray()) === true) {
+        if (in_array($showHide, ShowHide::asArray(), true) === true) {
             $this->showHide = $showHide;
         } else {
             $msg = "The 'showHide' argument must be a value from the ShowHide enumeration, '" . $showHide . "' given.";
