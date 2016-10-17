@@ -37,4 +37,20 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(1, count($content));
 	    $this->assertEquals('Inline ...', $content[0]->getContent());
 	}
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallInvalidContent() {
+	    $element = $this->createDOMElement('
+	        <templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show"><div>Block Content</div></templateInline>
+	    ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The content of the 'templateInline' is invalid. It must only contain 'block' elements."
+        );
+	    
+	    $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
 }
