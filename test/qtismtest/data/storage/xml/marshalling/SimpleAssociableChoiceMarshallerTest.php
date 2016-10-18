@@ -19,13 +19,14 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 		$strong = new Strong();
 		$strong->setContent(new InlineCollection(array(new TextRun('strong'))));
 	    $simpleChoice->setContent(new FlowStaticCollection(array(new TextRun('This is ... '), $strong, new TextRun('!'))));
+        $simpleChoice->setShowHide(ShowHide::HIDE);
 	    
 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($simpleChoice);
 	    $element = $marshaller->marshall($simpleChoice);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMax="1">This is ... <strong>strong</strong>!</simpleAssociableChoice>', $dom->saveXML($element));
+	    $this->assertEquals('<simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMax="1" showHide="hide">This is ... <strong>strong</strong>!</simpleAssociableChoice>', $dom->saveXML($element));
 	}
 	
 	/**
@@ -35,13 +36,14 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    $simpleChoice = new SimpleAssociableChoice('choice_1', 3);
 	    $simpleChoice->setMatchMin(2);
 	    $simpleChoice->setContent(new FlowStaticCollection(array(new TextRun('Choice #1'))));
+        $simpleChoice->setTemplateIdentifier('templateIdentifier');
 	     
 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($simpleChoice);
 	    $element = $marshaller->marshall($simpleChoice);
 	     
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="3" matchMin="2">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
+	    $this->assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="3" templateIdentifier="templateIdentifier" matchMin="2">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
 	}
 	
 	/**
@@ -65,7 +67,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshall21() {
 	    $element = $this->createDOMElement('
-	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMin="1" matchMax="2">This is ... <strong>strong</strong>!</simpleAssociableChoice>
+	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMin="1" matchMax="2" showHide="hide" templateIdentifier="templateIdentifier">This is ... <strong>strong</strong>!</simpleAssociableChoice>
 	    ');
 	    
 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
@@ -76,6 +78,8 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('choice_1', $component->getIdentifier());
 	    $this->assertEquals(1, $component->getMatchMin());
 	    $this->assertEquals(2, $component->getMatchMax());
+        $this->assertEquals(ShowHide::HIDE, $component->getShowHide());
+        $this->assertEquals('templateIdentifier', $component->getTemplateIdentifier());
 	    
 	    $content = $component->getContent();
 	    $this->assertInstanceOf('qtism\\data\\content\\FlowStaticCollection', $content);
@@ -97,6 +101,42 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase {
 	    
 	    $matchGroup = $component->getMatchGroup();
 	    $this->assertEquals(0, count($matchGroup));
+	}
+    
+    /**
+	 * @depends testUnmarshall21
+	 */
+	public function testUnmarshall21NoMatchMax() {
+	    $element = $this->createDOMElement('
+	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1">Choice #1</simpleAssociableChoice>
+	    ');
+	     
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+	    
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'matchMax' attribute is missing from the 'simpleAssociableChoice' element."
+        );
+        
+        $marshaller->unmarshall($element);
+	}
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoIdentifier() {
+	    $element = $this->createDOMElement('
+	        <simpleAssociableChoice matchMax="2">This is ... <strong>strong</strong>!</simpleAssociableChoice>
+	    ');
+	    
+	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'identifier' attribute is missing from the 'simpleAssociableChoice' element."
+        );
+        
+	    $marshaller->unmarshall($element);
 	}
 	
 	public function testMarshall20() {
