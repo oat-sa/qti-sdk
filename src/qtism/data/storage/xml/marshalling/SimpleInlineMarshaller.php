@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -50,10 +50,6 @@ class SimpleInlineMarshaller extends ContentMarshaller
             if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
                 $component = new $fqClass($href);
 
-                if (($xmlBase = self::getXmlBase($element)) !== false) {
-                    $component->setXmlBase($xmlBase);
-                }
-
                 if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
                     $component->setType($type);
                 }
@@ -64,6 +60,10 @@ class SimpleInlineMarshaller extends ContentMarshaller
 
         } else {
             $component = new $fqClass();
+            
+            if (($xmlBase = self::getXmlBase($element)) !== false) {
+                $component->setXmlBase($xmlBase);
+            }
         }
 
         $component->setContent(new InlineCollection($children->getArrayCopy()));
@@ -71,13 +71,7 @@ class SimpleInlineMarshaller extends ContentMarshaller
 
         // The q class has a specific cite (URI) attribute.
         if ($component instanceof Q && ($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
-
-            try {
-                $component->setCite($cite);
-            } catch (InvalidArgumentException $e) {
-                $msg = "The 'cite' attribute of a 'q' element must be a valid URI, '" . $cite . "' given.";
-                throw new UnmarshallingException($msg, $element, $e);
-            }
+            $component->setCite($cite);
         }
 
         return $component;

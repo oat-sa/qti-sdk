@@ -12,25 +12,28 @@ use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\text\Strong;
 use \DOMDocument;
 
-class SimpleInlineMarshallerTest extends QtiSmTestCase {
-
-	public function testMarshall21() {
+class SimpleInlineMarshallerTest extends QtiSmTestCase
+{
+	public function testMarshall21() 
+    {
 		$strong = new Strong('john');
 		$strong->setLabel('His name');
 		$strong->setContent(new InlineCollection(array(new TextRun('John Dunbar'))));
 		
 		$em = new Em('sentence', 'introduction', 'en-US');
 		$em->setContent(new InlineCollection(array(new TextRun('He is '), $strong, new TextRun('.'))));
+        $em->setXmlBase('/home/jerome');
 		
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($em);
 		$element = $marshaller->marshall($em);
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$element = $dom->importNode($element, true);
 		
-		$this->assertEquals('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
+		$this->assertEquals('<em id="sentence" class="introduction" xml:lang="en-US" xml:base="/home/jerome">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall21() {
+	public function testUnmarshall21()
+    {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>');
 		$element = $dom->documentElement;
@@ -58,8 +61,25 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\content\\TextRun', $sentence[2]);
 		$this->assertEquals('.', $sentence[2]->getContent());
 	}
+    
+    public function testUnmarshall21MissingHref()
+    {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML('<a>QTI-SDK</a>');
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'href' attribute of the 'a' element is missing."
+        );
+        
+		$a = $marshaller->unmarshall($element);
+	}
 	
-	public function testMarshallQandA21() {
+	public function testMarshallQandA21()
+    {
 	    $q = new Q('albert-einstein');
 	    
 	    $a = new A('http://en.wikipedia.org/wiki/Physicist');
@@ -75,12 +95,16 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshallQandA21() {
-	    $q = $this->createComponentFromXml('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
+	public function testUnmarshallQandA21()
+    {
+	    $q = $this->createComponentFromXml('<q id="albert-einstein" cite="http://en.wikipedia.org/wiki/Physicist" xml:base="/home/jerome">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
 	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\Q', $q);
+        $this->assertEquals('http://en.wikipedia.org/wiki/Physicist', $q->getCite());
+        $this->assertEquals('/home/jerome', $q->getXmlBase());
 	}
 	
-	public function testUnmarshall22Ltr() {
+	public function testUnmarshall22Ltr()
+    {
 	    $q = $this->createComponentFromXml('
 	        <q id="albert-einstein" class="albie yeah" dir="ltr">
 	            I am Albert Einstein!
@@ -92,7 +116,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(Direction::LTR, $q->getDir());
 	}
 	
-	public function testUnmarshall22Rtl() {
+	public function testUnmarshall22Rtl()
+    {
 	    $q = $this->createComponentFromXml('
 	        <q dir="rtl">
 	            I am Albert Einstein!
@@ -112,7 +137,8 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(Direction::AUTO, $q->getDir());
 	}
 	
-	public function testUnmarshall21DirAuto() {
+	public function testUnmarshall21DirAuto()
+    {
 	    $q = $this->createComponentFromXml('
 	        <q>
 	            I am Albert Einstein!
