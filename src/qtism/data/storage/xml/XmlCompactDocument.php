@@ -173,6 +173,9 @@ class XmlCompactDocument extends XmlDocument
         $trail = array(); // trailEntry[0] = a component, trailEntry[1] = from where we are coming (parent).
         $mark = array();
         $root = $xmlAssessmentTestDocument->getDocumentComponent();
+        
+        // Stores the resolved assessmentSection <-> XmlDocument documents during the compaction process.
+        $sectionStore = new SplObjectStorage();
 
         array_push($trail, array($root, $root));
 
@@ -210,8 +213,8 @@ class XmlCompactDocument extends XmlDocument
                             // If the previous processed component is an XmlAssessmentSectionDocument,
                             // it means that the given baseUri must be adapted.
                             $baseUri = $xmlAssessmentTestDocument->getUrl();
-                            if ($component instanceof XmlDocument && $component->getDocumentComponent() instanceof AssessmentSection) {
-                                $baseUri = $component->getUrl();
+                            if ($previous instanceof AssessmentSection && isset($sectionStore[$previous])) {
+                                $baseUri = $sectionStore[$previous]->getUrl();
                             }
 
                             $resolver->setBasePath($baseUri);
@@ -224,7 +227,17 @@ class XmlCompactDocument extends XmlDocument
                 } elseif ($component instanceof AssessmentSectionRef) {
                     // We follow the unreferenced AssessmentSection as if it was
                     // the 1st pass.
-                    $assessmentSection = self::resolveAssessmentSectionRef($component, $resolver);
+                    $baseUri = $xmlAssessmentTestDocument->getUrl();
+                    if ($previous instanceof AssessmentSection && isset($sectionStore[$previous])) {
+                        $baseUri = $sectionStore[$previous]->getUrl();
+                    }
+                    
+                    $resolver->setBasePath($baseUri);
+                    
+                    $assessmentSectionDocument = self::resolveAssessmentSectionRef($component, $resolver);
+                    $assessmentSection = $assessmentSectionDocument->getDocumentComponent();
+                    $sectionStore[$assessmentSection] = $assessmentSectionDocument;
+                    
                     $previousParts = $previous->getSectionParts();
                     foreach ($previousParts as $k => $previousPart) {
                         if ($previousParts[$k] === $component) {
@@ -316,11 +329,13 @@ class XmlCompactDocument extends XmlDocument
 
     /**
 	 * Dereference the file referenced by an assessmentSectionRef.
+     * 
+     * The xinclude elements in the target assessmentSection file will be resolved at the same time.
 	 *
 	 * @param \qtism\data\AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
 	 * @param \qtism\data\storage\FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while dereferencing the referenced file.
-	 * @return \qtism\data\AssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
+	 * @return \qtism\data\XmlDocument The AssessmentSection referenced by $assessmentSectionRef as an XmlDocument object.
 	 */
     protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
     {
@@ -331,7 +346,7 @@ class XmlCompactDocument extends XmlDocument
             $doc->load($href);
             $doc->xInclude();
 
-            return $doc->getDocumentComponent();
+            return $doc;
         } catch (XmlStorageException $e) {
             $msg = "An error occured while unreferencing section reference with identifier '" . $assessmentSectionRef->getIdentifier() . "'.";
             throw new XmlStorageException($msg, XmlStorageException::RESOLUTION, $e);
