@@ -694,17 +694,7 @@ class AssessmentItemSession extends State
 
         // Check if we can perform a new attempt.
         if ($this->getState() === AssessmentItemSessionState::CLOSED) {
-            if ($submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts > 0) {
-                $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.";
-                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
-            }
-            elseif ($submissionMode === SubmissionMode::INDIVIDUAL && $maxAttempts !== 0 && $numAttempts >= $maxAttempts) {
-                $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. The maximum number of attempts (${maxAttempts}) is reached.";
-                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
-            }
-            elseif ($this->isMaxTimeReached() === true) {
+            if ($this->isMaxTimeReached() === true) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
                 $msg = "A new attempt for item '${identifier}' is not allowed. The maximum time limit in force is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
@@ -712,6 +702,16 @@ class AssessmentItemSession extends State
             elseif ($this->getAssessmentItem()->isAdaptive() === true && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
                 $msg = "A new attempt for item '${identifier}' is not allowed. It is adaptive and its completion status is 'completed'.";
+                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
+            }
+            elseif ($submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts > 0) {
+                $identifier = $this->getAssessmentItem()->getIdentifier();
+                $msg = "A new attempt for item '${identifier}' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.";
+                throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
+            }
+            elseif ($submissionMode === SubmissionMode::INDIVIDUAL && $maxAttempts !== 0 && $numAttempts >= $maxAttempts) {
+                $identifier = $this->getAssessmentItem()->getIdentifier();
+                $msg = "A new attempt for item '${identifier}' is not allowed. The maximum number of attempts (${maxAttempts}) is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             }
         }

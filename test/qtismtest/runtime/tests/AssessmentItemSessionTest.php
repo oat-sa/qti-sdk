@@ -20,9 +20,10 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 
-class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
-	
-    public function testInstantiation() {
+class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
+{
+    public function testInstantiation()
+    {
         
         $itemSession = self::instantiateBasicAssessmentItemSession();
         
@@ -75,7 +76,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession->isAttemptable());
     }
     
-    public function testEvolutionBasic() {
+    public function testEvolutionBasic()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $this->assertTrue($itemSession->isSelected());
@@ -122,7 +124,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testGetResponseVariables() {
+    public function testGetResponseVariables()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -155,7 +158,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue(isset($outcomes['SCORE']));
     }
     
-    public function testEvolutionAdaptiveItem() {
+    public function testEvolutionAdaptiveItem()
+    {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
         
@@ -197,7 +201,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testSkippingForbiddenSimple() {
+    public function testSkippingForbiddenSimple()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
@@ -227,7 +232,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         }
     }
     
-    public function testSkippingForbiddenDefaultValue() {
+    public function testSkippingForbiddenDefaultValue()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/skipping/default_value.xml');
         
@@ -272,7 +278,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertNull($itemSession['RESPONSE']);
     }
     
-    public function testSkippingAllowedSimple() {
+    public function testSkippingAllowedSimple()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -284,7 +291,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(null, $itemSession['RESPONSE']);
     }
     
-    public function testValidResponsesInForceValid() {
+    public function testValidResponsesInForceValid()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setValidateResponses(false);
@@ -297,7 +305,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->endAttempt($responses);
     }
     
-    public function testIsCorrect() {
+    public function testIsCorrect()
+    {
         $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
         $this->assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
         
@@ -327,7 +336,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
     }
     
-    public function testStandaloneItemSession() {
+    public function testStandaloneItemSession()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
         
@@ -340,7 +350,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testStandaloneMultipleInteractions() {
+    public function testStandaloneMultipleInteractions()
+    {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
         
@@ -355,7 +366,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(6.0, $itemSession['SCORE']->getValue());
     }
     
-    public function testModalFeedback() {
+    public function testModalFeedback()
+    {
         $doc = new XmlDocument('2.1.0');
         $doc->load(self::samplesDir() . 'ims/items/2_1/modalFeedback.xml');
         
@@ -385,7 +397,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals('completed', $itemSession['completionStatus']->getValue());
     }
     
-    public function testTemplateVariableDefault() {
+    public function testTemplateVariableDefault()
+    {
         // This test aims at testing whether template variables
         // are correctly instantiated as part of the item session and
         // they can be used in response processing.
@@ -415,7 +428,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertTrue($itemSession['SCORE']->equals($itemSession['WRONGSCORE']));
     }
     
-    public function testSimultaneousSubmissionOnlyOneAttempt() {
+    public function testSimultaneousSubmissionOnlyOneAttempt()
+    {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
         $itemSession = self::instantiateBasicAssessmentItemSession();
@@ -432,7 +446,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(0, $itemSession->getRemainingAttempts());
     }
     
-    public function testSetOutcomeValuesWithSum() {
+    public function testSetOutcomeValuesWithSum()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
         
@@ -446,7 +461,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
     
-    public function testSetOutcomeValuesWithSumJuggling() {
+    public function testSetOutcomeValuesWithSumJuggling()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
         
@@ -460,7 +476,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1., $itemSession['score-X']->getValue());
     }
     
-    public function testSuspendWithResponses() {
+    public function testSuspendWithResponses()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
@@ -504,7 +521,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $this->assertEquals(1, $itemSession['numAttempts']->getValue());
     }
     
-    public function testIsRespondedTextEntry() {
+    public function testIsRespondedTextEntry()
+    {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/text_entry.xml');
         
@@ -533,5 +551,57 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase {
         $itemSession->endAttempt($responses);
         
         $this->assertTrue($itemSession->isResponded());
+    }
+    
+    public function testMultipleAttemptsSimultaneousSubmissionMode()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\tests\\AssessmentItemSessionException',
+            "A new attempt for item 'Q01' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.",
+            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
+        );
+        
+        // Beginning a 2nd attempt in simultaneous submission mode must throw an exception. Only a single attempt is accepted.
+        $itemSession->beginAttempt();
+    }
+    
+    public function testMultipleAttemptsIndividualSubmissionModeWhenSingleAttemptAllowed()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setMaxAttempts(1);
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\tests\\AssessmentItemSessionException',
+            "A new attempt for item 'Q01' is not allowed. The maximum number of attempts (1) is reached.",
+            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
+        );
+        
+        $itemSession->beginAttempt();
+    }
+    
+    public function testBeginAttemptAdaptiveCompletionStatusComplete()
+    {
+        $itemSession = self::instantiateBasicAdaptiveAssessmentItem();
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $itemSession->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\tests\\AssessmentItemSessionException',
+            "A new attempt for item 'Q01' is not allowed. It is adaptive and its completion status is 'completed'.",
+            AssessmentItemSessionException::ATTEMPTS_OVERFLOW
+        );
+        
+        $itemSession->beginAttempt();
     }
 }
