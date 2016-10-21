@@ -604,4 +604,43 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         
         $itemSession->beginAttempt();
     }
+    
+    public function testSuspendStateViolation()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentItemSessionException',
+            "Cannot switch from state NOTSELECTED to state SUSPENDED.",
+            AssessmentItemSessionException::STATE_VIOLATION
+        );
+        
+        $itemSession->suspend();
+    }
+    
+    public function testBeginCandidateSessionStateViolation()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentItemSessionException',
+            "Cannot switch from state NOTSELECTED to state INTERACTING.",
+            AssessmentItemSessionException::STATE_VIOLATION
+        );
+        
+        $itemSession->beginCandidateSession();
+    }
+    
+    public function testEndCandidateSessionStateViolation()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentItemSessionException',
+            "Cannot switch from state NOTSELECTED to state SUSPENDED.",
+            AssessmentItemSessionException::STATE_VIOLATION
+        );
+        
+        $itemSession->endCandidateSession();
+    }
 }
