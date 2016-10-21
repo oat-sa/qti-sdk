@@ -447,7 +447,7 @@ class AssessmentTestSession extends State
      */
     public function setState($state)
     {
-        if (in_array($state, AssessmentTestSessionState::asArray()) === true) {
+        if (in_array($state, AssessmentTestSessionState::asArray(), true) === true) {
             $this->state = $state;
         } else {
             $msg = "The state argument must be a value from the AssessmentTestSessionState enumeration";
@@ -970,6 +970,12 @@ class AssessmentTestSession extends State
         }
     
         $route = $this->getRoute();
+        
+        if ($position >= $route->count()) {
+            $msg = "Position '${position}' is out of the Route boundaries.";
+            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
+        }
+        
         $oldPosition = $route->getPosition();
     
         if ($position !== $oldPosition) {
@@ -1001,9 +1007,6 @@ class AssessmentTestSession extends State
                 $route->setPosition($oldPosition);
                 $this->interactWithItemSession();
                 throw $e;
-            } catch (OutOfBoundsException $e) {
-                $msg = "Position '${position}' is out of the Route bounds.";
-                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
             }
         }
     }

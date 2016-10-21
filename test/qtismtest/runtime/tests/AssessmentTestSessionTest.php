@@ -39,11 +39,13 @@ use qtism\common\datatypes\files\FileSystemFileManager;
 use \OutOfBoundsException;
 use \InvalidArgumentException;
 
-class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
+class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
+{
 	
 	protected $state;
 	
-	public function setUp() {
+	public function setUp()
+    {
 		parent::setUp();
 		
 		$xml = new XmlCompactDocument('2.1');
@@ -54,16 +56,19 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 		$this->state['OUTCOME1'] = new QtiString('String!');
 	}
 	
-	public function tearDown() {
+	public function tearDown()
+    {
 	    parent::tearDown();
 	    unset($this->state);
 	}
 	
-	public function getState() {
+	public function getState()
+    {
 		return $this->state;
 	}
 	
-	public function testInstantiateOne() {
+	public function testInstantiateOne()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
 	    
@@ -99,7 +104,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals('no_session_id', $assessmentTestSession->getSessionId());
 	}
 	
-	public function testInstantiateTwo() {
+	public function testInstantiateTwo()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 	    $assessmentTestSession->beginTestSession();
 	    // check Q01.1, Q01.2, Q01.3 item sessions are all initialized.
@@ -112,7 +118,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    }
 	}
 	
-	public function testSetVariableValuesAfterInstantiationOne() {
+	public function testSetVariableValuesAfterInstantiationOne()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    $assessmentTestSession->beginTestSession();
 	    
@@ -160,7 +167,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    }
 	}
 	
-	public function testLinearSkipAll() {
+	public function testLinearSkipAll()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    $assessmentTestSession->beginTestSession();
 	    
@@ -197,7 +205,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertFalse($assessmentTestSession->getCurrentSubmissionMode());
 	}
 	
-	public function testLinearAnswerAll() {
+	public function testLinearAnswerAll()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    $assessmentTestSession->beginTestSession();
 	    
@@ -253,7 +262,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
 	}
 	
-    public function testLinearSimultaneousSubmission() {
+    public function testLinearSimultaneousSubmission()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
         $session->beginTestSession();
         
@@ -384,7 +394,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	 * @param array $responses
 	 * @param array $outcomes
 	 */
-	public function testLinearOutcomeProcessing(array $responses, array $outcomes) {
+	public function testLinearOutcomeProcessing(array $responses, array $outcomes)
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
 	    $assessmentTestSession->beginTestSession();
 	    
@@ -421,7 +432,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    }
 	}
 	
-	public function linearOutcomeProcessingProvider() {
+	public function linearOutcomeProcessingProvider()
+    {
 	    $returnValue = array();
 	    
 	    // Test 1.
@@ -459,7 +471,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    return $returnValue;
 	}
 	
-	public function testWichLastOccurenceUpdate() {
+	public function testWichLastOccurenceUpdate()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
 		$assessmentTestSession->beginTestSession();
 		
@@ -483,7 +496,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 		$this->assertEquals(2, $assessmentTestSession->whichLastOccurenceUpdate('Q01'));
 	}
 	
-	public function testGetAssessmentItemSessions() {
+	public function testGetAssessmentItemSessions()
+    {
 	    // --- Test with single occurence items.
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
 	    $assessmentTestSession->beginTestSession();
@@ -530,7 +544,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    }
 	}
 	
-	public function testPossibleJumpsTestPart() {
+	public function testPossibleJumpsTestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/jumps.xml');
 	    
 	    // The session has not begun, the candidate is not able to jump anywhere.
@@ -588,7 +603,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(0, count($session->getPossibleJumps(false)));
 	}
 	
-	public function testPossibleJumpsWholeTest() {
+	public function testPossibleJumpsWholeTest()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
 	    $session->beginTestSession();
 	    
@@ -596,7 +612,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(12, count($jumps));
 	}
 	
-	public function testJumps() {
+	public function testJumps()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/jumps.xml');
 	    $session->beginTestSession();
 	    
@@ -675,7 +692,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(9, $session['NSELECTED']->getValue());
 	}
 	
-	public function testJumpsSimultaneous() {
+	public function testJumpsSimultaneous()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
 	    $session->beginTestSession();
 	     
@@ -775,7 +793,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(9, $session['NPRESENTED']->getValue());
 	}
 	
-	public function testMoveNextAndBackNonLinearIndividual() {
+	public function testMoveNextAndBackNonLinearIndividual()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset_nonlinear.xml');
 	    $session->beginTestSession();
         
@@ -835,7 +854,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(9, $session['NSELECTED']->getValue());
 	}
 	
-	public function testMoveNextAndBackNonLinearSimultaneous() {
+	public function testMoveNextAndBackNonLinearSimultaneous()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/jumps_simultaneous.xml');
 	    $session->beginTestSession();
         
@@ -878,7 +898,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(1.0, $session['Q01.scoring']->getValue());
 	}
 	
-	public function testUnlimitedAttempts() {
+	public function testUnlimitedAttempts()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
 	    $session->beginTestSession();
 	    
@@ -897,7 +918,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(-1, $session->getCurrentRemainingAttempts());
 	}
 	
-	public function testSuspendInteractItemSession() {
+	public function testSuspendInteractItemSession()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
 	    $session->beginTestSession();
 	    
@@ -932,7 +954,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	 * @param string $identifier
 	 * @param float $expectedValue
 	 */
-	public function testGetWeight($identifier, $expectedValue) {
+	public function testGetWeight($identifier, $expectedValue)
+    {
 		$state = $this->getState();
 		
 		$v = new VariableIdentifier($identifier);
@@ -947,7 +970,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	 * 
 	 * @param string $identifier
 	 */
-	public function testGetWeightNotFound($identifier) {
+	public function testGetWeightNotFound($identifier)
+    {
 		$state = $this->getState();
 		
 		$weight = $state->getWeight($identifier);
@@ -960,13 +984,15 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	 * 
 	 * @param string $identifier
 	 */
-	public function testGetWeightMalformed($identifier) {
+	public function testGetWeightMalformed($identifier)
+    {
 	    $state = $this->getState();
 	    $this->setExpectedException('\\InvalidArgumentException');
 	    $state->getWeight($identifier);
 	}
 	
-	public function getWeightProvider() {
+	public function getWeightProvider()
+    {
 		return array(
 			array('Q01.W01', 1.0),
 			array('Q01.W02', 1.1),
@@ -975,7 +1001,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 		);
 	}
 	
-	public function getWeightNotFoundProvider() {
+	public function getWeightNotFoundProvider()
+    {
 		return array(
 			array('Q01.W03'),
 			array('Q02.W02'),
@@ -984,7 +1011,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 		);
 	}
 	
-	public function getWeightMalformed() {
+	public function getWeightMalformed()
+    {
 	    return array(
 	        array('_Q01'),
 	        array('_Q01.SCORE'),
@@ -992,37 +1020,44 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    );
 	}
 	
-	public function testSelectionAndOrdering() {
+	public function testSelectionAndOrdering()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/selection_and_ordering_with_replacement.xml');
 	    $this->assertEquals(50, $assessmentTestSession->getRouteCount());
 	}
 	
-	public function testOrderingBasic() {
+	public function testOrderingBasic()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_basic.xml');
 	    $this->assertEquals(3, $assessmentTestSession->getRouteCount());
 	}
 	
-	public function testOrderingBasicFixed() {
+	public function testOrderingBasicFixed()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_basic_fixed.xml');
 	    $this->assertEquals(5, $assessmentTestSession->getRouteCount());
 	}
     
-	public function testOrderingVisible() {
+	public function testOrderingVisible()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_visible.xml');
 	    $this->assertEquals(9, $assessmentTestSession->getRouteCount());
 	}
 	
-	public function testOrderingInvisibleDontKeepTogether() {
+	public function testOrderingInvisibleDontKeepTogether()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_invisible_dont_keep_together.xml');
 	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
 	
-	public function testOrderingInvisibleKeepTogether() {
+	public function testOrderingInvisibleKeepTogether()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/ordering_invisible_keep_together.xml');
 	    $this->assertEquals(12, $assessmentTestSession->getRouteCount());
 	}
 	
-	public function testRouteItemAssessmentSections() {
+	public function testRouteItemAssessmentSections()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_assessmentsections.xml');	    
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1136,7 +1171,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    }
 	}
 	
-	public function testGetItemSessionControl() {
+	public function testGetItemSessionControl()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1160,7 +1196,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertTrue($assessmentTestSession->getAssessmentTest()->getComponentByIdentifier('P02') === $control->getOwner());
 	}
 	
-	public function testGetTimeLimits() {
+	public function testGetTimeLimits()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_timelimits.xml');
 	    $route = $assessmentTestSession->getRoute();
 	    
@@ -1210,7 +1247,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 	}
 	
-	public function testRubricBlockRefsHierarchy() {
+	public function testRubricBlockRefsHierarchy()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/rubricblockrefs_hierarchy.xml', true);
 	    $route = $session->getRoute();
 	    
@@ -1231,7 +1269,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(0, count($rubricBlockRefs));
 	}
 	
-	public function testRouteItemPosition() {
+	public function testRouteItemPosition()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_position.xml');
 	    $route = $session->getRoute();
 	    
@@ -1253,7 +1292,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(11, $route->getRouteItemPosition($routeItem));
 	}
 	
-	public function testEmptySection() {
+	public function testEmptySection()
+    {
 	    // Aims at testing that even a section of the test is empty,
 	    // it is simply ignored at runtime.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/empty_section.xml');
@@ -1270,7 +1310,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	}
 	
-	public function testItemModalFeedbacks() {
+	public function testItemModalFeedbacks()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/item_modalfeedbacks/modalfeedbacks_nonadaptive_individual_linear.xml', true);
 	    $session->beginTestSession();
 	    
@@ -1387,7 +1428,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
 	}
 	
-	public function testIsTimeout() {
+	public function testIsTimeout()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
 	    
 	    // If the session has not begun, the method systematically returns false.
@@ -1437,7 +1479,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
 	    $this->assertFalse($session->isTimeout());
 	}
     
-    public function testGetRouteCountAllWithResponseDeclaration() {
+    public function testGetRouteCountAllWithResponseDeclaration()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/route_count/all_with_responsedeclaration.xml');
         $session->beginTestSession();
         
@@ -1447,7 +1490,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
     
-    public function testGetRouteCountMissingResponseDeclaration() {
+    public function testGetRouteCountMissingResponseDeclaration()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/route_count/missing_responsedeclaration.xml');
         $session->beginTestSession();
         
@@ -1457,7 +1501,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(3, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
     
-    public function testGetRouteCountMixed() {
+    public function testGetRouteCountMixed()
+    {
         $qti = new XmlDocument();
         $qti->load(self::samplesDir() . 'custom/tests/linear_nonLinear_multiple_testparts/test.xml');
         $doc = XmlCompactDocument::createFromXmlAssessmentTestDocument($qti);
@@ -1470,7 +1515,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(5, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_FLOW));
     }
     
-    public function testVisitedTestPartsLinear1TestPart() {
+    public function testVisitedTestPartsLinear1TestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
         
         $this->assertFalse($session->isTestPartVisited('P01'));
@@ -1496,7 +1542,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertTrue($session->isTestPartVisited('P01'));
     }
     
-    public function testVisitedTestPartsLinear2TestPart() {
+    public function testVisitedTestPartsLinear2TestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
         
         $this->assertFalse($session->isTestPartVisited('P01'));
@@ -1539,7 +1586,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertTrue($session->isTestPartVisited('P02'));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
         
         $this->assertFalse($session->isTestPartVisited('P01'));
@@ -1583,7 +1631,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
         
         $this->assertFalse($session->isTestPartVisited('P01'));
@@ -1627,7 +1676,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
     
-    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart() {
+    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
         
         $this->assertFalse($session->isTestPartVisited('P01'));
@@ -1671,7 +1721,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
     
-    public function testGetFiles() {
+    public function testGetFiles()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/files/files.xml');
         $fileManager = new FileSystemFileManager();
         $session->beginTestSession();
@@ -1718,7 +1769,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals('file3.txt', $files[3]->getFileName());
     }
     
-    public function testAllowSkipping() {
+    public function testAllowSkipping()
+    {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/skipping/skipping.xml');
         $session->beginTestSession();
         
@@ -1891,7 +1943,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
     
-    public function testPathTracking() {
+    public function testPathTracking()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/nonlinear_5_items_unlimited_attempts.xml', false, AssessmentTestSession::PATH_TRACKING);
         
         $this->assertSame(array(), $assessmentTestSession->getPath());
@@ -1992,7 +2045,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
     }
     
-    public function testJumpNotAllowed() {
+    public function testJumpNotAllowed()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
         $assessmentTestSession->beginTestSession();
         
@@ -2003,11 +2057,138 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase {
         $assessmentTestSession->jumpTo(1);
     }
 
-    public function testAlwaysAllowJumps() {
+    public function testAlwaysAllowJumps()
+    {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml', false, AssessmentTestSession::ALWAYS_ALLOW_JUMPS);
         $assessmentTestSession->beginTestSession();
         
         $assessmentTestSession->jumpTo(1);
         $this->assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+    }
+    
+    public function testSetSessionIdEmptyString()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'sessionId' argument must be a non-empty string."
+        );
+        
+        $assessmentTestSession->setSessionId('');
+    }
+    
+    public function testSetSessionIdWrongType()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'sessionId' argument must be a string, 'integer' given."
+        );
+        
+        $assessmentTestSession->setSessionId(999);
+    }
+    
+    public function testSetStateWrongType()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The state argument must be a value from the AssessmentTestSessionState enumeration"
+        );
+        
+        $assessmentTestSession->setState(true);
+    }
+    
+    public function testEndTestSessionAlreadyFinished()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        $assessmentTestSession->endTestSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot end the test session while the state of the test session is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->endTestSession();
+    }
+    
+    public function testBeginAttemptNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->beginAttempt();
+    }
+    
+    public function testEndAttemptNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->endAttempt(new State());
+    }
+    
+    public function testMoveNextNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot move to the next item while the test session state is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->moveNext();
+    }
+    
+    public function testMoveBackNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot move to the previous item while the test session state is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->moveBack();
+    }
+    
+    public function testJumpWhenLinearNavigationMode()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Jumps are not allowed in LINEAR navigation mode.",
+            AssessmentTestSessionException::FORBIDDEN_JUMP
+        );
+        
+        $assessmentTestSession->jumpTo(1);
+    }
+    
+    public function testJumpWhenNonLinearNavigationModeOutOfBounds()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_nonlinear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Position '1337' is out of the Route boundaries.",
+            AssessmentTestSessionException::FORBIDDEN_JUMP
+        );
+        
+        $assessmentTestSession->jumpTo(1337);
     }
 }
