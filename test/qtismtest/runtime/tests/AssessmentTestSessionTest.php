@@ -2191,4 +2191,234 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         
         $assessmentTestSession->jumpTo(1337);
     }
+    
+    public function testgetCurrentAssessmentItemRefOccurenceNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $this->assertFalse($assessmentTestSession->getCurrentAssessmentItemRefOccurence());
+    }
+    
+    public function testIsCurrentAssessmentItemAdaptiveNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->isCurrentAssessmentItemAdaptive();
+    }
+    
+    public function testIsCurrentAssessmentItemInteractingNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            'qtism\runtime\tests\AssessmentTestSessionException',
+            "Cannot know if the current item is in INTERACTING state while the state of the test session INITIAL or CLOSED."
+        );
+        
+        $assessmentTestSession->isCurrentAssessmentItemInteracting();
+    }
+    
+    public function testWhichLastOccurenceUpdateWrongType()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object."
+        );
+        
+        $assessmentTestSession->whichLastOccurenceUpdate(999);
+    }
+    
+    public function testCanMoveBackwardPositionZero()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_nonlinear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        $this->assertFalse($assessmentTestSession->canMoveBackward());
+    }
+    
+    public function testCanMoveBackwardPositionNonZero()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_nonlinear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        $assessmentTestSession->moveNext();
+        $this->assertTrue($assessmentTestSession->canMoveBackward());
+    }
+    
+    public function testCanMoveBackwardPositionNonZeroLinear()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $assessmentTestSession->beginTestSession();
+        $assessmentTestSession->moveNext();
+        $this->assertFalse($assessmentTestSession->canMoveBackward());
+    }
+    
+    public function testGetWeightWrongType()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The given identifier argument is not a string, nor a VariableIdentifier object."
+        );
+        
+        $assessmentTestSession->getWeight(999);
+    }
+    
+    public function testSetVariableWithPrefixInIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "The variables set to the AssessmentTestSession global scope must have simple variable identifiers. 'TEST.Q01' given."
+        );
+        
+        $assessmentTestSession->setVariable(new OutcomeVariable('TEST.Q01', Cardinality::SINGLE, BaseType::IDENTIFIER));
+    }
+    
+    public function testSetVariableWithInvalidIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "The identifier '999' of the variable to set is invalid."
+        );
+        
+        $assessmentTestSession->setVariable(new OutcomeVariable('999', Cardinality::SINGLE, BaseType::IDENTIFIER));
+    }
+    
+    public function testOffsetGetWithInvalidVariableIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "AssessmentTestSession object addressed with an invalid identifier '999'."
+        );
+        
+        $assessmentTestSession[999];
+    }
+    
+    public function testOffsetSetWrongType()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "An AssessmentTestSession object must be addressed by string."
+        );
+        
+        $assessmentTestSession[999] = new QtiIdentifier('XXX');
+    }
+    
+    public function testOffsetSetNonExistingVariable()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "The variable 'abcd' to be set does not exist in the current context."
+        );
+        
+        $assessmentTestSession['abcd'] = new QtiIdentifier('XXX');
+    }
+    
+    public function testOffsetSetInvalidIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "AssessmentTestSession object addressed with an invalid identifier '---999'."
+        );
+        
+        $assessmentTestSession['---999'] = new QtiIdentifier('XXX');
+    }
+    
+    public function testOffsetUnset()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $assessmentTestSession['SCORE'] = new QtiFloat(1.);
+        $this->assertEquals(1.0, $assessmentTestSession['SCORE']->getValue());
+        unset($assessmentTestSession['SCORE']);
+        $this->assertNull($assessmentTestSession['SCORE']);
+    }
+    
+    public function testOffsetUnsetInvalidIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "The variable identifier '---8888' is not a valid variable identifier."
+        );
+        
+        unset($assessmentTestSession['---8888']);
+    }
+    
+    public function testOffsetUnsetUnexistingVariable()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope."
+        );
+        
+        unset($assessmentTestSession['SCOREX']);
+    }
+    
+    public function testOffsetUnsetNonGlobalScopeVariable()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfBoundsException',
+            "The variable 'SCOREX' does not exist in the AssessmentTestSession's global scope."
+        );
+        
+        unset($assessmentTestSession['SCOREX']);
+    }
+    
+    public function testOffsetExistz()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $this->assertTrue(isset($assessmentTestSession['SCORE']));
+    }
+    
+    public function testOffsetExistInvalidVariableIdentifier()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "The variable identifier '----989' is not a valid variable identifier."
+        );
+        
+        unset($assessmentTestSession['----989']);
+    }
+    
+    public function testOffsetExistsNonGlobalScope()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        
+        $this->setExpectedException(
+            '\\OutOfRangeException',
+            "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable identifiers (no prefix, no sequence number). 'QX.ITEMVAR' given."
+        );
+        
+        isset($assessmentTestSession['QX.ITEMVAR']);
+    }
+    
+    public function testGetCandidateStateNotRunning()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
+        $this->assertFalse($assessmentTestSession->getCandidateState());
+    }
 }

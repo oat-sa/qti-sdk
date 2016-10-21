@@ -297,7 +297,6 @@ class OperatorsUtilsTest extends QtiSmTestCase
             array('', 'foobar', 'PCRE Engine error'),
             array('/***', 'foobar', 'PCRE Engine error'),
             array('/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'),
-            array('/^([^<>}{\|])+$/', 'Testing bla di bla and more stupid text text text', 'PCRE Engine recursion limit exceeded', 5),
             array('/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error')
         );
     }

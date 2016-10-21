@@ -1981,7 +1981,7 @@ class AssessmentTestSession extends State
 
             if ($v->hasPrefix() === true) {
                 $msg = "Test existence of a variable in an AssessmentTestSession may only be addressed with simple variable ";
-                $msg = "identifiers (no prefix, no sequence number). '" . $v->__toString() . "' given.";
+                $msg .= "identifiers (no prefix, no sequence number). '" . $v->__toString() . "' given.";
                 throw new OutOfRangeException($msg, 0);
             }
 
