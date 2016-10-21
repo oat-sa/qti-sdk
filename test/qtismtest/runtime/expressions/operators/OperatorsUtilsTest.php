@@ -4,7 +4,8 @@ namespace qtismtest\runtime\expressions\operators;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
 
-class OperatorsUtilsTest extends QtiSmTestCase {
+class OperatorsUtilsTest extends QtiSmTestCase
+{
 	
 	/**
 	 * @dataProvider gcdProvider
@@ -13,7 +14,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param integer $b
 	 * @param integer $expected
 	 */
-	public function testGcd($a, $b, $expected) {
+	public function testGcd($a, $b, $expected)
+    {
 		$result = OperatorsUtils::gcd($a, $b);
 		$this->assertInternalType('integer', $result);
 		$this->assertSame($expected, $result);
@@ -26,7 +28,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param integer $b
 	 * @param integer $expected
 	 */
-	public function testLcm($a, $b, $expected) {
+	public function testLcm($a, $b, $expected)
+    {
 		$result = OperatorsUtils::lcm($a, $b);
 		$this->assertInternalType('integer', $result);
 		$this->assertSame($expected, $expected);
@@ -38,7 +41,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param array $sample
 	 * @param number $expected
 	 */
-	public function testMean(array $sample, $expected) {
+	public function testMean(array $sample, $expected)
+    {
 		$result = OperatorsUtils::mean($sample);
 		$this->assertSame($expected, $result);
 	}
@@ -50,7 +54,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param boolean Apply Bessel's correction?
 	 * @param number $expected
 	 */
-	public function testVariance(array $sample, $correction, $expected) {
+	public function testVariance(array $sample, $correction, $expected)
+    {
 		$result = OperatorsUtils::variance($sample, $correction);
 		$this->assertSame($expected, $result);
 	}
@@ -62,7 +67,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param boolean Apply Bessel's standard correction?
 	 * @param number $expected
 	 */
-	public function testStandardDeviation(array $sample, $correction, $expected) {
+	public function testStandardDeviation(array $sample, $correction, $expected)
+    {
 		$result = OperatorsUtils::standardDeviation($sample, $correction);
 		
 		if (is_bool($expected)) {
@@ -80,7 +86,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param integer $offset
 	 * @param integer $expected Expected preceding backslashes count.
 	 */
-	public function testGetPrecedingBackslashesCount($string, $offset, $expected) {
+	public function testGetPrecedingBackslashesCount($string, $offset, $expected)
+    {
 		$this->assertSame($expected, OperatorsUtils::getPrecedingBackslashesCount($string, $offset));
 	}
 	
@@ -90,7 +97,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param string $string
 	 * @param string $expected
 	 */
-	public function testPregAddDelimiter($string, $expected) {
+	public function testPregAddDelimiter($string, $expected)
+    {
 		$this->assertSame($expected, OperatorsUtils::pregAddDelimiter($string));
 	}
 	
@@ -101,7 +109,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param array|string $symbols
 	 * @param string $expected
 	 */
-	public function testEscapeSymbols($string, $symbols, $expected) {
+	public function testEscapeSymbols($string, $symbols, $expected)
+    {
 		$this->assertSame($expected, OperatorsUtils::escapeSymbols($string, $symbols));
 	}
 	
@@ -111,7 +120,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * @param string $customClass
 	 * @param string $expected
 	 */
-	public function testValidCustomOperatorClassToPhpClass($customClass, $expected) {
+	public function testValidCustomOperatorClassToPhpClass($customClass, $expected)
+    {
 	    $this->assertEquals($expected, OperatorsUtils::customOperatorClassToPhpClass($customClass));
 	}
 	
@@ -120,11 +130,38 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	 * 
 	 * @param string $customClass
 	 */
-	public function testInvalidCustomOperatorClassToPhpClass($customClass) {
+	public function testInvalidCustomOperatorClassToPhpClass($customClass)
+    {
 	    $this->assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
 	}
+    
+    /**
+     * @dataProvider lastPregErrorMessageProvider
+     * 
+     * @param string $pcre
+     * @param string $subject
+     * @param string $message
+     * @param integer $recursionLimit
+     */
+    public function testLastPregErrorMessage($pcre, $subject, $message, $recursionLimit = 0)
+    {
+        
+        if ($recursionLimit > 0) {
+            $prevRecursionLimit = ini_get('pcre.recursion_limit');
+            ini_set('pcre.recursion_limit', $recursionLimit);
+        }
+        
+        @preg_match($pcre, $subject);
+        
+        if ($recursionLimit > 0) {
+            ini_set('pcre.recursion_limit', $prevRecursionLimit);
+        }
+        
+        $this->assertEquals($message, OperatorsUtils::lastPregErrorMessage());
+    }
 	
-	public function pregAddDelimiterProvider() {
+	public function pregAddDelimiterProvider()
+    {
 		return array(
 				array('', '//'),
 				array('test', '/test/'),
@@ -140,7 +177,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function escapeSymbolsProvider() {
+	public function escapeSymbolsProvider()
+    {
 		return array(
 			array('10$ are 10$', array('$', '^'), '10\\$ are 10\\$'),
 			array('$$$Jackpot$$$', '$', '\\$\\$\\$Jackpot\\$\\$\\$'),
@@ -148,7 +186,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function getPrecedingBackslashesCountProvider() {
+	public function getPrecedingBackslashesCountProvider()
+    {
 		return array(
 				array('', 0, 0),
 				array('string!', 0, 0),
@@ -161,7 +200,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function gcdProvider() {
+	public function gcdProvider()
+    {
 		return array(
 			array(60, 330, 30),
 			array(256, 1024, 256),
@@ -172,7 +212,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function lcmProvider() {
+	public function lcmProvider()
+    {
 		return array(
 			array(4, 3, 12),
 			array(0, 3, 0),
@@ -182,7 +223,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function meanProvider() {
+	public function meanProvider()
+    {
 		return array(
 			array(array(), false),
 			array(array('string!'), false),
@@ -198,7 +240,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function varianceProvider() {
+	public function varianceProvider()
+    {
 		return array(
 			// [0] = sample; [1] = Bessel's correction, [2] = expected result
 			array(array(600, 470, 170, 430, 300), false, 21704), // on population (no correction)
@@ -213,7 +256,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function standardDeviationProvider() {
+	public function standardDeviationProvider()
+    {
 		// The equality test will be done with 2 significant figures.
 		return array(
 			array(array(600, 470, 170, 430, 300), false, 147.32), // on population (no correction)
@@ -227,7 +271,8 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function validCustomOperatorClassToPhpClassProvider() {
+	public function validCustomOperatorClassToPhpClassProvider()
+    {
 	    return array(
 	        array('com.taotesting.operators.custom.explode', "com\\taotesting\\operators\\custom\\Explode"),
 	        array('org.imsglobal.rStats', "org\\imsglobal\\RStats"),
@@ -235,12 +280,25 @@ class OperatorsUtilsTest extends QtiSmTestCase {
 	    );
 	}
 	
-	public function invalidCustomOperatorClassToPhpClassProvider() {
+	public function invalidCustomOperatorClassToPhpClassProvider()
+    {
 	    return array(
 	        array('taotesting'),
 	        array('com#taotesting'),
 	        array(''),
-	        array('com|taotesting.custom')
+	        array('com|taotesting.custom'),
+            array(false)
 	    );
 	}
+    
+    public function lastPregErrorMessageProvider()
+    {
+        return array(
+            array('', 'foobar', 'PCRE Engine error'),
+            array('/***', 'foobar', 'PCRE Engine error'),
+            array('/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'),
+            array('/^([^<>}{\|])+$/', 'Testing bla di bla and more stupid text text text', 'PCRE Engine recursion limit exceeded', 5),
+            array('/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error')
+        );
+    }
 }

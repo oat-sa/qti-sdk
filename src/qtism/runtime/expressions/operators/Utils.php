@@ -269,23 +269,18 @@ class Utils
 
         $class = strval($class);
         $tokens = explode('.', $class);
+        $tokenCount = count($tokens);
 
-        if ($tokens === false) {
-            return $tokens;
-        } else {
-            $tokenCount = count($tokens);
-
-            if ($tokenCount <= 1) {
-                return false;
-            }
-
-            // ucfirst on last token (i.e. The actual class name)
-            $lastPosition = $tokenCount - 1;
-            $lastToken = ucfirst($tokens[$lastPosition]);
-            $tokens[$lastPosition] = $lastToken;
-
-            return implode("\\", $tokens);
+        if ($tokenCount <= 1) {
+            return false;
         }
+
+        // ucfirst on last token (i.e. The actual class name)
+        $lastPosition = $tokenCount - 1;
+        $lastToken = ucfirst($tokens[$lastPosition]);
+        $tokens[$lastPosition] = $lastToken;
+
+        return implode("\\", $tokens);
     }
     
     /**
@@ -293,7 +288,6 @@ class Utils
      * 
      * The following PREG error codes are considered by this method:
      * 
-     * * PREG_INTERNAL_ERROR
      * * PREG_BACKTRACK_LIMIT_ERROR
      * * PREG_RECURSION_LIMIT_ERROR
      * * PREG_BAD_UTF8_ERROR
@@ -304,12 +298,9 @@ class Utils
     static public function lastPregErrorMessage()
     {
         $error = preg_last_error();
-        $errorType = 'PCRE Engine compilation error';
+        $errorType = 'PCRE Engine error';
 
         switch ($error) {
-            case PREG_INTERNAL_ERROR:
-                $errorType = "PCRE Engine internal error";
-                break;
 
             case PREG_BACKTRACK_LIMIT_ERROR:
                 $errorType = "PCRE Engine backtrack limit exceeded";
@@ -319,12 +310,8 @@ class Utils
                 $errorType = "PCRE Engine recursion limit exceeded";
                 break;
 
-            case PREG_BAD_UTF8_ERROR:
-                $errorType = "PCRE Engine malformed UTF-8";
-                break;
-
-            case PREG_BAD_UTF8_OFFSET_ERROR:
-                $errorType = "PCRE Engine UTF-8 offset error";
+            case PREG_BAD_UTF8_ERROR:case PREG_BAD_UTF8_OFFSET_ERROR:
+                $errorType = "PCRE Engine malformed UTF-8 error";
                 break;
         }
         
