@@ -127,7 +127,7 @@ class Equal extends Operator
 	 */
     public function setToleranceMode($toleranceMode)
     {
-        if (in_array($toleranceMode, ToleranceMode::asArray())) {
+        if (in_array($toleranceMode, ToleranceMode::asArray(), true)) {
             $this->toleranceMode = $toleranceMode;
         } else {
             $msg = "The toleranceMode argument must be a value from the ToleranceMode enumeration, '" . $toleranceMode . "' given.";
@@ -189,7 +189,7 @@ class Equal extends Operator
         if (is_bool($includeLowerBound)) {
             $this->includeLowerBound = $includeLowerBound;
         } else {
-            $msg = "The includeLowerBound argument must be a boolean, '" . gettype($includelowerBound) . "' given.";
+            $msg = "The includeLowerBound argument must be a boolean, '" . gettype($includeLowerBound) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
