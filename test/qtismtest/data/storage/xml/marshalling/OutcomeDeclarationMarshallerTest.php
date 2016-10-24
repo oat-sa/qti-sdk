@@ -19,7 +19,7 @@ use \DOMDocument;
 
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshallMinimal21() {
+	public function testMarshall21() {
 
 		// Initialize a minimal outcomeDeclaration.
 		$identifier = "outcome1";
@@ -27,6 +27,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$baseType = BaseType::INTEGER;
 		
 		$component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
+        $component->setInterpretation('My interpretation');
+        $component->setLongInterpretation('http://my.long.com/interpretation');
+        $component->setMasteryValue(0.5);
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
 		$element = $marshaller->marshall($component);
 		
@@ -35,10 +38,13 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('single', $element->getAttribute('cardinality'));
 		$this->assertEquals('integer', $element->getAttribute('baseType'));
 		$this->assertEquals('outcome1', $element->getAttribute('identifier'));
+        $this->assertEquals('My interpretation', $element->getAttribute('interpretation'));
+        $this->assertEquals('http://my.long.com/interpretation', $element->getAttribute('longInterpretation'));
+        $this->assertEquals('0.5', $element->getAttribute('masteryValue'));
 	}
 	
 	/**
-	 * @depends testMarshallMinimal21
+	 * @depends testMarshall21
 	 */
 	public function testMarshallNoOutputViewsNormalMinimumMasteryValueView20() {
 	    $identifier = "outcome1";
@@ -167,9 +173,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 	    $element = $marshaller->marshall($component);
 	}
 	
-	public function testUnmarshallMinimal21() {
+	public function testUnmarshall21() {
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer"/>');
+		$dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer" longInterpretation="http://my.long.com/interpretation"/>');
 		$element = $dom->documentElement;
 		
 		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
@@ -179,6 +185,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($component->getIdentifier(), 'outcomeDeclaration1');
 		$this->assertEquals($component->getCardinality(), Cardinality::SINGLE);
 		$this->assertEquals($component->getBaseType(), BaseType::INTEGER);
+        $this->assertEquals('http://my.long.com/interpretation', $component->getLongInterpretation());
 	}
 	
 	public function testUnmarshallDefaultValue21() {
