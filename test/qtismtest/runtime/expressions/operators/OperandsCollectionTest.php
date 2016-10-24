@@ -14,16 +14,18 @@ use qtism\runtime\common\RecordContainer;
 use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
-class OperandsCollectionProcessorTest extends QtiSmTestCase {
-	
+class OperandsCollectionProcessorTest extends QtiSmTestCase
+{
 	private $operands = null;
 	
-	public function setUp() {
+	public function setUp()
+    {
 		parent::setUp();
 		$this->operands = new OperandsCollection();
 	}
 	
-	public function tearDown() {
+	public function tearDown()
+    {
 	    parent::tearDown();
 	    unset($this->operands);
 	}
@@ -32,16 +34,19 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 	 * 
 	 * @return OperandsCollection
 	 */
-	protected function getOperands() {
+	protected function getOperands()
+    {
 		return $this->operands;
 	}
 	
-	public function testContainsNullEmpty() {
+	public function testContainsNullEmpty()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->containsNull());
 	}
 	
-	public function testContainsNullFullSingleCardinality() {
+	public function testContainsNullFullSingleCardinality()
+    {
 		$operands = $this->getOperands();
 		$operands[] = new QtiInteger(15);
 		
@@ -57,7 +62,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($operands->containsNull());
 	}
 	
-	public function testContainsNullMixed() {
+	public function testContainsNullMixed()
+    {
 		$operands = $this->getOperands();
 		$operands[] = new MultipleContainer(BaseType::FLOAT);
 		
@@ -79,7 +85,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->containsNull());
 	}
 	
-	public function testExclusivelyNumeric() {
+	public function testExclusivelyNumeric()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyNumeric());
 		
@@ -118,7 +125,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyNumeric());
 	}
 	
-	public function testExclusivelyInteger() {
+	public function testExclusivelyInteger()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyInteger());
 		
@@ -151,7 +159,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyInteger());
 	}
 	
-	public function testExclusivelyPoint() {
+	public function testExclusivelyPoint()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyPoint());
 	
@@ -184,7 +193,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyPoint());
 	}
 	
-	public function testExclusivelyDuration() {
+	public function testExclusivelyDuration()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyDuration());
 	
@@ -217,7 +227,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyDuration());
 	}
 	
-	public function testAnythingButRecord() {
+	public function testAnythingButRecord()
+    {
 		$operands = $this->getOperands();
 		$this->assertTrue($operands->anythingButRecord());
 		
@@ -252,7 +263,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->anythingButRecord());
 	}
 	
-	public function testExclusivelyMultipleOrOrdered() {
+	public function testExclusivelyMultipleOrOrdered()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyMultipleOrOrdered());
 		
@@ -289,7 +301,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($operands->exclusivelyMultipleOrOrdered());
 	}
 	
-	public function testExclusivelySingleOrOrdered() {
+	public function testExclusivelySingleOrOrdered()
+    {
 		$operands = $this->getOperands();
 		$operands[] = null;
 		$this->assertTrue($operands->exclusivelySingleOrOrdered());
@@ -331,7 +344,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelySingleOrMultiple());
 	}
 	
-	public function testSameBaseType() {
+	public function testSameBaseType()
+    {
 		// If any of the values is null, false.
 		$operands = new OperandsCollection(array(null, null, null));
 		$this->assertFalse($operands->sameBaseType());
@@ -382,7 +396,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->sameBaseType());
 	}
 	
-	public function testSameCardinality() {
+	public function testSameCardinality()
+    {
 		$operands = new OperandsCollection();
 		$this->assertFalse($operands->sameCardinality());
 		
@@ -399,7 +414,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->sameCardinality());
 	}
 	
-	public function testExclusivelyBoolean() {
+	public function testExclusivelyBoolean()
+    {
 		$operands = new OperandsCollection();
 		$this->assertFalse($operands->exclusivelyBoolean());
 
@@ -442,7 +458,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$this->assertFalse($operands->exclusivelyBoolean());
 	}
 	
-	public function testExclusivelyRecord() {
+	public function testExclusivelyRecord()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyRecord());
 		
@@ -470,7 +487,8 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		
 	}
 	
-	public function testExclusivelyOrdered() {
+	public function testExclusivelyOrdered()
+    {
 		$operands = $this->getOperands();
 		$this->assertFalse($operands->exclusivelyOrdered());
 	
@@ -501,4 +519,36 @@ class OperandsCollectionProcessorTest extends QtiSmTestCase {
 		$operands[] = new MultipleContainer(BaseType::URI);
 		$this->assertFalse($operands->exclusivelyOrdered());
 	}
+    
+    public function testInvalidDataType()
+    {
+        $operands = $this->getOperands();
+        
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The OperandsCollection only accepts QTI Runtime compliant values, '999' given."
+        );
+        
+        $operands[] = 999;
+    }
+    
+    public function testExclusivelySingleNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingle());
+    }
+    
+    public function testExclusivelyStringNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelyString());
+    }
+    
+    public function testExclusivelySingleOrMultipleNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingleOrMultiple());
+    }
+    
+    public function testExclusivelySingleOrOrderedNoValues()
+    {
+        $this->assertFalse($this->getOperands()->exclusivelySingleOrOrdered());
+    }
 }
