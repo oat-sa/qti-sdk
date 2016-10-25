@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -65,24 +65,28 @@ class AreaMapEntryMarshaller extends Marshaller
     {
         if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
 
-            $shape = QtiShape::getConstantByName($shape);
+            $shapeVal = QtiShape::getConstantByName($shape);
 
-            if ($shape !== false) {
+            if ($shapeVal !== false) {
 
                 if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null) {
 
                     try {
-                        $coords = Utils::stringToCoords($coords, $shape);
+                        $coords = Utils::stringToCoords($coords, $shapeVal);
 
                         if (($mappedValue = static::getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
-                            return new AreaMapEntry($shape, $coords, $mappedValue);
+                            return new AreaMapEntry($shapeVal, $coords, $mappedValue);
                         } else {
                             $msg = "The mandatory attribute 'mappedValue' is missing from element '" . $element->localName . "'.";
                             throw new UnmarshallingException($msg, $element);
                         }
                     } catch (Exception $e) {
-                        $msg = "The attribute 'coords' with value '${coords}' is has an invalid value.";
-                        throw new UnmarshallingException($msg, $element, $e);
+                        if (!$e instanceof UnmarshallingException) {
+                            $msg = "The attribute 'coords' with value '${coords}' has an invalid value.";
+                            throw new UnmarshallingException($msg, $element, $e);
+                        } else {
+                            throw $e;
+                        }
                     }
                 } else {
                     $msg = "The mandatory attribute 'coords' is missing from element '" . $element->localName . "'.";
