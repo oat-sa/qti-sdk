@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -36,89 +36,89 @@ use qtism\common\utils\Format;
 class TestFeedback extends QtiComponent
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * Test feedback is shown to the candidate either directly following outcome processing
-	 * (during the test) or at the end of the testPart or assessmentTest as appropriate
-	 * (referred to as atEnd).
-	 *
-	 * The value of an outcome variable is used in conjunction with the showHide and
-	 * identifier attributes to determine whether or not the feedback is actually
-	 * shown in a similar way to feedbackElement (Item Model).
-	 *
-	 * @var int
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Test feedback is shown to the candidate either directly following outcome processing
+     * (during the test) or at the end of the testPart or assessmentTest as appropriate
+     * (referred to as atEnd).
+     *
+     * The value of an outcome variable is used in conjunction with the showHide and
+     * identifier attributes to determine whether or not the feedback is actually
+     * shown in a similar way to feedbackElement (Item Model).
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $access = TestFeedbackAccess::DURING;
 
     /**
-	 * The QTI Identifier of the outcome variable bound to this feedback.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The QTI Identifier of the outcome variable bound to this feedback.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $outcomeIdentifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The showHide attribute determines how the visibility of the feedbackElement is controlled.
-	 * If set to show then the feedback is hidden by default and shown only if the associated
-	 * outcome variable matches, or contains, the value of the identifier attribute. If set
-	 * to hide then the feedback is shown by default and hidden if the associated outcome
-	 * variable matches, or contains, the value of the identifier attribute.
-	 *
-	 * @var int
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The showHide attribute determines how the visibility of the feedbackElement is controlled.
+     * If set to show then the feedback is hidden by default and shown only if the associated
+     * outcome variable matches, or contains, the value of the identifier attribute. If set
+     * to hide then the feedback is shown by default and hidden if the associated outcome
+     * variable matches, or contains, the value of the identifier attribute.
+     *
+     * @var int
+     * @qtism-bean-property
+     */
     private $showHide = ShowHide::SHOW;
 
     /**
-	 * The QTI identifier of the TestFeedback.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The QTI identifier of the TestFeedback.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * The title of the Feedback. Empty string means there is no title.
-	 *
-	 * From IMS QTI:
-	 *
-	 * Delivery engines are not required to present the title to the candidate but may do so,
-	 * for example as the title of a modal pop-up window or sub-heading in a combined report.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The title of the Feedback. Empty string means there is no title.
+     *
+     * From IMS QTI:
+     *
+     * Delivery engines are not required to present the title to the candidate but may do so,
+     * for example as the title of a modal pop-up window or sub-heading in a combined report.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $title;
 
     /**
-	 * The markup content of the feedback to show. In IMS QTI specs, this attribute
-	 * is a FlowStatic element.
-	 *
-	 * From IMS QTI:
-	 *
-	 * The content of the testFeedback must not contain any interactions.
-	 *
-	 * @var \qtism\data\content\FlowStaticCollection
-	 * @qtism-bean-property
-	 */
+     * The markup content of the feedback to show. In IMS QTI specs, this attribute
+     * is a FlowStatic element.
+     *
+     * From IMS QTI:
+     *
+     * The content of the testFeedback must not contain any interactions.
+     *
+     * @var \qtism\data\content\FlowStaticCollection
+     * @qtism-bean-property
+     */
     private $content;
 
     /**
-	 * Create a new instance of TestFeedback.
-	 *
-	 * Values of attributes 'showHide' and 'access' are respectively ShowHide::SHOW and
-	 * TestFeedbackAccess::DURING.
-	 *
-	 * @param string $identifier The identifier of the feedback.
-	 * @param string $outcomeIdentifier The identifier of the outcome variable bound to the feedback.
-	 * @param \qtism\data\content\FlowStaticCollection $content The content of the feedback.
-	 * @param string $title The title of the feedback. An empty string means that no title is specified.
-	 * @throws \InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
-	 */
+     * Create a new instance of TestFeedback.
+     *
+     * Values of attributes 'showHide' and 'access' are respectively ShowHide::SHOW and
+     * TestFeedbackAccess::DURING.
+     *
+     * @param string $identifier The identifier of the feedback.
+     * @param string $outcomeIdentifier The identifier of the outcome variable bound to the feedback.
+     * @param \qtism\data\content\FlowStaticCollection $content The content of the feedback.
+     * @param string $title The title of the feedback. An empty string means that no title is specified.
+     * @throws \InvalidArgumentException If one of the arguments has a wrong datatype or incorrect format.
+     */
     public function __construct($identifier, $outcomeIdentifier, FlowStaticCollection $content, $title = '')
     {
         $this->setIdentifier($identifier);
@@ -128,30 +128,30 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get how the feedback is shown to the candidate.
-	 *
-	 * * TestFeedbackAccess::DURING = At outcome processing time.
-	 * * TestFeedbackAccess::AT_END = At the end of the TestPart or AssessmentTest.
-	 *
-	 * @return int A value of the TestFeedbackAccess enumeration.
-	 */
+     * Get how the feedback is shown to the candidate.
+     *
+     * * TestFeedbackAccess::DURING = At outcome processing time.
+     * * TestFeedbackAccess::AT_END = At the end of the TestPart or AssessmentTest.
+     *
+     * @return int A value of the TestFeedbackAccess enumeration.
+     */
     public function getAccess()
     {
         return $this->access;
     }
 
     /**
-	 * Set how the feedback is shown to the candidate.
-	 *
-	 * * TestFeedbackAccess::DURING = At outcome processing time.
-	 * * TestFeedbackAccess:AT_END = At the end of the TestPart or AssessmentTest.
-	 *
-	 * @param int $access A value of the TestFeedbackAccess enumeration.
-	 * @throws \InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
-	 */
+     * Set how the feedback is shown to the candidate.
+     *
+     * * TestFeedbackAccess::DURING = At outcome processing time.
+     * * TestFeedbackAccess:AT_END = At the end of the TestPart or AssessmentTest.
+     *
+     * @param int $access A value of the TestFeedbackAccess enumeration.
+     * @throws \InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
+     */
     public function setAccess($access)
     {
-        if (in_array($access, TestFeedbackAccess::asArray())) {
+        if (in_array($access, TestFeedbackAccess::asArray(), true)) {
             $this->access = $access;
         } else {
             $msg = "'${access}' is not a value from the TestFeedbackAccess enumeration.";
@@ -160,21 +160,21 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get the QTI Identifier of the outcome variable bound to this TestFeedback.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the QTI Identifier of the outcome variable bound to this TestFeedback.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getOutcomeIdentifier()
     {
         return $this->outcomeIdentifier;
     }
 
     /**
-	 * Set the QTI Identifier of the outcome variable bound to this TestFeedback.
-	 *
-	 * @param string $outcomeIdentifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
-	 */
+     * Set the QTI Identifier of the outcome variable bound to this TestFeedback.
+     *
+     * @param string $outcomeIdentifier A QTI Identifier.
+     * @throws \InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
+     */
     public function setOutcomeIdentifier($outcomeIdentifier)
     {
         if (Format::isIdentifier($outcomeIdentifier)) {
@@ -186,24 +186,24 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get how the feedback should be displayed.
-	 *
-	 * @return int A value from the ShowHide enumeration.
-	 */
+     * Get how the feedback should be displayed.
+     *
+     * @return int A value from the ShowHide enumeration.
+     */
     public function getShowHide()
     {
         return $this->showHide;
     }
 
     /**
-	 * Set how the feedback should be displayed.
-	 *
-	 * @param boolean $showHide A value from the ShowHide enumeration.
-	 * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
-	 */
+     * Set how the feedback should be displayed.
+     *
+     * @param boolean $showHide A value from the ShowHide enumeration.
+     * @throws \InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
+     */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray())) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "'${showHide}' is not a value from the ShowHide enumeration.";
@@ -212,21 +212,21 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get the QTI identifier of this TestFeedback.
-	 *
-	 * @return string A QTI identifier.
-	 */
+     * Get the QTI identifier of this TestFeedback.
+     *
+     * @return string A QTI identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the QTI identifier of this TestFeedback.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the QTI identifier of this TestFeedback.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -238,21 +238,21 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get the title of this TestFeedback. Empty string means no title specified.
-	 *
-	 * @return string A title.
-	 */
+     * Get the title of this TestFeedback. Empty string means no title specified.
+     *
+     * @return string A title.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
     /**
-	 * Set the title of this TestFeedback. Empty string means no title specified.
-	 *
-	 * @param string $title A title.
-	 * @throws \InvalidArgumentException If $title is not a string.
-	 */
+     * Set the title of this TestFeedback. Empty string means no title specified.
+     *
+     * @param string $title A title.
+     * @throws \InvalidArgumentException If $title is not a string.
+     */
     public function setTitle($title)
     {
         if (gettype($title) === 'string') {
@@ -264,21 +264,21 @@ class TestFeedback extends QtiComponent
     }
 
     /**
-	 * Get the XML stream of the content of the TestFeedback.
-	 *
-	 * @return \qtism\data\content\FlowStaticCollection The content of the TestFeedback.
-	 */
+     * Get the XML stream of the content of the TestFeedback.
+     *
+     * @return \qtism\data\content\FlowStaticCollection The content of the TestFeedback.
+     */
     public function getContent()
     {
         return $this->content;
     }
 
     /**
-	 * Set the XML stream of the content of the TestFeedback.
-	 *
-	 * @param FlowStaticCollection $content XML markup binary stream as a string.
-	 * @throws \InvalidArgumentException If $content is not a string.
-	 */
+     * Set the XML stream of the content of the TestFeedback.
+     *
+     * @param FlowStaticCollection $content XML markup binary stream as a string.
+     * @throws \InvalidArgumentException If $content is not a string.
+     */
     public function setContent(FlowStaticCollection $content)
     {
         $this->content = $content;
