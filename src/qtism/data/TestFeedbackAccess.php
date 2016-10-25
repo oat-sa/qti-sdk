@@ -47,7 +47,7 @@ class TestFeedbackAccess implements Enumeration
     public static function getConstantByName($name)
     {
         switch (strtolower($name)) {
-            case 'atEnd':
+            case 'atend':
                 return self::AT_END;
             break;
 

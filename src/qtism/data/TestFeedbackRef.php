@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -132,7 +132,7 @@ class TestFeedbackRef extends QtiComponent
      */
     public function setAccess($access)
     {
-        if (in_array($access, TestFeedbackAccess::asArray())) {
+        if (in_array($access, TestFeedbackAccess::asArray(), true)) {
             $this->access = $access;
         } else {
             $msg = "'${access}' is not a value from the TestFeedbackAccess enumeration.";
@@ -210,7 +210,7 @@ class TestFeedbackRef extends QtiComponent
      */
     public function setShowHide($showHide)
     {
-        if (in_array($showHide, ShowHide::asArray())) {
+        if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
             $msg = "'${showHide}' is not a value from the ShowHide enumeration.";
