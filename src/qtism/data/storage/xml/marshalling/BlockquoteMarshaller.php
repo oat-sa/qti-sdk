@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -55,12 +55,12 @@ class BlockquoteMarshaller extends ContentMarshaller
         }
         $component->setContent($blockCollection);
 
-        if ($component->hasCite() === true) {
-            self::setDOMElementAttribute($element, 'cite', $component->getCite());
+        if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
+            $component->setCite($cite);
         }
 
-        if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->getXmlBase());
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
         }
 
         $this->fillBodyElement($component, $element);
@@ -75,12 +75,12 @@ class BlockquoteMarshaller extends ContentMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
-            $component->setCite($cite);
+        if ($component->hasCite() === true) {
+            $element->setAttribute('cite', $component->getCite());
         }
 
-        if (($xmlBase = self::getXmlBase($element)) !== false) {
-            $component->setXmlBase($xmlBase);
+        if ($component->hasXmlBase() === true) {
+            $element->setAttribute('xml:base', $component->getXmlBase());
         }
 
         foreach ($elements as $e) {
