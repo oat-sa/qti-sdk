@@ -20,12 +20,13 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	    $selectPointInteraction->setPrompt($prompt);
 	    $selectPointInteraction->setMinChoices(1);
         $selectPointInteraction->setMaxChoices(1);
+        $selectPointInteraction->setXmlBase('/home/jerome');
 	    
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($selectPointInteraction)->marshall($selectPointInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1" minChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>', $dom->saveXML($element));
+        $this->assertEquals('<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>', $dom->saveXML($element));
 	}
 	
 	/**
@@ -47,7 +48,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshall21() {
         $element = $this->createDOMElement('
-            <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1">
+            <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
               <prompt>Prompt...</prompt>
               <object data="./myimg.png" type="image/png"/>
             </selectPointInteraction>
@@ -58,6 +59,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this->assertEquals(1, $component->getMaxChoices());
         $this->assertEquals(1, $component->getMinChoices());
+        $this->assertEquals('/home/jerome', $component->getXmlBase());
         
         $this->assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
@@ -67,7 +69,44 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals('./myimg.png', $object->getData());
         $this->assertEquals('image/png', $object->getType());
 	}
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoObject() {
+        $element = $this->createDOMElement('
+            <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+            </selectPointInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'selectPointInteraction' element must contain exactly one 'object' element, none given."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
 	
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoResponseIdentifier() {
+        $element = $this->createDOMElement('
+            <selectPointInteraction minChoices="1" maxChoices="1" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <object data="./myimg.png" type="image/png"/>
+            </selectPointInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'responseIdentifier' attribute is missing from the 'selectPointInteraction' element."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
 	/**
 	 * @depends testUnmarshall21
 	 */
@@ -81,5 +120,23 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase {
 	    
 	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 	    $this->assertEquals(0, $component->getMinChoices());
+	}
+    
+    /**
+	 * @depends testUnmarshall21
+	 */
+	public function testUnmarshall20MissingMaxChoices() {
+	    $element = $this->createDOMElement('
+            <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1">
+              <object data="./myimg.png" type="image/png"/>
+            </selectPointInteraction>
+        ');
+	    
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'maxChoices' attribute is missing from the 'selectPointInteraction' element."
+        );
+        
+	    $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 	}
 }
