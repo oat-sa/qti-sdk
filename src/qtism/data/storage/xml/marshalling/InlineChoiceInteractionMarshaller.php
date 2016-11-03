@@ -50,7 +50,7 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
             $choices = new InlineChoiceCollection($children->getArrayCopy());
             if (count($choices) === 0) {
                 $msg = "An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.";
-                throw new UnmarshallingException($message, $element);
+                throw new UnmarshallingException($msg, $element);
             }
 
             try {
