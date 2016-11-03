@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -28,6 +28,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\collections\Container;
 use qtism\runtime\common\Utils as RuntimeUtils;
+use qtism\runtime\expressions\Utils as ExprUtils;
 use qtism\runtime\common\OrderedContainer;
 use qtism\data\expressions\operators\Repeat;
 use qtism\data\expressions\Expression;
@@ -74,13 +75,13 @@ class RepeatProcessor extends OperatorProcessor
         if (gettype($numberRepeats) === 'string') {
             // Variable reference found.
             $state = $this->getState();
-            $varName = Utils::sanitizeVariableRef($numberRepeats);
+            $varName = ExprUtils::sanitizeVariableRef($numberRepeats);
             $varValue = $state[$varName];
 
             if (is_null($varValue) === true) {
                 $msg = "The variable with name '${varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
-            } elseif ($varValue instanceof QtiInteger) {
+            } elseif (!$varValue instanceof QtiInteger) {
                 $msg = "The variable with name '${varName}' is not an integer value.";
                 throw new OperatorProcessingException($msg, $this);
             }

@@ -7,16 +7,20 @@ use qtism\common\datatypes\QtiUri;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiInteger;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\datatypes\QtiPoint;
-use qtism\common\enums\BaseType;
 use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\State;
 use qtism\runtime\expressions\operators\RepeatProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
-class RepeatProcessorTest extends QtiSmTestCase {
-	
-	public function testRepeatScalarOnly() {
+class RepeatProcessorTest extends QtiSmTestCase
+{
+	public function testRepeatScalarOnly()
+    {
 		$initialVal = array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3));
 		$expression = $this->createFakeExpression(1);
 		$operands = new OperandsCollection($initialVal);
@@ -29,8 +33,52 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 		$this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
 	}
+    
+    public function testRepeatVariableRef()
+    {
+        $initialVal = array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3));
+        $expression = $this->createFakeExpression('repeat');
+        $operands = new OperandsCollection($initialVal);
+        $processor = new RepeatProcessor($expression, $operands);
+        $processor->setState(new State(array(new OutcomeVariable('repeat', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(2)))));
+        
+        $result = $processor->process();
+        $this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
+    }
+    
+    public function testRepeatVariableRefNullRef()
+    {
+        $initialVal = array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3));
+        $expression = $this->createFakeExpression('repeat');
+        $operands = new OperandsCollection($initialVal);
+        $processor = new RepeatProcessor($expression, $operands);
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            "The variable with name 'repeat' could not be resolved."
+        );
+        
+        $processor->process();
+    }
+    
+    public function testRepeatVariableRefNonIntegerRef()
+    {
+        $initialVal = array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3));
+        $expression = $this->createFakeExpression('repeat');
+        $operands = new OperandsCollection($initialVal);
+        $processor = new RepeatProcessor($expression, $operands);
+        $processor->setState(new State(array(new OutcomeVariable('repeat', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(2.)))));
+        
+        $this->setExpectedException(
+            'qtism\\runtime\\expressions\\operators\\OperatorProcessingException',
+            "The variable with name 'repeat' is not an integer value."
+        );
+        
+        $processor->process();
+    }
 	
-	public function testOrderedOnly() {
+	public function testOrderedOnly()
+    {
 		$expression = $this->createFakeExpression(2);
 		$ordered1 = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)));
 		$ordered2 = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(4)));
@@ -42,7 +90,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($comparison->equals($result));
 	}
 	
-	public function testMixed() {
+	public function testMixed()
+    {
 		$expression = $this->createFakeExpression(2);
 		$operands = new OperandsCollection();
 		$operands[] = new QtiPoint(0, 0);
@@ -57,7 +106,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($comparison->equals($result));
 	}
 	
-	public function testNull() {
+	public function testNull()
+    {
 		// If all sub-expressions are NULL, the result is NULL.
 		$expression = $this->createFakeExpression(1);
 		$operands = new OperandsCollection(array(null, new OrderedContainer(BaseType::INTEGER)));
@@ -74,7 +124,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$this->assertTrue($result->equals($comparison));
 	}
 	
-	public function testWrongBaseTypeOne() {
+	public function testWrongBaseTypeOne()
+    {
 	    $expression = $this->createFakeExpression(1);
 	    $operands = new OperandsCollection();
 	    $operands[] = null;
@@ -88,7 +139,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 	    $result = $processor->process();
 	}
 	
-	public function testWrongCardinality() {
+	public function testWrongCardinality()
+    {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new MultipleContainer(BaseType::INTEGER, array(new QtiInteger(10)))));
 		$processor = new RepeatProcessor($expression, $operands);
@@ -96,7 +148,8 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 	}
 	
-	public function testWrongBaseTypeTwo() {
+	public function testWrongBaseTypeTwo()
+    {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection(array(new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10))), new QtiFloat(10.3)));
 		$processor = new RepeatProcessor($expression, $operands);
@@ -104,14 +157,16 @@ class RepeatProcessorTest extends QtiSmTestCase {
 		$result = $processor->process();
 	}
 	
-	public function testNotEnoughOperands() {
+	public function testNotEnoughOperands()
+    {
 		$expression = $this->createFakeExpression();
 		$operands = new OperandsCollection();
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new RepeatProcessor($expression, $operands);
 	}
 	
-	public function createFakeExpression($numberRepeats = 1) {
+	public function createFakeExpression($numberRepeats = 1)
+    {
 		return $this->createComponentFromXml('
 			<repeat numberRepeats="' . $numberRepeats . '">
 				<baseValue baseType="integer">120</baseValue>
