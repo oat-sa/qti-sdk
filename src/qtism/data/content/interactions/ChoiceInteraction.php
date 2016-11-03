@@ -235,7 +235,7 @@ class ChoiceInteraction extends BlockInteraction
      */
     public function setOrientation($orientation)
     {
-        if (in_array($orientation, Orientation::asArray()) === true) {
+        if (in_array($orientation, Orientation::asArray(), true) === true) {
             $this->orientation = $orientation;
         } else {
             $msg = "The 'orientation' argument must be a value from the Orientation enumeration, '" . gettype($orientation) . "' given.";
