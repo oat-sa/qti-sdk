@@ -22,6 +22,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
 	    $mediaInteraction->setMinPlays(1);
 	    $mediaInteraction->setMaxPlays(2);
 	    $mediaInteraction->setLoop(true);
+        $mediaInteraction->setXmlBase('/home/jerome');
 	    
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
@@ -31,12 +32,12 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>', $dom->saveXML($element));
+        $this->assertEquals('<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>', $dom->saveXML($element));
 	}
 	
 	public function testUnmarshall() {
         $element = $this->createDOMElement('
-            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
+            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
         ');
         
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
@@ -46,6 +47,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertFalse($component->mustAutostart());
         $this->assertEquals(1, $component->getMinPlays());
         $this->assertTrue($component->mustLoop());
+        $this->assertEquals('/home/jerome', $component->getXmlBase());
         
         $object = $component->getObject();
         $this->assertEquals('my-video.mp4', $object->getData());
@@ -56,5 +58,44 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
         $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+	}
+    
+    public function testUnmarshallNoObject() {
+        $element = $this->createDOMElement('
+            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></mediaInteraction>        
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'mediaInteraction' element must contain exactly one 'object' element, none given."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    public function testUnmarshallMissingAutoStart() {
+        $element = $this->createDOMElement('
+            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'autostart' attribute is missing from the 'mediaInteraction' element."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    public function testUnmarshallMissingResponseIdentifier() {
+        $element = $this->createDOMElement('
+            <mediaInteraction id="my-media" autostart="true" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'responseIdentifier' attribute is missing from the 'mediaInteraction' element."
+        );
+        
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 	}
 }
