@@ -34,14 +34,6 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     use \qtism\data\content\FlowTrait;
     
     /**
-     * A base URI.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
-    
-    /**
      * Create a new XInclude object.
      * 
      * @param string $xmlString The XML Content of the node.
