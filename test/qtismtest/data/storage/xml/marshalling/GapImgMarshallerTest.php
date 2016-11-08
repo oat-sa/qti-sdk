@@ -16,13 +16,15 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $object = new Object('http://imagine.us/myimg.png', "image/png");
 	    $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
 	    $gapImg->setShowHide(ShowHide::HIDE);
+        $gapImg->setMatchMin(1);
+        $gapImg->setTemplateIdentifier('templateIdentifier1');
 	    
 	    $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
 	    $element = $marshaller->marshall($gapImg);
 	    
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
-	    $this->assertEquals('<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" showHide="hide"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
+	    $this->assertEquals('<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" matchMin="1" templateIdentifier="templateIdentifier1" showHide="hide"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
 	}
 	
 	/**
@@ -103,7 +105,7 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshall21() {
 	    $element = $this->createDOMElement('
-	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" showHide="hide">
+	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMin="1" matchMax="1" showHide="hide" templateIdentifier="templateIdentifier1">
 	          <object data="http://imagine.us/myimg.png" type="image/png"/>
 	        </gapImg>
 	    ');
@@ -115,8 +117,9 @@ class GapImgMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('my-gap', $gapImg->getId());
 	    $this->assertEquals('gaps', $gapImg->getClass());
 	    $this->assertEquals('gapImg1', $gapImg->getIdentifier());
-	    $this->assertEquals(0, $gapImg->getMatchMin());
+	    $this->assertEquals(1, $gapImg->getMatchMin());
 	    $this->assertEquals(1, $gapImg->getMatchMax());
+        $this->assertEquals('templateIdentifier1', $gapImg->getTemplateIdentifier());
 	    $this->assertEquals(ShowHide::HIDE, $gapImg->getShowHide());
         $this->assertFalse($gapImg->isFixed());
 	    
