@@ -74,6 +74,7 @@ class ModalFeedbackMarshaller extends ContentMarshaller
                     return $component;
                 } else {
                     $msg = "The mandatory 'showHide' attribute is missing from element 'modalFeedback'.";
+                    throw new UnmarshallingException($msg, $element);
                 }
             } else {
                 $msg = "The mandatory 'identifier' attribute is missing from element 'modalFeedback'.";
