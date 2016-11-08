@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -69,7 +69,7 @@ class InterpolationTableMarshaller extends Marshaller
 	 */
     public function setBaseType($baseType)
     {
-        if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
+        if (in_array($baseType, BaseType::asArray(), true) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
             $msg = "The BaseType attribute must be a value from the BaseType enumeration.";
@@ -133,9 +133,8 @@ class InterpolationTableMarshaller extends Marshaller
             if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
-                } catch (InvalidArgumentException $e) {
-                    $strType = BaseType::getNameByConstant($this->getBaseType());
-                    $msg = "Unable to transform '${defaultValue}' into ${strType}.";
+                } catch (\UnexpectedValueException $e) {
+                    $msg = "Unable to transform '${defaultValue}' into float.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
             }
