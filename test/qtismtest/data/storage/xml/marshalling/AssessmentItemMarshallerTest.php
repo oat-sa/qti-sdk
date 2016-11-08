@@ -10,13 +10,12 @@ use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\AssessmentItem;
-
 use \DOMDocument;
 
 class AssessmentItemMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshallMinimal() {
-
+	public function testMarshallMinimal()
+    {
 		$identifier = 'Q01';
 		$timeDependent = false;
 	    $title = 'Question 1';
@@ -46,7 +45,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals($toolVersion, $element->getAttribute('toolVersion'));
 	}
 	
-	public function testUnmarshallMinimal() {
+	public function testUnmarshallMinimal()
+    {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
@@ -71,7 +71,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('0.6.0', $component->getToolVersion());
 	}
 	
-	public function testMarshallMaximal() {
+	public function testMarshallMaximal()
+    {
 		$identifier = 'Q01';
 		$title = 'Test Item';
 		$timeDependent = true;
@@ -116,7 +117,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('out2', $outcomeDeclarationElts->item(1)->getAttribute('identifier'));
 	}
 	
-	public function testUnmarshallMaximal() {
+	public function testUnmarshallMaximal()
+    {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXML(
 			'
@@ -145,5 +147,91 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase {
 		
 		$outcomeDeclarations = $component->getOutcomeDeclarations();
 		$this->assertEquals(2, count($outcomeDeclarations));
+	}
+    
+    /**
+     * @depends testUnmarshallMinimal
+     */
+    public function testUnmarshallDecorate()
+    {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML('<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" title="Test Item" timeDependent="false" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>');
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+		$decorated = $marshaller->unmarshall($element);
+        
+        $dom->loadXML('<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q02" title="Test Item" timeDependent="true" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>');
+        $element = $dom->documentElement;
+        
+        $decorated = $marshaller->unmarshall($element, $decorated);
+        $this->assertEquals('Q02', $decorated->getIdentifier());
+        $this->assertTrue($decorated->isTimeDependent());
+	}
+    
+    /**
+     * @testUnmarshallMinimal
+     */
+    public function testUnmarshallNoTitle()
+    {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML(
+			'
+			<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" timeDependent="false" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>
+			');
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'title' is missing from element 'assessmentItem'."
+        );
+        
+		$marshaller->unmarshall($element);
+	}
+    
+    /**
+     * @testUnmarshallMinimal
+     */
+    public function testUnmarshallNoTimeDependent()
+    {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML(
+			'
+			<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" title="title" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>
+			');
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'timeDependent' is missing from element 'assessmentItem'."
+        );
+        
+		$marshaller->unmarshall($element);
+	}
+    
+    /**
+     * @testUnmarshallMinimal
+     */
+    public function testUnmarshallNoIdentifier()
+    {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML(
+			'
+			<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" timeDependent="false" title="title" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>
+			');
+		$element = $dom->documentElement;
+		
+		$marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory attribute 'identifier' is missing from element 'assessmentItem'."
+        );
+        
+		$marshaller->unmarshall($element);
 	}
 }
