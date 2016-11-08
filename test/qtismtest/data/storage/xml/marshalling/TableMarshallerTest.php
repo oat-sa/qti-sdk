@@ -8,6 +8,7 @@ use qtism\data\content\xhtml\tables\Tbody;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\content\xhtml\tables\TableCellCollection;
 use qtism\data\content\xhtml\tables\Thead;
+use qtism\data\content\xhtml\tables\Tfoot;
 use qtism\data\content\xhtml\tables\Col;
 use qtism\data\content\xhtml\tables\ColCollection;
 use qtism\data\content\xhtml\text\Strong;
@@ -22,9 +23,10 @@ use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\tables\TableCellScope;
 use \DOMDocument;
 
-class TableMarshallerTest extends QtiSmTestCase {
-
-	public function testMarshall() {
+class TableMarshallerTest extends QtiSmTestCase
+{
+	public function testMarshall()
+    {
 	    $th1 = new Th('firstname');
 	    $th1->setContent(new FlowCollection(array(new TextRun('First Name'))));
 	    $th1->setAxis('identity');
@@ -35,6 +37,7 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $th2->setScope(TableCellScope::COL);
 	    $tr = new Tr(new TableCellCollection(array($th1, $th2)));
 	    $thead = new Thead(new TrCollection(array($tr)));
+        $tfoot = new Tfoot(new TrCollection(array($tr)));
 	    
 	    $caption = new Caption();
 	    $strong = new Strong();
@@ -68,8 +71,10 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $tbodies = new TbodyCollection(array($tbody));
 	    
 	    $table = new Table($tbodies, 'my-table', 'qti table');
+        $table->setXmlBase('/home/jerome');
 	    $table->setSummary('Some people...');
 	    $table->setThead($thead);
+        $table->setTfoot($tfoot);
 	    $table->setCaption($caption);
 	    $table->setCols($cols);
 	    
@@ -79,7 +84,7 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
 	    $element = $dom->importNode($element, true);
 	    
-	    $expected = '<table summary="Some people..." id="my-table" class="qti table">';
+	    $expected = '<table summary="Some people..." xml:base="/home/jerome" id="my-table" class="qti table">';
 	    $expected .= '<caption>Some <strong>people</strong> ...</caption>';
 	    $expected .= '<col/>';
 	    $expected .= '<col/>';
@@ -89,6 +94,12 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $expected .= '<th scope="col" axis="identity" id="lastname">Last Name</th>';
 	    $expected .= '</tr>';
 	    $expected .= '</thead>';
+        $expected .= '<tfoot>';
+	    $expected .= '<tr>';
+	    $expected .= '<th scope="col" axis="identity" id="firstname">First Name</th>';
+	    $expected .= '<th scope="col" axis="identity" id="lastname">Last Name</th>';
+	    $expected .= '</tr>';
+	    $expected .= '</tfoot>';
 	    $expected .= '<tbody>';
 	    $expected .= '<tr>';
 	    $expected .= '<td headers="firstname" rowspan="1" colspan="1">John</td>';
@@ -104,9 +115,10 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals($expected, $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall() {
+	public function testUnmarshall()
+    {
 	    $table = $this->createComponentFromXml('
-	        <table id="my-table" class="qti table" summary="Some people...">
+	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">
                 <caption>Some <strong>people</strong> ...</caption>
 	            <col span="1"/>
 	            <col span="1"/>
@@ -133,6 +145,7 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('my-table', $table->getId());
 	    $this->assertEquals('qti table', $table->getClass());
 	    $this->assertEquals('Some people...', $table->getSummary());
+        $this->assertEquals('/home/jerome', $table->getXmlBase());
 	    
 	    $thead = $table->getThead();
 	    $this->assertInstanceOf('qtism\\data\\content\\xhtml\\tables\\Thead', $thead);
@@ -191,5 +204,30 @@ class TableMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals(2, count($cols));
 	    $this->assertEquals(1, $cols[0]->getSpan());
 	    $this->assertEquals(1, $cols[1]->getspan());
+	}
+    
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoTbody()
+    {
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'table' element must contain at lease one 'tbody' element."
+        );
+        
+	    $table = $this->createComponentFromXml('
+	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">
+                <caption>Some <strong>people</strong> ...</caption>
+	            <col span="1"/>
+	            <col span="1"/>
+	            <thead>
+	                <tr>
+                        <th axis="identity" id="firstname" scope="col">First Name</th>
+	                    <th axis="identity" id="lastname" scope="col">Last Name</th>
+	                </tr>
+	            </thead>
+	        </table>
+	    ');
 	}
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -36,13 +36,7 @@ use \InvalidArgumentException;
  */
 class Table extends BodyElement implements BlockStatic, FlowStatic
 {
-    /**
-     * The base URI of the Table.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $xmlBase = '';
+    use \qtism\data\content\FlowTrait;
 
     /**
      * The summary attribute.
@@ -312,38 +306,6 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     public function getTbodies()
     {
         return $this->tbodies;
-    }
-
-    /**
-     * Set the base URI of the Table.
-     *
-     * @param string $xmlBase A URI.
-     * @throws \InvalidArgumentException if $base is not a valid URI nor an empty string.
-     */
-    public function setXmlBase($xmlBase = '')
-    {
-        if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
-            $this->xmlBase = $xmlBase;
-        } else {
-            $msg = "The 'xmlBase' argument must be an empty string or a valid URI, '" . $xmlBase . "' given";
-            throw new InvalidArgumentException($msg);
-        }
-    }
-
-    /**
-     * @see \qtism\data\content\Flow::getXmlBase()
-     */
-    public function getXmlBase()
-    {
-        return $this->xmlBase;
-    }
-
-    /**
-     * @see \qtism\data\content\Flow::hasXmlBase()
-     */
-    public function hasXmlBase()
-    {
-        return $this->getXmlBase() !== '';
     }
 
     /**
