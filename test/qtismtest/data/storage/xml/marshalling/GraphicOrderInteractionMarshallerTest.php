@@ -14,10 +14,10 @@ use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use \DOMDocument;
 
-class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
-
-	public function testMarshall21() {
-        
+class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
+{
+	public function testMarshall21()
+    {
 	    $prompt = new Prompt();
 	    $prompt->setContent(new FlowStaticCollection(array(new TextRun('Prompt...'))));
 	    
@@ -32,18 +32,20 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	    $graphicOrderInteraction->setPrompt($prompt);
 	    $graphicOrderInteraction->setMinChoices(2);
 	    $graphicOrderInteraction->setMaxChoices(3);
+        $graphicOrderInteraction->setXmlBase('/home/jerome');
 	    
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($graphicOrderInteraction)->marshall($graphicOrderInteraction);
         
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>', $dom->saveXML($element));
+        $this->assertEquals('<graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>', $dom->saveXML($element));
 	}
 	
 	/**
 	 * @depends testMarshall21
 	 */
-	public function testMarshall20() {
+	public function testMarshall20()
+    {
 	    // make sure minChoices and maxChoices attributes
 	    // are not in the output in a QTI 2.0 context.
 	    $choice1 = new HotspotChoice('choice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, array(0, 0, 15)));
@@ -64,9 +66,10 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<graphicOrderInteraction responseIdentifier="RESPONSE"><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall21() {
+	public function testUnmarshall21()
+    {
          $element = $this->createDOMElement('
-            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome">
               <prompt>Prompt...</prompt>
               <object data="my-img.png" type="image/png"/>
               <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
@@ -81,6 +84,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
          $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
          $this->assertEquals(2, $component->getMinChoices());
          $this->assertEquals(3, $component->getMaxChoices());
+         $this->assertEquals('/home/jerome', $component->getXmlBase());
          
          $this->assertTrue($component->hasPrompt());
          $promptContent = $component->getPrompt()->getContent();
@@ -96,11 +100,85 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
          $this->assertEquals('choice2', $choices[1]->getIdentifier());
          $this->assertEquals('choice3', $choices[2]->getIdentifier());
 	}
+    
+    public function testUnmarshall21SomethingElseThanHotspotChoice()
+    {
+         $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <simpleChoice identifier="choice2">Choice 2</simpleChoice>
+              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+        
+         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+         
+         // Correctly filtered...
+         $this->assertTrue(true);
+	}
+    
+    public function testUnmarshall21NoHotspotChoice()
+    {
+         $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+            </graphicOrderInteraction>
+         ');
+         
+         $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given."
+         );
+        
+         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
+    public function testUnmarshall21NoObject()
+    {
+         $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <hotspotChoice identifier="choice2" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+         
+         $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given."
+         );
+        
+         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    public function testUnmarshall21NoResponseIdentifier()
+    {
+         $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" minChoices="2" maxChoices="3" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
+              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+         
+         $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element."
+         );
+        
+         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
 	
 	/**
 	 * @depends testUnmarshall21
 	 */
-    public function testUnmarshall21MinChoicesIs0() {
+    public function testUnmarshall21MinChoicesIs0()
+    {
         // graphicOrderInteraction->minChoices = 0 is an endless debate:
         // The Information models says: If specfied, minChoices must be 1 or greater but ...
         // The XSD 2.1 says: xs:integer, [-inf, +inf], optional
@@ -129,7 +207,8 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase {
 	/**
 	 * @depends testUnmarshall21
 	 */
-	public function testUnmarshall20() {
+	public function testUnmarshall20()
+    {
 	    // Make sure minChoices and maxChoices attributes are not taken into account in a QTI 2.0 context.
 	    $element = $this->createDOMElement('
             <graphicOrderInteraction responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
