@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -41,46 +41,46 @@ use \InvalidArgumentException;
 class AreaMapping extends QtiComponent
 {
     /**
-	 * The lower bound.
-	 *
-	 * @var boolean|float
-	 * @qtism-bean-property
-	 */
+     * The lower bound.
+     *
+     * @var boolean|float
+     * @qtism-bean-property
+     */
     private $lowerBound = false;
 
     /**
-	 * The upper bound.
-	 *
-	 * @var boolean|float
-	 * @qtism-bean-property
-	 */
+     * The upper bound.
+     *
+     * @var boolean|float
+     * @qtism-bean-property
+     */
     private $upperBound = false;
 
     /**
-	 * The default value.
-	 *
-	 * @var float
-	 * @qtism-bean-property
-	 */
+     * The default value.
+     *
+     * @var float
+     * @qtism-bean-property
+     */
     private $defaultValue = 0.0;
 
     /**
-	 * A collection of AreaMapEntry objects.
-	 *
-	 * @var \qtism\data\state\AreaMapEntry
-	 * @qtism-bean-property
-	 */
+     * A collection of AreaMapEntry objects.
+     *
+     * @var \qtism\data\state\AreaMapEntry
+     * @qtism-bean-property
+     */
     private $areaMapEntries;
 
     /**
-	 * Create a new AreaMapping object.
-	 *
-	 * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
-	 * @param float $defaultValue A default value. Default is 0.
-	 * @param boolean|float $lowerBound A lower bound. Give false if no lower bound.
-	 * @param boolan|float $upperBound An upper bound. Give false if no upper bound.
-	 * @throws \InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
-	 */
+     * Create a new AreaMapping object.
+     *
+     * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+     * @param float $defaultValue A default value. Default is 0.
+     * @param boolean|float $lowerBound A lower bound. Give false if no lower bound.
+     * @param boolan|float $upperBound An upper bound. Give false if no upper bound.
+     * @throws \InvalidArgumentException If $lowerBound, $upperBound, $defaultValue are not float values or if $areaMapEntries is empty.
+     */
     public function __construct(AreaMapEntryCollection $areaMapEntries, $defaultValue = 0.0, $lowerBound = false, $upperBound = false)
     {
         $this->setLowerBound($lowerBound);
@@ -90,11 +90,11 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-	 * Set the lower bound.
-	 *
-	 * @param boolean|float $lowerBound A lower bound.
-	 * @throws \InvalidArgumentException If $lowerBound is not a float value nor false.
-	 */
+     * Set the lower bound.
+     *
+     * @param boolean|float $lowerBound A lower bound.
+     * @throws \InvalidArgumentException If $lowerBound is not a float value nor false.
+     */
     public function setLowerBound($lowerBound)
     {
         if (is_float($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
@@ -106,21 +106,21 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-	 * Get the lower bound.
-	 *
-	 * @return float A lower bound.
-	 */
+     * Get the lower bound.
+     *
+     * @return float A lower bound.
+     */
     public function getLowerBound()
     {
         return $this->lowerBound;
     }
 
     /**
-	 * Set the upper bound.
-	 *
-	 * @param boolean|float $upperBound An upper bound.
-	 * @throws \InvalidArgumentException If $upperBound is not a float value nor false.
-	 */
+     * Set the upper bound.
+     *
+     * @param boolean|float $upperBound An upper bound.
+     * @throws \InvalidArgumentException If $upperBound is not a float value nor false.
+     */
     public function setUpperBound($upperBound)
     {
         if (is_float($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
@@ -132,21 +132,21 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-	 * Get the upper bound.
-	 *
-	 * @return float An upper bound.
-	 */
+     * Get the upper bound.
+     *
+     * @return float An upper bound.
+     */
     public function getUpperBound()
     {
         return $this->upperBound;
     }
 
     /**
-	 * Set the default value.
-	 *
-	 * @param float $defaultValue A default value.
-	 * @throws \InvalidArgumentException If $defaultValue is not a float value.
-	 */
+     * Set the default value.
+     *
+     * @param float $defaultValue A default value.
+     * @throws \InvalidArgumentException If $defaultValue is not a float value.
+     */
     public function setDefaultValue($defaultValue)
     {
         if (is_float($defaultValue)) {
@@ -158,20 +158,20 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-	 * Get the default value.
-	 *
-	 * @return float A default value.
-	 */
+     * Get the default value.
+     *
+     * @return float A default value.
+     */
     public function getDefaultValue()
     {
         return $this->defaultValue;
     }
 
     /**
-	 * Set the collection of AreaMapEntry objects composing the AreaMapping.
-	 *
-	 * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
-	 */
+     * Set the collection of AreaMapEntry objects composing the AreaMapping.
+     *
+     * @param \qtism\data\state\AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
+     */
     public function setAreaMapEntries(AreaMapEntryCollection $areaMapEntries)
     {
         if (count($areaMapEntries) >= 1) {
@@ -183,46 +183,46 @@ class AreaMapping extends QtiComponent
     }
 
     /**
-	 * Get the collection of AreaMapEntry objects composing the AreaMapping.
-	 *
-	 * @return \qtism\data\state\AreaMapEntry A collection of AreaMapEntry objects.
-	 */
+     * Get the collection of AreaMapEntry objects composing the AreaMapping.
+     *
+     * @return \qtism\data\state\AreaMapEntry A collection of AreaMapEntry objects.
+     */
     public function getAreaMapEntries()
     {
         return $this->areaMapEntries;
     }
 
     /**
-	 * Whether the AreaMapping has a lower bound.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AreaMapping has a lower bound.
+     *
+     * @return boolean
+     */
     public function hasLowerBound()
     {
         return $this->getLowerBound() !== false;
     }
 
     /**
-	 * Whether the AreaMapping has an upper bound.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AreaMapping has an upper bound.
+     *
+     * @return boolean
+     */
     public function hasUpperBound()
     {
         return $this->getUpperBound() !== false;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'areaMapping';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = $this->getAreaMapEntries()->getArrayCopy();
