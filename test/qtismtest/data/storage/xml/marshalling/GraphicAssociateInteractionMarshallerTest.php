@@ -149,6 +149,23 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $this->assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, array(4, 4, 15))));
 	}
     
+    public function testUnmarshall21NoAssociableHotspot() 
+    {
+        $element = $this->createDOMElement('
+            <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
+              <prompt>Prompt...</prompt>
+              <object data="myimg.png" type="image/png"/>
+            </graphicAssociateInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'graphicAssociateInteraction' element must contain at lease one 'associableHotspot' element, none given."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+	}
+    
     public function testUnmarshall21InvalidContentIgnored() 
     {
         $element = $this->createDOMElement('
