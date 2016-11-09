@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -44,36 +44,36 @@ use qtism\data\QtiComponent;
 class OutcomeCondition extends QtiComponent implements OutcomeRule
 {
     /**
-	 * An OutcomeIf object.
-	 *
-	 * @var \qtism\data\rules\OutcomeIf
-	 * @qtism-bean-property
-	 */
+     * An OutcomeIf object.
+     *
+     * @var \qtism\data\rules\OutcomeIf
+     * @qtism-bean-property
+     */
     private $outcomeIf;
 
     /**
-	 * A collection of OutcomeElseIf objects.
-	 *
-	 * @var \qtism\data\rules\OutcomeElseIfCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of OutcomeElseIf objects.
+     *
+     * @var \qtism\data\rules\OutcomeElseIfCollection
+     * @qtism-bean-property
+     */
     private $outcomeElseIfs;
 
     /**
-	 * An optional OutcomeElse object.
-	 *
-	 * @var \qtism\data\rules\OutcomeElse
-	 * @qtism-bean-property
-	 */
+     * An optional OutcomeElse object.
+     *
+     * @var \qtism\data\rules\OutcomeElse
+     * @qtism-bean-property
+     */
     private $outcomeElse = null;
 
     /**
-	 * Create a new instance of OutcomeCondition.
-	 *
-	 * @param \qtism\data\rules\OutcomeIf $outcomeIf An OutcomeIf object.
-	 * @param \qtism\data\rules\OutcomeElseIfCollection $outcomeElseIfs A collection of OutcomeElseIf objects.
-	 * @param \qtism\data\rules\OutcomeElse $outcomeElse An OutcomeElse object.
-	 */
+     * Create a new instance of OutcomeCondition.
+     *
+     * @param \qtism\data\rules\OutcomeIf $outcomeIf An OutcomeIf object.
+     * @param \qtism\data\rules\OutcomeElseIfCollection $outcomeElseIfs A collection of OutcomeElseIf objects.
+     * @param \qtism\data\rules\OutcomeElse $outcomeElse An OutcomeElse object.
+     */
     public function __construct(OutcomeIf $outcomeIf, OutcomeElseIfCollection $outcomeElseIfs = null, OutcomeElse $outcomeElse = null)
     {
         $this->setOutcomeIf($outcomeIf);
@@ -82,86 +82,86 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     }
 
     /**
-	 * Get the OutcomeIf object.
-	 *
-	 * @return \qtism\data\rules\OutcomeIf An OutcomeIf object.
-	 */
+     * Get the OutcomeIf object.
+     *
+     * @return \qtism\data\rules\OutcomeIf An OutcomeIf object.
+     */
     public function getOutcomeIf()
     {
         return $this->outcomeIf;
     }
 
     /**
-	 * Set the OutcomeIf object.
-	 *
-	 * @param \qtism\data\rules\OutcomeIf $outcomeIf An OutcomeIf object.
-	 */
+     * Set the OutcomeIf object.
+     *
+     * @param \qtism\data\rules\OutcomeIf $outcomeIf An OutcomeIf object.
+     */
     public function setOutcomeIf(OutcomeIf $outcomeIf)
     {
         $this->outcomeIf = $outcomeIf;
     }
 
     /**
-	 * Get the collection of OutcomeElseIf objects.
-	 *
-	 * @return \qtism\data\rules\OutcomeElseIfCollection An OutcomeElseIfCollection object.
-	 */
+     * Get the collection of OutcomeElseIf objects.
+     *
+     * @return \qtism\data\rules\OutcomeElseIfCollection An OutcomeElseIfCollection object.
+     */
     public function getOutcomeElseIfs()
     {
         return $this->outcomeElseIfs;
     }
 
     /**
-	 * Set the collection of OutcomeElseIf objects.
-	 *
-	 * @param \qtism\data\rules\OutcomeElseIfCollection $outcomeElseIfs An OutcomeElseIfCollection object.
-	 */
+     * Set the collection of OutcomeElseIf objects.
+     *
+     * @param \qtism\data\rules\OutcomeElseIfCollection $outcomeElseIfs An OutcomeElseIfCollection object.
+     */
     public function setOutcomeElseIfs(OutcomeElseIfCollection $outcomeElseIfs)
     {
         $this->outcomeElseIfs = $outcomeElseIfs;
     }
 
     /**
-	 * Get the optional OutcomeElse object. Returns null if not specified.
-	 *
-	 * @return \qtism\data\rules\OutcomeElse An OutcomeElse object.
-	 */
+     * Get the optional OutcomeElse object. Returns null if not specified.
+     *
+     * @return \qtism\data\rules\OutcomeElse An OutcomeElse object.
+     */
     public function getOutcomeElse()
     {
         return $this->outcomeElse;
     }
 
     /**
-	 * Set the optional OutcomeElse object. A null value means there is no else.
-	 *
-	 * @param \qtism\data\rules\OutcomeElse $outcomeElse An OutcomeElse object.
-	 */
+     * Set the optional OutcomeElse object. A null value means there is no else.
+     *
+     * @param \qtism\data\rules\OutcomeElse $outcomeElse An OutcomeElse object.
+     */
     public function setOutcomeElse(OutcomeElse $outcomeElse = null)
     {
         $this->outcomeElse = $outcomeElse;
     }
 
     /**
-	 * Whether or not an OutcomeElse object is defined for the outcome condition.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not an OutcomeElse object is defined for the outcome condition.
+     *
+     * @return boolean
+     */
     public function hasOutcomeElse()
     {
         return $this->getOutcomeElse() !== null;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'outcomeCondition';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
