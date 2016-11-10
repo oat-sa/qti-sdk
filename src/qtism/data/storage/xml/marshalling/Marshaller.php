@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -34,20 +34,20 @@ use \InvalidArgumentException;
 abstract class Marshaller
 {
     /**
-	 * The DOMCradle is a DOMDocument object which will be used as a 'DOMElement cradle'. It
-	 * gives the opportunity to marshallers to create DOMElement that can be imported in an
-	 * exported document later on.
-	 *
-	 * @var DOMDocument
-	 */
+     * The DOMCradle is a DOMDocument object which will be used as a 'DOMElement cradle'. It
+     * gives the opportunity to marshallers to create DOMElement that can be imported in an
+     * exported document later on.
+     *
+     * @var DOMDocument
+     */
     private static $DOMCradle = null;
 
     /**
-	 * A reference to the Marshaller Factory to use when creating other marshallers
-	 * from this marshaller.
-	 *
-	 * @var MarshallerFactory
-	 */
+     * A reference to the Marshaller Factory to use when creating other marshallers
+     * from this marshaller.
+     *
+     * @var MarshallerFactory
+     */
     private $marshallerFactory = null;
 
     /**
@@ -162,11 +162,11 @@ abstract class Marshaller
     }
     
     /**
-	 * Get a DOMDocument to be used by marshaller implementations in order to create
-	 * new nodes to be imported in a currenlty exported document.
-	 *
-	 * @return DOMDocument A unique DOMDocument object.
-	 */
+     * Get a DOMDocument to be used by marshaller implementations in order to create
+     * new nodes to be imported in a currenlty exported document.
+     *
+     * @return DOMDocument A unique DOMDocument object.
+     */
     protected static function getDOMCradle()
     {
         if (empty(self::$DOMCradle)) {
@@ -177,22 +177,22 @@ abstract class Marshaller
     }
 
     /**
-	 * Set the MarshallerFactory object to use to create other Marshaller objects.
-	 *
-	 * @param MarshallerFactory $marshallerFactory A MarshallerFactory object.
-	 */
+     * Set the MarshallerFactory object to use to create other Marshaller objects.
+     *
+     * @param MarshallerFactory $marshallerFactory A MarshallerFactory object.
+     */
     public function setMarshallerFactory(MarshallerFactory $marshallerFactory = null)
     {
         $this->marshallerFactory = $marshallerFactory;
     }
 
     /**
-	 * Return the MarshallerFactory object to use to create other Marshaller objects.
-	 * If no MarshallerFactory object was previously defined, a default 'raw' MarshallerFactory
-	 * object will be returned.
-	 *
-	 * @return MarshallerFactory A MarshallerFactory object.
-	 */
+     * Return the MarshallerFactory object to use to create other Marshaller objects.
+     * If no MarshallerFactory object was previously defined, a default 'raw' MarshallerFactory
+     * object will be returned.
+     *
+     * @return MarshallerFactory A MarshallerFactory object.
+     */
     public function getMarshallerFactory()
     {
         if ($this->marshallerFactory === null) {
@@ -228,17 +228,18 @@ abstract class Marshaller
             if (count($args) >= 1) {
                 if ($method == 'marshall') {
                     $component = $args[0];
-                    if ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName())) {
+                    if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
                         return $this->marshall($component);
                     } else {
-                        throw new RuntimeException("No marshaller implementation found while marshalling component with class name '" . $component->getQtiClassName());
+                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? get_class($component) : $component;
+                        throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
                     }
                 } else {
                     $element = $args[0];
-                    if ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName())) {
+                    if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
                         return call_user_func_array(array($this, 'unmarshall'), $args);
                     } else {
-                        $nodeName = (($prefix = $element->prefix) === null) ? $element->localName : "${prefix}:" . $element->localName;
+                        $nodeName = ($element instanceof DOMElement) ? $element->localName : (is_object($element) ? get_class($element) : $element);
                         throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
                     }
                 }
@@ -251,14 +252,14 @@ abstract class Marshaller
     }
 
     /**
-	 * Get the attribute value of a given DOMElement object, cast in a given datatype.
-	 *
-	 * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
-	 * @param string $attribute The attribute name.
-	 * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
-	 * @throws InvalidArgumentException If $datatype is not in the range of possible values.
-	 * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
-	 */
+     * Get the attribute value of a given DOMElement object, cast in a given datatype.
+     *
+     * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
+     * @param string $attribute The attribute name.
+     * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
+     * @throws InvalidArgumentException If $datatype is not in the range of possible values.
+     * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     */
     public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
         $attr = $element->getAttribute($attribute);
@@ -295,12 +296,12 @@ abstract class Marshaller
     }
 
     /**
-	 * Set the attribute value of a given DOMElement object. Boolean values will be transformed
-	 *
-	 * @param DOMElement $element A DOMElement object.
-	 * @param string $attribute An XML attribute name.
-	 * @param mixed $value A given value.
-	 */
+     * Set the attribute value of a given DOMElement object. Boolean values will be transformed
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param string $attribute An XML attribute name.
+     * @param mixed $value A given value.
+     */
     public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
         switch (gettype($value)) {
@@ -315,11 +316,11 @@ abstract class Marshaller
     }
 
     /**
-	 * Set the node value of a given DOMElement object. Boolean values will be transformed as 'true'|'false'.
-	 *
-	 * @param DOMElement $element A DOMElement object.
-	 * @param mixed $value A given value.
-	 */
+     * Set the node value of a given DOMElement object. Boolean values will be transformed as 'true'|'false'.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $value A given value.
+     */
     public static function setDOMElementValue(DOMElement $element, $value)
     {
         switch (gettype($value)) {
@@ -334,13 +335,13 @@ abstract class Marshaller
     }
 
     /**
-	 * Get the first child DOM Node with nodeType attribute equals to XML_ELEMENT_NODE.
-	 * This is very useful to get a sub-node without having to exclude text nodes, cdata,
-	 * ... manually.
-	 *
-	 * @param DOMElement $element A DOMElement object
-	 * @return DOMElement|boolean A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
-	 */
+     * Get the first child DOM Node with nodeType attribute equals to XML_ELEMENT_NODE.
+     * This is very useful to get a sub-node without having to exclude text nodes, cdata,
+     * ... manually.
+     *
+     * @param DOMElement $element A DOMElement object
+     * @return DOMElement|boolean A DOMElement If a child node with nodeType = XML_ELEMENT_NODE or false if nothing found.
+     */
     public static function getFirstChildElement($element)
     {
         $children = $element->childNodes;
@@ -355,12 +356,12 @@ abstract class Marshaller
     }
 
     /**
-	 * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
-	 *
-	 * @param DOMElement $element A DOMElement object.
-	 * @param boolean $withText Wether text nodes must be returned or not.
-	 * @return array An array of DOMNode objects.
-	 */
+     * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param boolean $withText Wether text nodes must be returned or not.
+     * @return array An array of DOMNode objects.
+     */
     public static function getChildElements($element, $withText = false)
     {
         $children = $element->childNodes;
@@ -376,16 +377,16 @@ abstract class Marshaller
     }
 
     /**
-	 * Get the child elements of a given element by tag name. This method does
-	 * not behave like DOMElement::getElementsByTagName. It only returns the direct
-	 * child elements that matches $tagName but does not go recursive.
-	 *
-	 * @param DOMElement $element A DOMElement object.
-	 * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
-	 * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
+     * Get the child elements of a given element by tag name. This method does
+     * not behave like DOMElement::getElementsByTagName. It only returns the direct
+     * child elements that matches $tagName but does not go recursive.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
+     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
      * @param boolean $withText (optional) Wether text nodes must be returned or not.
-	 * @return array An array of DOMElement objects.
-	 */
+     * @return array An array of DOMElement objects.
+     */
     public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
         if (!is_array($tagName)) {
@@ -405,13 +406,13 @@ abstract class Marshaller
     }
 
     /**
-	 * Get the string value of the xml:base attribute of a given $element. The method
-	 * will return false if no xml:base attribute is defined for the $element or its value
-	 * is empty.
-	 *
-	 * @param DOMElement $element A DOMElement object you want to get the xml:base attribute value.
-	 * @return false|string The value of the xml:base attribute or false if it could not be retrieved.
-	 */
+     * Get the string value of the xml:base attribute of a given $element. The method
+     * will return false if no xml:base attribute is defined for the $element or its value
+     * is empty.
+     *
+     * @param DOMElement $element A DOMElement object you want to get the xml:base attribute value.
+     * @return false|string The value of the xml:base attribute or false if it could not be retrieved.
+     */
     public static function getXmlBase(DOMElement $element)
     {
         $returnValue = false;
@@ -423,31 +424,31 @@ abstract class Marshaller
     }
 
     /**
-	 * Set the value of the xml:base attribute of a given $element. If a value is already
-	 * defined for the xml:base attribute of the $element, the current value will be
-	 * overriden by $xmlBase.
-	 *
-	 * @param DOMElement $element The $element you want to set a value for xml:base.
-	 * @param string $xmlBase The value to be set to the xml:base attribute of $element.
-	 */
+     * Set the value of the xml:base attribute of a given $element. If a value is already
+     * defined for the xml:base attribute of the $element, the current value will be
+     * overriden by $xmlBase.
+     *
+     * @param DOMElement $element The $element you want to set a value for xml:base.
+     * @param string $xmlBase The value to be set to the xml:base attribute of $element.
+     */
     public static function setXmlBase(DOMElement $element, $xmlBase)
     {
         $element->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $xmlBase);
     }
 
     /**
-	 * Fill $bodyElement with the following bodyElement attributes:
-	 *
-	 * * id
-	 * * class
-	 * * lang
-	 * * label
-	 * * dir (QTI 2.2)
-	 *
-	 * @param BodyElement $bodyElement The bodyElement to fill.
-	 * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
-	 * @throws UnmarshallingException If one of the attributes of $element is not valid.
-	 */
+     * Fill $bodyElement with the following bodyElement attributes:
+     *
+     * * id
+     * * class
+     * * lang
+     * * label
+     * * dir (QTI 2.2)
+     *
+     * @param BodyElement $bodyElement The bodyElement to fill.
+     * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
+     * @throws UnmarshallingException If one of the attributes of $element is not valid.
+     */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
         try {
@@ -467,11 +468,11 @@ abstract class Marshaller
     }
 
     /**
-	 * Fill $element with the attributes of $bodyElement.
-	 *
-	 * @param DOMElement $element The element from where the atribute values will be
-	 * @param BodyElement $bodyElement The bodyElement to be fill.
-	 */
+     * Fill $element with the attributes of $bodyElement.
+     *
+     * @param DOMElement $element The element from where the atribute values will be
+     * @param BodyElement $bodyElement The bodyElement to be fill.
+     */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
     {
         if (($id = $bodyElement->getId()) !== '') {
@@ -497,30 +498,30 @@ abstract class Marshaller
     }
 
     /**
-	 * Marshall a QtiComponent object into its QTI-XML equivalent.
-	 *
-	 * @param QtiComponent $component A QtiComponent object to marshall.
-	 * @return DOMElement A DOMElement object.
-	 * @throws MarshallingException If an error occurs during the marshalling process.
-	 */
+     * Marshall a QtiComponent object into its QTI-XML equivalent.
+     *
+     * @param QtiComponent $component A QtiComponent object to marshall.
+     * @return DOMElement A DOMElement object.
+     * @throws MarshallingException If an error occurs during the marshalling process.
+     */
     abstract protected function marshall(QtiComponent $component);
 
     /**
-	 * Unmarshall a DOMElement object into its QTI Data Model equivalent.
-	 *
-	 * @param DOMElement $element A DOMElement object.
-	 * @return QtiComponent A QtiComponent object.
-	 */
+     * Unmarshall a DOMElement object into its QTI Data Model equivalent.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @return QtiComponent A QtiComponent object.
+     */
     abstract protected function unmarshall(DOMElement $element);
 
     /**
-	 * Get the class name/tag name of the QtiComponent/DOMElement which can be handled
-	 * by the Marshaller's implementation.
-	 *
-	 * Return an empty string if the marshaller implementation does not expect a particular
-	 * QTI class name.
-	 *
-	 * @return string A QTI class name or an empty string.
-	 */
+     * Get the class name/tag name of the QtiComponent/DOMElement which can be handled
+     * by the Marshaller's implementation.
+     *
+     * Return an empty string if the marshaller implementation does not expect a particular
+     * QTI class name.
+     *
+     * @return string A QTI class name or an empty string.
+     */
     abstract public function getExpectedQtiClassName();
 }
