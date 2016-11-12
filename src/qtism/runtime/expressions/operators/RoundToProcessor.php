@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -28,6 +28,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\operators\RoundTo;
+use qtism\runtime\expressions\Utils as ExprUtils;
 
 /**
  * The RoundToProcessor class aims at processing QTI Data Model RoundTo Operator objects.
@@ -60,17 +61,17 @@ use qtism\data\expressions\operators\RoundTo;
 class RoundToProcessor extends OperatorProcessor
 {
     /**
-	 * Process the RoundTo operator.
-	 *
-	 * An OperatorProcessingException will be thrown if:
-	 *
-	 * * The given operand is not a numeric value.
-	 * * The cardinality of the operand is not single.
-	 * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
-	 *
-	 * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
-	 */
+     * Process the RoundTo operator.
+     *
+     * An OperatorProcessingException will be thrown if:
+     *
+     * * The given operand is not a numeric value.
+     * * The cardinality of the operand is not single.
+     * * The value of the 'figures' attribute comes from a templateVariable which does not exist or is not numeric or null.
+     *
+     * @return null|float A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
+     * @throws \qtism\runtime\expressions\operators\OperatorProcessingException
+     */
     public function process()
     {
         $operands = $this->getOperands();
@@ -105,7 +106,7 @@ class RoundToProcessor extends OperatorProcessor
 
         if (gettype($figures) === 'string') {
             // try to recover the value from the state.
-            $figuresIdentifier = Utils::sanitizeVariableRef($figures);
+            $figuresIdentifier = ExprUtils::sanitizeVariableRef($figures);
             $figures = $state[$figuresIdentifier];
 
             if (is_null($figures)) {
