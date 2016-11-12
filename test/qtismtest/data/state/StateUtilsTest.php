@@ -64,9 +64,13 @@ class StateUtilsTest extends QtiSmTestCase {
     
     public function testCreateShufflingFromAssociateInteraction() {
         $choiceCollection = new SimpleAssociableChoiceCollection();
-        $choiceCollection[] = new SimpleAssociableChoice('id1', 1);
-        $choiceCollection[] = new SimpleAssociableChoice('id2', 1);
-        $choiceCollection[] = new SimpleAssociableChoice('id3', 1);
+        $choice1 = new SimpleAssociableChoice('id1', 1);
+        $choice2 = new SimpleAssociableChoice('id2', 1);
+        $choice2->setFixed(true);
+        $choice3 = new SimpleAssociableChoice('id3', 1);
+        $choiceCollection[] = $choice1;
+        $choiceCollection[] = $choice2;
+        $choiceCollection[] = $choice3;
         $associateInteraction = new AssociateInteraction('RESPONSE', $choiceCollection);
         $associateInteraction->setShuffle(true);
         
@@ -76,16 +80,22 @@ class StateUtilsTest extends QtiSmTestCase {
         $shufflingGroups = $shuffling->getShufflingGroups();
         $this->assertEquals(1, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
     public function testCreateShufflingFromMatchInteraction() {
         $choiceCollection1 = new SimpleAssociableChoiceCollection();
-        $choiceCollection1[] = new SimpleAssociableChoice('id1', 1);
-        $choiceCollection1[] = new SimpleAssociableChoice('id2', 1);
+        $choice11 = new SimpleAssociableChoice('id1', 1);
+        $choice22 = new SimpleAssociableChoice('id2', 1);
+        $choice22->setFixed(true);
+        $choiceCollection1[] = $choice11;
+        $choiceCollection1[] = $choice22;
         
         $choiceCollection2 = new SimpleAssociableChoiceCollection();
-        $choiceCollection2[] = new SimpleAssociableChoice('id3', 1);
-        $choiceCollection2[] = new SimpleAssociableChoice('id4', 1);
+        $choice21 = new SimpleAssociableChoice('id3', 1);
+        $choice22 = new SimpleAssociableChoice('id4', 1);
+        $choiceCollection2[] = $choice21;
+        $choiceCollection2[] = $choice22;
         
         $matchSets = new SimpleMatchSetCollection();
         $matchSets[] = new SimpleMatchSet($choiceCollection1);
@@ -99,14 +109,19 @@ class StateUtilsTest extends QtiSmTestCase {
         $shufflingGroups = $shuffling->getShufflingGroups();
         $this->assertEquals(2, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id2'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
         $this->assertEquals(array('id3', 'id4'), $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
     }
     
     public function testCreateShufflingFromGapMatchInteraction() {
         $choiceCollection = new GapChoiceCollection();
-        $choiceCollection[] = new GapText('id1', 1);
-        $choiceCollection[] = new GapText('id2', 1);
-        $choiceCollection[] = new GapText('id3', 1);
+        $gapText1 = new GapText('id1', 1);
+        $gapText2 = new GapText('id2', 1);
+        $gapText3 = new GapText('id3', 1);
+        $gapText3->setFixed(true);
+        $choiceCollection[] = $gapText1;
+        $choiceCollection[] = $gapText2;
+        $choiceCollection[] = $gapText3;
         $blockCollection = new BlockStaticCollection(array(new Div()));
         
         $gapMatchInteraction = new GapMatchInteraction('RESPONSE', $choiceCollection, $blockCollection);
@@ -118,13 +133,18 @@ class StateUtilsTest extends QtiSmTestCase {
         $shufflingGroups = $shuffling->getShufflingGroups();
         $this->assertEquals(1, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id3'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
     public function testCreateShufflingFromInlineChoiceInteraction() {
         $choiceCollection = new InlineChoiceCollection();
-        $choiceCollection[] = new InlineChoice('id1');
-        $choiceCollection[] = new InlineChoice('id2');
-        $choiceCollection[] = new InlineChoice('id3');
+        $choice1 = new InlineChoice('id1');
+        $choice2 = new InlineChoice('id2');
+        $choice3 = new InlineChoice('id3');
+        $choice3->setFixed(true);
+        $choiceCollection[] = $choice1;
+        $choiceCollection[] = $choice2;
+        $choiceCollection[] = $choice3;
         $inlineChoiceInteraction = new InlineChoiceInteraction('RESPONSE', $choiceCollection);
         $inlineChoiceInteraction->setShuffle(true);
         
@@ -134,6 +154,7 @@ class StateUtilsTest extends QtiSmTestCase {
         $shufflingGroups = $shuffling->getShufflingGroups();
         $this->assertEquals(1, count($shufflingGroups));
         $this->assertEquals(array('id1', 'id2', 'id3'), $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this->assertEquals(array('id3'), $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
     
     public function testCreateShufflingFromNonShufflableInteraction() {
