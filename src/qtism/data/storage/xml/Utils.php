@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -36,10 +36,10 @@ use \SplStack;
 class Utils
 {
     /**
-	 * Get the XML schema to use for a given QTI version.
-	 *
-	 * @return string A filename pointing at an XML Schema file.
-	 */
+     * Get the XML schema to use for a given QTI version.
+     *
+     * @return string A filename pointing at an XML Schema file.
+     */
     static public function getSchemaLocation($version = '2.1')
     {
         $dS = DIRECTORY_SEPARATOR;
@@ -138,11 +138,11 @@ class Utils
     }
 
     /**
-	 * Change the name of $element into $name.
-	 *
-	 * @param \DOMElement $element A DOMElement object you want to change the name.
-	 * @param string $name The new name of $element.
-	 */
+     * Change the name of $element into $name.
+     *
+     * @param \DOMElement $element A DOMElement object you want to change the name.
+     * @param string $name The new name of $element.
+     */
     static public function changeElementName(DOMElement $element, $name)
     {
         $newElement = $element->ownerDocument->createElement($name);
@@ -156,7 +156,7 @@ class Utils
             if ($attrNode->namespaceURI === null) {
                 $newElement->setAttribute($attrName, $attrNode->value);
             } else {
-                $newElement->setAttributeNS($attrNode->$namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
+                $newElement->setAttributeNS($attrNode->namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
             }
 
         }
@@ -167,15 +167,15 @@ class Utils
     }
 
     /**
-	 * Anonimize a given DOMElement. By 'anonimize', we mean remove
-	 * all namespace membership of an element and its child nodes.
-	 *
-	 * For instance, <m:math display="inline"><m:mi>x</m:mi></m:math> becomes
-	 * <math display="inline"><mi>x</mi></math>.
-	 *
-	 * @param \DOMElement $element The DOMElement to be anonimized.
-	 * @return \DOMElement The anonimized DOMElement copy of $element.
-	 */
+     * Anonimize a given DOMElement. By 'anonimize', we mean remove
+     * all namespace membership of an element and its child nodes.
+     *
+     * For instance, <m:math display="inline"><m:mi>x</m:mi></m:math> becomes
+     * <math display="inline"><mi>x</mi></math>.
+     *
+     * @param \DOMElement $element The DOMElement to be anonimized.
+     * @return \DOMElement The anonimized DOMElement copy of $element.
+     */
     static public function anonimizeElement(DOMElement $element)
     {
         $stack = new SplStack();
@@ -218,12 +218,12 @@ class Utils
     }
 
     /**
-	 * Import all the child nodes of DOMElement $from to DOMElement $into.
-	 *
-	 * @param \DOMElement $from The source DOMElement.
-	 * @param \DOMElement $into The target DOMElement.
-	 * @param boolean $deep Whether or not to import the whole node hierarchy.
-	 */
+     * Import all the child nodes of DOMElement $from to DOMElement $into.
+     *
+     * @param \DOMElement $from The source DOMElement.
+     * @param \DOMElement $into The target DOMElement.
+     * @param boolean $deep Whether or not to import the whole node hierarchy.
+     */
     static public function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
     {
         for ($i = 0; $i < $from->childNodes->length; $i++) {
@@ -233,12 +233,12 @@ class Utils
     }
 
     /**
-	 * Import (gracefully i.e. by respecting namespaces) the attributes of DOMElement $from to
-	 * DOMElement $into.
-	 *
-	 * @param \DOMElement $from The source DOMElement.
-	 * @param \DOMElement $into The target DOMElement.
-	 */
+     * Import (gracefully i.e. by respecting namespaces) the attributes of DOMElement $from to
+     * DOMElement $into.
+     *
+     * @param \DOMElement $from The source DOMElement.
+     * @param \DOMElement $into The target DOMElement.
+     */
     static public function importAttributes(DOMElement $from, DOMElement $into)
     {
         for ($i = 0; $i < $from->attributes->length; $i++) {
@@ -272,15 +272,16 @@ class Utils
      */
     static public function escapeXmlSpecialChars($string, $isAttribute = false)
     {
-        $fullSearch = array('"', "'", '<', '>', '&');
-        $fullReplace = array('&quot;', '&apos;', '&lt;', '&gt;', '&amp;');
-        
-        $attrSearch = array('"', "&");
-        $attrReplace = array('&quot;', '&amp;');
-        
-        $search = ($isAttribute === false) ? $fullSearch : $attrSearch;
-        $replace = ($isAttribute === false) ? $fullReplace : $attrReplace;
-        
-        return str_replace($search, $replace, $string);
+        if ($isAttribute === false) {
+            $fullSearch = array('"', "'", '<', '>');
+            $fullReplace = array('&quot;', '&apos;', '&lt;', '&gt;');
+            $string = str_replace('&', '&amp;', $string);
+            $string = str_replace($fullSearch, $fullReplace, $string);
+            return $string;
+        } else {
+            $string = str_replace('&', '&amp;', $string);
+            $string = str_replace('"', '&quot;', $string);
+            return $string;
+        }
     }
 }

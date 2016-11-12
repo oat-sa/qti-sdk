@@ -5,18 +5,20 @@ use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\Utils;
 use \DOMDocument;
 
-class XmlUtilsTest extends QtiSmTestCase {
-    
+class XmlUtilsTest extends QtiSmTestCase
+{    
 	/**
 	 * @dataProvider validInferQTIVersionProvider
 	 */
-	public function testInferQTIVersionValid($file, $expectedVersion) {
+	public function testInferQTIVersionValid($file, $expectedVersion)
+    {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->load($file);
 		$this->assertEquals($expectedVersion, Utils::inferVersion($dom));
 	}
 	
-	public function validInferQTIVersionProvider() {
+	public function validInferQTIVersionProvider()
+    {
 		return array(
 		    array(self::samplesDir() . 'ims/items/2_2/choice_multiple.xml', '2.2.0'),
 		    array(self::samplesDir() . 'ims/items/2_1_1/likert.xml', '2.1.1'),
@@ -32,14 +34,16 @@ class XmlUtilsTest extends QtiSmTestCase {
 	 * @param string $expectedXmlString
 	 * @dataProvider anonimizeElementProvider
 	 */
-	public function testAnonimizeElement($originalXmlString, $expectedXmlString) {
+	public function testAnonimizeElement($originalXmlString, $expectedXmlString)
+    {
 	    $elt = $this->createDOMElement($originalXmlString);
 	    $newElt = Utils::anonimizeElement($elt);
 	    
 	    $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
 	}
 	
-	public function anonimizeElementProvider() {
+	public function anonimizeElementProvider() 
+    {
 	    return array(
 	        array('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML" display="inline"><m:mn>1</m:mn><m:mo>+</m:mo><m:mn>2</m:mn><m:mo>=</m:mo><m:mn>3</m:mn></m:math>',
 	               '<math display="inline"><mn>1</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>3</mn></math>'),
@@ -59,7 +63,8 @@ class XmlUtilsTest extends QtiSmTestCase {
 	 * @param string $namespaceUri
 	 * @param boolean|string $expectedLocation
 	 */
-	public function testGetXsdLocation($file, $namespaceUri, $expectedLocation) {
+	public function testGetXsdLocation($file, $namespaceUri, $expectedLocation)
+    {
 	    $document = new DOMDocument('1.0', 'UTF-8');
 	    $document->load($file);
 	    $location = Utils::getXsdLocation($document, $namespaceUri);
@@ -67,7 +72,8 @@ class XmlUtilsTest extends QtiSmTestCase {
 	    $this->assertSame($expectedLocation, $location);
 	}
 	
-	public function getXsdLocationProvider() {
+	public function getXsdLocationProvider()
+    {
 	    return array(
 	        // Valid.
 	        array(
@@ -129,4 +135,56 @@ class XmlUtilsTest extends QtiSmTestCase {
           ),
 	    );
 	}
+    
+    /**
+     * @dataProvider getSchemaLocationProvider
+     */
+    public function testGetSchemaLocation($version, $expected)
+    {
+        $location = Utils::getSchemaLocation($version);
+        $this->assertEquals($expected, $location);
+    }
+    
+    public function getSchemaLocationProvider()
+    {
+        $baseDir = dirname(__FILE__) . '/../../../../../src/qtism/data/storage/xml/schemes';
+        return array(
+            array('2.0', realpath("${baseDir}/imsqti_v2p0.xsd")),
+            array('2.0.0', realpath("${baseDir}/imsqti_v2p0.xsd")),
+            array('2.1', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")),
+            array('2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")),
+            array('2.1.0', realpath("${baseDir}/qtiv2p1/imsqti_v2p1.xsd")),
+            array('2.1.1', realpath("${baseDir}/qtiv2p1p1/imsqti_v2p1p1.xsd")),
+            array('2.2', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")),
+            array('2.2.0', realpath("${baseDir}/qtiv2p2/imsqti_v2p2.xsd")),
+            array('2.2.1', realpath("${baseDir}/qtiv2p2p1/imsqti_v2p2p1.xsd")),
+        );
+    }
+    
+    public function testChangeNamespaceElementName()
+    {
+        $foo = $this->createDOMElement('<foo xmlns:bar="http://baz" bar:attr="foo"/>');
+        $foo = Utils::changeElementName($foo, 'bar');
+        $this->assertEquals('bar', $foo->tagName);
+        $this->assertEquals('foo', $foo->getAttributeNS('http://baz', 'attr'));
+    }
+    
+    /**
+     * @dataProvider escapeXmlSpecialCharsProvider
+     */
+    public function testEscapeXmlSpecialChars($str, $isAttribute, $expected)
+    {
+        $this->assertEquals($expected, Utils::escapeXmlSpecialChars($str, $isAttribute));
+    }
+    
+    public function escapeXmlSpecialCharsProvider()
+    {
+        return array(
+            array("'\"&<>", false, "&apos;&quot;&amp;&lt;&gt;"),
+            array("<blah>", false, "&lt;blah&gt;"),
+            array("blah", false, "blah"),
+            array('&"', true, "&amp;&quot;"),
+            array('blah & "cool" & \'cool\'', true, "blah &amp; &quot;cool&quot; &amp; 'cool'")
+        );
+    }
 }
