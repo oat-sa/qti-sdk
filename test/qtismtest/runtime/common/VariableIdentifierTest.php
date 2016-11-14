@@ -4,14 +4,15 @@ namespace qtismtest\runtime\common;
 use qtismtest\QtiSmTestCase;
 use qtism\runtime\common\VariableIdentifier;
 
-class VariableIdentifierTest extends QtiSmTestCase {
-	
+class VariableIdentifierTest extends QtiSmTestCase
+{
 	/**
 	 * @dataProvider invalidIdentifierProvider
 	 * 
 	 * @param string $identifier
 	 */
-	public function testInvalidIdentifier($identifier) {
+	public function testInvalidIdentifier($identifier)
+    {
 		$this->setExpectedException('\\InvalidArgumentException');
 		$v = new VariableIdentifier($identifier);
 	}
@@ -21,7 +22,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 	 * 
 	 * @param string $identifier
 	 */
-	public function testSimpleIdentifiers($identifier) {
+	public function testSimpleIdentifiers($identifier)
+    {
 		$v = new VariableIdentifier($identifier);
 		
 		$this->assertEquals($identifier, $v->getIdentifier());
@@ -37,7 +39,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 	 * @param string $expectedPrefix
 	 * @param string $expectedVariableName
 	 */
-	public function testPrefixedIdentifiers($identifier, $expectedPrefix, $expectedVariableName) {
+	public function testPrefixedIdentifiers($identifier, $expectedPrefix, $expectedVariableName)
+    {
 		$v = new VariableIdentifier($identifier);
 		
 		$this->assertEquals($identifier, $v->getIdentifier());
@@ -55,7 +58,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 	 * @param string $expectedSequence
 	 * @param string $expectedVariableName
 	 */
-	public function testSequencedIdentifiers($identifier, $expectedPrefix, $expectedSequence, $expectedVariableName) {
+	public function testSequencedIdentifiers($identifier, $expectedPrefix, $expectedSequence, $expectedVariableName)
+    {
 		$v = new VariableIdentifier($identifier);
 		
 		$this->assertEquals($identifier, $v->getIdentifier());
@@ -66,7 +70,44 @@ class VariableIdentifierTest extends QtiSmTestCase {
 		$this->assertEquals($expectedSequence, $v->getSequenceNumber());
 	}
 	
-	public function invalidIdentifierProvider() {
+	public function testInvalidSequenceNumberOne()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.bla.SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.bla.SCORE');
+    }
+    
+    public function testInvalidSequenceNumberTwo()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.0.SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.0.SCORE');
+    }
+    
+    public function testInvalidVariableName()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier 'Q01.0. ' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier('Q01.0. ');
+    }
+    
+    public function testInvalidPrefix()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The identifier ' .SCORE' is not a valid QTI Variable Name Identifier."
+        );
+        new VariableIdentifier(' .SCORE');
+    }
+	
+	public function invalidIdentifierProvider()
+    {
 		return array(
 			array('Q*01'),
 			array('_Q01'),
@@ -83,7 +124,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function simpleIdentifiersProvider() {
+	public function simpleIdentifiersProvider()
+    {
 		return array(
 			array('Q01'),
 			array('Q_01'),
@@ -91,7 +133,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function prefixedIdentifiersProvider() {
+	public function prefixedIdentifiersProvider()
+    {
 		return array(
 			array('Q01.SCORE', 'Q01', 'SCORE'),
 			array('Q_01.SCORE', 'Q_01', 'SCORE'),
@@ -99,7 +142,8 @@ class VariableIdentifierTest extends QtiSmTestCase {
 		);
 	}
 	
-	public function sequencedIdentifiersProvider() {
+	public function sequencedIdentifiersProvider()
+    {
 		return array(
 			array('Q01.1.SCORE', 'Q01', 1, 'SCORE')	,
 			array('Q_01.245.MAX', 'Q_01', 245, 'MAX')

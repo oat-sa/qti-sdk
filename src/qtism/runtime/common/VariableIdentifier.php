@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -48,42 +48,42 @@ use \InvalidArgumentException;
 class VariableIdentifier
 {
     /**
-	 * The identifier as given to the __construct method.
-	 *
-	 * @var string
-	 */
+     * The identifier as given to the __construct method.
+     *
+     * @var string
+     */
     private $identifier;
 
     /**
-	 * The detected sequence number.
-	 *
-	 * @var integer
-	 */
+     * The detected sequence number.
+     *
+     * @var integer
+     */
     private $sequenceNumber = 0;
 
     /**
-	 * The detected variable name. If the identifier is 'Q01.1.SCORE',
-	 * the variable name is 'SCORE'.
-	 *
-	 * @var string
-	 */
+     * The detected variable name. If the identifier is 'Q01.1.SCORE',
+     * the variable name is 'SCORE'.
+     *
+     * @var string
+     */
     private $variableName = '';
 
     /**
-	 * The detected prefix. If the identifier is 'Q01.1.SCORE',
-	 * the prefix is 'Q01'.
-	 *
-	 * @var string
-	 */
+     * The detected prefix. If the identifier is 'Q01.1.SCORE',
+     * the prefix is 'Q01'.
+     *
+     * @var string
+     */
     private $prefix = '';
 
     /**
-	 * Create a new VariableIdentifier object.
-	 *
-	 * @param string $identifier A prefixed identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid variable identifier.
-	 *
-	 */
+     * Create a new VariableIdentifier object.
+     *
+     * @param string $identifier A prefixed identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid variable identifier.
+     *
+     */
     public function __construct($identifier)
     {
         $this->setIdentifier($identifier);
@@ -114,11 +114,11 @@ class VariableIdentifier
     }
 
     /**
-	 * Set the identifier string.
-	 *
-	 * @param string $identifier A prefixed identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid prefixed identifier.
-	 */
+     * Set the identifier string.
+     *
+     * @param string $identifier A prefixed identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid prefixed identifier.
+     */
     protected function setIdentifier($identifier)
     {
         if (Utils::isValidVariableIdentifier($identifier)) {
@@ -130,21 +130,21 @@ class VariableIdentifier
     }
 
     /**
-	 * Get the identifier string as given to the __construct method.
-	 *
-	 * @return string A prefixed identifier.
-	 */
+     * Get the identifier string as given to the __construct method.
+     *
+     * @return string A prefixed identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the detected sequence number.
-	 *
-	 * @param integer $sequenceNumber A integer sequence number.
-	 * @throws \InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
-	 */
+     * Set the detected sequence number.
+     *
+     * @param integer $sequenceNumber A integer sequence number.
+     * @throws \InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
+     */
     protected function setSequenceNumber($sequenceNumber)
     {
         if (gettype($sequenceNumber) === 'integer') {
@@ -161,32 +161,32 @@ class VariableIdentifier
     }
 
     /**
-	 * Returns the sequence number found in the variable identifier. If no such
-	 * sequence number is found, integer 0 is returned.
-	 *
-	 * @return integer A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
-	 */
+     * Returns the sequence number found in the variable identifier. If no such
+     * sequence number is found, integer 0 is returned.
+     *
+     * @return integer A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
+     */
     public function getSequenceNumber()
     {
         return $this->sequenceNumber;
     }
 
     /**
-	 * Whether the identifier is composed by a sequence number.
-	 *
-	 * @return boolean
-	 */
+     * Whether the identifier is composed by a sequence number.
+     *
+     * @return boolean
+     */
     public function hasSequenceNumber()
     {
         return $this->getSequenceNumber() > 0;
     }
 
     /**
-	 * Set the variable name found in the identifier.
-	 *
-	 * @param string $variableName A variable name.
-	 * @throws \InvalidArgumentException If $variableName is not a string or is empty.
-	 */
+     * Set the variable name found in the identifier.
+     *
+     * @param string $variableName A variable name.
+     * @throws \InvalidArgumentException If $variableName is not a string or is empty.
+     */
     protected function setVariableName($variableName)
     {
         if (gettype($variableName) === 'string' && empty($variableName) === false) {
@@ -198,21 +198,21 @@ class VariableIdentifier
     }
 
     /**
-	 * Get the variable name found in the identifier.
-	 *
-	 * @return string
-	 */
+     * Get the variable name found in the identifier.
+     *
+     * @return string
+     */
     public function getVariableName()
     {
         return $this->variableName;
     }
 
     /**
-	 * Set the prefix part of the identifier.
-	 *
-	 * @param string $prefix The prefix of the variable identifier.
-	 * @throws \InvalidArgumentException If $prefix is not a string or is empty.
-	 */
+     * Set the prefix part of the identifier.
+     *
+     * @param string $prefix The prefix of the variable identifier.
+     * @throws \InvalidArgumentException If $prefix is not a string or is empty.
+     */
     protected function setPrefix($prefix)
     {
         if (gettype($prefix) === 'string' && empty($prefix) === false) {
@@ -224,39 +224,39 @@ class VariableIdentifier
     }
 
     /**
-	 * Get the prefix part of the identifier. If the identifier is 'Q01.SCORE' or
-	 * 'Q01.1.SCORE', the prefix is 'Q01'.
-	 *
-	 * If no prefix is detected, this method returns an empty string ('').
-	 *
-	 * @return string The detected variable identifier prefix or an empty string if there is no prefix in the identifier.
-	 */
+     * Get the prefix part of the identifier. If the identifier is 'Q01.SCORE' or
+     * 'Q01.1.SCORE', the prefix is 'Q01'.
+     *
+     * If no prefix is detected, this method returns an empty string ('').
+     *
+     * @return string The detected variable identifier prefix or an empty string if there is no prefix in the identifier.
+     */
     public function getPrefix()
     {
         return $this->prefix;
     }
 
     /**
-	 * Whether a prefix was found in the variable identifier.
-	 *
-	 * @return boolean
-	 */
+     * Whether a prefix was found in the variable identifier.
+     *
+     * @return boolean
+     */
     public function hasPrefix()
     {
         return $this->getPrefix() !== '';
     }
 
     /**
-	 * Returns the variable identifier as a string such as:
-	 *
-	 * * VARNAME
-	 * * PREFIX.VARNAME
-	 * * PREFIX.SEQ.VARNAME
-	 *
-	 * depending on the nature of the variable identifier.
-	 *
-	 * @return string The stringified VariableIdentifier object.
-	 */
+     * Returns the variable identifier as a string such as:
+     *
+     * * VARNAME
+     * * PREFIX.VARNAME
+     * * PREFIX.SEQ.VARNAME
+     *
+     * depending on the nature of the variable identifier.
+     *
+     * @return string The stringified VariableIdentifier object.
+     */
     public function __toString()
     {
         if ($this->hasSequenceNumber() === true) {
