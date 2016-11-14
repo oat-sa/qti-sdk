@@ -15,6 +15,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	public function testMarshallMinimal() {
 	    
 		$component = new InfoControl();
+		$component->setXmlBase('/home/jerome');
 		$element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 		
 		$this->assertInstanceOf('\\DOMElement', $element);
@@ -24,6 +25,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals('', $element->getAttribute('lang'));
 		$this->assertEquals('', $element->getAttribute('label'));
 		$this->assertEquals('', $element->getAttribute('title'));
+		$this->assertEquals('/home/jerome', $element->getAttribute('xml:base'));
 	}
 	
 	public function testMarshallMinimalWithAttributes() {
@@ -65,7 +67,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	
 	public function testUnmarshallComplex() {
 	    $element = $this->createDOMElement('
-	        <infoControl id="controlMePlease" title="">
+	        <infoControl id="controlMePlease" title="" xml:base="/home/jerome">
 	            This is <em>gooood</em> !
 	        </infoControl>
 	    ');
@@ -75,6 +77,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('controlMePlease', $component->getId());
 	    $content = $component->getContent();
 	    $this->assertEquals(3, count($content));
+	    $this->assertEquals('/home/jerome', $component->getXmlBase());
 	    
 	    $this->assertInstanceOf('qtism\\data\\content\\TextRun', $content[0]);
 	    $this->assertEquals('This is ', ltrim($content[0]->getContent()));
