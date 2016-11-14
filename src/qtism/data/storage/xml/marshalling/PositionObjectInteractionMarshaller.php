@@ -38,12 +38,12 @@ use \DOMElement;
 class PositionObjectInteractionMarshaller extends Marshaller
 {
     /**
-	 * Marshall an PositionObjectInteraction object into a DOMElement object.
-	 *
-	 * @param \qtism\data\QtiComponent $component A PositionObjectInteraction object.
-	 * @return \DOMElement The according DOMElement object.
-	 * @throws \qtism\data\storage\xml\marshalling\MarshallingException
-	 */
+     * Marshall an PositionObjectInteraction object into a DOMElement object.
+     *
+     * @param \qtism\data\QtiComponent $component A PositionObjectInteraction object.
+     * @return \DOMElement The according DOMElement object.
+     * @throws \qtism\data\storage\xml\marshalling\MarshallingException
+     */
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
@@ -70,12 +70,12 @@ class PositionObjectInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * Unmarshall a DOMElement object corresponding to an positionObjectInteraction element.
-	 *
-	 * @param \DOMElement $element A DOMElement object.
-	 * @return \qtism\data\QtiComponent A PositionObjectInteraction object.
-	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
-	 */
+     * Unmarshall a DOMElement object corresponding to an positionObjectInteraction element.
+     *
+     * @param \DOMElement $element A DOMElement object.
+     * @return \qtism\data\QtiComponent A PositionObjectInteraction object.
+     * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
+     */
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
@@ -134,8 +134,8 @@ class PositionObjectInteractionMarshaller extends Marshaller
     }
 
     /**
-	 * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
-	 */
+     * @see \qtism\data\storage\xml\marshalling\Marshaller::getExpectedQtiClassName()
+     */
     public function getExpectedQtiClassName()
     {
         return 'positionObjectInteraction';

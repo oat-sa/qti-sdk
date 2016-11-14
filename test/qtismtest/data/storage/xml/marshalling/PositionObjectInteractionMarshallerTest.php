@@ -6,14 +6,14 @@ use qtism\data\content\FlowStaticCollection;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\interactions\PositionObjectInteraction;
 use qtism\data\content\TextRun;
-use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\xhtml\Object;
 use \DOMDocument;
 
-class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
-
-	public function testMarshall21() {
+class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
+{
+	public function testMarshall21()
+    {
 	    
 	    $object = new Object('myimg.jpg', 'image/jpeg');
 	    $object->setWidth(400);
@@ -37,7 +37,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 	/**
 	 * @depends testMarshall21
 	 */
-	public function testMarshall20() {
+	public function testMarshall20()
+    {
 	    // Make sure minChoices is not taken into account in a QTI 2.0 context.
 	    $object = new Object('myimg.jpg', 'image/jpeg');
 	    $object->setWidth(400);
@@ -54,7 +55,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2"><object data="myimg.jpg" type="image/jpeg" width="400" height="300"/></positionObjectInteraction>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshall21() {
+	public function testUnmarshall21()
+    {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos">
                <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
@@ -74,11 +76,105 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase {
         $this->assertEquals(400, $component->getObject()->getWidth());
         $this->assertEquals(300, $component->getObject()->getHeight());
 	}
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21InvalidCenterPoint()
+    {
+        $element = $this->createDOMElement('
+            <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="invalid" id="my-pos">
+               <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
+            </positionObjectInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, 1 given."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21InvalidCenterPointFirstValue()
+    {
+        $element = $this->createDOMElement('
+            <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="invalid 74" id="my-pos">
+               <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
+            </positionObjectInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The 1st value of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21InvalidCenterPointSecondValue()
+    {
+        $element = $this->createDOMElement('
+            <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos">
+               <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
+            </positionObjectInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The 2nd integer of the 'centerPoint' attribute value is not a valid integer for element 'positionObjectInteraction'."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoObject()
+    {
+        $element = $this->createDOMElement('
+            <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos"/>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "A 'positionObjectInteraction' element must contain exactly one 'object' element, none given."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+    
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21MissingResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <positionObjectInteraction maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos">
+                <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
+            </positionObjectInteraction>
+        ');
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException',
+            "The mandatory 'responseIdentifier' attribute is missing from the 'positionObjectInteraction' object."
+        );
+        
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
 	
 	/**
 	 * @depends testUnmarshall21
 	 */
-	public function testUnmarshall20() {
+	public function testUnmarshall20()
+    {
 	    // Make sure minChoices is not in output in a QTI 2.0 context.
 	    $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2">
