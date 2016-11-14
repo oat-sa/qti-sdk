@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -38,87 +38,87 @@ use \InvalidArgumentException;
 class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
 {
     /**
-	 * From IMS QTI:
-	 *
-	 * The maximum number of choices this choice may be associated with.
-	 * If matchMax is 0 there is no restriction.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The maximum number of choices this choice may be associated with.
+     * If matchMax is 0 there is no restriction.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $matchMax;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The minimum number of choices this choice must be associated with to form a
-	 * valid response. If matchMin is 0 then the candidate is not required to
-	 * associate this choice with any others at all. matchMin must be less than or
-	 * equal to the limit imposed by matchMax.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The minimum number of choices this choice must be associated with to form a
+     * valid response. If matchMin is 0 then the candidate is not required to
+     * associate this choice with any others at all. matchMin must be less than or
+     * equal to the limit imposed by matchMax.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $matchMin = 0;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The shape of the hotspot.
-	 *
-	 * @var Shape
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The shape of the hotspot.
+     *
+     * @var Shape
+     * @qtism-bean-property
+     */
     private $shape;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The size and position of the hotspot, interpreted in conjunction with the shape.
-	 *
-	 * @var Coords
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The size and position of the hotspot, interpreted in conjunction with the shape.
+     *
+     * @var Coords
+     * @qtism-bean-property
+     */
     private $coords;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The alternative text for this (hot) area of the image, if specified it must be
-	 * treated in the same way as alternative text for img. For hidden hotspots this
-	 * label is ignored.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The alternative text for this (hot) area of the image, if specified it must be
+     * treated in the same way as alternative text for img. For hidden hotspots this
+     * label is ignored.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $hotspotLabel = '';
     
     /**
      * From IMS QTI:
-     * 
-     * A set of choices that this choice may be associated with, all others are 
-     * excluded. If no matchGroup is given, or if it is empty, then all other 
-     * choices may be associated with this one subject to their own matching 
+     *
+     * A set of choices that this choice may be associated with, all others are
+     * excluded. If no matchGroup is given, or if it is empty, then all other
+     * choices may be associated with this one subject to their own matching
      * constraints.
-     * 
+     *
      * @var \qtism\common\collections\IdentifierCollection
      * @qtism-bean-property
      */
     private $matchGroup;
 
     /**
-	 * Create a new AssociableHotspot object.
-	 *
-	 * @param string $identifier The identifier of the associableHotspot.
-	 * @param integer $matchMax The matchMax attribute.
-	 * @param integer $shape A value of the Shape enumeration.
-	 * @param Coords $coords The coords of the associableHotspot.
-	 * @param string $id The id of the bodyElement.
-	 * @param string $class The class of the bodyElement.
-	 * @param string $lang The language of the bodyElement.
-	 * @param string $label The label of the bodyElement.
-	 * @throws \InvalidArgument If one of the constructor's argument is invalid.
-	 */
+     * Create a new AssociableHotspot object.
+     *
+     * @param string $identifier The identifier of the associableHotspot.
+     * @param integer $matchMax The matchMax attribute.
+     * @param integer $shape A value of the Shape enumeration.
+     * @param \qtism\common\datatypes\QtiCoords $coords The coords of the associableHotspot.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgument If one of the constructor's argument is invalid.
+     */
     public function __construct($identifier, $matchMax, $shape, QtiCoords $coords, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
@@ -129,11 +129,11 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * Set the matchMax of the associableHotspot.
-	 *
-	 * @param integer $matchMax A positive (>= 0) integer.
-	 * @throws \InvalidArgumentException If $matchMax is not a positive integer.
-	 */
+     * Set the matchMax of the associableHotspot.
+     *
+     * @param integer $matchMax A positive (>= 0) integer.
+     * @throws \InvalidArgumentException If $matchMax is not a positive integer.
+     */
     public function setMatchMax($matchMax)
     {
         if (is_int($matchMax) === true && $matchMax >= 0) {
@@ -145,21 +145,21 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * Get the matchMax of the associableHotspot.
-	 *
-	 * @return integer A positive integer.
-	 */
+     * Get the matchMax of the associableHotspot.
+     *
+     * @return integer A positive integer.
+     */
     public function getMatchMax()
     {
         return $this->matchMax;
     }
 
     /**
-	 * Set the matchMin of the associableHotspot.
-	 *
-	 * @param integer $matchMin A positive (>= 0) integer.
-	 * @throws \InvalidArgumentException If $matchMin is not a positive integer.
-	 */
+     * Set the matchMin of the associableHotspot.
+     *
+     * @param integer $matchMin A positive (>= 0) integer.
+     * @throws \InvalidArgumentException If $matchMin is not a positive integer.
+     */
     public function setMatchMin($matchMin)
     {
         if (is_int($matchMin) === true && $matchMin >= 0) {
@@ -171,23 +171,23 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * Get the matchMin of the associableHotspot.
-	 *
-	 * @param integer $matchMin A positive (>= 0) integer.
-	 */
+     * Get the matchMin of the associableHotspot.
+     *
+     * @return integer
+     */
     public function getMatchMin()
     {
         return $this->matchMin;
     }
 
     /**
-	 * Set the shape of the associableHotspot.
-	 *
-	 * @param integer $shape A value from the Shape enumeration.
-	 */
+     * Set the shape of the associableHotspot.
+     *
+     * @param integer $shape A value from the Shape enumeration.
+     */
     public function setShape($shape)
     {
-        if (in_array($shape, QtiShape::asArray()) === true) {
+        if (in_array($shape, QtiShape::asArray(), true) === true) {
             $this->shape = $shape;
         } else {
             $msg = "The 'shape' argument must be a value from the Shape enumeration, '" . $shape . "' given.";
@@ -196,41 +196,41 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * Get the shape of the associableHotspot.
-	 *
-	 * @return \qtism\common\datatypes\Shape A Shape object.
-	 */
+     * Get the shape of the associableHotspot.
+     *
+     * @return \qtism\common\datatypes\QtiShape A Shape object.
+     */
     public function getShape()
     {
         return $this->shape;
     }
 
     /**
-	 * Set the coords of the associableHotspot.
-	 *
-	 * @param \qtism\common\datatypes\Coords $coords A Coords object.
-	 */
+     * Set the coords of the associableHotspot.
+     *
+     * @param \qtism\common\datatypes\QtiCoords $coords A Coords object.
+     */
     public function setCoords(QtiCoords $coords)
     {
         $this->coords = $coords;
     }
 
     /**
-	 * Get the coords of the associableHotspot.
-	 *
-	 * @return \qtism\common\datatypes\Coords A Coords object.
-	 */
+     * Get the coords of the associableHotspot.
+     *
+     * @return \qtism\common\datatypes\QtiCoords A Coords object.
+     */
     public function getCoords()
     {
         return $this->coords;
     }
 
     /**
-	 * Set the hotspotLabel of the associableHotspot.
-	 *
-	 * @param string $hotspotLabel A string with at most 256 characters.
-	 * @throws \InvalidArgumentException If $hotspotLabel has more than 256 characters.
-	 */
+     * Set the hotspotLabel of the associableHotspot.
+     *
+     * @param string $hotspotLabel A string with at most 256 characters.
+     * @throws \InvalidArgumentException If $hotspotLabel has more than 256 characters.
+     */
     public function setHotspotLabel($hotspotLabel)
     {
         if (Format::isString256($hotspotLabel) === true) {
@@ -242,20 +242,20 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * Get the hotspotLabel of the associableHotspot.
-	 *
-	 * @return string A string with at most 256 characters.
-	 */
+     * Get the hotspotLabel of the associableHotspot.
+     *
+     * @return string A string with at most 256 characters.
+     */
     public function getHotspotLabel()
     {
         return $this->hotspotLabel;
     }
 
     /**
-	 * Whether or not the associableHotspot has an hotspotLabel.
-	 *
-	 * @return boolean
-	 */
+     * Whether or not the associableHotspot has an hotspotLabel.
+     *
+     * @return boolean
+     */
     public function hasHotspotLabel()
     {
         return $this->getHotspotLabel() !== '';
@@ -276,16 +276,16 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return new QtiComponentCollection();
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'associableHotspot';
