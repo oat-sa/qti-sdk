@@ -140,7 +140,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
         if (is_int($maxAssociations) === true && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
         } else {
-            $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "'.";
+            $msg = "The 'maxAssociations' argument must be a positive (>= 0) integer, '" . gettype($maxAssociations) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -191,7 +191,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     }
     
     /**
-     * @see qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
+     * @see \qtism\data\content\interactions\Interaction::getResponseValidityConstraint()
      */
     public function getResponseValidityConstraint()
     {
