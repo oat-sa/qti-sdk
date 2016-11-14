@@ -91,7 +91,7 @@ class QtiComponentCollection extends AbstractCollection
                 return false;
             } else if ($recursive === true) {
                 foreach ($component->getIterator() as $subComponent) {
-                    if ($component->getClassName() !== $className) {
+                    if ($subComponent->getQtiClassName() !== $className) {
                         
                         return false;
                     }
