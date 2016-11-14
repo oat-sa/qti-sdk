@@ -42,58 +42,58 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     use \qtism\data\content\FlowTrait;
 
     /**
-	 * The content elements of the object.
-	 *
-	 * @var \qtism\data\content\ObjectFlowCollection
-	 */
+     * The content elements of the object.
+     *
+     * @var \qtism\data\content\ObjectFlowCollection
+     */
     private $content;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The data attribute provides a URI for locating the data
-	 * associated with the object.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The data attribute provides a URI for locating the data
+     * associated with the object.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $data;
 
     /**
-	 * The mime-type.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The mime-type.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $type;
 
     /**
-	 * The width. -1 means no height was provided.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The width. -1 means no height was provided.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $width = -1;
 
     /**
-	 * The height. -1 means no height was provided.
-	 *
-	 * @var integer
-	 * @qtism-bean-property
-	 */
+     * The height. -1 means no height was provided.
+     *
+     * @var integer
+     * @qtism-bean-property
+     */
     private $height = -1;
 
     /**
-	 * Create a new Object object.
-	 *
-	 * @param string $data The URI for locating the data of the object.
-	 * @param string $type The mime-type of the object.
-	 * @param string $id The id of the bodyElement.
-	 * @param string $class The class of the bodyElement.
-	 * @param string $lang The language of the bodyElement.
-	 * @param string $label The label of the bodyElement.
-	 * @throws \InvalidArgumentException If any of the arguments above is invalid.
-	 */
+     * Create a new Object object.
+     *
+     * @param string $data The URI for locating the data of the object.
+     * @param string $type The mime-type of the object.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The language of the bodyElement.
+     * @param string $label The label of the bodyElement.
+     * @throws \InvalidArgumentException If any of the arguments above is invalid.
+     */
     public function __construct($data, $type, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
@@ -105,11 +105,11 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-	 * Set the URI for locating the data of the object.
-	 *
-	 * @param string $data The URI for locating the data of the object.
-	 * @throws \InvalidArgumentException If $data is not a URI.
-	 */
+     * Set the URI for locating the data of the object.
+     *
+     * @param string $data The URI for locating the data of the object.
+     * @throws \InvalidArgumentException If $data is not a URI.
+     */
     public function setData($data)
     {
         if ((is_string($data) === true && $data === '') || Format::isUri($data) === true) {
@@ -121,21 +121,21 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-	 * Get the URI for locating the data of the object.
-	 *
-	 * @return string A URI.
-	 */
+     * Get the URI for locating the data of the object.
+     *
+     * @return string A URI.
+     */
     public function getData()
     {
         return $this->data;
     }
 
     /**
-	 * Set the mime-type of the object.
-	 *
-	 * @param string $type A mime-type.
-	 * @throws \InvalidArgumentException If $type is not a valid mime-type.
-	 */
+     * Set the mime-type of the object.
+     *
+     * @param string $type A mime-type.
+     * @throws \InvalidArgumentException If $type is not a valid mime-type.
+     */
     public function setType($type)
     {
         if (is_string($type) === true && empty($type) === false) {
@@ -147,22 +147,23 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-	 * Get the mime-type of the object.
-	 *
-	 * @return string A mime-type.
-	 */
+     * Get the mime-type of the object.
+     *
+     * @return string A mime-type.
+     */
     public function getType()
     {
         return $this->type;
     }
 
     /**
-	 * Set the width of the object. A negative value describes that no width
-	 * is provided.
-	 *
-	 * @param integer $width A width.
-	 * @throws \InvalidArgumentException
-	 */
+     * Set the width of the object.
+     *
+     * A negative value describes that no width is provided.
+     *
+     * @param integer $width A width.
+     * @throws \InvalidArgumentException
+     */
     public function setWidth($width)
     {
         if (is_int($width) === true) {
@@ -174,33 +175,35 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-	 * Get the width of the object. A negative value describes that no width
-	 * is provided.
-	 *
-	 * @return integer A width.
-	 */
+     * Get the width of the object.
+     *
+     * A negative value describes that no width is provided.
+     *
+     * @return integer A width.
+     */
     public function getWidth()
     {
         return $this->width;
     }
 
     /**
-	 * Whether a width is defined for the object.
-	 *
-	 * @return boolean.
-	 */
+     * Whether a width is defined for the object.
+     *
+     * @return boolean.
+     */
     public function hasWidth()
     {
         return $this->width >= 0;
     }
 
     /**
-	 * Set the height of the object. A negative value describes that no height
-	 * is provided.
-	 *
-	 * @param integer $height A height.
-	 * @throws \InvalidArgumentException If $height is not an integer value.
-	 */
+     * Set the height of the object.
+     *
+     * A negative value describes that no height is provided.
+     *
+     * @param integer $height A height.
+     * @throws \InvalidArgumentException If $height is not an integer value.
+     */
     public function setHeight($height)
     {
         if (is_int($height) === true) {
@@ -212,56 +215,56 @@ class Object extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-	 * Get the width of the object. A negative value describes that no height is
-	 * provided.
-	 *
-	 * @return integer A height.
-	 */
+     * Get the width of the object. A negative value describes that no height is
+     * provided.
+     *
+     * @return integer A height.
+     */
     public function getHeight()
     {
         return $this->height;
     }
 
     /**
-	 * Whether the object has a height.
-	 *
-	 */
+     * Whether the object has a height.
+     *
+     */
     public function hasHeight()
     {
         return $this->height >= 0;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         return $this->getContent();
     }
 
     /**
-	 * Set the components composing the Object.
-	 *
-	 * @param \qtism\data\content\ObjectFlowCollection $content
-	 */
+     * Set the components composing the Object.
+     *
+     * @param \qtism\data\content\ObjectFlowCollection $content
+     */
     public function setContent(ObjectFlowCollection $content)
     {
         $this->content = $content;
     }
 
     /**
-	 * Get the components composing the Object.
-	 *
-	 * @return \qtism\data\content\ObjectFlowCollection
-	 */
+     * Get the components composing the Object.
+     *
+     * @return \qtism\data\content\ObjectFlowCollection
+     */
     public function getContent()
     {
         return $this->content;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'object';
