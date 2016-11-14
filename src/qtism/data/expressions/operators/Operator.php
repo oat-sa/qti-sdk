@@ -45,44 +45,44 @@ abstract class Operator extends Expression
     private $minOperands = 0;
 
     /**
-	 * The maximal number of operands the operator can take.
-	 *
-	 * @var integer
-	 */
+     * The maximal number of operands the operator can take.
+     *
+     * @var integer
+     */
     private $maxOperands = -1;
 
     /**
-	 * The cardinalities accepted for the input operands.
-	 *
-	 * @var array
-	 */
+     * The cardinalities accepted for the input operands.
+     *
+     * @var array
+     */
     private $acceptedCardinalities = array();
 
     /**
-	 * The baseTypes accepted for the input operands.
-	 *
-	 * @var array
-	 */
+     * The baseTypes accepted for the input operands.
+     *
+     * @var array
+     */
     private $acceptedBaseTypes = array();
 
     /**
-	 * The sub-expressions.
-	 *
-	 * @var \qtism\data\expressions\ExpressionCollection
-	 * @qtism-bean-property
-	 */
+     * The sub-expressions.
+     *
+     * @var \qtism\data\expressions\ExpressionCollection
+     * @qtism-bean-property
+     */
     private $expressions;
 
     /**
-	 * Create a new instance of Operator.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions The sub-expressions that form the operator.
-	 * @param integer $minOperands The minimum operands count (0 equals no min).
-	 * @param integer $maxOperands The maximum operands count (-1 equals no max).
-	 * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
-	 * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
-	 * @throws \InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.
-	 */
+     * Create a new instance of Operator.
+     *
+     * @param \qtism\data\expressions\ExpressionCollection $expressions The sub-expressions that form the operator.
+     * @param integer $minOperands The minimum operands count (0 equals no min).
+     * @param integer $maxOperands The maximum operands count (-1 equals no max).
+     * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
+     * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
+     * @throws \InvalidArgumentException If $expressions does not match the restrictions or an invalid argument is given.
+     */
     public function __construct(ExpressionCollection $expressions, $minOperands = 0, $maxOperands = -1, $acceptedCardinalities = array(Cardinality::SINGLE, Cardinality::MULTIPLE, Cardinality::ORDERED), $acceptedBaseTypes = array(OperatorBaseType::ANY))
     {
         $this->setMinOperands($minOperands);
@@ -94,29 +94,29 @@ abstract class Operator extends Expression
     }
 
     /**
-	 * Set the collection of expressions that compose the Operation object.
-	 *
-	 * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of $expressions that form the hierarchy of expressions.
-	 * @throws \InvalidArgumentException If $expressions does not contain at least one Expression object.
-	 */
+     * Set the collection of expressions that compose the Operation object.
+     *
+     * @param \qtism\data\expressions\ExpressionCollection $expressions A collection of $expressions that form the hierarchy of expressions.
+     * @throws \InvalidArgumentException If $expressions does not contain at least one Expression object.
+     */
     public function setExpressions(ExpressionCollection $expressions)
     {
         $this->expressions = $expressions;
     }
 
     /**
-	 * Get the collection of expressions that compose the Operator object.
-	 *
-	 * @return \qtism\data\expressions\ExpressionCollection A collection of Expression objects.
-	 */
+     * Get the collection of expressions that compose the Operator object.
+     *
+     * @return \qtism\data\expressions\ExpressionCollection A collection of Expression objects.
+     */
     public function getExpressions()
     {
         return $this->expressions;
     }
 
     /**
-	 * @see \qtism\data\expressions\Expression::getComponents()
-	 */
+     * @see \qtism\data\expressions\Expression::getComponents()
+     */
     public function getComponents()
     {
         $comp = $this->getExpressions()->getArrayCopy();
@@ -125,12 +125,12 @@ abstract class Operator extends Expression
     }
 
     /**
-	 * Set the minimum operands count for this Operator.
-	 *
-	 * @param int $minOperands An integer which is >= 0.
-	 * @throws \InvalidArgumentException If $minOperands is not an integer >= 0.
-	 */
-    protected function setMinOperands($minOperands)
+     * Set the minimum operands count for this Operator.
+     *
+     * @param int $minOperands An integer which is >= 0.
+     * @throws \InvalidArgumentException If $minOperands is not an integer >= 0.
+     */
+    public function setMinOperands($minOperands)
     {
         if (is_int($minOperands) && $minOperands >= 0) {
             $this->minOperands = $minOperands;
@@ -141,22 +141,22 @@ abstract class Operator extends Expression
     }
 
     /**
-	 * Get the minimum operands count for this Operator.
-	 *
-	 * @return int
-	 */
+     * Get the minimum operands count for this Operator.
+     *
+     * @return int
+     */
     public function getMinOperands()
     {
         return $this->minOperands;
     }
 
     /**
-	 * Set the maxmimum operands count for this Operator. The value
-	 * is -1 if unlimited.
-	 *
-	 * @param int $maxOperands
-	 * @throws \InvalidArgumentException If $maxOperands is not an integer.
-	 */
+     * Set the maxmimum operands count for this Operator. The value
+     * is -1 if unlimited.
+     *
+     * @param int $maxOperands
+     * @throws \InvalidArgumentException If $maxOperands is not an integer.
+     */
     public function setMaxOperands($maxOperands)
     {
         if (is_int($maxOperands)) {
@@ -168,36 +168,36 @@ abstract class Operator extends Expression
     }
 
     /**
-	 * Get the maximum operands count for this Operator. The value
-	 * is -1 if unlimited.
-	 *
-	 * @return int
-	 */
+     * Get the maximum operands count for this Operator. The value
+     * is -1 if unlimited.
+     *
+     * @return int
+     */
     public function getMaxOperands()
     {
         return $this->maxOperands;
     }
 
     /**
-	 * Get the accepted operand cardinalities.
-	 *
-	 * @return array An array of values from the Cardinality enumeration.
-	 */
+     * Get the accepted operand cardinalities.
+     *
+     * @return array An array of values from the Cardinality enumeration.
+     */
     public function getAcceptedCardinalities()
     {
         return $this->acceptedCardinalities;
     }
 
     /**
-	 * Set the accepted operand cardinalities.
-	 *
-	 * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
-	 * @throws \InvalidArgumentException If a value from $acceptedCardinalities is not a value from the Cardinality enumeration.
-	 */
+     * Set the accepted operand cardinalities.
+     *
+     * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
+     * @throws \InvalidArgumentException If a value from $acceptedCardinalities is not a value from the Cardinality enumeration.
+     */
     public function setAcceptedCardinalities(array $acceptedCardinalities)
     {
         foreach ($acceptedCardinalities as $cardinality) {
-            if (!in_array($cardinality, OperatorCardinality::asArray())) {
+            if (!in_array($cardinality, OperatorCardinality::asArray(), true)) {
                 $msg = "Accepted cardinalities must be values from the Cardinality enumeration, '" . $cardinality . "' given";
                 throw new InvalidArgumentException($msg);
             }
@@ -207,25 +207,25 @@ abstract class Operator extends Expression
     }
 
     /**
-	 * Get the accepted operand baseTypes.
-	 *
-	 * @return array An array of values from OperatorBaseType enumeration.
-	 */
+     * Get the accepted operand baseTypes.
+     *
+     * @return array An array of values from OperatorBaseType enumeration.
+     */
     public function getAcceptedBaseTypes()
     {
         return $this->acceptedBaseTypes;
     }
 
     /**
-	 * Set the accepted operand accepted baseTypes.
-	 *
-	 * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
-	 * @throws \InvalidArgumentException If a value from the $acceptedBaseTypes is not a value from the OperatorBaseType.
-	 */
+     * Set the accepted operand accepted baseTypes.
+     *
+     * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
+     * @throws \InvalidArgumentException If a value from the $acceptedBaseTypes is not a value from the OperatorBaseType.
+     */
     public function setAcceptedBaseTypes(array $acceptedBaseTypes)
     {
         foreach ($acceptedBaseTypes as $baseType) {
-            if (!in_array($baseType, OperatorBaseType::asArray())) {
+            if (!in_array($baseType, OperatorBaseType::asArray(), true)) {
                 $msg = "Accepted baseTypes must be values from the OperatorBaseType enumeration, '" . $baseType . "' given.";
                 throw new InvalidArgumentException($msg);
             }
