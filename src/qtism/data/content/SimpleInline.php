@@ -22,8 +22,6 @@
 
 namespace qtism\data\content;
 
-use \InvalidArgumentException;
-
 /**
  * The QTI simpleInline abstract class which contains inline QTI components
  * only.
@@ -71,7 +69,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
     /**
      * Set the inline components contained by the SimpleInline object.
      *
-     * @param \qtism\data\QtiComponentCollection $content A collection of Inline components.
+     * @param \qtism\data\content\InlineCollection $content A collection of Inline components.
      */
     public function setContent(InlineCollection $content)
     {

@@ -371,9 +371,14 @@ class Format
      */
     public static function isClass($string)
     {
-        $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
-
-        return preg_match($pattern, $string) === 1;
+        if (is_string($string) === true) {
+            $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
+    
+            return preg_match($pattern, $string) === 1;
+        } else {
+            
+            return false;
+        }
     }
 
     /**

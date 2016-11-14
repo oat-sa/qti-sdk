@@ -164,8 +164,8 @@ abstract class BodyElement extends QtiComponent
      */
     public function setClass($class = '')
     {
-        $class = trim($class);
         if (is_string($class) && (empty($class) === true || Format::isClass($class) === true)) {
+            $class = trim($class);
             $this->class = $class;
         } else {
             $msg = "The 'class' argument must be a valid class name, '" . $class . "' given";
@@ -257,7 +257,7 @@ abstract class BodyElement extends QtiComponent
      */
     public function setDir($dir)
     {
-        if (in_array($dir, Direction::asArray()) === true) {
+        if (in_array($dir, Direction::asArray(), true) === true) {
             $this->dir = $dir;
         } else {
             $msg = "The 'dir' argument must be a value from the Direction enumeration.";
