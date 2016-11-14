@@ -4,8 +4,8 @@ namespace qtismtest\common\collections;
 use qtismtest\QtiSmTestCase;
 use qtism\common\collections\IdentifierCollection;
 
-class IdentifierCollectionTest extends QtiSmTestCase {
-	
+class IdentifierCollectionTest extends QtiSmTestCase
+{
 	/**
 	 * The IdentifierCollection object to test.
 	 * 
@@ -13,17 +13,20 @@ class IdentifierCollectionTest extends QtiSmTestCase {
 	 */
 	private $collection;
 	
-	public function setUp() {
+	public function setUp()
+    {
 		parent::setUp();
 		$this->collection = new IdentifierCollection();
 	}
 	
-	public function tearDown() {
+	public function tearDown()
+    {
 	    parent::tearDown();
 	    unset($this->collection);
 	}
 	
-	public function testAddIdentifier() {
+	public function testAddIdentifier()
+    {
 		$string = 'foobar';
 		$this->collection[] = $string;
 		$this->assertEquals(count($this->collection), 1);
@@ -33,7 +36,8 @@ class IdentifierCollectionTest extends QtiSmTestCase {
 	/**
 	 * @depends testAddIdentifier
 	 */
-	public function testRemoveIdentifier() {
+	public function testRemoveIdentifier()
+    {
 		$string  = 'foobar';
 		$this->collection[] = $string;
 		unset($this->collection[0]);
@@ -43,7 +47,8 @@ class IdentifierCollectionTest extends QtiSmTestCase {
 	/**
 	 * @depends testAddIdentifier
 	 */
-	public function testModifyIdentifier() {
+	public function testModifyIdentifier()
+    {
 		$string = 'foobar';
 		$this->collection[] = $string;
 		$this->assertTrue(isset($this->collection[0]));
@@ -51,9 +56,27 @@ class IdentifierCollectionTest extends QtiSmTestCase {
 		$this->assertNotEquals($this->collection[0], $string);
 	}
 	
-	public function testAddIdentifierWrongType() {
+	public function testAddIdentifierWrongFormat()
+    {
 		$identifier = '.identifier';
 		$this->setExpectedException('\\InvalidArgumentException');
 		$this->collection[] = $identifier;
 	}
+    
+    public function testAddIdentifierWrongType()
+    {
+        $identifier = 999;
+        $this->setExpectedException('\\InvalidArgumentException');
+        $this->collection[] = $identifier;
+    }
+    
+    public function testToString()
+    {
+        $this->collection[] = 'one';
+        $this->assertEquals('one', $this->collection->__toString());
+    
+        $this->collection[] = 'two';
+        $this->collection[] = 'three';
+        $this->assertEquals('one,two,three', $this->collection->__toString());
+    }
 }
