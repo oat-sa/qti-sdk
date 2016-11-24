@@ -952,10 +952,6 @@ class AssessmentItemSession extends State
             $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state INTERACTING.";
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
-        } elseif ($this->isAttempting() === false) {
-            $msg = "Cannot switch from state " . strtoupper(AssessmentItemSessionState::getNameByConstant($state)) . " to state INTERACTING while not currently attempting.";
-            $code = AssessmentItemSessionException::STATE_VIOLATION;
-            throw new AssessmentItemSessionException($msg, $this, $code);
         } else {
             $this->setState(AssessmentItemSessionState::INTERACTING);
         }
