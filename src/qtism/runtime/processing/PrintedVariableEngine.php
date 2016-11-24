@@ -35,6 +35,7 @@ use qtism\common\enums\Cardinality;
 use qtism\data\content\TextRun;
 use qtism\data\content\PrintedVariable;
 use qtism\runtime\common\AbstractEngine;
+use \InvalidArgumentException;
 
 /**
  * From IMS QTI:
@@ -230,7 +231,7 @@ class PrintedVariableEngine extends AbstractEngine
             $baseType = BaseType::STRING;
         } elseif ($baseType === BaseType::FILE) {
             // @todo support baseType::FILE in PrintedVariable.
-            $msg = "the 'file' BaseType is not supported yet by PrintedVariableEngine implementation.";
+            $msg = "The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.";
             throw new PrintedVariableProcessingException($msg, $this, PrintedVariableProcessingException::RUNTIME_ERROR);
         }
 

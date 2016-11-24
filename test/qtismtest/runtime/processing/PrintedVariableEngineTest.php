@@ -20,11 +20,14 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\processing\PrintedVariableEngine;
+use qtism\runtime\processing\PrintedVariableProcessingException;
 use qtism\data\content\PrintedVariable;
 use qtism\runtime\common\State;
+use qtism\data\content\TextRun;
+use qtism\common\datatypes\files\FileSystemFile;
 
-class PrintedVariableEngineTest extends QtiSmTestCase {
-	
+class PrintedVariableEngineTest extends QtiSmTestCase
+{
     /**
      * @param mixed $value
      * @param string $expected
@@ -37,8 +40,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
      * @param stribng $mappingIndicator
      * @dataProvider printedVariableProvider
      */
-    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=') {
-        
+    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
+    {
         $printedVariable = new PrintedVariable($identifier);
         $printedVariable->setFormat($format);
         $printedVariable->setPowerForm($powerForm);
@@ -53,7 +56,8 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
         $this->assertEquals($expected, $engine->process());
     }
     
-    public function printedVariableProvider() {
+    public function printedVariableProvider()
+    {
         $state = new State();
         
         $state->setVariable(new OutcomeVariable('nullValue', Cardinality::SINGLE, BaseType::BOOLEAN, null));
@@ -231,7 +235,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
             array('0', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 2),
             array('-25', 'orderedIndexedIntOrIdentifier', $state, '', false, 10, 3),
 
-            // -- Power form (only in force with float values.
+            // -- Power form (only in force with float values).
             array('250', 'powerFormScalarPositiveInteger', $state, '', true),
             array('0', 'powerFormScalarZeroInteger', $state, '', true),
             array('-23', 'powerFormScalarNegativeInteger', $state, '', true),
@@ -260,5 +264,34 @@ class PrintedVariableEngineTest extends QtiSmTestCase {
                         
             array('-987', 'integerMinus987', $state, '%i'),
         );
+    }
+    
+    public function testPrintedVariableWithUnknownValueType()
+    {
+        $this->setExpectedException(
+            '\\InvalidArgumentException',
+            "The PrintedVariableEngine class only accepts PrintedVariable objects to be executed."
+        );
+        
+        new PrintedVariableEngine(new TextRun('crash'));
+    }
+    
+    public function testPrintedVariableFromFile()
+    {
+        $tmp = tempnam('/tmp', 'qtism');
+        $state = new State(array(new OutcomeVariable('file', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::createFromData('test', $tmp, 'text/plain'))));
+        $printedVariable = new PrintedVariable('file');
+        
+        $engine = new PrintedVariableEngine($printedVariable);
+        $engine->setContext($state);
+        
+        try {
+            $engine->process();
+            $this->assertFalse(true, "Should not be able to process a printed variable rendering from a QTI File.");
+        } catch (PrintedVariableProcessingException $e) {
+            $this->assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
+        }
+        
+        unlink($tmp);
     }
 }
