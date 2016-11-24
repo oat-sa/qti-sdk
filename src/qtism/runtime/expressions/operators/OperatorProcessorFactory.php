@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -40,27 +40,31 @@ use \RuntimeException;
 class OperatorProcessorFactory extends ExpressionProcessorFactory
 {
     /**
-	 * Create a new OperatorProcessorFactory object.
-	 *
-	 */
+     * Create a new OperatorProcessorFactory object.
+     *
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
     /**
-	 * Create the OperatorProcessor relevant to the given $expression.
-	 *
-	 * @param \qtism\data\expressions\Expression $expression The Operator object you want to get the processor.
-	 * @param \qtism\runtime\expressions\operators\OperandsCollection $operands The operands to be involved in the Operator object.
-	 * @return \qtism\runtime\expressions\operators\OperatorProcessor An OperatorProcessor object ready to process $expression.
-	 * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If the $operands count is not compliant with the Operator object to be processed.
-	 * @throws \InvalidArgumentException If $expression is not an Operator object.
-	 * @throws \RuntimeException If no relevant OperatorProcessor is found for the given $expression.
-	 */
+     * Create the OperatorProcessor relevant to the given $expression.
+     *
+     * @param \qtism\data\expressions\Expression $expression The Operator object you want to get the processor.
+     * @param \qtism\runtime\expressions\operators\OperandsCollection $operands The operands to be involved in the Operator object.
+     * @return \qtism\runtime\expressions\operators\OperatorProcessor An OperatorProcessor object ready to process $expression.
+     * @throws \qtism\runtime\expressions\operators\OperatorProcessingException If the $operands count is not compliant with the Operator object to be processed.
+     * @throws \InvalidArgumentException If $expression is not an Operator object.
+     * @throws \RuntimeException If no relevant OperatorProcessor is found for the given $expression.
+     */
     public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null)
     {
         if ($expression instanceof Operator) {
+            
+            if (is_null($operands) === true) {
+                $operands = new OperandsCollection();
+            }
 
             if ($expression instanceof CustomOperator) {
                 // QTI custom operator. Try to load an autoloaded class by using
@@ -84,17 +88,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
                 $nsPackage = 'qtism\\runtime\\expressions\\operators\\';
                 $className = $nsPackage . $qtiClassName . 'Processor';
 
-                if (class_exists($className)) {
-
-                    if (is_null($operands) === true) {
-                        $operands = new OperandsCollection();
-                    }
-
-                    return new $className($expression, $operands);
-                } else {
-                    $msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
-                    throw new RuntimeException($msg);
-                }
+                return new $className($expression, $operands);
             }
         } else {
             $msg = "The OperatorProcessorFactory only accepts to create processors for Operator objects.";

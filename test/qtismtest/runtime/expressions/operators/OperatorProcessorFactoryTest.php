@@ -12,21 +12,24 @@ use qtism\data\expressions\operators\Operator;
 
 require_once (dirname(__FILE__) . '/custom/custom_operator_autoloader.php');
 
-class OperatorProcessorFactoryTest extends QtiSmTestCase {
-	
-    public function setUp() {
+class OperatorProcessorFactoryTest extends QtiSmTestCase 
+{
+    public function setUp()
+    {
         parent::setUp();
         // register testing custom operators autoloader.
         spl_autoload_register('custom_operator_autoloader');
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         // unregister testing custom operators autoloader.
         spl_autoload_unregister('custom_operator_autoloader');
     }
     
-	public function testCreateProcessor() {
+	public function testCreateProcessor()
+    {
 		// get a fake sum expression.
 		$expression = $this->createComponentFromXml(
 			'<sum>
@@ -43,7 +46,8 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		$this->assertEquals(4, $processor->process()->getValue()); // x)
 	}
 	
-	public function testInvalidOperatorClass() {
+	public function testInvalidOperatorClass()
+    {
 		$expression = $this->createComponentFromXml('<baseValue baseType="string">String!</baseValue>');
 		$factory = new OperatorProcessorFactory();
 		
@@ -51,7 +55,8 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 		$processor = $factory->createProcessor($expression);
 	}
 	
-	public function testCustomOperator() {
+	public function testCustomOperator()
+    {
 	    // Fake expression...
 	    $expression = $this->createComponentFromXml(
 	        '<customOperator xmlns:qtism="http://www.qtism.org/xsd/custom_operators/explode" class="org.qtism.test.Explode" qtism:delimiter="-">
@@ -65,5 +70,43 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('org\\qtism\\test\\Explode', $processor);
 	    $this->assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
 	    $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, array(new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')))));
+	}
+    
+    public function testCustomOperatorWithoutClassAttribute()
+    {
+	    // Fake expression...
+	    $expression = $this->createComponentFromXml(
+	        '<customOperator xmlns:qtism="http://www.qtism.org/xsd/custom_operators/explode" qtism:delimiter="-">
+	            <baseValue baseType="string">this-is-a-test</baseValue>
+	        </customOperator>'
+	    );
+	    
+	    $factory = new OperatorProcessorFactory();
+        
+        $this->setExpectedException(
+            '\\RuntimeException',
+            "Only custom operators with a 'class' attribute value can be processed."
+        );
+        
+	    $factory->createProcessor($expression);
+	}
+    
+    public function testUnknownCustomOperator()
+    {
+	    // Fake expression...
+	    $expression = $this->createComponentFromXml(
+	        '<customOperator xmlns:qtism="http://www.qtism.org/xsd/custom_operators/explode" class="org.qtism.test.Unknown" qtism:delimiter="-">
+	            <baseValue baseType="string">this-is-a-test</baseValue>
+	        </customOperator>'
+	    );
+	    
+	    $factory = new OperatorProcessorFactory();
+
+        $this->setExpectedException(
+            '\\RuntimeException',
+            "No custom operator implementation found for class 'org.qtism.test.Unknown'"
+        );
+        
+	    $factory->createProcessor($expression);
 	}
 }
