@@ -52,13 +52,13 @@ class FileSystemFileTest extends QtiSmTestCase {
         try {
             FileSystemFile::createFromExistingFile(
                 self::samplesDir() . 'datatypes/file/text-plain_name.txt',
-                'root/root/root/root.txt',
+                '/root/root/root/root.txt',
                 'text/plain'
             );
             
             $this->assertFalse(true, "Should throw an error.");
         } catch (\RuntimeException $e) {
-            $this->assertEquals("Unable to create destination directory at 'root/root/root'.", $e->getMessage());
+            $this->assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
         }
     }
     
@@ -80,7 +80,7 @@ class FileSystemFileTest extends QtiSmTestCase {
         try {
             FileSystemFile::createFromExistingFile(
                 self::samplesDir() . 'datatypes/file',
-                'root/root/root/root.txt',
+                '/root/root/root/root.txt',
                 'text/plain'
             );
             $this->assertFalse(true, "Should throw an error.");
@@ -134,7 +134,7 @@ class FileSystemFileTest extends QtiSmTestCase {
     public function testInstantiationWrongPath()
     {
         $this->setExpectedException('\\RuntimeException');
-        $pFile = new FileSystemFile('/qtism/test');
+        new FileSystemFile('/qtism/test');
     }
     
     public function retrieveProvider()
