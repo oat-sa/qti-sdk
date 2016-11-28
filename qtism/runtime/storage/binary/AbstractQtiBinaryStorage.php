@@ -141,10 +141,27 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             
             // Persist the Route of the AssessmentTestSession and the related item sessions.
             $access->writeTinyInt($route->count());
+            
+            // persist whether or not to force branching.
+            $access->writeBoolean($assessmentTestSession->mustForceBranching());
+            
+            // persist whether or not to force preconditions.
+            $access->writeBoolean($assessmentTestSession->mustForcePreconditions());
+            
+            // persist whether or not to use path tracking.
+            $access->writeBoolean($assessmentTestSession->mustTrackPath());
+            
+            // persist whether or not to always allow jumps.
+            $access->writeBoolean($assessmentTestSession->mustAlwaysAllowJumps());
+            
+            // persist path.
+            $access->writePath($assessmentTestSession->getPath());
+            
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
-            
-            foreach ($route as $routeItem) {
+
+            $routeItems = $route->getAllRouteItems();
+            foreach ($routeItems as $routeItem) {
                 $item = $routeItem->getAssessmentItemRef();
                 $occurence = $routeItem->getOccurence();
                 
@@ -222,6 +239,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $itemSessionStore = new AssessmentItemSessionStore();
             $pendingResponseStore = new PendingResponseStore();
             $routeCount = $access->readTinyInt();
+                     
+            $forceBranching = ($version >= 6) ? $access->readBoolean() : false;
+            $forcePreconditions = ($version >= 6) ? $access->readBoolean() : false;
+            $mustTrackPath = ($version >= 7) ? $access->readBoolean() : false;
+            $mustAlwaysAllowJumps = ($version >= 8) ? $access->readBoolean() : false;
+            $path = ($version >= 7) ? $access->readPath() : array();
             
             // Create the item session factory that will be used to instantiate
             // new item sessions.
@@ -252,6 +275,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage {
             $assessmentTestSession->setState($assessmentTestSessionState);
             $assessmentTestSession->setLastOccurenceUpdate($lastOccurenceUpdate);
             $assessmentTestSession->setPendingResponseStore($pendingResponseStore);
+            $assessmentTestSession->setForceBranching($forceBranching);
+            $assessmentTestSession->setForcePreconditions($forcePreconditions);
+            $assessmentTestSession->setPathTracking($mustTrackPath);
+            $assessmentTestSession->setAlwaysAllowJumps($mustAlwaysAllowJumps);
+            $assessmentTestSession->setPath($path);
 
             // Deal with test session configuration.
             // -- AutoForward (not in use anymore, consume it anyway).

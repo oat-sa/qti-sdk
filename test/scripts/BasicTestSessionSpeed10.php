@@ -5,7 +5,7 @@ use qtism\runtime\storage\common\AbstractStorage;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -17,7 +17,7 @@ use qtism\data\storage\php\PhpDocument;
 
 date_default_timezone_set('UTC');
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 function loadTestDefinition(array &$average = null) {
     $start = microtime();
@@ -56,7 +56,7 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
     $start = microtime();
 
     $session->beginAttempt();
-    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier($identifier)))));
+    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier)))));
 
     if (is_null($average) === false) {
         spentTime($start, microtime(), $average);

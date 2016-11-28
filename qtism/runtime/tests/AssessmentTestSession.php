@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -31,7 +31,7 @@ use qtism\common\enums\Cardinality;
 use qtism\runtime\expressions\ExpressionEngine;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\data\SubmissionMode;
 use qtism\runtime\common\ProcessingException;
@@ -70,6 +70,7 @@ class AssessmentTestSession extends State {
 	
     const ROUTECOUNT_ALL = 0;
     const ROUTECOUNT_EXCLUDENORESPONSE = 1;
+    const ROUTECOUNT_FLOW = 2;
     
     /**
      * A unique ID for this AssessmentTestSession.
@@ -158,6 +159,49 @@ class AssessmentTestSession extends State {
 	 * @var array
 	 */
 	private $preservedOutcomeVariables;
+      
+    /**
+     * Wheter or not to force branch rules to be executed.
+     * 
+     * If enabled, branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @var boolean
+     */
+    private $forceBranching = false;
+    
+    /**
+     * Whether or not to force preconditions to be executed.
+     * 
+     * If enabled, preconditions will be executed even if the current navigation mode is non-linear.
+     * 
+     * @var boolean
+     */
+    private $forcePreconditions = false;
+    
+    /**
+     * Whether or not to store the positions taken in the flow while navigating the test.
+     * 
+     * @var boolean
+     */
+    private $pathTracking = false;
+    
+    /**
+     * An array storing the positions taken in the flow while navigating the test.
+     * 
+     * Populated only if $pathTracking is enabled.
+     * 
+     * @var array
+     */
+    private $path = array();
+    
+    /**
+     * Whether or not allowing jump in any case.
+     * 
+     * If enabled, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @var boolean
+     */
+    private $alwaysAllowJumps = false;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -443,6 +487,122 @@ class AssessmentTestSession extends State {
 	public function getPreservedOutcomeVariables() {
 	    return $this->preservedOutcomeVariables;
 	}
+    
+    /**
+     * Set whether or not to force branch rules to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @param boolean $forceBranching
+     */
+    public function setForceBranching($forceBranching) {
+        $this->forceBranching = $forceBranching;
+    }
+
+    /**
+     * Know whether or not branch rules are forced to be executed.
+     * 
+     * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
+     * 
+     * @return boolean
+     */
+    public function mustForceBranching() {
+        return $this->forceBranching;
+    }
+    
+    /**
+     * Set whether or not to force preconditions to be executed.
+     * 
+     * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
+     * 
+     * @param boolean $forcePreconditions
+     */
+    public function setForcePreconditions($forcePreconditions) {
+        $this->forcePreconditions = $forcePreconditions;
+    }
+    
+    /**
+     * Know whether or not preconditions are forced to be executed.
+     * 
+     * When turned on, preconditions will be executed even if the current navigation mode is non-linear.
+     * 
+     * @return boolean
+     */
+    public function mustForcePreconditions() {
+        return $this->forcePreconditions;
+    }
+    
+    /**
+     * Set whether or not to always allow jumps.
+     * 
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @param boolean $alwaysAllowJumps
+     */
+    public function setAlwaysAllowJumps($alwaysAllowJumps) {
+        $this->alwaysAllowJumps = $alwaysAllowJumps;
+    }
+    
+    /**
+     * Know whether or not to always allow jumps.
+     * 
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     * 
+     * @return boolean
+     */
+    public function mustAlwaysAllowJumps() {
+        return $this->alwaysAllowJumps;
+    }
+    
+    /**
+     * Set whether or not to store the positions taken in the flow while navigating the test.
+     * 
+     * If enabled, forward/backward navigation will be considering the previous positions of the candidate
+     * in the item flow, instead of the default route flow.
+     * 
+     * Warning! This method must be called before the Assessment Test Session starts. Otherwise, you may
+     * encounter route item flow isssues during navigation. Moreover, after the Assessment Test Session
+     * has begun using the AssessmentTestSession::beginTestSession() method, path tracking should not
+     * be disable. Otherwise, you may experience issues with route item flow.
+     * 
+     * @param boolean $pathTracking
+     */
+    public function setPathTracking($pathTracking) {
+        $this->pathTracking = $pathTracking;
+    }
+    
+    /**
+     * Whether or not path tracking is enabled.
+     * 
+     * @return boolean
+     */
+    public function mustTrackPath() {
+        return $this->pathTracking;
+    }
+    
+    /**
+     * Set the current path.
+     * 
+     * The value to be specified is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @param array $path
+     */
+    public function setPath(array $path) {
+        $this->path = $path;
+    }
+    
+    /**
+     * Get the current path.
+     * 
+     * The returned value is an array of integer values representing positions in the route item flow
+     * that have been taken by the candidate.
+     * 
+     * @return array
+     */
+    public function getPath() {
+        return $this->path;
+    }
 
 	/**
 	 * Get a weight by using a prefixed identifier e.g. 'Q01.weight1'
@@ -835,7 +995,7 @@ class AssessmentTestSession extends State {
 	 * @param AssessmentItemSession $assessmentItemSession
 	 * @param Duration $diff
 	 */
-	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, Duration $diff) {
+	public function onItemSessionDurationUpdate(AssessmentItemSession $assessmentItemSession, QtiDuration $diff) {
 	    $routeItem = $this->getCurrentRouteItem();
 	    $durationStore = $this->getDurationStore();
 	    
@@ -867,7 +1027,7 @@ class AssessmentTestSession extends State {
 	        $ids = array_merge(array($assessmentTestId), array($testPartId), $assessmentSectionIds);
 	        foreach ($ids as $id) {
 	            if (isset($durationStore[$id]) === false) {
-	                $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+	                $durationStore->setVariable(new OutcomeVariable($id, Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 	            }
 	        }
 	    }
@@ -1302,7 +1462,8 @@ class AssessmentTestSession extends State {
 	public function jumpTo($position, $allowTimeout = false) {
 	    
 	    // Can we jump?
-	    if ($this->getCurrentNavigationMode() !== NavigationMode::NONLINEAR) {
+        $navigationMode = $this->getCurrentNavigationMode();
+	    if ($navigationMode === NavigationMode::LINEAR && $this->mustAlwaysAllowJumps() !== true) {
 	        $msg = "Jumps are not allowed in LINEAR navigation mode.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
 	    }
@@ -1310,28 +1471,45 @@ class AssessmentTestSession extends State {
 	    $this->suspendItemSession();
 	    $route = $this->getRoute();
 	    $oldPosition = $route->getPosition();
+        
+        if ($position !== $oldPosition) {
 	    
-	    try {
-            $route->setPosition($position);
-            $this->selectEligibleItems();
-            
-            // Check the time limits after the jump is trully performed.
-            if ($allowTimeout === false) {
-                $this->checkTimeLimits(false, true);
+            if ($this->mustTrackPath() === true) {
+                $path = $this->getPath();
+                
+                if (($search = array_search($position, $path)) === false && $position !== 0) {
+                    // Forward jump.
+                    array_push($path, $oldPosition);
+                } else {
+                    // Backward jump.
+                    $path = array_slice($path, 0, $search);
+                }
+                
+                $this->setPath($path);
             }
             
-            // No exception thrown, interact!
-            $this->interactWithItemSession();
-	    }
-	    catch (AssessmentTestSessionException $e) {
-	        // Rollback to previous position.
-	        $route->setPosition($oldPosition);
-	        throw $e;
-	    }
-	    catch (OutOfBoundsException $e) {
-	        $msg = "Position '${position}' is out of the Route bounds.";
-	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
-	    }
+            try {
+                $route->setPosition($position);
+                $this->selectEligibleItems();
+                
+                // Check the time limits after the jump is trully performed.
+                if ($allowTimeout === false) {
+                    $this->checkTimeLimits(false, true);
+                }
+                
+                // No exception thrown, interact!
+                $this->interactWithItemSession();
+            }
+            catch (AssessmentTestSessionException $e) {
+                // Rollback to previous position.
+                $route->setPosition($oldPosition);
+                throw $e;
+            }
+            catch (OutOfBoundsException $e) {
+                $msg = "Position '${position}' is out of the Route bounds.";
+                throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP, $e);
+            }
+        }
 	}
     
     /**
@@ -1467,6 +1645,13 @@ class AssessmentTestSession extends State {
 	    }
 	    
 	    $this->suspendItemSession();
+        
+        if ($this->mustTrackPath() === true) {
+            $path = $this->getPath();
+            array_push($path, $this->getRoute()->getPosition());
+            $this->setPath($path);
+        }
+        
 	    $this->nextRouteItem();
 	    
 	    while ($this->isRunning() === true) {
@@ -1519,48 +1704,59 @@ class AssessmentTestSession extends State {
 	        $msg = "Cannot move to the previous item while the test session state is INITIAL or CLOSED.";
 	        throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
 	    }
-	    
-	    $this->suspendItemSession();
-	    $route = $this->getRoute();
-	    $oldPosition = $route->getPosition();
-	    $this->previousRouteItem();
-	    
-	    while ($route->isFirst() === false) {
-	        
-	        if ($allowTimeout === false) {
-	            try {
-	                // Do not check min times, include item timings.
-	                $this->checkTimeLimits(false, true, false);
-	                
-	                // No exception thrown, return.
-	                $this->interactWithItemSession();
-	                return;
-	            }
-	            catch (AssessmentTestSessionException $e) {
-	                // The item is timed out, let's try the previous route item.
-	                $this->previousRouteItem();
-	            }
-	        }
-	        else {
-	            $this->interactWithItemSession();
-	            return;
-	        }
-	    }
-	    
-	    // If we are here, it means we got moved back to the very first RouteItem.
-	    // Maybe we are not allowed to be here because of the hypothetic timeout
-	    // of the first RouteItem of the test...
-	    if ($allowTimeout === false) {
-	        try {
-	            $this->checkTimeLimits(false, true, false);
-	            $this->interactWithItemSession();
-	        }
-	        catch (AssessmentTestSessionException $e) {
-	            $route->setPosition($oldPosition);
-	            $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
-	            throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
-	        }
-	    }
+        
+        if ($this->mustTrackPath() === true) {
+            // Backward move using path tracking.
+            $path = $this->getPath();
+            if (empty($path) === false) {
+                $jumpPosition = array_pop($path);
+                $this->jumpTo($jumpPosition, $allowTimeout);
+            }
+        } else {
+            $this->suspendItemSession();
+            
+            // Normal backward move.
+            $route = $this->getRoute();
+            $oldPosition = $route->getPosition();
+            $this->previousRouteItem();
+            
+            while ($route->isFirst() === false) {
+                
+                if ($allowTimeout === false) {
+                    try {
+                        // Do not check min times, include item timings.
+                        $this->checkTimeLimits(false, true, false);
+                        
+                        // No exception thrown, return.
+                        $this->interactWithItemSession();
+                        return;
+                    }
+                    catch (AssessmentTestSessionException $e) {
+                        // The item is timed out, let's try the previous route item.
+                        $this->previousRouteItem();
+                    }
+                }
+                else {
+                    $this->interactWithItemSession();
+                    return;
+                }
+            }
+            
+            // If we are here, it means we got moved back to the very first RouteItem.
+            // Maybe we are not allowed to be here because of the hypothetic timeout
+            // of the first RouteItem of the test...
+            if ($allowTimeout === false) {
+                try {
+                    $this->checkTimeLimits(false, true, false);
+                    $this->interactWithItemSession();
+                }
+                catch (AssessmentTestSessionException $e) {
+                    $route->setPosition($oldPosition);
+                    $msg = "Cannot move backward. All the previous items in the route sequence are timed out.";
+                    throw new AssessmentTestSessionException($msg, $e->getCode(), $e);
+                }
+            }
+        }
 	}
 	
 	/**
@@ -1594,7 +1790,7 @@ class AssessmentTestSession extends State {
 	    while ($route->valid() === true && $stop === false) {
 	        
 	        // Branchings?
-	        if ($ignoreBranchings === false && $this->getCurrentNavigationMode() === NavigationMode::LINEAR && count($route->current()->getBranchRules()) > 0) {
+            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true)) {
 	            
 	            $branchRules = $route->current()->getBranchRules();
 	            for ($i = 0; $i < count($branchRules); $i++) {
@@ -1633,32 +1829,32 @@ class AssessmentTestSession extends State {
 	        }
 	        
 	        // Preconditions on target?
-	        if ($ignorePreConditions === false && $route->valid() === true) {
-	            $preConditions = $route->current()->getPreConditions();
+	        if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true)) {
 	            
-	            if (count($preConditions) > 0) {
-	                for ($i = 0; $i < count($preConditions); $i++) {
-	                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-	                    $condition = $engine->process();
-	                    
-	                    if ($condition !== null && $condition->getValue() === true) {
-	                        // The item must be presented.
-	                        $stop = true;
-	                        break;
-	                    }
-	                }    
-	            }
-	            else {
-	                $stop = true;
-	            }
-	        }
+                for ($i = 0; $i < count($preConditions); $i++) {
+                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+                    $condition = $engine->process();
+                    
+                    if ($condition !== null && $condition->getValue() === true) {
+                        // The item must be presented.
+                        $stop = true;
+                        break;
+                    }
+                }    
+	        } else {
+                $stop = true;
+            }
+            
+            // After a first iteration, we will not performed branching again, as they are executed
+            // as soon as we leave an item. Chains of branch rules are not expected.
+            $ignoreBranchings = true;
 	    }
-	    
-	    $this->selectEligibleItems();
 	    
 	    if ($route->valid() === false && $this->isRunning() === true) {
 	        $this->endTestSession();
-	    }
+	    } else {
+            $this->selectEligibleItems();
+        }
 	}
 	
 	/**
@@ -1874,20 +2070,30 @@ class AssessmentTestSession extends State {
      * Get the number of items in the current Route. In other words, the total number
      * of item occurences the candidate can take during the test.
      * 
-     * The $mode parameter can take two values:
+     * The $mode parameter can take three values:
      * 
      * * AssessmentTestSession::ROUTECOUNT_ALL: consider all item occurences of the test
      * * AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE: consider only item occurences containing at least one response declaration.
+     * * AssessmentTestSession::ROUTECOUNT_FLOW: ignore item occurences in non linear mode having no response declaration. 
      *
-     * @param integer $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE
+     * @param integer $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
      * @return integer
      */
     public function getRouteCount($mode = self::ROUTECOUNT_ALL)
     {
         if ($mode === self::ROUTECOUNT_ALL) {
-            
             return $this->getRoute()->count();
-        } else {
+        } elseif ($mode === self::ROUTECOUNT_FLOW) {
+            $i = 0;
+            
+            foreach ($this->getRoute()->getAllRouteItems() as $routeItem) {
+                if (!($routeItem->getTestPart()->getNavigationMode() === NavigationMode::NONLINEAR && count($routeItem->getAssessmentItemRef()->getResponseDeclarations()) === 0)) {
+                    $i++;
+                }
+            }
+            
+            return $i;
+        } else { 
             $i = 0;
             
             foreach ($this->getRoute()->getAssessmentItemRefs() as $assessmentItemRef) {

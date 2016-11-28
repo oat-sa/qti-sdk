@@ -27,7 +27,7 @@ namespace qtism\runtime\tests;
 
 use qtism\data\SectionPart;
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
 
@@ -80,7 +80,7 @@ class TimeConstraint {
      * @param NavigationMode $navigationMode The current navigation mode.
      * @param boolean $considerMinTime Whether or not to consider minimum time limits.
      */
-    public function __construct(QtiComponent $source, Duration $duration, $navigationMode = NavigationMode::LINEAR, $considerMinTime = true) {
+    public function __construct(QtiComponent $source, QtiDuration $duration, $navigationMode = NavigationMode::LINEAR, $considerMinTime = true) {
         $this->setSource($source);
         $this->setDuration($duration);
         $this->setNavigationMode($navigationMode);
@@ -110,7 +110,7 @@ class TimeConstraint {
      * 
      * @param Duration $duration A Duration object.
      */
-    protected function setDuration(Duration $duration) {
+    protected function setDuration(QtiDuration $duration) {
         $this->duration = $duration;
     }
     
@@ -170,7 +170,7 @@ class TimeConstraint {
         if (($timeLimits = $this->getSource()->getTimeLimits()) !== null && ($maxTime = $timeLimits->getMaxTime()) !== null) {
             $remaining = clone $maxTime;
             $remaining->sub($this->getDuration());
-            return ($remaining->isNegative() === true) ? new Duration('PT0S') : $remaining;
+            return ($remaining->isNegative() === true) ? new QtiDuration('PT0S') : $remaining;
         }
         else {
             return false;
@@ -188,7 +188,7 @@ class TimeConstraint {
         if ($this->minTimeInForce() === true) {
             $remaining = clone $this->getSource()->getTimeLimits()->getMinTime();
             $remaining->sub($this->getDuration());
-            return ($remaining->isNegative() === true) ? new Duration('PT0S') : $remaining;
+            return ($remaining->isNegative() === true) ? new QtiDuration('PT0S') : $remaining;
         }
         else {
             return false;

@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 use qtism\data\expressions\operators\Power;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -113,7 +113,7 @@ class PowerProcessor extends OperatorProcessor {
 			return null;
 		}
 		else {
-			return new Float($floatval);
+			return new QtiFloat($floatval);
 		}
 	}
 }

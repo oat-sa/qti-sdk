@@ -1,9 +1,10 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
+use qtism\common\datatypes\QtiFloat;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\ResponseVariable;
@@ -23,7 +24,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 			</responseDeclaration>
 		');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
-		$variable->setValue(new Point(1, 1)); // in rect, poly
+		$variable->setValue(new QtiPoint(1, 1)); // in rect, poly
 		
 		$processor = new MapResponsePointProcessor($expr);
 		$state = new State(array($variable));
@@ -31,22 +32,22 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(3.0, $result->getValue());
 		
-		$state['response1'] = new Point(3, 3); // in rect, circle, poly
+		$state['response1'] = new QtiPoint(3, 3); // in rect, circle, poly
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(6, $result->getValue());
 		
-		$state['response1'] = new Point(19, 9); // in rect
+		$state['response1'] = new QtiPoint(19, 9); // in rect
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(1, $result->getValue());
 		
-		$state['response1'] = new Point(25, 25); // outside everything.
+		$state['response1'] = new QtiPoint(25, 25); // outside everything.
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(666.666, $result->getValue());
 	}
 	
@@ -63,8 +64,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$points = new MultipleContainer(BaseType::POINT);
-		$points[] = new Point(1, 1); // in rect, poly
-		$points[] = new Point(3, 3); // in rect, circle, poly
+		$points[] = new QtiPoint(1, 1); // in rect, poly
+		$points[] = new QtiPoint(3, 3); // in rect, circle, poly
 		$variable->setValue($points);
 		
 		// because 1, 1 falls in 2 times in rect and poly, it is added to the total
@@ -75,17 +76,17 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor->setState($state);
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(6, $result->getValue());
 		
 		// Nothing matches... defaultValue returned.
 		$points = new MultipleContainer(BaseType::POINT);
-		$points[] = new Point(-1, -1);
-		$points[] = new Point(21, 20);
+		$points[] = new QtiPoint(-1, -1);
+		$points[] = new QtiPoint(21, 20);
 		$state['response1'] = $points;
 		
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(666.666, $result->getValue());
 	}
 	
@@ -109,7 +110,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(0.0, $result->getValue());
 	}
 	
@@ -126,7 +127,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		$processor = new MapResponsePointProcessor($expr);
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(2.0, $result->getValue());
 	}
 	
@@ -185,11 +186,11 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$processor = new MapResponsePointProcessor($expr);
-		$variable->setValue(new Point(3, 3)); // inside everything.
+		$variable->setValue(new QtiPoint(3, 3)); // inside everything.
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(1, $result->getValue());
 	}
 	
@@ -205,11 +206,11 @@ class MapResponsePointProcessorTest extends QtiSmTestCase {
 		');
 		$variable = ResponseVariable::createFromDataModel($variableDeclaration);
 		$processor = new MapResponsePointProcessor($expr);
-		$variable->setValue(new Point(3, 3)); // inside everything.
+		$variable->setValue(new QtiPoint(3, 3)); // inside everything.
 		$processor->setState(new State(array($variable)));
 		$result = $processor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(5, $result->getValue());
 	}
 }

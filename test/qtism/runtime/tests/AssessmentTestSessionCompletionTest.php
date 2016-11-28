@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
@@ -54,7 +54,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
                 $movedNext++;
             }
             else {
-                $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier($identifier)))));
+                $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier)))));
             }
             
             $this->assertSame($i - $movedNext, $session->numberCompleted());

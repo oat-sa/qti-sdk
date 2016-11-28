@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * 
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  * 
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -45,8 +45,10 @@ class Utils {
 		$dS = DIRECTORY_SEPARATOR;
 	
 		if ($version === '2.1') {
-			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p1.xsd';
-		}
+			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
+		} elseif ($version === '2.2') {
+            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
+        }
 		else {
 			$filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
 		}
@@ -67,21 +69,29 @@ class Utils {
 		}
 		else {
 			switch (trim($root->lookupNamespaceURI(null))) {
-				case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
-					return '2.1';
-				break;
-				
-				case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
-                    return '2.1';				    
-				break;
-				
-				case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
-					return '2.0';
-				break;
-				
-				default:
-					return false;
-				break;
+                case 'http://www.imsglobal.org/xsd/imsqti_v2p1':
+                    return '2.1';
+                break;
+
+                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p1':
+                    return '2.1';		    
+                break;
+                
+                case 'http://www.imsglobal.org/xsd/imsqti_v2p2':
+                    return '2.2';
+                break;
+                
+                case 'http://www.imsglobal.org/xsd/apip/apipv1p0/qtiitem/imsqti_v2p2':
+                    return '2.2';
+                break;
+
+                case 'http://www.imsglobal.org/xsd/imsqti_v2p0':
+                    return '2.0';
+                break;
+
+                default:
+                    return false;
+                break;
 			}
 		}
 	}

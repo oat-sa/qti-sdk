@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -160,10 +160,10 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertEquals(2, count($values));
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[0]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[0]->getValue());
+		$this->assertInstanceOf(QtiDuration::class, $values[0]->getValue());
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Duration', $values[1]->getValue());
+		$this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
 	}
 	
 	public function testUnmarshallRecord() {
@@ -202,7 +202,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase {
 		$this->assertTrue($values[0]->hasBaseType());
 		$this->assertEquals('A', $values[0]->getFieldIdentifier());
 		$this->assertEquals(BaseType::DURATION, $values[0]->getBaseType());
-		$this->assertTrue($values[0]->getValue()->equals(new Duration('P2D')));
+		$this->assertTrue($values[0]->getValue()->equals(new QtiDuration('P2D')));
 		
 		$this->assertInstanceOf('qtism\\data\\state\\Value', $values[1]);
 		$this->assertTrue($values[1]->hasFieldIdentifier());

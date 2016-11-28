@@ -27,7 +27,7 @@ namespace qtism\runtime\tests;
 use qtism\data\SubmissionMode;
 use qtism\data\NavigationMode;
 use qtism\data\IAssessmentItem;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\data\AssessmentTest;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
@@ -59,7 +59,7 @@ abstract class AbstractSessionManager {
     private $considerMinTime;
     
     public function __construct() {
-        $this->setAcceptableLatency(new Duration('PT0S'));
+        $this->setAcceptableLatency(new QtiDuration('PT0S'));
         $this->setConsiderMinTime(true);
     }
     
@@ -68,7 +68,7 @@ abstract class AbstractSessionManager {
      * 
      * @param Duration $latency
      */
-    public function setAcceptableLatency(Duration $latency) {
+    public function setAcceptableLatency(QtiDuration $latency) {
         $this->acceptableLatency = $latency;
     }
     

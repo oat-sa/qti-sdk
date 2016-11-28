@@ -32,7 +32,7 @@ use InvalidArgumentException as InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class AssessmentSectionCollection extends QtiIdentifiableCollection {
+class AssessmentSectionCollection extends SectionPartCollection {
 
 	/**
 	 * Check if $value is an AssessmentSection object.

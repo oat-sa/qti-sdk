@@ -265,6 +265,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 		$compactRef->setPreConditions($assessmentItemRef->getPreConditions());
 		$compactRef->setRequired($assessmentItemRef->isRequired());
 		$compactRef->setTemplateDefaults($assessmentItemRef->getTemplateDefaults());
+        $compactRef->setWeights($assessmentItemRef->getWeights());
 		
 		return $compactRef;
 	}

@@ -237,6 +237,44 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
 	public function validFileProvider() {
 		return array(
+            // QTI 2.2
+            array(self::decorateUri('adaptive_template.xml', '2.2')),
+            array(self::decorateUri('adaptive.xml', '2.2')),
+            array(self::decorateUri('associate.xml', '2.2')),
+            array(self::decorateUri('choice_fixed.xml', '2.2')),
+            array(self::decorateUri('choice_multiple.xml', '2.2')),
+            array(self::decorateUri('choice.xml', '2.2')),
+            array(self::decorateUri('extended_text_rubric.xml', '2.2')),
+            array(self::decorateUri('extended_text.xml', '2.2')),
+            // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
+            //array(self::decorateUri('feedbackblock_adaptive.xml', '2.2')),
+            array(self::decorateUri('feedbackblock_solution_random.xml', '2.2')),
+            //array(self::decorateUri('feedbackblock_templateblock.xml', '2.2')),
+            array(self::decorateUri('feedbackInline.xml', '2.2')),
+            array(self::decorateUri('gap_match.xml', '2.2')),
+            array(self::decorateUri('graphic_associate.xml', '2.2')),
+            array(self::decorateUri('graphic_gap_match.xml', '2.2')),
+            array(self::decorateUri('hotspot.xml', '2.2')),
+            array(self::decorateUri('hottext.xml', '2.2')),
+            array(self::decorateUri('inline_choice.xml', '2.2')),
+            array(self::decorateUri('likert.xml', '2.2')),
+            array(self::decorateUri('match.xml', '2.2')),
+            array(self::decorateUri('math.xml', '2.2')),
+            array(self::decorateUri('mc_calc3.xml', '2.2')),
+            array(self::decorateUri('mc_calc5.xml', '2.2')),
+            array(self::decorateUri('mc_stat2.xml', '2.2')),
+            array(self::decorateUri('modalFeedback.xml', '2.2')),
+            array(self::decorateUri('multi-input.xml', '2.2')),
+            array(self::decorateUri('nested_object.xml', '2.2')),
+            array(self::decorateUri('order.xml', '2.2')),
+            array(self::decorateUri('orkney1.xml', '2.2')),
+            array(self::decorateUri('orkney2.xml', '2.2')),
+            array(self::decorateUri('position_object.xml', '2.2')),
+            array(self::decorateUri('slider.xml', '2.2')),
+            array(self::decorateUri('template.xml', '2.2')),
+            array(self::decorateUri('text_entry.xml', '2.2')),
+        
+            // QTI 2.1
 		    array(self::decorateUri('adaptive.xml')),
 		    array(self::decorateUri('adaptive_template.xml')),
 		    array(self::decorateUri('mc_stat2.xml')),
@@ -274,6 +312,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 		    array(self::decorateUri('nested_object.xml')),
 		    array(self::decorateUri('likert.xml')),
 		    //array(self::decorateUri('feedbackblock_templateblock.xml')),
+            
+            // QTI 2.0
 			array(self::decorateUri('associate.xml', '2.0')),
 		    array(self::decorateUri('associate_lang.xml', '2.0')),
 			array(self::decorateUri('adaptive.xml', '2.0')),
@@ -313,8 +353,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	private static function decorateUri($uri, $version = '2.1') {
 		if ($version === '2.1') {
 			return self::samplesDir() . 'ims/items/2_1/' . $uri;
-		}
-		else {
+		} elseif ($version === '2.2') {
+            return self::samplesDir() . 'ims/items/2_2/' . $uri;
+        } else {
 			return self::samplesDir() . 'ims/items/2_0/' . $uri;
 		}
 	}

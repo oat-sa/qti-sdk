@@ -124,7 +124,7 @@ class RubricBlockMarshaller extends Marshaller {
 			$stylesheets = new StylesheetCollection();
 			$content = new FlowStaticCollection();
 			
-			foreach (self::getChildElements($element, true) as $elt) {
+			foreach (self::getChildElementsByTagName($element, 'apipAccessibility', true, true) as $elt) {
 			    
 			    if ($elt instanceof DOMText) {
 			        $elt = self::getDOMCradle()->createElement('textRun', $elt->wholeText);

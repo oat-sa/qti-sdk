@@ -1,7 +1,8 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
 use qtism\runtime\rules\RuleProcessingException;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
@@ -51,18 +52,18 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase {
 		
 		// SCORE is still NULL because the 't' variable was not provided to the context.
 		$this->assertSame(null, $context['SCORE']);
-		$context->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::BOOLEAN, new Boolean(true)));
+		$context->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
 		$this->assertTrue($context['t']->getValue());
 		
 		// After processing, the $context['SCORE'] value must be 20.0.
 		$engine->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $context['SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
 		$this->assertEquals(20.0, $context['SCORE']->getValue());
 		
-		$context['t'] = new Boolean(false);
+		$context['t'] = new QtiBoolean(false);
 		// After processing, the $context['SCORE'] value must switch to 0.0.
 		$engine->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $context['SCORE']);
+		$this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
 		$this->assertEquals(0.0, $context['SCORE']->getValue());
 	}
 	

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentItem title="Set Outcome Values with Sum" identifier="set_outcome_values_with_sum" timeDependent="false" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration baseType="identifier" cardinality="multiple" identifier="response-X">
+    <correctResponse>
+      <value>ChoiceB</value>
+      <value>ChoiceC</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration cardinality="single" baseType="float" identifier="SCORE">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration cardinality="single" baseType="float" identifier="MAXSCORE">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="score-X">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="maxscore-X">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <div>
+      <div>
+        <choiceInteraction id="interaction-1" minChoices="1" maxChoices="2" responseIdentifier="response-X" orientation="vertical">
+          <prompt>
+            <p>What is the correct response?</p>
+          </prompt>
+          <simpleChoice identifier="ChoiceA">
+            Choice A 
+        </simpleChoice>
+          <simpleChoice identifier="ChoiceB">
+            Choice B
+        </simpleChoice>
+          <simpleChoice identifier="ChoiceC">
+            Choice C
+        </simpleChoice>
+          <simpleChoice identifier="ChoiceD">
+            Choice D
+        </simpleChoice>
+        </choiceInteraction>
+      </div>
+    </div>
+  </itemBody>
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <isNull>
+          <variable identifier="response-X" />
+        </isNull>
+        <setOutcomeValue identifier="score-X">
+          <baseValue baseType="integer">0</baseValue>
+        </setOutcomeValue>
+      </responseIf>
+      <responseElseIf>
+        <match>
+          <variable identifier="response-X" />
+          <correct identifier="response-X" />
+        </match>
+        <setOutcomeValue identifier="score-X">
+          <variable identifier="maxscore-X" />
+        </setOutcomeValue>
+      </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="score-X">
+          <baseValue baseType="integer">0</baseValue>
+        </setOutcomeValue>
+      </responseElse>
+    </responseCondition>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="score-X" />
+      </sum>
+    </setOutcomeValue>
+    <setOutcomeValue identifier="MAXSCORE">
+      <sum>
+        <variable identifier="maxscore-X" />
+      </sum>
+    </setOutcomeValue>
+  </responseProcessing>
+  <apipAccessibility xmlns="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" />
+</assessmentItem>

@@ -35,6 +35,7 @@ use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\storage\LocalFileResolver;
+use qtism\common\Resolver;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\marshalling\CompactMarshallerFactory;
@@ -96,10 +97,12 @@ class XmlCompactDocument extends XmlDocument {
 	 * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
 	 *
 	 * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
+     * @param Resolver $itemResolver (optional) A Resolver object aiming at resolving assessmentItemRefs. If not provided, fallback will be a LocalFileResolver.
+     * @param Resolver $sectionResolver (optional) A Resolver object aiming at resolving assessmentSectionRefs. If not provided, fallback will be a LocalFileResolver.
 	 * @return XmlCompactDocument An XmlCompactAssessmentTestDocument object.
 	 * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
 	 */
-	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $itemResolver = null) {
+	public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, Resolver $itemResolver = null, Resolver $sectionResolver = null) {
 	    $compactAssessmentTest = new XmlCompactDocument();
 	    $identifier = $xmlAssessmentTestDocument->getDocumentComponent()->getIdentifier();
 	    $title = $xmlAssessmentTestDocument->getDocumentComponent()->getTitle();
@@ -114,14 +117,17 @@ class XmlCompactDocument extends XmlDocument {
 	    $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
 	
 	    // File resolution.
-	    $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-	
 	    if (is_null($itemResolver) === true) {
 	        $itemResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
-	    }
-	    else {
+	    } elseif ($itemResolver instanceof FileResolver) {
 	        $itemResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
 	    }
+        
+        if (is_null($sectionResolver) === true) {
+            $sectionResolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
+        } elseif ($sectionResolver instanceof FileResolver) {
+            $sectionResolver->setBasePath($xmlAssessmentTestDocument->getUrl());
+        }
 	
 	    // It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
 	    $trail = array(); // trailEntry[0] = a component, trailEntry[1] = from where we are coming (parent).
@@ -168,8 +174,11 @@ class XmlCompactDocument extends XmlDocument {
 	                        if ($component instanceof XmlDocument && $component->getDocumentComponent() instanceof AssessmentSection) {
 	                            $baseUri = $component->getUrl();
 	                        }
-	                        	
-	                        $itemResolver->setBasePath($baseUri);
+                            
+                            if ($itemResolver instanceof FileResolver) {
+                                $itemResolver->setBasePath($baseUri);
+                            }
+	                        
 	                        self::resolveAssessmentItemRef($compactRef, $itemResolver);
 	                        
 	                        $previousParts->replace($component, $compactRef);
@@ -216,10 +225,10 @@ class XmlCompactDocument extends XmlDocument {
 	 * outcome/responseDeclarations to the compact one.
 	 *
 	 * @param ExtendedAssessmentItemRef $compactAssessmentItemRef A previously instantiated ExtendedAssessmentItemRef object.
-	 * @param FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
+	 * @param Resolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
 	 * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
 	 */
-	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver) {
+	protected static function resolveAssessmentItemRef(ExtendedAssessmentItemRef $compactAssessmentItemRef, Resolver $resolver) {
 	    try {
 	        $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 	        	
@@ -251,11 +260,11 @@ class XmlCompactDocument extends XmlDocument {
 	 * Dereference the file referenced by an assessmentSectionRef.
 	 *
 	 * @param AssessmentSectionRef $assessmentSectionRef An AssessmentSectionRef object to dereference.
-	 * @param FileResolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
+	 * @param Resolver $resolver The Resolver object to be used to resolve AssessmentSectionRef's href attribute.
 	 * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
 	 * @return XmlAssessmentSection The AssessmentSection referenced by $assessmentSectionRef.
 	 */
-	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver) {
+	protected static function resolveAssessmentSectionRef(AssessmentSectionRef $assessmentSectionRef, Resolver $resolver) {
 	    try {
 	        $href = $resolver->resolve($assessmentSectionRef->getHref());
 	        	
@@ -302,45 +311,58 @@ class XmlCompactDocument extends XmlDocument {
 	    // actual rubricBlocks in rubricBlockRefs.
 	    if ($this->mustExplodeRubricBlocks() === true) {
 	        
-	        // Get all rubricBlock elements...
-	        $iterator = new QtiComponentIterator($documentComponent, array('rubricBlock'));
-	        $sectionCount = new SplObjectStorage();
-	        
-	        foreach ($iterator as $rubricBlock) {
-	            // $section contains the assessmentSection the rubricBlock is related to.
-	            $section = $iterator->parent();
-	            
-	            // determine the occurence number of the rubricBlock relative to its section.
-	            if (isset($sectionCount[$section]) === false) {
-	                $sectionCount[$section] = 0;
-	            }
-	            
-	            $sectionCount[$section] = $sectionCount[$section] + 1;
-	            $occurence = $sectionCount[$section];
-	            
-	            // determine a suitable file name for the external rubricBlock definition.
-	            $rubricBlockRefId = 'RB_' . $section->getIdentifier() . '_' . $occurence;
-	            $href = './rubricBlock_' . $rubricBlockRefId . '.xml';
-	            
-	            $doc = new XmlDocument();
-	            $doc->setDocumentComponent($rubricBlock);
-	            
-	            try {
-	                $pathinfo = pathinfo($uri);
-	                $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
-	                
-	                // replace the rubric block with a reference.
-	                $sectionRubricBlocks = $section->getRubricBlocks();
-	                $sectionRubricBlocks->remove($rubricBlock);
-	                
-	                $sectionRubricBlockRefs = $section->getRubricBlockRefs();
-	                $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
-	            }
-	            catch (XmlStorageException $e) {
-	                $msg = "An error occured while creating external rubrickBlock definition(s).";
-	                throw new XmlStorageException($msg, $e);
-	            }
-	        }
+            foreach ($this->explodeRubricBlocks() as $href => $rubricBlock) {
+                try {
+                    $doc = new XmlDocument();
+                    $doc->setDocumentComponent($rubricBlock);
+                    
+                    $pathinfo = pathinfo($uri);
+                    $doc->save($pathinfo['dirname'] . DIRECTORY_SEPARATOR . $href);
+                } catch (XmlStorageException $e) {
+                    $msg = "An error occured while creating external rubrickBlock definition(s).";
+                    throw new XmlStorageException($msg, $e);
+                }
+            }
 	    }
 	}
+    
+    /**
+     * Explode Rubric Blocks into RubricBlockRefs.
+     * 
+     * @return array where keys are RubricBlockRefs href and values are RubricBlocs as QtiComponent objets.
+     */
+    public function explodeRubricBlocks() {
+        // Get all rubricBlock elements...
+        $iterator = new QtiComponentIterator($this->getDocumentComponent(), array('rubricBlock'));
+        $sectionCount = new SplObjectStorage();
+        $references = array();
+        
+        foreach ($iterator as $rubricBlock) {
+            // $section contains the assessmentSection the rubricBlock is related to.
+            $section = $iterator->parent();
+            
+            // determine the occurence number of the rubricBlock relative to its section.
+            if (isset($sectionCount[$section]) === false) {
+                $sectionCount[$section] = 0;
+            }
+            
+            $sectionCount[$section] = $sectionCount[$section] + 1;
+            $occurence = $sectionCount[$section];
+            
+            // determine a suitable file name for the external rubricBlock definition.
+            $rubricBlockRefId = 'RB_' . $section->getIdentifier() . '_' . $occurence;
+            $href = './rubricBlock_' . $rubricBlockRefId . '.xml';
+            
+            // replace the rubric block with a reference.
+            $sectionRubricBlocks = $section->getRubricBlocks();
+            $sectionRubricBlocks->remove($rubricBlock);
+            
+            $sectionRubricBlockRefs = $section->getRubricBlockRefs();
+            $sectionRubricBlockRefs[] = new RubricBlockRef($rubricBlockRefId, $href);
+            
+            $references[$href] = $rubricBlock;
+        }
+        
+        return $references;
+    }
 }

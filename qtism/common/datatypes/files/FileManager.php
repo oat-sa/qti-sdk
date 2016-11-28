@@ -25,7 +25,7 @@
 
 namespace qtism\common\datatypes\files;
 
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 
 /**
  * The File Management System of QTISM is an augmented implementation
@@ -79,5 +79,5 @@ interface FileManager {
      * @param AbstractPersistentFile $file A persistent file to be deleted gracefully.
      * @throws FileManagerException
      */
-    public function delete(File $file);
+    public function delete(QtiFile $file);
 }

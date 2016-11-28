@@ -2,16 +2,16 @@
 
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\ShowHide;
-use qtism\common\datatypes\Coords;
-use qtism\common\datatypes\Shape;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 
 require_once (dirname(__FILE__) . '/../../../../../QtiSmTestCase.php');
 
 class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 
 	public function testMarshall() {
-        $shape = Shape::RECT;
-        $coords = new Coords($shape, array(92, 19, 261, 66));
+        $shape = QtiShape::RECT;
+        $coords = new QtiCoords($shape, array(92, 19, 261, 66));
 	    $matchMax = 2;
 	    $matchMin = 1;
 	    $fixed = true;
@@ -40,7 +40,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase {
 	    $this->assertInstanceOf('qtism\\data\\content\\interactions\\Choice', $component);
 	    
 	    $this->assertEquals('hotspot1', $component->getIdentifier());
-	    $this->assertEquals(Shape::RECT, $component->getShape());
+	    $this->assertEquals(QtiShape::RECT, $component->getShape());
 	    $this->assertEquals('92,19,261,66', $component->getCoords()->__toString());
 	    $this->assertTrue($component->isFixed());
 	    $this->assertEquals(ShowHide::HIDE, $component->getShowHide());

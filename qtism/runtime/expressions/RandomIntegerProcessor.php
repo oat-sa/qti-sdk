@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\expressions\Expression;
 use qtism\data\expressions\RandomInteger;
 use \InvalidArgumentException;
@@ -81,12 +81,12 @@ class RandomIntegerProcessor extends ExpressionProcessor {
 			}
 			
 			if ($step === 1) {
-				return new Integer(mt_rand($min, $max));
+				return new QtiInteger(mt_rand($min, $max));
 			}
 			else {
 				$distance = ($min < 0) ? ($max + abs($min)) : ($max - $min);
 				$mult = mt_rand(0, intval(floor($distance / $step)));
-				$random = new Integer($min + ($mult * $step));
+				$random = new QtiInteger($min + ($mult * $step));
 				return $random;
 			}
 		}

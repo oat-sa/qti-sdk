@@ -2,7 +2,8 @@
 
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Pair;
+use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\data\state\ResponseDeclaration;
@@ -58,24 +59,24 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$this->assertInstanceOf('qtism\\data\\state\\Mapping', $mapping);
 		$mapEntries = $mapping->getMapEntries();
 		$this->assertEquals(3, count($mapEntries));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Pair', $mapEntries[0]->getMapKey());
+		$this->assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 		
 		$areaMapping = $responseVariable->getAreaMapping();
 		$this->assertInstanceOf('qtism\\data\\state\\AreaMapping', $areaMapping);
 		$areaMapEntries = $areaMapping->getAreaMapEntries();
 		$this->assertEquals(3, count($areaMapEntries));
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Coords', $areaMapEntries[0]->getCoords());
+		$this->assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 		
 		$this->assertTrue($responseVariable->hasCorrectResponse());
 		$correctResponse = $responseVariable->getCorrectResponse();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $correctResponse);
 		$this->assertEquals(2, count($correctResponse));
-		$this->assertTrue($correctResponse[0]->equals(new Pair('A', 'B')));
-		$this->assertTrue($correctResponse[1]->equals(new Pair('E', 'F')));
+		$this->assertTrue($correctResponse[0]->equals(new QtiPair('A', 'B')));
+		$this->assertTrue($correctResponse[1]->equals(new QtiPair('E', 'F')));
 		
-		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('E', 'F'))));
+		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('E', 'F'))));
 		$this->assertTrue($responseVariable->isCorrect());
-		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new Pair('E', 'F'), new Pair('A', 'B'))));
+		$responseVariable->setValue(new OrderedContainer(BaseType::PAIR, array(new QtiPair('E', 'F'), new QtiPair('A', 'B'))));
 		$this->assertFalse($responseVariable->isCorrect());
 		
 		// If I reinitialize the value, we must find a NULL container into this variable.
@@ -87,6 +88,6 @@ class ResponseVariableTest extends QtiSmTestCase {
 		$responseVariable->applyDefaultValue();
 		$this->assertInstanceOf('qtism\\runtime\\common\\OrderedContainer', $responseVariable->getValue());
 		$this->assertEquals(3, count($responseVariable->getValue()));
-		$this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, array(new Pair('A', 'B'), new Pair('C', 'D'), new Pair('E', 'F')))));
+		$this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, array(new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')))));
 	}
 }

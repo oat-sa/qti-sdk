@@ -1,9 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -34,7 +34,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$variableExpr = $this->createComponentFromXml('<variable identifier="var1"/>');
 		
 		// single cardinality test.
-		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new Integer(1337));
+		$var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1337));
 		$state = new State(array($var1));
 		$this->assertInstanceOf('qtism\\runtime\\common\\OutcomeVariable', $state->getVariable('var1'));
 		
@@ -43,11 +43,11 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		$variableProcessor->setState($state); // State is populated with var1.
 		$result = $variableProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(1337, $result->getValue());
 		
 		// multiple cardinality test.
-		$val = new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(12)));
+		$val = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(12)));
 		$var2 = new OutcomeVariable('var2', Cardinality::ORDERED, BaseType::INTEGER, $val);
 		$state->setVariable($var2);
 		$variableExpr = $this->createComponentFromXml('<variable identifier="var2"/>');
@@ -77,7 +77,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$assessmentTestSession = $sessionManager->createAssessmentTestSession($assessmentTest);
 		$assessmentTestSession->beginTestSession();
 		
-		$assessmentTestSession['Q01.var1'] = new Integer(1337);
+		$assessmentTestSession['Q01.var1'] = new QtiInteger(1337);
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight1" />');
 		
 		$variableProcessor = new VariableProcessor($variableExpr);
@@ -85,7 +85,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		
 		// -- single cardinality test.
 		$result = $variableProcessor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(1470.7, $result->getValue());
 		// The value in the state must be intact.
 		$this->assertEquals(1337, $assessmentTestSession['Q01.var1']->getValue());
@@ -97,7 +97,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 		$this->assertEquals(1337, $result->getValue());
 		
 		// -- multiple cardinality test.
-		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(new Float(10.1), new Float(12.1)));
+		$assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(10.1), new QtiFloat(12.1)));
 		$variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var2" weightIdentifier="weight1"/>');
 		$variableProcessor->setExpression($variableExpr);
 		$result = $variableProcessor->process();
@@ -143,7 +143,7 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    
 	    // Q01.1
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 	    
 	    $variableProcessor->setExpression($variableExpr);
 	    $result = $variableProcessor->process();
@@ -152,13 +152,13 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    
 	    $variableProcessor->setExpression($occurenceVariableExpression);
 	    $result = $variableProcessor->process();
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf(QtiFloat::class, $result);
 	    $this->assertEquals(1.0, $result->getValue());
 	    $session->moveNext();
 	    
 	    // Q01.2
 	    $session->beginAttempt();
-	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+	    $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
 	    
 	    $variableProcessor->setExpression($variableExpr);
 	    $result = $variableProcessor->process();
@@ -167,13 +167,13 @@ class VariableProcessorTest extends QtiSmTestCase {
 	    // $occurenceVariableExpression still targets Q01.1
 	    $variableProcessor->setExpression($occurenceVariableExpression);
 	    $result = $variableProcessor->process();
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf(QtiFloat::class, $result);
 	    $this->assertEquals(1.0, $result->getValue());
 	    
 	    // $occurenceVariableExpression now targets Q01.2
 	    $occurenceVariableExpression->setIdentifier('Q01.2.SCORE');
 	    $result = $variableProcessor->process();
-	    $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+	    $this->assertInstanceOf(QtiFloat::class, $result);
 	    $this->assertEquals(0.0, $result->getValue());
 	}
 }

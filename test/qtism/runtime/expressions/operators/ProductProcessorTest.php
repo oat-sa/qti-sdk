@@ -1,9 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -15,36 +15,36 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testSimple() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(1), new Integer(1)));
+		$operands = new OperandsCollection(array(new QtiInteger(1), new QtiInteger(1)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		
 		$this->assertInstanceOf('qtism\\runtime\\common\\Processable', $productProcessor);
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(1, $result->getValue());
 	}
 	
 	public function testNary() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(24), new Integer(-4), new Integer(1)));
+		$operands = new OperandsCollection(array(new QtiInteger(24), new QtiInteger(-4), new QtiInteger(1)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Integer', $result);
+		$this->assertInstanceOf(QtiInteger::class, $result);
 		$this->assertEquals(-96, $result->getValue());
 	}
 	
 	public function testComplex() {
 		$product = $this->createFakeProductComponent();
 		
-		$operands = new OperandsCollection(array(new Integer(-1), new Integer(1)));
-		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new Float(2.1), new Float(4.3)));
-		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new Integer(10), new Integer(15)));
+		$operands = new OperandsCollection(array(new QtiInteger(-1), new QtiInteger(1)));
+		$operands[] = new MultipleContainer(BaseType::FLOAT, array(new QtiFloat(2.1), new QtiFloat(4.3)));
+		$operands[] = new OrderedContainer(BaseType::INTEGER, array(new QtiInteger(10), new QtiInteger(15)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Float', $result);
+		$this->assertInstanceOf(QtiFloat::class, $result);
 		$this->assertEquals(-1354.5, $result->getValue());
 	}
 	
@@ -53,7 +53,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 		
 		$this->setExpectedException('\\RuntimeException');
 		
-		$operands = new OperandsCollection(array(new Boolean(true), new Integer(14), new Integer(10)));
+		$operands = new OperandsCollection(array(new QtiBoolean(true), new QtiInteger(14), new QtiInteger(10)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 	}
@@ -61,7 +61,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	public function testInvalidOperandsTwo() {
 		$product = $this->createFakeProductComponent();
 		$operands = new OperandsCollection();
-		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new Boolean(true), new Boolean(false)));
+		$operands[] = new MultipleContainer(BaseType::BOOLEAN, array(new QtiBoolean(true), new QtiBoolean(false)));
 		$productProcessor = new ProductProcessor($product, $operands);
 		
 		$this->setExpectedException('\\RuntimeException');
@@ -70,7 +70,7 @@ class ProductProcessorTest extends QtiSmTestCase {
 	
 	public function testNullInvolved() {
 		$product = $this->createFakeProductComponent();
-		$operands = new OperandsCollection(array(new Integer(10), new Integer(10), null));
+		$operands = new OperandsCollection(array(new QtiInteger(10), new QtiInteger(10), null));
 		$productProcessor = new ProductProcessor($product, $operands);
 		$result = $productProcessor->process();
 		$this->assertTrue($result === null);

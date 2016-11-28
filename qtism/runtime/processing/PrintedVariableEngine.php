@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\processing;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 use qtism\runtime\common\Variable;
 use qtism\data\QtiComponent;
 use qtism\common\utils\Format;
@@ -137,7 +137,7 @@ class PrintedVariableEngine extends AbstractEngine {
             if (is_string($index) === true && $state[$index] !== null) {
                 $refIndex = $state[$index];
                 
-                if ($refIndex instanceof Integer) {
+                if ($refIndex instanceof QtiInteger) {
                     // $index references an integer, that's correct.
                     $index = $refIndex->getValue();
                 }

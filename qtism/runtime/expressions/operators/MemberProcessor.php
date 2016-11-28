@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
@@ -24,9 +24,10 @@
  */
 namespace qtism\runtime\expressions\operators;
 
-use qtism\common\datatypes\Boolean;
+use qtism\common\datatypes\QtiBoolean;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\Utils as CommonUtils;
+use qtism\runtime\common\MultipleContainer;
 use qtism\data\expressions\operators\Member;
 use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
@@ -87,12 +88,15 @@ class MemberProcessor extends OperatorProcessor {
 		}
 		
 		// The second expression must have multiple or ordered cardinality.
+        // Extended to single cardinality to be a little bit less greedy.
 		$cardinality = CommonUtils::inferCardinality($operand2);
-		if ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
-			$msg = "The second operand of the Member operator must have a multiple or ordered cardinality.";
+        if ($cardinality === Cardinality::SINGLE) {
+            $operand2 = new MultipleContainer($operand1->getBaseType(), array($operand2));
+        } elseif ($cardinality !== Cardinality::MULTIPLE && $cardinality !== Cardinality::ORDERED) {
+			$msg = "The second operand of the Member operator must have a single, multiple or ordered cardinality.";
 			throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_CARDINALITY);
 		}
 		
-		return new Boolean($operand2->contains($operand1));
+		return new QtiBoolean($operand2->contains($operand1));
 	}
 }

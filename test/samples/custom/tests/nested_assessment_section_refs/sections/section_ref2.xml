@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentSection identifier="S02" title="Section 2" visible="true" fixed="false" keepTogether="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <assessmentItemRef identifier="Q01" href="../items/question1.xml" required="false" fixed="false" />
+  <assessmentItemRef identifier="Q02" href="../items/question2.xml" required="false" fixed="false" />
+  <assessmentItemRef identifier="Q03" href="../items/question3.xml" required="false" fixed="false" />
+</assessmentSection>

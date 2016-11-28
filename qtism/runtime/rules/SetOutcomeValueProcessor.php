@@ -26,9 +26,9 @@ namespace qtism\runtime\rules;
 
 use qtism\common\enums\Cardinality;
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiInteger;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\runtime\common\Utils as RuntimeUtils;
 use qtism\runtime\common\OutcomeVariable;
@@ -116,11 +116,16 @@ class SetOutcomeValueProcessor extends RuleProcessor {
 		    if ($val !== null && $var->getCardinality() === Cardinality::SINGLE) {
 		        $baseType = $var->getBaseType();
 		        
-		        if ($baseType === BaseType::INTEGER && $val instanceof Float) {
-		            $val = new Integer(intval($val->getValue()));
+                // If we are trying to put a container in a scalar, let's make some changes...
+                if (($val->getCardinality() === Cardinality::MULTIPLE || $val->getCardinality() === Cardinality::ORDERED) && count($val) > 0) {
+                    $val = $val[0];
+                }
+                
+		        if ($baseType === BaseType::INTEGER && $val instanceof QtiFloat) {
+		            $val = new QtiInteger(intval($val->getValue()));
 		        }
-		        else if ($baseType === BaseType::FLOAT && $val instanceof Integer) {
-		            $val = new Float(floatval($val->getValue()));
+		        else if ($baseType === BaseType::FLOAT && $val instanceof QtiInteger) {
+		            $val = new QtiFloat(floatval($val->getValue()));
 		        }
 		    }
 		    

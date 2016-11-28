@@ -1,16 +1,16 @@
 <?php
 
-use qtism\common\datatypes\Boolean;
-use qtism\common\datatypes\Float;
-use qtism\common\datatypes\Integer;
-use qtism\common\datatypes\String;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiInteger;
+use qtism\common\datatypes\QtiString;
 use qtism\common\Comparable;
 use qtism\runtime\common\Container;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OrderedContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
@@ -50,19 +50,19 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue = array();
 		
 		$returnValue[] = array(new RecordContainer(), false);
-		$returnValue[] = array(new RecordContainer(array('a' => new Integer(1), 'b' => new Integer(2))), false);
+		$returnValue[] = array(new RecordContainer(array('a' => new QtiInteger(1), 'b' => new QtiInteger(2))), false);
 		$returnValue[] = array(null, false);
-		$returnValue[] = array(new String(''), BaseType::STRING);
-		$returnValue[] = array(new String('String!'), BaseType::STRING);
-		$returnValue[] = array(new Boolean(false), BaseType::BOOLEAN);
-		$returnValue[] = array(new Integer(0), BaseType::INTEGER);
-		$returnValue[] = array(new Float(0.0), BaseType::FLOAT);
+		$returnValue[] = array(new QtiString(''), BaseType::STRING);
+		$returnValue[] = array(new QtiString('String!'), BaseType::STRING);
+		$returnValue[] = array(new QtiBoolean(false), BaseType::BOOLEAN);
+		$returnValue[] = array(new QtiInteger(0), BaseType::INTEGER);
+		$returnValue[] = array(new QtiFloat(0.0), BaseType::FLOAT);
 		$returnValue[] = array(new MultipleContainer(BaseType::DURATION), BaseType::DURATION);
 		$returnValue[] = array(new OrderedContainer(BaseType::BOOLEAN), BaseType::BOOLEAN);
-		$returnValue[] = array(new Duration('P1D'), BaseType::DURATION);
-		$returnValue[] = array(new Point(1, 1), BaseType::POINT);
-		$returnValue[] = array(new Pair('A', 'B'), BaseType::PAIR);
-		$returnValue[] = array(new DirectedPair('A', 'B'), BaseType::DIRECTED_PAIR);
+		$returnValue[] = array(new QtiDuration('P1D'), BaseType::DURATION);
+		$returnValue[] = array(new QtiPoint(1, 1), BaseType::POINT);
+		$returnValue[] = array(new QtiPair('A', 'B'), BaseType::PAIR);
+		$returnValue[] = array(new QtiDirectedPair('A', 'B'), BaseType::DIRECTED_PAIR);
 		$returnValue[] = array(new \StdClass(), false);
 		$returnValue[] = array(new Container(), false);
 		
@@ -77,15 +77,15 @@ class RuntimeUtilsTest extends QtiSmTestCase {
 		$returnValue[] = array(new OrderedContainer(BaseType::DURATION), Cardinality::ORDERED);
 		$returnValue[] = array(new \stdClass(), false);
 		$returnValue[] = array(null, false);
-		$returnValue[] = array(new String(''), Cardinality::SINGLE);
-		$returnValue[] = array(new String('String!'), Cardinality::SINGLE);
-		$returnValue[] = array(new Integer(0), Cardinality::SINGLE);
-		$returnValue[] = array(new Float(0.0), Cardinality::SINGLE);
-		$returnValue[] = array(new Boolean(false), Cardinality::SINGLE);
-		$returnValue[] = array(new Point(1, 1), Cardinality::SINGLE);
-		$returnValue[] = array(new Pair('A', 'B'), Cardinality::SINGLE);
-		$returnValue[] = array(new DirectedPair('A', 'B'), Cardinality::SINGLE);
-		$returnValue[] = array(new Duration('P1D'), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiString(''), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiString('String!'), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiInteger(0), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiFloat(0.0), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiBoolean(false), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiPoint(1, 1), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiPair('A', 'B'), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiDirectedPair('A', 'B'), Cardinality::SINGLE);
+		$returnValue[] = array(new QtiDuration('P1D'), Cardinality::SINGLE);
 		
 		return $returnValue;
 	}

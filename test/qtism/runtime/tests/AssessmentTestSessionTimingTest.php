@@ -1,16 +1,17 @@
 <?php
-use qtism\common\datatypes\Identifier;
+use qtism\common\datatypes\QtiFloat;
+use qtism\common\datatypes\QtiIdentifier;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentItemSessionException;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionFactory;
@@ -30,27 +31,27 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
         // Try the same on a running test session.
         $session->beginTestSession();
-        $this->assertTrue($session['P01.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['S01.duration']->equals(new Duration('PT0S')));
-        $this->assertTrue($session['itemsubset.duration']->equals(new Duration('PT0S')));
+        $this->assertTrue($session['P01.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['S01.duration']->equals(new QtiDuration('PT0S')));
+        $this->assertTrue($session['itemsubset.duration']->equals(new QtiDuration('PT0S')));
          
         // Q01.
         $session->beginAttempt();
         sleep(1);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
 
-        $this->assertTrue($session['P01.duration']->round()->equals(new Duration('PT1S')));
-        $this->assertTrue($session['S01.duration']->round()->equals(new Duration('PT1S')));
-        $this->assertTrue($session['itemsubset.duration']->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($session['P01.duration']->round()->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['S01.duration']->round()->equals(new QtiDuration('PT1S')));
+        $this->assertTrue($session['itemsubset.duration']->round()->equals(new QtiDuration('PT1S')));
         $session->moveNext();
          
         // Q02.
         $session->beginAttempt();
         sleep(1);
         $session->skip();
-        $this->assertTrue($session['P01.duration']->round()->equals(new Duration('PT2S')));
-        $this->assertTrue($session['S01.duration']->round()->equals(new Duration('PT2S')));
-        $this->assertTrue($session['itemsubset.duration']->round()->equals(new Duration('PT2S')));
+        $this->assertTrue($session['P01.duration']->round()->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['S01.duration']->round()->equals(new QtiDuration('PT2S')));
+        $this->assertTrue($session['itemsubset.duration']->round()->equals(new QtiDuration('PT2S')));
         $session->moveNext();
          
         // Try to get a duration that does not exist.
@@ -64,17 +65,17 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         // Q01.
         $session->beginAttempt();
         sleep(2);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $session->moveNext();
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
-        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new Duration('PT3S')));
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT3S')));
          
         // Q02.
         $session->beginAttempt();
         sleep(2);
         $session->updateDuration();
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
-        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT1S')));
         $session->skip();
         $session->moveNext();
          
@@ -84,7 +85,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         try {
             // P01.duration = 6 > maxTime -> exception !
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new Identifier('H'), new Identifier('O')))))));
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, array(new QtiIdentifier('H'), new QtiIdentifier('O')))))));
             $this->assertFalse(true);
         }
         catch (AssessmentTestSessionException $e) {
@@ -96,14 +97,14 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals('P02', $session->getCurrentTestPart() ? $session->getCurrentTestPart()->getIdentifier() : null);
         $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::TEST_PART);
-        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new Duration('PT1S')));
+        $this->assertTrue($timeConstraints[0]->getMaximumRemainingTime()->round()->equals(new QtiDuration('PT1S')));
          
         // Q04.
         $session->beginAttempt();
         sleep(2);
          
         try {
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new Point(102, 113)))));
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113)))));
             $this->assertTrue(false);
         }
         catch (AssessmentTestSessionException $e) {
@@ -133,11 +134,11 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         sleep(2);
         
         try {
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new Identifier('ChoiceA')))), $forceLateSubmission);
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA')))), $forceLateSubmission);
             $session->moveNext();
             
             $this->assertTrue($forceLateSubmission, '$forceLateSubmission is false but the attempt dit not raised an exception.');
-            $this->assertInstanceOf('qtism\\common\\datatypes\\Float', $session['Q01.SCORE']);
+            $this->assertInstanceOf(QtiFloat::class, $session['Q01.SCORE']);
             $this->assertEquals(1.0, $session['Q01.SCORE']->getValue());
             $this->assertFalse($session->isRunning());
             
@@ -221,7 +222,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertInstanceOf('qtism\\data\\AssessmentItemRef', $timeConstraints[3]->getSource());
         
         sleep(2);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::ASSESSMENT_ITEM);
         $this->assertEquals(1, count($timeConstraints));
         $this->assertEquals('PT0S', $timeConstraints[0]->getMinimumRemainingTime()->round()->__toString());
@@ -232,7 +233,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         
         $session->beginAttempt();
         sleep(3);
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
         $timeConstraints = $session->getTimeConstraints();
         $this->assertFalse($timeConstraints[3]->getMinimumRemainingTime());
         $this->assertEquals('PT0S', $timeConstraints[3]->getMaximumRemainingTime()->__toString());
@@ -256,7 +257,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         // Q01 - timeLimits on assessmentItemRef - minTime = 1, maxTime = 3
         try {
             $session->beginAttempt();
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
             
             // No exception should be thrown even if minTime = 1. Indeed, min time
             // are not to be considered.
@@ -273,7 +274,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         try {
             // Minimum time not respected...
             $session->beginAttempt();
-            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceB')))));
+            $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB')))));
             $this->fail("An exception should be thrown because minTime must be considered now on Q01.");
         }
         catch (AssessmentTestSessionException $e) {
@@ -298,7 +299,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this->assertEquals(1, $session['S01.duration']->getSeconds(true));
         $this->assertEquals(1, $session['TP01.duration']->getSeconds(true));
         $this->assertEquals(1, $session['duration']->getSeconds(true));
-        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier('ChoiceA')))));
+        $session->endAttempt(new State(array(new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA')))));
         
         // We are now between Q01 and Q02, the duration must not increase.
         sleep(1);

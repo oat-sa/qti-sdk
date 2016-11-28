@@ -27,11 +27,11 @@ namespace qtism\runtime\storage\binary;
 use qtism\common\datatypes\files\FileManager;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\runtime\tests\AbstractSessionManager;
-use qtism\common\datatypes\File;
+use qtism\common\datatypes\QtiFile;
 use qtism\data\ExtendedAssessmentItemRef;
-use qtism\common\datatypes\Scalar;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiScalar;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\state\Value;
 use qtism\data\AssessmentSectionCollection;
 use qtism\runtime\tests\RouteItem;
@@ -47,10 +47,10 @@ use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\PendingResponses;
 use qtism\data\AssessmentItemRef;
 use qtism\runtime\common\Utils;
-use qtism\common\datatypes\Duration;
-use qtism\common\datatypes\DirectedPair;
-use qtism\common\datatypes\Pair;
-use qtism\common\datatypes\Point;
+use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiDirectedPair;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
@@ -90,13 +90,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
 
     /**
      * Set file manager
+     * 
      * @param $fileManager
      * @return $this
      */
     public function setFileManager(FileManager $fileManager)
     {
         $this->fileManager = $fileManager;
-        return $this;
     }
 
     /**
@@ -211,7 +211,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     $this->writeBoolean(true);
             
                     // content
-                    $this->$toCall(($value instanceof Scalar) ? $value->getValue() : $value);
+                    $this->$toCall(($value instanceof QtiScalar) ? $value->getValue() : $value);
                 }
                 else {
                     // is-scalar
@@ -224,7 +224,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                     foreach ($value as $v) {
                         if (is_null($v) === false) {
                             $this->writeBoolean(false);
-                            $this->$toCall(($v instanceof Scalar) ? $v->getValue() : $v);
+                            $this->$toCall(($v instanceof QtiScalar) ? $v->getValue() : $v);
                         }
                         else {
                             $this->writeBoolean(true);
@@ -287,7 +287,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
                 
-                call_user_func(array($this, $toCall), ($value instanceof Scalar) ? $value->getValue() : $value);
+                call_user_func(array($this, $toCall), ($value instanceof QtiScalar) ? $value->getValue() : $value);
             }
         }
         catch (BinaryStreamAccessException $e) {
@@ -336,7 +336,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readPoint() {
         try {
-            return new Point($this->readShort(), $this->readShort());
+            return new QtiPoint($this->readShort(), $this->readShort());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a point.";
@@ -350,7 +350,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param Point $point A Point object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writePoint(Point $point) {
+    public function writePoint(QtiPoint $point) {
        try {
            $this->writeShort($point->getX());
            $this->writeShort($point->getY());
@@ -369,7 +369,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readPair() {
         try {
-            return new Pair($this->readString(), $this->readString());
+            return new QtiPair($this->readString(), $this->readString());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a pair.";
@@ -383,7 +383,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param Pair $pair A Pair object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writePair(Pair $pair) {
+    public function writePair(QtiPair $pair) {
         try {
             $this->writeString($pair->getFirst());
             $this->writeString($pair->getSecond());
@@ -402,7 +402,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readDirectedPair() {
         try {
-            return new DirectedPair($this->readString(), $this->readString());
+            return new QtiDirectedPair($this->readString(), $this->readString());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a directedPair.";
@@ -416,7 +416,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param DirectedPair $directedPair A DirectedPair object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeDirectedPair(DirectedPair $directedPair) {
+    public function writeDirectedPair(QtiDirectedPair $directedPair) {
         try {
             $this->writeString($directedPair->getFirst());
             $this->writeString($directedPair->getSecond());
@@ -435,7 +435,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      */
     public function readDuration() {
         try {
-            return new Duration($this->readString());
+            return new QtiDuration($this->readString());
         }
         catch (BinaryStreamAccessException $e) {
             $msg = "An error occured while reading a duration.";
@@ -449,7 +449,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
      * @param Duration $duration A Duration object.
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeDuration(Duration $duration) {
+    public function writeDuration(QtiDuration $duration) {
         try {
             $this->writeString($duration->__toString());
         }
@@ -563,9 +563,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
             }
             
             if ($session->getState() !== AssessmentItemSessionState::NOT_SELECTED) {
-                $session['numAttempts'] = new Integer($this->readTinyInt());
+                $session['numAttempts'] = new QtiInteger($this->readTinyInt());
                 $session['duration'] = $this->readDuration();
-                $session['completionStatus'] = new Identifier($this->readString());
+                $session['completionStatus'] = new QtiIdentifier($this->readString());
                 
                 if ($session['numAttempts']->getValue() > 0) {
                     $session->setTimeReference($this->readDateTime());
@@ -910,6 +910,45 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
         } catch (\Exception $e) {
             $msg = "An error occured while writing a QTI File.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
+        }
+    }
+
+    
+    /**
+     * Read the path from the current binary stream.
+     * 
+     * @return array An array of integer values representing flow positions.
+     */
+    public function readPath() {
+        try {
+            $pathCount = $this->readShort();
+            $path = array();
+            
+            for ($i = 0; $i < $pathCount; $i++) {
+                $path[] = $this->readShort();
+            }
+            
+            return $path;
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while reading the path.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
+        }
+    }
+    
+    /**
+     * Write the path in the current binary stream.
+     * 
+     * @param array $path An array of integer values representing flow positions.
+     */
+    public function writePath(array $path) {
+        try {
+            $this->writeShort(count($path));
+            foreach ($path as $p) {
+                $this->writeShort($p);
+            }
+        } catch (BinaryStreamAccessException $e) {
+            $msg = "An error occured while writing the path.";
+    		throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
         }
     }
 }

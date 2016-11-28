@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 
 require_once (dirname(__FILE__) . '/../../QtiSmTestCase.php');
 
@@ -16,8 +16,8 @@ class AssessmentTestTest extends QtiSmTestCase {
 	    $this->assertTrue($testPart->hasTimeLimits());
 	    $timeLimits = $testPart->getTimeLimits();
 	    
-	    $this->assertTrue($timeLimits->getMinTime()->equals(new Duration('PT60S')));
-	    $this->assertTrue($timeLimits->getMaxTime()->equals(new Duration('PT120S')));
+	    $this->assertTrue($timeLimits->getMinTime()->equals(new QtiDuration('PT60S')));
+	    $this->assertTrue($timeLimits->getMaxTime()->equals(new QtiDuration('PT120S')));
 	    $this->assertTrue($timeLimits->doesAllowLateSubmission());
 	}
 }

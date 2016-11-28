@@ -24,7 +24,7 @@
  */
 namespace qtism\runtime\expressions;
 
-use qtism\common\datatypes\Float;
+use qtism\common\datatypes\QtiFloat;
 
 use qtism\runtime\common\MultipleContainer;
 use qtism\common\enums\BaseType;
@@ -87,7 +87,7 @@ class MapResponsePointProcessor extends ExpressionProcessor {
 				$areaMapping = $var->getAreaMapping();
 				
 				if (is_null($areaMapping)) {
-                    return new Float(0.0);
+                    return new QtiFloat(0.0);
                 }
 					
                 // Correct cardinality ?
@@ -97,7 +97,7 @@ class MapResponsePointProcessor extends ExpressionProcessor {
                     
                     // -- Null value, nothing will match
                     if ($var->isNull()) {
-                        return new Float($areaMapping->getDefaultValue());
+                        return new QtiFloat($areaMapping->getDefaultValue());
                     }
                     
                     if ($var->isSingle()) {
@@ -124,18 +124,18 @@ class MapResponsePointProcessor extends ExpressionProcessor {
                     
                     // If no relevant mapping found, return the default.
                     if (count($mapped) === 0) {
-                        return new Float($areaMapping->getDefaultValue());
+                        return new QtiFloat($areaMapping->getDefaultValue());
                     }
                     else {
                         // Check upper and lower bound.
                         if ($areaMapping->hasLowerBound() && $result < $areaMapping->getLowerBound()) {
-                            return new Float($areaMapping->getLowerBound());
+                            return new QtiFloat($areaMapping->getLowerBound());
                         }
                         else if ($areaMapping->hasUpperBound() && $result > $areaMapping->getUpperBound()) {
-                            return new Float($areaMapping->getUpperBound());
+                            return new QtiFloat($areaMapping->getUpperBound());
                         }
                         else {
-                            return new Float(floatval($result));
+                            return new QtiFloat(floatval($result));
                         }
                     }
                 }

@@ -2,7 +2,7 @@
 
 use qtism\data\storage\xml\XmlDocument;
 
-require_once(dirname(__FILE__) . '/../../qtism/qtism.php');
+require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
 
 function testAssessmentItems(array $files, $validate = false) {
 	

@@ -26,8 +26,8 @@ namespace qtism\runtime\tests;
 
 use qtism\data\processing\ResponseProcessing;
 use qtism\runtime\common\Container;
-use qtism\common\datatypes\Identifier;
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiIdentifier;
+use qtism\common\datatypes\QtiInteger;
 use qtism\data\IAssessmentItem;
 use qtism\data\expressions\Correct;
 use qtism\runtime\expressions\CorrectProcessor;
@@ -38,12 +38,12 @@ use qtism\data\TimeLimits;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\data\ItemSessionControl;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
-use alroniks\dtms\DateTime;
+use oat\dtms\DateTime;
 use \DateTimeZone;
 use \InvalidArgumentException;
 
@@ -264,11 +264,11 @@ class AssessmentItemSession extends State {
 		$this->setSessionManager($sessionManager);
 		
 		// -- Create the built-in response variables.
-		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new Integer(0)));
-		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new Duration('PT0S')));
+		$this->setVariable(new ResponseVariable('numAttempts', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(0)));
+		$this->setVariable(new ResponseVariable('duration', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
 			
 		// -- Create the built-in outcome variables.
-		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new Identifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
+		$this->setVariable(new OutcomeVariable('completionStatus', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier(self::COMPLETION_STATUS_NOT_ATTEMPTED)));
 	}
 	
 	/**
@@ -521,7 +521,7 @@ class AssessmentItemSession extends State {
 		
 		// The session gets the INITIAL state, ready for a first attempt.
 		$this->setState(AssessmentItemSessionState::INITIAL);
-		$this['duration'] = new Duration('PT0S');
+		$this['duration'] = new QtiDuration('PT0S');
 		$this['numAttempts']->setValue(0);
 		$this['completionStatus']->setValue(self::COMPLETION_STATUS_NOT_ATTEMPTED);
 	}
@@ -579,8 +579,8 @@ class AssessmentItemSession extends State {
 				}
 			}
 			
-			$this['duration'] = new Duration('PT0S');
-			$this['numAttempts'] = new Integer(0);
+			$this['duration'] = new QtiDuration('PT0S');
+			$this['numAttempts'] = new QtiInteger(0);
 		}
 		
 		$this['numAttempts']->setValue($this['numAttempts']->getValue() + 1);
@@ -812,7 +812,7 @@ class AssessmentItemSession extends State {
 	        $this->setTimeReference($now);
 	        
 	        foreach ($this->onDurationUpdate as $callBack) {
-	            call_user_func_array($callBack, array($this, Duration::createFromDateInterval($diff)));
+	            call_user_func_array($callBack, array($this, QtiDuration::createFromDateInterval($diff)));
 	        }
 	    }
 	}
@@ -1044,7 +1044,7 @@ class AssessmentItemSession extends State {
 	 * 
 	 * @return Duration $duration + acceptable latency.
 	 */
-	protected function getDurationWithLatency(Duration $duration) {
+	protected function getDurationWithLatency(QtiDuration $duration) {
 	    $duration = clone $duration;
 	    $duration->add($this->getAcceptableLatency());
 	    return $duration;

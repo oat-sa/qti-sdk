@@ -26,8 +26,8 @@ namespace qtism\data\state;
 
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
 use \InvalidArgumentException;
 
 /**
@@ -77,7 +77,7 @@ class AreaMapEntry extends QtiComponent {
 	 * @param float $mappedValue A mapped value.
 	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration or if $mappedValue is not a float.
 	 */
-	public function __construct($shape, Coords $coords, $mappedValue) {
+	public function __construct($shape, QtiCoords $coords, $mappedValue) {
 		$this->setShape($shape);
 		$this->setCoords($coords);
 		$this->setMappedValue($mappedValue);
@@ -90,7 +90,7 @@ class AreaMapEntry extends QtiComponent {
 	 * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
 	 */
 	public function setShape($shape) {
-		if (in_array($shape, Shape::asArray())) {
+		if (in_array($shape, QtiShape::asArray())) {
 			$this->shape = $shape;
 		}
 		else {
@@ -114,7 +114,7 @@ class AreaMapEntry extends QtiComponent {
 	 * 
 	 * @param Coords $coords A Coords object.
 	 */
-	public function setCoords(Coords $coords) {
+	public function setCoords(QtiCoords $coords) {
 		$this->coords = $coords;
 	}
 	

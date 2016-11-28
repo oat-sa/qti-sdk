@@ -1,10 +1,11 @@
 <?php
 require_once (dirname(__FILE__) . '/../../../../QtiSmTestCase.php');
 
-use qtism\common\datatypes\Integer;
+use qtism\common\datatypes\QtiBoolean;
+use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 use qtism\runtime\expressions\operators\DurationGTEProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
 
@@ -14,28 +15,28 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 		// There is no need of intensive testing because
 		// the main logic is contained in the Duration class.
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P2D'), new Duration('P1D')));
+		$operands = new OperandsCollection(array(new QtiDuration('P2D'), new QtiDuration('P1D')));
 		$processor = new DurationGTEProcessor($expression, $operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Duration('P1D'), new Duration('P2D')));
+		$operands = new OperandsCollection(array(new QtiDuration('P1D'), new QtiDuration('P2D')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertFalse($result->getValue());
 		
-		$operands = new OperandsCollection(array(new Duration('P1DT23M2S'), new Duration('P1DT23M2S')));
+		$operands = new OperandsCollection(array(new QtiDuration('P1DT23M2S'), new QtiDuration('P1DT23M2S')));
 		$processor->setOperands($operands);
 		$result = $processor->process();
-		$this->assertInstanceOf('qtism\\common\\datatypes\\Boolean', $result);
+		$this->assertInstanceOf(QtiBoolean::class, $result);
 		$this->assertTrue($result->getValue());
 	}
 	
 	public function testNull() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P1D'), null));
+		$operands = new OperandsCollection(array(new QtiDuration('P1D'), null));
 		$processor = new DurationGTEProcessor($expression, $operands);
 		$result = $processor->process();
 		$this->assertSame(null, $result);
@@ -43,7 +44,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongBaseType() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P1D'), new Integer(256)));
+		$operands = new OperandsCollection(array(new QtiDuration('P1D'), new QtiInteger(256)));
 		$processor = new DurationGTEProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -51,7 +52,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 	
 	public function testWrongCardinality() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P1D'), new MultipleContainer(BaseType::DURATION, array(new Duration('P2D')))));
+		$operands = new OperandsCollection(array(new QtiDuration('P1D'), new MultipleContainer(BaseType::DURATION, array(new QtiDuration('P2D')))));
 		$processor = new DurationGTEProcessor($expression, $operands);
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$result = $processor->process();
@@ -66,7 +67,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase {
 	
 	public function testTooMuchOperands() {
 		$expression = $this->createFakeExpression();
-		$operands = new OperandsCollection(array(new Duration('P1D'), new Duration('P2D'), new Duration('P3D')));
+		$operands = new OperandsCollection(array(new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')));
 		$this->setExpectedException('qtism\\runtime\\expressions\\ExpressionProcessingException');
 		$processor = new DurationGTEProcessor($expression, $operands);
 	}

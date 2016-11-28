@@ -1,6 +1,6 @@
 <?php
 
-use qtism\common\datatypes\Duration;
+use qtism\common\datatypes\QtiDuration;
 
 require_once(dirname(__FILE__) . '/../qtism/qtism.php');
 require_once(dirname(__FILE__) . '/QtiSmTestCase.php');
@@ -35,7 +35,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return AssessmentItemSession
 	 */
-	protected static function instantiateBasicAssessmentItemSession(Duration $acceptableLatency = null) {
+	protected static function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null) {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -74,7 +74,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase {
 	 *
 	 * @return \qtism\runtime\tests\AssessmentItemSession
 	 */
-	protected static function instantiateBasicAdaptiveAssessmentItem(Duration $acceptableLatency = null) {
+	protected static function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null) {
 	    $itemRef = self::createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">

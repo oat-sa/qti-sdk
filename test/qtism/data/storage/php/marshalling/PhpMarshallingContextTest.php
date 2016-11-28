@@ -1,8 +1,8 @@
 <?php
 
-use qtism\common\datatypes\Point;
-use qtism\common\datatypes\Shape;
-use qtism\common\datatypes\Coords;
+use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiShape;
+use qtism\common\datatypes\QtiCoords;
 use qtism\common\storage\MemoryStream;
 use qtism\data\storage\php\marshalling\PhpMarshallingContext;
 use qtism\data\storage\php\PhpStreamAccess;
@@ -111,10 +111,10 @@ class PhpMarshallingContextTest extends QtiSmTestCase {
         $this->assertEquals('string_1', $ctx->generateVariableName('String!'));
         $this->assertEquals('integer_2', $ctx->generateVariableName(1337));
         
-        $this->assertEquals('coords_0', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(10, 10, 5))));
-        $this->assertEquals('coords_1', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(10, 10, 3))));
-        $this->assertEquals('point_0', $ctx->generateVariableName(new Point(0, 0)));
-        $this->assertEquals('point_1', $ctx->generateVariableName(new Point(0, 1)));
-        $this->assertEquals('coords_2', $ctx->generateVariableName(new Coords(Shape::CIRCLE, array(5, 5, 3))));
+        $this->assertEquals('qticoords_0', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(10, 10, 5))));
+        $this->assertEquals('qticoords_1', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(10, 10, 3))));
+        $this->assertEquals('qtipoint_0', $ctx->generateVariableName(new QtiPoint(0, 0)));
+        $this->assertEquals('qtipoint_1', $ctx->generateVariableName(new QtiPoint(0, 1)));
+        $this->assertEquals('qticoords_2', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, array(5, 5, 3))));
     }
 }

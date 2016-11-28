@@ -14,45 +14,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts, <jerome@taotesting.com>
  * @license GPLv2
  * @package qtism
- *  
+ * 
  *
  */
+
 namespace qtism\common\datatypes;
 
-use qtism\common\enums\Cardinality;
-use qtism\common\enums\BaseType;
-
 /**
- * From IMS QTI:
- * 
- * A directedPair value represents a pair of identifiers corresponding to a directed 
- * association between two objects. The two identifiers correspond to the source and 
- * destination objects.
- * 
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- *
+ * Legacy support of DirectedPair QTI datatype for PHP 5.
  */
-class DirectedPair extends Pair {
-	
-	
-	public function equals($obj) {
-		if (gettype($obj) === 'object' && $obj instanceof self) {
-			return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
-		}
-		
-		return false;
-	}
-	
-	public function getBaseType() {
-	    return BaseType::DIRECTED_PAIR;
-	}
-	
-	public function getCardinality() {
-	    return Cardinality::SINGLE;
-	}
+class DirectedPair extends QtiDirectedPair {
+    
 }
