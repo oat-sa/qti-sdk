@@ -883,10 +883,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Write a File object in the current binary stream.
      *
-     * @return File
+     * @return QtiFile
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeFile(File $file)
+    public function writeFile(QtiFile $file)
     {
         try {
             $this->writeString($file->getIdentifier());
@@ -899,7 +899,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess {
     /**
      * Read a File object from the current binary stream.
      *
-     * @return File
+     * @return QtiFile
      * @throws QtiBinaryStreamAccessException
      */
     public function readFile()
