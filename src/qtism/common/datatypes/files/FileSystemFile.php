@@ -217,10 +217,6 @@ class FileSystemFile implements QtiFile
 
                 // Should we build the path to $destination?
                 $pathinfo = pathinfo($destination);
-                if (isset($pathinfo['dirname']) === false) {
-                    $msg = "The destination argument '${destination}' is a malformed path.";
-                    throw new RuntimeException($msg);
-                }
 
                 if (is_dir($pathinfo['dirname']) === false) {
 
@@ -229,8 +225,7 @@ class FileSystemFile implements QtiFile
                         throw new RuntimeException($msg);
                     }
                 }
-
-                $filename = '';
+                
                 $pathinfo = pathinfo($source);
                 $filename = ($withFilename === true) ? ($pathinfo['filename'] . '.' . $pathinfo['extension']) : strval($withFilename);
 
@@ -246,8 +241,15 @@ class FileSystemFile implements QtiFile
 
                 $finalSize = strlen($packedFilename) + strlen($packedMimeType) + filesize($source);
 
-                $sourceFp = fopen($source, 'r');
-                $destinationFp = fopen($destination, 'w');
+                $sourceFp = @fopen($source, 'r');
+                if ($sourceFp === false) {
+                    throw new RuntimeException("Source file '${source}' could not be open.");
+                }
+                
+                $destinationFp = @fopen($destination, 'w');
+                if ($destinationFp === false) {
+                    throw new RuntimeException("Destination file '${destination}' could not be open.");
+                }
 
                 fwrite($destinationFp, $packedFilename . $packedMimeType);
 
