@@ -7,7 +7,6 @@ use qtism\data\rules\OutcomeCondition;
 use qtism\data\rules\OutcomeIf;
 use qtism\data\rules\OutcomeRuleCollection;
 use qtism\data\rules\SetOutcomeValue;
-use qtism\data\rules\OutcomeElseIf;
 use qtism\data\rules\OutcomeElse;
 use qtism\data\expressions\operators\Match;
 use qtism\data\expressions\BaseValue;
