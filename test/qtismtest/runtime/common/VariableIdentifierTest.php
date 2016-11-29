@@ -120,7 +120,12 @@ class VariableIdentifierTest extends QtiSmTestCase
 			array('Q01.1.SCORE.MAX'),
 			array('Q 01'),
 			array('Q01 . SCORE'),
-			array('Q01._SCORE')
+			array('Q01._SCORE'),
+            array('Q01.-1.SCORE'),
+            array('Q01..SCORE'),
+            array('Q01.'),
+            array('.1.SCORE'),
+            array('1.SCORE')
 		);
 	}
 	
