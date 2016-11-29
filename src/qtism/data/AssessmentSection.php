@@ -36,72 +36,72 @@ use \InvalidArgumentException;
 class AssessmentSection extends SectionPart
 {
     /**
-	 * The title of the Assessment Section.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * The title of the Assessment Section.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $title;
 
     /**
-	 * If the section is visible to the candidate.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * If the section is visible to the candidate.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $visible = true;
 
     /**
-	 * If the items of the section (if invisible) must be kept together or not.
-	 *
-	 * @var boolean
-	 * @qtism-bean-property
-	 */
+     * If the items of the section (if invisible) must be kept together or not.
+     *
+     * @var boolean
+     * @qtism-bean-property
+     */
     private $keepTogether = true;
 
     /**
-	 * The rules used to select which children of the section are to be used for
-	 * each instance of the test.
-	 *
-	 * @var \qtism\data\rules\Selection
-	 * @qtism-bean-property
-	 */
+     * The rules used to select which children of the section are to be used for
+     * each instance of the test.
+     *
+     * @var \qtism\data\rules\Selection
+     * @qtism-bean-property
+     */
     private $selection = null;
 
     /**
-	 * The rules used to determine the order in which the children
-	 * of the section are to be arranged for each instance of the test.
-	 *
-	 * @var \qtism\data\rules\Ordering
-	 * @qtism-bean-property
-	 */
+     * The rules used to determine the order in which the children
+     * of the section are to be arranged for each instance of the test.
+     *
+     * @var \qtism\data\rules\Ordering
+     * @qtism-bean-property
+     */
     private $ordering = null;
 
     /**
-	 * Section rubrics are presented to the candidate with each item contained
-	 * (directly or indirectly) by the section.
-	 *
-	 * @var \qtism\data\content\RubricBlockCollection
-	 * @qtism-bean-property
-	 */
+     * Section rubrics are presented to the candidate with each item contained
+     * (directly or indirectly) by the section.
+     *
+     * @var \qtism\data\content\RubricBlockCollection
+     * @qtism-bean-property
+     */
     private $rubricBlocks;
 
     /**
-	 * Child elements.
-	 *
-	 * @var \qtism\data\SectionPartCollection
-	 * @qtism-bean-property
-	 */
+     * Child elements.
+     *
+     * @var \qtism\data\SectionPartCollection
+     * @qtism-bean-property
+     */
     private $sectionParts;
 
     /**
-	 * Create a new AssessmentSection object
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @param string $title A Title.
-	 * @param boolean $visible If it is visible or not.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, $title is not a string, or visible is not a boolean.
-	 */
+     * Create a new AssessmentSection object
+     *
+     * @param string $identifier A QTI Identifier.
+     * @param string $title A Title.
+     * @param boolean $visible If it is visible or not.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier, $title is not a string, or visible is not a boolean.
+     */
     public function __construct($identifier, $title, $visible)
     {
         parent::__construct($identifier);
@@ -112,21 +112,21 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-	 * Get the title of the Assessment Section.
-	 *
-	 * @return string A title.
-	 */
+     * Get the title of the Assessment Section.
+     *
+     * @return string A title.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
     /**
-	 * Set the title of the Assessment Section.
-	 *
-	 * @param string $title A title.
-	 * @throws \InvalidArgumentException If $title is not a string.
-	 */
+     * Set the title of the Assessment Section.
+     *
+     * @param string $title A title.
+     * @throws \InvalidArgumentException If $title is not a string.
+     */
     public function setTitle($title)
     {
         if (gettype($title) === 'string') {
@@ -138,21 +138,21 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-	 * Wether the section is visible.
-	 *
-	 * @return boolean true if the section is visible, false if not.
-	 */
+     * Wether the section is visible.
+     *
+     * @return boolean true if the section is visible, false if not.
+     */
     public function isVisible()
     {
         return $this->visible;
     }
 
     /**
-	 * Set the visibility of the section.
-	 *
-	 * @param boolean $visible true if it must be visible, false otherwise.
-	 * @throws \InvalidArgumentException If $visible is not a boolean.
-	 */
+     * Set the visibility of the section.
+     *
+     * @param boolean $visible true if it must be visible, false otherwise.
+     * @throws \InvalidArgumentException If $visible is not a boolean.
+     */
     public function setVisible($visible)
     {
         if (is_bool($visible)) {
@@ -164,146 +164,146 @@ class AssessmentSection extends SectionPart
     }
 
     /**
-	 * Inform you if the items must be kept together if the section is invisible.
-	 *
-	 * @return boolean
-	 */
+     * Inform you if the items must be kept together if the section is invisible.
+     *
+     * @return boolean
+     */
     public function mustKeepTogether()
     {
         return $this->keepTogether;
     }
 
     /**
-	 * Set if the items must be kept together if the section is invisible.
-	 *
-	 * @param boolean $keepTogether true if the items must be kept together, false otherwise.
-	 * @throws \InvalidArgumentException If $keepTogether is not a boolean.
-	 */
+     * Set if the items must be kept together if the section is invisible.
+     *
+     * @param boolean $keepTogether true if the items must be kept together, false otherwise.
+     * @throws \InvalidArgumentException If $keepTogether is not a boolean.
+     */
     public function setKeepTogether($keepTogether)
     {
         if (is_bool($keepTogether)) {
             $this->keepTogether = $keepTogether;
         } else {
-            $msg = "KeepTogether must be a boolan, '" . gettype($keepTogether) . "' given.";
+            $msg = "KeepTogether must be a boolean, '" . gettype($keepTogether) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
 
     /**
-	 * Get the selection rule for this section. Returns null
-	 * if no selection rule is applied to the section.
-	 *
-	 * @return \qtism\data\rules\Selection A selection rule.
-	 */
+     * Get the selection rule for this section. Returns null
+     * if no selection rule is applied to the section.
+     *
+     * @return \qtism\data\rules\Selection A selection rule.
+     */
     public function getSelection()
     {
         return $this->selection;
     }
 
     /**
-	 * Set the selection rule  for this section.
-	 *
-	 * @param \qtism\data\rules\Selection $selection A selection rule.
-	 */
+     * Set the selection rule  for this section.
+     *
+     * @param \qtism\data\rules\Selection $selection A selection rule.
+     */
     public function setSelection(Selection $selection = null)
     {
         $this->selection = $selection;
     }
 
     /**
-	 * Whether the AssessmentSection holds a Selection object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentSection holds a Selection object.
+     *
+     * @return boolean
+     */
     public function hasSelection()
     {
         return is_null($this->getSelection()) === false;
     }
 
     /**
-	 * Get the ordering rule for this section. Returns null
-	 * if no ordering is applied to the section.
-	 *
-	 * @return \qtism\data\rules\Ordering An Ordering object.
-	 */
+     * Get the ordering rule for this section. Returns null
+     * if no ordering is applied to the section.
+     *
+     * @return \qtism\data\rules\Ordering An Ordering object.
+     */
     public function getOrdering()
     {
         return $this->ordering;
     }
 
     /**
-	 * Set the ordering rule for this section.
-	 *
-	 * @param \qtism\data\rules\Ordering $ordering An Ordering object.
-	 */
+     * Set the ordering rule for this section.
+     *
+     * @param \qtism\data\rules\Ordering $ordering An Ordering object.
+     */
     public function setOrdering(Ordering $ordering = null)
     {
         $this->ordering = $ordering;
     }
 
     /**
-	 * Whether the AssessmentSection holds an Ordering object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentSection holds an Ordering object.
+     *
+     * @return boolean
+     */
     public function hasOrdering()
     {
         return is_null($this->getOrdering()) === false;
     }
 
     /**
-	 * Get the section rubrics to presented to the candidate with each
-	 * item contained by the section.
-	 *
-	 * @return \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
-	 */
+     * Get the section rubrics to presented to the candidate with each
+     * item contained by the section.
+     *
+     * @return \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
+     */
     public function getRubricBlocks()
     {
         return $this->rubricBlocks;
     }
 
     /**
-	 * Set the section rubrics to presented to the candidate with each
-	 * item contained by the section.
-	 *
-	 * @param \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
-	 */
+     * Set the section rubrics to presented to the candidate with each
+     * item contained by the section.
+     *
+     * @param \qtism\data\content\RubricBlockCollection A collection of RubricBlock objects.
+     */
     public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
     {
         $this->rubricBlocks = $rubricBlocks;
     }
 
     /**
-	 * Get the child elements.
-	 *
-	 * @return \qtism\data\SectionPartCollection A collection of SectionPart objects.
-	 */
+     * Get the child elements.
+     *
+     * @return \qtism\data\SectionPartCollection A collection of SectionPart objects.
+     */
     public function getSectionParts()
     {
         return $this->sectionParts;
     }
 
     /**
-	 * Set the child elements.
-	 *
-	 * @param \qtism\data\SectionPartCollection $sectionParts A collection of SectionPart objects.
-	 */
+     * Set the child elements.
+     *
+     * @param \qtism\data\SectionPartCollection $sectionParts A collection of SectionPart objects.
+     */
     public function setSectionParts(SectionPartCollection $sectionParts)
     {
         $this->sectionParts = $sectionParts;
     }
 
     /**
-	 * @see \qtism\data\SectionPart::getQtiClassName()
-	 */
+     * @see \qtism\data\SectionPart::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'assessmentSection';
     }
 
     /**
-	 * @see \qtism\data\SectionPart::getComponents()
-	 */
+     * @see \qtism\data\SectionPart::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
