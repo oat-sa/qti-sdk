@@ -37,20 +37,20 @@ use \InvalidArgumentException;
 class MatchTable extends LookupTable
 {
     /**
-	 * A collection of MatchTableEntry objects.
-	 *
-	 * @var \qtism\data\state\MatchTableEntryCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of MatchTableEntry objects.
+     *
+     * @var \qtism\data\state\MatchTableEntryCollection
+     * @qtism-bean-property
+     */
     private $matchTableEntries;
 
     /**
-	 * Create a new instance of MatchTable.
-	 *
-	 * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
-	 * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
-	 * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
-	 */
+     * Create a new instance of MatchTable.
+     *
+     * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+     * @param mixed $defaultValue The default oucome value to be used when no matching table entry is found.
+     * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
+     */
     public function __construct(MatchTableEntryCollection $matchTableEntries, $defaultValue = null)
     {
         parent::__construct($defaultValue);
@@ -58,21 +58,21 @@ class MatchTable extends LookupTable
     }
 
     /**
-	 * Get the collection of MatchTableEntry objects.
-	 *
-	 * @return \qtism\data\state\MatchTableEntryCollection A collection of MatchTableEntry objects.
-	 */
+     * Get the collection of MatchTableEntry objects.
+     *
+     * @return \qtism\data\state\MatchTableEntryCollection A collection of MatchTableEntry objects.
+     */
     public function getMatchTableEntries()
     {
         return $this->matchTableEntries;
     }
 
     /**
-	 * Set the collection of MatchTableEntry objects.
-	 *
-	 * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
-	 * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
-	 */
+     * Set the collection of MatchTableEntry objects.
+     *
+     * @param \qtism\data\state\MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
+     * @throws \InvalidArgumentException If $matchTableEntries is an empty collection.
+     */
     public function setMatchTableEntries(MatchTableEntryCollection $matchTableEntries)
     {
         if (count($matchTableEntries) > 0) {
@@ -84,22 +84,22 @@ class MatchTable extends LookupTable
     }
 
     /**
-	 * @see \qtism\data\state\LookupTable::getQtiClassName()
-	 */
+     * @see \qtism\data\state\LookupTable::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'matchTable';
     }
 
     /**
-	 * @see \qtism\data\state\LookupTable::getComponents()
-	 */
+     * @see \qtism\data\state\LookupTable::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
-                    parent::getComponents()->getArrayCopy(),
-                    $this->getMatchTableEntries()->getArrayCopy()
-                );
+            parent::getComponents()->getArrayCopy(),
+            $this->getMatchTableEntries()->getArrayCopy()
+        );
 
         return new QtiComponentCollection($comp);
     }
