@@ -228,4 +228,9 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     {
         return $this->showHide;
     }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
+    }
 }
