@@ -39,7 +39,6 @@ use qtism\data\processing\ResponseProcessing;
 use qtism\common\utils\Format;
 use \SplObjectStorage;
 use \InvalidArgumentException;
-use \SplObserver;
 
 /**
  * The AssessmentItem QTI class implementation. It contains all the information
@@ -795,5 +794,10 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         $comp = array_merge($comp, $this->getModalFeedbacks()->getArrayCopy());
 
         return new QtiComponentCollection($comp);
+    }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
     }
 }
