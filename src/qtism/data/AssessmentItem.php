@@ -50,6 +50,8 @@ use \SplObserver;
  */
 class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmentItem
 {
+    use QtiIdentifiableTrait;
+    
     /**
      * From IMS QTI:
      *
@@ -196,13 +198,6 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @var \qtism\data\content\ModalFeedbackCollection
      */
     private $modalFeedbacks;
-
-    /**
-     * The observers of this object.
-     *
-     * @var \SplObjectStorage
-     */
-    private $observers;
 
     /**
      * Create a new AssessmentItem object.
@@ -800,55 +795,5 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
         $comp = array_merge($comp, $this->getModalFeedbacks()->getArrayCopy());
 
         return new QtiComponentCollection($comp);
-    }
-
-    /**
-     * Get the observers of the object.
-     *
-     * @return \SplObjectStorage An SplObjectStorage object.
-     */
-    public function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param \SplObjectStorage $observers An SplObjectStorage object.
-     */
-    public function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param \SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param \SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
     }
 }
