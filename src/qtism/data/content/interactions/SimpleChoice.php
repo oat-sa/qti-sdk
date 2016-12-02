@@ -23,7 +23,6 @@
 namespace qtism\data\content\interactions;
 
 use qtism\data\content\FlowStaticCollection;
-use \InvalidArgumentException;
 
 class SimpleChoice extends Choice
 {

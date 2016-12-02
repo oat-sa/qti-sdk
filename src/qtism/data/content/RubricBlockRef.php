@@ -134,4 +134,9 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
     {
         return 'rubricBlockRef';
     }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
+    }
 }

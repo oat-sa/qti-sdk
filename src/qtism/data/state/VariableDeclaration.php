@@ -29,7 +29,6 @@ use qtism\data\QtiIdentifiableTrait;
 use qtism\common\utils\Format;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use \SplObserver;
 use \SplObjectStorage;
 use \InvalidArgumentException;
 
@@ -263,5 +262,10 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
         }
 
         return new QtiComponentCollection($comp);
+    }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
     }
 }

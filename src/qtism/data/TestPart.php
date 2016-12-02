@@ -412,4 +412,9 @@ class TestPart extends QtiComponent implements QtiIdentifiable
 
         return new QtiComponentCollection($comp);
     }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
+    }
 }

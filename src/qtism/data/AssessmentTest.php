@@ -438,4 +438,9 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     {
         return $this->getTimeLimits() !== null;
     }
+    
+    public function __clone()
+    {
+        $this->setObservers(new SplObjectStorage());
+    }
 }
