@@ -27,7 +27,6 @@ use \OutOfRangeException;
 use \UnexpectedValueException;
 use \SplObserver;
 use \SplSubject;
-use \SplObjectStorage;
 
 /**
  * This extension of QtiComponentCollection can retrieve items it contains by QTI identifier.
@@ -228,7 +227,6 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
 
         foreach (array_keys($oldPlaceHolder) as $k) {
             $cloned = clone $oldPlaceHolder[$k];
-            $cloned->setObservers(new SplObjectStorage());
             $cloned->attach($this);
             $this->offsetSet(null, $cloned);
         }
