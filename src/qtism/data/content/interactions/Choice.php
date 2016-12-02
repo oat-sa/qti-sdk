@@ -125,7 +125,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return SplObjectStorage An SplObjectStorage object.
      */
-    protected function getObservers()
+    public function getObservers()
     {
         return $this->observers;
     }
@@ -135,7 +135,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @param SplObjectStorage $observers An SplObjectStorage object.
      */
-    protected function setObservers(SplObjectStorage $observers)
+    public function setObservers(SplObjectStorage $observers)
     {
         $this->observers = $observers;
     }

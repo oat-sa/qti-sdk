@@ -807,7 +807,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return \SplObjectStorage An SplObjectStorage object.
      */
-    protected function getObservers()
+    public function getObservers()
     {
         return $this->observers;
     }
@@ -817,7 +817,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param \SplObjectStorage $observers An SplObjectStorage object.
      */
-    protected function setObservers(SplObjectStorage $observers)
+    public function setObservers(SplObjectStorage $observers)
     {
         $this->observers = $observers;
     }

@@ -414,7 +414,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 	 *
 	 * @return SplObjectStorage An SplObjectStorage object.
 	 */
-    protected function getObservers()
+    public function getObservers()
     {
         return $this->observers;
     }
@@ -424,7 +424,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 	 *
 	 * @param SplObjectStorage $observers An SplObjectStorage object.
 	 */
-    protected function setObservers(SplObjectStorage $observers)
+    public function setObservers(SplObjectStorage $observers)
     {
         $this->observers = $observers;
     }

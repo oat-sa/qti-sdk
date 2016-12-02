@@ -23,6 +23,7 @@
 namespace qtism\data;
 
 use \SplSubject;
+use \SplObjectStorage;
 
 /**
  * Any QTI class which has an identifier that makes its instances
@@ -39,4 +40,18 @@ interface QtiIdentifiable extends SplSubject
 	 * @return string A QTI Identifier.
 	 */
     public function getIdentifier();
+    
+    /**
+     * Get the observers of the object.
+     *
+     * @return \SplObjectStorage An SplObjectStorage object.
+     */
+    public function getObservers();
+    
+    /**
+     * Set the observers of the object.
+     *
+     * @param \SplObjectStorage $observers An SplObjectStorage object.
+     */
+    public function setObservers(SplObjectStorage $observers);
 }
