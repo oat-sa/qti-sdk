@@ -27,8 +27,8 @@ use qtism\data\content\BodyElement;
 use qtism\data\QtiIdentifiable;
 use qtism\data\ShowHide;
 use qtism\common\utils\Format;
+use qtism\data\QtiIdentifiableTrait;
 use \SplObjectStorage;
-use \SplObserver;
 use \InvalidArgumentException;
 
 /**
@@ -41,13 +41,8 @@ use \InvalidArgumentException;
  */
 abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
 {
-    /**
-     * A collection of SplObservers.
-     *
-     * @var SplObjectStorage
-     */
-    private $observers = null;
-
+    use QtiIdentifiableTrait;
+    
     /**
      * From IMS QTI:
      *
@@ -118,26 +113,6 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
         $this->setTemplateIdentifier('');
         $this->setShowHide(ShowHide::SHOW);
         $this->setObservers(new SplObjectStorage());
-    }
-
-    /**
-     * Get the observers of the object.
-     *
-     * @return SplObjectStorage An SplObjectStorage object.
-     */
-    protected function getObservers()
-    {
-        return $this->observers;
-    }
-
-    /**
-     * Set the observers of the object.
-     *
-     * @param SplObjectStorage $observers An SplObjectStorage object.
-     */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
     }
 
     /**
@@ -252,35 +227,5 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
     public function getShowHide()
     {
         return $this->showHide;
-    }
-
-    /**
-     * SplSubject::attach implementation.
-     *
-     * @param \SplObserver An SplObserver object.
-     */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-     * SplSubject::detach implementation.
-     *
-     * @param \SplObserver $observer An SplObserver object.
-     */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-     * SplSubject::notify implementation.
-     */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
     }
 }
