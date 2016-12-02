@@ -166,17 +166,10 @@ class Unmarshaller
 
             // This is a list.
             foreach ($json['list'][$keys[0]] as $v) {
-                try {
-                    if ($v === null) {
-                        $returnValue[] = $this->unmarshallUnit(array('base' => $v));
-                    } else {
-                        $returnValue[] = $this->unmarshallUnit(array('base' => array($keys[0] => $v)));
-                    }
-                } catch (InvalidArgumentException $e) {
-                    $strBaseType = BaseType::getNameByConstant($baseType);
-                    $msg = "A value is not compliant with the '${strBaseType}' baseType.";
-                    $code = UnmarshallingException::NOT_PCI;
-                    throw new UnmarshallingException($msg, $code);
+                if ($v === null) {
+                    $returnValue[] = $this->unmarshallUnit(array('base' => $v));
+                } else {
+                    $returnValue[] = $this->unmarshallUnit(array('base' => array($keys[0] => $v)));
                 }
             }
 
@@ -229,10 +222,6 @@ class Unmarshaller
     protected function unmarshallUnit(array $unit)
     {
         if (isset($unit['base'])) {
-
-            if ($unit['base'] === null) {
-                return null;
-            }
 
             // Primitive base type.
             try {
@@ -294,6 +283,8 @@ class Unmarshaller
                 $msg = "A value does not satisfy its baseType.";
                 throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI, $e);
             }
+        } elseif ($unit['base'] === null) {
+            return null;
         }
     }
 

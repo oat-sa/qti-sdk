@@ -405,6 +405,7 @@ class CssScoper implements Renderable
      *
      * @param string $id The identifier to be used for scoping.
      * @param string $file The path to the CSS file to be scoped.
+     * @throws \qtism\runtime\rendering\RenderingException
      */
     protected function init($id, $file)
     {
@@ -506,16 +507,6 @@ class CssScoper implements Renderable
         if (self::isWhiteSpace($char) === false) {
             $this->setPreviousSignificantChar($char);
         }
-    }
-
-    /**
-     * Get the previous significant char (non whitespace).
-     *
-     * @return string The previous read significant char or false if there is no previous significant char.
-     */
-    protected function getPreviousSignificantChar()
-    {
-        return $this->previousSignificantChar;
     }
 
     /**

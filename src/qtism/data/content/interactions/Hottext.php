@@ -25,7 +25,6 @@ namespace qtism\data\content\interactions;
 use qtism\data\content\InlineStaticCollection;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\FlowStatic;
-use \InvalidArgumentException;
 
 /**
  * From IMS QTI:

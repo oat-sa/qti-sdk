@@ -2,7 +2,6 @@
 namespace qtismtest\data;
 
 use qtismtest\QtiSmTestCase;
-use qtism\data\QtiIdentifiableCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 
@@ -179,8 +178,22 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase {
     public function testClone()
     {
         $collection = new WeightCollection();
-        $clone = clone $collection;
+        $w01 = new Weight('W01', 1.0);
+        $collection[] = $w01;
         
+        $clone = clone $collection;
         $this->assertFalse($collection === $clone);
+        $this->assertFalse($collection['W01'] === $clone['W01']);
+        
+        $clone['W01']->setIdentifier('W02');
+        $this->assertFalse(isset($clone['W01']));
+        $this->assertTrue(isset($clone['W02']));
+        $this->assertEquals('W01', $w01->getIdentifier());
+        $this->assertEquals('W01', $collection['W01']->getIdentifier());
+        $this->assertFalse($w01 === $clone['W02']);
+        
+        $collection['W01']->setIdentifier('W03');
+        $this->assertFalse(isset($collection['W01']));
+        $this->assertTrue(isset($collection['W03']));
     }
 }

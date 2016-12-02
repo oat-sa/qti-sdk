@@ -35,61 +35,55 @@ use \InvalidArgumentException;
 class OutcomeElse extends QtiComponent
 {
     /**
-	 * A collection of OutcomeRule objects to be evaluated.
-	 *
-	 * @var \qtism\data\rules\OutcomeRuleCollection
-	 * @qtism-bean-property
-	 */
+     * A collection of OutcomeRule objects to be evaluated.
+     *
+     * @var \qtism\data\rules\OutcomeRuleCollection
+     * @qtism-bean-property
+     */
     private $outcomeRules;
 
     /**
-	 * Create a new instance of OutcomeElse.
-	 *
-	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
-	 */
+     * Create a new instance of OutcomeElse.
+     *
+     * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
+     */
     public function __construct(OutcomeRuleCollection $outcomeRules)
     {
-        $this->outcomeRules = $outcomeRules;
+        $this->setOutcomeRules($outcomeRules);
     }
 
     /**
-	 * Get the OutcomeRule objects to be evaluated.
-	 *
-	 * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule objects.
-	 */
+     * Get the OutcomeRule objects to be evaluated.
+     *
+     * @return \qtism\data\rules\OutcomeRuleCollection A collection of OutcomeRule objects.
+     */
     public function getOutcomeRules()
     {
         return $this->outcomeRules;
     }
 
     /**
-	 * Set the OutcomeRule objects to be evaluated.
-	 *
-	 * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
-	 * @throws \InvalidArgumentException If $outcomeRules is an empty collection.
-	 */
+     * Set the OutcomeRule objects to be evaluated.
+     *
+     * @param \qtism\data\rules\OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
+     */
     public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
     {
-        if (count($outcomeRules) > 0) {
-            $this->outcomeRules = $outcomeRules;
-        } else {
-            $msg = "An OutcomeElse object must be bound to at least one OutcomeRule object.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->outcomeRules = $outcomeRules;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'outcomeElse';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = $this->getOutcomeRules()->getArrayCopy();

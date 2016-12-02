@@ -24,8 +24,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
     public function testInstantiation()
     {
-        
         $itemSession = self::instantiateBasicAssessmentItemSession();
+        $this->assertFalse($itemSession->isNavigationNonLinear());
         
         // isPresented? isCorrect? isResponded? isSelected?
         $this->assertFalse($itemSession->isPresented());
@@ -142,7 +142,8 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this->assertTrue(isset($responses['RESPONSE']));
     }
     
-    public function testGetOutcomeVariables() {
+    public function testGetOutcomeVariables()
+    {
         $itemSession = self::instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         
@@ -642,5 +643,15 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         );
         
         $itemSession->endCandidateSession();
+    }
+    
+    public function testIsRespondedValueNullDefaultNotNull()
+    {
+        $itemSession = self::instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+        $itemSession->beginAttempt();
+        $itemSession->getVariable('RESPONSE')->setDefaultValue(new QtiIdentifier('ChoiceA'));
+
+        $this->assertTrue($itemSession->isResponded());
     }
 }

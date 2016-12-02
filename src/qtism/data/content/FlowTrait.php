@@ -28,11 +28,20 @@ use qtism\common\utils\Format;
 /**
  * The Flow trait.
  *
+ * This trait deals with xml:base information of a QTI content Component.
+ *
  * @authorJérôme Bogaerts <jerome@taotesting.com>
  * @see \qtism\data\content\Flow
  */
 trait FlowTrait
 {
+    /**
+     * xml:base value.
+     *
+     * The current value of xml:base.
+     *
+     * @var string
+     */
     private $xmlBase = '';
     
     /**

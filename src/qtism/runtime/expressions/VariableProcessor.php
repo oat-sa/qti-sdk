@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -30,8 +30,6 @@ use qtism\runtime\common\VariableIdentifier;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\tests\AssessmentTestSession;
-use qtism\data\expressions\Variable;
-use qtism\data\expressions\Expression;
 use \InvalidArgumentException;
 
 /**
@@ -76,14 +74,14 @@ use \InvalidArgumentException;
 class VariableProcessor extends ExpressionProcessor
 {
     /**
-	 * Process the Variable expression.
-	 *
-	 * * If the requested variable does not exist, NULL is returned.
-	 * * In a test context, if the requested weight does not exist, the raw value of the variable is returned.
-	 *
-	 * @returns null|mixed The value of the target variable or NULL if the variable does not exist.
-	 * @throws \qtism\runtime\expressions\ExpressionProcessingException
-	 */
+     * Process the Variable expression.
+     *
+     * * If the requested variable does not exist, NULL is returned.
+     * * In a test context, if the requested weight does not exist, the raw value of the variable is returned.
+     *
+     * @returns null|mixed The value of the target variable or NULL if the variable does not exist.
+     * @throws \qtism\runtime\expressions\ExpressionProcessingException
+     */
     public function process()
     {
         $state = $this->getState();

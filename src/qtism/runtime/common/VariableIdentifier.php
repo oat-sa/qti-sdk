@@ -143,21 +143,10 @@ class VariableIdentifier
      * Set the detected sequence number.
      *
      * @param integer $sequenceNumber A integer sequence number.
-     * @throws \InvalidArgumentException If $sequenceNumber is not an integer or <= 0.
      */
     protected function setSequenceNumber($sequenceNumber)
     {
-        if (gettype($sequenceNumber) === 'integer') {
-            if ($sequenceNumber > 0) {
-                $this->sequenceNumber = $sequenceNumber;
-            } else {
-                $msg = "The sequenceNumber argument must be a non zero positive integer, '${sequenceNumber}' given.";
-                throw new InvalidArgumentException($msg);
-            }
-        } else {
-            $msg = "The sequenceNumber argument must be an integer, '" . gettype($sequenceNumber) . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->sequenceNumber = $sequenceNumber;
     }
 
     /**
@@ -185,16 +174,10 @@ class VariableIdentifier
      * Set the variable name found in the identifier.
      *
      * @param string $variableName A variable name.
-     * @throws \InvalidArgumentException If $variableName is not a string or is empty.
      */
     protected function setVariableName($variableName)
     {
-        if (gettype($variableName) === 'string' && empty($variableName) === false) {
-            $this->variableName = $variableName;
-        } else {
-            $msg = "The variableName argument must be a non-empty string.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->variableName = $variableName;
     }
 
     /**
@@ -211,16 +194,10 @@ class VariableIdentifier
      * Set the prefix part of the identifier.
      *
      * @param string $prefix The prefix of the variable identifier.
-     * @throws \InvalidArgumentException If $prefix is not a string or is empty.
      */
     protected function setPrefix($prefix)
     {
-        if (gettype($prefix) === 'string' && empty($prefix) === false) {
-            $this->prefix = $prefix;
-        } else {
-            $msg = "The prefix argument must be a non-empty string.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->prefix = $prefix;
     }
 
     /**

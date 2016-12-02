@@ -1,6 +1,10 @@
 <?php
 namespace qtismtest\data\storage\php;
 
+use qtism\data\expressions\BaseValue;
+use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\operators\Equal;
+use qtism\data\expressions\operators\ToleranceMode;
 use qtismtest\QtiSmTestCase;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
@@ -239,5 +243,56 @@ class PhpDocumentTest extends QtiSmTestCase {
             array(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml', 'qtism\\data\\expressions\\operators\\CustomOperator'),
             array(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml', 'qtism\\data\\AssessmentItem')
         );
+    }
+    
+    public function testSaveComponentWithArrayBeanProperty()
+    {
+        $equal = new Equal(
+            new ExpressionCollection(
+                array(
+                    new BaseValue(BaseType::FLOAT, 2.22),
+                    new BaseValue(BaseType::FLOAT, 2.22)
+                )
+            ),
+            ToleranceMode::RELATIVE,
+            array(5, 5)
+        );
+    
+        $file = tempnam('/tmp', 'qsm');
+        $phpDoc = new PhpDocument('2.1', $equal);
+        $phpDoc->save($file);
+        
+        $phpDoc2 = new PhpDocument('2.1');
+        $phpDoc2->load($file);
+        
+        $this->assertInstanceOf('qtism\\data\\expressions\\operators\\Equal', $phpDoc2->getDocumentComponent());
+        $this->assertEquals(ToleranceMode::RELATIVE, $phpDoc2->getDocumentComponent()->getToleranceMode());
+        $this->assertEquals(array(5, 5), $phpDoc2->getDocumentComponent()->getTolerance());
+        
+        unlink($file);
+    }
+    
+    public function testSaveError()
+    {
+        $phpDoc = new PhpDocument();
+        
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\PhpStorageException',
+            "File located at '/root/root.php' could not be written."
+        );
+        
+        $phpDoc->save('/root/root.php');
+    }
+    
+    public function testLoadError()
+    {
+        $phpDoc = new PhpDocument();
+    
+        $this->setExpectedException(
+            'qtism\\data\\storage\\php\\PhpStorageException',
+            "The PHP document located at '/root/root.php' is not readable or does not exist."
+        );
+    
+        $phpDoc->load('/root/root.php');
     }
 }

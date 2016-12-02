@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2014 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -23,9 +23,9 @@
 namespace qtism\data\state;
 
 use qtism\data\QtiIdentifiable;
+use qtism\data\QtiIdentifiableTrait;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponent;
-use \SplObserver;
 use \SplObjectStorage;
 use \InvalidArgumentException;
 use qtism\common\utils\Format as Format;
@@ -42,6 +42,8 @@ use qtism\common\utils\Format as Format;
  */
 class Weight extends QtiComponent implements QtiIdentifiable
 {
+    use QtiIdentifiableTrait;
+    
     /**
 	 * A QTI identifier.
 	 *
@@ -58,13 +60,6 @@ class Weight extends QtiComponent implements QtiIdentifiable
 	 * @qtism-bean-property
 	 */
     private $value;
-
-    /**
-	 * The observers of this object.
-	 *
-	 * @var \SplObjectStorage
-	 */
-    private $observers;
 
     /**
 	 * Create a new instance of Weight.
@@ -150,54 +145,9 @@ class Weight extends QtiComponent implements QtiIdentifiable
     {
         return new QtiComponentCollection();
     }
-
-    /**
-	 * Get the observers of the object.
-	 *
-	 * @return \SplObjectStorage An SplObjectStorage object.
-	 */
-    protected function getObservers()
+    
+    public function __clone()
     {
-        return $this->observers;
-    }
-
-    /**
-	 * Set the observers of the object.
-	 *
-	 * @param \SplObjectStorage $observers An SplObjectStorage object.
-	 */
-    protected function setObservers(SplObjectStorage $observers)
-    {
-        $this->observers = $observers;
-    }
-
-    /**
-	 * SplSubject::attach implementation.
-	 *
-	 * @param \SplObserver An SplObserver object.
-	 */
-    public function attach(SplObserver $observer)
-    {
-        $this->getObservers()->attach($observer);
-    }
-
-    /**
-	 * SplSubject::detach implementation.
-	 *
-	 * @param \SplObserver $observer An SplObserver object.
-	 */
-    public function detach(SplObserver $observer)
-    {
-        $this->getObservers()->detach($observer);
-    }
-
-    /**
-	 * SplSubject::notify implementation.
-	 */
-    public function notify()
-    {
-        foreach ($this->getObservers() as $observer) {
-            $observer->update($this);
-        }
+        $this->setObservers(new SplObjectStorage());
     }
 }
