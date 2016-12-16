@@ -369,6 +369,15 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             array(self::samplesDir() . 'custom/items/2_2/biditorture1.xml', '2.2.0')
         );
     }
+    
+    public function testRetrievePromptFromGraphicGapMatch()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::decorateUri('graphic_gap_match.xml', '2.2'));
+        
+        $prompts = $doc->getDocumentComponent()->getComponentsByClassName('prompt');
+        $this->assertCount(1, $prompts);
+    }
 
     private static function decorateUri($uri, $version = '2.1') {
         if ($version === '2.1' || $version === '2.1.0') {
