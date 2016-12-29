@@ -117,8 +117,8 @@ class AssessmentItemSessionStore {
      */
     public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0) {
         try {
-            isset($this->shelves[$assessmentItemRef][$occurence]);
-            return true;
+            // Circumvent SplObjectStorage bug (prior PHP 7.0.8)
+            return isset($this->shelves[$assessmentItemRef][$occurence]);
         }
         catch (UnexpectedValueException $e) {
             return false;
