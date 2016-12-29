@@ -67,11 +67,11 @@ class FileSystemFileTest extends QtiSmTestCase {
         try {
             FileSystemFile::createFromExistingFile(
                 self::samplesDir() . 'datatypes/file/text-plain_name.txt',
-                'abcd\t/v**',
+                sys_get_temp_dir() . '/abcd\\t/v**',
                 'text/plain'
             );
         } catch (\RuntimeException $e) {
-            $this->assertEquals("Destination file 'abcd\\t/v**' could not be open.", $e->getMessage());
+            $this->assertInstanceOf('\\RuntimeException', $e);
         }
     }
     
@@ -85,7 +85,7 @@ class FileSystemFileTest extends QtiSmTestCase {
             );
             $this->assertFalse(true, "Should throw an error.");
         } catch (\RuntimeException $e) {
-            $this->assertTrue(true);
+            $this->assertEquals("Unable to find source file at '/home/jerome/Development/QTI/qtisdk/test/qtismtest/../samples/datatypes/file'.", $e->getMessage());
         }
     }
     
