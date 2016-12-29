@@ -232,7 +232,7 @@ class AssessmentTestSession extends State {
 		}
 		
 		$this->setSessionId('no_session_id');
-		$this->state = AssessmentTestSessionState::INITIAL;
+		$this->setState(AssessmentTestSessionState::INITIAL);
 	}
 	
 	/**
