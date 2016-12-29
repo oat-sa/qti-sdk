@@ -85,7 +85,7 @@ class FileSystemFileTest extends QtiSmTestCase {
             );
             $this->assertFalse(true, "Should throw an error.");
         } catch (\RuntimeException $e) {
-            $this->assertEquals("Unable to find source file at '/home/jerome/Development/QTI/qtisdk/test/qtismtest/../samples/datatypes/file'.", $e->getMessage());
+            $this->assertInstanceOf('\\RuntimeException', $e);
         }
     }
     
