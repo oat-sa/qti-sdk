@@ -43,7 +43,7 @@ class OperatorBaseType extends BaseType
 	 *
 	 * @var integer
 	 */
-    const ANY = 12;
+    const ANY = 13;
 
     /**
 	 * Express that all the operands must have the same
@@ -51,7 +51,7 @@ class OperatorBaseType extends BaseType
 	 *
 	 * @var integer
 	 */
-    const SAME = 13;
+    const SAME = 14;
 
     public static function asArray()
     {
