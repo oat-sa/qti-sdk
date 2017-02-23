@@ -164,7 +164,42 @@ abstract class Marshaller
      * @var array
      */
     private static $webComponentFriendlyClasses = array(
-        
+        'associableHotspot',
+        'gap',
+        'gapChoice',
+        'simpleAssociableChoice',
+        'hotspotChoice',
+        'hottext',
+        'inlineChoice',
+        'simpleChoice',
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'graphicGapMatchInteraction',
+        'graphicOrderInteraction',
+        'hotspotInteraction',
+        'selectPointInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'customInteraction',
+        'endAttemptInteraction',
+        'inlineChoiceInteraction',
+        'textEntryInteraction',
+        'positionObjectInteraction',
+        'printedVariable',
+        'prompt',
+        'feedbackBlock',
+        'rubricBlock',
+        'templateBlock',
+        'templateInline',
+        'infoControl'
     );
     
     /**
