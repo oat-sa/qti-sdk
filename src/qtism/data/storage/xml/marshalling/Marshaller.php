@@ -301,6 +301,30 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
+    
+    /**
+     * Set Web Componenent Friendship
+     * 
+     * Sets whether or not consider Web Component friendly QTI components.
+     * 
+     * @param boolean $webComponentFriendly
+     */
+    public function setWebComponentFriendly($webComponentFriendly)
+    {
+        $this->webComponentFriendly($webComponentFriendly);
+    }
+    
+    /**
+     * Web Component Friendship Status
+     * 
+     * Whether or not Web Component friendly QTI components are considered.
+     * 
+     * @return boolean
+     */
+    public function isWebComponentFriendly()
+    {
+        return $this->webComponentFriendly;
+    }
 
     /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
