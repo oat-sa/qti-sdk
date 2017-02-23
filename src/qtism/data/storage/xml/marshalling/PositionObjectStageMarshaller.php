@@ -64,12 +64,12 @@ class PositionObjectStageMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        $objectElts = self::getChildElementsByTagName($element, 'object');
+        $objectElts = $this->getChildElementsByTagName($element, 'object');
         if (count($objectElts) > 0) {
 
             $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
 
-            $positionObjectInteractionElts = self::getChildElementsByTagName($element, 'positionObjectInteraction');
+            $positionObjectInteractionElts = $this->getChildElementsByTagName($element, 'positionObjectInteraction');
             if (count($positionObjectInteractionElts) > 0) {
 
                 $positionObjectInteractions = new PositionObjectInteractionCollection();

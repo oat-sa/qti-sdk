@@ -196,7 +196,7 @@ class OperatorMarshaller extends RecursiveMarshaller
             // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
             $xml = $component->getXml();
             $operatorElt = $xml->documentElement->cloneNode(true);
-            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
+            $qtiOperatorElts = $this->getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
 
             foreach ($qtiOperatorElts as $qtiOperatorElt) {
                 $operatorElt->removeChild($qtiOperatorElt);
@@ -230,7 +230,7 @@ class OperatorMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
+        return $this->getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
     }
 
     /**

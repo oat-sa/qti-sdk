@@ -166,7 +166,7 @@ class TextInteractionMarshaller extends Marshaller
                     $component->setFormat(TextFormat::getConstantByName($format));
                 }
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
                 }

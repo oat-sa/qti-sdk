@@ -86,14 +86,14 @@ class MediaInteractionMarshaller extends Marshaller
 
             if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
 
-                $objectElts = self::getChildElementsByTagName($element, 'object');
+                $objectElts = $this->getChildElementsByTagName($element, 'object');
                 if (count($objectElts) > 0) {
                     $objectElt = $objectElts[0];
                     $object = $this->getMarshallerFactory()->createMarshaller($objectElt)->unmarshall($objectElt);
 
                     $component = new MediaInteraction($responseIdentifier, $autostart, $object);
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

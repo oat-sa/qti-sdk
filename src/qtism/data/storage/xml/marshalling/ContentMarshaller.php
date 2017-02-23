@@ -228,39 +228,39 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         if (in_array($element->localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);
         } elseif ($element->localName === 'choiceInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
         } elseif ($element->localName === 'orderInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
         } elseif ($element->localName === 'associateInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
         } elseif ($element->localName === 'matchInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleMatchSet');
+            return $this->getChildElementsByTagName($element, 'simpleMatchSet');
         } elseif ($element->localName === 'gapMatchInteraction') {
-            return self::getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
+            return $this->getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
         } elseif ($element->localName === 'inlineChoiceInteraction') {
-            return self::getChildElementsByTagName($element, 'inlineChoice');
+            return $this->getChildElementsByTagName($element, 'inlineChoice');
         } elseif ($element->localName === 'hottextInteraction') {
-            return self::getChildElementsByTagName($element, 'prompt', true);
+            return $this->getChildElementsByTagName($element, 'prompt', true);
         } elseif ($element->localName === 'hotspotInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
         } elseif ($element->localName === 'graphicAssociateInteraction') {
-            return self::getChildElementsByTagName($element, 'associableHotspot');
+            return $this->getChildElementsByTagName($element, 'associableHotspot');
         } elseif ($element->localName === 'graphicOrderInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
         } elseif ($element->localName === 'tr') {
-            return self::getChildElementsByTagName($element, array('td', 'th'));
+            return $this->getChildElementsByTagName($element, array('td', 'th'));
         } elseif ($element->localName === 'ul' || $element->localName === 'ol') {
-            return self::getChildElementsByTagName($element, 'li');
+            return $this->getChildElementsByTagName($element, 'li');
         } elseif ($element->localName === 'dl') {
-            return self::getChildElementsByTagName($element, array('dd', 'dt'));
+            return $this->getChildElementsByTagName($element, array('dd', 'dt'));
         } elseif ($element->localName === 'itemBody') {
             return self::getChildElements($element);
         } elseif ($element->localName === 'blockquote') {
             return self::getChildElements($element);
         } elseif ($element->localName === 'simpleMatchSet') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
         } elseif ($element->localName === 'gapImg') {
-            return self::getChildElementsByTagName($element, 'object');
+            return $this->getChildElementsByTagName($element, 'object');
         } else {
             return array();
         }

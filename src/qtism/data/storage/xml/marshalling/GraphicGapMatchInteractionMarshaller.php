@@ -47,12 +47,12 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
 
-                $associableHotspotElts = self::getChildElementsByTagName($element, 'associableHotspot');
+                $associableHotspotElts = $this->getChildElementsByTagName($element, 'associableHotspot');
 
                 if (count($associableHotspotElts) > 0) {
 
@@ -62,7 +62,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
                         $associableHotspots[] = $this->getMarshallerFactory()->createMarshaller($associableHotspotElt)->unmarshall($associableHotspotElt);
                     }
 
-                    $gapImgElts = self::getChildElementsByTagName($element, 'gapImg');
+                    $gapImgElts = $this->getChildElementsByTagName($element, 'gapImg');
 
                     if (count($gapImgElts) > 0) {
 
@@ -74,7 +74,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
 
                         $component = new GraphicGapMatchInteraction($responseIdentifier, $object, $gapImgs, $associableHotspots);
 
-                        $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                        $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                         if (count($promptElts) > 0) {
                             $promptElt = $promptElts[0];
                             $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

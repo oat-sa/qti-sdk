@@ -81,7 +81,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);

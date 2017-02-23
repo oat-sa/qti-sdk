@@ -116,7 +116,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                 }
 
                 // Get the test parts.
-                $testPartsElts = self::getChildElementsByTagName($element, 'testPart');
+                $testPartsElts = $this->getChildElementsByTagName($element, 'testPart');
 
                 if (count($testPartsElts) > 0) {
                     $testParts = new TestPartCollection();
@@ -136,7 +136,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                         $object->setToolVersion($toolVersion);
                     }
 
-                    $testFeedbackElts = self::getChildElementsByTagName($element, 'testFeedback');
+                    $testFeedbackElts = $this->getChildElementsByTagName($element, 'testFeedback');
                     if (count($testFeedbackElts) > 0) {
                         $testFeedbacks = new TestFeedbackCollection();
 
@@ -148,7 +148,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                         $object->setTestFeedbacks($testFeedbacks);
                     }
 
-                    $outcomeDeclarationElts = self::getChildElementsByTagName($element, 'outcomeDeclaration');
+                    $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
                     if (count($outcomeDeclarationElts) > 0) {
                         $outcomeDeclarations = new OutcomeDeclarationCollection();
 
@@ -160,13 +160,13 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
                         $object->setOutcomeDeclarations($outcomeDeclarations);
                     }
 
-                    $outcomeProcessingElts = self::getChildElementsByTagName($element, 'outcomeProcessing');
+                    $outcomeProcessingElts = $this->getChildElementsByTagName($element, 'outcomeProcessing');
                     if (isset($outcomeProcessingElts[0])) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeProcessingElts[0]);
                         $object->setOutcomeProcessing($marshaller->unmarshall($outcomeProcessingElts[0]));
                     }
 
-                    $timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
+                    $timeLimitsElts = $this->getChildElementsByTagName($element, 'timeLimits');
                     if (isset($timeLimitsElts[0])) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($timeLimitsElts[0]);
                         $object->setTimeLimits($marshaller->unmarshall($timeLimitsElts[0]));

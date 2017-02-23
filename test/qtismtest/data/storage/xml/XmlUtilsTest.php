@@ -261,4 +261,37 @@ class XmlUtilsTest extends QtiSmTestCase
             array($elt, 'boolean', 'boolean', true),
         );
     }
+    
+    public function testGetChildElementsByTagName()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        
+        // There are 3 child elements. 2 at the first level, 1 at the second.
+        // We should find only 2 direct child elements.
+        $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(2, count(Utils::getChildElementsByTagName($element, 'child')));
+    }
+    
+    public function testGetChildElementsByTagNameMultiple()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(3, count(Utils::getChildElementsByTagName($element, array('child', 'grandChild'))));
+    }
+    
+    public function testGetChildElementsByTagNameEmpty()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        
+        // There is only 1 child but at the second level. Nothing
+        // should be found.
+        $dom->loadXML('<parent><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(0, count(Utils::getChildElementsByTagName($element, 'child')));
+    }
 }

@@ -83,7 +83,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // prompt.
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

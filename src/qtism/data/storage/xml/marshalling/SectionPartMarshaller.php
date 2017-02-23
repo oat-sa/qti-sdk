@@ -96,7 +96,7 @@ class SectionPartMarshaller extends Marshaller
                 $object->setFixed($fixed);
             }
 
-            $preConditionElts = self::getChildElementsByTagName($element, 'preCondition');
+            $preConditionElts = $this->getChildElementsByTagName($element, 'preCondition');
             if (count($preConditionElts) > 0) {
                 $preConditions = new PreConditionCollection();
                 for ($i = 0; $i < count($preConditionElts); $i++) {
@@ -106,7 +106,7 @@ class SectionPartMarshaller extends Marshaller
                 $object->setPreConditions($preConditions);
             }
 
-            $branchRuleElts = self::getChildElementsByTagName($element, 'branchRule');
+            $branchRuleElts = $this->getChildElementsByTagName($element, 'branchRule');
             if (count($branchRuleElts) > 0) {
                 $branchRules = new BranchRuleCollection();
                 for ($i = 0; $i < count($branchRuleElts); $i++) {
@@ -116,13 +116,13 @@ class SectionPartMarshaller extends Marshaller
                 $object->setBranchRules($branchRules);
             }
 
-            $itemSessionControlElts = self::getChildElementsByTagName($element, 'itemSessionControl');
+            $itemSessionControlElts = $this->getChildElementsByTagName($element, 'itemSessionControl');
             if (count($itemSessionControlElts) == 1) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($itemSessionControlElts[0]);
                 $object->setItemSessionControl($marshaller->unmarshall($itemSessionControlElts[0]));
             }
 
-            $timeLimitsElts = self::getChildElementsByTagName($element, 'timeLimits');
+            $timeLimitsElts = $this->getChildElementsByTagName($element, 'timeLimits');
             if (count($timeLimitsElts) == 1) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($timeLimitsElts[0]);
                 $object->setTimeLimits($marshaller->unmarshall($timeLimitsElts[0]));

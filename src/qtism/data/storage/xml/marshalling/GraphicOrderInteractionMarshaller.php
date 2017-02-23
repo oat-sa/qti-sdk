@@ -45,7 +45,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
@@ -78,7 +78,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
                         $component->setXmlBase($xmlBase);
                     }
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

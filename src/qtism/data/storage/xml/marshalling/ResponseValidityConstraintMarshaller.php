@@ -83,7 +83,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
                         $component = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
                     
                         // Find child associationValidityConstraint elements if any.
-                        $associationValidityConstraintElts = static::getChildElementsByTagName($element, 'associationValidityConstraint');
+                        $associationValidityConstraintElts = $this->getChildElementsByTagName($element, 'associationValidityConstraint');
                             
                         foreach ($associationValidityConstraintElts as $associationValidityConstraintElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraintElt);

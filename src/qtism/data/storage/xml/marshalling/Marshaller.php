@@ -402,16 +402,7 @@ abstract class Marshaller
      */
     public static function getChildElements($element, $withText = false)
     {
-        $children = $element->childNodes;
-        $returnValue = array();
-
-        for ($i = 0; $i < $children->length; $i++) {
-            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
-                $returnValue[] = $children->item($i);
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElements($element, $withText);
     }
 
     /**
@@ -425,22 +416,9 @@ abstract class Marshaller
      * @param boolean $withText (optional) Wether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
-        if (!is_array($tagName)) {
-            $tagName = array($tagName);
-        }
-
-        $rawElts = self::getChildElements($element, $withText);
-        $returnValue = array();
-
-        foreach ($rawElts as $elt) {
-            if (in_array($elt->localName, $tagName) === !$exclude) {
-                $returnValue[] = $elt;
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
     /**

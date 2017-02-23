@@ -75,7 +75,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
                 $component->setXmlBase($xmlBase);
             }
 
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

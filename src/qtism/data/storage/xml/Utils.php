@@ -398,4 +398,54 @@ class Utils
                 break;
         }
     }
+    
+    /**
+     * Get the child elements of a given element by tag name. This method does
+     * not behave like DOMElement::getElementsByTagName. It only returns the direct
+     * child elements that matches $tagName but does not go recursive.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
+     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
+     * @param boolean $withText (optional) Wether text nodes must be returned or not.
+     * @return array An array of DOMElement objects.
+     */
+    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    {
+        if (!is_array($tagName)) {
+            $tagName = array($tagName);
+        }
+        
+        $rawElts = self::getChildElements($element, $withText);
+        $returnValue = array();
+        
+        foreach ($rawElts as $elt) {
+            if (in_array($elt->localName, $tagName) === !$exclude) {
+                $returnValue[] = $elt;
+            }
+        }
+        
+        return $returnValue;
+    }
+    
+    /**
+     * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param boolean $withText Wether text nodes must be returned or not.
+     * @return array An array of DOMNode objects.
+     */
+    public static function getChildElements($element, $withText = false)
+    {
+        $children = $element->childNodes;
+        $returnValue = array();
+        
+        for ($i = 0; $i < $children->length; $i++) {
+            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
+                $returnValue[] = $children->item($i);
+            }
+        }
+        
+        return $returnValue;
+    }
 }

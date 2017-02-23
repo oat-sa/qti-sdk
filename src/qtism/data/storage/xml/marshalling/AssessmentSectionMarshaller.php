@@ -74,7 +74,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 }
 
                 // Deal with selection elements.
-                $selectionElements = static::getChildElementsByTagName($element, 'selection');
+                $selectionElements = $this->getChildElementsByTagName($element, 'selection');
                 if (count($selectionElements) == 1) {
                     $select = intval($selectionElements[0]->getAttribute('select'));
                     
@@ -85,14 +85,14 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 }
 
                 // Deal with ordering elements.
-                $orderingElements = static::getChildElementsByTagName($element, 'ordering');
+                $orderingElements = $this->getChildElementsByTagName($element, 'ordering');
                 if (count($orderingElements) == 1) {
                     $marshaller = $this->getMarshallerFactory()->createMarshaller($orderingElements[0]);
                     $object->setOrdering($marshaller->unmarshall($orderingElements[0]));
                 }
 
                 // Deal with rubrickBlocks.
-                $rubricBlockElements = static::getChildElementsByTagName($element, 'rubricBlock');
+                $rubricBlockElements = $this->getChildElementsByTagName($element, 'rubricBlock');
                 if (count($rubricBlockElements) > 0) {
                     $rubricBlocks = new RubricBlockCollection();
                     for ($i = 0; $i < count($rubricBlockElements); $i++) {

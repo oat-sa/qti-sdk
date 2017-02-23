@@ -161,7 +161,7 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setToolVersion($toolVersion);
                     }
 
-                    $responseDeclarationElts = static::getChildElementsByTagName($element, 'responseDeclaration');
+                    $responseDeclarationElts = $this->getChildElementsByTagName($element, 'responseDeclaration');
                     if (!empty($responseDeclarationElts)) {
 
                         $responseDeclarations = new ResponseDeclarationCollection();
@@ -174,7 +174,7 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setResponseDeclarations($responseDeclarations);
                     }
 
-                    $outcomeDeclarationElts = static::getChildElementsByTagName($element, 'outcomeDeclaration');
+                    $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
                     if (!empty($outcomeDeclarationElts)) {
 
                         $outcomeDeclarations = new OutcomeDeclarationCollection();
@@ -187,7 +187,7 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setOutcomeDeclarations($outcomeDeclarations);
                     }
 
-                    $templateDeclarationElts = static::getChildElementsByTagName($element, 'templateDeclaration');
+                    $templateDeclarationElts = $this->getChildElementsByTagName($element, 'templateDeclaration');
                     if (!empty($templateDeclarationElts)) {
 
                         $templateDeclarations = new TemplateDeclarationCollection();
@@ -200,13 +200,13 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setTemplateDeclarations($templateDeclarations);
                     }
 
-                    $templateProcessingElts = static::getChildElementsByTagName($element, 'templateProcessing');
+                    $templateProcessingElts = $this->getChildElementsByTagName($element, 'templateProcessing');
                     if (!empty($templateProcessingElts)) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($templateProcessingElts[0]);
                         $object->setTemplateProcessing($marshaller->unmarshall($templateProcessingElts[0]));
                     }
 
-                    $stylesheetElts = static::getChildElementsByTagName($element, 'stylesheet');
+                    $stylesheetElts = $this->getChildElementsByTagName($element, 'stylesheet');
                     if (!empty($stylesheetElts)) {
                         $stylesheets = new StylesheetCollection();
 
@@ -218,19 +218,19 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setStylesheets($stylesheets);
                     }
 
-                    $itemBodyElts = static::getChildElementsByTagName($element, 'itemBody');
+                    $itemBodyElts = $this->getChildElementsByTagName($element, 'itemBody');
                     if (count($itemBodyElts) > 0) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($itemBodyElts[0]);
                         $object->setItemBody($marshaller->unmarshall($itemBodyElts[0]));
                     }
 
-                    $responseProcessingElts = static::getChildElementsByTagName($element, 'responseProcessing');
+                    $responseProcessingElts = $this->getChildElementsByTagName($element, 'responseProcessing');
                     if (!empty($responseProcessingElts)) {
                         $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
                         $object->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
                     }
 
-                    $modalFeedbackElts = static::getChildElementsByTagName($element, 'modalFeedback');
+                    $modalFeedbackElts = $this->getChildElementsByTagName($element, 'modalFeedback');
                     if (!empty($modalFeedbackElts)) {
                         $modalFeedbacks = new ModalFeedbackCollection();
 

@@ -75,7 +75,7 @@ class AreaMappingMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $areaMapEntries = new AreaMapEntryCollection();
-        $areaMapEntryElts = static::getChildElementsByTagName($element, 'areaMapEntry');
+        $areaMapEntryElts = $this->getChildElementsByTagName($element, 'areaMapEntry');
 
         foreach ($areaMapEntryElts as $areaMapEntryElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($areaMapEntryElt);

@@ -121,7 +121,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array(
+        return $this->getChildElementsByTagName($element, array(
                 'responseIf',
                 'responseElseIf',
                 'responseElse',

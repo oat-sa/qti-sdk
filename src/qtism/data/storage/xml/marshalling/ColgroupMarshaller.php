@@ -73,7 +73,7 @@ class ColgroupMarshaller extends Marshaller
         }
 
         $cols = new ColCollection();
-        foreach (self::getChildElementsByTagName($element, 'col') as $colElt) {
+        foreach ($this->getChildElementsByTagName($element, 'col') as $colElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($colElt);
             $cols[] = $marshaller->unmarshall($colElt);
         }

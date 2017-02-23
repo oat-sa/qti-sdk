@@ -5,6 +5,11 @@
             <directory>./test</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+    </filter>
     <!-- PHP configuration -->
     <php>
         <!-- About 300Mo are consumed on Travis CI or ContinuousPHP. -->

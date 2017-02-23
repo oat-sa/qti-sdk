@@ -65,7 +65,7 @@ class TablePartMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $trs = new TrCollection();
-        foreach (self::getChildElementsByTagName($element, 'tr') as $trElt) {
+        foreach ($this->getChildElementsByTagName($element, 'tr') as $trElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($trElt);
             $trs[] = $marshaller->unmarshall($trElt);
 
