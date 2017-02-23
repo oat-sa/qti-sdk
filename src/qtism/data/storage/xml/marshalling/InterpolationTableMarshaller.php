@@ -130,7 +130,7 @@ class InterpolationTableMarshaller extends Marshaller
 
             $object = new InterpolationTable($interpolationTableEntryCollection);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
                 } catch (\UnexpectedValueException $e) {

@@ -142,6 +142,8 @@ class Utils
      *
      * @param \DOMElement $element A DOMElement object you want to change the name.
      * @param string $name The new name of $element.
+     *
+     * @return \DOMElement
      */
     static public function changeElementName(DOMElement $element, $name)
     {
@@ -331,5 +333,49 @@ class Utils
         $qtiName = preg_replace('/^qti-/', '', $qtiName);
         
         return lcfirst(str_replace('-', '', ucwords($qtiName, '-')));
+    }
+    
+    /**
+     * Get the attribute value of a given DOMElement object, cast in a given datatype.
+     *
+     * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
+     * @param string $attribute The attribute name.
+     * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
+     * @throws \InvalidArgumentException If $datatype is not in the range of possible values.
+     * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     */
+    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    {
+        $attr = $element->getAttribute($attribute);
+    
+        if ($attr !== '') {
+            switch ($datatype) {
+                case 'string':
+                    return $attr;
+                    break;
+            
+                case 'integer':
+                    return intval($attr);
+                    break;
+            
+                case 'float':
+                    return floatval($attr);
+                    break;
+            
+                case 'double':
+                    return doubleval($attr);
+                    break;
+            
+                case 'boolean':
+                    return ($attr == 'true') ? true : false;
+                    break;
+            
+                default:
+                    throw new \InvalidArgumentException("Unknown datatype '${datatype}'.");
+                    break;
+            }
+        } else {
+            return null;
+        }
     }
 }

@@ -65,18 +65,18 @@ class StylesheetMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // href is a mandatory value, retrieve it first.
-        if (($value = static::getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
             $object = new Stylesheet($value);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'type', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'type', 'string')) !== null) {
                 $object->setType($value);
             }
 
-            if (($value = static::getDOMElementAttributeAs($element, 'media', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'media', 'string')) !== null) {
                 $object->setMedia($value);
             }
 
-            if (($value = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
                 $object->setTitle($value);
             }
         } else {

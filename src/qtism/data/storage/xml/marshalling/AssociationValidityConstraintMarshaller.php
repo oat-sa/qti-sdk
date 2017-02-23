@@ -60,11 +60,11 @@ class AssociationValidityConstraintMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             
-            if (($minConstraint = self::getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
+            if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
                 
-                if (($maxConstraint = self::getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
+                if (($maxConstraint = $this->getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
                     
                     try {
                         return new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);

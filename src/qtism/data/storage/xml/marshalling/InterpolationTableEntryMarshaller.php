@@ -106,12 +106,12 @@ class InterpolationTableEntryMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($sourceValue = static::getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
+        if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
 
-            if (($targetValue = static::getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
+            if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
                 $object = new InterpolationTableEntry($sourceValue, Utils::stringToDatatype($targetValue, $this->getBaseType()));
 
-                if (($includeBoundary = static::getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
+                if (($includeBoundary = $this->getDOMElementAttributeAs($element, 'includeBoundary', 'boolean')) !== null) {
                     $object->setIncludeBoundary($includeBoundary);
                 }
 

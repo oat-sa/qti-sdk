@@ -67,7 +67,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
 
             $object = new MathOperator($children, MathFunctions::getConstantByName($name));
 

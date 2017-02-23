@@ -127,11 +127,11 @@ class AssessmentItemMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+            if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
 
-                if (($title= static::getDOMElementAttributeAs($element, 'title')) !== null) {
+                if (($title= $this->getDOMElementAttributeAs($element, 'title')) !== null) {
 
                     if (empty($assessmentItem)) {
                         $object = new AssessmentItem($identifier, $title, $timeDependent);
@@ -141,23 +141,23 @@ class AssessmentItemMarshaller extends Marshaller
                         $object->setTimeDependent($timeDependent);
                     }
 
-                    if (($lang = static::getDOMElementAttributeAs($element, 'lang')) !== null) {
+                    if (($lang = $this->getDOMElementAttributeAs($element, 'lang')) !== null) {
                         $object->setLang($lang);
                     }
 
-                    if (($label = static::getDOMElementAttributeAs($element, 'label')) !== null) {
+                    if (($label = $this->getDOMElementAttributeAs($element, 'label')) !== null) {
                         $object->setLabel($label);
                     }
 
-                    if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+                    if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
                         $object->setAdaptive($adaptive);
                     }
 
-                    if (($toolName = static::getDOMElementAttributeAs($element, 'toolName')) !== null) {
+                    if (($toolName = $this->getDOMElementAttributeAs($element, 'toolName')) !== null) {
                         $object->setToolName($toolName);
                     }
 
-                    if (($toolVersion = static::getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
+                    if (($toolVersion = $this->getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
                         $object->setToolVersion($toolVersion);
                     }
 

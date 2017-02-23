@@ -116,7 +116,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
             // deal with views.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($views = static::getDOMElementAttributeAs($element, 'view')) != null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($views = $this->getDOMElementAttributeAs($element, 'view')) != null) {
                 $viewCollection = new ViewCollection();
                 foreach (explode("\x20", $views) as $viewName) {
                     $viewCollection[] = View::getConstantByName($viewName);
@@ -126,27 +126,27 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             // deal with interpretation.
-            if (($interpretation = static::getDOMElementAttributeAs($element, 'interpretation')) != null) {
+            if (($interpretation = $this->getDOMElementAttributeAs($element, 'interpretation')) != null) {
                 $object->setInterpretation($interpretation);
             }
 
             // deal with longInterpretation.
-            if (($longInterpretation = static::getDOMElementAttributeAs($element, 'longInterpretation')) != null) {
+            if (($longInterpretation = $this->getDOMElementAttributeAs($element, 'longInterpretation')) != null) {
                 $object->setLongInterpretation($longInterpretation);
             }
 
             // deal with normalMaximum.
-            if (($normalMaximum = static::getDOMElementAttributeAs($element, 'normalMaximum', 'float')) !== null) {
+            if (($normalMaximum = $this->getDOMElementAttributeAs($element, 'normalMaximum', 'float')) !== null) {
                 $object->setNormalMaximum($normalMaximum);
             }
 
             // deal with normalMinimum.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($normalMinimum = static::getDOMElementAttributeAs($element, 'normalMinimum', 'float')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($normalMinimum = $this->getDOMElementAttributeAs($element, 'normalMinimum', 'float')) !== null) {
                 $object->setNormalMinimum($normalMinimum);
             }
 
             // deal with matseryValue.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($masteryValue = static::getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($masteryValue = $this->getDOMElementAttributeAs($element, 'masteryValue', 'float')) !== null) {
                 $object->setMasteryValue($masteryValue);
             }
 

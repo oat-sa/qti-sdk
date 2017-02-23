@@ -70,15 +70,15 @@ class TimeLimitsMarshaller extends Marshaller
     {
         $object = new TimeLimits();
 
-        if (($value = static::getDOMElementAttributeAs($element, 'minTime', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'minTime', 'string')) !== null) {
             $object->setMinTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'maxTime', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'maxTime', 'string')) !== null) {
             $object->setMaxTime(StorageUtils::stringToDatatype("PT${value}S", BaseType::DURATION));
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowLateSubmission', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowLateSubmission', 'boolean')) !== null) {
             $object->setAllowLateSubmission($value);
         }
 

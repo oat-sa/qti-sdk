@@ -58,9 +58,9 @@ class RubricBlockRefMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
+            if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 return new RubricBlockRef($identifier, $href);
             } else {
                 $msg = "The mandatory 'href' attribute is missing from element 'rubricBlockRef'.";

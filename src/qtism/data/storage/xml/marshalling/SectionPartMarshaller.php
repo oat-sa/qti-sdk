@@ -84,15 +84,15 @@ class SectionPartMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
             $object = new SectionPart($identifier);
 
-            if (($required = static::getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
+            if (($required = $this->getDOMElementAttributeAs($element, 'required', 'boolean')) !== null) {
                 $object->setRequired($required);
             }
 
-            if (($fixed = static::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+            if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $object->setFixed($fixed);
             }
 

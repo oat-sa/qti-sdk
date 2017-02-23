@@ -93,11 +93,11 @@ class TestPartMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($navigationMode = static::getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
+            if (($navigationMode = $this->getDOMElementAttributeAs($element, 'navigationMode')) !== null) {
 
-                if (($submissionMode = static::getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
+                if (($submissionMode = $this->getDOMElementAttributeAs($element, 'submissionMode')) !== null) {
 
                     // We do not use the regular DOMElement::getElementsByTagName method
                     // because it is recursive. We only want the first level elements with

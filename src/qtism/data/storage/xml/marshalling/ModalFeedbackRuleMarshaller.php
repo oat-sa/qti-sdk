@@ -64,16 +64,16 @@ class ModalFeedbackRuleMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+            if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
                 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
                     
                     $showHide = ShowHide::getConstantByName($showHide);
                     $component = new ModalFeedbackRule($outcomeIdentifier, $showHide, $identifier);
                     
-                    if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
+                    if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
                         $component->setTitle($title);
                     }
                     

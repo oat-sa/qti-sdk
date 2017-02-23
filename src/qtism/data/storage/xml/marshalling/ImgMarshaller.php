@@ -78,9 +78,9 @@ class ImgMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($src = self::getDOMElementAttributeAs($element, 'src')) !== null) {
+        if (($src = $this->getDOMElementAttributeAs($element, 'src')) !== null) {
 
-            if (($alt = self::getDOMElementAttributeAs($element, 'alt')) === null) {
+            if (($alt = $this->getDOMElementAttributeAs($element, 'alt')) === null) {
                 // The XSD does not force the 'alt' attribute to be non-empty,
                 // thus we consider the 'alt' attribute value as an empty string ('').
                 $alt = '';
@@ -88,11 +88,11 @@ class ImgMarshaller extends Marshaller
 
             $component = new Img($src, $alt);
 
-            if (($longdesc = self::getDOMElementAttributeAs($element, 'longdesc')) !== null) {
+            if (($longdesc = $this->getDOMElementAttributeAs($element, 'longdesc')) !== null) {
                 $component->setLongdesc($longdesc);
             }
 
-            if (($height = self::getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
+            if (($height = $this->getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
                 if (stripos($height, '%') === false) {
                     $component->setHeight(intval($height));
                 } else {
@@ -100,7 +100,7 @@ class ImgMarshaller extends Marshaller
                 }
             }
 
-            if (($width = self::getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
+            if (($width = $this->getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
                 if (stripos($width, '%') === false) {
                     $component->setWidth(intval($width));
                 } else {

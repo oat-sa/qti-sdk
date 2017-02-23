@@ -70,17 +70,17 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($variableIdentifier = static::getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
+        if (($variableIdentifier = $this->getDOMElementAttributeAs($element, 'variableIdentifier')) !== null) {
             $object = new TestVariables($variableIdentifier);
             $object->setSectionIdentifier($baseComponent->getSectionIdentifier());
             $object->setIncludeCategories($baseComponent->getIncludeCategories());
             $object->setExcludeCategories($baseComponent->getExcludeCategories());
 
-            if (($baseType = static::getDOMElementAttributeAs($element, 'baseType')) !== null) {
+            if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType')) !== null) {
                 $object->setBaseType(BaseType::getConstantByName($baseType));
             }
 
-            if (($weightIdentifier = static::getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
+            if (($weightIdentifier = $this->getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
                 $object->setWeightIdentifier($weightIdentifier);
             }
 

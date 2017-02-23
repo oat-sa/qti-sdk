@@ -59,31 +59,31 @@ class ItemSessionControlMarshaller extends Marshaller
     {
         $object = new ItemSessionControl();
 
-        if (($value = static::getDOMElementAttributeAs($element, 'maxAttempts', 'integer')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'maxAttempts', 'integer')) !== null) {
             $object->setMaxAttempts($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'showFeedback', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'showFeedback', 'boolean')) !== null) {
             $object->setShowFeedback($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowReview', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowReview', 'boolean')) !== null) {
             $object->setAllowReview($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'showSolution', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'showSolution', 'boolean')) !== null) {
             $object->setShowSolution($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowComment', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowComment', 'boolean')) !== null) {
             $object->setAllowComment($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'allowSkipping', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'allowSkipping', 'boolean')) !== null) {
             $object->setAllowSkipping($value);
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'validateResponses', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'validateResponses', 'boolean')) !== null) {
             $object->setValidateResponses($value);
         }
 

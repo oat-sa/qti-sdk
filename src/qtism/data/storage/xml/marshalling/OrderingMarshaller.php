@@ -59,7 +59,7 @@ class OrderingMarshaller extends Marshaller
     {
         $object = new Ordering();
 
-        if (($value = static::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
             $object->setShuffle($value);
         }
 

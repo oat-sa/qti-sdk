@@ -84,15 +84,15 @@ class AreaMappingMarshaller extends Marshaller
 
         $object = new AreaMapping($areaMapEntries);
 
-        if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
+        if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
             $object->setDefaultValue($defaultValue);
         }
 
-        if (($lowerBound = static::getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
+        if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
             $object->setLowerBound($lowerBound);
         }
 
-        if (($upperBound = static::getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
+        if (($upperBound = $this->getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
             $object->setUpperBound($upperBound);
         }
 

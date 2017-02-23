@@ -67,7 +67,7 @@ class SubstringMarshaller extends OperatorMarshaller
     {
         $object = new Substring($children);
 
-        if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+        if (($caseSensitive = $this->getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
             $object->setCaseSensitive($caseSensitive);
         }
 

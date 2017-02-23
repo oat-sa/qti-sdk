@@ -75,14 +75,14 @@ class VariableDeclarationMarshaller extends Marshaller
     {
         try {
             // identifier is a mandatory value for the variableDeclaration element.
-            if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
                 // cardinality is a mandatory value too.
-                if (($cardinality = static::getDOMElementAttributeAs($element, 'cardinality')) !== null) {
+                if (($cardinality = $this->getDOMElementAttributeAs($element, 'cardinality')) !== null) {
                     $object = new VariableDeclaration($identifier, -1, Cardinality::getConstantByName($cardinality));
 
                     // deal with baseType.
-                    $baseType = static::getDOMElementAttributeAs($element, 'baseType');
+                    $baseType = $this->getDOMElementAttributeAs($element, 'baseType');
                     if (!empty($baseType)) {
                         $object->setBaseType(BaseType::getConstantByName($baseType));
                     }

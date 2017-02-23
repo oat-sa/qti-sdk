@@ -118,14 +118,14 @@ class MapEntryMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         try {
-            $mapKey = static::getDOMElementAttributeAs($element, 'mapKey');
+            $mapKey = $this->getDOMElementAttributeAs($element, 'mapKey');
             $mapKey = Utils::stringToDatatype($mapKey, $this->getBaseType());
 
-            if (($mappedValue = static::getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
+            if (($mappedValue = $this->getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
 
                 $object = new MapEntry($mapKey, $mappedValue);
 
-                if (Version::compare($this->getVersion(), '2.0.0', '>') && ($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+                if (Version::compare($this->getVersion(), '2.0.0', '>') && ($caseSensitive = $this->getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
                     $object->setCaseSensitive($caseSensitive);
                 }
 

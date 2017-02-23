@@ -63,11 +63,11 @@ class ShufflingGroupMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifiers = self::getDOMElementAttributeAs($element, 'identifiers')) !== null) {
+        if (($identifiers = $this->getDOMElementAttributeAs($element, 'identifiers')) !== null) {
             $identifiers = explode("\x20", $identifiers);
             $component = new ShufflingGroup(new IdentifierCollection($identifiers));
             
-            if (($fixedIdentifiers = self::getDOMElementAttributeAs($element, 'fixedIdentifiers')) !== null) {
+            if (($fixedIdentifiers = $this->getDOMElementAttributeAs($element, 'fixedIdentifiers')) !== null) {
                 $fixedIdentifiers = explode("\x20", $fixedIdentifiers);
                 $component->setFixedIdentifiers(new IdentifierCollection($fixedIdentifiers));
             }

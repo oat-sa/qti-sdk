@@ -129,7 +129,7 @@ class MatchTableMarshaller extends Marshaller
 
             $object = new MatchTable($matchTableEntries);
 
-            if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
+            if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue')) !== null) {
                 try {
                     $defaultValue = Utils::stringToDatatype($defaultValue, $this->getBaseType());
                     $object->setDefaultValue($defaultValue);

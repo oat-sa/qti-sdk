@@ -58,7 +58,7 @@ class MapResponseMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             $object = new MapResponse($identifier);
 
             return $object;

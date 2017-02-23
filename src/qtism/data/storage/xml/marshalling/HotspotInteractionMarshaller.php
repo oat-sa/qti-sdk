@@ -43,7 +43,7 @@ class HotspotInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $objectElts = self::getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
@@ -56,11 +56,11 @@ class HotspotInteractionMarshaller extends ContentMarshaller
                     $fqClass = $this->lookupClass($element);
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
-                    if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                    if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                         $component->setMinChoices($minChoices);
                     }
                     
-                    if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                    if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                         $component->setMaxChoices($maxChoices);
                     } elseif (Version::compare($version, '2.1.0', '<') === true) {
                         $msg = "The mandatory 'maxChoices' attribute is missing from the '" . $element->localName . "' element.";

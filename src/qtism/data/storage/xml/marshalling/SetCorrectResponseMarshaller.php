@@ -60,7 +60,7 @@ class SetCorrectResponseMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
 
             if ($expressionElt !== false) {

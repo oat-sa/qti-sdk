@@ -79,13 +79,13 @@ class TestFeedbackMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             
-            if (($outcomeIdentifier = static::getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
+            if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
                 
-                if (($showHide = static::getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide', 'string')) !== null) {
                     
-                    if (($access = static::getDOMElementAttributeAs($element, 'access', 'string')) !== null) {
+                    if (($access = $this->getDOMElementAttributeAs($element, 'access', 'string')) !== null) {
 
                         $content = new FlowStaticCollection();
     
@@ -110,7 +110,7 @@ class TestFeedbackMarshaller extends Marshaller
                         $object->setAccess(($access == 'atEnd') ? TestFeedbackAccess::AT_END : TestFeedbackAccess::DURING);
                         $object->setShowHide(($showHide == 'show') ? ShowHide::SHOW : ShowHide::HIDE);
 
-                        if (($title = static::getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
+                        if (($title = $this->getDOMElementAttributeAs($element, 'title', 'string')) !== null) {
                             $object->setTitle($title);
                         }
 

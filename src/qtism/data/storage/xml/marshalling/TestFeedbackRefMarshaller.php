@@ -64,15 +64,15 @@ class TestFeedbackRefMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
+            if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 
-                if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+                if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
                     
-                    if (($access = self::getDOMElementAttributeAs($element, 'access')) !== null) {
+                    if (($access = $this->getDOMElementAttributeAs($element, 'access')) !== null) {
                         
-                        if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                        if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                             
                             $access = TestFeedbackAccess::getConstantByName($access);
                             $showHide = ShowHide::getConstantByName($showHide);

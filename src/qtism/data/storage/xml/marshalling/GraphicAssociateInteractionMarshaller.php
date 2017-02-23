@@ -43,7 +43,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $objectElts = self::getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
@@ -56,14 +56,14 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
                     $fqClass = $this->lookupClass($element);
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
-                    if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+                    if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                         $component->setMaxAssociations($maxAssociations);
                     } elseif (Version::compare($version, '2.1.0', '<') === true) {
                         $msg = "The mandatory 'maxAssociations' attribute is missing from the 'graphicAssociateInteraction' element.";
                         throw new UnmarshallingException($msg, $element);
                     }
                     
-                    if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+                    if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                         $component->setMinAssociations($minAssociations);
                     }
 

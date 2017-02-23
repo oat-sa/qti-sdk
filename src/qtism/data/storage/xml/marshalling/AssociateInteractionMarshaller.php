@@ -42,7 +42,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         // responseIdentifier.
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $version = $this->getVersion();
             
@@ -50,7 +50,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
             $component = new $fqClass($responseIdentifier, new SimpleAssociableChoiceCollection($children->getArrayCopy()));
 
             // shuffle.
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             } elseif (Version::compare($version, '2.0.0', '==') === true) {
                 $msg = "The mandatory attribute 'shuffle' is missing from the 'associateInteraction' element.";
@@ -58,7 +58,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
             }
 
             // maxAssociations.
-            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+            if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                 $component->setMaxAssociations($maxAssociations);
             } elseif (Version::compare($version, '2.0.0', '==') === true) {
                 $msg = "The mandatory attribute 'maxAssociations' is missing from the 'associateInteraction' element.";
@@ -66,7 +66,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
             }
 
             // minAssociations.
-            if (Version::compare($version, '2.1.0', '>=') && ($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') && ($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                 $component->setMinAssociations($minAssociations);
             }
 

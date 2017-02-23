@@ -64,9 +64,9 @@ class EndAttemptInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            if (($title = self::getDOMElementAttributeAs($element, 'title')) === null) {
+            if (($title = $this->getDOMElementAttributeAs($element, 'title')) === null) {
                 // The XSD does not restrict to an empty string, we then consider
                 // the title as an empty string ('').
                 $title = '';

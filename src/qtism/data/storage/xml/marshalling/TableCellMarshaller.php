@@ -46,7 +46,7 @@ class TableCellMarshaller extends ContentMarshaller
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
 
-        if (($headers = self::getDOMElementAttributeAs($element, 'headers')) !== null) {
+        if (($headers = $this->getDOMElementAttributeAs($element, 'headers')) !== null) {
             try {
                 $headersCollection = new IdentifierCollection();
 
@@ -61,23 +61,23 @@ class TableCellMarshaller extends ContentMarshaller
             }
         }
 
-        if (($scope = self::getDOMElementAttributeAs($element, 'scope')) !== null) {
+        if (($scope = $this->getDOMElementAttributeAs($element, 'scope')) !== null) {
             $component->setScope(TableCellScope::getConstantByName($scope));
         }
 
-        if (($abbr = self::getDOMElementAttributeAs($element, 'abbr')) !== null) {
+        if (($abbr = $this->getDOMElementAttributeAs($element, 'abbr')) !== null) {
             $component->setAbbr($abbr);
         }
 
-        if (($axis = self::getDOMElementAttributeAs($element, 'axis')) !== null) {
+        if (($axis = $this->getDOMElementAttributeAs($element, 'axis')) !== null) {
             $component->setAxis($axis);
         }
 
-        if (($rowspan = self::getDOMElementAttributeAs($element, 'rowspan', 'integer')) !== null) {
+        if (($rowspan = $this->getDOMElementAttributeAs($element, 'rowspan', 'integer')) !== null) {
             $component->setRowspan($rowspan);
         }
 
-        if (($colspan = self::getDOMElementAttributeAs($element, 'colspan', 'integer')) !== null) {
+        if (($colspan = $this->getDOMElementAttributeAs($element, 'colspan', 'integer')) !== null) {
             $component->setColspan($colspan);
         }
 

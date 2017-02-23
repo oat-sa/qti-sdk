@@ -63,13 +63,13 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($outcomeIdentifier = static::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+        if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
             $object = new OutcomeMaximum($outcomeIdentifier);
             $object->setSectionIdentifier($baseComponent->getSectionIdentifier());
             $object->setIncludeCategories($baseComponent->getIncludeCategories());
             $object->setExcludeCategories($baseComponent->getExcludeCategories());
 
-            if (($weightIdentifier = static::getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
+            if (($weightIdentifier = $this->getDOMElementAttributeAs($element, 'weightIdentifier')) !== null) {
                 $object->setWeightIdentifier($weightIdentifier);
             }
 

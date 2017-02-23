@@ -60,9 +60,9 @@ class InsideMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
+        if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
 
-            if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null ) {
+            if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null ) {
 
                 $shape = QtiShape::getConstantByName($shape);
                 $coords = Utils::stringToCoords($coords, $shape);

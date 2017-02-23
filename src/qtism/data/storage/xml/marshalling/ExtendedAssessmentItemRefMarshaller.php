@@ -197,18 +197,18 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         }
         $compactAssessmentItemRef->setResponseValidityConstraints($responseValidityConstraints);
 
-        if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+        if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);
         }
 
-        if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+        if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
             $compactAssessmentItemRef->setTimeDependent($timeDependent);
         } else {
             $msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
         
-        if (($endAttemptIdentifiers = self::getDOMElementAttributeAs($element, 'endAttemptIdentifiers')) !== null) {
+        if (($endAttemptIdentifiers = $this->getDOMElementAttributeAs($element, 'endAttemptIdentifiers')) !== null) {
             $identifiersArray = explode("\x20", $endAttemptIdentifiers);
             if (count($identifiersArray) > 0) {
                 $compactAssessmentItemRef->setEndAttemptIdentifiers(new IdentifierCollection($identifiersArray));

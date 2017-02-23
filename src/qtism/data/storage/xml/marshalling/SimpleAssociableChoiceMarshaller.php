@@ -45,30 +45,30 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+            if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
 
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($identifier, $matchMax);
 
-                if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                     $component->setFixed($fixed);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
                 
-                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                     $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                 }
 

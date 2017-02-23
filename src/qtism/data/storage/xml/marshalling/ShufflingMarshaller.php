@@ -64,7 +64,7 @@ class ShufflingMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
             $shufflingGroupElts = self::getChildElements($element, 'shufflingGroup');
             

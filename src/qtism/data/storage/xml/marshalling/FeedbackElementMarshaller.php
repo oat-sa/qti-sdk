@@ -46,13 +46,13 @@ class FeedbackElementMarshaller extends ContentMarshaller
     {
         $fqClass = $this->lookupClass($element);
 
-        if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+        if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
 
-            if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
                 $component = new $fqClass($outcomeIdentifier, $identifier);
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
 
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));

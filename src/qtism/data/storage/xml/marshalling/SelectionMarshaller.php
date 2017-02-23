@@ -60,10 +60,10 @@ class SelectionMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // select is a mandatory value, retrieve it first.
-        if (($value = static::getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
             $object = new Selection($value);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
                 $object->setWithReplacement($value);
             }
         } else {

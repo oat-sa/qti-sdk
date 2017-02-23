@@ -82,9 +82,9 @@ class MediaInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            if (($autostart = self::getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
+            if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
 
                 $objectElts = self::getChildElementsByTagName($element, 'object');
                 if (count($objectElts) > 0) {
@@ -100,15 +100,15 @@ class MediaInteractionMarshaller extends Marshaller
                         $component->setPrompt($prompt);
                     }
 
-                    if (($minPlays = self::getDOMElementAttributeAs($element, 'minPlays', 'integer')) !== null) {
+                    if (($minPlays = $this->getDOMElementAttributeAs($element, 'minPlays', 'integer')) !== null) {
                         $component->setMinPlays($minPlays);
                     }
 
-                    if (($maxPlays = self::getDOMElementAttributeAs($element, 'maxPlays', 'integer')) !== null) {
+                    if (($maxPlays = $this->getDOMElementAttributeAs($element, 'maxPlays', 'integer')) !== null) {
                         $component->setMaxPlays($maxPlays);
                     }
 
-                    if (($loop = self::getDOMElementAttributeAs($element, 'loop', 'boolean')) !== null) {
+                    if (($loop = $this->getDOMElementAttributeAs($element, 'loop', 'boolean')) !== null) {
                         $component->setLoop($loop);
                     }
 

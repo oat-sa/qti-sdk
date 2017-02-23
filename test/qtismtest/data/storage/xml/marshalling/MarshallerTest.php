@@ -183,28 +183,4 @@ class MarshallerTest extends QtiSmTestCase
         
         $marshaller->hello();
     }
-    
-    /**
-     * @dataProvider getDOMElementAttributeAsProvider
-     */
-    public function testGetDOMElementAttributeAs(\DOMElement $element, $attribute, $datatype, $expected)
-    {
-        $result = Marshaller::getDOMElementAttributeAs($element, $attribute, $datatype);
-        $this->assertSame($expected, $result);
-    }
-    
-    public function getDOMElementAttributeAsProvider()
-    {        
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true"/>');
-        $elt = $dom->documentElement;
-        
-        return array(
-            array($elt, 'string', 'string', 'str'),
-            array($elt, 'integer', 'integer', 1),
-            array($elt, 'float', 'float', 1.1),
-            array($elt, 'double', 'double', 1.1),
-            array($elt, 'boolean', 'boolean', true),
-        );
-    }
 }

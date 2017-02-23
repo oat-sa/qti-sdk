@@ -61,7 +61,7 @@ class BaseValueMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($baseType = static::getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
+        if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
 
             $value = $element->nodeValue;
             $baseTypeCst = BaseType::getConstantByName($baseType);

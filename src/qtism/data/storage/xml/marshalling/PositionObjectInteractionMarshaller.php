@@ -79,7 +79,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $objectElts = self::getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
@@ -87,15 +87,15 @@ class PositionObjectInteractionMarshaller extends Marshaller
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $component = new PositionObjectInteraction($responseIdentifier, $object);
 
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     $component->setMaxChoices($maxChoices);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
 
-                if (($centerPoint = self::getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
+                if (($centerPoint = $this->getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
                     $points = explode("\x20", $centerPoint);
                     $pointsCount = count($points);
 

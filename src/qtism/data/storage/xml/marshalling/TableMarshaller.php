@@ -122,7 +122,7 @@ class TableMarshaller extends Marshaller
 
             $component = new Table($tbodies);
 
-            if (($summary = self::getDOMElementAttributeAs($element, 'summary')) !== null) {
+            if (($summary = $this->getDOMElementAttributeAs($element, 'summary')) !== null) {
                 $component->setSummary($summary);
             }
 

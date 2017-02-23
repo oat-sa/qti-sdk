@@ -59,7 +59,7 @@ class MathConstantMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($name = static::getDOMElementAttributeAs($element, 'name')) !== null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
                 $object = new MathConstant($cst);
 

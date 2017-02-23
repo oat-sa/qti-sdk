@@ -80,14 +80,14 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
 
             $version = $this->getVersion();
             
-            if (($paramVariable = self::getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
+            if (($paramVariable = $this->getDOMElementAttributeAs($element, 'paramVariable', 'boolean')) !== null) {
                 $object->setParamVariable($paramVariable);
             } elseif (Version::compare($version, '2.0.0', '==') === true) {
                 $msg = "The mandatory attribute 'paramVariable' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
 
-            if (($mathVariable = self::getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
+            if (($mathVariable = $this->getDOMElementAttributeAs($element, 'mathVariable', 'boolean')) !== null) {
                 $object->setMathVariable($mathVariable);
             } elseif (Version::compare($version, '2.0.0', '==') === true) {
                 $msg = "The mandatory attribute 'mathVariable' is missing from element '" . $element->localName . "'.";

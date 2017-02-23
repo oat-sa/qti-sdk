@@ -57,7 +57,7 @@ class IndexMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($n = static::getDOMElementAttributeAs($element, 'n')) !== null) {
+        if (($n = $this->getDOMElementAttributeAs($element, 'n')) !== null) {
 
             if (Format::isInteger($n)) {
                 $n = intval($n);

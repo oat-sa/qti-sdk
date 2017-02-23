@@ -60,8 +60,8 @@ class VariableMappingMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($source = static::getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
-            if (($target = static::getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
+        if (($source = $this->getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
+            if (($target = $this->getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
                 try {
                     $object = new VariableMapping($source, $target);
 

@@ -55,7 +55,7 @@ class BlockquoteMarshaller extends ContentMarshaller
         }
         $component->setContent($blockCollection);
 
-        if (($cite = self::getDOMElementAttributeAs($element, 'cite')) !== null) {
+        if (($cite = $this->getDOMElementAttributeAs($element, 'cite')) !== null) {
             $component->setCite($cite);
         }
 

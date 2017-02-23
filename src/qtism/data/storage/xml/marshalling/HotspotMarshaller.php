@@ -108,11 +108,11 @@ class HotspotMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($shape = self::getDOMElementAttributeAs($element, 'shape')) !== null) {
+            if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
 
-                if (($coords = self::getDOMElementAttributeAs($element, 'coords')) !== null) {
+                if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
 
                     $shape = QtiShape::getConstantByName($shape);
                     if ($shape === false) {
@@ -133,7 +133,7 @@ class HotspotMarshaller extends Marshaller
                     if ($element->localName === 'hotspotChoice') {
                         $component = new HotspotChoice($identifier, $shape, $coords);
                     } else {
-                        if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+                        if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
                             $component = new AssociableHotspot($identifier, $matchMax, $shape, $coords);
                         } else {
                             $msg = "The mandatory attribute 'matchMax' is missing from element 'associableHotspot'.";
@@ -141,19 +141,19 @@ class HotspotMarshaller extends Marshaller
                         }
                     }
 
-                    if (($hotspotLabel = self::getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {
+                    if (($hotspotLabel = $this->getDOMElementAttributeAs($element, 'hotspotLabel')) !== null) {
                         $component->setHotspotLabel($hotspotLabel);
                     }
 
-                    if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                    if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                         $component->setFixed($fixed);
                     }
 
-                    if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                    if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                         $component->setTemplateIdentifier($templateIdentifier);
                     }
 
-                    if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                    if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
 
                         if (($showHide = ShowHide::getConstantByName($showHide)) !== false) {
                             $component->setShowHide($showHide);
@@ -165,13 +165,13 @@ class HotspotMarshaller extends Marshaller
                     
                     if ($element->localName === 'associableHotspot') {
                         if (Version::compare($version, '2.1.0', '<') === true) {
-                            if (($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                            if (($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                                 $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                             }
                         }
                         
                         if (Version::compare($version, '2.1.0', '>=') === true) {
-                            if (($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                            if (($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                                 $component->setMatchMin($matchMin);
                             }
                         }

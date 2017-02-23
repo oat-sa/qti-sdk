@@ -114,7 +114,7 @@ class TextInteractionMarshaller extends Marshaller
     {
         $version = $this->getVersion();
         
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             try {
                 $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->localName);
@@ -124,23 +124,23 @@ class TextInteractionMarshaller extends Marshaller
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
-            if (($base = self::getDOMElementAttributeAs($element, 'base', 'integer')) !== null) {
+            if (($base = $this->getDOMElementAttributeAs($element, 'base', 'integer')) !== null) {
                 $component->setBase($base);
             }
 
-            if (($stringIdentifier = self::getDOMElementAttributeAs($element, 'stringIdentifier')) !== null) {
+            if (($stringIdentifier = $this->getDOMElementAttributeAs($element, 'stringIdentifier')) !== null) {
                 $component->setStringIdentifier($stringIdentifier);
             }
 
-            if (($expectedLength = self::getDOMElementAttributeAs($element, 'expectedLength', 'integer')) !== null) {
+            if (($expectedLength = $this->getDOMElementAttributeAs($element, 'expectedLength', 'integer')) !== null) {
                 $component->setExpectedLength($expectedLength);
             }
 
-            if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) !== null) {
+            if (($patternMask = $this->getDOMElementAttributeAs($element, 'patternMask')) !== null) {
                 $component->setPatternMask($patternMask);
             }
 
-            if (($placeholderText = self::getDOMElementAttributeAs($element, 'placeholderText')) !== null) {
+            if (($placeholderText = $this->getDOMElementAttributeAs($element, 'placeholderText')) !== null) {
                 $component->setPlaceholderText($placeholderText);
             }
 
@@ -150,19 +150,19 @@ class TextInteractionMarshaller extends Marshaller
 
             if ($element->localName === 'extendedTextInteraction') {
 
-                if (($maxStrings = self::getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
+                if (($maxStrings = $this->getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
                     $component->setMaxStrings($maxStrings);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($minStrings = self::getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minStrings = $this->getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
                     $component->setMinStrings($minStrings);
                 }
 
-                if (($expectedLines = self::getDOMElementAttributeAs($element, 'expectedLines', 'integer')) !== null) {
+                if (($expectedLines = $this->getDOMElementAttributeAs($element, 'expectedLines', 'integer')) !== null) {
                     $component->setExpectedLines($expectedLines);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($format = $this->getDOMElementAttributeAs($element, 'format')) !== null) {
                     $component->setFormat(TextFormat::getConstantByName($format));
                 }
 

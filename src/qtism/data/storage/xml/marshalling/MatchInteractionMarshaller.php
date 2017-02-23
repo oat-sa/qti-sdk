@@ -45,7 +45,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         
         // responseIdentifier.
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $fqClass = $this->lookupClass($element);
 
@@ -57,7 +57,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // shuffle.
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             } elseif (Version::compare($version, '2.1.0', '<') === true) {
                 $msg = "The mandatory attribute 'shuffle' is missing from the 'matchInteraction' element.";
@@ -65,7 +65,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // maxAssociations.
-            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+            if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                 $component->setMaxAssociations($maxAssociations);
             } elseif (Version::compare($version, '2.1.0', '<') === true) {
                 $msg = "The mandatory attribute 'maxAssociations' is missing from the 'matchInteraction' element.";
@@ -73,7 +73,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // minAssociations.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                 $component->setMinAssociations($minAssociations);
             }
 

@@ -68,16 +68,16 @@ class ItemSubsetMarshaller extends Marshaller
     {
         $object = new ItemSubset();
 
-        if (($sectionIdentifier = static::getDOMElementAttributeAs($element, 'sectionIdentifier')) !== null) {
+        if (($sectionIdentifier = $this->getDOMElementAttributeAs($element, 'sectionIdentifier')) !== null) {
             $object->setSectionIdentifier($sectionIdentifier);
         }
 
-        if (($includeCategories = static::getDOMElementAttributeAs($element, 'includeCategory')) !== null) {
+        if (($includeCategories = $this->getDOMElementAttributeAs($element, 'includeCategory')) !== null) {
             $includeCategories = new IdentifierCollection(explode("\x20", $includeCategories));
             $object->setIncludeCategories($includeCategories);
         }
 
-        if (($excludeCategories = static::getDOMElementAttributeAs($element, 'excludeCategory')) !== null) {
+        if (($excludeCategories = $this->getDOMElementAttributeAs($element, 'excludeCategory')) !== null) {
             $excludeCategories = new IdentifierCollection(explode("\x20", $excludeCategories));
             $object->setExcludeCategories($excludeCategories);
         }

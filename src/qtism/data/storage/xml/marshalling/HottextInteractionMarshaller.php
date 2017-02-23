@@ -44,7 +44,7 @@ class HottextInteractionMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $fqClass = $this->lookupClass($element);
             try {
@@ -61,11 +61,11 @@ class HottextInteractionMarshaller extends ContentMarshaller
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
-            if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+            if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                 $component->setMaxChoices($maxChoices);
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                 $component->setMinChoices($minChoices);
             }
 

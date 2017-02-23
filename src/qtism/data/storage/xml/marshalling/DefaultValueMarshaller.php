@@ -101,7 +101,7 @@ class DefaultValueMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        $interpretation = static::getDOMElementAttributeAs($element, 'interpretation', 'string');
+        $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
 
         // Retrieve the values ...

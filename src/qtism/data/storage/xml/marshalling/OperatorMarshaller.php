@@ -159,11 +159,11 @@ class OperatorMarshaller extends RecursiveMarshaller
             $params[] = $frag->ownerDocument->saveXML($frag);
             $component = Reflection::newInstance($class, $params);
 
-            if (($class = self::getDOMElementAttributeAs($element, 'class')) !== null) {
+            if (($class = $this->getDOMElementAttributeAs($element, 'class')) !== null) {
                 $component->setClass($class);
             }
 
-            if (($definition = self::getDOMElementAttributeAs($element, 'definition')) !== null) {
+            if (($definition = $this->getDOMElementAttributeAs($element, 'definition')) !== null) {
                 $component->setDefinition($definition);
             }
 

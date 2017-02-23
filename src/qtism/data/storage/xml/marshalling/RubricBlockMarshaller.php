@@ -96,7 +96,7 @@ class RubricBlockMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // First we retrieve the mandatory views.
-        if (($value = static::getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
             $viewsArray = explode("\x20", $value);
             $viewsCollection = new ViewCollection();
             $ref = View::asArray();
@@ -110,7 +110,7 @@ class RubricBlockMarshaller extends Marshaller
 
             $object = new RubricBlock($viewsCollection);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'use', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'use', 'string')) !== null) {
                 $object->setUse($value);
             }
 

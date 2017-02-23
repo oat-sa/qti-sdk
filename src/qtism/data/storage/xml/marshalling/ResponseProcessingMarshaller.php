@@ -86,11 +86,11 @@ class ResponseProcessingMarshaller extends Marshaller
             $object->setResponseRules($responseRules);
         }
 
-        if (($template = static::getDOMElementAttributeAs($element, 'template')) !== null) {
+        if (($template = $this->getDOMElementAttributeAs($element, 'template')) !== null) {
             $object->setTemplate($template);
         }
 
-        if (($templateLocation = static::getDOMElementAttributeAs($element, 'templateLocation')) !== null) {
+        if (($templateLocation = $this->getDOMElementAttributeAs($element, 'templateLocation')) !== null) {
             $object->setTemplateLocation($templateLocation);
         }
 

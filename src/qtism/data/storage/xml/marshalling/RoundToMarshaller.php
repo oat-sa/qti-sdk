@@ -69,7 +69,7 @@ class RoundToMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($figures = static::getDOMElementAttributeAs($element, 'figures', 'string')) !== null) {
+        if (($figures = $this->getDOMElementAttributeAs($element, 'figures', 'string')) !== null) {
 
             if (!Format::isVariableRef($figures)) {
                 $figures = intval($figures);
@@ -77,7 +77,7 @@ class RoundToMarshaller extends OperatorMarshaller
 
             $object = new RoundTo($children, $figures);
 
-            if (($roundingMode = static::getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
+            if (($roundingMode = $this->getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
                 $object->setRoundingMode(RoundingMode::getConstantByName($roundingMode));
             }
 

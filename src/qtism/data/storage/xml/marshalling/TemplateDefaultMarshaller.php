@@ -64,7 +64,7 @@ class TemplateDefaultMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($tplIdentifier = static::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+        if (($tplIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
 
             $expressionElt = self::getFirstChildElement($element);
 

@@ -66,7 +66,7 @@ class RepeatMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($numberRepeats = static::getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
+        if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
 
             if (Format::isInteger($numberRepeats)) {
                 $numberRepeats = intval($numberRepeats);

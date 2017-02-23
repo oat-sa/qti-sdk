@@ -47,9 +47,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $baseComponent = $baseMarshaller->unmarshall($element);
 
-        if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
 
-            if (($visible = static::getDOMElementAttributeAs($element, 'visible', 'boolean')) !== null) {
+            if (($visible = $this->getDOMElementAttributeAs($element, 'visible', 'boolean')) !== null) {
 
                 if (empty($assessmentSection)) {
                     $object = new AssessmentSection($baseComponent->getIdentifier(), $title, $visible);
@@ -69,7 +69,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 $object->setTimeLimits($baseComponent->getTimeLimits());
 
                 // Deal with the keepTogether attribute.
-                if (($keepTogether = static::getDOMElementAttributeAs($element, 'keepTogether', 'boolean')) !== null) {
+                if (($keepTogether = $this->getDOMElementAttributeAs($element, 'keepTogether', 'boolean')) !== null) {
                     $object->setKeepTogether($keepTogether);
                 }
 

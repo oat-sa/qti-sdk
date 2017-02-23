@@ -42,7 +42,7 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $gapChoiceElts = self::getChildElementsByTagName($element, array('gapText', 'gapImg'));
             if (count($gapChoiceElts) > 0) {
@@ -60,7 +60,7 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
                     $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
                 }
 
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                     $component->setShuffle($shuffle);
                 }
 

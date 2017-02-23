@@ -50,7 +50,7 @@ class InfoControlMarshaller extends ContentMarshaller
 
         $this->fillBodyElement($component, $element);
         
-        if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
             $component->setTitle($title);
         }
 

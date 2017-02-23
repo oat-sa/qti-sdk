@@ -26,6 +26,7 @@ use qtism\common\utils\Version;
 use qtism\data\content\Direction;
 use qtism\data\QtiComponent;
 use qtism\data\content\BodyElement;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMDocument;
 use \DOMElement;
 use \RuntimeException;
@@ -335,39 +336,9 @@ abstract class Marshaller
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      */
-    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
-        $attr = $element->getAttribute($attribute);
-
-        if ($attr !== '') {
-            switch ($datatype) {
-                case 'string':
-                    return $attr;
-                break;
-
-                case 'integer':
-                    return intval($attr);
-                break;
-
-                case 'float':
-                    return floatval($attr);
-                break;
-
-                case 'double':
-                    return doubleval($attr);
-                break;
-
-                case 'boolean':
-                    return ($attr == 'true') ? true : false;
-                break;
-
-                default:
-                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
-                break;
-            }
-        } else {
-            return null;
-        }
+        return XmlUtils::getDOMElementAttributeAs($element, $attribute, $datatype);
     }
 
     /**
@@ -533,7 +504,7 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
             
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = self::getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
                 $bodyElement->setDir(Direction::getConstantByName($dir));
             }
         } catch (InvalidArgumentException $e) {

@@ -65,21 +65,21 @@ class ParamMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($name = self::getDOMElementAttributeAs($element, 'name')) === null) {
+        if (($name = $this->getDOMElementAttributeAs($element, 'name')) === null) {
             // XSD use="required" but can be empty.
             $name = '';
         }
 
-        if (($value = self::getDOMElementAttributeAs($element, 'value')) === null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'value')) === null) {
             // XSD use="required" but can be empty.
             $value = '';
         }
 
-        if (($valueType = self::getDOMElementAttributeAs($element, 'valuetype')) !== null) {
+        if (($valueType = $this->getDOMElementAttributeAs($element, 'valuetype')) !== null) {
 
             $component = new Param($name, $value, ParamType::getConstantByName($valueType));
 
-            if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+            if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
                 $component->setType($type);
             }
 

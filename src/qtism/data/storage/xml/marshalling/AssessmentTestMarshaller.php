@@ -103,9 +103,9 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
 	 */
     protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
     {
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+            if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
 
                 if (empty($assessmentTest)) {
                     $object = new AssessmentTest($identifier, $title);
@@ -128,11 +128,11 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
 
                     $object->setTestParts($testParts);
 
-                    if (($toolName = static::getDOMElementAttributeAs($element, 'toolName')) !== null) {
+                    if (($toolName = $this->getDOMElementAttributeAs($element, 'toolName')) !== null) {
                         $object->setToolName($toolName);
                     }
 
-                    if (($toolVersion = static::getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
+                    if (($toolVersion = $this->getDOMElementAttributeAs($element, 'toolVersion')) !== null) {
                         $object->setToolVersion($toolVersion);
                     }
 

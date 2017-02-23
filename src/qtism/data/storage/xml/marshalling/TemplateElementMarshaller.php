@@ -46,13 +46,13 @@ class TemplateElementMarshaller extends ContentMarshaller
     {
         $fqClass = $this->lookupClass($element);
 
-        if (($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+        if (($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
 
-            if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
                 $component = new $fqClass($templateIdentifier, $identifier);
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
 
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));

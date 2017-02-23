@@ -71,7 +71,7 @@ class UploadInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $component = new UploadInteraction($responseIdentifier);
 
@@ -82,7 +82,7 @@ class UploadInteractionMarshaller extends Marshaller
                 $component->setPrompt($prompt);
             }
 
-            if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+            if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
                 $component->setType($type);
             }
 

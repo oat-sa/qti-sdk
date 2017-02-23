@@ -73,12 +73,12 @@ class EqualMarshaller extends OperatorMarshaller
     {
         $object = new Equal($children);
 
-        if (($toleranceMode = static::getDOMElementAttributeAs($element, 'toleranceMode')) !== null) {
+        if (($toleranceMode = $this->getDOMElementAttributeAs($element, 'toleranceMode')) !== null) {
             $toleranceMode = ToleranceMode::getConstantByName($toleranceMode);
             $object->setToleranceMode($toleranceMode);
         }
 
-        if (($tolerance = static::getDOMElementAttributeAs($element, 'tolerance')) !== null) {
+        if (($tolerance = $this->getDOMElementAttributeAs($element, 'tolerance')) !== null) {
             $tolerance = explode("\x20", $tolerance);
 
             if (count($tolerance) < 1) {
@@ -97,11 +97,11 @@ class EqualMarshaller extends OperatorMarshaller
             }
         }
 
-        if (($includeLowerBound = static::getDOMElementAttributeAs($element, 'includeLowerBound', 'boolean')) !== null) {
+        if (($includeLowerBound = $this->getDOMElementAttributeAs($element, 'includeLowerBound', 'boolean')) !== null) {
             $object->setIncludeLowerBound($includeLowerBound);
         }
 
-        if (($includeUpperBound = static::getDOMElementAttributeAs($element, 'includeUpperBound', 'boolean')) !== null) {
+        if (($includeUpperBound = $this->getDOMElementAttributeAs($element, 'includeUpperBound', 'boolean')) !== null) {
             $object->setIncludeUpperBound($includeUpperBound);
         }
 

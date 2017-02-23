@@ -68,7 +68,7 @@ class ColgroupMarshaller extends Marshaller
     {
         $component = new Colgroup();
 
-        if (($span = self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 

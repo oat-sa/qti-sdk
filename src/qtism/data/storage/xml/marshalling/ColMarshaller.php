@@ -65,7 +65,7 @@ class ColMarshaller extends Marshaller
     {
         $component = new Col();
 
-        if (($span = self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 

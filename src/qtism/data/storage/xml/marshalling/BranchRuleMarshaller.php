@@ -59,7 +59,7 @@ class BranchRuleMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($target = static::getDOMElementAttributeAs($element, 'target')) !== null) {
+        if (($target = $this->getDOMElementAttributeAs($element, 'target')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
 
             if ($expressionElt !== false) {

@@ -65,7 +65,7 @@ class PatternMatchMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($pattern = static::getDOMElementAttributeAs($element, 'pattern')) !== null) {
+        if (($pattern = $this->getDOMElementAttributeAs($element, 'pattern')) !== null) {
 
             $object = new PatternMatch($children, $pattern);
 

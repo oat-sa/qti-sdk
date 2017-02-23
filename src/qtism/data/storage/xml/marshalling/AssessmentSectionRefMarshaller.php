@@ -60,7 +60,7 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($href = static::getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
+        if (($href = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
             $object = new AssessmentSectionRef($baseComponent->getIdentifier(), $href);
             $object->setRequired($baseComponent->isRequired());
             $object->setFixed($baseComponent->isFixed());

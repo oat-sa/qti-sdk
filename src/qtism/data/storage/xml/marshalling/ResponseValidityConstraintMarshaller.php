@@ -70,13 +70,13 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
-            if (($minConstraint = self::getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
+            if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
                 
-                if (($maxConstraint = self::getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
+                if (($maxConstraint = $this->getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
                     
-                    if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) === null) {
+                    if (($patternMask = $this->getDOMElementAttributeAs($element, 'patternMask')) === null) {
                         $patternMask = '';
                     }
                     try {
