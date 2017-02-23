@@ -48,17 +48,17 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
 
         $toolName = $component->getToolName();
         if (!empty($toolName)) {
-            self::setDOMElementAttribute($element, 'toolName', $component->getToolName());
+            $this->setDOMElementAttribute($element, 'toolName', $component->getToolName());
         }
 
         $toolVersion = $component->getToolVersion();
         if (!empty($toolVersion)) {
-            self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
+            $this->setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
         }
 
         foreach ($component->getOutcomeDeclarations() as $outcomeDeclaration) {

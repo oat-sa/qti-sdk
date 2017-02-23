@@ -44,7 +44,7 @@ class MapResponsePointMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         return $element;
     }

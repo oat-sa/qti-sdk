@@ -125,9 +125,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $element = $baseMarshaller->marshall($component);
 
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
-        self::setDOMElementAttribute($element, 'visible', $component->isVisible());
-        self::setDOMElementAttribute($element, 'keepTogether', $component->mustKeepTogether());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'visible', $component->isVisible());
+        $this->setDOMElementAttribute($element, 'keepTogether', $component->mustKeepTogether());
 
         // Deal with selection element
         $selection = $component->getSelection();

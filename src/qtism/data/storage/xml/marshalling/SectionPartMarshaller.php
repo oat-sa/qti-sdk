@@ -48,9 +48,9 @@ class SectionPartMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'required', $component->isRequired());
-        self::setDOMElementAttribute($element, 'fixed', $component->isFixed());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'required', $component->isRequired());
+        $this->setDOMElementAttribute($element, 'fixed', $component->isFixed());
 
         foreach ($component->getPreConditions() as $preCondition) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($preCondition);

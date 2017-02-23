@@ -44,7 +44,7 @@ class AssessmentSectionRefMarshaller extends SectionPartMarshaller
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         return $element;
     }

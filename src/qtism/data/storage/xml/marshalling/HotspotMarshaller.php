@@ -53,24 +53,24 @@ class HotspotMarshaller extends Marshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
-        self::setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
+        $this->setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() === ShowHide::HIDE) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
         }
 
         if ($component->hasHotspotLabel() === true) {
-            self::setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
+            $this->setDOMElementAttribute($element, 'hotspotLabel', $component->getHotspotLabel());
         }
         
         if ($component instanceof AssociableHotspot) {
@@ -78,19 +78,19 @@ class HotspotMarshaller extends Marshaller
             if (Version::compare($version, '2.1.0', '<') === true) {
                 $matchGroup = $component->getMatchGroup();
                 if (count($matchGroup) > 0) {
-                    self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                    $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
                 }
             }
             
             if (Version::compare($version, '2.1.0', '>=') === true) {
                 if ($component->getMatchMin() !== 0) {
-                    self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+                    $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
                 }
             }
         }
         
         if ($component instanceof AssociableHotspot) {
-            self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+            $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
         }
 
         $this->fillElement($element, $component);

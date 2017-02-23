@@ -92,14 +92,14 @@ class InlineChoiceInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->mustShuffle() !== false || Version::compare($version, '2.0.0', '==') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         if (Version::compare($version, '2.1.0', '>=') && $component->isRequired() !== false) {
-            self::setDOMElementAttribute($element, 'required', $component->isRequired());
+            $this->setDOMElementAttribute($element, 'required', $component->isRequired());
         }
 
         if ($component->hasXmlBase() === true) {

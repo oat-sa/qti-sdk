@@ -44,19 +44,19 @@ class EqualMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'toleranceMode', ToleranceMode::getNameByConstant($component->getToleranceMode()));
+        $this->setDOMElementAttribute($element, 'toleranceMode', ToleranceMode::getNameByConstant($component->getToleranceMode()));
 
         $tolerance = $component->getTolerance();
         if (!empty($tolerance)) {
-            self::setDOMElementAttribute($element, 'tolerance', implode("\x20", $tolerance));
+            $this->setDOMElementAttribute($element, 'tolerance', implode("\x20", $tolerance));
         }
 
         if ($component->doesIncludeLowerBound() === false) {
-            self::setDOMElementAttribute($element, 'includeLowerBound', false);
+            $this->setDOMElementAttribute($element, 'includeLowerBound', false);
         }
 
         if ($component->doesIncludeUpperBound() === false) {
-            self::setDOMElementAttribute($element, 'includeUpperBound', false);
+            $this->setDOMElementAttribute($element, 'includeUpperBound', false);
         }
 
         foreach ($elements as $elt) {

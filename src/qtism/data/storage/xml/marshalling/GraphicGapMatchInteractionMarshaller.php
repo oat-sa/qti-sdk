@@ -118,7 +118,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('graphicGapMatchInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));

@@ -73,7 +73,7 @@ class InfoControlMarshaller extends ContentMarshaller
         }
 
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
 
         return $element;
     }

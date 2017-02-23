@@ -89,7 +89,7 @@ class CorrectResponseMarshaller extends Marshaller
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {
-            self::setDOMElementAttribute($element, 'interpretation', $interpretation);
+            $this->setDOMElementAttribute($element, 'interpretation', $interpretation);
         }
 
         // A CorrectResponse contains 1..* Value objects

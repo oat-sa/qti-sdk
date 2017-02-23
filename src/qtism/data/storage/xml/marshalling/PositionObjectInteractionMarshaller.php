@@ -49,19 +49,19 @@ class PositionObjectInteractionMarshaller extends Marshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement('positionObjectInteraction');
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
         if ($component->getMaxChoices() > 0) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasMinChoices() === true) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasCenterPoint() === true) {
             $centerPoint = $component->getCenterPoint();
-            self::setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
+            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
         }
 
         $this->fillElement($element, $component);

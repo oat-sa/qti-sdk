@@ -46,7 +46,7 @@ class ColMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement('col');
 
         if ($component->getSpan() !== 1) {
-            self::setDOMElementAttribute($element, 'span', $component->getSpan());
+            $this->setDOMElementAttribute($element, 'span', $component->getSpan());
         }
 
         $this->fillElement($element, $component);

@@ -45,8 +45,8 @@ class MediaInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('mediaInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'autostart', $component->mustAutostart());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'autostart', $component->mustAutostart());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -55,15 +55,15 @@ class MediaInteractionMarshaller extends Marshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if ($component->getMinPlays() !== 0) {
-            self::setDOMElementAttribute($element, 'minPlays', $component->getMinPlays());
+            $this->setDOMElementAttribute($element, 'minPlays', $component->getMinPlays());
         }
 
         if ($component->getMaxPlays() !== 0) {
-            self::setDOMElementAttribute($element, 'maxPlays', $component->getMaxPlays());
+            $this->setDOMElementAttribute($element, 'maxPlays', $component->getMaxPlays());
         }
 
         if ($component->mustLoop() === true) {
-            self::setDOMElementAttribute($element, 'loop', true);
+            $this->setDOMElementAttribute($element, 'loop', true);
         }
 
         if ($component->hasXmlBase() === true) {

@@ -44,7 +44,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
         $element->appendChild($marshaller->marshall($component->getExpression()));

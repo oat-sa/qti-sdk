@@ -378,4 +378,24 @@ class Utils
             return null;
         }
     }
+    
+    /**
+     * Set the attribute value of a given DOMElement object. Boolean values will be transformed
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param string $attribute An XML attribute name.
+     * @param mixed $value A given value.
+     */
+    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    {
+        switch (gettype($value)) {
+            case 'boolean':
+                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
+                break;
+            
+            default:
+                $element->setAttribute($attribute, '' . $value);
+                break;
+        }
+    }
 }

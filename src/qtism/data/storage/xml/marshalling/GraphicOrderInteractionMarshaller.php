@@ -110,7 +110,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -120,11 +120,11 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
 
         if (Version::compare($version, '2.1.0', '>=') === true) {
             if ($component->hasMinChoices()) {
-                self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+                $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
             }
             
             if ($component->hasMaxChoices()) {
-                self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+                $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
             }
         }
 

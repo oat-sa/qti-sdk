@@ -44,12 +44,12 @@ class StylesheetMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
-        self::setDOMElementAttribute($element, 'media', $component->getMedia());
-        self::setDOMElementAttribute($element, 'type', $component->getType());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'media', $component->getMedia());
+        $this->setDOMElementAttribute($element, 'type', $component->getType());
 
         if (($title = $component->getTitle()) != '') {
-            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
         return $element;

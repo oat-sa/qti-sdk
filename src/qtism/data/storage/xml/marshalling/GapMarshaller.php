@@ -48,28 +48,28 @@ class GapMarshaller extends Marshaller
     {
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement('gap');
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed' , true);
+            $this->setDOMElementAttribute($element, 'fixed' , true);
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() === ShowHide::HIDE) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->isRequired() === true) {
-            self::setDOMElementAttribute($element, 'required', true);
+            $this->setDOMElementAttribute($element, 'required', true);
         }
         
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
-                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
             }
         }
 

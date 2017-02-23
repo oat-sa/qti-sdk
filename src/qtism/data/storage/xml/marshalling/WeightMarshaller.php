@@ -46,8 +46,8 @@ class WeightMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'value', $component->getValue());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'value', $component->getValue());
 
         return $element;
     }

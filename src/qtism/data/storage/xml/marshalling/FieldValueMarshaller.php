@@ -42,7 +42,7 @@ class FieldValueMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'fieldIdentifier', $component->getFieldIdentifier());
+        $this->setDOMElementAttribute($element, 'fieldIdentifier', $component->getFieldIdentifier());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

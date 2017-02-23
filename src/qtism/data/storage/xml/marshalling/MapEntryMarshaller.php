@@ -98,11 +98,11 @@ class MapEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'mapKey', $component->getMapKey());
-        self::setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());
+        $this->setDOMElementAttribute($element, 'mapKey', $component->getMapKey());
+        $this->setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());
         
         if (Version::compare($this->getVersion(), '2.0.0', '>') === true) {
-            self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
+            $this->setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
         }
 
         return $element;

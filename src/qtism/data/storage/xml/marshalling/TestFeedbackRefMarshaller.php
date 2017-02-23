@@ -46,11 +46,11 @@ class TestFeedbackRefMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('testFeedbackRef');
         
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'access', TestFeedbackAccess::getNameByConstant($component->getAccess()));
-        self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'access', TestFeedbackAccess::getNameByConstant($component->getAccess()));
+        $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         return $element;
     }

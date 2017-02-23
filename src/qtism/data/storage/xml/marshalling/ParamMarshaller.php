@@ -45,12 +45,12 @@ class ParamMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('param');
-        self::setDOMElementAttribute($element, 'name', $component->getName());
-        self::setDOMElementAttribute($element, 'value', $component->getValue());
-        self::setDOMElementAttribute($element, 'valuetype', ParamType::getNameByConstant($component->getValueType()));
+        $this->setDOMElementAttribute($element, 'name', $component->getName());
+        $this->setDOMElementAttribute($element, 'value', $component->getValue());
+        $this->setDOMElementAttribute($element, 'valuetype', ParamType::getNameByConstant($component->getValueType()));
 
         if ($component->hasType() === true) {
-            self::setDOMElementAttribute($element, 'type', $component->getType());
+            $this->setDOMElementAttribute($element, 'type', $component->getType());
         }
 
         return $element;

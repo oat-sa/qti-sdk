@@ -44,9 +44,9 @@ class AssociationValidityConstraintMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
-        self::setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
+        $this->setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
 
         return $element;
     }

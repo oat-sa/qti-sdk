@@ -45,16 +45,16 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
+        $this->setDOMElementAttribute($element, 'variableIdentifier', $component->getVariableIdentifier());
 
         $baseType = $component->getBaseType();
         if ($baseType != -1) {
-            self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;

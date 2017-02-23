@@ -99,8 +99,8 @@ class MatchTableEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
-        self::setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
+        $this->setDOMElementAttribute($element, 'sourceValue', $component->getSourceValue());
+        $this->setDOMElementAttribute($element, 'targetValue', $component->getTargetValue());
 
         return $element;
     }

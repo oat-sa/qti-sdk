@@ -47,11 +47,11 @@ class ResponseProcessingMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasTemplate() === true) {
-            self::setDOMElementAttribute($element, 'template', $component->getTemplate());
+            $this->setDOMElementAttribute($element, 'template', $component->getTemplate());
         }
 
         if ($component->hasTemplateLocation() === true) {
-            self::setDOMElementAttribute($element, 'templateLocation', $component->getTemplateLocation());
+            $this->setDOMElementAttribute($element, 'templateLocation', $component->getTemplateLocation());
         }
 
         foreach ($component->getResponseRules() as $responseRule) {

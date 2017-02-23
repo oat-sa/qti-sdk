@@ -101,27 +101,27 @@ class TableCellMarshaller extends ContentMarshaller
 
         $headers = $component->getHeaders();
         if (count($headers) > 0) {
-            self::setDOMElementAttribute($element, 'headers', implode("\x20", $headers->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'headers', implode("\x20", $headers->getArrayCopy()));
         }
 
         if ($component->hasScope() === true) {
-            self::setDOMElementAttribute($element, 'scope', TableCellScope::getNameByConstant($component->getScope()));
+            $this->setDOMElementAttribute($element, 'scope', TableCellScope::getNameByConstant($component->getScope()));
         }
 
         if ($component->hasAbbr() === true) {
-            self::setDOMElementAttribute($element, 'abbr', $component->getAbbr());
+            $this->setDOMElementAttribute($element, 'abbr', $component->getAbbr());
         }
 
         if ($component->hasAxis() === true) {
-            self::setDOMElementAttribute($element, 'axis', $component->getAxis());
+            $this->setDOMElementAttribute($element, 'axis', $component->getAxis());
         }
 
         if ($component->hasRowspan() === true) {
-            self::setDOMElementAttribute($element, 'rowspan', $component->getRowspan());
+            $this->setDOMElementAttribute($element, 'rowspan', $component->getRowspan());
         }
 
         if ($component->hasColspan() === true) {
-            self::setDOMElementAttribute($element, 'colspan', $component->getColspan());
+            $this->setDOMElementAttribute($element, 'colspan', $component->getColspan());
         }
 
         foreach ($component->getContent() as $c) {

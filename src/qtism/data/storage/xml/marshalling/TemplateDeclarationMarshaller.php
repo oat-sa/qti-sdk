@@ -48,15 +48,15 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
         $version = $this->getVersion();
         
         if ($component->isParamVariable() === true) {
-            self::setDOMElementAttribute($element, 'paramVariable', true);
+            $this->setDOMElementAttribute($element, 'paramVariable', true);
         } elseif (Version::compare($version, '2.0.0', '==') === true && $component->isParamVariable() === false) {
-            self::setDOMElementAttribute($element, 'paramVariable', false);
+            $this->setDOMElementAttribute($element, 'paramVariable', false);
         }
 
         if ($component->isMathVariable() === true) {
-            self::setDOMElementAttribute($element, 'mathVariable', true);
+            $this->setDOMElementAttribute($element, 'mathVariable', true);
         } elseif (Version::compare($version, '2.0.0', '==') === true && $component->isMathVariable() === false) {
-            self::setDOMElementAttribute($element, 'mathVariable', false);
+            $this->setDOMElementAttribute($element, 'mathVariable', false);
         }
 
         return $element;

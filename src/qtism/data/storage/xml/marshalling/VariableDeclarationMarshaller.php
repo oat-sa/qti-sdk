@@ -47,11 +47,11 @@ class VariableDeclarationMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'cardinality', Cardinality::getNameByConstant($component->getCardinality()));
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'cardinality', Cardinality::getNameByConstant($component->getCardinality()));
 
         if ($component->getBaseType() != -1) {
-            self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
         }
 
         // deal with default value.

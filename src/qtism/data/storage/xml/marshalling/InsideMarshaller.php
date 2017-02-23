@@ -45,8 +45,8 @@ class InsideMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
-        self::setDOMElementAttribute($element, 'coords', $component->getCoords());
+        $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
+        $this->setDOMElementAttribute($element, 'coords', $component->getCoords());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

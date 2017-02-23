@@ -47,14 +47,14 @@ class TimeLimitsMarshaller extends Marshaller
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasMinTime() === true) {
-            self::setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));
+            $this->setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));
         }
 
         if ($component->hasMaxTime() === true) {
-            self::setDOMElementAttribute($element, 'maxTime', $component->getMaxTime()->getSeconds(true));
+            $this->setDOMElementAttribute($element, 'maxTime', $component->getMaxTime()->getSeconds(true));
         }
 
-        self::setDOMElementAttribute($element, 'allowLateSubmission', $component->doesAllowLateSubmission());
+        $this->setDOMElementAttribute($element, 'allowLateSubmission', $component->doesAllowLateSubmission());
 
         return $element;
     }

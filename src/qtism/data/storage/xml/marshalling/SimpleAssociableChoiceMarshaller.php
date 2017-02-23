@@ -95,29 +95,29 @@ class SimpleAssociableChoiceMarshaller extends ContentMarshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true && Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() !== ShowHide::SHOW && Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($component->getMatchMin() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
         
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
-                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
             }
         }
 

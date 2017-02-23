@@ -45,8 +45,8 @@ class VariableMappingMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'sourceIdentifier', $component->getSource());
-        self::setDOMElementAttribute($element, 'targetIdentifier', $component->getTarget());
+        $this->setDOMElementAttribute($element, 'sourceIdentifier', $component->getSource());
+        $this->setDOMElementAttribute($element, 'targetIdentifier', $component->getTarget());
 
         return $element;
     }

@@ -60,11 +60,11 @@ class RubricBlockMarshaller extends Marshaller
         }
 
         if (count($arrayViews) > 0) {
-            static::setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
+            $this->setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
         }
 
         if ($component->getUse() != '') {
-            static::setDOMElementAttribute($element, 'use', $component->getUse());
+            $this->setDOMElementAttribute($element, 'use', $component->getUse());
         }
 
         if ($component->hasXmlBase() === true) {

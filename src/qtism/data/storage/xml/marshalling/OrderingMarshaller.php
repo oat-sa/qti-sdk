@@ -44,7 +44,7 @@ class OrderingMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'shuffle', $component->getShuffle());
+        $this->setDOMElementAttribute($element, 'shuffle', $component->getShuffle());
 
         return $element;
     }

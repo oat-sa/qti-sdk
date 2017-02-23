@@ -103,7 +103,7 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -112,11 +112,11 @@ class GraphicAssociateInteractionMarshaller extends ContentMarshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinAssociations() !== 0) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         if (Version::compare($version, '2.1.0', '<') === true || (Version::compare($version, '2.1.0', '>=') && $component->getMaxAssociations() !== 1)) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         if ($component->hasXmlBase() === true) {

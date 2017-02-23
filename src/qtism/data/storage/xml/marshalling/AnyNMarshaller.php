@@ -47,8 +47,8 @@ class AnyNMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

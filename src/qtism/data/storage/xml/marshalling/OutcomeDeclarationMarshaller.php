@@ -59,33 +59,33 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
             }
 
             if (count($arrayViews) > 0) {
-                static::setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
+                $this->setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
             }
         }
 
         // deal with interpretation.
         if ($component->getInterpretation() != '') {
-            static::setDOMElementAttribute($element, 'interpretation', $component->getInterpretation());
+            $this->setDOMElementAttribute($element, 'interpretation', $component->getInterpretation());
         }
 
         // deal with long interpretation.
         if ($component->getLongInterpretation() != '') {
-            static::setDOMElementAttribute($element, 'longInterpretation', $component->getLongInterpretation());
+            $this->setDOMElementAttribute($element, 'longInterpretation', $component->getLongInterpretation());
         }
 
         // Deal with normal maximum.
         if ($component->getNormalMaximum() !== false) {
-            static::setDOMElementAttribute($element, 'normalMaximum', $component->getNormalMaximum());
+            $this->setDOMElementAttribute($element, 'normalMaximum', $component->getNormalMaximum());
         }
 
         // Deal with normal minimum.
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getNormalMinimum() !== false) {
-            static::setDOMElementAttribute($element, 'normalMinimum', $component->getNormalMinimum());
+            $this->setDOMElementAttribute($element, 'normalMinimum', $component->getNormalMinimum());
         }
 
         // Deal with mastery value.
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMasteryValue() !== false) {
-            static::setDOMElementAttribute($element, 'masteryValue', $component->getMasteryValue());
+            $this->setDOMElementAttribute($element, 'masteryValue', $component->getMasteryValue());
         }
 
         // Deal with lookup table.

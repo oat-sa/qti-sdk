@@ -50,26 +50,26 @@ class TextInteractionMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $version = $this->getVersion();
 
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->getBase() !== 10) {
-            self::setDOMElementAttribute($element, 'base', $component->getBase());
+            $this->setDOMElementAttribute($element, 'base', $component->getBase());
         }
 
         if ($component->hasStringIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'stringIdentifier', $component->getStringIdentifier());
+            $this->setDOMElementAttribute($element, 'stringIdentifier', $component->getStringIdentifier());
         }
 
         if ($component->hasExpectedLength() === true) {
-            self::setDOMElementAttribute($element, 'expectedLength', $component->getExpectedLength());
+            $this->setDOMElementAttribute($element, 'expectedLength', $component->getExpectedLength());
         }
 
         if ($component->hasPatternMask() === true) {
-            self::setDOMElementAttribute($element, 'patternMask', $component->getPatternMask());
+            $this->setDOMElementAttribute($element, 'patternMask', $component->getPatternMask());
         }
 
         if ($component->hasPlaceholderText() === true) {
-            self::setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
+            $this->setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -78,19 +78,19 @@ class TextInteractionMarshaller extends Marshaller
 
         if ($element->localName === 'extendedTextInteraction') {
             if ($component->hasMaxStrings() === true) {
-                self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
+                $this->setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
             }
 
             if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinStrings() !== 0) {
-                self::setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
+                $this->setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
             }
 
             if ($component->hasExpectedLines() === true) {
-                self::setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
+                $this->setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
             }
 
             if (Version::compare($version, '2.1.0', '>=') === true && $component->getFormat() !== TextFormat::PLAIN) {
-                self::setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
+                $this->setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
             }
 
             if ($component->hasPrompt() === true) {

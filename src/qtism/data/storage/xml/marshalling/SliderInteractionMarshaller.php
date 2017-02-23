@@ -47,24 +47,24 @@ class SliderInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('sliderInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
-        self::setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
+        $this->setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
 
         if ($component->hasStep() === true) {
-            self::setDOMElementAttribute($element, 'step', $component->getStep());
+            $this->setDOMElementAttribute($element, 'step', $component->getStep());
         }
 
         if ($component->mustStepLabel() === true) {
-            self::setDOMElementAttribute($element, 'stepLabel', true);
+            $this->setDOMElementAttribute($element, 'stepLabel', true);
         }
 
         if ($component->getOrientation() === Orientation::VERTICAL) {
-            self::setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::VERTICAL));
+            $this->setDOMElementAttribute($element, 'orientation', Orientation::getNameByConstant(Orientation::VERTICAL));
         }
 
         if ($component->mustReverse() === true) {
-            self::setDOMElementAttribute($element, 'reverse', true);
+            $this->setDOMElementAttribute($element, 'reverse', true);
         }
 
         if ($component->hasXmlBase() === true) {

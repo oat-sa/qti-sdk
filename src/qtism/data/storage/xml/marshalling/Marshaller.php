@@ -348,17 +348,9 @@ abstract class Marshaller
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
-            break;
-
-            default:
-                $element->setAttribute($attribute, '' . $value);
-            break;
-        }
+        XmlUtils::setDOMElementAttribute($element, $attribute, $value);
     }
 
     /**

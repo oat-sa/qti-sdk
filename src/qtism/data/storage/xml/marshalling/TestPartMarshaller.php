@@ -49,9 +49,9 @@ class TestPartMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'navigationMode', NavigationMode::getNameByConstant($component->getNavigationMode()));
-        self::setDOMElementAttribute($element, 'submissionMode', SubmissionMode::getNameByConstant($component->getSubmissionMode()));
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'navigationMode', NavigationMode::getNameByConstant($component->getNavigationMode()));
+        $this->setDOMElementAttribute($element, 'submissionMode', SubmissionMode::getNameByConstant($component->getSubmissionMode()));
 
         foreach ($component->getPreConditions() as $preCondition) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($preCondition);

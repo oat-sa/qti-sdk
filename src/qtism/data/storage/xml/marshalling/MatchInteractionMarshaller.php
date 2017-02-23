@@ -110,7 +110,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
         $this->fillElement($element, $component);
         
         // responseIdentifier.
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.
         if ($component->hasPrompt() === true) {
@@ -119,17 +119,17 @@ class MatchInteractionMarshaller extends ContentMarshaller
 
         // shuffle.
         if ((Version::compare($version, '2.1.0', '>=') === true && $component->mustShuffle() !== false) || Version::compare($version, '2.1.0', '<') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         // maxAssociations.
         if ($component->getMaxAssociations() !== 1 || Version::compare($version, '2.1.0', '<') === true) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         // minAssociations.
         if ($component->getMinAssociations() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         // xml:base

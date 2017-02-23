@@ -92,12 +92,12 @@ class ModalFeedbackMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
 
         if ($component->hasTitle() === true) {
-            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
         foreach ($elements as $e) {

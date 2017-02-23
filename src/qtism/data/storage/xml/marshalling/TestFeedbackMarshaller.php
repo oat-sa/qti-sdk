@@ -52,14 +52,14 @@ class TestFeedbackMarshaller extends Marshaller
         $access = ($component->getAccess() == TestFeedbackAccess::AT_END) ? 'atEnd' : 'during';
         $showHide = ($component->getShowHide() == ShowHide::SHOW) ? 'show' : 'hide';
 
-        self::setDOMElementAttribute($element, 'access', $access);
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'showHide', $showHide);
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'access', $access);
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'showHide', $showHide);
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         $title = $component->getTitle();
         if (!empty($title)) {
-            self::setDOMElementAttribute($element, 'title', $title);
+            $this->setDOMElementAttribute($element, 'title', $title);
         }
 
         foreach ($component->getContent() as $flowStatic) {

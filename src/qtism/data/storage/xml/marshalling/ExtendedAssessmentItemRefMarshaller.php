@@ -93,12 +93,12 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $element->appendChild($marshaller->marshall($responseValidityConstraint));
         }
         
-        self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
-        self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+        $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
         
         $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
         if (count($endAttemptIdentifiers) > 0) {
-            self::setDOMElementAttribute($element, 'endAttemptIdentifiers', implode("\x20", $endAttemptIdentifiers->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'endAttemptIdentifiers', implode("\x20", $endAttemptIdentifiers->getArrayCopy()));
         }
 
         return $element;

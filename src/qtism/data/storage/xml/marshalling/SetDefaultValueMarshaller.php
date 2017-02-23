@@ -46,7 +46,7 @@ class SetDefaultValueMarshaller extends Marshaller
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
         $element->appendChild($marshaller->marshall($component->getExpression()));
 
-        static::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         return $element;
     }

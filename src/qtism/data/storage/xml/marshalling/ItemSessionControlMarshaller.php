@@ -41,13 +41,13 @@ class ItemSessionControlMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        static::setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
-        static::setDOMElementAttribute($element, 'showFeedback', $component->mustShowFeedback());
-        static::setDOMElementAttribute($element, 'allowReview', $component->doesAllowReview());
-        static::setDOMElementAttribute($element, 'showSolution', $component->mustShowSolution());
-        static::setDOMElementAttribute($element, 'allowComment', $component->doesAllowComment());
-        static::setDOMElementAttribute($element, 'allowSkipping', $component->doesAllowSkipping());
-        static::setDOMElementAttribute($element, 'validateResponses', $component->mustValidateResponses());
+        $this->setDOMElementAttribute($element, 'maxAttempts', $component->getMaxAttempts());
+        $this->setDOMElementAttribute($element, 'showFeedback', $component->mustShowFeedback());
+        $this->setDOMElementAttribute($element, 'allowReview', $component->doesAllowReview());
+        $this->setDOMElementAttribute($element, 'showSolution', $component->mustShowSolution());
+        $this->setDOMElementAttribute($element, 'allowComment', $component->doesAllowComment());
+        $this->setDOMElementAttribute($element, 'allowSkipping', $component->doesAllowSkipping());
+        $this->setDOMElementAttribute($element, 'validateResponses', $component->mustValidateResponses());
 
         return $element;
     }

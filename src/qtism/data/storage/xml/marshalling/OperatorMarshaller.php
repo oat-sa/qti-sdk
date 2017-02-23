@@ -185,11 +185,11 @@ class OperatorMarshaller extends RecursiveMarshaller
 
         if ($component instanceof CustomOperator) {
             if ($component->hasClass() === true) {
-                self::setDOMElementAttribute($element, 'class', $component->getClass());
+                $this->setDOMElementAttribute($element, 'class', $component->getClass());
             }
 
             if ($component->hasDefinition() === true) {
-                self::setDOMElementAttribute($element, 'definition', $component->getDefinition());
+                $this->setDOMElementAttribute($element, 'definition', $component->getDefinition());
             }
 
             // Now, we have to extract the LAX content of the custom operator and put it into

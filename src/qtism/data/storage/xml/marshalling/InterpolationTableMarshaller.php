@@ -104,7 +104,7 @@ class InterpolationTableMarshaller extends Marshaller
         }
 
         if ($component->getDefaultValue() !== null) {
-            static::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+            $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
         }
 
         return $element;

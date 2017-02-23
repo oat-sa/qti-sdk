@@ -44,12 +44,12 @@ class ModalFeedbackRuleMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('modalFeedbackRule');
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         
         if ($component->hasTitle() === true) {
-            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
         return $element;

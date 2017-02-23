@@ -44,8 +44,8 @@ class SelectionMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'select', $component->getSelect());
-        self::setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
+        $this->setDOMElementAttribute($element, 'select', $component->getSelect());
+        $this->setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
 
         return $element;
     }

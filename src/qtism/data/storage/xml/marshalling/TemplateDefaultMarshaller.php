@@ -44,7 +44,7 @@ class TemplateDefaultMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+        $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
 
         $expr = $component->getExpression();
         $exprMarshaller = $this->getMarshallerFactory()->createMarshaller($expr);

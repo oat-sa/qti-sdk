@@ -49,8 +49,8 @@ class RoundToMarshaller extends OperatorMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'figures', $component->getFigures());
-        self::setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
+        $this->setDOMElementAttribute($element, 'figures', $component->getFigures());
+        $this->setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

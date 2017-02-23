@@ -45,11 +45,11 @@ class RandomIntegerMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         if ($component->getStep() !== 1) { // default value of the step attribute is 1.
-            self::setDOMElementAttribute($element, 'step', $component->getStep());
+            $this->setDOMElementAttribute($element, 'step', $component->getStep());
         }
 
         return $element;

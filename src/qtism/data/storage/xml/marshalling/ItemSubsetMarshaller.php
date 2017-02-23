@@ -45,17 +45,17 @@ class ItemSubsetMarshaller extends Marshaller
 
         $sectionIdentifier = $component->getSectionIdentifier();
         if (!empty($sectionIdentifier)) {
-            self::setDOMElementAttribute($element, 'sectionIdentifier', $sectionIdentifier);
+            $this->setDOMElementAttribute($element, 'sectionIdentifier', $sectionIdentifier);
         }
 
         $includeCategories = $component->getIncludeCategories();
         if (count($includeCategories) > 0) {
-            self::setDOMElementAttribute($element, 'includeCategory', implode(' ', $includeCategories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'includeCategory', implode(' ', $includeCategories->getArrayCopy()));
         }
 
         $excludeCategories = $component->getExcludeCategories();
         if (count($excludeCategories) > 0) {
-            self::setDOMElementAttribute($element, 'excludeCategory', implode(' ', $excludeCategories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'excludeCategory', implode(' ', $excludeCategories->getArrayCopy()));
         }
 
         return $element;

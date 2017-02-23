@@ -81,18 +81,18 @@ class HottextMarshaller extends ContentMarshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if ($component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if ($component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($component->hasXmlBase() === true) {

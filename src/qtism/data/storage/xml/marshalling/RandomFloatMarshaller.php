@@ -45,8 +45,8 @@ class RandomFloatMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'min', $component->getMin());
-        self::setDOMElementAttribute($element, 'max', $component->getMax());
+        $this->setDOMElementAttribute($element, 'min', $component->getMin());
+        $this->setDOMElementAttribute($element, 'max', $component->getMax());
 
         return $element;
     }

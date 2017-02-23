@@ -97,14 +97,14 @@ class MappingMarshaller extends Marshaller
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
         if ($component->hasLowerBound() === true) {
-            self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
+            $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
         }
 
         if ($component->hasUpperBound() === true) {
-            self::setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
+            $this->setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
         }
 
-        self::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+        $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
 
         foreach ($component->getMapEntries() as $mapEntry) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($mapEntry, array($this->getBaseType()));

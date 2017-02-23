@@ -47,10 +47,10 @@ class SelectPointInteractionMarshaller extends Marshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
         if ($component->getMaxChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         if ($component->hasPrompt() === true) {
@@ -60,7 +60,7 @@ class SelectPointInteractionMarshaller extends Marshaller
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasXmlBase() === true) {

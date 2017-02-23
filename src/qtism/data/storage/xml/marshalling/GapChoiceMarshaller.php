@@ -126,27 +126,27 @@ class GapChoiceMarshaller extends ContentMarshaller
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMatchMin() !== 0) {
-            self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($element->localName === 'gapImg' && $component->hasObjectLabel() === true) {
-            self::setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
+            $this->setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
         }
 
         foreach ($elements as $e) {
@@ -166,7 +166,7 @@ class GapChoiceMarshaller extends ContentMarshaller
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
-                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
             }
         }
 

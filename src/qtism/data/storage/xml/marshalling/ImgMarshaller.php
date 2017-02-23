@@ -45,19 +45,19 @@ class ImgMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('img');
 
-        self::setDOMElementAttribute($element, 'src', $component->getSrc());
-        self::setDOMElementAttribute($element, 'alt', $component->getAlt());
+        $this->setDOMElementAttribute($element, 'src', $component->getSrc());
+        $this->setDOMElementAttribute($element, 'alt', $component->getAlt());
 
         if ($component->hasWidth() === true) {
-            self::setDOMElementAttribute($element, 'width', $component->getWidth());
+            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
         if ($component->hasHeight() === true) {
-            self::setDOMElementAttribute($element, 'height', $component->getHeight());
+            $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
         if ($component->hasLongdesc() === true) {
-            self::setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
+            $this->setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
         }
 
         if ($component->hasXmlBase() === true) {

@@ -48,7 +48,7 @@ class StatsOperatorMarshaller extends OperatorMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', Statistics::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', Statistics::getNameByConstant($component->getName()));
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

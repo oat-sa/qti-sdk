@@ -45,7 +45,7 @@ class DrawingInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('drawingInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());

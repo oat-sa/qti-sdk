@@ -49,12 +49,12 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         // Deal with categories.
         $categories = $component->getCategories();
         if (count($categories) > 0) {
-            self::setDOMElementAttribute($element, 'category', implode("\x20", $categories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'category', implode("\x20", $categories->getArrayCopy()));
         }
 
         // Deal with variableMappings.

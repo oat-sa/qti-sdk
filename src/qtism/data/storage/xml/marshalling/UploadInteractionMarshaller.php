@@ -45,10 +45,10 @@ class UploadInteractionMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('uploadInteraction');
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasType() === true) {
-            self::setDOMElementAttribute($element, 'type', $component->getType());
+            $this->setDOMElementAttribute($element, 'type', $component->getType());
         }
 
         if ($component->hasXmlBase() === true) {

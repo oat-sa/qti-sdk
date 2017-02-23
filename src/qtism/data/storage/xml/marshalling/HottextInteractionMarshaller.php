@@ -97,18 +97,18 @@ class HottextInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
         }
 
         if ($component->getMaxChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinChoices() !== 0) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasXmlBase() !== false) {

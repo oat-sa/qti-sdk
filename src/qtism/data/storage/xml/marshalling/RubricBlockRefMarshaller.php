@@ -43,8 +43,8 @@ class RubricBlockRefMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('rubricBlockRef');
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         return $element;
     }

@@ -79,15 +79,15 @@ class ObjectMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'data', $component->getData());
-        self::setDOMElementAttribute($element, 'type', $component->getType());
+        $this->setDOMElementAttribute($element, 'data', $component->getData());
+        $this->setDOMElementAttribute($element, 'type', $component->getType());
 
         if ($component->hasWidth() === true) {
-            self::setDOMElementAttribute($element, 'width', $component->getWidth());
+            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
         if ($component->hasHeight() === true) {
-            self::setDOMElementAttribute($element, 'height', $component->getHeight());
+            $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
         if ($component->hasXmlBase() === true) {

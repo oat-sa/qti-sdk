@@ -49,25 +49,25 @@ class AssessmentItemMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
-        self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
-        self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
 
         if ($component->hasLang() === true) {
-            self::setDOMElementAttribute($element, 'lang', $component->getLang());
+            $this->setDOMElementAttribute($element, 'lang', $component->getLang());
         }
 
         if ($component->hasLabel() === true) {
-            self::setDOMElementAttribute($element, 'label', $component->getLabel());
+            $this->setDOMElementAttribute($element, 'label', $component->getLabel());
         }
 
         if ($component->hasToolName() === true) {
-            self::setDOMElementAttribute($element, 'toolName', $component->getToolName());
+            $this->setDOMElementAttribute($element, 'toolName', $component->getToolName());
         }
 
         if ($component->hasToolVersion() === true) {
-            self::setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
+            $this->setDOMElementAttribute($element, 'toolVersion', $component->getToolVersion());
         }
 
         foreach ($component->getResponseDeclarations() as $responseDeclaration) {

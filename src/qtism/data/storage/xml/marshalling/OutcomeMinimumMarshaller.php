@@ -43,11 +43,11 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
     protected function marshall(QtiComponent $component)
     {
         $element = parent::marshall($component);
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;

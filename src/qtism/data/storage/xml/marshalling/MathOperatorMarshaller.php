@@ -48,7 +48,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
+        $this->setDOMElementAttribute($element, 'name', MathFunctions::getNameByConstant($component->getName()));
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);

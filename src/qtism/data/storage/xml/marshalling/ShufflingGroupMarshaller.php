@@ -44,11 +44,11 @@ class ShufflingGroupMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
+        $this->setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
         
         $fixedIdentifiers = $component->getFixedIdentifiers();
         if (count($fixedIdentifiers) > 0) {
-            self::setDOMElementAttribute($element, 'fixedIdentifiers', implode("\x20", $component->getFixedIdentifiers()->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'fixedIdentifiers', implode("\x20", $component->getFixedIdentifiers()->getArrayCopy()));
         }
 
         return $element;

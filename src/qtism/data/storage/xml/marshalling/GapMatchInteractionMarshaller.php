@@ -89,10 +89,10 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->mustShuffle() === true || Version::compare($version, '2.0.0', '==') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         if ($component->hasXmlBase() === true) {

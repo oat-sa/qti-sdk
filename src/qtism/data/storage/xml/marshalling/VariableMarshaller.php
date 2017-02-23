@@ -44,11 +44,11 @@ class VariableMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         $weightIdentifier = $component->getWeightIdentifier();
         if (!empty($weightIdentifier)) {
-            self::setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
+            $this->setDOMElementAttribute($element, 'weightIdentifier', $weightIdentifier);
         }
 
         return $element;

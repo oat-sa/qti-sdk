@@ -46,7 +46,7 @@ class BaseValueMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
+        $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($component->getBaseType()));
         self::setDOMElementValue($element, $component->getValue());
 
         return $element;

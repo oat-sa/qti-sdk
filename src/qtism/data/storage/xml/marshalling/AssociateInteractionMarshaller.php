@@ -101,7 +101,7 @@ class AssociateInteractionMarshaller extends ContentMarshaller
         $this->fillElement($element, $component);
         
         // responseIdentifier.
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.
         if ($component->hasPrompt() === true) {
@@ -110,19 +110,19 @@ class AssociateInteractionMarshaller extends ContentMarshaller
 
         // shuffle.
         if (Version::compare($version, '2.1.0', '>=') && $component->mustShuffle() !== false) {
-            self::setDOMElementAttribute($element, 'shuffle', true);
+            $this->setDOMElementAttribute($element, 'shuffle', true);
         } else if (Version::compare($version, '2.0.0', '==') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         // maxAssociations.
         if (Version::compare($version, '2.0.0', '==') === true || (Version::compare($version, '2.1.0', '>=') === true && $component->getMaxAssociations() !== 1)) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         // minAssociations.
         if (Version::compare($version, '2.1.0', '>=') && $component->getMinAssociations() !== 0) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         // xml:base.

@@ -102,11 +102,11 @@ class ValueMarshaller extends Marshaller
         self::setDOMElementValue($element, $component->getValue());
 
         if (!empty($fieldIdentifer)) {
-            static::setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
+            $this->setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
         }
 
         if ($component->isPartOfRecord() && $baseType >= 0) {
-            static::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         return $element;

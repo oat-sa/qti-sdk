@@ -49,7 +49,7 @@ class TableMarshaller extends Marshaller
         $element = self::getDOMCradle()->createElement('table');
 
         if ($component->hasSummary() === true) {
-            self::setDOMElementAttribute($element, 'summary', $component->getSummary());
+            $this->setDOMElementAttribute($element, 'summary', $component->getSummary());
         }
 
         if ($component->hasXmlBase() === true) {
