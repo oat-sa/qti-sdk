@@ -220,4 +220,21 @@ class XmlUtilsTest extends QtiSmTestCase
             ['prompt', 'qti-prompt']
         ];
     }
+    
+    /**
+     * @dataProvider qtiFriendlyNameProvider
+     */
+    public function testQtiFriendlyName($wcName, $expected)
+    {
+        $this->assertEquals($expected, Utils::qtiFriendlyName($wcName));
+    }
+    
+    public function qtiFriendlyNameProvider()
+    {
+        return [
+            ['qti-choice-interaction', 'choiceInteraction'],
+            ['qti-prompt', 'prompt'],
+            ['min-choices', 'minChoices']
+        ];
+    }
 }

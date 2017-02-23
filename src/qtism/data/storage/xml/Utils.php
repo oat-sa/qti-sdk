@@ -314,4 +314,22 @@ class Utils
     {
         return 'qti-' . self::webComponentFriendlyAttributeName($qtiName);
     }
+    
+    /**
+     * QTI friendly name of a Web Component friendly name.
+     * 
+     * This method returns the QTI friendly name of a Web Component friendly name.
+     * 
+     * Example: "qti-choice-interaction" becomes "choiceInteraction".
+     * 
+     * @param string $wcName
+     * @return string
+     */
+    static public function qtiFriendlyName($wcName)
+    {
+        $qtiName = strtolower($wcName);
+        $qtiName = preg_replace('/^qti-/', '', $qtiName);
+        
+        return lcfirst(str_replace('-', '', ucwords($qtiName, '-')));
+    }
 }
