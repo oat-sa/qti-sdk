@@ -1,8 +1,8 @@
 <?php
 namespace qtismtest;
 
+use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
-use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
@@ -12,7 +12,7 @@ use \DOMDocument;
 use \DateTime;
 use \DateTimeZone;
 
-abstract class QtiSmTestCase extends \PHPUnit_Framework_TestCase {
+abstract class QtiSmTestCase extends TestCase {
 	
 	public function setUp() {
 	    parent::setUp();
