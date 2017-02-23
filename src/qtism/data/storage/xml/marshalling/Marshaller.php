@@ -152,6 +152,22 @@ abstract class Marshaller
     );
     
     /**
+     * Whether or not element and attribute serialization must be Web Component friendly.
+     * 
+     * @var boolean
+     */
+    private $webComponentFriendly = false;
+    
+    /**
+     * An array containing the QTI class names that are allowed to be Web Component friendly.
+     * 
+     * @var array
+     */
+    private static $webComponentFriendlyClasses = array(
+        
+    );
+    
+    /**
      * Create a new Marshaller object.
      * 
      * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.

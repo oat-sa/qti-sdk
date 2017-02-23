@@ -187,4 +187,37 @@ class XmlUtilsTest extends QtiSmTestCase
             array('blah & "cool" & \'cool\'', true, "blah &amp; &quot;cool&quot; &amp; 'cool'")
         );
     }
+    
+    /**
+     * @dataProvider webComponentFriendlyAttributeNameProvider
+     */
+    public function testWebComponentFriendlyAttributeName($qtiName, $expected)
+    {
+        $this->assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
+    }
+    
+    public function webComponentFriendlyAttributeNameProvider()
+    {
+        return [
+            ['minChoices', 'min-choices'],
+            ['identifier', 'identifier']
+        ];
+    }
+    
+    /**
+     * @dataProvider webComponentFriendlyClassNameProvider
+     */
+    public function testWebComponentFriendlyClassName($qtiName, $expected)
+    {
+        $this->assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
+    }
+    
+    public function webComponentFriendlyClassNameProvider()
+    {
+        return [
+            ['choiceInteraction', 'qti-choice-interaction'],
+            ['simpleChoice', 'qti-simple-choice'],
+            ['prompt', 'qti-prompt']
+        ];
+    }
 }

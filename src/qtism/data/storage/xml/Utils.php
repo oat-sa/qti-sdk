@@ -284,4 +284,34 @@ class Utils
             return $string;
         }
     }
+    
+    /**
+     * Web Component friendly version of a QTI name (without qti-).
+     * 
+     * This method returns the Web Component friendly version of a QTI attribute name.
+     * 
+     * Example: "minChoices" becomes "min-choices".
+     * 
+     * @param string $qtiName
+     * @return string
+     */
+    static public function webComponentFriendlyAttributeName($qtiName)
+    {
+        return strtolower(preg_replace('/([A-Z])/', '-$1', $qtiName));
+    }
+    
+    /**
+     * Web Component friendly version of a QTI name (with qti-).
+     * 
+     * This method returns the Web Component friendly version of a QTI class name.
+     * 
+     * Example: "choiceInteraction" becomes "qti-choice-interaction".
+     * 
+     * @param string $qtiName
+     * @return string
+     */
+    static public function webComponentFriendlyClassName($qtiName)
+    {
+        return 'qti-' . self::webComponentFriendlyAttributeName($qtiName);
+    }
 }
