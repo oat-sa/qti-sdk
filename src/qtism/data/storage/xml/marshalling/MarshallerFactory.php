@@ -58,6 +58,13 @@ abstract class MarshallerFactory
     public function &getMapping() {
         return $this->mapping;
     }
+    
+    /**
+     * Whether or not element and attribute serialization must be Web Component friendly.
+     *
+     * @var boolean
+     */
+    private $webComponentFriendly = false;
 
     /**
 	 * Create a new instance of MarshallerFactory.
@@ -349,6 +356,30 @@ abstract class MarshallerFactory
             unset($mapping[$qtiClassName]);
         }
     }
+    
+    /**
+     * Set Web Componenent Friendship
+     *
+     * Sets whether or not consider Web Component friendly QTI components.
+     *
+     * @param boolean $webComponentFriendly
+     */
+    protected function setWebComponentFriendly($webComponentFriendly)
+    {
+        $this->webComponentFriendly = $webComponentFriendly;
+    }
+    
+    /**
+     * Web Component Friendship Status
+     *
+     * Whether or not Web Component friendly QTI components are considered.
+     *
+     * @return boolean
+     */
+    public function isWebComponentFriendly()
+    {
+        return $this->webComponentFriendly;
+    }
 
     /**
 	 * Create a marshaller for a given QtiComponent or DOMElement object, depending on the current mapping
@@ -362,6 +393,7 @@ abstract class MarshallerFactory
 	 * @param array $args An optional array of arguments to be passed to the Marshaller constructor.
 	 * @throws \InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
 	 * @throws \RuntimeException If no Marshaller object can be created for the given $object.
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException If no Marshaller mapping is set for a given $object.
 	 * @return \qtism\data\storage\xml\marshalling\Marshaller The corresponding Marshaller object.
 	 */
     public function createMarshaller($object, array $args = array())

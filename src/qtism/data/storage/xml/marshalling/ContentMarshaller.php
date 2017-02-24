@@ -22,7 +22,6 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\utils\Version;
 use qtism\data\content\InfoControl;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
@@ -47,9 +46,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
-use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;
-use qtism\data\content\xhtml\text\Bdo;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\xhtml\lists\DlElement;
@@ -63,6 +60,7 @@ use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\SimpleInline;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMElement;
 use \DOMNode;
 use \DOMText;
@@ -223,43 +221,50 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     protected function getChildrenElements(DOMElement $element)
     {
         $simpleComposites = self::$simpleComposites;
-        $version = $this->getVersion();
+        $localName = $element->localName;
         
-        if (in_array($element->localName, $simpleComposites) === true) {
+        if ($this->isWebComponentFriendly() === true) {
+            $qtiFriendlyName = XmlUtils::qtiFriendlyName($localName);
+            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses) === true) {
+                $localName = $qtiFriendlyName;
+            }
+        }
+        
+        if (in_array($localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);
-        } elseif ($element->localName === 'choiceInteraction') {
+        } elseif ($localName === 'choiceInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'orderInteraction') {
+        } elseif ($localName === 'orderInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'associateInteraction') {
+        } elseif ($localName === 'associateInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'matchInteraction') {
+        } elseif ($localName === 'matchInteraction') {
             return $this->getChildElementsByTagName($element, 'simpleMatchSet');
-        } elseif ($element->localName === 'gapMatchInteraction') {
+        } elseif ($localName === 'gapMatchInteraction') {
             return $this->getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
-        } elseif ($element->localName === 'inlineChoiceInteraction') {
+        } elseif ($localName === 'inlineChoiceInteraction') {
             return $this->getChildElementsByTagName($element, 'inlineChoice');
-        } elseif ($element->localName === 'hottextInteraction') {
+        } elseif ($localName === 'hottextInteraction') {
             return $this->getChildElementsByTagName($element, 'prompt', true);
-        } elseif ($element->localName === 'hotspotInteraction') {
+        } elseif ($localName === 'hotspotInteraction') {
             return $this->getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'graphicAssociateInteraction') {
+        } elseif ($localName === 'graphicAssociateInteraction') {
             return $this->getChildElementsByTagName($element, 'associableHotspot');
-        } elseif ($element->localName === 'graphicOrderInteraction') {
+        } elseif ($localName === 'graphicOrderInteraction') {
             return $this->getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'tr') {
+        } elseif ($localName === 'tr') {
             return $this->getChildElementsByTagName($element, array('td', 'th'));
-        } elseif ($element->localName === 'ul' || $element->localName === 'ol') {
+        } elseif ($localName === 'ul' || $element->localName === 'ol') {
             return $this->getChildElementsByTagName($element, 'li');
-        } elseif ($element->localName === 'dl') {
+        } elseif ($localName === 'dl') {
             return $this->getChildElementsByTagName($element, array('dd', 'dt'));
-        } elseif ($element->localName === 'itemBody') {
+        } elseif ($localName === 'itemBody') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'blockquote') {
+        } elseif ($localName === 'blockquote') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'simpleMatchSet') {
+        } elseif ($localName === 'simpleMatchSet') {
             return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'gapImg') {
+        } elseif ($localName === 'gapImg') {
             return $this->getChildElementsByTagName($element, 'object');
         } else {
             return array();
@@ -298,8 +303,13 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function lookupClass(DOMElement $element)
     {
+        $localName = $element->localName;
+        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $localName) === 1) {
+            $localName = XmlUtils::qtiFriendlyName($localName);
+        }
+        
         $lookup = $this->getLookupClasses();
-        $class = ucfirst($element->localName);
+        $class = ucfirst($localName);
 
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
@@ -314,7 +324,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             }
         }
 
-        $msg = "No class could be found for tag with name '" . $element->localName . "'.";
+        $msg = "No class could be found for tag with name '" . $localName . "'.";
         throw new UnmarshallingException($msg, $element);
     }
 }

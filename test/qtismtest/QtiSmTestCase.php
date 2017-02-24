@@ -7,6 +7,7 @@ use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti300MarshallerFactory;
 use \DOMElement;
 use \DOMDocument;
 use \DateTime;
@@ -29,7 +30,9 @@ abstract class QtiSmTestCase extends TestCase {
 	        return new Qti211MarshallerFactory();
 	    } elseif (Version::compare($version, '2.2.0', '==') === true) {
 	        return new Qti22MarshallerFactory();
-	    } else {
+	    } elseif (Version::compare($version, '3.0.0', '==') === true) {
+	       return new Qti300MarshallerFactory();
+        } else {
 	        return new Qti21MarshallerFactory();
 	    }
 	}

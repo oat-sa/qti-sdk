@@ -45,8 +45,8 @@ class ChoiceInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        $isOrderInteraction = $element->localName === 'orderInteraction';
-        $isChoiceInteraction = $element->localName === 'choiceInteraction';
+        $expectedOrderInteractionClassName = ($this->isWebComponentFriendly() === true) ? 'qti-order-interaction' : 'orderInteraction';
+        $isOrderInteraction = $element->localName === $expectedOrderInteractionClassName;
         
         // responseIdentifier.
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

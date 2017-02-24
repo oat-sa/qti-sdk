@@ -153,21 +153,15 @@ abstract class Marshaller
     );
     
     /**
-     * Whether or not element and attribute serialization must be Web Component friendly.
-     * 
-     * @var boolean
-     */
-    private $webComponentFriendly = false;
-    
-    /**
      * An array containing the QTI class names that are allowed to be Web Component friendly.
      * 
      * @var array
      */
-    private static $webComponentFriendlyClasses = array(
+    protected static $webComponentFriendlyClasses = array(
         'associableHotspot',
         'gap',
-        'gapChoice',
+        'gapImg',
+        'gapText',
         'simpleAssociableChoice',
         'hotspotChoice',
         'hottext',
@@ -197,6 +191,7 @@ abstract class Marshaller
         'printedVariable',
         'prompt',
         'feedbackBlock',
+        'feedbackInline',
         'rubricBlock',
         'templateBlock',
         'templateInline',
@@ -302,30 +297,6 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
-    
-    /**
-     * Set Web Componenent Friendship
-     * 
-     * Sets whether or not consider Web Component friendly QTI components.
-     * 
-     * @param boolean $webComponentFriendly
-     */
-    public function setWebComponentFriendly($webComponentFriendly)
-    {
-        $this->webComponentFriendly($webComponentFriendly);
-    }
-    
-    /**
-     * Web Component Friendship Status
-     * 
-     * Whether or not Web Component friendly QTI components are considered.
-     * 
-     * @return boolean
-     */
-    public function isWebComponentFriendly()
-    {
-        return $this->webComponentFriendly;
-    }
 
     /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
@@ -338,6 +309,10 @@ abstract class Marshaller
      */
     public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
+        if ($this->isWebComponentFriendly() === true) {
+            $attribute = XmlUtils::webComponentFriendlyAttributeName($attribute);
+        }
+        
         return XmlUtils::getDOMElementAttributeAs($element, $attribute, $datatype);
     }
 
@@ -418,6 +393,18 @@ abstract class Marshaller
      */
     public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
+        if (is_array($tagName) === false) {
+            $tagName = [$tagName];
+        }
+        
+        if ($this->isWebComponentFriendly() === true) {
+            foreach ($tagName as $key => $name) {
+                if (in_array($name, self::$webComponentFriendlyClasses) === true) {
+                    $tagName[$key] = XmlUtils::webComponentFriendlyClassName($name);
+                }
+            }
+        }
+        
         return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
@@ -511,6 +498,18 @@ abstract class Marshaller
         if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
             $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
+    }
+    
+    /**
+     * Is Web Component Friendly
+     *
+     * Whether or not the Marshaller should work in Web Component Friendly mode.
+     *
+     * @return bool
+     */
+    protected function isWebComponentFriendly()
+    {
+        return $this->getMarshallerFactory()->isWebComponentFriendly();
     }
 
     /**
