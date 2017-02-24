@@ -68,6 +68,14 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
         
         $this->assertEquals('2.0.0', $doc->getVersion());
     }
+    
+    public function testLoad300() {
+        $file = self::samplesDir() . 'ims/items/3_0/aqti_tmh_sample_1.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+        
+        $this->assertEquals('3.0.0', $doc->getVersion());
+    }
 
     public function testLoadTemplate($uri = '') {
         $file = (empty($uri) === true) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
@@ -210,6 +218,11 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 
     public function validFileProvider() {
         return array(
+            // -- 3.0.0
+            array(self::decorateUri('aqti_tmh_sample_1.xml', '3.0.0'), '3.0.0'),
+            array(self::decorateUri('aqti_tmh_sample_2.xml', '3.0.0'), '3.0.0'),
+            array(self::decorateUri('aqti_tmh_sample_3.xml', '3.0.0'), '3.0.0'),
+            
             // -- 2.2.1
             array(self::decorateUri('choice.xml', '2.2.1'), '2.2.1'),
             array(self::decorateUri('graphic_order.xml', '2.2.1'), '2.2.1'),
@@ -388,6 +401,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
             return self::samplesDir() . 'ims/items/2_2/' . $uri;
         } elseif ($version === '2.2.1') {
             return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
+        } elseif ($version === '3.0.0') {
+            return self::samplesDir() . 'ims/items/3_0/' . $uri;
         } else {
             return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }

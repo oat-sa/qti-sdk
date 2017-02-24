@@ -97,6 +97,12 @@ class Utils
                 } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
                     $version = '2.2.1';
                 }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0');
+                
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd') {
+                    $version = '3.0.0';
+                }
             }
         }
         
