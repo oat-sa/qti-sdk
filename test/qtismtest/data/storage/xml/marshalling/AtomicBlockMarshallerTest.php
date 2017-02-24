@@ -1,6 +1,9 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\ssml\Sub as SsmlSub;
+use qtism\data\content\xhtml\presentation\Sub;
+use qtism\data\content\xhtml\text\Span;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\TextRun;
@@ -124,5 +127,32 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase {
     
         $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[9]);
         $this->assertEquals('', trim($component->getContent()[9]->getContent()));
+    }
+    
+    public function testMarshallP30SsmlSub()
+    {
+        $span1 = new Span();
+        $span1->setContent(new InlineCollection([new TextRun('Grace')]));
+        $textRun1 = new TextRun(' walks to and from her ');
+        $span2 = new Span();
+        $span2->setContent(new InlineCollection([new TextRun('harmonica')]));
+        $textRun2 = new TextRun(' lessons once a week. Her house on Maple ');
+        $ssmlSub1 = new SsmlSub('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub>');
+        $textRun3 = new TextRun(' is a 2 kilometre walk to her teacher\'s house on Chestnut ');
+        $ssmlSub2 = new SsmlSub('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub>');
+        $sub = new Sub();
+        $sub->setContent(new InlineCollection([new TextRun('this is sub-script')]));
+        
+        $p = new P();
+        $p->setContent(new InlineCollection([
+            $span1, $textRun1, $span2, $textRun2, $ssmlSub1, $textRun3, $ssmlSub2, $sub
+        ]));
+    
+        $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($p);
+        $element = $marshaller->marshall($p);
+        
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $element = $doc->importNode($element, true);
+        $this->assertEquals('<p><span>Grace</span> walks to and from her <span>harmonica</span> lessons once a week. Her house on Maple <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub> is a 2 kilometre walk to her teacher\'s house on Chestnut <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub><sub>this is sub-script</sub></p>', $doc->saveXML($element));
     }
 }

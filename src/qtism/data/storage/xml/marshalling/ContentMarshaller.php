@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -60,6 +60,7 @@ use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\SimpleInline;
+use qtism\data\ExternalQtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMElement;
 use \DOMNode;
@@ -120,7 +121,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function isComponentFinal(QtiComponent $component)
     {
-        return in_array($component->getQtiClassName(), self::$finals);
+        return in_array($component->getQtiClassName(), self::$finals) || $component instanceof ExternalQtiComponent;
     }
 
     /**
