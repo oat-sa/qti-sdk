@@ -157,7 +157,7 @@ abstract class Marshaller
      * 
      * @var array
      */
-    protected static $webComponentFriendlyClasses = array(
+    public static $webComponentFriendlyClasses = array(
         'associableHotspot',
         'gap',
         'gapImg',
@@ -297,6 +297,40 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
+    
+    /**
+     * Get Attribute Name to Use for Marshalling
+     *
+     * This method provides the attribute name to be used to retrieve an element attribute value
+     * by considering whether or not the Marshaller implementation is running in Web Component
+     * Friendly mode.
+     *
+     * Examples:
+     *
+     * In case of the Marshaller implementation IS NOT running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "responseIdentifier" value is returned.
+     *
+     * On the other hand, in case of the Marshaller implementation IS running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "response-identifier" value is returned.
+     *
+     * @param \DOMElement $element
+     * @param $attribute
+     * @return string
+     */
+    protected function getAttributeName(DOMElement $element, $attribute)
+    {
+        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
+            $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
+        
+            if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses) === true) {
+                return XmlUtils::webComponentFriendlyAttributeName($attribute);
+            }
+        }
+        
+        return $attribute;
+    }
 
     /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
@@ -309,11 +343,7 @@ abstract class Marshaller
      */
     public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
-        if ($this->isWebComponentFriendly() === true) {
-            $attribute = XmlUtils::webComponentFriendlyAttributeName($attribute);
-        }
-        
-        return XmlUtils::getDOMElementAttributeAs($element, $attribute, $datatype);
+        return XmlUtils::getDOMElementAttributeAs($element, $this->getAttributeName($element, $attribute), $datatype);
     }
 
     /**
@@ -325,7 +355,7 @@ abstract class Marshaller
      */
     public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
-        XmlUtils::setDOMElementAttribute($element, $attribute, $value);
+        XmlUtils::setDOMElementAttribute($element, $this->getAttributeName($element, $attribute), $value);
     }
 
     /**
@@ -498,6 +528,17 @@ abstract class Marshaller
         if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
             $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
+    }
+    
+    protected function createElement(QtiComponent $component)
+    {
+        $localName = $component->getQtiClassName();
+        
+        if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses) === true) {
+            $localName = XmlUtils::webComponentFriendlyClassName($localName);
+        }
+        
+        return self::getDOMCradle()->createElement($localName);
     }
     
     /**

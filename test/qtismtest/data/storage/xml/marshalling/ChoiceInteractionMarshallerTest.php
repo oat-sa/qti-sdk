@@ -1,6 +1,8 @@
 <?php
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\FlowCollection;
+use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\Orientation;
@@ -222,7 +224,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
 	    $this->setExpectedException('qtism\\data\\storage\\xml\\marshalling\\UnmarshallingException', $expectedMsg);
 	    
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
-        $component = $marshaller->unmarshall($element);
+        $marshaller->unmarshall($element);
 	}
     
     public function testUnmarshallNoMaxChoices()
@@ -281,5 +283,25 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
     
         $simpleChoices = $component->getSimpleChoices();
         $this->assertEquals(2, count($simpleChoices));
+    }
+    
+    public function testMarshall30()
+    {
+        $choice1 = new SimpleChoice('choice_1');
+        $div1 = new Div('div_1');
+        $div1->setContent(new FlowCollection([new TextRun('Choice #1')]));
+        $choice1->setContent(new FlowStaticCollection([$div1]));
+    
+        $choice2 = new SimpleChoice('choice_2');
+        $div2 = new Div('div_2');
+        $div2->setContent(new FlowCollection([new TextRun('Choice #2')]));
+        $choice2->setContent(new FlowStaticCollection([$div2]));
+        
+        $component = new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection([$choice1, $choice2]));
+    
+        $element = $this->getMarshallerFactory('3.0.0')->createMarshaller($component)->marshall($component);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this->assertEquals('<qti-choice-interaction response-identifier="RESPONSE"><qti-simple-choice identifier="choice_1"><div id="div_1">Choice #1</div></qti-simple-choice><qti-simple-choice identifier="choice_2"><div id="div_2">Choice #2</div></qti-simple-choice></qti-choice-interaction>', $dom->saveXML($element));
     }
 }

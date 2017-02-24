@@ -22,12 +22,10 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\utils\Reflection;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\Utils;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMElement;
 use \InvalidArgumentException;
-use \RuntimeException;
 use \ReflectionClass;
 use \ReflectionException;
 
@@ -399,8 +397,14 @@ abstract class MarshallerFactory
     public function createMarshaller($object, array $args = array())
     {
         if ($object instanceof QtiComponent) {
+            // Asking for a Marshaller...
             $qtiClassName = $object->getQtiClassName();
+            
+            if ($this->isWebComponentFriendly() === true && in_array($qtiClassName, Marshaller::$webComponentFriendlyClasses)) {
+                $qtiClassName = XmlUtils::webComponentFriendlyClassName($qtiClassName);
+            }
         } elseif ($object instanceof DOMElement) {
+            // Asking for an Unmarshaller...
             $qtiClassName = $object->localName;
         }
 
