@@ -24,8 +24,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\TextFormat;
-use qtism\data\content\interactions\ExtendedTextInteraction;
-use qtism\data\content\interactions\TextEntryInteraction;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 use \DOMElement;
@@ -47,7 +46,7 @@ class TextInteractionMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $version = $this->getVersion();
 
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
@@ -117,7 +116,9 @@ class TextInteractionMarshaller extends Marshaller
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             try {
-                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->localName);
+                $localName = $element->localName;
+                $name = ($this->isWebComponentFriendly()) ? ucfirst(XmlUtils::qtiFriendlyName($localName)) : ucfirst($localName);
+                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($name);
                 $component = new $class($responseIdentifier);
             } catch (InvalidArgumentException $e) {
                 $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";

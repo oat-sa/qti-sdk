@@ -43,7 +43,7 @@ class MediaInteractionMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('mediaInteraction');
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         $this->setDOMElementAttribute($element, 'autostart', $component->mustAutostart());
@@ -78,7 +78,7 @@ class MediaInteractionMarshaller extends Marshaller
 	 *
 	 * @param \DOMElement $element A DOMElement object.
 	 * @return \qtism\data\QtiComponent A MediaInteraction object.
-	 * @throws \UnmarshallingException
+	 * @throws \qtism\data\storage\xml\marshalling\UnmarshallingException
 	 */
     protected function unmarshall(DOMElement $element)
     {

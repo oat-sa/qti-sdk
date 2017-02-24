@@ -47,7 +47,7 @@ class GapMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement('gap');
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {

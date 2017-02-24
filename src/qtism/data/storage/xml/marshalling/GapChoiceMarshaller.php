@@ -46,6 +46,7 @@ class GapChoiceMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
+        $expectedGapImgName = ($this->isWebComponentFriendly()) ? 'qti-gap-img' : 'gapImg';
         
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
@@ -53,7 +54,7 @@ class GapChoiceMarshaller extends ContentMarshaller
 
                 $fqClass = $this->lookupClass($element);
 
-                if ($element->localName === 'gapImg') {
+                if ($element->localName === $expectedGapImgName) {
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     } else {
@@ -123,7 +124,7 @@ class GapChoiceMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
 
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());

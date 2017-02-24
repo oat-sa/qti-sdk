@@ -47,7 +47,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement('positionObjectInteraction');
+        $element = $this->createElement($component);
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         

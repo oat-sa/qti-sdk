@@ -188,6 +188,7 @@ abstract class Marshaller
         'inlineChoiceInteraction',
         'textEntryInteraction',
         'positionObjectInteraction',
+        'positionObjectStage',
         'printedVariable',
         'prompt',
         'feedbackBlock',

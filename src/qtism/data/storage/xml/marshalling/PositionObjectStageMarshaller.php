@@ -44,7 +44,7 @@ class PositionObjectStageMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('positionObjectStage');
+        $element = $this->createElement($component);
         $object = $component->getObject();
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($object)->marshall($object));
 
