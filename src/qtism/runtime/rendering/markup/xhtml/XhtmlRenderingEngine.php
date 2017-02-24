@@ -161,5 +161,6 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
 
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());
+        $this->registerRenderer('sub', new SsmlSubRenderer(), 'http://www.w3.org/2010/10/synthesis');
     }
 }
