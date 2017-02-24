@@ -249,8 +249,8 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
         $element = $this->createDOMElement('
             <qti-choice-interaction response-identifier="RESPONSE" xml:base="/home/jerome">
               <qti-prompt>Prompt...</qti-prompt>
-              <qti-simple-choice identifier="choice_1">Choice #1</qti-simple-choice>
-              <qti-simple-choice identifier="choice_2">Choice #2</qti-simple-choice>
+              <qti-simple-choice identifier="choice_1"><div>Choice #1</div></qti-simple-choice>
+              <qti-simple-choice identifier="choice_2"><div>Choice #2</div></qti-simple-choice>
             </qti-choice-interaction>
         ');
     
@@ -269,6 +269,15 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase {
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
         $this->assertEquals('Prompt...', $content[0]->getContent());
+        
+        $this->assertCount(2, $component->getSimpleChoices());
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\Text\\Div', $component->getSimpleChoices()[0]->getContent()[0]);
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getSimpleChoices()[0]->getContent()[0]->getContent()[0]);
+        $this->assertEquals('Choice #1', $component->getSimpleChoices()[0]->getContent()[0]->getContent()[0]->getContent());
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\Text\\Div', $component->getSimpleChoices()[1]->getContent()[0]);
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]);
+        $this->assertEquals('Choice #2', $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]->getContent());
+        
     
         $simpleChoices = $component->getSimpleChoices();
         $this->assertEquals(2, count($simpleChoices));
