@@ -47,7 +47,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * Create a MathRenderer object.
      * 
      * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine $renderingEngine
-     * @param boolean $namespace Whether to embed the resulting output into the MathML namespace.
+     * @param boolean $namespaceOutput Whether to embed the resulting output into the MathML namespace.
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
     {

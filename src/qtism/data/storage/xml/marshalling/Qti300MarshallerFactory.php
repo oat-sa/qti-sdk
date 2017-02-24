@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -117,6 +117,8 @@ class Qti300MarshallerFactory extends Qti221MarshallerFactory
         $this->addMappingEntry('qti-template-block', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
         $this->addMappingEntry('qti-template-inline', 'qtism\\data\\storage\\xml\\marshalling\\TemplateElementMarshaller');
         $this->addMappingEntry('qti-info-control', 'qtism\\data\\storage\\xml\\marshalling\\InfoControlMarshaller');
+    
+        $this->addMappingEntry('sub', 'qtism\\data\\storage\\xml\\marshalling\\SsmlSubMarshaller', 'http://www.w3.org/2010/10/synthesis');
     }
     
     /**

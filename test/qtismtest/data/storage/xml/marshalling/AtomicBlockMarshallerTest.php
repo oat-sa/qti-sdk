@@ -10,7 +10,8 @@ use \DOMDocument;
 
 class AtomicBlockMarshallerTest extends QtiSmTestCase {
 
-	public function testMarshallP() {
+	public function testMarshallP()
+    {
 	    $p = new P('my-p');
 	    $em = new Em();
 	    $em->setContent(new InlineCollection(array(new TextRun('simple'))));
@@ -24,7 +25,8 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('<p id="my-p">This text is a <em>simple</em> test.</p>', $dom->saveXML($element));
 	}
 	
-	public function testUnmarshallP() {
+	public function testUnmarshallP()
+    {
 	    $p = $this->createComponentFromXml('
 	        <p id="my-p">
                 This text is
@@ -44,4 +46,83 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase {
 	    $this->assertEquals('simple', $emContent[0]->getContent());
 	    $this->assertEquals(" test.\n            ", $content[2]->getContent());
 	}
+	
+	public function testUnmarshallP30()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+            <p>
+                <span data-catalog-idref="cat1">Grace</span> walks to and from her <span data-catalog-idref="cat2">harmonica</span> lessons once a week. Her house on Maple Dr. is a 2 kilometre walk to her teacher&apos;s house on Chestnut St.
+            </p>
+        ');
+        
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($element);
+        
+        $component = $marshaller->unmarshall($element);
+        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $component);
+        $this->assertCount(5, $component->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[0]);
+        $this->assertEquals('', trim($component->getContent()[0]->getContent()));
+        
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\text\\Span', $component->getContent()[1]);
+        $this->assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[2]);
+        $this->assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\text\\Span', $component->getContent()[3]);
+        $this->assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[4]);
+        $this->assertEquals('lessons once a week. Her house on Maple Dr. is a 2 kilometre walk to her teacher\'s house on Chestnut St.', trim($component->getContent()[4]->getContent()));
+    }
+    
+    public function testUnmarshallP30SsmlSub()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+            <p>
+                <span data-catalog-idref="cat1">Grace</span> walks to and from her <span data-catalog-idref="cat2">harmonica</span> lessons once a week. Her house on Maple <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub> is a 2 kilometre walk to her teacher&apos;s house on Chestnut <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub><sub>this is sub-script</sub>
+            </p>
+        ');
+        
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($element);
+        
+        $component = $marshaller->unmarshall($element);
+        $this->assertInstanceOf('qtism\\data\\content\\xhtml\\text\\P', $component);
+        $this->assertCount(10, $component->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[0]);
+        $this->assertEquals('', trim($component->getContent()[0]->getContent()));
+        
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\text\\Span', $component->getContent()[1]);
+        $this->assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[2]);
+        $this->assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\text\\Span', $component->getContent()[3]);
+        $this->assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
+        
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[4]);
+        $this->assertEquals(' lessons once a week. Her house on Maple ', $component->getContent()[4]->getContent());
+    
+        $this->assertInstanceOf('qtism\\data\content\\ssml\Sub', $component->getContent()[5]);
+        $this->assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub>', $component->getContent()[5]->getXmlString());
+    
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[6]);
+        $this->assertEquals(' is a 2 kilometre walk to her teacher\'s house on Chestnut ', $component->getContent()[6]->getContent());
+    
+        $this->assertInstanceOf('qtism\\data\content\\ssml\Sub', $component->getContent()[7]);
+        $this->assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub>', $component->getContent()[7]->getXmlString());
+    
+        $this->assertInstanceOf('qtism\\data\content\\xhtml\\presentation\\Sub', $component->getContent()[8]);
+        $this->assertEquals('this is sub-script', $component->getContent()[8]->getContent()[0]->getContent());
+    
+        $this->assertInstanceOf('qtism\\data\content\\TextRun', $component->getContent()[9]);
+        $this->assertEquals('', trim($component->getContent()[9]->getContent()));
+    }
 }

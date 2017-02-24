@@ -308,50 +308,54 @@ abstract class MarshallerFactory
 	 *
 	 * @param string $qtiClassName A QTI class name.
 	 * @param string $marshallerClassName A PHP marshaller class name (fully qualified).
+     * @param string $ns
 	 */
-    public function addMappingEntry($qtiClassName, $marshallerClassName)
+    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
-        $mapping[$qtiClassName] = $marshallerClassName;
+        $mapping[$ns][$qtiClassName] = $marshallerClassName;
     }
 
     /**
 	 * Whether a mapping entry is defined for a given $qtiClassName.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 * @return boolean Whether a mapping entry is defined.
 	 */
-    public function hasMappingEntry($qtiClassName)
+    public function hasMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        return isset($mapping[$qtiClassName]);
+        return isset($mapping[$ns]) && isset($mapping[$ns][$qtiClassName]);
     }
 
     /**
 	 * Get the mapping entry.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 * @return false|string False if does not exist, otherwise a fully qualified class name.
 	 */
-    public function getMappingEntry($qtiClassName)
+    public function getMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        return $mapping[$qtiClassName];
+        return $mapping[$ns][$qtiClassName];
     }
 
     /**
 	 * Remove a mapping for $qtiClassName.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 */
-    public function removeMappingEntry($qtiClassName)
+    public function removeMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        if ($this->hasMappingEntry($qtiClassName)) {
-            unset($mapping[$qtiClassName]);
+        if ($this->hasMappingEntry($qtiClassName, $ns)) {
+            unset($mapping[$ns][$qtiClassName]);
         }
     }
     
@@ -412,7 +416,9 @@ abstract class MarshallerFactory
 
             try {
                 // Look for a mapping entry.
-                if ($this->hasMappingEntry($qtiClassName)) {
+                if ($object instanceof DOMElement && $this->hasMappingEntry($qtiClassName, $object->namespaceURI)) {
+                    $class = new ReflectionClass($this->getMappingEntry($qtiClassName, $object->namespaceURI));
+                } elseif ($this->hasMappingEntry($qtiClassName)) {
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName));
                 } else {
                     // No qtiClassName/mapping entry found.

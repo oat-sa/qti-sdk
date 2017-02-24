@@ -99,7 +99,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
                                       'selectPointInteraction', 'associableHotspot', 'hotspotChoice', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'endAttemptInteraction', 'customInteraction',
-                                      'printedVariable', 'math', 'include');
+                                      'printedVariable', 'include');
 
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',

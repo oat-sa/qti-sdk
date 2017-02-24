@@ -278,7 +278,7 @@ abstract class Marshaller
                     if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
                         return $this->marshall($component);
                     } else {
-                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? get_class($component) : $component;
+                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? ($component instanceof DOMElement) ? $component->localName : get_class($component) : $component;
                         throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
                     }
                 } else {
