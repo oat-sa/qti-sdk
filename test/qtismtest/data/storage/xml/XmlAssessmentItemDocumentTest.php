@@ -5,9 +5,6 @@ use qtismtest\QtiSmTestCase;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\data\View;
-use qtism\data\AssessmentItem;
-use qtism\data\storage\xml\XmlStorageException;
 
 class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
 	
@@ -48,7 +45,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
     public function testLoad211() {
         $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
         
         $this->assertEquals('2.1.1', $doc->getVersion());
     }
@@ -56,7 +53,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
     public function testLoad21() {
         $file = self::samplesDir() . 'ims/items/2_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
         
         $this->assertEquals('2.1.0', $doc->getVersion());
     }
@@ -64,15 +61,15 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase {
     public function testLoad20() {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
         
         $this->assertEquals('2.0.0', $doc->getVersion());
     }
     
     public function testLoad300() {
-        $file = self::samplesDir() . 'ims/items/3_0/aqti_tmh_sample_1.xml';
+        $file = self::samplesDir() . 'ims/items/3_0/aqti_tmh_sample_2.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
         
         $this->assertEquals('3.0.0', $doc->getVersion());
     }
