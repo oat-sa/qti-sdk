@@ -33,7 +33,7 @@ use \ReflectionClass;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Qti300MarshallerFactory extends Qti221MarshallerFactory
+class Qti30MarshallerFactory extends Qti221MarshallerFactory
 {
     public function __construct()
     {
