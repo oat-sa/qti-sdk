@@ -47,9 +47,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $baseComponent = $baseMarshaller->unmarshall($element);
 
-        if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
 
-            if (($visible = static::getDOMElementAttributeAs($element, 'visible', 'boolean')) !== null) {
+            if (($visible = $this->getDOMElementAttributeAs($element, 'visible', 'boolean')) !== null) {
 
                 if (empty($assessmentSection)) {
                     $object = new AssessmentSection($baseComponent->getIdentifier(), $title, $visible);
@@ -69,12 +69,12 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 $object->setTimeLimits($baseComponent->getTimeLimits());
 
                 // Deal with the keepTogether attribute.
-                if (($keepTogether = static::getDOMElementAttributeAs($element, 'keepTogether', 'boolean')) !== null) {
+                if (($keepTogether = $this->getDOMElementAttributeAs($element, 'keepTogether', 'boolean')) !== null) {
                     $object->setKeepTogether($keepTogether);
                 }
 
                 // Deal with selection elements.
-                $selectionElements = static::getChildElementsByTagName($element, 'selection');
+                $selectionElements = $this->getChildElementsByTagName($element, 'selection');
                 if (count($selectionElements) == 1) {
                     $select = intval($selectionElements[0]->getAttribute('select'));
                     
@@ -85,14 +85,14 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
                 }
 
                 // Deal with ordering elements.
-                $orderingElements = static::getChildElementsByTagName($element, 'ordering');
+                $orderingElements = $this->getChildElementsByTagName($element, 'ordering');
                 if (count($orderingElements) == 1) {
                     $marshaller = $this->getMarshallerFactory()->createMarshaller($orderingElements[0]);
                     $object->setOrdering($marshaller->unmarshall($orderingElements[0]));
                 }
 
                 // Deal with rubrickBlocks.
-                $rubricBlockElements = static::getChildElementsByTagName($element, 'rubricBlock');
+                $rubricBlockElements = $this->getChildElementsByTagName($element, 'rubricBlock');
                 if (count($rubricBlockElements) > 0) {
                     $rubricBlocks = new RubricBlockCollection();
                     for ($i = 0; $i < count($rubricBlockElements); $i++) {
@@ -125,9 +125,9 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $element = $baseMarshaller->marshall($component);
 
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
-        self::setDOMElementAttribute($element, 'visible', $component->isVisible());
-        self::setDOMElementAttribute($element, 'keepTogether', $component->mustKeepTogether());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'visible', $component->isVisible());
+        $this->setDOMElementAttribute($element, 'keepTogether', $component->mustKeepTogether());
 
         // Deal with selection element
         $selection = $component->getSelection();

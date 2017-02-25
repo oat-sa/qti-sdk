@@ -102,11 +102,11 @@ class ValueMarshaller extends Marshaller
         self::setDOMElementValue($element, $component->getValue());
 
         if (!empty($fieldIdentifer)) {
-            static::setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
+            $this->setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
         }
 
         if ($component->isPartOfRecord() && $baseType >= 0) {
-            static::setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
+            $this->setDOMElementAttribute($element, 'baseType', BaseType::getNameByConstant($baseType));
         }
 
         return $element;
@@ -123,7 +123,7 @@ class ValueMarshaller extends Marshaller
     {
         $object = null;
 
-        if (($baseType = static::getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
+        if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             // baseType attribute is set -> part of a record.
             $baseTypeCst = BaseType::getConstantByName($baseType);
             if ($baseTypeCst !== false) {
@@ -151,7 +151,7 @@ class ValueMarshaller extends Marshaller
             }
         }
 
-        if (($value = static::getDOMElementAttributeAs($element, 'fieldIdentifier', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'fieldIdentifier', 'string')) !== null) {
             $object->setFieldIdentifier($value);
         }
 

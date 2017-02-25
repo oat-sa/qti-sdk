@@ -43,9 +43,9 @@ class DrawingInteractionMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('drawingInteraction');
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -69,16 +69,16 @@ class DrawingInteractionMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
                 $objectElt = $objectElts[0];
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElt)->unmarshall($objectElt);
 
                 $component = new DrawingInteraction($responseIdentifier, $object);
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $promptElt = $promptElts[0];
                     $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);

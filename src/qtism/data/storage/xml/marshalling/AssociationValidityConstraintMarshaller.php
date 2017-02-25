@@ -44,9 +44,9 @@ class AssociationValidityConstraintMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
-        self::setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
+        $this->setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
 
         return $element;
     }
@@ -60,11 +60,11 @@ class AssociationValidityConstraintMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             
-            if (($minConstraint = self::getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
+            if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
                 
-                if (($maxConstraint = self::getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
+                if (($maxConstraint = $this->getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
                     
                     try {
                         return new AssociationValidityConstraint($identifier, $minConstraint, $maxConstraint);

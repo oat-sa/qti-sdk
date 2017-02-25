@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,12 +22,11 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\utils\Reflection;
+use qtism\data\ExternalQtiComponent;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\Utils;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMElement;
 use \InvalidArgumentException;
-use \RuntimeException;
 use \ReflectionClass;
 use \ReflectionException;
 
@@ -58,6 +57,13 @@ abstract class MarshallerFactory
     public function &getMapping() {
         return $this->mapping;
     }
+    
+    /**
+     * Whether or not element and attribute serialization must be Web Component friendly.
+     *
+     * @var boolean
+     */
+    private $webComponentFriendly = false;
 
     /**
 	 * Create a new instance of MarshallerFactory.
@@ -303,51 +309,79 @@ abstract class MarshallerFactory
 	 *
 	 * @param string $qtiClassName A QTI class name.
 	 * @param string $marshallerClassName A PHP marshaller class name (fully qualified).
+     * @param string $ns
 	 */
-    public function addMappingEntry($qtiClassName, $marshallerClassName)
+    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
-        $mapping[$qtiClassName] = $marshallerClassName;
+        $mapping[$ns][$qtiClassName] = $marshallerClassName;
     }
 
     /**
 	 * Whether a mapping entry is defined for a given $qtiClassName.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 * @return boolean Whether a mapping entry is defined.
 	 */
-    public function hasMappingEntry($qtiClassName)
+    public function hasMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        return isset($mapping[$qtiClassName]);
+        return isset($mapping[$ns]) && isset($mapping[$ns][$qtiClassName]);
     }
 
     /**
 	 * Get the mapping entry.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 * @return false|string False if does not exist, otherwise a fully qualified class name.
 	 */
-    public function getMappingEntry($qtiClassName)
+    public function getMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        return $mapping[$qtiClassName];
+        return $mapping[$ns][$qtiClassName];
     }
 
     /**
 	 * Remove a mapping for $qtiClassName.
 	 *
 	 * @param string $qtiClassName A QTI class name.
+     * @param string $ns
 	 */
-    public function removeMappingEntry($qtiClassName)
+    public function removeMappingEntry($qtiClassName, $ns = 'qtism')
     {
         $mapping = &$this->getMapping();
 
-        if ($this->hasMappingEntry($qtiClassName)) {
-            unset($mapping[$qtiClassName]);
+        if ($this->hasMappingEntry($qtiClassName, $ns)) {
+            unset($mapping[$ns][$qtiClassName]);
         }
+    }
+    
+    /**
+     * Set Web Componenent Friendship
+     *
+     * Sets whether or not consider Web Component friendly QTI components.
+     *
+     * @param boolean $webComponentFriendly
+     */
+    protected function setWebComponentFriendly($webComponentFriendly)
+    {
+        $this->webComponentFriendly = $webComponentFriendly;
+    }
+    
+    /**
+     * Web Component Friendship Status
+     *
+     * Whether or not Web Component friendly QTI components are considered.
+     *
+     * @return boolean
+     */
+    public function isWebComponentFriendly()
+    {
+        return $this->webComponentFriendly;
     }
 
     /**
@@ -362,13 +396,20 @@ abstract class MarshallerFactory
 	 * @param array $args An optional array of arguments to be passed to the Marshaller constructor.
 	 * @throws \InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
 	 * @throws \RuntimeException If no Marshaller object can be created for the given $object.
+     * @throws \qtism\data\storage\xml\marshalling\MarshallerNotFoundException If no Marshaller mapping is set for a given $object.
 	 * @return \qtism\data\storage\xml\marshalling\Marshaller The corresponding Marshaller object.
 	 */
     public function createMarshaller($object, array $args = array())
     {
         if ($object instanceof QtiComponent) {
+            // Asking for a Marshaller...
             $qtiClassName = $object->getQtiClassName();
+            
+            if ($this->isWebComponentFriendly() === true && in_array($qtiClassName, Marshaller::$webComponentFriendlyClasses)) {
+                $qtiClassName = XmlUtils::webComponentFriendlyClassName($qtiClassName);
+            }
         } elseif ($object instanceof DOMElement) {
+            // Asking for an Unmarshaller...
             $qtiClassName = $object->localName;
         }
 
@@ -376,7 +417,11 @@ abstract class MarshallerFactory
 
             try {
                 // Look for a mapping entry.
-                if ($this->hasMappingEntry($qtiClassName)) {
+                if ($object instanceof DOMElement && $this->hasMappingEntry($qtiClassName, $object->namespaceURI)) {
+                    $class = new ReflectionClass($this->getMappingEntry($qtiClassName, $object->namespaceURI));
+                } elseif ($object instanceof ExternalQtiComponent && $this->hasMappingEntry($qtiClassName, $object->getTargetNamespace())) {
+                    $class = new ReflectionClass($this->getMappingEntry($qtiClassName, $object->getTargetNamespace()));
+                } elseif ($this->hasMappingEntry($qtiClassName)) {
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName));
                 } else {
                     // No qtiClassName/mapping entry found.

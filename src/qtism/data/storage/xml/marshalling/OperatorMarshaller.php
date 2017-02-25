@@ -159,11 +159,11 @@ class OperatorMarshaller extends RecursiveMarshaller
             $params[] = $frag->ownerDocument->saveXML($frag);
             $component = Reflection::newInstance($class, $params);
 
-            if (($class = self::getDOMElementAttributeAs($element, 'class')) !== null) {
+            if (($class = $this->getDOMElementAttributeAs($element, 'class')) !== null) {
                 $component->setClass($class);
             }
 
-            if (($definition = self::getDOMElementAttributeAs($element, 'definition')) !== null) {
+            if (($definition = $this->getDOMElementAttributeAs($element, 'definition')) !== null) {
                 $component->setDefinition($definition);
             }
 
@@ -185,18 +185,18 @@ class OperatorMarshaller extends RecursiveMarshaller
 
         if ($component instanceof CustomOperator) {
             if ($component->hasClass() === true) {
-                self::setDOMElementAttribute($element, 'class', $component->getClass());
+                $this->setDOMElementAttribute($element, 'class', $component->getClass());
             }
 
             if ($component->hasDefinition() === true) {
-                self::setDOMElementAttribute($element, 'definition', $component->getDefinition());
+                $this->setDOMElementAttribute($element, 'definition', $component->getDefinition());
             }
 
             // Now, we have to extract the LAX content of the custom operator and put it into
             // what we are putting out. (It is possible to have no LAX content at all, it is not mandatory).
             $xml = $component->getXml();
             $operatorElt = $xml->documentElement->cloneNode(true);
-            $qtiOperatorElts = self::getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
+            $qtiOperatorElts = $this->getChildElementsByTagName($operatorElt, array_merge(self::getOperators(), self::getExpressions()));
 
             foreach ($qtiOperatorElts as $qtiOperatorElt) {
                 $operatorElt->removeChild($qtiOperatorElt);
@@ -230,7 +230,7 @@ class OperatorMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
+        return $this->getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
     }
 
     /**

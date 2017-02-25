@@ -45,7 +45,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
         $version = $this->getVersion();
         
         // responseIdentifier.
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $fqClass = $this->lookupClass($element);
 
@@ -57,7 +57,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // shuffle.
-            if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+            if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                 $component->setShuffle($shuffle);
             } elseif (Version::compare($version, '2.1.0', '<') === true) {
                 $msg = "The mandatory attribute 'shuffle' is missing from the 'matchInteraction' element.";
@@ -65,7 +65,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // maxAssociations.
-            if (($maxAssociations = self::getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
+            if (($maxAssociations = $this->getDOMElementAttributeAs($element, 'maxAssociations', 'integer')) !== null) {
                 $component->setMaxAssociations($maxAssociations);
             } elseif (Version::compare($version, '2.1.0', '<') === true) {
                 $msg = "The mandatory attribute 'maxAssociations' is missing from the 'matchInteraction' element.";
@@ -73,7 +73,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // minAssociations.
-            if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = self::getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($minAssociations = $this->getDOMElementAttributeAs($element, 'minAssociations', 'integer')) !== null) {
                 $component->setMinAssociations($minAssociations);
             }
 
@@ -83,7 +83,7 @@ class MatchInteractionMarshaller extends ContentMarshaller
             }
 
             // prompt.
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -105,12 +105,12 @@ class MatchInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         
         $this->fillElement($element, $component);
         
         // responseIdentifier.
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         // prompt.
         if ($component->hasPrompt() === true) {
@@ -119,17 +119,17 @@ class MatchInteractionMarshaller extends ContentMarshaller
 
         // shuffle.
         if ((Version::compare($version, '2.1.0', '>=') === true && $component->mustShuffle() !== false) || Version::compare($version, '2.1.0', '<') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         // maxAssociations.
         if ($component->getMaxAssociations() !== 1 || Version::compare($version, '2.1.0', '<') === true) {
-            self::setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
+            $this->setDOMElementAttribute($element, 'maxAssociations', $component->getMaxAssociations());
         }
 
         // minAssociations.
         if ($component->getMinAssociations() !== 0 && Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
+            $this->setDOMElementAttribute($element, 'minAssociations', $component->getMinAssociations());
         }
 
         // xml:base

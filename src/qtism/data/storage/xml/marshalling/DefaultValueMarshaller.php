@@ -79,7 +79,7 @@ class DefaultValueMarshaller extends Marshaller
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {
-            self::setDOMElementAttribute($element, 'interpretation', $interpretation);
+            $this->setDOMElementAttribute($element, 'interpretation', $interpretation);
         }
 
         // A DefaultValue contains 1..* Value objects
@@ -101,7 +101,7 @@ class DefaultValueMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        $interpretation = static::getDOMElementAttributeAs($element, 'interpretation', 'string');
+        $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
 
         // Retrieve the values ...

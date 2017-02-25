@@ -46,14 +46,14 @@ class AreaMappingMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
+        $this->setDOMElementAttribute($element, 'defaultValue', $component->getDefaultValue());
 
         if ($component->hasLowerBound() === true) {
-            self::setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
+            $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());
         }
 
         if ($component->hasUpperBound() === true) {
-            self::setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
+            $this->setDOMElementAttribute($element, 'upperBound', $component->getUpperBound());
         }
 
         foreach ($component->getAreaMapEntries() as $entry) {
@@ -75,7 +75,7 @@ class AreaMappingMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $areaMapEntries = new AreaMapEntryCollection();
-        $areaMapEntryElts = static::getChildElementsByTagName($element, 'areaMapEntry');
+        $areaMapEntryElts = $this->getChildElementsByTagName($element, 'areaMapEntry');
 
         foreach ($areaMapEntryElts as $areaMapEntryElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($areaMapEntryElt);
@@ -84,15 +84,15 @@ class AreaMappingMarshaller extends Marshaller
 
         $object = new AreaMapping($areaMapEntries);
 
-        if (($defaultValue = static::getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
+        if (($defaultValue = $this->getDOMElementAttributeAs($element, 'defaultValue', 'float')) !== null) {
             $object->setDefaultValue($defaultValue);
         }
 
-        if (($lowerBound = static::getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
+        if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
             $object->setLowerBound($lowerBound);
         }
 
-        if (($upperBound = static::getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
+        if (($upperBound = $this->getDOMElementAttributeAs($element, 'upperBound', 'float')) !== null) {
             $object->setUpperBound($upperBound);
         }
 

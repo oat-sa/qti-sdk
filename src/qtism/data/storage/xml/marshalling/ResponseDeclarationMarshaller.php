@@ -80,21 +80,21 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
             $object->setCardinality($baseComponent->getCardinality());
             $object->setDefaultValue($baseComponent->getDefaultValue());
 
-            $correctResponseElts = self::getChildElementsByTagName($element, 'correctResponse');
+            $correctResponseElts = $this->getChildElementsByTagName($element, 'correctResponse');
             if (count($correctResponseElts) === 1) {
                 $correctResponseElt = $correctResponseElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($correctResponseElt, array($baseComponent->getBaseType()));
                 $object->setCorrectResponse($marshaller->unmarshall($correctResponseElt));
             }
 
-            $mappingElts = self::getChildElementsByTagName($element, 'mapping');
+            $mappingElts = $this->getChildElementsByTagName($element, 'mapping');
             if (count($mappingElts) === 1) {
                 $mappingElt = $mappingElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($mappingElt, array($baseComponent->getBaseType()));
                 $object->setMapping($marshaller->unmarshall($mappingElt));
             }
 
-            $areaMappingElts = self::getChildElementsByTagName($element, 'areaMapping');
+            $areaMappingElts = $this->getChildElementsByTagName($element, 'areaMapping');
             if (count($areaMappingElts) === 1) {
                 $areaMappingElt = $areaMappingElts[0];
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($areaMappingElt);

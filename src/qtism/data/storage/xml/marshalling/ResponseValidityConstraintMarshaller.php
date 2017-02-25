@@ -45,12 +45,12 @@ class ResponseValidityConstraintMarshaller extends Marshaller
     public function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('responseValidityConstraint');
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
-        self::setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
-        self::setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
+        $this->setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
         
         if (($patternMask = $component->getPatternMask()) !== '') {
-            self::setDOMElementAttribute($element, 'patternMask', $patternMask);
+            $this->setDOMElementAttribute($element, 'patternMask', $patternMask);
         }
         
         foreach ($component->getAssociationValidityConstraints() as $associationValidityConstraint) {
@@ -70,20 +70,20 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
-            if (($minConstraint = self::getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
+            if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
                 
-                if (($maxConstraint = self::getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
+                if (($maxConstraint = $this->getDOMElementAttributeAs($element, 'maxConstraint', 'integer')) !== null) {
                     
-                    if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) === null) {
+                    if (($patternMask = $this->getDOMElementAttributeAs($element, 'patternMask')) === null) {
                         $patternMask = '';
                     }
                     try {
                         $component = new ResponseValidityConstraint($responseIdentifier, $minConstraint, $maxConstraint, $patternMask);
                     
                         // Find child associationValidityConstraint elements if any.
-                        $associationValidityConstraintElts = static::getChildElementsByTagName($element, 'associationValidityConstraint');
+                        $associationValidityConstraintElts = $this->getChildElementsByTagName($element, 'associationValidityConstraint');
                             
                         foreach ($associationValidityConstraintElts as $associationValidityConstraintElt) {
                             $marshaller = $this->getMarshallerFactory()->createMarshaller($associationValidityConstraintElt);

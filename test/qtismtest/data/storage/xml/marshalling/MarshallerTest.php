@@ -70,39 +70,6 @@ class MarshallerTest extends QtiSmTestCase
 		$this->assertEquals('anotherChild', $childElements[1]->nodeName);
 	}
 	
-	public function testGetChildElementsByTagName()
-    {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		
-		// There are 3 child elements. 2 at the first level, 1 at the second.
-		// We should find only 2 direct child elements.
-		$dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
-		$element = $dom->documentElement;
-		
-		$this->assertEquals(2, count(Marshaller::getChildElementsByTagName($element, 'child')));
-	}
-	
-	public function testGetChildElementsByTagNameMultiple()
-    {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
-		$element = $dom->documentElement;
-		
-		$this->assertEquals(3, count(Marshaller::getChildElementsByTagName($element, array('child', 'grandChild'))));
-	}
-	
-	public function testGetChildElementsByTagNameEmpty()
-    {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		
-		// There is only 1 child but at the second level. Nothing
-		// should be found.
-		$dom->loadXML('<parent><parent><child/></parent></parent>');
-		$element = $dom->documentElement;
-		
-		$this->assertEquals(0, count(Marshaller::getChildElementsByTagName($element, 'child')));
-	}
-	
 	public function testGetXmlBase()
     {
 	    $dom = new DOMDocument('1.0', 'UTF-8');
@@ -182,29 +149,5 @@ class MarshallerTest extends QtiSmTestCase
         );
         
         $marshaller->hello();
-    }
-    
-    /**
-     * @dataProvider getDOMElementAttributeAsProvider
-     */
-    public function testGetDOMElementAttributeAs(\DOMElement $element, $attribute, $datatype, $expected)
-    {
-        $result = Marshaller::getDOMElementAttributeAs($element, $attribute, $datatype);
-        $this->assertSame($expected, $result);
-    }
-    
-    public function getDOMElementAttributeAsProvider()
-    {        
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true"/>');
-        $elt = $dom->documentElement;
-        
-        return array(
-            array($elt, 'string', 'string', 'str'),
-            array($elt, 'integer', 'integer', 1),
-            array($elt, 'float', 'float', 1.1),
-            array($elt, 'double', 'double', 1.1),
-            array($elt, 'boolean', 'boolean', true),
-        );
     }
 }

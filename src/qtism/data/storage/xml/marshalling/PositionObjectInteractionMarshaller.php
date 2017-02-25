@@ -47,21 +47,21 @@ class PositionObjectInteractionMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement('positionObjectInteraction');
+        $element = $this->createElement($component);
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getObject())->marshall($component->getObject()));
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
         if ($component->getMaxChoices() > 0) {
-            self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+            $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasMinChoices() === true) {
-            self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+            $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
         }
 
         if ($component->hasCenterPoint() === true) {
             $centerPoint = $component->getCenterPoint();
-            self::setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
+            $this->setDOMElementAttribute($element, 'centerPoint', $centerPoint->getX() . " " . $centerPoint->getY());
         }
 
         $this->fillElement($element, $component);
@@ -79,23 +79,23 @@ class PositionObjectInteractionMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
                 $component = new PositionObjectInteraction($responseIdentifier, $object);
 
-                if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                     $component->setMaxChoices($maxChoices);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                     $component->setMinChoices($minChoices);
                 }
 
-                if (($centerPoint = self::getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
+                if (($centerPoint = $this->getDOMElementAttributeAs($element, 'centerPoint')) !== null) {
                     $points = explode("\x20", $centerPoint);
                     $pointsCount = count($points);
 

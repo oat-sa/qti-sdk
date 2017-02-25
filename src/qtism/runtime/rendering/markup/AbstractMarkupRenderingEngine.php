@@ -29,6 +29,7 @@ use qtism\data\content\interactions\Gap;
 use qtism\common\collections\Container;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiScalar;
+use qtism\data\ExternalQtiComponent;
 use qtism\runtime\rendering\RenderingException;
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\markup\xhtml\PrintedVariableRenderer;
@@ -44,7 +45,6 @@ use qtism\data\content\FeedbackElement;
 use qtism\data\storage\php\Utils as PhpUtils;
 use qtism\runtime\common\State;
 use qtism\data\ViewCollection;
-use qtism\data\View;
 use qtism\data\QtiComponent;
 use \SplStack;
 use \DOMDocument;
@@ -764,13 +764,14 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * Register a $renderer object to a given $qtiClassName.
      *
      * @param string $qtiClassName A QTI class name.
-     * @param AbstractRenderer $renderer An AbstractRenderer object.
+     * @param \qtism\runtime\rendering\markup\AbstractMarkupRenderer $renderer An AbstractRenderer object.
+     * @param string $ns
      */
-    public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer)
+    public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer, $ns = 'qtism')
     {
         $renderer->setRenderingEngine($this);
         $renderers = $this->getRenderers();
-        $renderers[$qtiClassName] = $renderer;
+        $renderers[$ns][$qtiClassName] = $renderer;
         $this->setRenderers($renderers);
     }
 
@@ -780,15 +781,17 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param QtiComponent $component A QtiComponent object you want to get the appropriate AbstractRenderer implementation.
      * @throws RenderingException If no implementation of AbstractRenderer is registered for $component.
-     * @return AbstractRenderer The AbstractRenderer implementation to render $component.
+     * @return \qtism\runtime\rendering\markup\AbstractMarkupRenderer The AbstractRenderer implementation to render $component.
      */
     public function getRenderer(QtiComponent $component)
     {
         $renderers = $this->getRenderers();
         $className = $component->getQtiClassName();
 
-        if (isset($renderers[$className]) === true) {
-            return $renderers[$className];
+        if ($component instanceof ExternalQtiComponent && isset($renderers[$component->getTargetNamespace()][$className])) {
+            return $renderers[$component->getTargetNamespace()][$className];
+        } elseif (isset($renderers['qtism'][$className]) === true) {
+            return $renderers['qtism'][$className];
         } else {
             $msg = "No AbstractRenderer implementation registered for QTI class name '${className}'.";
             throw new RenderingException($msg, RenderingException::NO_RENDERER);
@@ -955,7 +958,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * it is an instance of FeedbackElement or ModalFeedback
      * * the current policy for feedback elements is TEMPLATE_ORIENTED
      *
-     * @param QtiComponent
+     * @param QtiComponent $component
      * @return boolean
      */
     protected function mustTemplateFeedbackComponent(QtiComponent $component)

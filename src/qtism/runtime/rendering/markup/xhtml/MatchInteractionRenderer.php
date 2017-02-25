@@ -95,7 +95,7 @@ class MatchInteractionRenderer extends InteractionRenderer
                 }
 
                 // Retrieve the two content of the two simpleMatchSets, separately.
-                $choiceElts[] = Marshaller::getChildElementsByTagName($n, 'li');
+                $choiceElts[] = XmlUtils::getChildElementsByTagName($n, 'li');
                 $currentSet++;
             }
         }

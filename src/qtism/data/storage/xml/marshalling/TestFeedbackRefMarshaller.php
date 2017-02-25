@@ -46,11 +46,11 @@ class TestFeedbackRefMarshaller extends Marshaller
     {
         $element = self::getDOMCradle()->createElement('testFeedbackRef');
         
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'access', TestFeedbackAccess::getNameByConstant($component->getAccess()));
-        self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'access', TestFeedbackAccess::getNameByConstant($component->getAccess()));
+        $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         return $element;
     }
@@ -64,15 +64,15 @@ class TestFeedbackRefMarshaller extends Marshaller
      */
     public function unmarshall(DOMElement $element)
     {
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($href = self::getDOMElementAttributeAs($element, 'href')) !== null) {
+            if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
                 
-                if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+                if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
                     
-                    if (($access = self::getDOMElementAttributeAs($element, 'access')) !== null) {
+                    if (($access = $this->getDOMElementAttributeAs($element, 'access')) !== null) {
                         
-                        if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                        if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                             
                             $access = TestFeedbackAccess::getConstantByName($access);
                             $showHide = ShowHide::getConstantByName($showHide);

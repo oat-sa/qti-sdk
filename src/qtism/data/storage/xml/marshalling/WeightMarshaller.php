@@ -46,8 +46,8 @@ class WeightMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'value', $component->getValue());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'value', $component->getValue());
 
         return $element;
     }
@@ -62,8 +62,8 @@ class WeightMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // identifier is a mandatory value.
-        if (($identifier = static::getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
-            if (($value = static::getDOMElementAttributeAs($element, 'value', 'string')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'value', 'string')) !== null) {
                 if (Format::isFloat($value)) {
                     try {
                         $object = new Weight($identifier, floatval($value));

@@ -43,9 +43,9 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $objectElts = self::getChildElementsByTagName($element, 'object');
+            $objectElts = $this->getChildElementsByTagName($element, 'object');
             if (count($objectElts) > 0) {
 
                 $object = $this->getMarshallerFactory()->createMarshaller($objectElts[0])->unmarshall($objectElts[0]);
@@ -57,7 +57,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
                     $component = new $fqClass($responseIdentifier, $object, $choices);
 
                     if (Version::compare($version, '2.1.0', '>=') === true) {
-                        if (($minChoices = self::getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
+                        if (($minChoices = $this->getDOMElementAttributeAs($element, 'minChoices', 'integer')) !== null) {
                             // graphicOrderInteraction->minChoices = 0 is an endless debate:
                             // The Information models says: If specfied, minChoices must be 1 or greater but ...
                             // The XSD 2.1 says: xs:integer, [-inf, +inf], optional
@@ -69,7 +69,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
                             }
                         }
                         
-                        if (($maxChoices = self::getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
+                        if (($maxChoices = $this->getDOMElementAttributeAs($element, 'maxChoices', 'integer')) !== null) {
                             $component->setMaxChoices($maxChoices);
                         }
                     }
@@ -78,7 +78,7 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
                         $component->setXmlBase($xmlBase);
                     }
 
-                    $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                    $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
                         $promptElt = $promptElts[0];
                         $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
@@ -108,9 +108,9 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasPrompt() === true) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($component->getPrompt())->marshall($component->getPrompt()));
@@ -120,11 +120,11 @@ class GraphicOrderInteractionMarshaller extends ContentMarshaller
 
         if (Version::compare($version, '2.1.0', '>=') === true) {
             if ($component->hasMinChoices()) {
-                self::setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
+                $this->setDOMElementAttribute($element, 'minChoices', $component->getMinChoices());
             }
             
             if ($component->hasMaxChoices()) {
-                self::setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
+                $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());
             }
         }
 

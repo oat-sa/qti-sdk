@@ -46,28 +46,28 @@ class PrintedVariableMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('printedVariable');
+        $element = $this->createElement($component);
         $version = $this->getVersion();
         
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'base', $component->getBase());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'base', $component->getBase());
         
         if (Version::compare($version, '2.1.0', '>=') === true) {
-            self::setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());
-            self::setDOMElementAttribute($element, 'delimiter', $component->getDelimiter());
-            self::setDOMElementAttribute($element, 'mappingIndicator', $component->getMappingIndicator());
+            $this->setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());
+            $this->setDOMElementAttribute($element, 'delimiter', $component->getDelimiter());
+            $this->setDOMElementAttribute($element, 'mappingIndicator', $component->getMappingIndicator());
         }
 
         if ($component->hasFormat() === true) {
-            self::setDOMElementAttribute($element, 'format', $component->getFormat());
+            $this->setDOMElementAttribute($element, 'format', $component->getFormat());
         }
 
         if ($component->hasIndex() === true) {
-            self::setDOMElementAttribute($element, 'index', $component->getIndex());
+            $this->setDOMElementAttribute($element, 'index', $component->getIndex());
         }
 
         if ($component->hasField() === true) {
-            self::setDOMElementAttribute($element, 'field', $component->getField());
+            $this->setDOMElementAttribute($element, 'field', $component->getField());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -90,34 +90,34 @@ class PrintedVariableMarshaller extends Marshaller
     {
         $version = $this->getVersion();
         
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $component = new PrintedVariable($identifier);
 
-            if (($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
+            if (($format = $this->getDOMElementAttributeAs($element, 'format')) !== null) {
                 $component->setFormat($format);
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true && ($powerForm = self::getDOMElementAttributeAs($element, 'powerForm', 'boolean')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($powerForm = $this->getDOMElementAttributeAs($element, 'powerForm', 'boolean')) !== null) {
                 $component->setPowerForm($powerForm);
             }
 
-            if (($base = self::getDOMElementAttributeAs($element, 'base')) !== null) {
+            if (($base = $this->getDOMElementAttributeAs($element, 'base')) !== null) {
                 $component->setBase((Format::isInteger($base) === true) ? intval($base) : $base);
             }
 
-            if (($index = self::getDOMElementAttributeAs($element, 'index')) !== null) {
+            if (($index = $this->getDOMElementAttributeAs($element, 'index')) !== null) {
                 $component->setIndex((Format::isInteger($index) === true) ? intval($index) : $base);
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true && ($delimiter = self::getDOMElementAttributeAs($element, 'delimiter')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($delimiter = $this->getDOMElementAttributeAs($element, 'delimiter')) !== null) {
                 $component->setDelimiter($delimiter);
             }
 
-            if (($field = self::getDOMElementAttributeAs($element, 'field')) !== null) {
+            if (($field = $this->getDOMElementAttributeAs($element, 'field')) !== null) {
                 $component->setField($field);
             }
 
-            if (Version::compare($version, '2.1.0', '>=') === true && ($mappingIndicator = self::getDOMElementAttributeAs($element, 'mappingIndicator')) !== null) {
+            if (Version::compare($version, '2.1.0', '>=') === true && ($mappingIndicator = $this->getDOMElementAttributeAs($element, 'mappingIndicator')) !== null) {
                 $component->setMappingIndicator($mappingIndicator);
             }
 

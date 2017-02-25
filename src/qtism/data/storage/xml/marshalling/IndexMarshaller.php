@@ -43,7 +43,7 @@ class IndexMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'n', $component->getN());
+        $this->setDOMElementAttribute($element, 'n', $component->getN());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -57,7 +57,7 @@ class IndexMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($n = static::getDOMElementAttributeAs($element, 'n')) !== null) {
+        if (($n = $this->getDOMElementAttributeAs($element, 'n')) !== null) {
 
             if (Format::isInteger($n)) {
                 $n = intval($n);

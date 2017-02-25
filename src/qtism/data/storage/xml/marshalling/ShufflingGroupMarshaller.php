@@ -44,11 +44,11 @@ class ShufflingGroupMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
+        $this->setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
         
         $fixedIdentifiers = $component->getFixedIdentifiers();
         if (count($fixedIdentifiers) > 0) {
-            self::setDOMElementAttribute($element, 'fixedIdentifiers', implode("\x20", $component->getFixedIdentifiers()->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'fixedIdentifiers', implode("\x20", $component->getFixedIdentifiers()->getArrayCopy()));
         }
 
         return $element;
@@ -63,11 +63,11 @@ class ShufflingGroupMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($identifiers = self::getDOMElementAttributeAs($element, 'identifiers')) !== null) {
+        if (($identifiers = $this->getDOMElementAttributeAs($element, 'identifiers')) !== null) {
             $identifiers = explode("\x20", $identifiers);
             $component = new ShufflingGroup(new IdentifierCollection($identifiers));
             
-            if (($fixedIdentifiers = self::getDOMElementAttributeAs($element, 'fixedIdentifiers')) !== null) {
+            if (($fixedIdentifiers = $this->getDOMElementAttributeAs($element, 'fixedIdentifiers')) !== null) {
                 $fixedIdentifiers = explode("\x20", $fixedIdentifiers);
                 $component->setFixedIdentifiers(new IdentifierCollection($fixedIdentifiers));
             }

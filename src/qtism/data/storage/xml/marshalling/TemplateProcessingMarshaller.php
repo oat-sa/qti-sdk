@@ -64,7 +64,7 @@ class TemplateProcessingMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         $childrenTagNames = array('exitTemplate', 'setCorrectResponse', 'setDefaultValue', 'setTemplateValue', 'templateCondition', 'templateConstraint');
-        $templateRuleElts = self::getChildElementsByTagName($element, $childrenTagNames);
+        $templateRuleElts = $this->getChildElementsByTagName($element, $childrenTagNames);
         $templateRules = new TemplateRuleCollection();
 
         foreach ($templateRuleElts as $templateRuleElt) {

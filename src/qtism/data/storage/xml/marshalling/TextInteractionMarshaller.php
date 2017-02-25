@@ -24,8 +24,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Version;
 use qtism\data\content\interactions\TextFormat;
-use qtism\data\content\interactions\ExtendedTextInteraction;
-use qtism\data\content\interactions\TextEntryInteraction;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\QtiComponent;
 use \InvalidArgumentException;
 use \DOMElement;
@@ -47,29 +46,29 @@ class TextInteractionMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $version = $this->getVersion();
 
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->getBase() !== 10) {
-            self::setDOMElementAttribute($element, 'base', $component->getBase());
+            $this->setDOMElementAttribute($element, 'base', $component->getBase());
         }
 
         if ($component->hasStringIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'stringIdentifier', $component->getStringIdentifier());
+            $this->setDOMElementAttribute($element, 'stringIdentifier', $component->getStringIdentifier());
         }
 
         if ($component->hasExpectedLength() === true) {
-            self::setDOMElementAttribute($element, 'expectedLength', $component->getExpectedLength());
+            $this->setDOMElementAttribute($element, 'expectedLength', $component->getExpectedLength());
         }
 
         if ($component->hasPatternMask() === true) {
-            self::setDOMElementAttribute($element, 'patternMask', $component->getPatternMask());
+            $this->setDOMElementAttribute($element, 'patternMask', $component->getPatternMask());
         }
 
         if ($component->hasPlaceholderText() === true) {
-            self::setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
+            $this->setDOMElementAttribute($element, 'placeholderText', $component->getPlaceholderText());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -78,19 +77,19 @@ class TextInteractionMarshaller extends Marshaller
 
         if ($element->localName === 'extendedTextInteraction') {
             if ($component->hasMaxStrings() === true) {
-                self::setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
+                $this->setDOMElementAttribute($element, 'maxStrings', $component->getMaxStrings());
             }
 
             if (Version::compare($version, '2.1.0', '>=') === true && $component->getMinStrings() !== 0) {
-                self::setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
+                $this->setDOMElementAttribute($element, 'minStrings', $component->getMinStrings());
             }
 
             if ($component->hasExpectedLines() === true) {
-                self::setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
+                $this->setDOMElementAttribute($element, 'expectedLines', $component->getExpectedLines());
             }
 
             if (Version::compare($version, '2.1.0', '>=') === true && $component->getFormat() !== TextFormat::PLAIN) {
-                self::setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
+                $this->setDOMElementAttribute($element, 'format', TextFormat::getNameByConstant($component->getFormat()));
             }
 
             if ($component->hasPrompt() === true) {
@@ -114,33 +113,35 @@ class TextInteractionMarshaller extends Marshaller
     {
         $version = $this->getVersion();
         
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             try {
-                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($element->localName);
+                $localName = $element->localName;
+                $name = ($this->isWebComponentFriendly()) ? ucfirst(XmlUtils::qtiFriendlyName($localName)) : ucfirst($localName);
+                $class = 'qtism\\data\\content\\interactions\\' . ucfirst($name);
                 $component = new $class($responseIdentifier);
             } catch (InvalidArgumentException $e) {
                 $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
 
-            if (($base = self::getDOMElementAttributeAs($element, 'base', 'integer')) !== null) {
+            if (($base = $this->getDOMElementAttributeAs($element, 'base', 'integer')) !== null) {
                 $component->setBase($base);
             }
 
-            if (($stringIdentifier = self::getDOMElementAttributeAs($element, 'stringIdentifier')) !== null) {
+            if (($stringIdentifier = $this->getDOMElementAttributeAs($element, 'stringIdentifier')) !== null) {
                 $component->setStringIdentifier($stringIdentifier);
             }
 
-            if (($expectedLength = self::getDOMElementAttributeAs($element, 'expectedLength', 'integer')) !== null) {
+            if (($expectedLength = $this->getDOMElementAttributeAs($element, 'expectedLength', 'integer')) !== null) {
                 $component->setExpectedLength($expectedLength);
             }
 
-            if (($patternMask = self::getDOMElementAttributeAs($element, 'patternMask')) !== null) {
+            if (($patternMask = $this->getDOMElementAttributeAs($element, 'patternMask')) !== null) {
                 $component->setPatternMask($patternMask);
             }
 
-            if (($placeholderText = self::getDOMElementAttributeAs($element, 'placeholderText')) !== null) {
+            if (($placeholderText = $this->getDOMElementAttributeAs($element, 'placeholderText')) !== null) {
                 $component->setPlaceholderText($placeholderText);
             }
 
@@ -150,23 +151,23 @@ class TextInteractionMarshaller extends Marshaller
 
             if ($element->localName === 'extendedTextInteraction') {
 
-                if (($maxStrings = self::getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
+                if (($maxStrings = $this->getDOMElementAttributeAs($element, 'maxStrings', 'integer')) !== null) {
                     $component->setMaxStrings($maxStrings);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($minStrings = self::getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($minStrings = $this->getDOMElementAttributeAs($element, 'minStrings', 'integer')) !== null) {
                     $component->setMinStrings($minStrings);
                 }
 
-                if (($expectedLines = self::getDOMElementAttributeAs($element, 'expectedLines', 'integer')) !== null) {
+                if (($expectedLines = $this->getDOMElementAttributeAs($element, 'expectedLines', 'integer')) !== null) {
                     $component->setExpectedLines($expectedLines);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($format = self::getDOMElementAttributeAs($element, 'format')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($format = $this->getDOMElementAttributeAs($element, 'format')) !== null) {
                     $component->setFormat(TextFormat::getConstantByName($format));
                 }
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) > 0) {
                     $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
                 }

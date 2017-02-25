@@ -50,7 +50,7 @@ class RubricBlockMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $arrayViews = array();
         foreach ($component->getViews() as $view) {
@@ -60,11 +60,11 @@ class RubricBlockMarshaller extends Marshaller
         }
 
         if (count($arrayViews) > 0) {
-            static::setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
+            $this->setDOMElementAttribute($element, 'view', implode("\x20", $arrayViews));
         }
 
         if ($component->getUse() != '') {
-            static::setDOMElementAttribute($element, 'use', $component->getUse());
+            $this->setDOMElementAttribute($element, 'use', $component->getUse());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -96,7 +96,7 @@ class RubricBlockMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // First we retrieve the mandatory views.
-        if (($value = static::getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
             $viewsArray = explode("\x20", $value);
             $viewsCollection = new ViewCollection();
             $ref = View::asArray();
@@ -110,7 +110,7 @@ class RubricBlockMarshaller extends Marshaller
 
             $object = new RubricBlock($viewsCollection);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'use', 'string')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'use', 'string')) !== null) {
                 $object->setUse($value);
             }
 
@@ -121,7 +121,7 @@ class RubricBlockMarshaller extends Marshaller
             $stylesheets = new StylesheetCollection();
             $content = new FlowStaticCollection();
 
-            foreach (self::getChildElementsByTagName($element, 'apipAccessibility', true, true) as $elt) {
+            foreach ($this->getChildElementsByTagName($element, 'apipAccessibility', true, true) as $elt) {
 
                 if ($elt instanceof DOMText) {
                     $elt = self::getDOMCradle()->createElement('textRun', $elt->wholeText);

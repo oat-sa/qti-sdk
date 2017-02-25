@@ -120,7 +120,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array(
+        return $this->getChildElementsByTagName($element, array(
                 'outcomeIf',
                 'outcomeElseIf',
                 'outcomeElse',

@@ -42,9 +42,9 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
-            $gapChoiceElts = self::getChildElementsByTagName($element, array('gapText', 'gapImg'));
+            $gapChoiceElts = $this->getChildElementsByTagName($element, array('gapText', 'gapImg'));
             if (count($gapChoiceElts) > 0) {
 
                 $gapChoices = new GapChoiceCollection();
@@ -55,12 +55,12 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
                 $fqClass = $this->lookupClass($element);
                 $component = new $fqClass($responseIdentifier, $gapChoices, new BlockStaticCollection($children->getArrayCopy()));
 
-                $promptElts = self::getChildElementsByTagName($element, 'prompt');
+                $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                 if (count($promptElts) === 1) {
                     $component->setPrompt($this->getMarshallerFactory()->createMarshaller($promptElts[0])->unmarshall($promptElts[0]));
                 }
 
-                if (($shuffle = self::getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
+                if (($shuffle = $this->getDOMElementAttributeAs($element, 'shuffle', 'boolean')) !== null) {
                     $component->setShuffle($shuffle);
                 }
 
@@ -87,12 +87,12 @@ class GapMatchInteractionMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->mustShuffle() === true || Version::compare($version, '2.0.0', '==') === true) {
-            self::setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
+            $this->setDOMElementAttribute($element, 'shuffle', $component->mustShuffle());
         }
 
         if ($component->hasXmlBase() === true) {
