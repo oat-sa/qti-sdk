@@ -46,14 +46,15 @@ class GapChoiceMarshaller extends ContentMarshaller
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
         $version = $this->getVersion();
+        $expectedGapImgName = ($this->isWebComponentFriendly()) ? 'qti-gap-img' : 'gapImg';
         
-        if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+        if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
-            if (($matchMax = self::getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
+            if (($matchMax = $this->getDOMElementAttributeAs($element, 'matchMax', 'integer')) !== null) {
 
                 $fqClass = $this->lookupClass($element);
 
-                if ($element->localName === 'gapImg') {
+                if ($element->localName === $expectedGapImgName) {
                     if (count($children) === 1) {
                         $component = new $fqClass($identifier, $matchMax, $children[0]);
                     } else {
@@ -64,19 +65,19 @@ class GapChoiceMarshaller extends ContentMarshaller
                     $component = new $fqClass($identifier, $matchMax);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = self::getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($matchMin = $this->getDOMElementAttributeAs($element, 'matchMin', 'integer')) !== null) {
                     $component->setMatchMin($matchMin);
                 }
 
-                if (($fixed = self::getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
+                if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                     $component->setFixed($fixed);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = self::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($templateIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
                     $component->setTemplateIdentifier($templateIdentifier);
                 }
 
-                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (Version::compare($version, '2.1.0', '>=') === true && ($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
                     $component->setShowHide(ShowHide::getConstantByName($showHide));
                 }
 
@@ -94,12 +95,12 @@ class GapChoiceMarshaller extends ContentMarshaller
                         throw new UnmarshallingException($msg, $element, $e);
                     }
                 } else {
-                    if (($objectLabel = self::getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
+                    if (($objectLabel = $this->getDOMElementAttributeAs($element, 'objectLabel')) !== null) {
                         $component->setObjectLabel($objectLabel);
                     }
                 }
                 
-                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = self::getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
+                if (Version::compare($version, '2.1.0', '<') === true && ($matchGroup = $this->getDOMElementAttributeAs($element, 'matchGroup')) !== null) {
                     $component->setMatchGroup(new IdentifierCollection(explode("\x20", $matchGroup)));
                 }
 
@@ -123,30 +124,30 @@ class GapChoiceMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $version = $this->getVersion();
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
 
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getMatchMin() !== 0) {
-            self::setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
         if ($component->isFixed() === true) {
-            self::setDOMElementAttribute($element, 'fixed', true);
+            $this->setDOMElementAttribute($element, 'fixed', true);
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->hasTemplateIdentifier() === true) {
-            self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+            $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
         }
 
         if (Version::compare($version, '2.1.0', '>=') === true && $component->getShowHide() !== ShowHide::SHOW) {
-            self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($element->localName === 'gapImg' && $component->hasObjectLabel() === true) {
-            self::setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
+            $this->setDOMElementAttribute($element, 'objectLabel', $component->getObjectLabel());
         }
 
         foreach ($elements as $e) {
@@ -166,7 +167,7 @@ class GapChoiceMarshaller extends ContentMarshaller
         if (Version::compare($version, '2.1.0', '<') === true) {
             $matchGroup = $component->getMatchGroup();
             if (count($matchGroup) > 0) {
-                self::setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
+                $this->setDOMElementAttribute($element, 'matchGroup', implode(' ', $matchGroup->getArrayCopy()));
             }
         }
 

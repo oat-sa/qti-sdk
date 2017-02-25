@@ -60,7 +60,7 @@ class ExtendedTestPartMarshaller extends TestPartMarshaller
         $component = ExtendedTestPart::createFromTestPart($baseComponent);
         
         // TestFeedbackRefs.
-        $testFeedbackRefElts = self::getChildElementsByTagName($element, 'testFeedbackRef');
+        $testFeedbackRefElts = $this->getChildElementsByTagName($element, 'testFeedbackRef');
         $testFeedbackRefs = new TestFeedbackRefCollection();
         
         foreach ($testFeedbackRefElts as $testFeedbackRefElt) {

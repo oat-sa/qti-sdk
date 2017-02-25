@@ -49,12 +49,12 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     {
         $element = parent::marshall($component);
 
-        self::setDOMElementAttribute($element, 'href', $component->getHref());
+        $this->setDOMElementAttribute($element, 'href', $component->getHref());
 
         // Deal with categories.
         $categories = $component->getCategories();
         if (count($categories) > 0) {
-            self::setDOMElementAttribute($element, 'category', implode("\x20", $categories->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'category', implode("\x20", $categories->getArrayCopy()));
         }
 
         // Deal with variableMappings.
@@ -92,7 +92,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     {
         $baseComponent = parent::unmarshall($element);
 
-        if (($href = static::getDOMElementAttributeAs($element, 'href')) !== null) {
+        if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
             $object = new AssessmentItemRef($baseComponent->getIdentifier(), $href);
             $object->setRequired($baseComponent->isRequired());
             $object->setFixed($baseComponent->isFixed());
@@ -102,7 +102,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
             $object->setTimeLimits($baseComponent->getTimeLimits());
 
             // Deal with categories.
-            if (($category = static::getDOMElementAttributeAs($element, 'category')) !== null) {
+            if (($category = $this->getDOMElementAttributeAs($element, 'category')) !== null) {
                 $object->setCategories(new IdentifierCollection(explode("\x20", $category)));
             }
 

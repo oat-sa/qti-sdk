@@ -45,7 +45,7 @@ class ColgroupMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = self::getDOMCradle()->createElement('colgroup');
-        self::setDOMElementAttribute($element, 'span', $component->getSpan());
+        $this->setDOMElementAttribute($element, 'span', $component->getSpan());
 
         foreach ($component->getContent() as $col) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($col);
@@ -68,12 +68,12 @@ class ColgroupMarshaller extends Marshaller
     {
         $component = new Colgroup();
 
-        if (($span = self::getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
+        if (($span = $this->getDOMElementAttributeAs($element, 'span', 'integer')) !== null) {
             $component->setSpan($span);
         }
 
         $cols = new ColCollection();
-        foreach (self::getChildElementsByTagName($element, 'col') as $colElt) {
+        foreach ($this->getChildElementsByTagName($element, 'col') as $colElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($colElt);
             $cols[] = $marshaller->unmarshall($colElt);
         }

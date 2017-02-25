@@ -50,7 +50,7 @@ class InfoControlMarshaller extends ContentMarshaller
 
         $this->fillBodyElement($component, $element);
         
-        if (($title = static::getDOMElementAttributeAs($element, 'title')) !== null) {
+        if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
             $component->setTitle($title);
         }
 
@@ -62,7 +62,7 @@ class InfoControlMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement('infoControl');
+        $element = $this->createElement($component);
 
         if ($component->hasXmlBase() === true) {
             self::setXmlBase($element, $component->getXmlBase());
@@ -73,7 +73,7 @@ class InfoControlMarshaller extends ContentMarshaller
         }
 
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'title', $component->getTitle());
+        $this->setDOMElementAttribute($element, 'title', $component->getTitle());
 
         return $element;
     }

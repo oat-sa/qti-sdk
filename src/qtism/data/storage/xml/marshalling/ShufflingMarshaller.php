@@ -45,7 +45,7 @@ class ShufflingMarshaller extends Marshaller
     protected function marshall(QtiComponent $component)
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         
         foreach ($component->getShufflingGroups() as $shufflingGroup) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($shufflingGroup);
@@ -64,7 +64,7 @@ class ShufflingMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             
             $shufflingGroupElts = self::getChildElements($element, 'shufflingGroup');
             

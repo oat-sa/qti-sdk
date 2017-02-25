@@ -43,12 +43,12 @@ class UploadInteractionMarshaller extends Marshaller
 	 */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('uploadInteraction');
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
-        self::setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
+        $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         if ($component->hasType() === true) {
-            self::setDOMElementAttribute($element, 'type', $component->getType());
+            $this->setDOMElementAttribute($element, 'type', $component->getType());
         }
 
         if ($component->hasXmlBase() === true) {
@@ -71,18 +71,18 @@ class UploadInteractionMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($responseIdentifier = self::getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
+        if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
 
             $component = new UploadInteraction($responseIdentifier);
 
-            $promptElts = self::getChildElementsByTagName($element, 'prompt');
+            $promptElts = $this->getChildElementsByTagName($element, 'prompt');
             if (count($promptElts) > 0) {
                 $promptElt = $promptElts[0];
                 $prompt = $this->getMarshallerFactory()->createMarshaller($promptElt)->unmarshall($promptElt);
                 $component->setPrompt($prompt);
             }
 
-            if (($type = self::getDOMElementAttributeAs($element, 'type')) !== null) {
+            if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
                 $component->setType($type);
             }
 

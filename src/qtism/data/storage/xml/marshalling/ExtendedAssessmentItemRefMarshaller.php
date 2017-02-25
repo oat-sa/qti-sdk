@@ -93,12 +93,12 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $element->appendChild($marshaller->marshall($responseValidityConstraint));
         }
         
-        self::setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
-        self::setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
+        $this->setDOMElementAttribute($element, 'adaptive', $component->isAdaptive());
+        $this->setDOMElementAttribute($element, 'timeDependent', $component->isTimeDependent());
         
         $endAttemptIdentifiers = $component->getEndAttemptIdentifiers();
         if (count($endAttemptIdentifiers) > 0) {
-            self::setDOMElementAttribute($element, 'endAttemptIdentifiers', implode("\x20", $endAttemptIdentifiers->getArrayCopy()));
+            $this->setDOMElementAttribute($element, 'endAttemptIdentifiers', implode("\x20", $endAttemptIdentifiers->getArrayCopy()));
         }
 
         return $element;
@@ -130,7 +130,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setCategories($baseComponent->getCategories());
 
         // ResponseDeclarations.
-        $responseDeclarationElts = self::getChildElementsByTagName($element, 'responseDeclaration');
+        $responseDeclarationElts = $this->getChildElementsByTagName($element, 'responseDeclaration');
         $responseDeclarations = new ResponseDeclarationCollection();
         foreach ($responseDeclarationElts as $responseDeclarationElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseDeclarationElt);
@@ -139,7 +139,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setResponseDeclarations($responseDeclarations);
 
         // OutcomeDeclarations.
-        $outcomeDeclarationElts = self::getChildElementsByTagName($element, 'outcomeDeclaration');
+        $outcomeDeclarationElts = $this->getChildElementsByTagName($element, 'outcomeDeclaration');
         $outcomeDeclarations = new OutcomeDeclarationCollection();
         foreach ($outcomeDeclarationElts as $outcomeDeclarationElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($outcomeDeclarationElt);
@@ -148,7 +148,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setOutcomeDeclarations($outcomeDeclarations);
         
         // TemplateDeclarations.
-        $templateDeclarationElts = self::getChildElementsByTagName($element, 'templateDeclaration');
+        $templateDeclarationElts = $this->getChildElementsByTagName($element, 'templateDeclaration');
         $templateDeclarations = new TemplateDeclarationCollection();
         foreach ($templateDeclarationElts as $templateDeclarationElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($templateDeclarationElt);
@@ -157,21 +157,21 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setTemplateDeclarations($templateDeclarations);
         
         // TemplateProcessing.
-        $templateProcessingElts = self::getChildElementsByTagName($element, 'templateProcessing');
+        $templateProcessingElts = $this->getChildElementsByTagName($element, 'templateProcessing');
         if (count($templateProcessingElts) === 1) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($templateProcessingElts[0]);
             $compactAssessmentItemRef->setTemplateProcessing($marshaller->unmarshall($templateProcessingElts[0]));
         }
         
         // ResponseProcessing.
-        $responseProcessingElts = self::getChildElementsByTagName($element, 'responseProcessing');
+        $responseProcessingElts = $this->getChildElementsByTagName($element, 'responseProcessing');
         if (count($responseProcessingElts) === 1) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
             $compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
         }
         
         // ModalFeedbacks (transformed in ModalFeedbackRules).
-        $modalFeedbackElts = self::getChildElementsByTagName($element, 'modalFeedbackRule');
+        $modalFeedbackElts = $this->getChildElementsByTagName($element, 'modalFeedbackRule');
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
         foreach ($modalFeedbackElts as $modalFeedbackElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($modalFeedbackElt);
@@ -180,7 +180,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setModalFeedbackRules($modalFeedbackRules);
         
         // Shufflings.
-        $shufflingElts = self::getChildElementsByTagName($element, 'shuffling');
+        $shufflingElts = $this->getChildElementsByTagName($element, 'shuffling');
         $shufflings = new ShufflingCollection();
         foreach ($shufflingElts as $shufflingElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($shufflingElt);
@@ -189,7 +189,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         $compactAssessmentItemRef->setShufflings($shufflings);
         
         // ResponseValidityConstraints.
-        $responseValidityConstraintElts = self::getChildElementsByTagName($element, 'responseValidityConstraint');
+        $responseValidityConstraintElts = $this->getChildElementsByTagName($element, 'responseValidityConstraint');
         $responseValidityConstraints = new ResponseValidityConstraintCollection();
         foreach ($responseValidityConstraintElts as $responseValidityConstraintElt) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseValidityConstraintElt);
@@ -197,18 +197,18 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
         }
         $compactAssessmentItemRef->setResponseValidityConstraints($responseValidityConstraints);
 
-        if (($adaptive = static::getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
+        if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);
         }
 
-        if (($timeDependent = static::getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
+        if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {
             $compactAssessmentItemRef->setTimeDependent($timeDependent);
         } else {
             $msg = "The mandatory attribute 'timeDependent' is missing from element '" . $element->localName . "'.";
             throw new UnmarshallingException($msg, $element);
         }
         
-        if (($endAttemptIdentifiers = self::getDOMElementAttributeAs($element, 'endAttemptIdentifiers')) !== null) {
+        if (($endAttemptIdentifiers = $this->getDOMElementAttributeAs($element, 'endAttemptIdentifiers')) !== null) {
             $identifiersArray = explode("\x20", $endAttemptIdentifiers);
             if (count($identifiersArray) > 0) {
                 $compactAssessmentItemRef->setEndAttemptIdentifiers(new IdentifierCollection($identifiersArray));

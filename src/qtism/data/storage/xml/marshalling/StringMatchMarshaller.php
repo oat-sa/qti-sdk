@@ -46,8 +46,8 @@ class StringMatchMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
-        self::setDOMElementAttribute($element, 'substring', $component->mustSubstring());
+        $this->setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
+        $this->setDOMElementAttribute($element, 'substring', $component->mustSubstring());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -66,11 +66,11 @@ class StringMatchMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($caseSensitive = static::getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
+        if (($caseSensitive = $this->getDOMElementAttributeAs($element, 'caseSensitive', 'boolean')) !== null) {
 
             $object = new StringMatch($children, $caseSensitive);
 
-            if (($substring = static::getDOMElementAttributeAs($element, 'substring', 'boolean')) !== null) {
+            if (($substring = $this->getDOMElementAttributeAs($element, 'substring', 'boolean')) !== null) {
                 $object->setSubstring($substring);
             }
 

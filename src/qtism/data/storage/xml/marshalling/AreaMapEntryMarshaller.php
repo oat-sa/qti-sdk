@@ -47,9 +47,9 @@ class AreaMapEntryMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
-        self::setDOMElementAttribute($element, 'coords', $component->getCoords());
-        self::setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());
+        $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
+        $this->setDOMElementAttribute($element, 'coords', $component->getCoords());
+        $this->setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());
 
         return $element;
     }
@@ -63,18 +63,18 @@ class AreaMapEntryMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($shape = static::getDOMElementAttributeAs($element, 'shape')) !== null) {
+        if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
 
             $shapeVal = QtiShape::getConstantByName($shape);
 
             if ($shapeVal !== false) {
 
-                if (($coords = static::getDOMElementAttributeAs($element, 'coords')) !== null) {
+                if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {
 
                     try {
                         $coords = Utils::stringToCoords($coords, $shapeVal);
 
-                        if (($mappedValue = static::getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
+                        if (($mappedValue = $this->getDOMElementAttributeAs($element, 'mappedValue', 'float')) !== null) {
                             return new AreaMapEntry($shapeVal, $coords, $mappedValue);
                         } else {
                             $msg = "The mandatory attribute 'mappedValue' is missing from element '" . $element->localName . "'.";

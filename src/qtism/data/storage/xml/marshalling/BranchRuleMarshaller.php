@@ -45,7 +45,7 @@ class BranchRuleMarshaller extends Marshaller
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
         $element->appendChild($marshaller->marshall($component->getExpression()));
-        static::setDOMElementAttribute($element, 'target', $component->getTarget());
+        $this->setDOMElementAttribute($element, 'target', $component->getTarget());
 
         return $element;
     }
@@ -59,7 +59,7 @@ class BranchRuleMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($target = static::getDOMElementAttributeAs($element, 'target')) !== null) {
+        if (($target = $this->getDOMElementAttributeAs($element, 'target')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
 
             if ($expressionElt !== false) {

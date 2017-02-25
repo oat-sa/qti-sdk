@@ -116,7 +116,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array(
+        return $this->getChildElementsByTagName($element, array(
                 'templateIf',
                 'templateElseIf',
                 'templateElse',

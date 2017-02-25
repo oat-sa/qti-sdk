@@ -44,13 +44,13 @@ class ModalFeedbackMarshaller extends ContentMarshaller
     {
         $fqClass = $this->lookupClass($element);
 
-        if (($outcomeIdentifier = self::getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
+        if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
 
-            if (($identifier = self::getDOMElementAttributeAs($element, 'identifier')) !== null) {
+            if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
 
                 $component = new $fqClass($outcomeIdentifier, $identifier);
 
-                if (($showHide = self::getDOMElementAttributeAs($element, 'showHide')) !== null) {
+                if (($showHide = $this->getDOMElementAttributeAs($element, 'showHide')) !== null) {
 
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
@@ -67,7 +67,7 @@ class ModalFeedbackMarshaller extends ContentMarshaller
                         throw new UnmarshallingException($msg, $element, $e);
                     }
 
-                    if (($title = self::getDOMElementAttributeAs($element, 'title')) !== null) {
+                    if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
                         $component->setTitle($title);
                     }
 
@@ -92,12 +92,12 @@ class ModalFeedbackMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
-        self::setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
-        self::setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
+        $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
+        $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
+        $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant($component->getShowHide()));
 
         if ($component->hasTitle() === true) {
-            self::setDOMElementAttribute($element, 'title', $component->getTitle());
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
         foreach ($elements as $e) {

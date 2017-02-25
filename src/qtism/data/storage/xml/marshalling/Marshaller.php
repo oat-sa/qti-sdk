@@ -26,6 +26,7 @@ use qtism\common\utils\Version;
 use qtism\data\content\Direction;
 use qtism\data\QtiComponent;
 use qtism\data\content\BodyElement;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMDocument;
 use \DOMElement;
 use \RuntimeException;
@@ -152,6 +153,53 @@ abstract class Marshaller
     );
     
     /**
+     * An array containing the QTI class names that are allowed to be Web Component friendly.
+     * 
+     * @var array
+     */
+    public static $webComponentFriendlyClasses = array(
+        'associableHotspot',
+        'gap',
+        'gapImg',
+        'gapText',
+        'simpleAssociableChoice',
+        'hotspotChoice',
+        'hottext',
+        'inlineChoice',
+        'simpleChoice',
+        'associateInteraction',
+        'choiceInteraction',
+        'drawingInteraction',
+        'extendedTextInteraction',
+        'gapMatchInteraction',
+        'graphicAssociateInteraction',
+        'graphicGapMatchInteraction',
+        'graphicOrderInteraction',
+        'hotspotInteraction',
+        'selectPointInteraction',
+        'hottextInteraction',
+        'matchInteraction',
+        'mediaInteraction',
+        'orderInteraction',
+        'sliderInteraction',
+        'uploadInteraction',
+        'customInteraction',
+        'endAttemptInteraction',
+        'inlineChoiceInteraction',
+        'textEntryInteraction',
+        'positionObjectInteraction',
+        'positionObjectStage',
+        'printedVariable',
+        'prompt',
+        'feedbackBlock',
+        'feedbackInline',
+        'rubricBlock',
+        'templateBlock',
+        'templateInline',
+        'infoControl'
+    );
+    
+    /**
      * Create a new Marshaller object.
      * 
      * @param string $version The QTI version on which the Marshaller operates e.g. '2.1'.
@@ -231,7 +279,7 @@ abstract class Marshaller
                     if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
                         return $this->marshall($component);
                     } else {
-                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? get_class($component) : $component;
+                        $componentName = ($component instanceof QtiComponent) ? $component->getQtiClassName() : (is_object($component)) ? ($component instanceof DOMElement) ? $component->localName : get_class($component) : $component;
                         throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
                     }
                 } else {
@@ -250,6 +298,40 @@ abstract class Marshaller
 
         throw new RuntimeException("Unknown method Marshaller::'${method}'.");
     }
+    
+    /**
+     * Get Attribute Name to Use for Marshalling
+     *
+     * This method provides the attribute name to be used to retrieve an element attribute value
+     * by considering whether or not the Marshaller implementation is running in Web Component
+     * Friendly mode.
+     *
+     * Examples:
+     *
+     * In case of the Marshaller implementation IS NOT running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "responseIdentifier" value is returned.
+     *
+     * On the other hand, in case of the Marshaller implementation IS running in Web Component Friendly mode,
+     * calling this method on an $element "choiceInteraction" and a "responseIdentifier" $attribute, the
+     * "response-identifier" value is returned.
+     *
+     * @param \DOMElement $element
+     * @param $attribute
+     * @return string
+     */
+    protected function getAttributeName(DOMElement $element, $attribute)
+    {
+        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
+            $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
+        
+            if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses) === true) {
+                return XmlUtils::webComponentFriendlyAttributeName($attribute);
+            }
+        }
+        
+        return $attribute;
+    }
 
     /**
      * Get the attribute value of a given DOMElement object, cast in a given datatype.
@@ -260,39 +342,9 @@ abstract class Marshaller
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      */
-    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
-        $attr = $element->getAttribute($attribute);
-
-        if ($attr !== '') {
-            switch ($datatype) {
-                case 'string':
-                    return $attr;
-                break;
-
-                case 'integer':
-                    return intval($attr);
-                break;
-
-                case 'float':
-                    return floatval($attr);
-                break;
-
-                case 'double':
-                    return doubleval($attr);
-                break;
-
-                case 'boolean':
-                    return ($attr == 'true') ? true : false;
-                break;
-
-                default:
-                    throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
-                break;
-            }
-        } else {
-            return null;
-        }
+        return XmlUtils::getDOMElementAttributeAs($element, $this->getAttributeName($element, $attribute), $datatype);
     }
 
     /**
@@ -302,17 +354,9 @@ abstract class Marshaller
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
-            break;
-
-            default:
-                $element->setAttribute($attribute, '' . $value);
-            break;
-        }
+        XmlUtils::setDOMElementAttribute($element, $this->getAttributeName($element, $attribute), $value);
     }
 
     /**
@@ -364,16 +408,7 @@ abstract class Marshaller
      */
     public static function getChildElements($element, $withText = false)
     {
-        $children = $element->childNodes;
-        $returnValue = array();
-
-        for ($i = 0; $i < $children->length; $i++) {
-            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
-                $returnValue[] = $children->item($i);
-            }
-        }
-
-        return $returnValue;
+        return XmlUtils::getChildElements($element, $withText);
     }
 
     /**
@@ -387,22 +422,21 @@ abstract class Marshaller
      * @param boolean $withText (optional) Wether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
     {
-        if (!is_array($tagName)) {
-            $tagName = array($tagName);
+        if (is_array($tagName) === false) {
+            $tagName = [$tagName];
         }
-
-        $rawElts = self::getChildElements($element, $withText);
-        $returnValue = array();
-
-        foreach ($rawElts as $elt) {
-            if (in_array($elt->localName, $tagName) === !$exclude) {
-                $returnValue[] = $elt;
+        
+        if ($this->isWebComponentFriendly() === true) {
+            foreach ($tagName as $key => $name) {
+                if (in_array($name, self::$webComponentFriendlyClasses) === true) {
+                    $tagName[$key] = XmlUtils::webComponentFriendlyClassName($name);
+                }
             }
         }
-
-        return $returnValue;
+        
+        return XmlUtils::getChildElementsByTagName($element, $tagName, $exclude, $withText);
     }
 
     /**
@@ -458,7 +492,7 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
             
             $version = $this->getVersion();
-            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = self::getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
+            if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $this->getDOMElementAttributeAs($element, 'dir')) !== null && in_array($element->localName, self::$dirClasses) === true) {
                 $bodyElement->setDir(Direction::getConstantByName($dir));
             }
         } catch (InvalidArgumentException $e) {
@@ -495,6 +529,29 @@ abstract class Marshaller
         if (Version::compare($version, '2.2.0', '>=') === true && ($dir = $bodyElement->getDir()) !== Direction::AUTO && in_array($bodyElement->getQtiClassName(), self::$dirClasses) === true) {
             $element->setAttribute('dir', Direction::getNameByConstant($dir));
         }
+    }
+    
+    protected function createElement(QtiComponent $component)
+    {
+        $localName = $component->getQtiClassName();
+        
+        if ($this->isWebComponentFriendly() === true && in_array($localName, self::$webComponentFriendlyClasses) === true) {
+            $localName = XmlUtils::webComponentFriendlyClassName($localName);
+        }
+        
+        return self::getDOMCradle()->createElement($localName);
+    }
+    
+    /**
+     * Is Web Component Friendly
+     *
+     * Whether or not the Marshaller should work in Web Component Friendly mode.
+     *
+     * @return bool
+     */
+    protected function isWebComponentFriendly()
+    {
+        return $this->getMarshallerFactory()->isWebComponentFriendly();
     }
 
     /**

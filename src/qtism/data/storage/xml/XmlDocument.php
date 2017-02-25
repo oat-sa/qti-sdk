@@ -27,7 +27,6 @@ use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\AssessmentItem;
-use qtism\data\AssessmentSectionRef;
 use qtism\data\TestPart;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
@@ -35,9 +34,8 @@ use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
-use qtism\data\AssessmentTest;
+use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 use qtism\data\content\Flow;
-use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\QtiComponent;
@@ -254,6 +252,7 @@ class XmlDocument extends QtiDocument
 	 *
 	 * @param boolean $formatOutput Wether the XML content of the file must be formatted (new lines, indentation) or not.
 	 * @throws \qtism\data\storage\xml\XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
+     * @return string The XML string.
 	 */
     public function saveToString($formatOutput = true)
     {
@@ -266,7 +265,7 @@ class XmlDocument extends QtiDocument
 	 * @param string $uri
 	 * @param boolean $formatOutput
 	 * @throws \qtism\data\storage\xml\XmlStorageException
-	 * @return string|void
+	 * @return string
 	 */
     protected function saveImplementation($uri = '', $formatOutput = true)
     {
@@ -301,8 +300,6 @@ class XmlDocument extends QtiDocument
                         // An error occured while saving.
                         $msg = "An error occured while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?";
                         throw new XmlStorageException($msg, XmlStorageException::WRITE);
-
-                        $this->setUrl($uri);
                     }
                 } else {
                     if (($strXml = $this->getDomDocument()->saveXML()) !== false) {
@@ -528,32 +525,39 @@ class XmlDocument extends QtiDocument
 	 */
     protected function decorateRootElement(DOMElement $rootElement)
     {
-        $qtiSuffix = 'v2p1';
         $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd';
+        $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+        
         switch (trim($this->getVersion())) {
             case '2.0.0':
-                $qtiSuffix = 'v2p0';
                 $xsdLocation = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
-            break;
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p0";
+                break;
             
             case '2.1.1':
-                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';    
-            break;
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p1";
+                break;
             
             case '2.2.0':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
-                $qtiSuffix = 'v2p2';
-            break;
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                break;
             
             case '2.2.1':
                 $xsdLocation = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd';
-                $qtiSuffix = 'v2p2';
-            break;
+                $xmlns = "http://www.imsglobal.org/xsd/imsqti_v2p2";
+                break;
+            
+            case '3.0.0':
+                $xsdLocation = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+                $xmlns = "http://www.imsglobal.org/xsd/imsaqti_item_v1p0";
+                break;
         }
-
-        $rootElement->setAttribute('xmlns', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix}");
+    
+        $rootElement->setAttribute('xmlns', $xmlns);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "http://www.imsglobal.org/xsd/imsqti_${qtiSuffix} ${xsdLocation}");
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', "${xmlns} ${xsdLocation}");
     }
 
     /**
@@ -611,6 +615,8 @@ class XmlDocument extends QtiDocument
             return new Qti22MarshallerFactory();
         } elseif ($version === '2.2.1') {
             return new Qti221MarshallerFactory();
+        } elseif ($version === '3.0.0') {
+            return new Qti30MarshallerFactory();
         } else {
             $msg = "No MarshallerFactory implementation found for QTI version '${version}'.";
             throw new RuntimeException($msg);

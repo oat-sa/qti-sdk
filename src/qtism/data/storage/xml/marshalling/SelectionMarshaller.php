@@ -44,8 +44,8 @@ class SelectionMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'select', $component->getSelect());
-        self::setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
+        $this->setDOMElementAttribute($element, 'select', $component->getSelect());
+        $this->setDOMElementAttribute($element, 'withReplacement', $component->isWithReplacement());
 
         return $element;
     }
@@ -60,10 +60,10 @@ class SelectionMarshaller extends Marshaller
     protected function unmarshall(DOMElement $element)
     {
         // select is a mandatory value, retrieve it first.
-        if (($value = static::getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
+        if (($value = $this->getDOMElementAttributeAs($element, 'select', 'integer')) !== null) {
             $object = new Selection($value);
 
-            if (($value = static::getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
+            if (($value = $this->getDOMElementAttributeAs($element, 'withReplacement', 'boolean')) !== null) {
                 $object->setWithReplacement($value);
             }
         } else {

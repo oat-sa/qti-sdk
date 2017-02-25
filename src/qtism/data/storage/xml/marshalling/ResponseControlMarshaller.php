@@ -49,7 +49,7 @@ class ResponseControlMarshaller extends RecursiveMarshaller
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        $expressionElts = self::getChildElementsByTagName($element, Expression::getExpressionClassNames());
+        $expressionElts = $this->getChildElementsByTagName($element, Expression::getExpressionClassNames());
 
         if (count($expressionElts) > 0) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElts[0]);
@@ -118,7 +118,7 @@ class ResponseControlMarshaller extends RecursiveMarshaller
 	 */
     protected function getChildrenElements(DOMElement $element)
     {
-        return self::getChildElementsByTagName($element, array(
+        return $this->getChildElementsByTagName($element, array(
                     'exitResponse',
                     'lookupOutcomeValue',
                     'setOutcomeValue',

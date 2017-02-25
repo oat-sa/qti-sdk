@@ -44,8 +44,8 @@ class EqualRoundedMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
-        self::setDOMElementAttribute($element, 'figures', $component->getFigures());
+        $this->setDOMElementAttribute($element, 'roundingMode', RoundingMode::getNameByConstant($component->getRoundingMode()));
+        $this->setDOMElementAttribute($element, 'figures', $component->getFigures());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -59,7 +59,7 @@ class EqualRoundedMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($figures = static::getDOMElementAttributeAs($element, 'figures')) !== null) {
+        if (($figures = $this->getDOMElementAttributeAs($element, 'figures')) !== null) {
 
             if (Format::isInteger($figures)) {
                 $figures = intval($figures);
@@ -67,7 +67,7 @@ class EqualRoundedMarshaller extends OperatorMarshaller
 
             $object = new EqualRounded($children, $figures);
 
-            if (($roundingMode = static::getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
+            if (($roundingMode = $this->getDOMElementAttributeAs($element, 'roundingMode')) !== null) {
                 $object->setRoundingMode(RoundingMode::getConstantByName($roundingMode));
             }
 

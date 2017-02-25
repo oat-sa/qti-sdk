@@ -46,7 +46,7 @@ class PatternMatchMarshaller extends OperatorMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
         $element = self::getDOMCradle()->createElement($component->getQtiClassName());
-        self::setDOMElementAttribute($element, 'pattern', $component->getPattern());
+        $this->setDOMElementAttribute($element, 'pattern', $component->getPattern());
 
         foreach ($elements as $elt) {
             $element->appendChild($elt);
@@ -65,7 +65,7 @@ class PatternMatchMarshaller extends OperatorMarshaller
 	 */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        if (($pattern = static::getDOMElementAttributeAs($element, 'pattern')) !== null) {
+        if (($pattern = $this->getDOMElementAttributeAs($element, 'pattern')) !== null) {
 
             $object = new PatternMatch($children, $pattern);
 

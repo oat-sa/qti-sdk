@@ -42,19 +42,20 @@ class Utils
      */
     static public function getSchemaLocation($version = '2.1')
     {
-        $dS = DIRECTORY_SEPARATOR;
         $version = Version::appendPatchVersion($version);
         
         if ($version === '2.1.0') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1' . $dS . 'imsqti_v2p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p1/imsqti_v2p1.xsd';
         } elseif ($version === '2.1.1') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p1p1' . $dS . 'imsqti_v2p1p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p1p1/imsqti_v2p1p1.xsd';
         } elseif ($version === '2.2.0') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2' . $dS . 'imsqti_v2p2.xsd';
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2/imsqti_v2p2.xsd';
         } elseif ($version === '2.2.1') {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'qtiv2p2p1' . $dS . 'imsqti_v2p2p1.xsd';
+            $filename = dirname(__FILE__) . '/schemes/qtiv2p2p1/imsqti_v2p2p1.xsd';
+        } elseif ($version === '3.0.0') {
+            $filename = dirname(__FILE__) . '/schemes/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
         } else {
-            $filename = dirname(__FILE__) . $dS . 'schemes' . $dS . 'imsqti_v2p0.xsd';
+            $filename = dirname(__FILE__) . '/schemes/imsqti_v2p0.xsd';
         }
 
         return $filename;
@@ -96,6 +97,12 @@ class Utils
                     $version = '2.2.0';
                 } elseif ($nsLocation === 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p1.xsd') {
                     $version = '2.2.1';
+                }
+            } elseif ($rootNs === 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0') {
+                $nsLocation = self::getXsdLocation($document, 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0');
+                
+                if ($nsLocation === 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd') {
+                    $version = '3.0.0';
                 }
             }
         }
@@ -142,6 +149,8 @@ class Utils
      *
      * @param \DOMElement $element A DOMElement object you want to change the name.
      * @param string $name The new name of $element.
+     *
+     * @return \DOMElement
      */
     static public function changeElementName(DOMElement $element, $name)
     {
@@ -283,5 +292,167 @@ class Utils
             $string = str_replace('"', '&quot;', $string);
             return $string;
         }
+    }
+    
+    /**
+     * Web Component friendly version of a QTI name (without qti-).
+     * 
+     * This method returns the Web Component friendly version of a QTI attribute name.
+     * 
+     * Example: "minChoices" becomes "min-choices".
+     * 
+     * @param string $qtiName
+     * @return string
+     */
+    static public function webComponentFriendlyAttributeName($qtiName)
+    {
+        return strtolower(preg_replace('/([A-Z])/', '-$1', $qtiName));
+    }
+    
+    /**
+     * Web Component friendly version of a QTI name (with qti-).
+     * 
+     * This method returns the Web Component friendly version of a QTI class name.
+     * 
+     * Example: "choiceInteraction" becomes "qti-choice-interaction".
+     * 
+     * @param string $qtiName
+     * @return string
+     */
+    static public function webComponentFriendlyClassName($qtiName)
+    {
+        return 'qti-' . self::webComponentFriendlyAttributeName($qtiName);
+    }
+    
+    /**
+     * QTI friendly name of a Web Component friendly name.
+     * 
+     * This method returns the QTI friendly name of a Web Component friendly name.
+     * 
+     * Example: "qti-choice-interaction" becomes "choiceInteraction".
+     * 
+     * @param string $wcName
+     * @return string
+     */
+    static public function qtiFriendlyName($wcName)
+    {
+        $qtiName = strtolower($wcName);
+        $qtiName = preg_replace('/^qti-/', '', $qtiName);
+        
+        return lcfirst(str_replace('-', '', ucwords($qtiName, '-')));
+    }
+    
+    /**
+     * Get the attribute value of a given DOMElement object, cast in a given datatype.
+     *
+     * @param DOMElement $element The element the attribute you want to retrieve the value is bound to.
+     * @param string $attribute The attribute name.
+     * @param string $datatype The returned datatype. Accepted values are 'string', 'integer', 'float', 'double' and 'boolean'.
+     * @throws \InvalidArgumentException If $datatype is not in the range of possible values.
+     * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
+     */
+    public static function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
+    {
+        $attr = $element->getAttribute($attribute);
+    
+        if ($attr !== '') {
+            switch ($datatype) {
+                case 'string':
+                    return $attr;
+                    break;
+            
+                case 'integer':
+                    return intval($attr);
+                    break;
+            
+                case 'float':
+                    return floatval($attr);
+                    break;
+            
+                case 'double':
+                    return doubleval($attr);
+                    break;
+            
+                case 'boolean':
+                    return ($attr == 'true') ? true : false;
+                    break;
+            
+                default:
+                    throw new \InvalidArgumentException("Unknown datatype '${datatype}'.");
+                    break;
+            }
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Set the attribute value of a given DOMElement object. Boolean values will be transformed
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param string $attribute An XML attribute name.
+     * @param mixed $value A given value.
+     */
+    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    {
+        switch (gettype($value)) {
+            case 'boolean':
+                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
+                break;
+            
+            default:
+                $element->setAttribute($attribute, '' . $value);
+                break;
+        }
+    }
+    
+    /**
+     * Get the child elements of a given element by tag name. This method does
+     * not behave like DOMElement::getElementsByTagName. It only returns the direct
+     * child elements that matches $tagName but does not go recursive.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $tagName The name of the tags you would like to retrieve or an array of tags to match.
+     * @param boolean $exclude (optional) Wether the $tagName parameter must be considered as a blacklist.
+     * @param boolean $withText (optional) Wether text nodes must be returned or not.
+     * @return array An array of DOMElement objects.
+     */
+    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    {
+        if (!is_array($tagName)) {
+            $tagName = array($tagName);
+        }
+        
+        $rawElts = self::getChildElements($element, $withText);
+        $returnValue = array();
+        
+        foreach ($rawElts as $elt) {
+            if (in_array($elt->localName, $tagName) === !$exclude) {
+                $returnValue[] = $elt;
+            }
+        }
+        
+        return $returnValue;
+    }
+    
+    /**
+     * Get the children DOM Nodes with nodeType attribute equals to XML_ELEMENT_NODE.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param boolean $withText Wether text nodes must be returned or not.
+     * @return array An array of DOMNode objects.
+     */
+    public static function getChildElements($element, $withText = false)
+    {
+        $children = $element->childNodes;
+        $returnValue = array();
+        
+        for ($i = 0; $i < $children->length; $i++) {
+            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
+                $returnValue[] = $children->item($i);
+            }
+        }
+        
+        return $returnValue;
     }
 }

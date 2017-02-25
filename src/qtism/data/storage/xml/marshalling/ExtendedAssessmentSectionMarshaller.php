@@ -59,7 +59,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
 
-        $rubricBlockRefElts = self::getChildElementsByTagName($element, 'rubricBlockRef');
+        $rubricBlockRefElts = $this->getChildElementsByTagName($element, 'rubricBlockRef');
         if (count($rubricBlockRefElts) > 0) {
 
             $rubricBlockRefs = new RubricBlockRefCollection();

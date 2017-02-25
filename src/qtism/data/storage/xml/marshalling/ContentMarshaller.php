@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -22,7 +22,6 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
-use qtism\common\utils\Version;
 use qtism\data\content\InfoControl;
 use qtism\data\content\ModalFeedback;
 use qtism\data\content\interactions\GraphicAssociateInteraction;
@@ -47,9 +46,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\xhtml\text\Blockquote;
-use qtism\data\content\RubricBlock;
 use qtism\data\content\ItemBody;
-use qtism\data\content\xhtml\text\Bdo;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\Object;
 use qtism\data\content\xhtml\lists\DlElement;
@@ -63,6 +60,8 @@ use qtism\data\content\xhtml\tables\Caption;
 use qtism\data\content\xhtml\tables\Td;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\SimpleInline;
+use qtism\data\ExternalQtiComponent;
+use qtism\data\storage\xml\Utils as XmlUtils;
 use \DOMElement;
 use \DOMNode;
 use \DOMText;
@@ -101,7 +100,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
                                       'selectPointInteraction', 'associableHotspot', 'hotspotChoice', 'graphicGapMatchInteraction',
                                       'positionObjectInteraction', 'positionObjectStage', 'sliderInteraction', 'mediaInteraction',
                                       'drawingInteraction', 'uploadInteraction', 'endAttemptInteraction', 'customInteraction',
-                                      'printedVariable', 'math', 'include');
+                                      'printedVariable', 'include');
 
     private static $simpleComposites = array('a', 'abbr', 'acronym', 'b', 'big', 'cite', 'code', 'dfn', 'em', 'feedbackInline', 'templateInline', 'i',
                                              'kbd', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'tt', 'var', 'td', 'th', 'object', 'infoControl',
@@ -122,7 +121,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function isComponentFinal(QtiComponent $component)
     {
-        return in_array($component->getQtiClassName(), self::$finals);
+        return in_array($component->getQtiClassName(), self::$finals) || $component instanceof ExternalQtiComponent;
     }
 
     /**
@@ -223,44 +222,51 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     protected function getChildrenElements(DOMElement $element)
     {
         $simpleComposites = self::$simpleComposites;
-        $version = $this->getVersion();
+        $localName = $element->localName;
         
-        if (in_array($element->localName, $simpleComposites) === true) {
+        if ($this->isWebComponentFriendly() === true) {
+            $qtiFriendlyName = XmlUtils::qtiFriendlyName($localName);
+            if (in_array($qtiFriendlyName, self::$webComponentFriendlyClasses) === true) {
+                $localName = $qtiFriendlyName;
+            }
+        }
+        
+        if (in_array($localName, $simpleComposites) === true) {
             return self::getChildElements($element, true);
-        } elseif ($element->localName === 'choiceInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'orderInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleChoice');
-        } elseif ($element->localName === 'associateInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'matchInteraction') {
-            return self::getChildElementsByTagName($element, 'simpleMatchSet');
-        } elseif ($element->localName === 'gapMatchInteraction') {
-            return self::getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
-        } elseif ($element->localName === 'inlineChoiceInteraction') {
-            return self::getChildElementsByTagName($element, 'inlineChoice');
-        } elseif ($element->localName === 'hottextInteraction') {
-            return self::getChildElementsByTagName($element, 'prompt', true);
-        } elseif ($element->localName === 'hotspotInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'graphicAssociateInteraction') {
-            return self::getChildElementsByTagName($element, 'associableHotspot');
-        } elseif ($element->localName === 'graphicOrderInteraction') {
-            return self::getChildElementsByTagName($element, 'hotspotChoice');
-        } elseif ($element->localName === 'tr') {
-            return self::getChildElementsByTagName($element, array('td', 'th'));
-        } elseif ($element->localName === 'ul' || $element->localName === 'ol') {
-            return self::getChildElementsByTagName($element, 'li');
-        } elseif ($element->localName === 'dl') {
-            return self::getChildElementsByTagName($element, array('dd', 'dt'));
-        } elseif ($element->localName === 'itemBody') {
+        } elseif ($localName === 'choiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'orderInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleChoice');
+        } elseif ($localName === 'associateInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'matchInteraction') {
+            return $this->getChildElementsByTagName($element, 'simpleMatchSet');
+        } elseif ($localName === 'gapMatchInteraction') {
+            return $this->getChildElementsByTagName($element, array('gapText', 'gapImg', 'prompt'), true);
+        } elseif ($localName === 'inlineChoiceInteraction') {
+            return $this->getChildElementsByTagName($element, 'inlineChoice');
+        } elseif ($localName === 'hottextInteraction') {
+            return $this->getChildElementsByTagName($element, 'prompt', true);
+        } elseif ($localName === 'hotspotInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'graphicAssociateInteraction') {
+            return $this->getChildElementsByTagName($element, 'associableHotspot');
+        } elseif ($localName === 'graphicOrderInteraction') {
+            return $this->getChildElementsByTagName($element, 'hotspotChoice');
+        } elseif ($localName === 'tr') {
+            return $this->getChildElementsByTagName($element, array('td', 'th'));
+        } elseif ($localName === 'ul' || $element->localName === 'ol') {
+            return $this->getChildElementsByTagName($element, 'li');
+        } elseif ($localName === 'dl') {
+            return $this->getChildElementsByTagName($element, array('dd', 'dt'));
+        } elseif ($localName === 'itemBody') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'blockquote') {
+        } elseif ($localName === 'blockquote') {
             return self::getChildElements($element);
-        } elseif ($element->localName === 'simpleMatchSet') {
-            return self::getChildElementsByTagName($element, 'simpleAssociableChoice');
-        } elseif ($element->localName === 'gapImg') {
-            return self::getChildElementsByTagName($element, 'object');
+        } elseif ($localName === 'simpleMatchSet') {
+            return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === 'gapImg') {
+            return $this->getChildElementsByTagName($element, 'object');
         } else {
             return array();
         }
@@ -298,8 +304,13 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      */
     protected function lookupClass(DOMElement $element)
     {
+        $localName = $element->localName;
+        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $localName) === 1) {
+            $localName = XmlUtils::qtiFriendlyName($localName);
+        }
+        
         $lookup = $this->getLookupClasses();
-        $class = ucfirst($element->localName);
+        $class = ucfirst($localName);
 
         foreach ($lookup as $l) {
             $fqClass = $l . "\\" . $class;
@@ -314,7 +325,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             }
         }
 
-        $msg = "No class could be found for tag with name '" . $element->localName . "'.";
+        $msg = "No class could be found for tag with name '" . $localName . "'.";
         throw new UnmarshallingException($msg, $element);
     }
 }

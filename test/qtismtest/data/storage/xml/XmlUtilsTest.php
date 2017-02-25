@@ -187,4 +187,111 @@ class XmlUtilsTest extends QtiSmTestCase
             array('blah & "cool" & \'cool\'', true, "blah &amp; &quot;cool&quot; &amp; 'cool'")
         );
     }
+    
+    /**
+     * @dataProvider webComponentFriendlyAttributeNameProvider
+     */
+    public function testWebComponentFriendlyAttributeName($qtiName, $expected)
+    {
+        $this->assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
+    }
+    
+    public function webComponentFriendlyAttributeNameProvider()
+    {
+        return [
+            ['minChoices', 'min-choices'],
+            ['identifier', 'identifier']
+        ];
+    }
+    
+    /**
+     * @dataProvider webComponentFriendlyClassNameProvider
+     */
+    public function testWebComponentFriendlyClassName($qtiName, $expected)
+    {
+        $this->assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
+    }
+    
+    public function webComponentFriendlyClassNameProvider()
+    {
+        return [
+            ['choiceInteraction', 'qti-choice-interaction'],
+            ['simpleChoice', 'qti-simple-choice'],
+            ['prompt', 'qti-prompt']
+        ];
+    }
+    
+    /**
+     * @dataProvider qtiFriendlyNameProvider
+     */
+    public function testQtiFriendlyName($wcName, $expected)
+    {
+        $this->assertEquals($expected, Utils::qtiFriendlyName($wcName));
+    }
+    
+    public function qtiFriendlyNameProvider()
+    {
+        return [
+            ['qti-choice-interaction', 'choiceInteraction'],
+            ['qti-prompt', 'prompt'],
+            ['min-choices', 'minChoices']
+        ];
+    }
+    
+    /**
+     * @dataProvider getDOMElementAttributeAsProvider
+     */
+    public function testGetDOMElementAttributeAs(\DOMElement $element, $attribute, $datatype, $expected)
+    {
+        $result = Utils::getDOMElementAttributeAs($element, $attribute, $datatype);
+        $this->assertSame($expected, $result);
+    }
+    
+    public function getDOMElementAttributeAsProvider()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true"/>');
+        $elt = $dom->documentElement;
+        
+        return array(
+            array($elt, 'string', 'string', 'str'),
+            array($elt, 'integer', 'integer', 1),
+            array($elt, 'float', 'float', 1.1),
+            array($elt, 'double', 'double', 1.1),
+            array($elt, 'boolean', 'boolean', true),
+        );
+    }
+    
+    public function testGetChildElementsByTagName()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        
+        // There are 3 child elements. 2 at the first level, 1 at the second.
+        // We should find only 2 direct child elements.
+        $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(2, count(Utils::getChildElementsByTagName($element, 'child')));
+    }
+    
+    public function testGetChildElementsByTagNameMultiple()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(3, count(Utils::getChildElementsByTagName($element, array('child', 'grandChild'))));
+    }
+    
+    public function testGetChildElementsByTagNameEmpty()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        
+        // There is only 1 child but at the second level. Nothing
+        // should be found.
+        $dom->loadXML('<parent><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        
+        $this->assertEquals(0, count(Utils::getChildElementsByTagName($element, 'child')));
+    }
 }

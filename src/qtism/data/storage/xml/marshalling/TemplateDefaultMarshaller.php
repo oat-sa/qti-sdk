@@ -44,7 +44,7 @@ class TemplateDefaultMarshaller extends Marshaller
     {
         $element = static::getDOMCradle()->createElement($component->getQtiClassName());
 
-        self::setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
+        $this->setDOMElementAttribute($element, 'templateIdentifier', $component->getTemplateIdentifier());
 
         $expr = $component->getExpression();
         $exprMarshaller = $this->getMarshallerFactory()->createMarshaller($expr);
@@ -64,7 +64,7 @@ class TemplateDefaultMarshaller extends Marshaller
 	 */
     protected function unmarshall(DOMElement $element)
     {
-        if (($tplIdentifier = static::getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
+        if (($tplIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
 
             $expressionElt = self::getFirstChildElement($element);
 
