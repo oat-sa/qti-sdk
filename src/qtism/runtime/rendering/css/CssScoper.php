@@ -156,6 +156,11 @@ class CssScoper implements Renderable
      * Whether or not map -qti-* like peuso classes to qti-X CSS classes.
      */
     private $mapQtiPseudoClasses = false;
+    
+    /**
+     * @var boolean Whether or not using the Web Component Friendly mode.
+     */
+    private $webComponentFriendly = false;
 
     /**
      * QTI classes to qti-* classes.
@@ -169,101 +174,159 @@ class CssScoper implements Renderable
 	 * @var array
 	 */
     static private $qtiClassMapping = array(
-       // HTML components of QTI.
-       'abbr' => 'qti-abbr',
-       'acronym' => 'qti-acronym',
-       'address' => 'qti-address',
-       'blockquote' => 'qti-blockquote',
-       'br' => 'qti-br',
-       'cite' => 'qti-cite',
-       'code' => 'qti-code',
-       'dfn' => 'qti-dfn',
-       'div' => 'qti-div',
-       'em' => 'qti-em',
-       'h1' => 'qti-h1',
-       'h2' => 'qti-h2',
-       'h3' => 'qti-h3',
-       'h4' => 'qti-h4',
-       'h5' => 'qti-h5',
-       'h6' => 'qti-h6',
-       'kbd' => 'qti-kbd',
-       'p' => 'qti-p',
-       'pre' => 'qti-pre',
-       'q' => 'qti-q',
-       'samp' => 'qti-samp',
-       'span' => 'qti-span',
-       'strong' => 'qti-strong',
-       'var' => 'qti-var',
-       'dl' => 'qti-dl',
-       'dt' => 'qti-dt',
-       'dd' => 'qti-dd',
-       'ol' => 'qti-ol',
-       'ul' => 'qti-ul',
-       'li' => 'qti-li',
-       'object' => 'qti-object',
-       'param' => 'qti-param',
-       'b' => 'qti-b',
-       'big' => 'qti-big',
-       'hr' => 'qti-hr',
-       'i' => 'qti-i',
-       'small' => 'qti-small',
-       'sub' => 'qti-sub',
-       'sup' => 'qti-sup',
-       'tt' => 'qti-tt',
-       'table' => 'qti-table',
-       'caption' => 'qti-caption',
-       'col' => 'qti-col',
-       'colgroup' => 'qti-colgroup',
-       'tbody' => 'qti-tbody',
-       'td' => 'qti-td',
-       'tfoot' => 'qti-tfoot',
-       'th' => 'qti-th',
-       'thead' => 'qti-thead',
-       'tr' => 'qti-tr',
-       'img' => 'qti-img',
-       'a' => 'qti-a',
-
-       // QTI Components considered to be safe CSS selector targets.
-       'assessmentItem' => 'qti-assessmentItem',
-       'itemBody' => 'qti-itemBody',
-       'feedbackBlock' => 'qti-feedbackBlock',
-       'feedbackInline' => 'qti-feedbackInline',
-       'rubricBlock' => 'qti-rubricBlock',
-       'printedVariable' => 'qti-printedVariable',
-       'prompt' => 'qti-prompt',
-       'choiceInteraction' => 'qti-choiceInteraction',
-       'orderInteraction' => 'qti-orderInteraction',
-       'simpleChoice' => 'qti-simpleChoice',
-       'associateInteraction' => 'qti-associateInteraction',
-       'matchInteraction' => 'qti-matchInteraction',
-       'simpleAssociableChoice' => 'qti-simpleAssociableChoice',
-       'gapMatchInteraction' => 'qti-gapMatchInteraction',
-       'gap' => 'qti-gap',
-       'gapText' => 'qti-gapText',
-       'gapImg' => 'qti-gapImg',
-       'inlineChoiceInteraction' => 'qti-inlineChoiceInteraction',
-       'textEntryInteraction' => 'qti-textEntryInteraction',
-       'extendedTextInteraction' => 'qti-extendedTextInteraction',
-       'hottextInteraction' => 'qti-hottextInteraction',
-       'hottext' => 'qti-hottext',
-       'hotspotChoice' => 'qti-hotspotChoice',
-       'associableHotspot' => 'qti-associableHotspot',
-       'hotspotInteraction' => 'qti-hotspotInteraction',
-       'selectPointInteraction' => 'qti-selectPointInteraction',
-       'graphicOrderInteraction' => 'qti-graphicOrderInteraction',
-       'graphicAssociateInteraction' => 'qti-graphicAssociateInteraction',
-       'graphicGapMatchInteraction' => 'qti-graphicGapMatchInteraction',
-       'positionObjectInteraction' => 'qti-positionObjectInteraction',
-       'positionObjectStage' => 'qti-positionObjectStage',
-       'sliderInteraction' => 'qti-sliderInteraction',
-       'mediaInteraction' => 'qti-mediaInteraction',
-       'drawingInteraction' => 'qti-drawingInteraction',
-       'uploadInteraction' => 'qti-uploadInteraction',
-       'customInteraction' => 'qti-customInteraction',
-       'endAttemptInteraction' => 'qti-endAttemptInteraction',
-       'infoControl' => 'qti-infoControl',
-       'modalFeedback' => 'qti-modalFeedback');
-       
+        // HTML components of QTI.
+        'abbr' => 'qti-abbr',
+        'acronym' => 'qti-acronym',
+        'address' => 'qti-address',
+        'blockquote' => 'qti-blockquote',
+        'br' => 'qti-br',
+        'cite' => 'qti-cite',
+        'code' => 'qti-code',
+        'dfn' => 'qti-dfn',
+        'div' => 'qti-div',
+        'em' => 'qti-em',
+        'h1' => 'qti-h1',
+        'h2' => 'qti-h2',
+        'h3' => 'qti-h3',
+        'h4' => 'qti-h4',
+        'h5' => 'qti-h5',
+        'h6' => 'qti-h6',
+        'kbd' => 'qti-kbd',
+        'p' => 'qti-p',
+        'pre' => 'qti-pre',
+        'q' => 'qti-q',
+        'samp' => 'qti-samp',
+        'span' => 'qti-span',
+        'strong' => 'qti-strong',
+        'var' => 'qti-var',
+        'dl' => 'qti-dl',
+        'dt' => 'qti-dt',
+        'dd' => 'qti-dd',
+        'ol' => 'qti-ol',
+        'ul' => 'qti-ul',
+        'li' => 'qti-li',
+        'object' => 'qti-object',
+        'param' => 'qti-param',
+        'b' => 'qti-b',
+        'big' => 'qti-big',
+        'hr' => 'qti-hr',
+        'i' => 'qti-i',
+        'small' => 'qti-small',
+        'sub' => 'qti-sub',
+        'sup' => 'qti-sup',
+        'tt' => 'qti-tt',
+        'table' => 'qti-table',
+        'caption' => 'qti-caption',
+        'col' => 'qti-col',
+        'colgroup' => 'qti-colgroup',
+        'tbody' => 'qti-tbody',
+        'td' => 'qti-td',
+        'tfoot' => 'qti-tfoot',
+        'th' => 'qti-th',
+        'thead' => 'qti-thead',
+        'tr' => 'qti-tr',
+        'img' => 'qti-img',
+        'a' => 'qti-a',
+        
+        // QTI Components considered to be safe CSS selector targets.
+        'assessmentItem' => 'qti-assessmentItem',
+        'itemBody' => 'qti-itemBody',
+        'feedbackBlock' => 'qti-feedbackBlock',
+        'feedbackInline' => 'qti-feedbackInline',
+        'rubricBlock' => 'qti-rubricBlock',
+        'printedVariable' => 'qti-printedVariable',
+        'prompt' => 'qti-prompt',
+        'choiceInteraction' => 'qti-choiceInteraction',
+        'orderInteraction' => 'qti-orderInteraction',
+        'simpleChoice' => 'qti-simpleChoice',
+        'associateInteraction' => 'qti-associateInteraction',
+        'matchInteraction' => 'qti-matchInteraction',
+        'simpleAssociableChoice' => 'qti-simpleAssociableChoice',
+        'gapMatchInteraction' => 'qti-gapMatchInteraction',
+        'gap' => 'qti-gap',
+        'gapText' => 'qti-gapText',
+        'gapImg' => 'qti-gapImg',
+        'inlineChoiceInteraction' => 'qti-inlineChoiceInteraction',
+        'textEntryInteraction' => 'qti-textEntryInteraction',
+        'extendedTextInteraction' => 'qti-extendedTextInteraction',
+        'hottextInteraction' => 'qti-hottextInteraction',
+        'hottext' => 'qti-hottext',
+        'hotspotChoice' => 'qti-hotspotChoice',
+        'associableHotspot' => 'qti-associableHotspot',
+        'hotspotInteraction' => 'qti-hotspotInteraction',
+        'selectPointInteraction' => 'qti-selectPointInteraction',
+        'graphicOrderInteraction' => 'qti-graphicOrderInteraction',
+        'graphicAssociateInteraction' => 'qti-graphicAssociateInteraction',
+        'graphicGapMatchInteraction' => 'qti-graphicGapMatchInteraction',
+        'positionObjectInteraction' => 'qti-positionObjectInteraction',
+        'positionObjectStage' => 'qti-positionObjectStage',
+        'sliderInteraction' => 'qti-sliderInteraction',
+        'mediaInteraction' => 'qti-mediaInteraction',
+        'drawingInteraction' => 'qti-drawingInteraction',
+        'uploadInteraction' => 'qti-uploadInteraction',
+        'customInteraction' => 'qti-customInteraction',
+        'endAttemptInteraction' => 'qti-endAttemptInteraction',
+        'infoControl' => 'qti-infoControl',
+        'modalFeedback' => 'qti-modalFeedback',
+        'templateInline' => 'qti-templateInline',
+        'templateBlock' => 'qti-templateBlock'
+    );
+    
+    /**
+     * aQTI classes to qti-* classes.
+     *
+     * An array containing a mapping between aQTI class names
+     * and their runtime XHTML rendering equivalent.
+     *
+     * This array is associative. Keys are the aQTI class names
+     * and values are their XHTML rendering equivalent.
+     *
+     * @var array
+     */
+    static private $wcFriendlyQtiClassMapping = array(
+        'qti-assessment-item' => 'qti-assessmentItem',
+        'qti-item-body' => 'qti-itemBody',
+        'qti-feedback-block' => 'qti-feedbackBlock',
+        'qti-feedback-inline' => 'qti-feedbackInline',
+        'qti-rubric-block' => 'qti-rubricBlock',
+        'qti-printed-variable' => 'qti-printedVariable',
+        'qti-prompt' => 'qti-prompt',
+        'qti-choice-interaction' => 'qti-choiceInteraction',
+        'qti-order-interaction' => 'qti-orderInteraction',
+        'qti-simple-choice' => 'qti-simpleChoice',
+        'qti-associate-interaction' => 'qti-associateInteraction',
+        'qti-match-interaction' => 'qti-matchInteraction',
+        'qti-simple-associable-choice' => 'qti-simpleAssociableChoice',
+        'qti-gap-match-interaction' => 'qti-gapMatchInteraction',
+        'qti-gap' => 'qti-gap',
+        'qti-gap-text' => 'qti-gapText',
+        'qti-gap-img' => 'qti-gapImg',
+        'qti-inline-choice-interaction' => 'qti-inlineChoiceInteraction',
+        'qti-text-entry-interaction' => 'qti-textEntryInteraction',
+        'qti-extended-text-interaction' => 'qti-extendedTextInteraction',
+        'qti-hottext-interaction' => 'qti-hottextInteraction',
+        'qti-hottext' => 'qti-hottext',
+        'qti-hotspot-choice' => 'qti-hotspotChoice',
+        'qti-associable-hotspot' => 'qti-associableHotspot',
+        'qti-hotspot-interaction' => 'qti-hotspotInteraction',
+        'qti-select-point-interaction' => 'qti-selectPointInteraction',
+        'qti-graphic-order-interaction' => 'qti-graphicOrderInteraction',
+        'qti-graphic-associate-interaction' => 'qti-graphicAssociateInteraction',
+        'qti-graphic-gap-match-interaction' => 'qti-graphicGapMatchInteraction',
+        'qti-position-object-interaction' => 'qti-positionObjectInteraction',
+        'qti-position-object-stage' => 'qti-positionObjectStage',
+        'qti-slider-interaction' => 'qti-sliderInteraction',
+        'qti-media-interaction' => 'qti-mediaInteraction',
+        'qti-drawing-interaction' => 'qti-drawingInteraction',
+        'qti-upload-interaction' => 'qti-uploadInteraction',
+        'qti-custom-interaction' => 'qti-customInteraction',
+        'qti-end-attempt-interaction' => 'qti-endAttemptInteraction',
+        'qti-info-control' => 'qti-infoControl',
+        'qti-modal-feedback' => 'qti-modalFeedback',
+        'qti-template-inline' => 'qti-templateInline',
+        'qti-template-block' => 'qti-templateBlock'
+    );
+    
     /**
      * -qti-* pseudo classes to CSS class map.
      * 
@@ -323,6 +386,16 @@ class CssScoper implements Renderable
     public function mapQtiPseudoClasses($mapQtiPseudoClasses)
     {
         $this->mapQtiPseudoClasses = $mapQtiPseudoClasses;
+    }
+    
+    public function setWebComponentFriendly($webComponentFriendly)
+    {
+        $this->webComponentFriendly = $webComponentFriendly;
+    }
+    
+    public function isWebComponentFriendly()
+    {
+        return $this->webComponentFriendly;
     }
 
     /**
@@ -870,12 +943,13 @@ class CssScoper implements Renderable
     protected function updateSelector()
     {
         $buffer = implode('', $this->getBuffer());
+        $qtiClassMap = ($this->isWebComponentFriendly()) ? array_merge(self::$qtiClassMapping, self::$wcFriendlyQtiClassMapping) : self::$qtiClassMapping;
 
         if (strpos($buffer, ',') === false) {
 
             // Do not rescope if already scoped!
             if (strpos($buffer, '#' . $this->getId()) === false) {
-                $buffer = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($buffer, self::getQtiClassMapping()) : $buffer;
+                $buffer = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($buffer, $qtiClassMap) : $buffer;
                 $buffer = ($this->doesMapQtiPseudoClasses() === true) ? CssUtils::mapPseudoClasses($buffer, self::getQtiPseudoClassMapping()) : $buffer;
                 $this->output('#' . $this->getId() . ' ' . $buffer . '{');
             } else {
@@ -890,7 +964,7 @@ class CssScoper implements Renderable
 
                 // Same as above, do not rescope if already scoped...
                 if (strpos($c, '#' . $this->getId()) === false) {
-                    $c = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($c, self::getQtiClassMapping()) : $c;
+                    $c = ($this->doesMapQtiClasses() === true) ? CssUtils::mapSelector($c, $qtiClassMap) : $c;
                     $newC =  '#' . $this->getId() . ' ' . trim($c);
                     $newC = str_replace(trim($c), $newC, $c);
                 } else {
