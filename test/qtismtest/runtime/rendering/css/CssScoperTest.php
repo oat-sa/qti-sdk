@@ -14,10 +14,12 @@ class CssScoperTest extends QtiSmTestCase
      * @param string $id
      * @param boolean $cssMapping
      * @param boolean $pseudoClassMapping
+     * @param boolean $wcFriendly
      */
-    public function testOutput ($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true)
+    public function testOutput ($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
     {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
+        $cssScoper->setWebComponentFriendly($wcFriendly);
         $expected = file_get_contents($outputFile);
         $actual = $cssScoper->render($inputFile, $id);
         $this->assertEquals($expected, $actual);
@@ -45,7 +47,8 @@ class CssScoperTest extends QtiSmTestCase
             array(self::samplesDir() . 'rendering/css/css_input17.css', self::samplesDir() . 'rendering/css/css_output17.css', 'myId', true),
             array(self::samplesDir() . 'rendering/css/css_input18.css', self::samplesDir() . 'rendering/css/css_output18.css', 'myId', true),
             array(self::samplesDir() . 'rendering/css/css_input19.css', self::samplesDir() . 'rendering/css/css_output19.css', 'myId', true),
-            array(self::samplesDir() . 'rendering/css/css_input20.css', self::samplesDir() . 'rendering/css/css_output20.css', 'myId')
+            array(self::samplesDir() . 'rendering/css/css_input20.css', self::samplesDir() . 'rendering/css/css_output20.css', 'myId'),
+            array(self::samplesDir() . 'rendering/css/css_input21.css', self::samplesDir() . 'rendering/css/css_output21.css', 'myId', true, false, true)
         );
     }
     
