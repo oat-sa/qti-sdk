@@ -45,9 +45,13 @@ class Utils
      *
      * @param string $selector A Cascading Style Sheet selector.
      * @param array $map A QTI to XHTML CSS class map.
+     * @param array
+     * @return string
      */
     public static function mapSelector($selector, array $map)
     {
+        
+        
         foreach ($map as $k => $v) {
             $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";
             $count = 1;
