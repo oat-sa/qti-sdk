@@ -66,7 +66,11 @@ class ChoiceInteractionRenderer extends InteractionRenderer
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-choiceInteraction');
         $this->additionalUserClass(($component->getOrientation() === Orientation::VERTICAL) ? 'qti-vertical' : 'qti-horizontal');
-
+    
+        $qtiCount = count($component->getSimpleChoices());
+        $qtiCount = ($qtiCount % 2 === 1) ? $qtiCount + 1 : $qtiCount;
+        $this->additionalUserClass("qti-count-${qtiCount}");
+        
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-max-choices', $component->getMaxChoices());
         $fragment->firstChild->setAttribute('data-min-choices', $component->getMinChoices());
