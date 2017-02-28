@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name ="QTISM Test Suite">
+        <testsuite name ="QTI-SDK Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">./src/</directory>
+            <exclude>
+                <directory suffix=".php">./src/qtism/runtime/processing/templates</directory>
+            </exclude>
         </whitelist>
     </filter>
     <!-- PHP configuration -->
