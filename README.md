@@ -288,6 +288,6 @@ configured as below.
 
 ### PHP7 Configuration
 
-The `opcache.load.comments` option was removed from PHP7. Only `opcache.save.comments` remains.
+The `opcache.load_comments` option was removed from PHP7. Only `opcache.save_comments` remains.
 
 * [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
