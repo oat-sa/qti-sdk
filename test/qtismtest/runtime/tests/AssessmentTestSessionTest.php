@@ -7,22 +7,14 @@ use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiString;
 use qtism\runtime\tests\AssessmentTestPlace;
-use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentItemSessionState;
-use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
 use qtism\runtime\common\State;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\data\state\VariableDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\runtime\common\VariableIdentifier;
-use qtism\data\state\Weight;
-use qtism\data\state\WeightCollection;
-use qtism\data\AssessmentItemRef;
-use qtism\data\AssessmentItemRefCollection;
 use qtism\common\enums\Cardinality;
 use qtism\common\enums\BaseType;
 use qtism\runtime\common\OutcomeVariable;
@@ -34,14 +26,12 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\runtime\common\MultipleContainer;
-use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use \OutOfBoundsException;
 use \InvalidArgumentException;
 
 class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 {
-	
 	protected $state;
 	
 	public function setUp()
@@ -2255,6 +2245,37 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->beginTestSession();
         $assessmentTestSession->moveNext();
         $this->assertFalse($assessmentTestSession->canMoveBackward());
+    }
+    
+    public function testIsNextRouteItemPredictible()
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/route_item_prediction.xml');
+        
+        // Cannot be predicted while not running.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        
+        // Q01 - Can predict that next item is Q02.
+        $assessmentTestSession->beginTestSession();
+        $this->assertTrue($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q02 - Cannot predict that next item Q03 because it contains preConditions.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q03 - Can predict that next item is Q04.
+        $this->assertTrue($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q04 - Cannot predict that next item is Q05 because Q04 has branchRules.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q05 - Cannot predict next item because Q05 is the very last item.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
     }
     
     public function testGetWeightWrongType()
