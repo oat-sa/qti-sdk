@@ -11,7 +11,7 @@
 An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 5.5 and higher supporting a wide 
 range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
 
-__This implementation of QTI is under constant enhancement. The API of the master branch might change at any time. See release 6.x.x. for the latest stable version.__
+__This implementation of QTI is under constant enhancement. The API of the master branch might change at any time.__
 
 ## Features
 
@@ -279,7 +279,15 @@ For additionnal help and information, just call the help screen to know about th
 
 As for other major PHP frameworks such as [Doctrine](http://stackoverflow.com/questions/21925354/doctrine-is-freaking-out-when-i-turn-on-php-opcache-on), Zend Framework 2 or PHPUnit, QTI-SDK makes use
 of annotations. In such a context, the two following Zend Opcache configuration directives must be
-configured as below:
+configured as below.
 
-* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): true
-* [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): true
+### PHP5 Configuration
+
+* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
+* [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): 1
+
+### PHP7 Configuration
+
+The `opcache.load_comments` option was removed from PHP7. Only `opcache.save_comments` remains.
+
+* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
