@@ -283,11 +283,11 @@ configured as below.
 
 ### PHP5 Configuration
 
-* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): true
-* [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): true
+* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
+* [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): 1
 
 ### PHP7 Configuration
 
 The `opcache.load.comments` option was removed from PHP7. Only `opcache.save.comments` remains.
 
-* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): true
+* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): 1
