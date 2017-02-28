@@ -279,7 +279,15 @@ For additionnal help and information, just call the help screen to know about th
 
 As for other major PHP frameworks such as [Doctrine](http://stackoverflow.com/questions/21925354/doctrine-is-freaking-out-when-i-turn-on-php-opcache-on), Zend Framework 2 or PHPUnit, QTI-SDK makes use
 of annotations. In such a context, the two following Zend Opcache configuration directives must be
-configured as below:
+configured as below.
+
+### PHP5 Configuration
 
 * [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): true
 * [opcache.load_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.load-comments): true
+
+### PHP7 Configuration
+
+The `opcache.load.comments` option was removed from PHP7. Only `opcache.save.comments` remains.
+
+* [opcache.save_comments](http://php.net/manual/en/opcache.configuration.php#ini.opcache.save-comments): true
