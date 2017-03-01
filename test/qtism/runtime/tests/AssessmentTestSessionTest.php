@@ -1633,4 +1633,38 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
         $this->assertSame(array(0, 1, 2, 3, 4), $assessmentTestSession->getPath());
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
     }
+    
+    public function testIsNextRouteItemPredictible()
+    {
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/route_item_prediction.xml');
+        $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        
+        // Cannot be predicted while not running.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        
+        // Q01 - Can predict that next item is Q02.
+        $assessmentTestSession->beginTestSession();
+        $this->assertTrue($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q02 - Cannot predict that next item Q03 because it contains preConditions.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q03 - Can predict that next item is Q04.
+        $this->assertTrue($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q04 - Cannot predict that next item is Q05 because Q04 has branchRules.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        $assessmentTestSession->moveNext();
+        
+        // Q05 - Cannot predict next item because Q05 is the very last item.
+        $this->assertFalse($assessmentTestSession->isNextRouteItemPredictible());
+        
+        $assessmentTestSession->moveNext();
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+    }
 }

@@ -1790,7 +1790,7 @@ class AssessmentTestSession extends State {
 	    while ($route->valid() === true && $stop === false) {
 	        
 	        // Branchings?
-            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true)) {
+            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && $this->mustApplyBranchRules() === true) {
 	            
 	            $branchRules = $route->current()->getBranchRules();
 	            for ($i = 0; $i < count($branchRules); $i++) {
@@ -1829,7 +1829,7 @@ class AssessmentTestSession extends State {
 	        }
 	        
 	        // Preconditions on target?
-	        if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true)) {
+	        if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
 	            
                 for ($i = 0; $i < count($preConditions); $i++) {
                     $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
@@ -2775,4 +2775,72 @@ class AssessmentTestSession extends State {
 	protected function timeLimitsInForce($excludeItem = false) {
 	    return count($this->getCurrentRouteItem()->getTimeLimits($excludeItem)) !== 0;
 	}
+    
+    /**
+     * Must Apply Branch Rules
+     *
+     * Whether or not Branch Rules have to be applied.
+     *
+     * @return boolean
+     */
+    protected function mustApplyBranchRules()
+    {
+        return ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true);
+    }
+    
+    /**
+     * Must Apply PreConditions
+     *
+     * Whether or not PreConditions have to be applied.
+     *
+     * @param boolean $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
+     * @return boolean
+     */
+    protected function mustApplyPreConditions($nextRouteItem = false)
+    {
+        $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
+        return ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true);
+    }
+    
+    /**
+     * Next Route Item Prediction
+     *
+     * This method indicates whether or not the next route item is predictible.
+     *
+     * This method returns false when:
+     *
+     * * The session is not running (state is INITIAL or CLOSED)
+     * * The current route item is the last of the route
+     * * The current route item has branch rules and have to be applied.
+     * * The next route item has preconditions and have to be applied.
+     *
+     * Otherwise, this method returns true.
+     *
+     * @return boolean
+     */
+    public function isNextRouteItemPredictible()
+    {
+        // Case 1. The session is not running.
+        if ($this->isRunning() === false) {
+            return false;
+        }
+        
+        // Case 2. This is the very last item route.
+        if ($this->getRoute()->isLast() === true) {
+            return false;
+        }
+        
+        // Case 3. The current route item contains branch rules.
+        if ($this->mustApplyBranchRules() && count($this->getCurrentRouteItem()->getBranchRules()) > 0) {
+            return false;
+        }
+        
+        // Case 4. The next item has preconditions.
+        if ($this->mustApplyPreConditions(true) && count($this->getRoute()->getNext()->getPreConditions()) > 0) {
+            return false;
+        }
+        
+        // Otherwise, the next route item is predictible.
+        return true;
+    }
 }

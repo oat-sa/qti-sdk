@@ -2,7 +2,7 @@
 	"name": "qtism/qtism",
 	"description": "OAT QTI Software Module Library",
 	"type": "library",
-	"version": "0.10.25",
+	"version": "0.10.26",
 	"authors": [
 		{
 			"name": "Open Assessment Technologies S.A.",
@@ -29,7 +29,7 @@
 		"oat-sa/lib-tao-dtms" :  "~0.5"
 	},
 	"require-dev": {
-		"phpunit/PHPUnit": ">=3.7.20"
+		"phpunit/PHPUnit": "<6.0.0"
 	},
 	"autoload": {
 		"psr-0": {
