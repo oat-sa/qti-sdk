@@ -22,6 +22,8 @@
 
 namespace qtism\data;
 
+use phpDocumentor\Reflection\Types\Boolean;
+use qtism\common\utils\Exception;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\common\utils\Format;
@@ -42,104 +44,104 @@ use \InvalidArgumentException;
 class AssessmentTest extends QtiComponent implements QtiIdentifiable
 {
     use QtiIdentifiableTrait;
-    
+
     /**
-	 * From IMS QTI:
-	 *
-	 * The principle identifier of the test. This identifier must have a corresponding
-	 * entry in the test's metadata. See Metadata and Usage Data for more information.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The principle identifier of the test. This identifier must have a corresponding
+     * entry in the test's metadata. See Metadata and Usage Data for more information.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The title of an assessmentTest is intended to enable the test to be selected outside
-	 * of any test session. Therefore, delivery engines may reveal the title to candidates
-	 * at any time, but are not required to do so.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The title of an assessmentTest is intended to enable the test to be selected outside
+     * of any test session. Therefore, delivery engines may reveal the title to candidates
+     * at any time, but are not required to do so.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $title;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool name attribute allows the tool creating the test to identify itself.
-	 * Other processing systems may use this information to interpret the content of
-	 * application specific data, such as labels on the elements of the test rubric.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool name attribute allows the tool creating the test to identify itself.
+     * Other processing systems may use this information to interpret the content of
+     * application specific data, such as labels on the elements of the test rubric.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolName = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool version attribute allows the tool creating the test to identify its version. This value must only be interpreted in the context of the toolName.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool version attribute allows the tool creating the test to identify its version. This value must only be interpreted in the context of the toolName.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolVersion = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Each test has an associated set of outcomes. The values of these outcomes are set by the
-	 * test's outcomeProcessing rules.
-	 *
-	 * @var \qtism\data\state\OutcomeDeclarationCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Each test has an associated set of outcomes. The values of these outcomes are set by the
+     * test's outcomeProcessing rules.
+     *
+     * @var \qtism\data\state\OutcomeDeclarationCollection
+     * @qtism-bean-property
+     */
     private $outcomeDeclarations;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Optionally controls the amount of time a candidate is allowed for the entire test.
-	 *
-	 * @var \qtism\data\TimeLimits
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Optionally controls the amount of time a candidate is allowed for the entire test.
+     *
+     * @var \qtism\data\TimeLimits
+     * @qtism-bean-property
+     */
     private $timeLimits = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Each test is divided into one or more parts which may in turn be divided into sections,
-	 * sub-sections and so on. A testPart represents a major division of the test and is used
-	 * to control the basic mode parameters that apply to all sections and sub-sections within
-	 * that part.
-	 *
-	 * @var \qtism\data\TestPartCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Each test is divided into one or more parts which may in turn be divided into sections,
+     * sub-sections and so on. A testPart represents a major division of the test and is used
+     * to control the basic mode parameters that apply to all sections and sub-sections within
+     * that part.
+     *
+     * @var \qtism\data\TestPartCollection
+     * @qtism-bean-property
+     */
     private $testParts;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The set of rules used for calculating the values of the test outcomes.
-	 *
-	 * @var \qtism\data\processing\OutcomeProcessing
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The set of rules used for calculating the values of the test outcomes.
+     *
+     * @var \qtism\data\processing\OutcomeProcessing
+     * @qtism-bean-property
+     */
     private $outcomeProcessing = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Contains the test-level feedback controlled by the test outcomes.
-	 *
-	 * @var \qtism\data\TestFeedbackCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Contains the test-level feedback controlled by the test outcomes.
+     *
+     * @var \qtism\data\TestFeedbackCollection
+     * @qtism-bean-property
+     */
     private $testFeedbacks;
 
     public function __construct($identifier, $title, TestPartCollection $testParts = null)
@@ -154,21 +156,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the identifier of the AssessmentTest.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the identifier of the AssessmentTest.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the identifier of the AssessmentTest.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the AssessmentTest.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -182,21 +184,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the title of the AssessmentTest.
-	 *
-	 * @return string A title.
-	 */
+     * Get the title of the AssessmentTest.
+     *
+     * @return string A title.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
     /**
-	 * Set the title of the AssessmentTest.
-	 *
-	 * @param string $title A title.
-	 * @throws \InvalidArgumentException If $title is not a string.
-	 */
+     * Set the title of the AssessmentTest.
+     *
+     * @param string $title A title.
+     * @throws \InvalidArgumentException If $title is not a string.
+     */
     public function setTitle($title)
     {
         if (gettype($title) === 'string') {
@@ -208,22 +210,22 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the name of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if not specfied.
-	 *
-	 * @return string A tool name or empty string if not specified.
-	 */
+     * Get the name of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if not specfied.
+     *
+     * @return string A tool name or empty string if not specified.
+     */
     public function getToolName()
     {
         return $this->toolName;
     }
 
     /**
-	 * Set the name of the tool that was used to author the AssessmentTest.
-	 *
-	 * @param string $toolName A tool name.
-	 * @throws \InvalidArgumentException If $toolName is not a string.
-	 */
+     * Set the name of the tool that was used to author the AssessmentTest.
+     *
+     * @param string $toolName A tool name.
+     * @throws \InvalidArgumentException If $toolName is not a string.
+     */
     public function setToolName($toolName)
     {
         if (gettype($toolName) === 'string') {
@@ -235,23 +237,23 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the version of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if it was not specified.
-	 *
-	 * @return string A tool version.
-	 */
+     * Get the version of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if it was not specified.
+     *
+     * @return string A tool version.
+     */
     public function getToolVersion()
     {
         return $this->toolVersion;
     }
 
     /**
-	 * Set the version of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if it was not specified.
-	 *
-	 * @param string $toolVersion A tool version.
-	 * @throws \InvalidArgumentException If $toolVersion is not a string.
-	 */
+     * Set the version of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if it was not specified.
+     *
+     * @param string $toolVersion A tool version.
+     * @throws \InvalidArgumentException If $toolVersion is not a string.
+     */
     public function setToolVersion($toolVersion)
     {
         if (gettype($toolVersion) === 'string') {
@@ -263,134 +265,134 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get a collection of OutcomeDeclaration objects bound to the AssessmentTest.
-	 *
-	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
-	 */
+     * Get a collection of OutcomeDeclaration objects bound to the AssessmentTest.
+     *
+     * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+     */
     public function getOutcomeDeclarations()
     {
         return $this->outcomeDeclarations;
     }
 
     /**
-	 * Set a collection of OutcomeDeclaration objects bound to the AssessmentTest.
-	 *
-	 * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
-	 */
+     * Set a collection of OutcomeDeclaration objects bound to the AssessmentTest.
+     *
+     * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
 
     /**
-	 * Get the time limits of this AssessmentTest. Returns null if not specified.
-	 *
-	 * @return \qtism\data\TimeLimits A TimeLimits object or null value if not specified.
-	 */
+     * Get the time limits of this AssessmentTest. Returns null if not specified.
+     *
+     * @return \qtism\data\TimeLimits A TimeLimits object or null value if not specified.
+     */
     public function getTimeLimits()
     {
         return $this->timeLimits;
     }
 
     /**
-	 * Set the time limits of this AssessmentTest.
-	 *
-	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
-	 */
+     * Set the time limits of this AssessmentTest.
+     *
+     * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
+     */
     public function setTimeLimits(TimeLimits $timeLimits = null)
     {
         $this->timeLimits = $timeLimits;
     }
 
     /**
-	 * Get the test parts that form the AssessmentTest.
-	 *
-	 * @return \qtism\data\TestPartCollection A collection of TestPart objects.
-	 */
+     * Get the test parts that form the AssessmentTest.
+     *
+     * @return \qtism\data\TestPartCollection A collection of TestPart objects.
+     */
     public function getTestParts()
     {
         return $this->testParts;
     }
 
     /**
-	 * Set the test parts that form the AssessmentTest.
-	 *
-	 * @param \qtism\data\TestPartCollection $testParts A collection of TestPart objects.
-	 */
+     * Set the test parts that form the AssessmentTest.
+     *
+     * @param \qtism\data\TestPartCollection $testParts A collection of TestPart objects.
+     */
     public function setTestParts(TestPartCollection $testParts)
     {
         $this->testParts = $testParts;
     }
 
     /**
-	 * Get the OutcomeProcessing of the AssessmentTest. Returns null if it was not
-	 * specified.
-	 *
-	 * @return \qtism\data\processing\OutcomeProcessing An OutcomeProcessing object or null if not specified.
-	 */
+     * Get the OutcomeProcessing of the AssessmentTest. Returns null if it was not
+     * specified.
+     *
+     * @return \qtism\data\processing\OutcomeProcessing An OutcomeProcessing object or null if not specified.
+     */
     public function getOutcomeProcessing()
     {
         return $this->outcomeProcessing;
     }
 
     /**
-	 * Set the OutcomeProcessing of the AssessmentTest.
-	 *
-	 * @param \qtism\data\processing\OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
-	 */
+     * Set the OutcomeProcessing of the AssessmentTest.
+     *
+     * @param \qtism\data\processing\OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
+     */
     public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null)
     {
         $this->outcomeProcessing = $outcomeProcessing;
     }
 
     /**
-	 * Whether the AssessmentTest holds an OutcomeProcessing object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest holds an OutcomeProcessing object.
+     *
+     * @return boolean
+     */
     public function hasOutcomeProcessing()
     {
         return is_null($this->getOutcomeProcessing()) !== true;
     }
 
     /**
-	 * Get the feedbacks associated to the AssessmentTest.
-	 *
-	 * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
-	 */
+     * Get the feedbacks associated to the AssessmentTest.
+     *
+     * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
+     */
     public function getTestFeedbacks()
     {
         return $this->testFeedbacks;
     }
 
     /**
-	 * Set the feedbacks associated to the AssessmentTest.
-	 *
-	 * @param \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
-	 */
+     * Set the feedbacks associated to the AssessmentTest.
+     *
+     * @param \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
+     */
     public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks)
     {
         $this->testFeedbacks = $testFeedbacks;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
-                    $this->getOutcomeDeclarations()->getArrayCopy(),
-                    $this->getTestFeedbacks()->getArrayCopy(),
-                    $this->getTestParts()->getArrayCopy()
-                );
+            $this->getOutcomeDeclarations()->getArrayCopy(),
+            $this->getTestFeedbacks()->getArrayCopy(),
+            $this->getTestParts()->getArrayCopy()
+        );
 
         if ($this->getOutcomeProcessing() !== null) {
             $comp[] = $this->getOutcomeProcessing();
@@ -404,11 +406,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
-	 * the result will be false.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
+     * the result will be false.
+     *
+     * @return boolean
+     */
     public function isExclusivelyLinear()
     {
         $testParts = $this->getTestParts();
@@ -430,17 +432,179 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Whether the AssessmentTest as a TimeLimits component bound to it.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest as a TimeLimits component bound to it.
+     *
+     * @return boolean
+     */
     public function hasTimeLimits()
     {
         return $this->getTimeLimits() !== null;
     }
-    
+
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());
+    }
+
+    /**
+     * Returns an array with all possible paths possible for a AssessmentTest.
+     * @param asArray true to return an array, false to return an AssessmentItemRefCollection
+     * @return array of array ofAssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray
+     */
+
+    public function getPossiblePaths(Boolean $asArray)
+    {
+        $paths = array();
+        $items = $this->getComponentsByClassName("AssessmentItemRef");
+        $paths[] = $items;
+
+        // Array associating to each item the possible successor item
+
+        $succs = array();
+
+        // Association of the successor item to the next one
+
+        for ($i = 0; $i < count($items); $i++) {
+            $prevs[$items[$i]] = array();
+
+            if ($i < count($items) - 1) {
+                $prevs[$items[$i]][] = $items[$i + 1];
+            }
+        }
+
+        // Checking existing branches to add other possible previous items
+
+        foreach ($items as $item) {
+
+            foreach ($item->getComponentsByClassName("branchRule") as $branch) {
+
+                // @todo if branch always false, skip
+                // @todo if branch always true, remove all problematic paths.
+
+                $item_target = $this->getComponentByIdentifier($branch->getTarget());
+
+                if (!in_array($item_target, $prevs[$item])) {
+                    $prevs[$item][] = $this->getComponentByIdentifier($branch->getTarget());
+
+                    // new successor => possible
+
+                    foreach ($paths as $path) {
+
+                        // get the index of the current item and of the target item
+
+                        $index_current_item = -1;
+                        $index_target_item = -1;
+
+                        for ($j = 0; $j < count($path); $j++) {
+
+                            if ($path[$j] == $item) {
+                                $index_current_item = $j;
+                            }
+
+                            if ($path[$j] == $item_target) {
+                                $index_target_item = $j;
+                            }
+                        }
+
+                        if (($index_current_item == -1) or ($index_target_item == -1)) {
+                            break;
+                        }
+
+                        if ($index_current_item == $index_target_item) {
+                            throw new Exception("Recursion problem"); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
+                        }
+
+                        if ($index_current_item < $index_target_item) {
+
+                            $paths[] = array_splice($items->clone(), $index_current_item,
+                                $index_target_item - $index_current_item);
+                        }
+
+                        if ($index_current_item > $index_target_item) {
+                            // @todo Checking any recursion problems ? Recursion problem or not ?
+                        }
+                    }
+                }
+            }
+        }
+
+        // Checking preConditions
+
+        foreach ($this->getComponentsByClassName("AssessmentItemRef") as $item) {
+
+            if (count($item->getComponentsByClassName("preCondition")) > 0) {
+
+                // for each existing, duplicate it and remove the current item (because it may not exist with the precondition)
+
+                // @todo if branch always true, skip
+                // @todo if branch always skip, remove that items from all paths.
+
+                foreach ($paths as $path) {
+
+                    if (in_array($item, $path)) {
+                        $new_path = $path->clone();
+                        unset($new_path[array_search($item, $path)]);
+                    }
+
+                    // Check if new path does't already exists
+
+                    if (!in_array($new_path, $paths)) {
+                        $paths[] = $path;
+                    }
+                }
+            }
+        }
+
+        return $paths;
+    }
+
+    /**
+     * Returns an array with all shortest possible paths possible for a AssessmentTest.
+     * @return array of Paths
+     */
+
+    public function getShortestPaths()
+    {
+        $paths = $this->getPossiblePaths(false);
+        $min_count = PHP_INT_MAX;
+        $min_paths = array();
+
+        foreach ($paths as $path) {
+            if (sizeof($path) < $min_count) {
+                $min_count = sizeof($path);
+                $min_paths = array();
+            }
+
+            if (sizeof($path) <= $min_count) {
+                $min_paths[] = $paths;
+            }
+        }
+
+        return $min_paths;
+    }
+
+    /**
+     * Returns an array with all longest possible paths possible for a AssessmentTest.
+     * @return array of Paths
+     */
+
+    public function getLongestPaths()
+    {
+        $paths = $this->getPossiblePaths(false);
+        $max_count = 0;
+        $max_paths = array();
+
+        foreach ($paths as $path) {
+            if (sizeof($path) > $max_count) {
+                $max_count = sizeof($path);
+                $max_paths = array();
+            }
+
+            if (sizeof($path) >= $max_count) {
+                $max_paths[] = $paths;
+            }
+        }
+
+        return $max_paths;
     }
 }

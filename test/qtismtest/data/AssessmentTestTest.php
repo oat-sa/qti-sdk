@@ -114,4 +114,62 @@ class AssessmentTestTest extends QtiSmTestCase
         $testPart->setNavigationMode(NavigationMode::LINEAR);
         $this->assertTrue($test->isExclusivelyLinear());
     }
+    
+    public function testGetPossiblePaths()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
+        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
+
+        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $itemq4 = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
+        $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
+        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+
+        $possible_paths = array();
+
+        $possible_paths[] = [$itemq1, $itemq2, $itemq4, $itemq5, $itemq6];
+        $possible_paths[] = [$itemq1, $itemq2, $itemq3, $itemq6];
+        $possible_paths[] = [$itemq1, $itemq3, $itemq6];
+
+        $this->assertEquals($test->getPossiblePaths(), $possible_paths);
+    }
+
+    public function testGetShortestPaths()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
+        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
+
+        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+
+        $shortest_paths = array();
+
+        $shortest_paths[] = [$itemq1, $itemq3, $itemq6];
+
+        $this->assertEquals($test->getShortestPath(), $shortest_paths);
+    }
+
+    public function testGetLongestPaths()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
+        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
+
+        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
+        $itemq4 = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
+        $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
+        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+
+        $longest_paths = array();
+
+        $longest_paths[] = [$itemq1, $itemq2, $itemq4, $itemq5, $itemq6];
+
+        $this->assertEquals($test->getLongestPaths(), $longest_paths);
+    }
 }

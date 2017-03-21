@@ -52,5 +52,5 @@
             <assessmentItemRef identifier="Q05" href="./Q05/qti.xml"/>
             <assessmentItemRef identifier="Q06" href="./Q06/qti.xml"/>
         </assessmentSection>
-</testPart>
+    </testPart>
 </assessmentTest>
