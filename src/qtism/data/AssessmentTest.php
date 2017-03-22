@@ -449,14 +449,16 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Returns an array with all possible paths possible for a AssessmentTest.
      * @param asArray true to return an array, false to return an AssessmentItemRefCollection
-     * @return array of array ofAssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray
+     * @return array of array of AssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray
      */
 
-    public function getPossiblePaths(Boolean $asArray)
+    public function getPossiblePaths($asArray)
     {
         $paths = array();
-        $items = $this->getComponentsByClassName("AssessmentItemRef");
+        $items = new AssessmentItemRefCollection($this->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
         $paths[] = $items;
+        $identifier_list = $items->getKeys(); // list of the identifiers
+        $id_to_index = array_flip($identifier_list); // get the index of the item with its ID, needed to order branches
 
         // Array associating to each item the possible successor item
 
@@ -465,63 +467,102 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         // Association of the successor item to the next one
 
         for ($i = 0; $i < count($items); $i++) {
-            $prevs[$items[$i]] = array();
+            $succs[$identifier_list[$i]] = array();
 
-            if ($i < count($items) - 1) {
-                $prevs[$items[$i]][] = $items[$i + 1];
+            if ($i < (count($items) - 1)) {
+                $succs[$identifier_list[$i]][] = $items[$identifier_list[$i + 1]];
             }
         }
 
         // Checking existing branches to add other possible previous items
 
+        /*
         foreach ($items as $item) {
 
-            foreach ($item->getComponentsByClassName("branchRule") as $branch) {
+            var_dump($item->getIdentifier());
 
-                // @todo if branch always false, skip
-                // @todo if branch always true, remove all problematic paths.
+        }*/
+
+        foreach ($items as $item) {
+            
+            foreach ($item->getComponentsByClassName("branchRule") as $branch) {
 
                 $item_target = $this->getComponentByIdentifier($branch->getTarget());
 
-                if (!in_array($item_target, $prevs[$item])) {
-                    $prevs[$item][] = $this->getComponentByIdentifier($branch->getTarget());
+                if (!in_array($item_target, $succs[$item->getIdentifier()])) {
+                    $target = $this->getComponentByIdentifier($branch->getTarget());
+                    $succs[$item->getIdentifier()][] = $target;
 
-                    // new successor => possible
+                    // new successor possible => new paths possible
 
                     foreach ($paths as $path) {
 
                         // get the index of the current item and of the target item
+                        
+                        $key_current_item = null;
+                        $key_target_item = null;
 
-                        $index_current_item = -1;
-                        $index_target_item = -1;
+                        $pathkeys = $path->getKeys();
 
                         for ($j = 0; $j < count($path); $j++) {
 
-                            if ($path[$j] == $item) {
-                                $index_current_item = $j;
+                            if ($item->getIdentifier() == $path[$pathkeys[$j]]) {
+                                $key_current_item = $item->getIdentifier();
                             }
 
-                            if ($path[$j] == $item_target) {
-                                $index_target_item = $j;
+                            if ($branch->getTarget() == $path[$pathkeys[$j]]) {
+                                $key_target_item = $branch->getTarget();
                             }
                         }
 
-                        if (($index_current_item == -1) or ($index_target_item == -1)) {
-                            break;
+                        /* Ne fonctionne pas...
+                           foreach ($path as $identifier => $item_from_path) {
+
+                            if ($item->getIdentifier() == $identifier) {
+                                $key_current_item = $item->getIdentifier();
+                            }
+                            
+                            if ($branch->getTarget() == $identifier) {
+                                $key_target_item = $branch->getTarget();
+                            }
+                        }*/
+
+                        if (($key_current_item == null) or ($key_target_item == null)) {
+                            break; // no new path to add
                         }
 
-                        if ($index_current_item == $index_target_item) {
-                            throw new Exception("Recursion problem"); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
+                        if ($key_current_item == $key_target_item) {
+                            throw new \Exception("Recursive branching is not allowed."); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
                         }
 
-                        if ($index_current_item < $index_target_item) {
-
-                            $paths[] = array_splice($items->clone(), $index_current_item,
-                                $index_target_item - $index_current_item);
+                        if ($id_to_index[$key_current_item] > $id_to_index[$key_target_item]) {
+                            throw new \Exception("Branching backward is not allowed.");
                         }
 
-                        if ($index_current_item > $index_target_item) {
-                            // @todo Checking any recursion problems ? Recursion problem or not ?
+                        if ($id_to_index[$key_current_item] < $id_to_index[$key_target_item]) {
+
+                            $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+                            $delete_keys = false;
+
+                            // Delete from new path everything between $key_current_item and $key_target_item
+
+                            for ($i_path = 0;$i_path < count($path);$i_path++) {
+                                if ($path[$pathkeys[$i_path]] == $key_target_item) {
+                                    break;
+                                }
+
+                                if ($delete_keys) {
+                                    unset($new_path[$pathkeys[$i_path]]);
+                                }
+
+                                if ($path[$pathkeys[$i_path]] == $key_current_item) {
+                                    $delete_keys = true;
+                                }
+                            }
+
+                            var_dump($new_path->getKeys());
+
+                            $paths[] = $new_path;
                         }
                     }
                 }
@@ -535,9 +576,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             if (count($item->getComponentsByClassName("preCondition")) > 0) {
 
                 // for each existing, duplicate it and remove the current item (because it may not exist with the precondition)
-
-                // @todo if branch always true, skip
-                // @todo if branch always skip, remove that items from all paths.
 
                 foreach ($paths as $path) {
 

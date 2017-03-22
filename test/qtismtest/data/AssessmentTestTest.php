@@ -11,6 +11,7 @@ use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
 use qtism\data\NavigationMode;
+use qtism\data\AssessmentItemRefCollection;
 
 class AssessmentTestTest extends QtiSmTestCase 
 {
@@ -118,8 +119,8 @@ class AssessmentTestTest extends QtiSmTestCase
     public function testGetPossiblePaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
-        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $test = $doc->getDocumentComponent(); // ->getComponentByIdentifier('branching-example');
 
         $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
         $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
@@ -130,46 +131,54 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $possible_paths = array();
 
-        $possible_paths[] = [$itemq1, $itemq2, $itemq4, $itemq5, $itemq6];
-        $possible_paths[] = [$itemq1, $itemq2, $itemq3, $itemq6];
-        $possible_paths[] = [$itemq1, $itemq3, $itemq6];
 
-        $this->assertEquals($test->getPossiblePaths(), $possible_paths);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq4, $itemq5, $itemq6]);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3, $itemq4, $itemq5, $itemq6]);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq4, $itemq5, $itemq6]);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq6]);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3, $itemq6]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(true));
     }
 
+    /*
     public function testGetShortestPaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
-        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
-
-        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
-        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
-        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $test = $doc->getDocumentComponent(); // ->getComponentByIdentifier('branching-example');
 
         $shortest_paths = array();
+        $path = new AssessmentItemRefCollection();
 
-        $shortest_paths[] = [$itemq1, $itemq3, $itemq6];
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
 
-        $this->assertEquals($test->getShortestPath(), $shortest_paths);
+        $shortest_paths[] = $path;
+
+        $this->assertEquals($shortest_paths, $test->getShortestPaths(true));
     }
 
     public function testGetLongestPaths()
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/branching.xml');
-        $test = $doc->getDocumentComponent()->getComponentByIdentifier('branching-based-on-the-response-to-an-assessmentItem');
-
-        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
-        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
-        $itemq4 = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
-        $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
-        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
+        $test = $doc->getDocumentComponent(); // ->getComponentByIdentifier('branching-example');
 
         $longest_paths = array();
+        $path = new AssessmentItemRefCollection();
 
-        $longest_paths[] = [$itemq1, $itemq2, $itemq4, $itemq5, $itemq6];
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
+        $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
 
-        $this->assertEquals($test->getLongestPaths(), $longest_paths);
-    }
+
+        $longest_paths[] = $path;
+
+        $this->assertEquals($longest_paths, $test->getLongestPaths(true)) ;
+    }*/
 }
