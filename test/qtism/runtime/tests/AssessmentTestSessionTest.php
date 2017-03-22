@@ -1667,4 +1667,49 @@ class AssessmentTestSessionTest extends QtiSmTestCase {
         $assessmentTestSession->moveNext();
         $this->assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
     }
+    
+    public function testOutcomeProcessingEnabled()
+    {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/outcome_processing/enable_disable_outcome_processing.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->beginTestSession();
+        $this->assertEquals('Hello world!', $assessmentTestSession['MYOUTCOME']->getValue());
+        
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->endAttempt(
+            new State([
+                new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA'))
+            ])
+        );
+        
+        $this->assertEquals('This is me!', $assessmentTestSession['MYOUTCOME']->getValue());
+    }
+    
+    public function testOutcomeProcessingDisabled()
+    {
+        $doc = new XmlCompactDocument();
+	    $doc->load(self::samplesDir() . 'custom/runtime/outcome_processing/enable_disable_outcome_processing.xml');
+	    
+	    $sessionManager = new SessionManager();
+	    $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession->setOutcomeProcessingEnabled(false);
+	    $this->assertEquals(AssessmentTestSessionState::INITIAL, $assessmentTestSession->getState());
+        
+        $assessmentTestSession->beginTestSession();
+        $this->assertEquals('Hello world!', $assessmentTestSession['MYOUTCOME']->getValue());
+        
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->endAttempt(
+            new State([
+                new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA'))
+            ])
+        );
+        
+        $this->assertEquals('Hello world!', $assessmentTestSession['MYOUTCOME']->getValue());
+    }
 }
