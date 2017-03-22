@@ -202,6 +202,14 @@ class AssessmentTestSession extends State {
      * @var boolean
      */
     private $alwaysAllowJumps = false;
+    
+    /**
+     * Whether or not enable outcome processing.
+     * 
+     * If disabled, outcome processing will not occur at the end of an attempt (individual submission) or end of test part (simultaneous submission).
+     * 
+     */
+    private $outcomeProcessingEnabled = true;
 	
 	/**
 	 * Create a new AssessmentTestSession object.
@@ -602,6 +610,30 @@ class AssessmentTestSession extends State {
      */
     public function getPath() {
         return $this->path;
+    }
+    
+    /**
+     * Is outcome processing enabled.
+     * 
+     * Whether or not outcome processing is enabled.
+     * 
+     * @return boolean
+     */
+    public function isOutcomeProcessingEnabled()
+    {
+        return $this->outcomeProcessingEnabled;
+    }
+    
+    /**
+     * Enable/disable outcome processing.
+     * 
+     * Set whether or not outcome processing is enabled.
+     * 
+     * @param boolean $outcomeProcessingEnabled
+     */
+    public function setOutcomeProcessingEnabled($outcomeProcessingEnabled)
+    {
+        $this->outcomeProcessingEnabled = $outcomeProcessingEnabled;
     }
 
 	/**
@@ -1958,12 +1990,14 @@ class AssessmentTestSession extends State {
 	
 	/**
 	 * Apply outcome processing at test-level.
+     * 
+     * In case of outcome processing is disabled, this method simply does nothing.
 	 * 
 	 * @throws AssessmentTestSessionException If an error occurs at OutcomeProcessing time or at result submission time.
 	 */
 	protected function outcomeProcessing() {
 	    
-	    if ($this->getAssessmentTest()->hasOutcomeProcessing() === true) {
+	    if ($this->isOutcomeProcessingEnabled() === true && $this->getAssessmentTest()->hasOutcomeProcessing() === true) {
 	        // As per QTI Spec:
 	        // The values of the test's outcome variables are always reset to their defaults prior
 	        // to carrying out the instructions described by the outcomeRules.
