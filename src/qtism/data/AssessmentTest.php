@@ -476,13 +476,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         // Checking existing branches to add other possible previous items
 
-        /*
-        foreach ($items as $item) {
-
-            var_dump($item->getIdentifier());
-
-        }*/
-
         foreach ($items as $item) {
             
             foreach ($item->getComponentsByClassName("branchRule") as $branch) {
@@ -560,8 +553,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                                 }
                             }
 
-                            var_dump($new_path->getKeys());
-
                             $paths[] = $new_path;
                         }
                     }
@@ -571,7 +562,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         // Checking preConditions
 
-        foreach ($this->getComponentsByClassName("AssessmentItemRef") as $item) {
+        foreach ($items as $item) {
 
             if (count($item->getComponentsByClassName("preCondition")) > 0) {
 
@@ -579,17 +570,25 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                 foreach ($paths as $path) {
 
-                    if (in_array($item, $path)) {
-                        $new_path = $path->clone();
-                        unset($new_path[array_search($item, $path)]);
+                    if (in_array($item, $path->getArrayCopy())) {
+                        $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+                        unset($new_path[$item->getIdentifier()]);
                     }
 
                     // Check if new path does't already exists
 
                     if (!in_array($new_path, $paths)) {
-                        $paths[] = $path;
+                        $paths[] = $new_path;
                     }
                 }
+            }
+        }
+
+        // Transform into array if necessary
+
+        if ($asArray) {
+            foreach ($paths as $key => $path) {
+                $paths[$key] = $path->getArrayCopy();
             }
         }
 
@@ -614,7 +613,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             }
 
             if (sizeof($path) <= $min_count) {
-                $min_paths[] = $paths;
+                $min_paths[] = $path;
             }
         }
 
@@ -639,7 +638,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             }
 
             if (sizeof($path) >= $max_count) {
-                $max_paths[] = $paths;
+                $max_paths[] = $path;
             }
         }
 
