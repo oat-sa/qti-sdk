@@ -144,6 +144,16 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
         $this->assertEquals($possible_paths2, $test->getPossiblePaths(true));
+
+        // Test with no item
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/assessmentwithnoitem.xml');
+        $test = $doc->getDocumentComponent();
+
+        $possible_paths = array();
+        $possible_paths[] = new AssessmentItemRefCollection();
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathswithPreCondition()
