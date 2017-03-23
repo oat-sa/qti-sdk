@@ -447,15 +447,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Returns an array with all possible paths for a AssessmentTest.
-     * @param asArray true to return an array, false to return an AssessmentItemRefCollection.
-     * @return array of array of AssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray.
-     * @throws Exception if branching is recursive of backward.
+     * Returns an array with all possible paths for an AssessmentTest.
+     *
+     * Create the list with all possible paths that a student can take through an AssessmentTest.
+     * It first gets the base path, with all items. Then it creates new shorter paths, that can
+     * been taken with branches targeting further forward. Then it creates the new path possible
+     * with items that are not mandatory due to the precondition.
+     *
+     * @param Boolean $asArray true to return an array, false to return an qtism\data\AssessmentItemRefCollection.
+     * @return array of array of qtism\data\AssessmentItemRef | array of qtism\data\AssessmentItemRefCollection
+     * @throws \Exception if branching is recursive of backward.
      */
 
     public function getPossiblePaths($asArray)
     {
-        $paths = array();
+        $paths = [];
         $items = new AssessmentItemRefCollection($this->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
         $paths[] = $items;
         $identifier_list = $items->getKeys(); // list of the identifiers
@@ -463,12 +469,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         // Array associating to each item the possible successor item
 
-        $succs = array();
+        $succs = [];
 
         // Association of the successor item to the next one
 
         for ($i = 0; $i < count($items); $i++) {
-            $succs[$identifier_list[$i]] = array();
+            $succs[$identifier_list[$i]] = [];
 
             if ($i < (count($items) - 1)) {
                 $succs[$identifier_list[$i]][] = $items[$identifier_list[$i + 1]];
@@ -512,11 +518,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         if (($key_current_item != null) and ($key_target_item != null)) {
 
                             if ($key_current_item == $key_target_item) {
-                                throw new \Exception("Recursive branching is not allowed."); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
+                                throw new BranchRuleTargetException("Recursive branching is not allowed."); 
                             }
 
                             if ($id_to_index[$key_current_item] > $id_to_index[$key_target_item]) {
-                                throw new \Exception("Branching backward is not allowed.");
+                                throw new BranchRuleTargetException("Branching backward is not allowed.");
                             }
 
                             if ($id_to_index[$key_current_item] < $id_to_index[$key_target_item]) {
@@ -556,7 +562,8 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             if (count($item->getComponentsByClassName("preCondition")) > 0) {
             // if (!empty($item->getComponentsByClassName("preCondition"))) {
 
-                // for each existing, duplicate it and remove the current item (because it may not exist with the precondition)
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
 
                 foreach ($paths as $path) {
 
@@ -587,19 +594,24 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
     /**
      * Returns an array with all shortest possible paths for a AssessmentTest.
-     * @return array of Paths An array with all shortest possible paths for this AssessmentTest.
+     *
+     * Iterates on all possible paths and when it finds a path shorter than the minimum length,
+     * it is stored as the new shortest path.
+     *
+     * @return array of qtism\data\AssessmentItemRefCollection An array with all shortest possible paths
+     * for this AssessmentTest.
      */
 
     public function getShortestPaths()
     {
         $paths = $this->getPossiblePaths(false);
         $min_count = PHP_INT_MAX;
-        $min_paths = array();
+        $min_paths = [];
 
         foreach ($paths as $path) {
             if (sizeof($path) < $min_count) {
                 $min_count = sizeof($path);
-                $min_paths = array();
+                $min_paths = [];
             }
 
             if (sizeof($path) <= $min_count) {
@@ -613,19 +625,24 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * Returns an array with all longest possible paths for a AssessmentTest.
      * Currently it's the path with all items that will always be returned.
-     * @return array of Paths An array with all longest possible paths for this AssessmentTest.
+     *
+     * Iterates on all possible paths and when it finds a path longer than the maximum length,
+     * it is stored as the new longest path.
+     *
+     * @return array of qtism\data\AssessmentItemRefCollection An array with all longest possible paths
+     * for this AssessmentTest.
      */
 
     public function getLongestPaths()
     {
         $paths = $this->getPossiblePaths(false);
         $max_count = 0;
-        $max_paths = array();
+        $max_paths = [];
 
         foreach ($paths as $path) {
             if (sizeof($path) > $max_count) {
                 $max_count = sizeof($path);
-                $max_paths = array();
+                $max_paths = [];
             }
 
             if (sizeof($path) >= $max_count) {

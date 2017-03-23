@@ -10,6 +10,7 @@ use qtism\data\TestPartCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\TimeLimits;
+use qtism\data\BranchRuleTargetException;
 use qtism\data\NavigationMode;
 use qtism\data\AssessmentItemRefCollection;
 
@@ -129,8 +130,8 @@ class AssessmentTestTest extends QtiSmTestCase
         $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
         $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
 
-        $possible_paths = array();
-        $possible_paths2 = array();
+        $possible_paths = [];
+        $possible_paths2 = [];
 
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq4, $itemq5, $itemq6]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3, $itemq4, $itemq5, $itemq6]);
@@ -151,7 +152,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/assessmentwithnoitem.xml');
         $test = $doc->getDocumentComponent();
 
-        $possible_paths = array();
+        $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
@@ -170,7 +171,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $itemq4 = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
         $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
 
-        $possible_paths = array();
+        $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq4, $itemq5]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3, $itemq4, $itemq5]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq5]);
@@ -192,7 +193,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
         $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
 
-        $possible_paths = array();
+        $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3]);
 
@@ -203,11 +204,7 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testRecursiveBranching()
     {
-        $this->setExpectedException(
-            '\\Exception',
-            "Recursive branching is not allowed."
-        );
-
+        $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingrecursive.xml');
         $test = $doc->getDocumentComponent();
@@ -216,11 +213,7 @@ class AssessmentTestTest extends QtiSmTestCase
 
     public function testBackwardBranching()
     {
-        $this->setExpectedException(
-            '\\Exception',
-            "Branching backward is not allowed."
-        );
-
+        $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingbackward.xml');
         $test = $doc->getDocumentComponent();
@@ -234,7 +227,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
         $test = $doc->getDocumentComponent();
 
-        $shortest_paths = array();
+        $shortest_paths = [];
         $path = new AssessmentItemRefCollection();
 
         $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
@@ -251,7 +244,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/multipleshortpaths.xml');
         $test = $doc->getDocumentComponent();
 
-        $shortest_paths = array();
+        $shortest_paths = [];
         $path1 = new AssessmentItemRefCollection();
         $path2 = new AssessmentItemRefCollection();
 
@@ -275,7 +268,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
         $test = $doc->getDocumentComponent();
 
-        $longest_paths = array();
+        $longest_paths = [];
         $path = new AssessmentItemRefCollection();
 
         $path[] = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
