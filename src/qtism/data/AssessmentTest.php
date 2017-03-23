@@ -447,9 +447,10 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Returns an array with all possible paths possible for a AssessmentTest.
-     * @param asArray true to return an array, false to return an AssessmentItemRefCollection
-     * @return array of array of AssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray
+     * Returns an array with all possible paths for a AssessmentTest.
+     * @param asArray true to return an array, false to return an AssessmentItemRefCollection.
+     * @return array of array of AssessmentItemRef or an array AssessmentItemRefCollection, depending on $asArray.
+     * @throws Exception if branching is recursive of backward.
      */
 
     public function getPossiblePaths($asArray)
@@ -477,7 +478,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         // Checking existing branches to add other possible previous items
 
         foreach ($items as $item) {
-            
+
             foreach ($item->getComponentsByClassName("branchRule") as $branch) {
 
                 $item_target = $this->getComponentByIdentifier($branch->getTarget());
@@ -491,69 +492,57 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     foreach ($paths as $path) {
 
                         // get the index of the current item and of the target item
-                        
+
                         $key_current_item = null;
                         $key_target_item = null;
 
                         $pathkeys = $path->getKeys();
 
-                        for ($j = 0; $j < count($path); $j++) {
-
-                            if ($item->getIdentifier() == $path[$pathkeys[$j]]) {
-                                $key_current_item = $item->getIdentifier();
-                            }
-
-                            if ($branch->getTarget() == $path[$pathkeys[$j]]) {
-                                $key_target_item = $branch->getTarget();
-                            }
-                        }
-
-                        /* Ne fonctionne pas...
-                           foreach ($path as $identifier => $item_from_path) {
+                        foreach ($pathkeys as $identifier) {
 
                             if ($item->getIdentifier() == $identifier) {
                                 $key_current_item = $item->getIdentifier();
                             }
-                            
+
                             if ($branch->getTarget() == $identifier) {
                                 $key_target_item = $branch->getTarget();
                             }
-                        }*/
-
-                        if (($key_current_item == null) or ($key_target_item == null)) {
-                            break; // no new path to add
                         }
 
-                        if ($key_current_item == $key_target_item) {
-                            throw new \Exception("Recursive branching is not allowed."); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
-                        }
+                        if (($key_current_item != null) and ($key_target_item != null)) {
 
-                        if ($id_to_index[$key_current_item] > $id_to_index[$key_target_item]) {
-                            throw new \Exception("Branching backward is not allowed.");
-                        }
-
-                        if ($id_to_index[$key_current_item] < $id_to_index[$key_target_item]) {
-
-                            $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
-                            $delete_keys = false;
-
-                            // Delete from new path everything between $key_current_item and $key_target_item
-
-                            for ($i_path = 0;$i_path < count($path);$i_path++) {
-                                if ($path[$pathkeys[$i_path]] == $key_target_item) {
-                                    break;
-                                }
-
-                                if ($delete_keys) {
-                                    unset($new_path[$pathkeys[$i_path]]);
-                                }
-
-                                if ($path[$pathkeys[$i_path]] == $key_current_item) {
-                                    $delete_keys = true;
-                                }
+                            if ($key_current_item == $key_target_item) {
+                                throw new \Exception("Recursive branching is not allowed."); //http://stackoverflow.com/questions/22698093/disable-warning-the-thrown-object-must-be-an-instance-of-the-exception
                             }
 
-                            $paths[] = $new_path;
+                            if ($id_to_index[$key_current_item] > $id_to_index[$key_target_item]) {
+                                throw new \Exception("Branching backward is not allowed.");
+                            }
+
+                            if ($id_to_index[$key_current_item] < $id_to_index[$key_target_item]) {
+
+                                $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+                                $delete_keys = false;
+
+                                // Delete from new path everything between $key_current_item and $key_target_item
+
+                                foreach ($pathkeys as $identifier) {
+
+                                    if ($identifier == $key_target_item) {
+                                        break;
+                                    }
+
+                                    if ($delete_keys) {
+                                        unset($new_path[$identifier]);
+                                    }
+
+                                    if ($path[$identifier] == $key_current_item) {
+                                        $delete_keys = true;
+                                    }
+                                }
+
+                                $paths[] = $new_path;
+                            }
                         }
                     }
                 }
@@ -565,6 +554,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         foreach ($items as $item) {
 
             if (count($item->getComponentsByClassName("preCondition")) > 0) {
+            // if (!empty($item->getComponentsByClassName("preCondition"))) {
 
                 // for each existing, duplicate it and remove the current item (because it may not exist with the precondition)
 
@@ -575,7 +565,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         unset($new_path[$item->getIdentifier()]);
                     }
 
-                    // Check if new path does't already exists
+                    // Check if new path does't already exists in paths
 
                     if (!in_array($new_path, $paths)) {
                         $paths[] = $new_path;
@@ -596,8 +586,8 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Returns an array with all shortest possible paths possible for a AssessmentTest.
-     * @return array of Paths
+     * Returns an array with all shortest possible paths for a AssessmentTest.
+     * @return array of Paths An array with all shortest possible paths for this AssessmentTest.
      */
 
     public function getShortestPaths()
@@ -621,8 +611,9 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-     * Returns an array with all longest possible paths possible for a AssessmentTest.
-     * @return array of Paths
+     * Returns an array with all longest possible paths for a AssessmentTest.
+     * Currently it's the path with all items that will always be returned.
+     * @return array of Paths An array with all longest possible paths for this AssessmentTest.
      */
 
     public function getLongestPaths()
