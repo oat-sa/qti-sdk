@@ -447,6 +447,184 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
+     * @TODO DOC
+     *
+     * @param $component
+     * @param $cp_index
+     * @param $components
+     */
+
+    public static function getFirstItem($component, $cp_index, $components)
+    {
+        // @TODO tests
+
+        switch ($component->getQtiClassName()) {
+            case "assessmentItemRef":
+                return $component;
+                break;
+
+            case "assessmentSection":
+                $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // @todo PROBLEM WITH EMPTY SUBSECTION
+
+                if (count($items) == 0) {
+                    // Subsection...
+
+                    // @TODO
+                }
+                else {
+                    return $items[0];
+                }
+                break;
+
+            case "testPart":
+                $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // @todo PROBLEM WITH EMPTY TESTPART
+
+                if (count($items) == 0) {
+                    // Go to next testpart
+
+                    // @TODO
+                }
+                else {
+                    return $items[0];
+                }
+                break;
+
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @TODO DOC
+     *
+     * @param $component
+     * @param $cp_index
+     * @param $components
+     */
+
+    public static function getLastItem($component, $cp_index, $components)
+    {
+        // @TODO tests
+
+        switch ($component->getQtiClassName()) {
+            case "assessmentItemRef":
+                return $component;
+                break;
+
+            case "assessmentSection":
+                $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // @todo PROBLEM WITH EMPTY SUBSECTION
+
+                if (count($items) == 0) {
+                    // Subsection...
+
+                    // @TODO
+                }
+                else {
+                    return $items[count($items) - 1];
+                }
+                break;
+
+            case "testPart":
+                $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // @todo PROBLEM WITH EMPTY TESTPART
+
+                if (count($items) == 0) {
+                    // Go to previous testpart
+
+                    // @TODO
+                }
+                else {
+                    return $items[count($items) - 1];
+                }
+                break;
+
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @Todo DOC
+     *
+     * @param $paths
+     * @param $prev_item
+     * @param $target_item
+     * @param $itemid_to_index
+     * @return null
+     */
+
+    private function addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index)
+    {
+        $new_paths = [];
+
+        foreach ($paths as $path) {
+
+            // get the index of the current item and of the target item
+
+            $key_current_item = null;
+            $key_target_item = null;
+
+            $pathkeys = $path->getKeys();
+
+            foreach ($pathkeys as $identifier) {
+
+                if ($prev_item->getIdentifier() == $identifier) {
+                    $key_current_item = $prev_item->getIdentifier();
+                }
+
+                if ($target_item->getIdentifier() == $identifier) {
+                    $key_target_item = $target_item->getIdentifier();
+                }
+            }
+
+            if (($key_current_item != null) and ($key_target_item != null)) {
+
+                if ($key_current_item == $key_target_item) {
+                    throw new BranchRuleTargetException("Recursive branching is not allowed.");
+                }
+
+                if ($itemid_to_index[$key_current_item] > $itemid_to_index[$key_target_item]) {
+                    throw new BranchRuleTargetException("Branching backward is not allowed.");
+                }
+
+                if ($itemid_to_index[$key_current_item] < $itemid_to_index[$key_target_item]) {
+
+                    $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+                    $delete_keys = false;
+
+                    // Delete from new path everything between $key_current_item and $key_target_item
+
+                    foreach ($pathkeys as $identifier) {
+
+                        if ($identifier == $key_target_item) {
+                            break;
+                        }
+
+                        if ($delete_keys) {
+                            unset($new_path[$identifier]);
+                        }
+
+                        if ($path[$identifier] == $key_current_item) {
+                            $delete_keys = true;
+                        }
+                    }
+
+                    $new_paths[] = $new_path;
+                }
+            }
+        }
+        
+        return $new_paths;
+    }
+
+    /**
      * Returns an array with all possible paths for an AssessmentTest.
      *
      * Create the list with all possible paths that a student can take through an AssessmentTest.
@@ -463,109 +641,201 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     {
         $paths = [];
         $items = new AssessmentItemRefCollection($this->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
+        $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($this->getComponentsByClassName("testPart")->getArrayCopy());
+            
         $paths[] = $items;
-        $identifier_list = $items->getKeys(); // list of the identifiers
-        $id_to_index = array_flip($identifier_list); // get the index of the item with its ID, needed to order branches
+        
+        $itemid_list = $items->getKeys(); // list of the identifiers
+        $itemid_to_index = array_flip($itemid_list); // get the index of the item with its ID, needed to order branches
+        $sectid_list = $sections->getKeys();
+        $tpid_list = $testparts->getKeys();
 
-        // Array associating to each item the possible successor item
+        // Array associating to each item the possible successor item, the same for the sections and parts
 
-        $succs = [];
+        $succs_item = [];
 
         // Association of the successor item to the next one
 
         for ($i = 0; $i < count($items); $i++) {
-            $succs[$identifier_list[$i]] = [];
+            $succs_item[$itemid_list[$i]] = [];
 
             if ($i < (count($items) - 1)) {
-                $succs[$identifier_list[$i]][] = $items[$identifier_list[$i + 1]];
+                $succs_item[$itemid_list[$i]][] = $items[$itemid_list[$i + 1]];
             }
         }
 
         // Checking existing branches to add other possible previous items
 
-        foreach ($items as $item) {
+        foreach ($testparts as $test) {
 
-            foreach ($item->getComponentsByClassName("branchRule") as $branch) {
+            foreach ($test->getBranchRules() as $branch) {
 
-                $item_target = $this->getComponentByIdentifier($branch->getTarget());
+                // Target analysis
 
-                if (!in_array($item_target, $succs[$item->getIdentifier()])) {
-                    $target = $this->getComponentByIdentifier($branch->getTarget());
-                    $succs[$item->getIdentifier()][] = $target;
+                $target = $this->getComponentByIdentifier($branch->getTarget());
+
+                if ($target == null) {
+                    throw new BranchRuleTargetException("Target '" . $branch->getTarget() ."' doesn't exist.");
+                }
+
+                $target_item = AssessmentTest::getFirstItem($target, $branch->getTarget(), $items);
+                $prev_item = AssessmentTest::getLastItem($test, $test->getIdentifier(), $items);
+
+                if (!in_array($target_item, $succs_item[$prev_item->getIdentifier()])) {
+                    $succs_item[$prev_item->getIdentifier()][] = $target_item;
 
                     // new successor possible => new paths possible
 
-                    foreach ($paths as $path) {
-
-                        // get the index of the current item and of the target item
-
-                        $key_current_item = null;
-                        $key_target_item = null;
-
-                        $pathkeys = $path->getKeys();
-
-                        foreach ($pathkeys as $identifier) {
-
-                            if ($item->getIdentifier() == $identifier) {
-                                $key_current_item = $item->getIdentifier();
-                            }
-
-                            if ($branch->getTarget() == $identifier) {
-                                $key_target_item = $branch->getTarget();
-                            }
-                        }
-
-                        if (($key_current_item != null) and ($key_target_item != null)) {
-
-                            if ($key_current_item == $key_target_item) {
-                                throw new BranchRuleTargetException("Recursive branching is not allowed."); 
-                            }
-
-                            if ($id_to_index[$key_current_item] > $id_to_index[$key_target_item]) {
-                                throw new BranchRuleTargetException("Branching backward is not allowed.");
-                            }
-
-                            if ($id_to_index[$key_current_item] < $id_to_index[$key_target_item]) {
-
-                                $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
-                                $delete_keys = false;
-
-                                // Delete from new path everything between $key_current_item and $key_target_item
-
-                                foreach ($pathkeys as $identifier) {
-
-                                    if ($identifier == $key_target_item) {
-                                        break;
-                                    }
-
-                                    if ($delete_keys) {
-                                        unset($new_path[$identifier]);
-                                    }
-
-                                    if ($path[$identifier] == $key_current_item) {
-                                        $delete_keys = true;
-                                    }
-                                }
-
-                                $paths[] = $new_path;
-                            }
-                        }
+                    if ($target_item == null) {
+                        var_dump("Code reached");
+                        var_dump($branch->getTarget());
+                        var_dump($target);
                     }
+
+                    $paths = array_merge($paths, AssessmentTest::addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index));
                 }
             }
         }
 
-        // Checking preConditions
+        foreach ($sections as $sect) {
+
+            foreach ($sect->getBranchRules() as $branch) {
+
+                // Target analysis
+
+                $target = $this->getComponentByIdentifier($branch->getTarget());
+
+                if ($target == null) {
+                    throw new BranchRuleTargetException("Target '" . $branch->getTarget() ."' doesn't exist.");
+                }
+
+                $target_item = AssessmentTest::getFirstItem($target, $branch->getTarget(), $items);
+                $prev_item = AssessmentTest::getLastItem($sect, $test->getIdentifier(), $items);
+
+                if (!in_array($target_item, $succs_item[$prev_item->getIdentifier()])) {
+                    $succs_item[$prev_item->getIdentifier()][] = $target_item;
+
+                    // new successor possible => new paths possible
+
+                    if ($target_item == null) {
+                        var_dump("Code reached");
+                        var_dump($branch->getTarget());
+                        var_dump($target);
+                    }
+
+                    $paths = array_merge($paths, AssessmentTest::addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index));
+                }
+            }
+        }
 
         foreach ($items as $item) {
+            
+            foreach ($item->getBranchRules() as $branch) {
 
-            if (count($item->getComponentsByClassName("preCondition")) > 0) {
-            // if (!empty($item->getComponentsByClassName("preCondition"))) {
+                // Target analysis
+
+                $target = $this->getComponentByIdentifier($branch->getTarget());
+
+                if ($target == null) {
+                    throw new BranchRuleTargetException("Target '" . $branch->getTarget() ."' doesn't exist.");
+                }
+                
+                $target_item = AssessmentTest::getFirstItem($target, $branch->getTarget(), $items);
+                $prev_item = AssessmentTest::getLastItem($item, $item->getIdentifier(), $items);
+
+                if (!in_array($target_item, $succs_item[$prev_item->getIdentifier()])) {
+                    $succs_item[$prev_item->getIdentifier()][] = $target_item;
+                
+                /*if (!in_array($target, $succs_item[$item->getIdentifier()])) {
+                    $succs_item[$item->getIdentifier()][] = $target_item;*/
+
+                    // new successor possible => new paths possible
+                    
+                    if ($target_item == null) {
+                        var_dump("Code reached");
+                        var_dump($branch->getTarget());
+                        var_dump($target);
+                    }
+
+                    $paths = array_merge($paths, AssessmentTest::addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index));
+                }
+            }
+        }
+
+        // Checking preConditions in tests, sections and itens
+
+        foreach ($testparts as $tp) {
+
+            if (count($tp->getPreConditions()) > 0) {
+
+                $tp_items = $tp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                 // for each existing, duplicate it and remove the current item
                 // (because it may not exist with the precondition)
 
                 foreach ($paths as $path) {
+
+                    $new_path = null;
+
+                    if (count(array_intersect($tp_items, $path->getArrayCopy())) == count($tp_items)) {
+                        $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                        foreach ($tp_items as $item) {
+                            unset($new_path[$item->getIdentifier()]);
+                        }
+                    }
+
+                    // Check if new path does't already exists in paths
+
+                    if (($new_path != null) and (!in_array($new_path, $paths))) {
+                        $paths[] = $new_path;
+                    }
+                }
+            }
+        }
+
+        foreach ($sections as $sect) {
+
+            if (count($sect->getPreConditions()) > 0) {
+
+                $sect_items = $sect->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
+
+                foreach ($paths as $path) {
+                    
+                    $new_path = null;
+
+                    if (count(array_intersect($sect_items, $path->getArrayCopy())) == count($sect_items)) {
+                        
+                        $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                        foreach ($sect_items as $item) {
+                            unset($new_path[$item->getIdentifier()]);
+                        }
+                    }
+
+                    // Check if new path does't already exists in paths
+
+                    if (($new_path != null) and (!in_array($new_path, $paths))) {
+                        $paths[] = $new_path;
+                    }
+                }
+            }
+        }
+
+        foreach ($items as $item) {
+
+            if (count($item->getComponentsByClassName("preCondition")) > 0) {
+
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
+
+                foreach ($paths as $path) {
+
+                    $new_path = null;
 
                     if (in_array($item, $path->getArrayCopy())) {
                         $new_path = new AssessmentItemRefCollection($path->getArrayCopy());
@@ -574,7 +844,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
                     // Check if new path does't already exists in paths
 
-                    if (!in_array($new_path, $paths)) {
+                    if (($new_path != null) and (!in_array($new_path, $paths))) {
                         $paths[] = $new_path;
                     }
                 }

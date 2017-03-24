@@ -116,6 +116,70 @@ class AssessmentTestTest extends QtiSmTestCase
         $testPart->setNavigationMode(NavigationMode::LINEAR);
         $this->assertTrue($test->isExclusivelyLinear());
     }
+
+    public function testGetFirstItem()
+    {
+        // Simple cases
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
+        $test = $doc->getDocumentComponent();
+        $items = new AssessmentItemRefCollection($test->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
+        $sections = new AssessmentSectionCollection($test->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $this->assertEquals($test->getComponentByIdentifier('Q01'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('Q01'), $items, 'Q01', "assessmentItemRef"));
+        $this->assertEquals($test->getComponentByIdentifier('Q03'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S02'), $sections, 'S02', "assessmentSection") );
+        $this->assertEquals($test->getComponentByIdentifier('Q05'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('TP02'), $testparts, 'TP02', "testPart"));
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
+        $test = $doc->getDocumentComponent();
+        $sections = new AssessmentSectionCollection($test->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $this->assertEquals($test->getComponentByIdentifier('Q05'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S04'), $sections, 'S04', "assessmentSection"));
+        $this->assertEquals($test->getComponentByIdentifier('Q03'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S03'), $sections, 'S03', "assessmentSection"));
+        $this->assertEquals($test->getComponentByIdentifier('Q01'),
+            AssessmentTest::getFirstItem($test->getComponentByIdentifier('TP01'), $testparts, 'TP01', "testPart"));
+    }
+
+    public function testGetLastItem()
+    {
+        // Simple cases
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
+        $test = $doc->getDocumentComponent();
+        $items = new AssessmentItemRefCollection($test->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
+        $sections = new AssessmentSectionCollection($test->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $this->assertEquals($test->getComponentByIdentifier('Q01'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('Q01'), $items, 'Q01', "assessmentItemRef"));
+        $this->assertEquals($test->getComponentByIdentifier('Q04'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('S02'), $sections, 'S02', "assessmentSection"));
+        $this->assertEquals($test->getComponentByIdentifier('Q08'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('TP02'), $testparts, 'TP02', "testPart"));
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
+        $test = $doc->getDocumentComponent();
+        $sections = new AssessmentSectionCollection($test->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $this->assertEquals($test->getComponentByIdentifier('Q08'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('S04'), $sections, 'S04', "assessmentSection"));
+        $this->assertEquals($test->getComponentByIdentifier('Q04'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('S03'), $sections, 'S03', "assessmentSection"));
+        $this->assertEquals($test->getComponentByIdentifier('Q08'),
+            AssessmentTest::getLastItem($test->getComponentByIdentifier('TP01'), $testparts, 'TP01', "testPart"));
+    }
     
     public function testGetPossiblePaths()
     {
@@ -154,6 +218,26 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+
+        // Test with item's branching targeting on section
+
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsecttarget.xml');
+        $test = $doc->getDocumentComponent();
+
+        $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
+        $itemq2 = $doc->getDocumentComponent()->getComponentByIdentifier('Q02');
+        $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
+        $itemq4 = $doc->getDocumentComponent()->getComponentByIdentifier('Q04');
+        $itemq5 = $doc->getDocumentComponent()->getComponentByIdentifier('Q05');
+        $itemq6 = $doc->getDocumentComponent()->getComponentByIdentifier('Q06');
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq4, $itemq5, $itemq6]);
+        $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq4, $itemq5, $itemq6]);
+
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
@@ -200,6 +284,102 @@ class AssessmentTestTest extends QtiSmTestCase
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
+    public function testPossiblePathsWitPreOnSectionsAndTPs()
+    {
+        // Case with testParts and sections
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = array();
+
+        for ($i = 1; $i <= 8; $i++) {
+            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+    }
+
+    public function testPossiblePathsWitPreOnSubSections()
+    {
+        // Case with subsections
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = array();
+
+        for ($i = 1; $i <= 8; $i++) {
+            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+    }
+
+    public function testPossiblePathWithSectsAndTPs()
+    {
+        // Testing branching on sections
+
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsections.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = array();
+
+        for ($i = 1; $i <= 7; $i++) {
+            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[6], $it[7]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+
+        // Testing branching on testparts and sections
+
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = array();
+
+        for ($i = 1; $i <= 8; $i++) {
+            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[6], $it[7], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[6], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[8]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+    }
+
     // Testing special cases
 
     public function testRecursiveBranching()
@@ -220,6 +400,14 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
+    public function testWrongTargetBranching()
+    {
+        $this->expectException(BranchRuleTargetException::class);
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingwrongtarget.xml');
+        $test = $doc->getDocumentComponent();
+        $test->getPossiblePaths(false);
+    }
 
     public function testGetShortestPaths()
     {
