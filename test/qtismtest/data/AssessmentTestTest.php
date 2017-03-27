@@ -129,11 +129,11 @@ class AssessmentTestTest extends QtiSmTestCase
         $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
 
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('Q01'), $items, 'Q01', "assessmentItemRef"));
+            $test->getFirstItem($test->getComponentByIdentifier('Q01'), 'Q01'));
         $this->assertEquals($test->getComponentByIdentifier('Q03'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S02'), $sections, 'S02', "assessmentSection") );
+            $test->getFirstItem($test->getComponentByIdentifier('S02'), 'S02'));
         $this->assertEquals($test->getComponentByIdentifier('Q05'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('TP02'), $testparts, 'TP02', "testPart"));
+            $test->getFirstItem($test->getComponentByIdentifier('TP02'), 'TP02'));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
@@ -142,11 +142,37 @@ class AssessmentTestTest extends QtiSmTestCase
         $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
 
         $this->assertEquals($test->getComponentByIdentifier('Q05'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S04'), $sections, 'S04', "assessmentSection"));
+            $test->getFirstItem($test->getComponentByIdentifier('S04'), 'S04'));
         $this->assertEquals($test->getComponentByIdentifier('Q03'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('S03'), $sections, 'S03', "assessmentSection"));
+            $test->getFirstItem($test->getComponentByIdentifier('S03'), 'S03'));
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            AssessmentTest::getFirstItem($test->getComponentByIdentifier('TP01'), $testparts, 'TP01', "testPart"));
+            $test->getFirstItem($test->getComponentByIdentifier('TP01'), 'TP01'));
+    }
+
+    public function testGetFirstItem2()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
+        $test = $doc->getDocumentComponent();
+
+        $this->assertEquals($test->getComponentByIdentifier('Q06'),
+            $test->getFirstItem($test->getComponentByIdentifier('TP03'), 'TP03'));
+
+        // Recursive subsections
+/*
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
+        $test = $doc->getDocumentComponent();
+
+        $this->assertEquals($test->getComponentByIdentifier('Q04'),
+            $test->getFirstItem($test->getComponentByIdentifier('S02'), 'S02'));
+        $this->assertEquals($test->getComponentByIdentifier('Q07'),
+            $test->getFirstItem($test->getComponentByIdentifier('S07'), 'S07'));
+        $this->assertEquals($test->getComponentByIdentifier('Q11'),
+            $test->getFirstItem($test->getComponentByIdentifier('S13'), 'S13'));
+        $this->assertEquals($test->getComponentByIdentifier('Q99'),
+            $test->getFirstItem($test->getComponentByIdentifier('S99'), 'S99'));*/
+
     }
 
     public function testGetLastItem()
@@ -161,11 +187,11 @@ class AssessmentTestTest extends QtiSmTestCase
         $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
 
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('Q01'), $items, 'Q01', "assessmentItemRef"));
+            $test->getLastItem($test->getComponentByIdentifier('Q01'), 'Q01'));
         $this->assertEquals($test->getComponentByIdentifier('Q04'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('S02'), $sections, 'S02', "assessmentSection"));
+            $test->getLastItem($test->getComponentByIdentifier('S02'), 'S02'));
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('TP02'), $testparts, 'TP02', "testPart"));
+            $test->getLastItem($test->getComponentByIdentifier('TP02'), 'TP02'));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
@@ -174,11 +200,40 @@ class AssessmentTestTest extends QtiSmTestCase
         $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
 
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('S04'), $sections, 'S04', "assessmentSection"));
+            $test->getLastItem($test->getComponentByIdentifier('S04'), 'S04'));
         $this->assertEquals($test->getComponentByIdentifier('Q04'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('S03'), $sections, 'S03', "assessmentSection"));
+            $test->getLastItem($test->getComponentByIdentifier('S03'), 'S03'));
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            AssessmentTest::getLastItem($test->getComponentByIdentifier('TP01'), $testparts, 'TP01', "testPart"));
+            $test->getLastItem($test->getComponentByIdentifier('TP01'), 'TP01'));
+    }
+
+    public function testGetLastItem2()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
+        $test = $doc->getDocumentComponent();
+
+        $testparts = new TestPartCollection($test->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $this->assertEquals($test->getComponentByIdentifier('Q05'),
+            $test->getLastItem($test->getComponentByIdentifier('TP03'), 'TP03'));
+
+        // Recursive subsections
+
+        /*
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
+        $test = $doc->getDocumentComponent();
+
+        $this->assertEquals($test->getComponentByIdentifier('Q03'),
+            $test->getLastItem($test->getComponentByIdentifier('S02'), 'S02'));
+        $this->assertEquals($test->getComponentByIdentifier('Q06'),
+            $test->getLastItem($test->getComponentByIdentifier('S07'), 'S07'));
+        $this->assertEquals($test->getComponentByIdentifier('Q10'),
+            $test->getLastItem($test->getComponentByIdentifier('S13'), 'S13'));
+        $this->assertEquals(null,
+            $test->getLastItem($test->getComponentByIdentifier('S98'), 'S98'));
+        */
     }
     
     public function testGetPossiblePaths()
@@ -358,7 +413,6 @@ class AssessmentTestTest extends QtiSmTestCase
 
         // Testing branching on testparts and sections
 
-
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
         $test = $doc->getDocumentComponent();
@@ -366,7 +420,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $it = array();
 
         for ($i = 1; $i <= 8; $i++) {
-            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+            $it[$i] = $test->getComponentByIdentifier('Q0' . $i);
         }
 
         $possible_paths = [];
@@ -380,6 +434,45 @@ class AssessmentTestTest extends QtiSmTestCase
         $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
+    public function testPossiblePathWithBranchingStartAndEnd()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend1.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = [];
+
+        for ($i = 1; $i <= 4; $i++) {
+            $it[$i] = $test->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3], $it[4]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend2.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = [];
+
+        for ($i = 1; $i <= 4; $i++) {
+            $it[$i] = $doc->getDocumentComponent()->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3], $it[4]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+    }
+
     // Testing special cases
 
     public function testRecursiveBranching()
@@ -387,6 +480,42 @@ class AssessmentTestTest extends QtiSmTestCase
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingrecursive.xml');
+        $test = $doc->getDocumentComponent();
+        $test->getPossiblePaths(false);
+    }
+
+    public function testRecursiveBranching2()
+    {
+        $this->expectException(BranchRuleTargetException::class);
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend3.xml');
+        $test = $doc->getDocumentComponent();
+        $test->getPossiblePaths(false);
+    }
+
+    public function testRecursiveBranching3()
+    {
+        $this->expectException(BranchRuleTargetException::class);
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend4.xml');
+        $test = $doc->getDocumentComponent();
+        $test->getPossiblePaths(false);
+    }
+
+    public function testRecursiveBranching4()
+    {
+        $this->expectException(BranchRuleTargetException::class);
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend5.xml');
+        $test = $doc->getDocumentComponent();
+        $test->getPossiblePaths(false);
+    }
+
+    public function testRecursiveBranching5()
+    {
+        $this->expectException(BranchRuleTargetException::class);
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend6.xml');
         $test = $doc->getDocumentComponent();
         $test->getPossiblePaths(false);
     }
@@ -407,6 +536,28 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/branchingwrongtarget.xml');
         $test = $doc->getDocumentComponent();
         $test->getPossiblePaths(false);
+    }
+
+    public function testGetPossiblePathsWithExitMentions()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/tests/branchingwithexitmentions.xml');
+        $test = $doc->getDocumentComponent();
+
+        $it = [];
+
+        for ($i = 1; $i <= 9; $i++) {
+            $it[$i] = $test->getComponentByIdentifier('Q0' . $i);
+        }
+
+        $possible_paths = [];
+        $possible_paths[] = new AssessmentItemRefCollection($it);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8], $it[9]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
+        $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8]]);
+
+        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testGetShortestPaths()

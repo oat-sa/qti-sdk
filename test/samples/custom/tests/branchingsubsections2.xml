@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S99" title="Section 99" visible="true" required="true">
+            <assessmentSection identifier="S98" title="Section 98" visible="true" required="true">
+                <assessmentItemRef identifier="Q99" href="./Q99/qti.xml"/>
+            </assessmentSection>
+        </assessmentSection>
+        <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
+            <assessmentItemRef identifier="Q01" href="./Q01/qti.xml"/>
+            <assessmentItemRef identifier="Q02" href="./Q02/qti.xml"/>
+            <assessmentItemRef identifier="Q03" href="./Q03/qti.xml"/>
+            <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
+
+            </assessmentSection>
+            <assessmentItemRef identifier="Q04" href="./Q04/qti.xml"/>
+            <assessmentItemRef identifier="Q05" href="./Q05/qti.xml"/>
+        </assessmentSection>
+    </testPart>
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP02">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S03" title="Section 03" visible="true" required="true">
+            <assessmentItemRef identifier="Q06" href="./Q06/qti.xml"/>
+        </assessmentSection>
+        <assessmentSection identifier="S04" title="Section 04" visible="true" required="true">
+            <assessmentSection identifier="S05" title="Section 05" visible="true" required="true">
+
+            </assessmentSection>
+            <assessmentSection identifier="S06" title="Section 06" visible="true" required="true">
+                <assessmentSection identifier="S07" title="Section 07" visible="true" required="true">
+
+                </assessmentSection>
+            </assessmentSection>
+            <assessmentSection identifier="S08" title="Section 08" visible="true" required="true">
+
+            </assessmentSection>
+        </assessmentSection>
+        <assessmentSection identifier="S09" title="Section 09" visible="true" required="true">
+            <assessmentItemRef identifier="Q07" href="./Q07/qti.xml"/>
+        </assessmentSection>
+    </testPart>
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP03">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S10" title="Section 10" visible="true" required="true">
+            <assessmentItemRef identifier="Q08" href="./Q08/qti.xml"/>
+            <assessmentSection identifier="S11" title="Section 11" visible="true" required="true">
+                <assessmentItemRef identifier="Q09" href="./Q09/qti.xml"/>
+                <assessmentItemRef identifier="Q10" href="./Q10/qti.xml"/>
+            </assessmentSection>
+            <assessmentSection identifier="S12" title="Section 12" visible="true" required="true">
+                <assessmentSection identifier="S13" title="Section 13" visible="true" required="true">
+
+                </assessmentSection>
+            </assessmentSection>
+            <assessmentSection identifier="S14" title="Section 14" visible="true" required="true">
+
+            </assessmentSection>
+            <assessmentSection identifier="Q15" title="Section 15" visible="true" required="true">
+                <assessmentItemRef identifier="Q11" href="./Q11/qti.xml"/>
+            </assessmentSection>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>
