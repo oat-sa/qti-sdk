@@ -5,6 +5,10 @@
                 identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
     <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S97" title="Section 97" visible="true" required="true">
+            <assessmentSection identifier="S96" title="Section 96" visible="true" required="true">
+            </assessmentSection>
+        </assessmentSection>
         <assessmentSection identifier="S99" title="Section 99" visible="true" required="true">
             <assessmentSection identifier="S98" title="Section 98" visible="true" required="true">
                 <assessmentItemRef identifier="Q99" href="./Q99/qti.xml"/>
@@ -61,6 +65,10 @@
             </assessmentSection>
             <assessmentSection identifier="Q15" title="Section 15" visible="true" required="true">
                 <assessmentItemRef identifier="Q11" href="./Q11/qti.xml"/>
+            </assessmentSection>
+        </assessmentSection>
+        <assessmentSection identifier="S95" title="Section 95" visible="true" required="true">
+            <assessmentSection identifier="S94" title="Section 94" visible="true" required="true">
             </assessmentSection>
         </assessmentSection>
     </testPart>

@@ -43,6 +43,16 @@
                     </preCondition>
                 </assessmentItemRef>
             </assessmentSection>
+            <assessmentSection identifier="S07" title="Section 07" visible="true" required="true">
+                <preCondition>
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </preCondition>
+                <assessmentSection identifier="S08" title="Section 08" visible="true" required="true">
+                </assessmentSection>
+            </assessmentSection>
         </assessmentSection>
     </testPart>
 </assessmentTest>
