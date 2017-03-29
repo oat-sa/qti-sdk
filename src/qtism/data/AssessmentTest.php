@@ -744,17 +744,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $new_paths = [];
 
         if (($prev_item == null) and ($target_item == null)) {
-            
-            // @TODO Test 
 
-            $new_paths[] = new AssessmentItemRefCollection();
+            if (!in_array(new AssessmentItemRefCollection(), $paths)) {
+                $new_paths[] = new AssessmentItemRefCollection();
+            }
 
         } else {
             if ($target_item == null) { // Branching to the end of the test
-
-                if ($itemid_to_index[$prev_item->getIdentifier()] == (count($itemid_to_index) - 1)) {
-                    throw new BranchRuleTargetException("Branching backward is not allowed.");
-                }
 
                 foreach ($paths as $path) {
 
@@ -790,16 +786,14 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                             }
                         }
 
-                        $new_paths[] = $new_path;
+                        if (!in_array($new_path, $paths)) {
+                            $new_paths[] = $new_path;
+                        }
                     }
 
                 }
             } else {
                 if ($prev_item == null) { // Branching starts at the beginning of the test
-
-                    if ($itemid_to_index[$target_item->getIdentifier()] == 0) {
-                        throw new BranchRuleTargetException("Branching backward is not allowed.");
-                    }
 
                     foreach ($paths as $path) {
 
@@ -831,7 +825,9 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                                 unset($new_path[$identifier]);
                             }
 
-                            $new_paths[] = $new_path;
+                            if (!in_array($new_path, $paths)) {
+                                $new_paths[] = $new_path;
+                            }
                         }
                     }
 
@@ -889,7 +885,9 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                                     }
                                 }
 
-                                $new_paths[] = $new_path;
+                                if (!in_array($new_path, $paths)) {
+                                    $new_paths[] = $new_path;
+                                }
                             }
                         }
                     }
@@ -996,12 +994,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
             }
         }
 
-        /*
-        
-                foreach ($testparts as $tp) {
-                    $paths = $this->PreConditionAnalysis($tp, $paths);
-                } */
-
         foreach ($sections as $sect) {
 
             if (count($sect->getPreConditions()) > 0) {
@@ -1032,16 +1024,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 }
             }
         }
-
-        /*      
-      
-              foreach ($sections as $sect) {
-                  $paths = $this->PreConditionAnalysis($sect, $paths);
-              }
-      
-              foreach ($items as $item) {
-                  $paths = $this->PreConditionAnalysis($item, $paths);
-              } */
 
         foreach ($items as $item) {
 
@@ -1091,7 +1073,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known.
      * @param $succs_item array of array of string For each AssessmentItem + the start (indexed as 0), a list of the
      * identifiers of the possible successor after the AssessmentItem. Necessary to avoid duplicating branches thus
-     * paths.
+     * paths. Argument passed by reference
      * @param $itemid_to_index array of int A hashmap with identifier as keys, int array's indexes as values. It's
      * necessary to check for backward branching.
      * 
@@ -1100,7 +1082,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
 
-    private function BranchAnalysis($branch, $component, $paths, $succs_item, $itemid_to_index)
+    private function BranchAnalysis($branch, $component, $paths, &$succs_item, $itemid_to_index)
     {
         // Special cases
 
@@ -1137,8 +1119,9 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         break;
                     }
                     
-                    if (in_array($component,
-                        $tp->getComponentsByClassName($component->getQtiClassName())->getArrayCopy())) {
+                    if ((in_array($component,
+                        $tp->getComponentsByClassName($component->getQtiClassName())->getArrayCopy())) or 
+                    ($component->getIdentifier() == $tp->getIdentifier())) {
                         $current_tp_found = true;                        
                     }
                 }
@@ -1164,20 +1147,49 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
                 $prev_item = $this->getLastItem($component);
                 $target_item = null;
-                $current_tp_found = false;
+                // $current_tp_found = false;
+                $prev_sect = null;
 
                 // Find the beginning of the next section
 
                 foreach ($sections as $sect) {
 
+                    /*
                     if ($current_tp_found) {
                         $target_item = $this->getFirstItem($sect);
                         break;
+                    }*/
+                    
+                    if (($component->getQtiClassName() == "assessmentSection") and 
+                        ($component->getIdentifier() == $sect->getIdentifier())) {
+                        // $current_tp_found = true;
+                        $prev_sect = $sect;
+                        break;
                     }
+                    else if ((($component->getQtiClassName() != "assessmentSection")) and (in_array($component,
+                        $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()))) {
+                        // $current_tp_found = true;
+                        $prev_sect = $sect;
+                        // No break to be sure that the deepest section is taken
+                    }
+                }
+                
+                // var_dump($prev_sect->getIdentifier());
+                $current_sct_found = false;
 
-                    if (in_array($component,
-                        $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy())) {
-                        $current_tp_found = true;
+                foreach ($sections as $sect) {
+
+                    // var_dump($sect->getIdentifier());
+
+                    if ($current_sct_found and (!in_array($sect, 
+                            $prev_sect->getComponentsByClassName("assessmentSection")->getArrayCopy()))) {
+                        $target_item = $this->getFirstItem($sect);
+                        // var_dump($target_item);
+                        break;
+                    }
+                    
+                    if ($sect->getIdentifier() == $prev_sect->getIdentifier()){
+                        $current_sct_found = true;
                     }
                 }
 
@@ -1186,8 +1198,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     $paths = array_merge($paths,
                         AssessmentTest::addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index));
                 } elseif (!in_array($target_item, $succs_item[$prev_item->getIdentifier()])) {
-                    $succs_item[$prev_item->getIdentifier()][] = $target_item;
-
+                    $succs_item[$prev_item->getIdentifier()][] = $target_item;                 
                     $paths = array_merge($paths,
                         AssessmentTest::addPathsWithBranches($paths, $prev_item, $target_item, $itemid_to_index));
                 }
