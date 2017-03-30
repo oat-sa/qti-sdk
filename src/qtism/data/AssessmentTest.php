@@ -1173,18 +1173,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         // No break to be sure that the deepest section is taken
                     }
                 }
-                
-                // var_dump($prev_sect->getIdentifier());
                 $current_sct_found = false;
 
                 foreach ($sections as $sect) {
 
-                    // var_dump($sect->getIdentifier());
-
                     if ($current_sct_found and (!in_array($sect, 
                             $prev_sect->getComponentsByClassName("assessmentSection")->getArrayCopy()))) {
                         $target_item = $this->getFirstItem($sect);
-                        // var_dump($target_item);
                         break;
                     }
                     
