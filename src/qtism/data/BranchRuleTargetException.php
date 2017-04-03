@@ -14,9 +14,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2017 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Tom Verhoof <tomv@taotesting.com>
  * @license GPLv2
  */
 
@@ -33,14 +33,45 @@ use \Exception;
  */
 class BranchRuleTargetException extends Exception
 {
+
+    /**
+     * The target is unknown.
+     *
+     * @var integer
+     */
+    const UNKNOWN_TARGET = 0;
+
+
+    /**
+     * The target may or will cause a recursive loop in the test.
+     *
+     * @var integer
+     */
+    const RECURSIVE_BRANCHING = 1;
+
+    /**
+     * The target may or will go to an item already passed.
+     *
+     * @var integer
+     */
+    const BACKWARD_BRANCHING = 2;
+
+    /**
+     * @var QtiComponent The AssessmentTest, AssessmentSection or Assessment ItemRef whose BranchRule caused
+     * this Exception.
+     */
+
+    private $source;
+
     /**
      * BranchRuleTargetException object.
      *
      * @param string $message A human-readable message.
      * @param integer $code A exception code (see class constants).
+     * @param QtiComponent A QtiComponent from where the Exception comes from.
      * @param \Exception $previous An eventual previous Exception object.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, $source = null, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
