@@ -124,25 +124,27 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            $test->getFirstItem($test->getComponentByIdentifier('Q01')));
+            $test->getFirstItem($test->getComponentByIdentifier('Q01'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q03'),
-            $test->getFirstItem($test->getComponentByIdentifier('S02')));
+            $test->getFirstItem($test->getComponentByIdentifier('S02'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q05'),
-            $test->getFirstItem($test->getComponentByIdentifier('TP02')));
+            $test->getFirstItem($test->getComponentByIdentifier('TP02'), $sections));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q05'),
-            $test->getFirstItem($test->getComponentByIdentifier('S04')));
+            $test->getFirstItem($test->getComponentByIdentifier('S04'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q03'),
-            $test->getFirstItem($test->getComponentByIdentifier('S03')));
+            $test->getFirstItem($test->getComponentByIdentifier('S03'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            $test->getFirstItem($test->getComponentByIdentifier('TP01')));
-        $this->assertEquals(null, $test->getFirstItem($test));
+            $test->getFirstItem($test->getComponentByIdentifier('TP01'), $sections));
+        $this->assertEquals(null, $test->getFirstItem($test, $sections));
     }
 
     public function testgetFirstItem2()
@@ -150,28 +152,30 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q06'),
-            $test->getFirstItem($test->getComponentByIdentifier('TP03')));
+            $test->getFirstItem($test->getComponentByIdentifier('TP03'), $sections));
 
         // Recursive subsections
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q04'),
-            $test->getFirstItem($test->getComponentByIdentifier('S02')));
+            $test->getFirstItem($test->getComponentByIdentifier('S02'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q07'),
-            $test->getFirstItem($test->getComponentByIdentifier('S07')));
+            $test->getFirstItem($test->getComponentByIdentifier('S07'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q07'),
-            $test->getFirstItem($test->getComponentByIdentifier('S04')));
+            $test->getFirstItem($test->getComponentByIdentifier('S04'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q11'),
-            $test->getFirstItem($test->getComponentByIdentifier('S13')));
+            $test->getFirstItem($test->getComponentByIdentifier('S13'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q99'),
-            $test->getFirstItem($test->getComponentByIdentifier('S99')));
+            $test->getFirstItem($test->getComponentByIdentifier('S99'), $sections));
         $this->assertEquals(null,
-            $test->getFirstItem($test->getComponentByIdentifier('S95')));
+            $test->getFirstItem($test->getComponentByIdentifier('S95'), $sections));
     }
 
     public function testGetLastItem()
@@ -181,25 +185,27 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q01'),
-            $test->getLastItem($test->getComponentByIdentifier('Q01')));
+            $test->getLastItem($test->getComponentByIdentifier('Q01'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q04'),
-            $test->getLastItem($test->getComponentByIdentifier('S02')));
+            $test->getLastItem($test->getComponentByIdentifier('S02'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            $test->getLastItem($test->getComponentByIdentifier('TP02')));
+            $test->getLastItem($test->getComponentByIdentifier('TP02'), $sections));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            $test->getLastItem($test->getComponentByIdentifier('S04')));
+            $test->getLastItem($test->getComponentByIdentifier('S04'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q04'),
-            $test->getLastItem($test->getComponentByIdentifier('S03')));
+            $test->getLastItem($test->getComponentByIdentifier('S03'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q08'),
-            $test->getLastItem($test->getComponentByIdentifier('TP01')));
-        $this->assertEquals(null, $test->getLastItem($test));
+            $test->getLastItem($test->getComponentByIdentifier('TP01'), $sections));
+        $this->assertEquals(null, $test->getLastItem($test, $sections));
     }
 
     public function testgetLastItem2()
@@ -207,26 +213,28 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q05'),
-            $test->getLastItem($test->getComponentByIdentifier('TP03')));
+            $test->getLastItem($test->getComponentByIdentifier('TP03'), $sections));
 
         // Recursive subsections
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
         $test = $doc->getDocumentComponent();
+        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
 
         $this->assertEquals($test->getComponentByIdentifier('Q03'),
-            $test->getLastItem($test->getComponentByIdentifier('S02')));
+            $test->getLastItem($test->getComponentByIdentifier('S02'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q06'),
-            $test->getLastItem($test->getComponentByIdentifier('S07')));
+            $test->getLastItem($test->getComponentByIdentifier('S07'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q10'),
-            $test->getLastItem($test->getComponentByIdentifier('S13')));
+            $test->getLastItem($test->getComponentByIdentifier('S13'), $sections));
         $this->assertEquals($test->getComponentByIdentifier('Q99'),
-            $test->getLastItem($test->getComponentByIdentifier('S98')));
+            $test->getLastItem($test->getComponentByIdentifier('S98'), $sections));
         $this->assertEquals(null,
-            $test->getLastItem($test->getComponentByIdentifier('S96')));
+            $test->getLastItem($test->getComponentByIdentifier('S96'), $sections));
     }
     
     public function testGetPossiblePaths()
