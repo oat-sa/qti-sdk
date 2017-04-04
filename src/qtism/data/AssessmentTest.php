@@ -446,7 +446,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
     
     /**
-     * Checks if the current session has a parent, and returns it, if any.
+     * Checks if the current section has a parent, and returns it, if any.
      * 
      * Gets the list of sections of this AssessmentTest, and checks if any has the AssessmentSection
      * set as parameter in its components. If some has, we keep the last section found (to take the
@@ -461,9 +461,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         foreach ($this->getComponentsByClassName("assessmentSection") as $key => $sect)
         {
-            if (in_array($component,
-                $sect->getComponentsByClassName("assessmentSection")->getArrayCopy())) {
-                $sectparent = $sect;
+            // 1. Optimization
+
+            if ($sect->getQtiClassName() != "assessmentItemRef") {
+                if (in_array($component,
+                    $sect->getComponentsByClassName("assessmentSection")->getArrayCopy())) {
+                    $sectparent = $sect;
+                }
             }
 
             if ($sect->getIdentifier() == $component->getIdentifier()) {
