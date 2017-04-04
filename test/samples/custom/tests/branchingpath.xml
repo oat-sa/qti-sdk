@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+				identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
+            <assessmentItemRef identifier="Q01" href="./Q01/qti.xml">
+                <!-- go to Q02 if response is identifier "B" -->
+                <branchRule target="Q02">
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                            <baseValue baseType="identifier">B</baseValue>
+                    </match>
+                </branchRule>
+                <!-- go to Q03 if response is identifier "A" -->
+                <branchRule target="Q03">
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q02" href="./Q02/qti.xml">
+                <!-- go to Q03 if response is identifier "A" -->
+                <branchRule target="Q03">
+                    <match>
+                        <variable identifier="Q02.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </branchRule>
+                <!-- go to Q04 if response is identifier "B" -->
+                <branchRule target="Q04">
+                    <match>
+                        <variable identifier="Q02.RESPONSE"/>
+                        <baseValue baseType="identifier">B</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q03" href="./Q03/qti.xml">
+                <!-- go to Q06 -->
+                <branchRule target="Q06">
+                    <match>
+                        <baseValue baseType="boolean">true</baseValue>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+
+            <assessmentItemRef identifier="Q04" href="./Q04/qti.xml"/>
+            <assessmentItemRef identifier="Q05" href="./Q05/qti.xml"/>
+            <assessmentItemRef identifier="Q06" href="./Q06/qti.xml"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

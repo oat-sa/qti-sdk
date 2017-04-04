@@ -22,6 +22,7 @@
 
 namespace qtism\data;
 
+use qtism\data\rules\BranchRule;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\common\utils\Format;
@@ -42,104 +43,104 @@ use \InvalidArgumentException;
 class AssessmentTest extends QtiComponent implements QtiIdentifiable
 {
     use QtiIdentifiableTrait;
-    
+
     /**
-	 * From IMS QTI:
-	 *
-	 * The principle identifier of the test. This identifier must have a corresponding
-	 * entry in the test's metadata. See Metadata and Usage Data for more information.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The principle identifier of the test. This identifier must have a corresponding
+     * entry in the test's metadata. See Metadata and Usage Data for more information.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $identifier;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The title of an assessmentTest is intended to enable the test to be selected outside
-	 * of any test session. Therefore, delivery engines may reveal the title to candidates
-	 * at any time, but are not required to do so.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The title of an assessmentTest is intended to enable the test to be selected outside
+     * of any test session. Therefore, delivery engines may reveal the title to candidates
+     * at any time, but are not required to do so.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $title;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool name attribute allows the tool creating the test to identify itself.
-	 * Other processing systems may use this information to interpret the content of
-	 * application specific data, such as labels on the elements of the test rubric.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool name attribute allows the tool creating the test to identify itself.
+     * Other processing systems may use this information to interpret the content of
+     * application specific data, such as labels on the elements of the test rubric.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolName = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The tool version attribute allows the tool creating the test to identify its version. This value must only be interpreted in the context of the toolName.
-	 *
-	 * @var string
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The tool version attribute allows the tool creating the test to identify its version. This value must only be interpreted in the context of the toolName.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
     private $toolVersion = '';
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Each test has an associated set of outcomes. The values of these outcomes are set by the
-	 * test's outcomeProcessing rules.
-	 *
-	 * @var \qtism\data\state\OutcomeDeclarationCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Each test has an associated set of outcomes. The values of these outcomes are set by the
+     * test's outcomeProcessing rules.
+     *
+     * @var \qtism\data\state\OutcomeDeclarationCollection
+     * @qtism-bean-property
+     */
     private $outcomeDeclarations;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Optionally controls the amount of time a candidate is allowed for the entire test.
-	 *
-	 * @var \qtism\data\TimeLimits
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Optionally controls the amount of time a candidate is allowed for the entire test.
+     *
+     * @var \qtism\data\TimeLimits
+     * @qtism-bean-property
+     */
     private $timeLimits = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Each test is divided into one or more parts which may in turn be divided into sections,
-	 * sub-sections and so on. A testPart represents a major division of the test and is used
-	 * to control the basic mode parameters that apply to all sections and sub-sections within
-	 * that part.
-	 *
-	 * @var \qtism\data\TestPartCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Each test is divided into one or more parts which may in turn be divided into sections,
+     * sub-sections and so on. A testPart represents a major division of the test and is used
+     * to control the basic mode parameters that apply to all sections and sub-sections within
+     * that part.
+     *
+     * @var \qtism\data\TestPartCollection
+     * @qtism-bean-property
+     */
     private $testParts;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * The set of rules used for calculating the values of the test outcomes.
-	 *
-	 * @var \qtism\data\processing\OutcomeProcessing
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * The set of rules used for calculating the values of the test outcomes.
+     *
+     * @var \qtism\data\processing\OutcomeProcessing
+     * @qtism-bean-property
+     */
     private $outcomeProcessing = null;
 
     /**
-	 * From IMS QTI:
-	 *
-	 * Contains the test-level feedback controlled by the test outcomes.
-	 *
-	 * @var \qtism\data\TestFeedbackCollection
-	 * @qtism-bean-property
-	 */
+     * From IMS QTI:
+     *
+     * Contains the test-level feedback controlled by the test outcomes.
+     *
+     * @var \qtism\data\TestFeedbackCollection
+     * @qtism-bean-property
+     */
     private $testFeedbacks;
 
     public function __construct($identifier, $title, TestPartCollection $testParts = null)
@@ -154,21 +155,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the identifier of the AssessmentTest.
-	 *
-	 * @return string A QTI Identifier.
-	 */
+     * Get the identifier of the AssessmentTest.
+     *
+     * @return string A QTI Identifier.
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
-	 * Set the identifier of the AssessmentTest.
-	 *
-	 * @param string $identifier A QTI Identifier.
-	 * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
-	 */
+     * Set the identifier of the AssessmentTest.
+     *
+     * @param string $identifier A QTI Identifier.
+     * @throws \InvalidArgumentException If $identifier is not a valid QTI Identifier.
+     */
     public function setIdentifier($identifier)
     {
         if (Format::isIdentifier($identifier, false)) {
@@ -182,21 +183,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the title of the AssessmentTest.
-	 *
-	 * @return string A title.
-	 */
+     * Get the title of the AssessmentTest.
+     *
+     * @return string A title.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
     /**
-	 * Set the title of the AssessmentTest.
-	 *
-	 * @param string $title A title.
-	 * @throws \InvalidArgumentException If $title is not a string.
-	 */
+     * Set the title of the AssessmentTest.
+     *
+     * @param string $title A title.
+     * @throws \InvalidArgumentException If $title is not a string.
+     */
     public function setTitle($title)
     {
         if (gettype($title) === 'string') {
@@ -208,22 +209,22 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the name of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if not specfied.
-	 *
-	 * @return string A tool name or empty string if not specified.
-	 */
+     * Get the name of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if not specfied.
+     *
+     * @return string A tool name or empty string if not specified.
+     */
     public function getToolName()
     {
         return $this->toolName;
     }
 
     /**
-	 * Set the name of the tool that was used to author the AssessmentTest.
-	 *
-	 * @param string $toolName A tool name.
-	 * @throws \InvalidArgumentException If $toolName is not a string.
-	 */
+     * Set the name of the tool that was used to author the AssessmentTest.
+     *
+     * @param string $toolName A tool name.
+     * @throws \InvalidArgumentException If $toolName is not a string.
+     */
     public function setToolName($toolName)
     {
         if (gettype($toolName) === 'string') {
@@ -235,23 +236,23 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get the version of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if it was not specified.
-	 *
-	 * @return string A tool version.
-	 */
+     * Get the version of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if it was not specified.
+     *
+     * @return string A tool version.
+     */
     public function getToolVersion()
     {
         return $this->toolVersion;
     }
 
     /**
-	 * Set the version of the tool that was used to author the AssessmentTest. Returns an
-	 * empty string if it was not specified.
-	 *
-	 * @param string $toolVersion A tool version.
-	 * @throws \InvalidArgumentException If $toolVersion is not a string.
-	 */
+     * Set the version of the tool that was used to author the AssessmentTest. Returns an
+     * empty string if it was not specified.
+     *
+     * @param string $toolVersion A tool version.
+     * @throws \InvalidArgumentException If $toolVersion is not a string.
+     */
     public function setToolVersion($toolVersion)
     {
         if (gettype($toolVersion) === 'string') {
@@ -263,134 +264,134 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Get a collection of OutcomeDeclaration objects bound to the AssessmentTest.
-	 *
-	 * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
-	 */
+     * Get a collection of OutcomeDeclaration objects bound to the AssessmentTest.
+     *
+     * @return \qtism\data\state\OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
+     */
     public function getOutcomeDeclarations()
     {
         return $this->outcomeDeclarations;
     }
 
     /**
-	 * Set a collection of OutcomeDeclaration objects bound to the AssessmentTest.
-	 *
-	 * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
-	 */
+     * Set a collection of OutcomeDeclaration objects bound to the AssessmentTest.
+     *
+     * @param \qtism\data\state\OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
+     */
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
 
     /**
-	 * Get the time limits of this AssessmentTest. Returns null if not specified.
-	 *
-	 * @return \qtism\data\TimeLimits A TimeLimits object or null value if not specified.
-	 */
+     * Get the time limits of this AssessmentTest. Returns null if not specified.
+     *
+     * @return \qtism\data\TimeLimits A TimeLimits object or null value if not specified.
+     */
     public function getTimeLimits()
     {
         return $this->timeLimits;
     }
 
     /**
-	 * Set the time limits of this AssessmentTest.
-	 *
-	 * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
-	 */
+     * Set the time limits of this AssessmentTest.
+     *
+     * @param \qtism\data\TimeLimits $timeLimits A TimeLimits object.
+     */
     public function setTimeLimits(TimeLimits $timeLimits = null)
     {
         $this->timeLimits = $timeLimits;
     }
 
     /**
-	 * Get the test parts that form the AssessmentTest.
-	 *
-	 * @return \qtism\data\TestPartCollection A collection of TestPart objects.
-	 */
+     * Get the test parts that form the AssessmentTest.
+     *
+     * @return \qtism\data\TestPartCollection A collection of TestPart objects.
+     */
     public function getTestParts()
     {
         return $this->testParts;
     }
 
     /**
-	 * Set the test parts that form the AssessmentTest.
-	 *
-	 * @param \qtism\data\TestPartCollection $testParts A collection of TestPart objects.
-	 */
+     * Set the test parts that form the AssessmentTest.
+     *
+     * @param \qtism\data\TestPartCollection $testParts A collection of TestPart objects.
+     */
     public function setTestParts(TestPartCollection $testParts)
     {
         $this->testParts = $testParts;
     }
 
     /**
-	 * Get the OutcomeProcessing of the AssessmentTest. Returns null if it was not
-	 * specified.
-	 *
-	 * @return \qtism\data\processing\OutcomeProcessing An OutcomeProcessing object or null if not specified.
-	 */
+     * Get the OutcomeProcessing of the AssessmentTest. Returns null if it was not
+     * specified.
+     *
+     * @return \qtism\data\processing\OutcomeProcessing An OutcomeProcessing object or null if not specified.
+     */
     public function getOutcomeProcessing()
     {
         return $this->outcomeProcessing;
     }
 
     /**
-	 * Set the OutcomeProcessing of the AssessmentTest.
-	 *
-	 * @param \qtism\data\processing\OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
-	 */
+     * Set the OutcomeProcessing of the AssessmentTest.
+     *
+     * @param \qtism\data\processing\OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
+     */
     public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null)
     {
         $this->outcomeProcessing = $outcomeProcessing;
     }
 
     /**
-	 * Whether the AssessmentTest holds an OutcomeProcessing object.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest holds an OutcomeProcessing object.
+     *
+     * @return boolean
+     */
     public function hasOutcomeProcessing()
     {
         return is_null($this->getOutcomeProcessing()) !== true;
     }
 
     /**
-	 * Get the feedbacks associated to the AssessmentTest.
-	 *
-	 * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
-	 */
+     * Get the feedbacks associated to the AssessmentTest.
+     *
+     * @return \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
+     */
     public function getTestFeedbacks()
     {
         return $this->testFeedbacks;
     }
 
     /**
-	 * Set the feedbacks associated to the AssessmentTest.
-	 *
-	 * @param \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
-	 */
+     * Set the feedbacks associated to the AssessmentTest.
+     *
+     * @param \qtism\data\TestFeedbackCollection A collection of TestFeedback objects.
+     */
     public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks)
     {
         $this->testFeedbacks = $testFeedbacks;
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getQtiClassName()
-	 */
+     * @see \qtism\data\QtiComponent::getQtiClassName()
+     */
     public function getQtiClassName()
     {
         return 'assessmentTest';
     }
 
     /**
-	 * @see \qtism\data\QtiComponent::getComponents()
-	 */
+     * @see \qtism\data\QtiComponent::getComponents()
+     */
     public function getComponents()
     {
         $comp = array_merge(
-                    $this->getOutcomeDeclarations()->getArrayCopy(),
-                    $this->getTestFeedbacks()->getArrayCopy(),
-                    $this->getTestParts()->getArrayCopy()
-                );
+            $this->getOutcomeDeclarations()->getArrayCopy(),
+            $this->getTestFeedbacks()->getArrayCopy(),
+            $this->getTestParts()->getArrayCopy()
+        );
 
         if ($this->getOutcomeProcessing() !== null) {
             $comp[] = $this->getOutcomeProcessing();
@@ -404,11 +405,11 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
-	 * the result will be false.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest is exclusively linear. Be carefull, if the test has no test part,
+     * the result will be false.
+     *
+     * @return boolean
+     */
     public function isExclusivelyLinear()
     {
         $testParts = $this->getTestParts();
@@ -430,17 +431,840 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     }
 
     /**
-	 * Whether the AssessmentTest as a TimeLimits component bound to it.
-	 *
-	 * @return boolean
-	 */
+     * Whether the AssessmentTest as a TimeLimits component bound to it.
+     *
+     * @return boolean
+     */
     public function hasTimeLimits()
     {
         return $this->getTimeLimits() !== null;
     }
-    
+
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());
+    }
+    
+    /**
+     * Checks if the current session has a parent, and returns it, if any.
+     * 
+     * Gets the list of sections of this AssessmentTest, and checks if any has the AssessmentSection
+     * set as parameter in its components. If some has, we keep the last section found (to take the
+     * closest parent).
+     * 
+     * @param $component AssessmentSection The section from which we want to find the parent.
+     * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
+     */
+    private function checkRecursion($component)
+    {
+        $sectparent = null;
+
+        foreach ($this->getComponentsByClassName("assessmentSection") as $key => $sect)
+        {
+            if (in_array($component,
+                $sect->getComponentsByClassName("assessmentSection")->getArrayCopy())) {
+                $sectparent = $sect;
+            }
+
+            if ($sect->getIdentifier() == $component->getIdentifier()) {
+                break;
+            }
+        }
+
+        return $sectparent;
+    }
+
+    /**
+     * Returns the first AssessmentItem that will be prompted if a branch targets the
+     * QtiComponent set as parameter.
+     *
+     * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
+     * find the firstItem from another QtiComponent : this is then done iteratively.
+     * 
+     * @param $component \qtism\data\QtiComponent The QtiComponent targeted by a branch.
+     * @return \qtism\data\AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
+     * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
+     * has been reached.
+     */
+    public function getFirstItem($component)
+    {
+        $currentCmp = $component;
+        $visitedNodes = [];
+        
+        while (true) {
+            
+            $components = $this->getComponentsByClassName($currentCmp->getQtiClassName());
+            $visitedNodes[] = $currentCmp->getIdentifier();
+
+            switch ($currentCmp->getQtiClassName()) {
+                case "assessmentItemRef":
+                    return $currentCmp;
+                    break;
+
+                case "assessmentSection":
+                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                    if (count($items) == 0) {
+
+                        // Check for recursion
+                        
+                        $sectparent = $this->checkRecursion($currentCmp);
+
+                        if ($sectparent != null)
+                        {
+                            $nextSectpart = null;
+                            $currentFound = false;
+
+                            foreach ($sectparent->getSectionParts() as $key => $scpt)
+                            {
+                                if ($currentFound) {
+                                    $nextSectpart = $scpt;
+                                    break;
+                                }
+
+                                if ($scpt == $currentCmp) {
+                                    $currentFound = true;
+                                }
+                            }
+
+                            if ($nextSectpart == null) {  // Check end of file or at a higher level
+                                $currentCmp = $sectparent;
+                            } else { // Recursive part
+                                $currentCmp = $nextSectpart;
+                            }
+                        }
+                        else { // No recursion
+
+                            $nextSect = null;
+                            $keyFound = null;
+
+                            foreach ($components as $sect) {
+
+                                if (($keyFound) and (!in_array($sect->getIdentifier(), $visitedNodes))) {
+                                    $nextSect = $sect;
+                                    break;
+                                }
+
+                                if ($sect->getIdentifier() == $currentCmp->getIdentifier()) {
+                                    $keyFound = true;
+                                }
+                            }
+
+                            if ($nextSect == null) {
+                                return null;
+                            } else {
+                                $currentCmp = $nextSect;
+                            }
+                        }
+                    } else {
+                        return $items[0];
+                    }
+                    break;
+
+                case "testPart":
+                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                    if (count($items) == 0) {
+
+                        // First item of the next testpart
+
+                        $nextTest = null;
+                        $keyFound = null;
+
+                        foreach ($components as $test) {
+
+                            if ($keyFound) {
+                                $nextTest = $test;
+                                break;
+                            }
+
+                            if ($test->getIdentifier() == $currentCmp->getIdentifier()) {
+                                $keyFound = true;
+                            }
+                        }
+
+                        if ($nextTest != null) {
+                            $currentCmp = $nextTest;
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return $items[0];
+                    }
+                    break;
+
+                default:
+                    return null;
+            }
+            
+        } 
+    }
+
+    /**
+     * Returns the last AssessmentItem that will be prompted before a BranchRule of the QtiComponent set as parameter
+     * will be taken.
+     *
+     * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
+     * find the lastItem from another QtiComponent : this is then done iteratively.
+     *
+     * @param $component \qtism\data\QtiComponent The QtiComponent with a BranchRule.
+     * @return \qtism\data\AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
+     * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
+     * test has been reached.
+     */
+    public function getLastItem($component)
+    {
+        $currentCmp = $component;
+
+        while (true)
+        {
+            $components = $this->getComponentsByClassName($currentCmp->getQtiClassName())->getArrayCopy();
+
+            switch ($currentCmp->getQtiClassName()) {
+                case "assessmentItemRef":
+                    return $currentCmp;
+                    break;
+
+                case "assessmentSection":
+                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                    if (count($items) == 0) {
+
+                        // Check for recursion
+
+                        $sectparent = $this->checkRecursion($currentCmp, $currentCmp->getIdentifier());
+
+                        if ($sectparent != null) {
+                            $prevSectPart = null;
+
+                            foreach ($sectparent->getSectionParts() as $key => $scpt) {
+                                if ($scpt == $currentCmp) {
+                                    break;
+                                }
+
+                                $prevSectPart = $scpt;
+                            }
+
+                            if ($prevSectPart == null) 
+                            {
+                                $currentCmp = $sectparent;
+                            } else {
+                                $currentCmp = $prevSectPart;
+                            }
+                        }
+                        else {
+
+                            // No recursion
+                            $prevSect = null;
+                            $keyFound = null;
+
+                            foreach ($components as $sect) {
+
+                                if ($sect->getIdentifier() == $currentCmp->getIdentifier()) {
+                                    break;
+                                } else {
+                                    $prevSect = $sect;
+                                }
+                            }
+
+                            if ($prevSect == null) {
+                                return null;
+                            } else {
+                                $currentCmp = $prevSect;
+                            }
+                        }
+                    } else { // Case with sub items
+                        return $items[count($items) - 1];
+                    }
+                    break;
+
+                case "testPart":
+                    $items = $currentCmp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                    if (count($items) == 0) {
+
+                        // First item of the next testpart
+
+                        $prevTest = null;
+                        $keyFound = null;
+
+                        foreach ($components as $test) {
+
+                            if ($test->getIdentifier() == $currentCmp->getIdentifier()) {
+                                break;
+                            } else {
+                                $prevTest = $test;
+                            }
+                        }
+
+                        if ($prevTest != null) {
+                            $currentCmp = $prevTest;
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return $items[count($items) - 1];
+                    }
+                    break;
+
+                default:
+                    return null;
+            }
+        }
+    }
+
+    /**
+     * Finds the new paths available with a branch. The branch must already have been analysed.
+     *
+     * Using the prevItem and the targetItem set as parameter, this method goes through all existing paths, to check
+     * on which path a shortcut between the prevItem and the targetItem can be used : if it's the case, a new
+     * path, taking the shortcut, is created.
+     *
+     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known
+     * @param $prevItem \qtism\data\AssessmentItem the last AssessmentItem that will be prompted before the branch.
+     * @param $targetItem \qtism\data\AssessmentItem the first AssessmentItem that will be prompted after the branch.
+     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
+     * necessary to check for backward branching.
+     * @param $component QtiComponent The BranchRule's QtiComponent.
+     * @return array of \qtism\data\AssessmentItemRefCollection Returns the paths that can be added to the possible
+     * paths due to the new possibilities afforded by the branch.
+     * @throws BranchRuleTargetException if backward or recursive branching is found.
+     */
+    private function addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+    {
+        $newPaths = [];
+
+        if (($prevItem == null) and ($targetItem == null)) {
+
+            if (!in_array(new AssessmentItemRefCollection(), $paths)) {
+                $newPaths[] = new AssessmentItemRefCollection();
+            }
+
+        } else {
+            if ($targetItem == null) { // Branching to the end of the test
+
+                foreach ($paths as $path) {
+
+                    // get the index of the current item and of the target item
+
+                    $keyCurrentItem = null;
+
+                    $pathkeys = $path->getKeys();
+
+                    foreach ($pathkeys as $identifier) {
+
+                        if ($prevItem->getIdentifier() == $identifier) {
+                            $keyCurrentItem = $prevItem->getIdentifier();
+                            break;
+                        }
+                    }
+                    
+                    if ($keyCurrentItem != null) {
+
+                        $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+                        $deleteKeys = false;
+
+                        // Delete from new path everything between $keyCurrentItem and $keyTargetItem
+
+                        foreach ($pathkeys as $identifier) {
+
+                            if ($deleteKeys) {
+                                unset($newPath[$identifier]);
+                            }
+
+                            if ($path[$identifier] == $keyCurrentItem) {
+                                $deleteKeys = true;
+                            }
+                        }
+
+                        if (!in_array($newPath, $paths)) {
+                            $newPaths[] = $newPath;
+                        }
+                    }
+
+                }
+            } else {
+                if ($prevItem == null) { // Branching starts at the beginning of the test
+
+                    foreach ($paths as $path) {
+
+                        // get the index of the current item and of the target item
+
+                        $keyTargetItem = null;
+
+                        $pathkeys = $path->getKeys();
+
+                        foreach ($pathkeys as $identifier) {
+
+                            if ($targetItem->getIdentifier() == $identifier) {
+                                $keyTargetItem = $targetItem->getIdentifier();
+                            }
+                        }
+                        
+                        if ($keyTargetItem != null) {
+
+                            $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                            // Delete from new path everything between $keyCurrentItem and $keyTargetItem
+
+                            foreach ($pathkeys as $identifier) {
+
+                                if ($identifier == $keyTargetItem) {
+                                    break;
+                                }
+
+                                unset($newPath[$identifier]);
+                            }
+
+                            if (!in_array($newPath, $paths)) {
+                                $newPaths[] = $newPath;
+                            }
+                        }
+                    }
+
+                } else { // Normal case
+
+                    foreach ($paths as $path) {
+
+                        // get the index of the current item and of the target item
+
+                        $keyCurrentItem = null;
+                        $keyTargetItem = null;
+
+                        $pathkeys = $path->getKeys();
+
+                        foreach ($pathkeys as $identifier) {
+
+                            if ($prevItem->getIdentifier() == $identifier) {
+                                $keyCurrentItem = $prevItem->getIdentifier();
+                            }
+
+                            if ($targetItem->getIdentifier() == $identifier) {
+                                $keyTargetItem = $targetItem->getIdentifier();
+                            }
+                        }
+
+                        if (($keyCurrentItem != null) and ($keyTargetItem != null)) {
+
+                            if ($keyCurrentItem == $keyTargetItem) {
+                                throw new BranchRuleTargetException("Recursive branching is not allowed.",
+                                    BranchRuleTargetException::RECURSIVE_BRANCHING, $component);
+                            }
+
+                            if ($itemidToIndex[$keyCurrentItem] > $itemidToIndex[$keyTargetItem]) {
+                                throw new BranchRuleTargetException("Branching backward is not allowed.",
+                                    BranchRuleTargetException::BACKWARD_BRANCHING, $component);
+                            }
+
+                            if ($itemidToIndex[$keyCurrentItem] < $itemidToIndex[$keyTargetItem]) {
+
+                                $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+                                $deleteKeys = false;
+
+                                // Delete from new path everything between $keyCurrentItem and $keyTargetItem
+
+                                foreach ($pathkeys as $identifier) {
+
+                                    if ($identifier == $keyTargetItem) {
+                                        break;
+                                    }
+
+                                    if ($deleteKeys) {
+                                        unset($newPath[$identifier]);
+                                    }
+
+                                    if ($path[$identifier] == $keyCurrentItem) {
+                                        $deleteKeys = true;
+                                    }
+                                }
+
+                                if (!in_array($newPath, $paths)) {
+                                    $newPaths[] = $newPath;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $newPaths;
+    }
+
+    /**
+     * Returns an array with all possible paths for an AssessmentTest.
+     *
+     * Create the list with all possible paths that a student can take through an AssessmentTest.
+     * It first gets the base path, with all items. Then it creates new shorter paths, that can
+     * been taken with branches targeting further forward. Then it creates the new path possible
+     * with items that are not mandatory due to the precondition.
+     *
+     * @param Boolean $asArray true to return an array, false to return an \qtism\data\AssessmentItemRefCollection.
+     * @return array of array of \qtism\data\AssessmentItemRef | array of \qtism\data\AssessmentItemRefCollection
+     * @throws BranchRuleTargetException if branching is recursive of backward.
+     */
+    public function getPossiblePaths($asArray)
+    {
+        $paths = [];
+        $items = new AssessmentItemRefCollection($this->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
+        $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
+        $testparts = new TestPartCollection($this->getComponentsByClassName("testPart")->getArrayCopy());
+
+        $paths[] = $items;
+
+        $itemidList = $items->getKeys(); // list of the identifiers
+        $itemidToIndex = array_flip($itemidList); // get the index of the item with its ID, needed to order branches
+
+        // Array associating to each item the possible successor item, the same for the sections and parts
+
+        $succsItem = [];
+        $succsItem[0] = [];
+
+        // Association of the successor item to the next one
+
+        for ($i = 0; $i < count($items); $i++) {
+            $succsItem[$itemidList[$i]] = [];
+
+            if ($i < (count($items) - 1)) {
+                $succsItem[$itemidList[$i]][] = $items[$itemidList[$i + 1]];
+            }
+        }
+
+        // Checking existing branches to add other possible previous items
+
+        foreach ($testparts as $tp) {
+
+            foreach ($tp->getBranchRules() as $branch) {
+                $paths = $this->BranchAnalysis($branch, $tp, $paths, $succsItem, $itemidToIndex);
+            }
+        }
+
+        foreach ($sections as $sect) {
+
+            foreach ($sect->getBranchRules() as $branch) {
+                $paths = $this->BranchAnalysis($branch, $sect, $paths, $succsItem, $itemidToIndex);
+            }
+        }
+
+        foreach ($items as $item) {
+
+            foreach ($item->getBranchRules() as $branch) {
+                $paths = $this->BranchAnalysis($branch, $item, $paths, $succsItem, $itemidToIndex);
+            }
+        }
+
+        // Checking preConditions in tests, sections and itens
+
+        foreach ($testparts as $tp) {
+
+            if (count($tp->getPreConditions()) > 0) {
+
+                $tpItems = $tp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
+
+                foreach ($paths as $path) {
+
+                    $newPath = null;
+
+                    if (count(array_intersect($tpItems, $path->getArrayCopy())) == count($tpItems)) {
+                        $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                        foreach ($tpItems as $item) {
+                            unset($newPath[$item->getIdentifier()]);
+                        }
+                    }
+
+                    // Check if new path does't already exists in paths
+
+                    if (($newPath != null) and (!in_array($newPath, $paths))) {
+                        $paths[] = $newPath;
+                    }
+                }
+            }
+        }
+
+        foreach ($sections as $sect) {
+
+            if (count($sect->getPreConditions()) > 0) {
+
+                $sectItems = $sect->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
+
+                foreach ($paths as $path) {
+
+                    $newPath = null;
+
+                    if (count(array_intersect($sectItems, $path->getArrayCopy())) == count($sectItems)) {
+
+                        $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+
+                        foreach ($sectItems as $item) {
+                            unset($newPath[$item->getIdentifier()]);
+                        }
+                    }
+
+                    // Check if new path does't already exists in paths
+
+                    if (($newPath != null) and (!in_array($newPath, $paths))) {
+                        $paths[] = $newPath;
+                    }
+                }
+            }
+        }
+
+        foreach ($items as $item) {
+
+            if (count($item->getComponentsByClassName("preCondition")) > 0) {
+
+                // for each existing, duplicate it and remove the current item
+                // (because it may not exist with the precondition)
+
+                foreach ($paths as $path) {
+
+                    $newPath = null;
+
+                    if (in_array($item, $path->getArrayCopy())) {
+                        $newPath = new AssessmentItemRefCollection($path->getArrayCopy());
+                        unset($newPath[$item->getIdentifier()]);
+                    }
+
+                    // Check if new path does't already exists in paths
+
+                    if (($newPath != null) and (!in_array($newPath, $paths))) {
+                        $paths[] = $newPath;
+                    }
+                }
+            }
+        }
+
+        // Transform into array if necessary
+
+        if ($asArray) {
+            foreach ($paths as $key => $path) {
+                $paths[$key] = $path->getArrayCopy();
+            }
+        }
+
+        return $paths;
+    }
+
+    /**
+     * Analyse the branch set as parameter and returns the list of possible paths updated with the new possibilities
+     * given by the branch.
+     * 
+     * First analyse the branch, behave appropriate if special EXIT mention, finds where the branch can create
+     * shortcuts in the paths and adds these to the possible paths. 
+     *
+     * @param $branch BranchRule The BranchRule to analyse.
+     * @param $component QtiComponent The BranchRule's QtiComponent. 
+     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known.
+     * @param $succsItem array of array of string For each AssessmentItem + the start (indexed as 0), a list of the
+     * identifiers of the possible successor after the AssessmentItem. Necessary to avoid duplicating branches thus
+     * paths. Argument passed by reference
+     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
+     * necessary to check for backward branching.
+     * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
+     * possibilities given by the branch.
+     * @throws BranchRuleTargetException if branching is recursive of backward.
+     */
+    private function BranchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex)
+    {
+        // Special cases
+
+        switch ($branch->getTarget()) {
+            case "EXIT_TEST":
+                $prevItem = $this->getLastItem($component);
+
+                if ($prevItem == null) {
+                    $succsItem[0][] = null;
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component));
+                } elseif (!in_array(null, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = null;
+
+                    // new successor possible => new paths possible
+
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, null, $itemidToIndex, $component));
+                }
+                break;
+
+            case "EXIT_TESTPART":
+                $testparts = new TestPartCollection($this->getComponentsByClassName("testPart")->getArrayCopy());
+                $prevItem = $this->getLastItem($component);
+                $targetItem = null;
+                $currentTpFound = false;
+                
+                // Find the beginning of the next testpart
+                
+                foreach ($testparts as $tp) {
+                    
+                    if ($currentTpFound) {
+                        $targetItem = $this->getFirstItem($tp);
+                        break;
+                    }
+                    
+                    if ((in_array($component,
+                        $tp->getComponentsByClassName($component->getQtiClassName())->getArrayCopy())) or 
+                    ($component->getIdentifier() == $tp->getIdentifier())) {
+                        $currentTpFound = true;                        
+                    }
+                }
+
+                if ($prevItem == null) {
+                    $succsItem[0][] = $targetItem;
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;
+
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                }
+                break;
+
+            case "EXIT_SECTION":
+                
+                if ($component->getQtiClassName() == "testPart") {
+                    break;
+                }
+                
+                $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
+                $prevItem = $this->getLastItem($component);
+                $targetItem = null;
+                $prevSect = null;
+
+                // Find the beginning of the next section
+
+                foreach ($sections as $sect) {
+                    
+                    if (($component->getQtiClassName() == "assessmentSection") and 
+                        ($component->getIdentifier() == $sect->getIdentifier())) {
+                        $prevSect = $sect;
+                        break;
+                    }
+                    else if ((($component->getQtiClassName() != "assessmentSection")) and (in_array($component,
+                        $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()))) {
+                        $prevSect = $sect;
+                        // No break to be sure that the deepest section is taken
+                    }
+                }
+                $currentSctFound = false;
+
+                foreach ($sections as $sect) {
+
+                    if ($currentSctFound and (!in_array($sect, 
+                            $prevSect->getComponentsByClassName("assessmentSection")->getArrayCopy()))) {
+                        $targetItem = $this->getFirstItem($sect);
+                        break;
+                    }
+                    
+                    if ($sect->getIdentifier() == $prevSect->getIdentifier()){
+                        $currentSctFound = true;
+                    }
+                }
+
+                if ($prevItem == null) {
+                    $succsItem[0][] = $targetItem;
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;                 
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                }
+                break;
+
+            default:
+
+                $target = $this->getComponentByIdentifier($branch->getTarget());
+
+                if ($target == null) {
+                    throw new BranchRuleTargetException("Target '" . $branch->getTarget() . "' doesn't exist.",
+                        BranchRuleTargetException::UNKNOWN_TARGET, $component);
+                }
+
+                $targetItem = $this->getFirstItem($target);
+                $prevItem = $this->getLastItem($component);
+
+                if ($prevItem == null) {
+                    $succsItem[0][] = $targetItem;
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                } elseif (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;
+
+                    // new successor possible => new paths possible            
+
+                    $paths = array_merge($paths,
+                        AssessmentTest::addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component));
+                }
+                break;
+        }
+
+        return $paths;
+    }
+
+    /**
+     * Returns an array with all shortest possible paths for a AssessmentTest.
+     *
+     * Iterates on all possible paths and when it finds a path shorter than the minimum length,
+     * it is stored as the new shortest path.
+     *
+     * @return array of qtism\data\AssessmentItemRefCollection An array with all shortest possible paths
+     * for this AssessmentTest.
+     */
+    public function getShortestPaths()
+    {
+        $paths = $this->getPossiblePaths(false);
+        $minCount = PHP_INT_MAX;
+        $minPaths = [];
+
+        foreach ($paths as $path) {
+            if (sizeof($path) < $minCount) {
+                $minCount = sizeof($path);
+                $minPaths = [];
+            }
+
+            if (sizeof($path) <= $minCount) {
+                $minPaths[] = $path;
+            }
+        }
+
+        return $minPaths;
+    }
+
+    /**
+     * Returns an array with all longest possible paths for a AssessmentTest.
+     * Currently it's the path with all items that will always be returned.
+     *
+     * Iterates on all possible paths and when it finds a path longer than the maximum length,
+     * it is stored as the new longest path.
+     *
+     * @return array of qtism\data\AssessmentItemRefCollection An array with all longest possible paths
+     * for this AssessmentTest.
+     */
+    public function getLongestPaths()
+    {
+        $paths = $this->getPossiblePaths(false);
+        $maxCount = 0;
+        $maxPaths = [];
+
+        foreach ($paths as $path) {
+            if (sizeof($path) > $maxCount) {
+                $maxCount = sizeof($path);
+                $maxPaths = [];
+            }
+
+            if (sizeof($path) >= $maxCount) {
+                $maxPaths[] = $path;
+            }
+        }
+
+        return $maxPaths;
     }
 }
