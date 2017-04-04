@@ -453,21 +453,18 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * closest parent).
      * 
      * @param $component AssessmentSection The section from which we want to find the parent.
+     * @param TODO
      * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
      */
-    private function checkRecursion($component)
+    private function checkRecursion($component, $sections)
     {
         $sectparent = null;
 
-        foreach ($this->getComponentsByClassName("assessmentSection") as $key => $sect)
-        {
-            // 1. Optimization
+        foreach ($sections as $key => $sect) {
+            
+            if (in_array($component, $sect->getSectionParts()->getArrayCopy())) {
 
-            if ($sect->getQtiClassName() != "assessmentItemRef") {
-                if (in_array($component,
-                    $sect->getComponentsByClassName("assessmentSection")->getArrayCopy())) {
-                    $sectparent = $sect;
-                }
+                $sectparent = $sect;
             }
 
             if ($sect->getIdentifier() == $component->getIdentifier()) {
@@ -494,10 +491,10 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     {
         $currentCmp = $component;
         $visitedNodes = [];
+        $sections = null;
         
         while (true) {
-            
-            $components = $this->getComponentsByClassName($currentCmp->getQtiClassName());
+
             $visitedNodes[] = $currentCmp->getIdentifier();
 
             switch ($currentCmp->getQtiClassName()) {
@@ -511,8 +508,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     if (count($items) == 0) {
 
                         // Check for recursion
+
+                        if ($sections == null) {
+                            $sections = $this->getComponentsByClassName("assessmentSection");
+                        }
                         
-                        $sectparent = $this->checkRecursion($currentCmp);
+                        $sectparent = $this->checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null)
                         {
@@ -542,7 +543,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                             $nextSect = null;
                             $keyFound = null;
 
-                            foreach ($components as $sect) {
+                            foreach ($sections as $sect) {
 
                                 if (($keyFound) and (!in_array($sect->getIdentifier(), $visitedNodes))) {
                                     $nextSect = $sect;
@@ -575,7 +576,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         $nextTest = null;
                         $keyFound = null;
 
-                        foreach ($components as $test) {
+                        foreach ($this->getComponentsByClassName($currentCmp->getQtiClassName()) as $test) {
 
                             if ($keyFound) {
                                 $nextTest = $test;
@@ -619,11 +620,10 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     public function getLastItem($component)
     {
         $currentCmp = $component;
+        $sections = null;
 
         while (true)
         {
-            $components = $this->getComponentsByClassName($currentCmp->getQtiClassName())->getArrayCopy();
-
             switch ($currentCmp->getQtiClassName()) {
                 case "assessmentItemRef":
                     return $currentCmp;
@@ -635,8 +635,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                     if (count($items) == 0) {
 
                         // Check for recursion
+                        
+                        if ($sections == null){
+                            $sections = $this->getComponentsByClassName("assessmentSection");
+                        }
 
-                        $sectparent = $this->checkRecursion($currentCmp, $currentCmp->getIdentifier());
+                        $sectparent = $this->checkRecursion($currentCmp, $sections);
 
                         if ($sectparent != null) {
                             $prevSectPart = null;
@@ -662,7 +666,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                             $prevSect = null;
                             $keyFound = null;
 
-                            foreach ($components as $sect) {
+                            foreach ($sections as $sect) {
 
                                 if ($sect->getIdentifier() == $currentCmp->getIdentifier()) {
                                     break;
@@ -692,7 +696,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         $prevTest = null;
                         $keyFound = null;
 
-                        foreach ($components as $test) {
+                        foreach ($this->getComponentsByClassName($currentCmp->getQtiClassName()) as $test) {
 
                             if ($test->getIdentifier() == $currentCmp->getIdentifier()) {
                                 break;
@@ -910,10 +914,31 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     public function getPossiblePaths($asArray)
     {
         $paths = [];
-        $items = new AssessmentItemRefCollection($this->getComponentsByClassName("assessmentItemRef")->getArrayCopy());
-        $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
-        $testparts = new TestPartCollection($this->getComponentsByClassName("testPart")->getArrayCopy());
 
+        $items = new AssessmentItemRefCollection();
+        $sections = new AssessmentSectionCollection();
+        $testparts = new TestPartCollection();        
+
+        foreach ($this->getComponentsByClassName(["assessmentItemRef", "assessmentSection", "testPart"]) as $cp) {
+            
+            switch ($cp->getQtiClassName()) {
+                case "assessmentItemRef":
+                    $items[] = $cp;
+                    break;
+
+                case "assessmentSection":
+                    $sections[] = $cp;
+                    break;
+
+                case "testPart":
+                    $testparts[] = $cp;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        
         $paths[] = $items;
 
         $itemidList = $items->getKeys(); // list of the identifiers
@@ -939,21 +964,21 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         foreach ($testparts as $tp) {
 
             foreach ($tp->getBranchRules() as $branch) {
-                $paths = $this->BranchAnalysis($branch, $tp, $paths, $succsItem, $itemidToIndex);
+                $paths = $this->BranchAnalysis($branch, $tp, $paths, $succsItem, $itemidToIndex, $items, $sections, $testparts);
             }
         }
 
         foreach ($sections as $sect) {
 
             foreach ($sect->getBranchRules() as $branch) {
-                $paths = $this->BranchAnalysis($branch, $sect, $paths, $succsItem, $itemidToIndex);
+                $paths = $this->BranchAnalysis($branch, $sect, $paths, $succsItem, $itemidToIndex, $items, $sections, $testparts);
             }
         }
 
         foreach ($items as $item) {
 
             foreach ($item->getBranchRules() as $branch) {
-                $paths = $this->BranchAnalysis($branch, $item, $paths, $succsItem, $itemidToIndex);
+                $paths = $this->BranchAnalysis($branch, $item, $paths, $succsItem, $itemidToIndex, $items, $sections, $testparts);
             }
         }
 
@@ -1022,8 +1047,8 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
         foreach ($items as $item) {
 
-            if (count($item->getComponentsByClassName("preCondition")) > 0) {
-
+                if (count($item->getPreconditions()) > 0) {
+            
                 // for each existing, duplicate it and remove the current item
                 // (because it may not exist with the precondition)
 
@@ -1071,11 +1096,12 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * paths. Argument passed by reference
      * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
      * necessary to check for backward branching.
+     * @param TODO
      * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    private function BranchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex)
+    private function BranchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex, $items, $sections, $testparts)
     {
         // Special cases
 
@@ -1098,7 +1124,6 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 break;
 
             case "EXIT_TESTPART":
-                $testparts = new TestPartCollection($this->getComponentsByClassName("testPart")->getArrayCopy());
                 $prevItem = $this->getLastItem($component);
                 $targetItem = null;
                 $currentTpFound = false;
@@ -1136,8 +1161,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 if ($component->getQtiClassName() == "testPart") {
                     break;
                 }
-                
-                $sections = new AssessmentSectionCollection($this->getComponentsByClassName("assessmentSection")->getArrayCopy());
+
                 $prevItem = $this->getLastItem($component);
                 $targetItem = null;
                 $prevSect = null;
@@ -1157,12 +1181,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                         // No break to be sure that the deepest section is taken
                     }
                 }
+
                 $currentSctFound = false;
 
                 foreach ($sections as $sect) {
 
                     if ($currentSctFound and (!in_array($sect, 
-                            $prevSect->getComponentsByClassName("assessmentSection")->getArrayCopy()))) {
+                            $prevSect->getSectionParts()->getArrayCopy()))) {
                         $targetItem = $this->getFirstItem($sect);
                         break;
                     }
@@ -1185,7 +1210,17 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
 
             default:
 
-                $target = $this->getComponentByIdentifier($branch->getTarget());
+                // $target = $this->getComponentByIdentifier($branch->getTarget());
+
+                $target = null;
+
+                if ($items[$branch->getTarget()] != null) {
+                    $target = $items[$branch->getTarget()];
+                } elseif ($sections[$branch->getTarget()] != null) {
+                    $target = $sections[$branch->getTarget()];
+                } elseif ($testparts[$branch->getTarget()] != null) {
+                    $target = $testparts[$branch->getTarget()];
+                }
 
                 if ($target == null) {
                     throw new BranchRuleTargetException("Target '" . $branch->getTarget() . "' doesn't exist.",
