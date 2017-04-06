@@ -7,18 +7,18 @@
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
             <assessmentItemRef identifier="Q01" href="./Q01/qti.xml">
-                <!-- go to Q02 if response is identifier "B" -->
+                <!-- go to Q02 if response is identifier "A" -->
                 <branchRule target="Q02">
                     <match>
                         <variable identifier="Q01.RESPONSE"/>
-                            <baseValue baseType="identifier">B</baseValue>
+                            <baseValue baseType="identifier">A</baseValue>
                     </match>
                 </branchRule>
-                <!-- go to Q03 if response is identifier "A" -->
+                <!-- go to Q03 if response is identifier "B" -->
                 <branchRule target="Q03">
                     <match>
                         <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
+                        <baseValue baseType="identifier">B</baseValue>
                     </match>
                 </branchRule>
             </assessmentItemRef>
