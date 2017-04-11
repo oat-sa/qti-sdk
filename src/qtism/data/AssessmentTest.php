@@ -824,7 +824,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * necessary to check for backward branching.
      * @param $items AssessmentItemRefCollection The collection of all items in this AssessmentTest.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @param $testparts AssessmentTest The collection of all tests in this AssessmentTest.
+     * @param $testparts TestPartCollection The collection of all TestParts in this AssessmentTest.
      * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.

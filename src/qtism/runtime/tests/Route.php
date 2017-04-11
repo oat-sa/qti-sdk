@@ -125,7 +125,7 @@ class Route implements Iterator
      *
      * @var array
      */
-    private $routeItems = array();
+    private $routeItems = [];
 
     /**
      * The current position in the route.
@@ -150,14 +150,14 @@ class Route implements Iterator
     {
         $this->setPosition(0);
         $this->setAssessmentItemRefs(new AssessmentItemRefCollection());
-        $this->setAssessmentItemRefCategoryMap(array());
-        $this->setAssessmentItemRefSectionMap(array());
+        $this->setAssessmentItemRefCategoryMap([]);
+        $this->setAssessmentItemRefSectionMap([]);
         $this->setAssessmentItemRefOccurenceMap(new SplObjectStorage());
         $this->setCategories(new IdentifierCollection());
         $this->setTestPartMap(new SplObjectStorage());
         $this->setAssessmentSectionMap(new SplObjectStorage());
-        $this->setTestPartIdentifierMap(array());
-        $this->setAssessmentSectionIdentifierMap(array());
+        $this->setTestPartIdentifierMap([]);
+        $this->setAssessmentSectionIdentifierMap([]);
         $this->setAssessmentItemRefMap(new SplObjectStorage());
     }
 
@@ -187,7 +187,8 @@ class Route implements Iterator
      *
      * @return array
      */
-    protected function &getRouteItems() {
+    protected function &getRouteItems()
+    {
         return $this->routeItems;
     }
 
@@ -407,8 +408,12 @@ class Route implements Iterator
      * @param \qtism\data\TestPart $testPart
      * @param \qtism\data\AssessmentTest $assessmentTest
      */
-    public function addRouteItem(AssessmentItemRef $assessmentItemRef, $assessmentSections, TestPart $testPart, AssessmentTest $assessmentTest)
-    {
+    public function addRouteItem(
+        AssessmentItemRef $assessmentItemRef,
+        $assessmentSections,
+        TestPart $testPart,
+        AssessmentTest $assessmentTest
+    ) {
         // Push the routeItem in the track :) !
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSections, $testPart, $assessmentTest);
         $this->registerAssessmentItemRef($routeItem);
@@ -503,7 +508,7 @@ class Route implements Iterator
         $nextPosition = $this->getPosition() + 1;
         $routeItems = &$this->getRouteItems();
 
-        return !isset($routeItems[$nextPosition]);
+        return ! isset($routeItems[$nextPosition]);
     }
 
     /**
@@ -535,7 +540,7 @@ class Route implements Iterator
      */
     public function isNavigationNonLinear()
     {
-        return !$this->isNavigationLinear();
+        return ! $this->isNavigationLinear();
     }
 
     /**
@@ -557,7 +562,7 @@ class Route implements Iterator
      */
     public function isSubmissionSimultaneous()
     {
-        return !$this->isSubmissionIndividual();
+        return ! $this->isSubmissionIndividual();
     }
 
     /**
@@ -652,7 +657,7 @@ class Route implements Iterator
         $testPart = $routeItem->getTestPart();
 
         if (isset($this->testPartMap[$testPart]) === false) {
-            $this->testPartMap[$testPart] = array();
+            $this->testPartMap[$testPart] = [];
         }
 
         $target = $this->testPartMap[$testPart];
@@ -663,7 +668,7 @@ class Route implements Iterator
         $id = $testPart->getIdentifier();
 
         if (isset($this->testPartIdentifierMap[$id]) === false) {
-            $this->testPartIdentifierMap[$id] = array();
+            $this->testPartIdentifierMap[$id] = [];
         }
 
         $this->testPartIdentifierMap[$id][] = $routeItem;
@@ -680,7 +685,7 @@ class Route implements Iterator
         foreach ($routeItem->getAssessmentSections() as $assessmentSection) {
 
             if (isset($this->assessmentSectionMap[$assessmentSection]) === false) {
-                $this->assessmentSectionMap[$assessmentSection] = array();
+                $this->assessmentSectionMap[$assessmentSection] = [];
             }
 
             $target = $this->assessmentSectionMap[$assessmentSection];
@@ -691,7 +696,7 @@ class Route implements Iterator
             $id = $assessmentSection->getIdentifier();
 
             if (isset($this->assessmentSectionIdentifierMap[$id]) === false) {
-                $assessmentSectionIdentifierMap[$id] = array();
+                $assessmentSectionIdentifierMap[$id] = [];
             }
 
             $this->assessmentSectionIdentifierMap[$id][] = $routeItem;
@@ -712,7 +717,7 @@ class Route implements Iterator
 
         foreach (array_keys($routeItems) as $k) {
             $virginIdentifier = $routeItems[$k]->getAssessmentItemRef()->getIdentifier();
-            $collection[] = ($withSequenceNumber === true) ? $virginIdentifier . '.' . ($routeItems[$k]->getOccurence() + 1) : $virginIdentifier;
+            $collection[] = ($withSequenceNumber === true) ? $virginIdentifier.'.'.($routeItems[$k]->getOccurence() + 1) : $virginIdentifier;
         }
 
         return $collection;
@@ -731,7 +736,7 @@ class Route implements Iterator
     public function getAssessmentItemRefsByCategory($category)
     {
         $categoryMap = $this->getAssessmentItemRefCategoryMap();
-        $categories = (gettype($category) === 'string') ? array($category) : $category->getArrayCopy();
+        $categories = (gettype($category) === 'string') ? [$category] : $category->getArrayCopy();
 
         $result = new AssessmentItemRefCollection();
 
@@ -774,8 +779,11 @@ class Route implements Iterator
      * @return \qtism\data\AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
      *
      */
-    public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
-    {
+    public function getAssessmentItemRefsSubset(
+        $sectionIdentifier = '',
+        IdentifierCollection $includeCategories = null,
+        IdentifierCollection $excludeCategories = null
+    ) {
         $bySection = (empty($sectionIdentifier) === true) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 
         if (is_null($includeCategories) === false) {
@@ -1013,7 +1021,7 @@ class Route implements Iterator
             $map = $this->getTestPartMap();
 
             if (isset($map[$testPart]) === false) {
-                $msg = "The testPart '" . $testPart->getIdentifier() . "' is not referenced in the Route.";
+                $msg = "The testPart '".$testPart->getIdentifier()."' is not referenced in the Route.";
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1048,7 +1056,7 @@ class Route implements Iterator
             $routeItems = new RouteItemCollection();
 
             if (isset($map[$assessmentSection]) === false) {
-                $msg = "The assessmentSection '" . $assessmentSection->getIdentifier() . "' is not referenced in the Route.";
+                $msg = "The assessmentSection '".$assessmentSection->getIdentifier()."' is not referenced in the Route.";
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1077,7 +1085,6 @@ class Route implements Iterator
                 $msg = "No AssessmentItemRef with identifier '${assessmentItemRef}' found in the Route.";
                 throw new OutOfBoundsException($msg);
             }
-
         } elseif ($assessmentItemRef instanceof AssessmentItemRef) {
 
             if (isset($this->assessmentItemRefMap[$assessmentItemRef]) === true) {
@@ -1105,11 +1112,11 @@ class Route implements Iterator
     /**
      * Perform a branching on a TestPart, AssessmentSection or AssessmentItemRef with
      * the given $identifier.
-     * 
+     *
      * The target will be considered invalid if the following constraints are not fullfilled:
-     * 
+     *
      * From IMS QTI:
-     * In the case of an item or section, the target must refer to an item or section in the same 
+     * In the case of an item or section, the target must refer to an item or section in the same
      * testPart that has not yet been presented. For testParts, the target must refer to another testPart.
      *
      * @param string $identifier A QTI Identifier to be the target of the branching.
@@ -1207,37 +1214,15 @@ class Route implements Iterator
     }
 
     /**
-     * @TODO doc
-     * Checks if the current section has a parent, and returns it, if any.
-     *
-     * Gets the list of sections of this AssessmentTest, and checks if any has the AssessmentSection
-     * set as parameter in its components. If some has, we keep the last section found (to take the
-     * closest parent).
-     *
-     * @param $component AssessmentSection The section from which we want to find the parent.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
-     */
-    private function checkRecursion($component, $sections) {
-        return null;
-    }
-
-    /**
-     * @TODO doc
-     *
      * Returns the first AssessmentItem that will be prompted if a branch targets the
      * QtiComponent set as parameter.
      *
-     * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
-     * find the firstItem from another QtiComponent : this is then done iteratively.
-     *
-     * @param $test \qtism\data\AssessmentTest The AssessmentTest where we are searching the item from where the branch
-     * comes.
+     * This method assume that each assessmentSection and TestPart contains at least one 
+     * AssessmentItemRef : it then returns the first AssessmentItemRef, or the AssessmentItemRef itself.
+     * 
      * @param $component \qtism\data\QtiComponent The QtiComponent targeted by a branch.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
      * @return \qtism\data\AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
-     * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
-     * has been reached.
+     * QtiComponent set as parameter.
      */
     public function getFirstItem($component)
     {
@@ -1249,25 +1234,14 @@ class Route implements Iterator
             case "assessmentSection":
                 $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
-                if (count($items) == 0) {
-
-                    // To complete
-                    var_dump("Empty section detected");
-                } else {
-                    return $items[0];
-                }
-                break;
+                // We consider that in the runtime configuration, each section has at least one item
+                return $items[0];
 
             case "testPart":
                 $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
-                if (count($items) == 0) {
-
-                    var_dump("Empty testPart detected");
-                } else {
-                    return $items[0];
-                }
-                break;
+                // We consider that in the runtime configuration, each testpart has at least one item
+                return $items[0];
 
             default:
                 return null;
@@ -1275,20 +1249,15 @@ class Route implements Iterator
     }
 
     /**
-     * @TODO doc
-     * Returns the last AssessmentItem that will be prompted before a BranchRule of the QtiComponent set as parameter
-     * will be taken.
+     * Returns the last AssessmentItem that will be prompted if a branch targets the
+     * QtiComponent set as parameter.
      *
-     * This method depends heavily of the QtiClass of the QtiComponent. Some require multiples loops where we need to
-     * find the lastItem from another QtiComponent : this is then done iteratively.
+     * This method assume that each assessmentSection and TestPart contains at least one
+     * AssessmentItemRef : it then returns the last AssessmentItemRef, or the AssessmentItemRef itself.
      *
-     * @param $test \qtism\data\AssessmentTest The AssessmentTest where we are searching the item from where the branch
-     * starts.
-     * @param $component \qtism\data\QtiComponent The QtiComponent with a BranchRule.
-     * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @return \qtism\data\AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
-     * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
-     * test has been reached.
+     * @param $component \qtism\data\QtiComponent The QtiComponent targeted by a branch.
+     * @return \qtism\data\AssessmentItem|null The last AssessmentItem that will be prompted if a branch targets the
+     * QtiComponent set as parameter.
      */
     public function getLastItem($component)
     {
@@ -1326,103 +1295,261 @@ class Route implements Iterator
     }
 
     /**
-     * @TODO doc
-     * Finds the new paths available with a branch. The branch must already have been analysed.
+     * Finds the new routes available with a branch. The branch must already have been analysed.
      *
-     * Using the prevItem and the targetItem set as parameter, this method goes through all existing paths, to check
-     * on which path a shortcut between the prevItem and the targetItem can be used : if it's the case, a new
-     * path, taking the shortcut, is created.
+     * Using the prevItem and the targetItem set as parameter, this method goes through all existing routes, to check
+     * on which route a shortcut between the prevItem and the targetItem can be used : if it's the case, a new
+     * route, taking the shortcut, is created.
      *
-     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known
+     * @param $routes array of \qtism\runtime\RouteItemCollection The list of possible routes already known
      * @param $prevItem \qtism\data\AssessmentItem the last AssessmentItem that will be prompted before the branch.
      * @param $targetItem \qtism\data\AssessmentItem the first AssessmentItem that will be prompted after the branch.
-     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
-     * necessary to check for backward branching.
      * @param $component QtiComponent The BranchRule's QtiComponent.
-     * @return array of \qtism\data\AssessmentItemRefCollection Returns the paths that can be added to the possible
-     * paths due to the new possibilities afforded by the branch.
+     * @return array of \qtism\data\AssessmentItemRefCollection Returns the routes that can be added to the possible
+     * routes due to the new possibilities afforded by the branch.
      * @throws BranchRuleTargetException if backward or recursive branching is found.
      */
     private function addRoutesWithBranches($routes, $prevItem, $targetItem, $component)
-    {        
+    {
         $newRoutes = [];
-        // var_dump($prevItem->getAssessmentItemRef()->getIdentifier(), $targetItem->getAssessmentItemRef()->getIdentifier());
-        
+
+        /*
+        if ($targetItem == null) { var_dump($prevItem->getIdentifier(), "NULL"); }
+        else {
+            var_dump($prevItem->getIdentifier(), $targetItem->getIdentifier());
+        }*/
+
         if ($prevItem == $targetItem) {
-            throw new BranchRuleTargetException("Recursive branching is not allowed.",
-                BranchRuleTargetException::RECURSIVE_BRANCHING, $component);
+            throw new BranchRuleTargetException("Recursive branching is not allowed.", BranchRuleTargetException::RECURSIVE_BRANCHING, $component);
         }
 
-        if ($this->getRouteItemPosition($prevItem) > $this->getRouteItemPosition($targetItem)) {
-            throw new BranchRuleTargetException("Branching backward is not allowed.",
-                BranchRuleTargetException::BACKWARD_BRANCHING, $component);
+        $prevRi = null;
+        $targetRi = null;
+
+        foreach ($this as $ri) {
+            if (($prevItem != null) and ($prevItem->getIdentifier() == $ri->getAssessmentItemRef()->getIdentifier())) {
+                $prevRi = $ri;
+            }
+
+            if (($targetItem != null) and ($targetItem->getIdentifier() == $ri->getAssessmentItemRef()->getIdentifier())) {
+                $targetRi = $ri;
+            }
         }
-        
-        foreach ($routes as $route) 
-        {
+
+        if ((($prevRi != null) and ($targetRi != null)) and ($this->getRouteItemPosition($prevRi) > $this->getRouteItemPosition($targetRi))) {
+            throw new BranchRuleTargetException("Branching backward is not allowed.", BranchRuleTargetException::BACKWARD_BRANCHING, $component);
+        }
+
+        foreach ($routes as $route) {
             $newRoute = new RouteItemCollection();
-            
-            $deleteitems = false;
+            $routeItems = [];
+            $targetRouteItem = null;
+            $prevRouteItem = null;
 
-            if (in_array($prevItem, $route->getArrayCopy()) and (in_array($targetItem, $route->getArrayCopy()))) {
-                
+            foreach ($route as $ritem) {
+                $routeItems[] = $ritem->getAssessmentItemRef();
+
+                if (($targetItem != null) and ($ritem->getAssessmentItemRef()->getIdentifier() == $targetItem->getIdentifier())) {
+                    $targetRouteItem = $ritem;
+                }
+
+                if (($prevItem != null) and ($ritem->getAssessmentItemRef()->getIdentifier() == $prevItem->getIdentifier())) {
+                    $prevRouteItem = $ritem;
+                }
+            }
+
+            $deleteitems = $prevItem == null;
+
+            if ((in_array($prevItem, $routeItems) or ($prevItem == null)) and ((in_array($targetItem, $routeItems)) or ($targetItem == null))) {
+
                 for ($i = 0; $i < count($this->getRouteItems()); $i++) {
 
-                    if ($i == $this->getRouteItemPosition($targetItem)) {
+                    if (($targetRouteItem != null) and ($i == $this->getRouteItemPosition($targetRouteItem))) {
                         $deleteitems = false;
                     }
 
-                    if ((!$deleteitems) and (in_array($this->getRouteItemAt($i), $route->getArrayCopy()))) {
+                    if ((! $deleteitems) and (in_array($this->getRouteItemAt($i), $route->getArrayCopy()))) {
                         $newRoute->attach($this->getRouteItemAt($i));
                     }
 
-                    if ($i == $this->getRouteItemPosition($prevItem)) {
+                    if (($prevRouteItem != null) and ($i == $this->getRouteItemPosition($prevRouteItem))) {
                         $deleteitems = true;
                     }
                 }
-                
+
                 $newRoutes[] = $newRoute;
             }
-            
         }
-        
+
         return $newRoutes;
     }
 
     /**
-     * @TODO doc
-     * Analyse the branch set as parameter and returns the list of possible paths updated with the new possibilities
+     * Analyse the branch set as parameter and returns the list of possible routes updated with the new possibilities
      * given by the branch.
      *
      * First analyse the branch, behave appropriate if special EXIT mention, finds where the branch can create
-     * shortcuts in the paths and adds these to the possible paths.
+     * shortcuts in the routes and adds these to the possible routes.
      *
      * @param $branch BranchRule The BranchRule to analyse.
      * @param $component QtiComponent The BranchRule's QtiComponent.
-     * @param $paths array of \qtism\data\AssessmentItemRefCollection The list of possible paths already known.
+     * @param $routes array of \qtism\runtime\RouteItemCollection The list of possible routes already known.
      * @param $succsItem array of array of string For each AssessmentItem + the start (indexed as 0), a list of the
      * identifiers of the possible successor after the AssessmentItem. Necessary to avoid duplicating branches thus
-     * paths. Argument passed by reference
-     * @param $itemidToIndex array of int A hashmap with identifier as keys, int array's indexes as values. It's
-     * necessary to check for backward branching.
-     * @param $items AssessmentItemRefCollection The collection of all items in this AssessmentTest.
+     * routes. Argument passed by reference.
      * @param $sections AssessmentSectionCollection The collection of all sections in this AssessmentTest.
-     * @param $testparts AssessmentTest The collection of all tests in this AssessmentTest.
-     * @return array of \qtism\data\AssessmentItemRefCollection The list of possible paths updated with the new
+     * @param $testparts TestPartCollection The collection of all TestParts in this AssessmentTest.
+     * @return array of \qtism\runtime\RouteItemCollection The list of possible routes updated with the new
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    private function BranchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex, $items, $sections, $testparts)
+    private function BranchAnalysis($branch, $component, $routes, &$succsItem, $sections, $testparts)
     {
-        return null;
+        switch ($branch->getTarget()) {
+
+            case "EXIT_TEST":
+                $prevItem = $this->getLastItem($component);
+
+                if ($prevItem == null) {
+                    $succsItem[0][] = null;
+                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, null, $component));
+                } elseif (! in_array(null, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = null;
+
+                    // new successor possible => new paths possible
+
+                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, null, $component));
+                }
+                break;
+            case "EXIT_TESTPART":
+                $prevItem = $this->getLastItem($component);
+                $targetItem = null;
+                $currentTpFound = false;
+
+                // Find the beginning of the next testpart
+
+                foreach ($testparts as $tp) {
+
+                    if ($currentTpFound) {
+                        $targetItem = $this->getFirstItem($tp);
+                        break;
+                    }
+
+                    if ((in_array($component, $tp->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()))
+                        or ($component->getIdentifier() == $tp->getIdentifier())) {
+                        $currentTpFound = true;
+                    }
+                }
+
+                $prevItem = $this->getLastItem($component);
+
+                if (! in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;
+                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, $targetItem, $component));
+                }
+
+                break;
+            case "EXIT_SECTION":
+
+                $currentSection = null;
+
+                if ($component->getQtiClassName() == "testPart") {
+                    break;
+                }
+
+                $prevItem = $this->getLastItem($component);
+                $targetItem = null;
+                $prevSect = null;
+
+                // Find the beginning of the next section
+
+                foreach ($sections as $sect) {
+
+                    if (($component->getQtiClassName() == "assessmentSection") and 
+                        ($component->getIdentifier() == $sect->getIdentifier())) {
+                        $prevSect = $sect;
+                        break;
+                    } else {
+                        if ((($component->getQtiClassName() != "assessmentSection")) and 
+                            (in_array($component, $sect->getComponentsByClassName($component->getQtiClassName())->getArrayCopy()))) {
+                            $prevSect = $sect;
+                            // No break to be sure that the deepest section is taken
+                        }
+                    }
+                }
+
+                $currentSctFound = false;
+
+                foreach ($sections as $sect) {
+
+                    if ($currentSctFound and (! in_array($sect, $prevSect->getSectionParts()->getArrayCopy()))) {
+                        $targetItem = $this->getFirstItem($sect);
+                        break;
+                    }
+
+                    if ($sect->getIdentifier() == $prevSect->getIdentifier()) {
+                        $currentSctFound = true;
+                    }
+                }
+
+                if (! in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;
+                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, $targetItem, $component));
+                }
+
+                break;
+
+            default:
+                $prevItem = $this->getLastItem($component);
+                $targetItem = null;
+                $found = false;
+
+                foreach ($testparts as $tp) {
+                    if ($tp->getIdentifier() == $branch->getTarget()) {
+                        $targetItem = $this->getRouteItemsByTestPart($branch->getTarget())[0]->getAssessmentItemRef();
+                        $found = true;
+                    }
+                }
+
+                if (! $found) {
+                    foreach ($sections as $section) {
+                        if ($section->getIdentifier() == $branch->getTarget()) {
+                            $targetItem = $this->getRouteItemsByAssessmentSection($branch->getTarget())[0]->getAssessmentItemRef();
+                            $found = true;
+                        }
+                    }
+                }
+
+                if (! $found) {
+                    try {
+                        $targetItem = $this->getRouteItemsByAssessmentItemRef($branch->getTarget())[0]->getAssessmentItemRef();
+                    } catch (OutOfBoundsException $ex) {
+                        throw new BranchRuleTargetException("Target '".$branch->getTarget().
+                            "' doesn't exist.", BranchRuleTargetException::UNKNOWN_TARGET, $tp);
+                    }
+                }
+
+                if (! in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
+                    $succsItem[$prevItem->getIdentifier()][] = $targetItem;
+                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, $targetItem, $component));
+                }
+
+                break;
+        }
+
+        return $routes;
     }
 
     /**
+     * Returns an array with all possible routes for an AssessmentTest.
      *
-     * @TODO doc
+     * Create the list with all possible routes that a candidate can take through this Route.
+     * It creates new shorter routes, that can been taken with branches targeting further forward.
+     * Then it creates the new routes possible with items that are not mandatory due to the precondition.
      *
-     * @param bool $asArray
-     * @return null
+     * @param Boolean $asArray true to return an array, false to return an \qtism\runtime\RouteItemCollection.
+     * @return array of array of \qtism\runtime\RouteItem | array of \qtism\runtime\RouteItemCollection
+     * @throws BranchRuleTargetException if branching is recursive of backward.
      */
     public function getPossibleRoutes($asArray = false)
     {
@@ -1433,16 +1560,16 @@ class Route implements Iterator
         $sections = new AssessmentSectionCollection();
 
         foreach ($this as $ri) {
-            if (!in_array($ri->getTestPart(), $testparts->getArrayCopy())) {
+            if (! in_array($ri->getTestPart(), $testparts->getArrayCopy())) {
                 $testparts[] = $ri->getTestPart();
             }
 
             foreach ($ri->getAssessmentSections() as $section) {
-                if (!in_array($section, $sections->getArrayCopy())) {
+                if (! in_array($section, $sections->getArrayCopy())) {
                     $sections[] = $section;
                 }
             }
-        }  
+        }
 
         // Array associating to each item the possible successor item, the same for the sections and parts
 
@@ -1455,64 +1582,29 @@ class Route implements Iterator
             $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()] = [];
 
             if ($i < (count($this->getRouteItems()) - 1)) {
-                $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()][]
-                    = $this->getRouteItemAt($i + 1);
+                $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()][] = $this->getRouteItemAt($i + 1)->getAssessmentItemRef();
+            } else {
+                $succsItem[$this->getRouteItemAt($i)->getAssessmentItemRef()->getIdentifier()][] = null;
             }
         }
 
         // Checking existing branches to add other possible previous items
 
-        $pre_tp = array();
-        $pre_sect = array();
+        $branchTp = [];
+        $branchSect = [];
 
-        foreach ($this as $ri)
-        {
+        foreach ($this->getRouteItems() as $ri) {
             // Handling testparts
 
             $tp = $ri->getTestPart();
 
-            if (!in_array($tp, $pre_tp)) {
-
+            if (! in_array($tp, $branchTp)) {
                 if (count($tp->getBranchRules()) > 0) {
                     foreach ($tp->getBranchRules() as $branch) {
-                        // handling branches
-
-                        $prevItem = $this->getLastItem($tp);
-                        $targetItem = null;
-
-                        foreach ($testparts as $tp) {
-                            if ($tp->getIdentifier() == $branch->getTarget()) {
-                                $targetItem = $this->getRouteItemsByTestPart($branch->getTarget())[0];
-                            }
-                        }
-
-                        foreach ($sections as $section) {
-                            if ($section->getIdentifier() == $branch->getTarget()) {
-                                $targetItem = $this->getRouteItemsByAssessmentSection($branch->getTarget())[0];
-                            }
-                        }
-
-                        if ($targetItem == null) {
-                            try {
-                                $targetItem = $this->getRouteItemsByAssessmentItemRef($branch->getTarget())[0];
-                            }
-                            catch (OutOfBoundsException $ex) {
-                                throw new BranchRuleTargetException("Target '" . $branch->getTarget() . "' doesn't exist.",
-                                    BranchRuleTargetException::UNKNOWN_TARGET, $tp);
-                            }
-                        }
-
-
-                        if (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
-                            $succsItem[$prevItem->getIdentifier()][] = $targetItem;
-                            $routes = array_merge($routes ,$this->addRoutesWithBranches($routes,
-                                $this->getRouteItemsByAssessmentItemRef($prevItem->getIdentifier())[0],
-                                $this->getRouteItemsByAssessmentItemRef($targetItem->getAssessmentItemRef()->getIdentifier())[0],
-                                $tp));
-                        }
+                        $routes = $this->BranchAnalysis($branch, $tp, $routes, $succsItem, $sections, $testparts);
                     }
 
-                    $pre_tp[] = $tp;
+                    $branchTp[] = $tp;
                 }
             }
 
@@ -1521,202 +1613,134 @@ class Route implements Iterator
             $sects = $ri->getAssessmentSections();
 
             foreach ($sects as $section) {
-                if (! in_array($section, $pre_sect)) {
+                if (! in_array($section, $branchSect)) {
                     if (count($section->getBranchRules()) > 0) {
                         foreach ($section->getBranchRules() as $branch) {
-                            // handling branches
-
-                            $prevItem = $this->getLastItem($section);
-                            $targetItem = null;
-
-                            foreach ($testparts as $tp) {
-                                if ($tp->getIdentifier() == $branch->getTarget()) {
-                                    $targetItem = $this->getRouteItemsByTestPart($branch->getTarget())[0];
-                                }
-                            }
-
-                            foreach ($sections as $section) {
-                                if ($section->getIdentifier() == $branch->getTarget()) {
-                                    $targetItem = $this->getRouteItemsByAssessmentSection($branch->getTarget())[0];
-                                }
-                            }
-
-                            if ($targetItem == null) {
-                                try {
-                                    $targetItem = $this->getRouteItemsByAssessmentItemRef($branch->getTarget())[0];
-                                }
-                                catch (OutOfBoundsException $ex) {
-                                    throw new BranchRuleTargetException("Target '" . $branch->getTarget() . "' doesn't exist.",
-                                        BranchRuleTargetException::UNKNOWN_TARGET, $section);
-                                }
-                            }
-
-                            if (! in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
-                                $succsItem[$prevItem->getIdentifier()][] = $targetItem;
-                                $routes = array_merge($routes ,$this->addRoutesWithBranches($routes,
-                                    $this->getRouteItemsByAssessmentItemRef($prevItem->getIdentifier())[0],
-                                    $this->getRouteItemsByAssessmentItemRef($targetItem->getAssessmentItemRef()->getIdentifier())[0],
-                                    $section));
-                            }
+                            $routes = $this->BranchAnalysis($branch, $section, $routes, $succsItem, $sections, $testparts);
                         }
 
-                        $pre_sect[] = $section;
+                        $branchSect[] = $section;
                     }
                 }
             }
 
-            // Handling assessmentItem
+            // Handling assessmentItem            
 
             if (count($ri->getBranchRules()) > 0) {
                 foreach ($ri->getBranchRules() as $branch) {
-
-                    // handling branches
-
-                    $prevItem = $this->getLastItem($ri->getAssessmentItemRef());
-                    $targetItem = null;
-
-                    foreach ($testparts as $tp) {
-                        if ($tp->getIdentifier() == $branch->getTarget()) {
-                            $targetItem = $this->getRouteItemsByTestPart($branch->getTarget())[0];
-                        }
-                    }
-
-                    foreach ($sections as $section) {
-                        if ($section->getIdentifier() == $branch->getTarget()) {
-                            $targetItem = $this->getRouteItemsByAssessmentSection($branch->getTarget())[0];
-                        }
-                    }
-
-                    if ($targetItem == null) {
-                        try {
-                            $targetItem = $this->getRouteItemsByAssessmentItemRef($branch->getTarget())[0];
-                        }
-                        catch (OutOfBoundsException $ex) {
-                            throw new BranchRuleTargetException("Target '" . $branch->getTarget() . "' doesn't exist.",
-                                BranchRuleTargetException::UNKNOWN_TARGET, $ri->getAssessmentItemRef());
-                        }
-                    }
-
-                    if (!in_array($targetItem, $succsItem[$prevItem->getIdentifier()])) {
-                        $succsItem[$prevItem->getIdentifier()][] = $targetItem;
-                        $routes = array_merge($routes ,$this->addRoutesWithBranches($routes,
-                            $this->getRouteItemsByAssessmentItemRef($prevItem->getIdentifier())[0],
-                            $this->getRouteItemsByAssessmentItemRef($targetItem->getAssessmentItemRef()->getIdentifier())[0],
-                            $ri->getAssessmentItemRef()));
-                    }
+                    $routes = $this->BranchAnalysis($branch, $ri->getAssessmentItemRef(), $routes, $succsItem, $sections, $testparts);
                 }
             }
         }
 
         // Checking preConditions in tests, sections and items
 
-        $pre_tp = array();
-        $pre_sect = array();
+        $preTp = [];
+        $preSect = [];
 
-        foreach ($this as $ri)
-        {
+        foreach ($this as $ri) {
+
             // Handling testparts
 
-            $tp = $ri->getTestPart();
+            if (count($ri->getTestPart()->getPreConditions()) > 0) {
+                if (! in_array($ri->getTestPart(), $preTp)) {
 
-            if (!in_array($tp, $pre_tp)) {
-
-                if (count($tp->getPreConditions()) > 0) {
-
-                    $tpItems = $tp->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                    $preTp[] = $ri->getTestPart();
+                    $tpItems = $ri->getTestPart()->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
                     // for each existing, duplicate it and remove the current item
                     // (because it may not exist with the precondition)                    
 
                     foreach ($routes as $route) {
-                        
+
                         $routeitems = new AssessmentItemRefCollection();
 
                         foreach ($route as $routeitem) {
                             $routeitems->attach($routeitem->getAssessmentItemRef());
                         }
 
-                        if (!array_diff($tpItems, $routeitems->getArrayCopy())) {
+                        if (! array_diff($tpItems, $routeitems->getArrayCopy())) {
                             $newRoute = new RouteItemCollection();
 
                             foreach ($routeitems as $item) {
 
-                                if (!in_array($item, $tpItems)) {
+                                if (! in_array($item, $tpItems)) {
                                     $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
                                 }
                             }
 
-                            if (($newRoute != null) and (!in_array($newRoute, $routes))) {
+                            if (($newRoute != null) and (! in_array($newRoute, $routes))) {
                                 $routes[] = $newRoute;
                             }
                         }
                     }
                 }
-
-                $pre_tp[] = $tp;
             }
 
-            // Handling sections
+            if (count($ri->getPreConditions()) > 0) {
 
-            $sect = $ri->getAssessmentSections();
+                $preCount = count($ri->getPreConditions());
 
-            foreach ($sect as $section) {
-                if (! in_array($section, $pre_sect)) {
+                // Handling sections
+
+                $sect = $ri->getAssessmentSections();
+
+                foreach ($sect as $section) {
                     if (count($section->getPreConditions()) > 0) {
-                        $sectItems = $section->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
+                        if (! in_array($section, $preSect)) {
 
-                        // for each existing, duplicate it and remove the current item
-                        // (because it may not exist with the precondition)
+                            $preCount -= count($section->getPreConditions());
+                            $preSect[] = $section;
+                            $sectItems = $section->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
 
-                        foreach ($routes as $route) {
+                            // for each existing, duplicate it and remove the current item
+                            // (because it may not exist with the precondition)
 
-                            $routeitems = new AssessmentItemRefCollection();
+                            foreach ($routes as $route) {
 
-                            foreach ($route as $routeitem) {
-                                $routeitems->attach($routeitem->getAssessmentItemRef());
-                            }
+                                $routeitems = new AssessmentItemRefCollection();
 
-                            if (!array_diff($sectItems, $routeitems->getArrayCopy())) {
-                                $newRoute = new RouteItemCollection();
-
-                                foreach ($routeitems as $item){
-
-                                    if (!in_array($item, $sectItems)) {
-                                        $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
-                                    }
+                                foreach ($route as $routeitem) {
+                                    $routeitems->attach($routeitem->getAssessmentItemRef());
                                 }
 
-                                if (($newRoute != null) and (!in_array($newRoute, $routes))) {
-                                    $routes[] = $newRoute;
+                                if (! array_diff($sectItems, $routeitems->getArrayCopy())) {
+                                    $newRoute = new RouteItemCollection();
+
+                                    foreach ($routeitems as $item) {
+
+                                        if (! in_array($item, $sectItems)) {
+                                            $newRoute->attach($this->getRouteItemsByAssessmentItemRef($item->getIdentifier())[0]);
+                                        }
+                                    }
+
+                                    if (($newRoute != null) and (! in_array($newRoute, $routes))) {
+                                        $routes[] = $newRoute;
+                                    }
                                 }
                             }
                         }
                     }
+                }
+                // Handling assessmentItem
 
-                    $pre_sect[] = $section;
-                }                
-            }
+                if ($preCount > 0) {
 
-            // var_dump($ri->getAssessmentItemRef()->getIdentifier());
-            // var_dump(count($routes));
+                    foreach ($routes as $route) {
+                        if (in_array($ri, $route->getArrayCopy())) {
 
-            // Handling assessmentItem
+                            $newRoute = new RouteItemCollection();
 
-            if (count($ri->getPreConditions()) > 0) {
-                
-                foreach ($routes as $route) {
-                    if (in_array($ri, $route->getArrayCopy())) {
-                        $newRoute = new RouteItemCollection();
+                            foreach ($route as $item) {
 
-                        foreach ($route as $item){
-
-                            if ($item != $ri){
-                                $newRoute->attach($item);
+                                if ($item != $ri) {
+                                    $newRoute->attach($item);
+                                }
                             }
-                        }
-                        
-                        if (($newRoute != null) and (!in_array($newRoute, $routes))) {
-                            $routes[] = $newRoute;
+
+                            if (($newRoute != null) and (! in_array($newRoute, $routes))) {
+                                $routes[] = $newRoute;
+                            }
                         }
                     }
                 }
@@ -1749,14 +1773,14 @@ class Route implements Iterator
         $minCount = PHP_INT_MAX;
         $minRoutes = [];
 
-        foreach ($routes as $path) {
-            if (sizeof($path) < $minCount) {
-                $minCount = sizeof($path);
+        foreach ($routes as $route) {
+            if (sizeof($route) < $minCount) {
+                $minCount = sizeof($route);
                 $minRoutes = [];
             }
 
-            if (sizeof($path) <= $minCount) {
-                $minRoutes[] = $path;
+            if (sizeof($route) <= $minCount) {
+                $minRoutes[] = $route;
             }
         }
 
@@ -1767,7 +1791,7 @@ class Route implements Iterator
      * Returns an array with all longest possible routes for this Route.
      * Currently it's the route with all items that will always be returned.
      *
-     * Iterates on all possible routes and when it finds a path longer than the maximum length,
+     * Iterates on all possible routes and when it finds a route longer than the maximum length,
      * it is stored as the new longest route.
      *
      * @return array of qtism\runtime\Route An array with all longest possible routes
@@ -1779,14 +1803,14 @@ class Route implements Iterator
         $maxCount = 0;
         $maxRoutes = [];
 
-        foreach ($routes as $path) {
-            if (sizeof($path) > $maxCount) {
-                $maxCount = sizeof($path);
+        foreach ($routes as $route) {
+            if (sizeof($route) > $maxCount) {
+                $maxCount = sizeof($route);
                 $maxRoutes = [];
             }
 
-            if (sizeof($path) >= $maxCount) {
-                $maxRoutes[] = $path;
+            if (sizeof($route) >= $maxCount) {
+                $maxRoutes[] = $route;
             }
         }
 
