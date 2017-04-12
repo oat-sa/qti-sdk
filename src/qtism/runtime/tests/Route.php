@@ -1268,26 +1268,11 @@ class Route implements Iterator
 
             case "assessmentSection":
                 $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
-
-                if (count($items) == 0) {
-
-                    // To complete
-                    var_dump("Empty section detected");
-                } else {
-                    return $items[count($items) - 1];
-                }
-                break;
+                return $items[count($items) - 1];
 
             case "testPart":
                 $items = $component->getComponentsByClassName("assessmentItemRef")->getArrayCopy();
-
-                if (count($items) == 0) {
-
-                    var_dump("Empty testPart detected");
-                } else {
-                    return $items[count($items) - 1];
-                }
-                break;
+                return $items[count($items) - 1];
 
             default:
                 return null;
@@ -1313,12 +1298,6 @@ class Route implements Iterator
     {
         $newRoutes = [];
 
-        /*
-        if ($targetItem == null) { var_dump($prevItem->getIdentifier(), "NULL"); }
-        else {
-            var_dump($prevItem->getIdentifier(), $targetItem->getIdentifier());
-        }*/
-
         if ($prevItem == $targetItem) {
             throw new BranchRuleTargetException("Recursive branching is not allowed.", BranchRuleTargetException::RECURSIVE_BRANCHING, $component);
         }
@@ -1326,7 +1305,7 @@ class Route implements Iterator
         $prevRi = null;
         $targetRi = null;
 
-        foreach ($this as $ri) {
+        foreach ($this->getRouteItems() as $ri) {
             if (($prevItem != null) and ($prevItem->getIdentifier() == $ri->getAssessmentItemRef()->getIdentifier())) {
                 $prevRi = $ri;
             }
@@ -1410,10 +1389,7 @@ class Route implements Iterator
             case "EXIT_TEST":
                 $prevItem = $this->getLastItem($component);
 
-                if ($prevItem == null) {
-                    $succsItem[0][] = null;
-                    $routes = array_merge($routes, $this->addRoutesWithBranches($routes, $prevItem, null, $component));
-                } elseif (! in_array(null, $succsItem[$prevItem->getIdentifier()])) {
+                if (! in_array(null, $succsItem[$prevItem->getIdentifier()])) {
                     $succsItem[$prevItem->getIdentifier()][] = null;
 
                     // new successor possible => new paths possible
@@ -1559,7 +1535,8 @@ class Route implements Iterator
         $testparts = new TestPartCollection();
         $sections = new AssessmentSectionCollection();
 
-        foreach ($this as $ri) {
+        foreach ($this->getRouteItems() as $ri) {
+            
             if (! in_array($ri->getTestPart(), $testparts->getArrayCopy())) {
                 $testparts[] = $ri->getTestPart();
             }
@@ -1638,7 +1615,7 @@ class Route implements Iterator
         $preTp = [];
         $preSect = [];
 
-        foreach ($this as $ri) {
+        foreach ($this->getRouteItems() as $ri) {
 
             // Handling testparts
 
@@ -1759,6 +1736,42 @@ class Route implements Iterator
     }
 
     /**
+     * @TODO code, doc and tests
+     * @param $routes
+     * @return null
+     */
+
+    public function getPossibleRoutesFromCurrentPosition($routes)
+    {
+        $curItem = $this->getRouteItemAt($this->getPosition());
+        $routesFCP = [];
+        
+        foreach ($routes as $route) {
+            
+            $newRoute = new RouteItemCollection();
+            $curItemFound = false;
+            
+            foreach ($route as $routeItem) {                
+                
+                if ($curItem->getAssessmentItemRef()->getIdentifier() == 
+                        $routeItem->getAssessmentItemRef()->getIdentifier()) {
+                    $curItemFound = true;
+                }
+                
+                if ($curItemFound) {                    
+                    $newRoute[] = $routeItem;
+                }
+            }
+            
+            if ((count($newRoute) > 0) and (!in_array($newRoute, $routesFCP))) {
+                $routesFCP[] = $newRoute;
+            }
+        }
+        
+        return $routesFCP;
+    }
+
+    /**
      * Returns an array with all shortest possible routes for a AssessmentTest.
      *
      * Iterates on all possible routes and when it finds a route shorter than the minimum length,
@@ -1774,6 +1787,36 @@ class Route implements Iterator
         $minRoutes = [];
 
         foreach ($routes as $route) {
+            if (sizeof($route) < $minCount) {
+                $minCount = sizeof($route);
+                $minRoutes = [];
+            }
+
+            if (sizeof($route) <= $minCount) {
+                $minRoutes[] = $route;
+            }
+        }
+
+        return $minRoutes;
+    }
+
+    /**
+     * @TODO doc and tests
+     * Returns an array with all shortest possible routes for a AssessmentTest.
+     *
+     * Iterates on all possible routes and when it finds a route shorter than the minimum length,
+     * it is stored as the new shortest route.
+     *
+     * @return array of qtism\runtime\Route An array with all shortest possible routes
+     * for this Route.
+     */
+    public function getShortestRoutesFromCurrentPosition($routes)
+    {
+        $routesFCP = $this->getPossibleRoutesFromCurrentPosition($routes);
+        $minCount = PHP_INT_MAX;
+        $minRoutes = [];
+
+        foreach ($routesFCP as $route) {
             if (sizeof($route) < $minCount) {
                 $minCount = sizeof($route);
                 $minRoutes = [];
@@ -1804,6 +1847,37 @@ class Route implements Iterator
         $maxRoutes = [];
 
         foreach ($routes as $route) {
+            if (sizeof($route) > $maxCount) {
+                $maxCount = sizeof($route);
+                $maxRoutes = [];
+            }
+
+            if (sizeof($route) >= $maxCount) {
+                $maxRoutes[] = $route;
+            }
+        }
+
+        return $maxRoutes;
+    }
+
+    /**
+     * @TODO doc and tests
+     * Returns an array with all longest possible routes for this Route.
+     * Currently it's the route with all items that will always be returned.
+     *
+     * Iterates on all possible routes and when it finds a route longer than the maximum length,
+     * it is stored as the new longest route.
+     *
+     * @return array of qtism\runtime\Route An array with all longest possible routes
+     * for this Route.
+     */
+    public function getLongestRoutesFromCurrentPosition($routes)
+    {
+        $routesFCP = $this->getPossibleRoutesFromCurrentPosition($routes);
+        $maxCount = 0;
+        $maxRoutes = [];
+
+        foreach ($routesFCP as $route) {
             if (sizeof($route) > $maxCount) {
                 $maxCount = sizeof($route);
                 $maxRoutes = [];

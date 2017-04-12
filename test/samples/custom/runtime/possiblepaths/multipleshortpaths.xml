@@ -18,20 +18,6 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q02 if response is identifier "A" -->
-                <branchRule target="Q02">
-                    <match>
-                        <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
-                    </match>
-                </branchRule>
-                <!-- go to Q03 if response is identifier "B" -->
-                <branchRule target="Q03">
-                    <match>
-                        <variable identifier="Q01.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
-                    </match>
-                </branchRule>
             </assessmentItemRef>
             <assessmentItemRef identifier="Q02" href="./Q02/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -45,20 +31,6 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
-                <!-- go to Q03 if response is identifier "A" -->
-                <branchRule target="Q03">
-                    <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">A</baseValue>
-                    </match>
-                </branchRule>
-                <!-- go to Q04 if response is identifier "B" -->
-                <branchRule target="Q04">
-                    <match>
-                        <variable identifier="Q02.RESPONSE"/>
-                        <baseValue baseType="identifier">B</baseValue>
-                    </match>
-                </branchRule>
             </assessmentItemRef>
             <assessmentItemRef identifier="Q03" href="./Q03/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -72,8 +44,62 @@
                     </defaultValue>
                 </outcomeDeclaration>
                 <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+                <!-- go to Q04 if response is identifier "A" -->
+                <branchRule target="Q04">
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </branchRule>
+                <!-- go to Q04 if response is identifier "B" -->
+                <branchRule target="Q05">
+                    <match>
+                        <variable identifier="Q05.RESPONSE"/>
+                        <baseValue baseType="identifier">B</baseValue>
+                    </match>
+                </branchRule>
             </assessmentItemRef>
             <assessmentItemRef identifier="Q04" href="./Q04/qti.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>A</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+                <!-- go to Q05 if response is identifier "A" -->
+                <branchRule target="Q05">
+                    <match>
+                        <variable identifier="Q04.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </branchRule>
+                <!-- go to Q06 if response is identifier "B" -->
+                <branchRule target="Q06">
+                    <match>
+                        <variable identifier="Q02.RESPONSE"/>
+                        <baseValue baseType="identifier">B</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q05" href="./Q05/qti.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+                    <correctResponse>
+                        <value>A</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q06" href="./Q06/qti.xml" timeDependent="false">
                 <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
                     <correctResponse>
                         <value>A</value>
