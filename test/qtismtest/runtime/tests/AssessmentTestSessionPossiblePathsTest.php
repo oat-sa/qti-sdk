@@ -12,11 +12,11 @@ use qtism\runtime\tests\BranchRuleTargetException;
 use qtism\runtime\tests\RouteItemCollection;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
-class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionTestCase
+class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testgetPossibleRoutes()
     {
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -24,34 +24,34 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths2 = [];
+        $possibleRoutes = [];
+        $possibleRoutes2 = [];
 
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
 
-        foreach ($possiblePaths as $path) {
-            $possiblePaths2[] = $path->getArrayCopy();
+        foreach ($possibleRoutes as $path) {
+            $possibleRoutes2[] = $path->getArrayCopy();
         }
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
-        $this->assertEquals($possiblePaths2, $route->getPossibleRoutes(true));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes2, $route->getPossibleRoutes(true));
 
         // Test with no item
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/assessmentwithnoitem.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/assessmentwithnoitem.xml');
         $route = $session->getRoute();
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection();
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection();
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
         // Test with item's branching targeting on section
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsecttarget.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsecttarget.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -59,14 +59,14 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
         // Tests with subsections
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections2.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections2.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -74,15 +74,15 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections3.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections3.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -90,14 +90,14 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections4.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections4.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -105,19 +105,19 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[4]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[0], $it[2], $it[4]]));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
-    public function testPossiblePathswithPreCondition()
+    public function testPossibleRouteswithPreCondition()
     {
         // Case 1
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpathwithpre.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -125,21 +125,21 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[2], $it[3], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[1], $it[2], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[2], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[1], $it[2], $it[3]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[2], $it[3]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[1], $it[2]]);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[2]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[2], $it[3], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[1], $it[2], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[2], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[1], $it[2], $it[3]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[2], $it[3]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[1], $it[2]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[2]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
         // Case with duplicates
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/testnoduplicatepaths.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/testnoduplicatepaths.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -147,18 +147,18 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[0], $it[2]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[0], $it[2]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
-    public function testPossiblePathsWitPreOnSectionsAndTPs()
+    public function testPossibleRoutesWitPreOnSectionsAndTPs()
     {
         // Case with testParts and sections
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $route = $session->getRoute();
 
         $it = [];
@@ -167,41 +167,40 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i + 1] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpathwithpre3.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre3.xml');
         $route = $session->getRoute();
-
         $it = [];
 
         for ($i = 0; $i <= 7; $i++) {
             $it[$i + 1] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[4]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[4]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
-    public function testPossiblePathsWitPreOnSubSections()
+    public function testPossibleRoutesWitPreOnSubSections()
     {
         // Case with subsections
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -209,26 +208,26 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8], $it[9]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[9]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[9]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8], $it[9]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[9]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[9]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
     public function testPossiblePathWithSectsAndTPs()
     {
         // Testing branching on sections
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsections.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsections.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -236,16 +235,16 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[7]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[7]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
         // Testing branching on testparts and sections
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingtestparts.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingtestparts.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -253,15 +252,15 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[8]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[6], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[8]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
     // Testing special cases
@@ -269,7 +268,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testRecursiveBranching()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingrecursive.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingrecursive.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -277,7 +276,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testRecursiveBranching2()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingstartandend3.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingstartandend3.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -285,7 +284,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testRecursiveBranching3()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingstartandend4.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingstartandend4.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -293,7 +292,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testRecursiveBranching4()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingstartandend5.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingstartandend5.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -301,7 +300,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testRecursiveBranching5()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingstartandend6.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingstartandend6.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -309,7 +308,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testBackwardBranching()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingbackward.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingbackward.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
@@ -317,14 +316,14 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     public function testWrongTargetBranching()
     {
         $this->expectException(BranchRuleTargetException::class);
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingwrongtarget.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingwrongtarget.xml');
         $route = $session->getRoute();
         $route->getPossibleRoutes(false);
     }
 
     public function testgetPossibleRoutesWithExitMentions()
     {
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingwithexitmentions.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingwithexitmentions.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -332,16 +331,16 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i] = $route->getRouteItemAt($i - 1);;
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8], $it[9]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8]]);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8], $it[9]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingexitsession.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingexitsession.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -349,29 +348,29 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[$i] = $route->getRouteItemAt($i - 1);
         }
 
-        $possiblePaths = [];
-        $possiblePaths[] = new RouteItemCollection($it);
+        $possibleRoutes = [];
+        $possibleRoutes[] = new RouteItemCollection($it);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingwithexitmentions2.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingwithexitmentions2.xml');
         $route = $session->getRoute();
-        $possiblePaths = [];
+        $possibleRoutes = [];
         $it = [];
 
         for ($i = 1; $i <= 7; $i++) {
             $it[$i] = $route->getRouteItemAt($i - 1);;
         }
 
-        $possiblePaths[] = new RouteItemCollection($it);
-        $possiblePaths[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7]]);
+        $possibleRoutes[] = new RouteItemCollection($it);
+        $possibleRoutes[] = new RouteItemCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7]]);
 
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutes(false));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutes(false));
     }
 
     public function testGetShortestRoutes()
     {
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -379,15 +378,15 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $shortestPaths = [];
+        $shortestRoutes = [];
         $path = new RouteItemCollection([$it[0], $it[2], $it[5]]);
-        $shortestPaths[] = $path;
+        $shortestRoutes[] =$path;
 
-        $this->assertEquals($shortestPaths, $route->getShortestRoutes());
+        $this->assertEquals($shortestRoutes, $route->getShortestRoutes());
 
         // With multiple shortest paths
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/multipleshortpaths.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/multipleshortpaths.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -395,18 +394,18 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $shortestPaths = [];
+        $shortestRoutes = [];
         $path1 = new RouteItemCollection([$it[0], $it[1], $it[2], $it[3], $it[5]]);
         $path2 = new RouteItemCollection([$it[0], $it[1], $it[2], $it[4], $it[5]]);
-        $shortestPaths[] = $path2;
-        $shortestPaths[] = $path1;
+        $shortestRoutes[] = $path2;
+        $shortestRoutes[] = $path1;
 
-        $this->assertEquals($shortestPaths, $route->getShortestRoutes());
+        $this->assertEquals($shortestRoutes, $route->getShortestRoutes());
     }
 
-    public function testGetLongestPaths()
+    public function testGetLongestRoutes()
     {
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpath.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpath.xml');
         $route = $session->getRoute();
         $it = [];
 
@@ -414,16 +413,16 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $longestPaths[] = new RouteItemCollection($it);
+        $longestRoutes[] = new RouteItemCollection($it);
 
-        $this->assertEquals($longestPaths, $route->getLongestRoutes());
+        $this->assertEquals($longestRoutes, $route->getLongestRoutes());
     }
 
     public function testGetFirstItem()
     {
         // Simple cases
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $route = $session->getRoute();
         $test = $route->getRouteItemAt(0)->getAssessmentTest();
 
@@ -431,7 +430,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
         $this->assertEquals($test->getComponentByIdentifier('Q03'), $route->getFirstItem($test->getComponentByIdentifier('S02')));
         $this->assertEquals($test->getComponentByIdentifier('Q05'), $route->getFirstItem($test->getComponentByIdentifier('TP02')));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections.xml');
         $route = $session->getRoute();
         $test = $route->getRouteItemAt(0)->getAssessmentTest();
 
@@ -445,7 +444,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
     {
         // Simple cases
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingpathwithpre2.xml');
         $route = $session->getRoute();
         $test = $route->getRouteItemAt(0)->getAssessmentTest();
 
@@ -453,7 +452,7 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
         $this->assertEquals($test->getComponentByIdentifier('Q04'), $route->getLastItem($test->getComponentByIdentifier('S02')));
         $this->assertEquals($test->getComponentByIdentifier('Q08'), $route->getLastItem($test->getComponentByIdentifier('TP02')));
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/branchingsubsections.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/branchingsubsections.xml');
         $route = $session->getRoute();
         $test = $route->getRouteItemAt(0)->getAssessmentTest();
 
@@ -473,31 +472,31 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths2 = [];
-        $possiblePaths3 = [];
+        $possibleRoutes = [];
+        $possibleRoutes2 = [];
+        $possibleRoutes3 = [];
 
-        $possiblePaths[] = new RouteItemCollection(([$it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths[] = new RouteItemCollection(([$it[2], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[2], $it[5]]));
 
-        $possiblePaths2[] = new RouteItemCollection(([$it[5]]));
+        $possibleRoutes2[] = new RouteItemCollection(([$it[5]]));
 
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4], $it[5]]));
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[5]]));
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
-        
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[1], $it[3], $it[4], $it[5]]));
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[5]]));
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
+
         $routes = $route->getPossibleRoutes();
 
         $route->setPosition(2);
-        $this->assertEquals($possiblePaths, $route->getPossibleRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes, $route->getPossibleRoutesFromCurrentPosition($routes));
 
         $route->setPosition(5);
-        $this->assertEquals($possiblePaths2, $route->getPossibleRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes2, $route->getPossibleRoutesFromCurrentPosition($routes));
 
         $route->setPosition(0);
-        $this->assertEquals($possiblePaths3, $route->getPossibleRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes3, $route->getPossibleRoutesFromCurrentPosition($routes));
     }
 
     public function testgetShortestRoutesFromCurrentPosition()
@@ -510,33 +509,33 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $shortestPaths = [];
-        $shortestPaths2 = [];
-        $shortestPaths3 = [];
-        $shortestPaths4 = [];
+        $shortestRoutes = [];
+        $shortestRoutes2 = [];
+        $shortestRoutes3 = [];
+        $shortestRoutes4 = [];
 
-        $shortestPaths[] = new RouteItemCollection(([$it[2], $it[5]]));
-        $shortestPaths2[] = new RouteItemCollection(([$it[5]]));
-        $shortestPaths3[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
-        $shortestPaths4[] = new RouteItemCollection(([$it[1], $it[2], $it[5]]));
+        $shortestRoutes[] = new RouteItemCollection(([$it[2], $it[5]]));
+        $shortestRoutes2[] = new RouteItemCollection(([$it[5]]));
+        $shortestRoutes3[] = new RouteItemCollection(([$it[0], $it[2], $it[5]]));
+        $shortestRoutes4[] = new RouteItemCollection(([$it[1], $it[2], $it[5]]));
 
         $routes = $route->getPossibleRoutes();
 
         $route->setPosition(2);
-        $this->assertEquals($shortestPaths, $route->getShortestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($shortestRoutes, $route->getShortestRoutesFromCurrentPosition($routes));
 
         $route->setPosition(5);
-        $this->assertEquals($shortestPaths2, $route->getShortestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($shortestRoutes2, $route->getShortestRoutesFromCurrentPosition($routes));
 
         $route->setPosition(0);
-        $this->assertEquals($shortestPaths3, $route->getShortestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($shortestRoutes3, $route->getShortestRoutesFromCurrentPosition($routes));
 
         $route->setPosition(1);
-        $this->assertEquals($shortestPaths4, $route->getShortestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($shortestRoutes4, $route->getShortestRoutesFromCurrentPosition($routes));
 
         // With multiple shortest paths
 
-        $session = self::instantiate(self::samplesDir().'custom/runtime/possiblepaths/multipleshortpaths.xml');
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/possiblepaths/multipleshortpaths.xml');
         $route = $session->getRoute();
         $routes = $route->getPossibleRoutes();
         $it = [];
@@ -545,14 +544,14 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $shortestPaths = [];
+        $shortestRoutes = [];
         $path1 = new RouteItemCollection([$it[1], $it[2], $it[3], $it[5]]);
         $path2 = new RouteItemCollection([$it[1], $it[2], $it[4], $it[5]]);
-        $shortestPaths[] = $path2;
-        $shortestPaths[] = $path1;
+        $shortestRoutes[] = $path2;
+        $shortestRoutes[] = $path1;
 
         $route->setPosition(1);
-        $this->assertEquals($shortestPaths, $route->getShortestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($shortestRoutes, $route->getShortestRoutesFromCurrentPosition($routes));
     }
 
     public function testgetLongestRoutesFromCurrentPosition()
@@ -565,25 +564,25 @@ class AssessmentTestSessionPossiblePathsTest extends QtiSmAssessmentTestSessionT
             $it[] = $route->getRouteItemAt($i);
         }
 
-        $possiblePaths = [];
-        $possiblePaths2 = [];
-        $possiblePaths3 = [];
+        $possibleRoutes = [];
+        $possibleRoutes2 = [];
+        $possibleRoutes3 = [];
 
-        $possiblePaths[] = new RouteItemCollection(([$it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes[] = new RouteItemCollection(([$it[2], $it[3], $it[4], $it[5]]));
 
-        $possiblePaths2[] = new RouteItemCollection(([$it[5]]));
+        $possibleRoutes2[] = new RouteItemCollection(([$it[5]]));
 
-        $possiblePaths3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
+        $possibleRoutes3[] = new RouteItemCollection(([$it[0], $it[1], $it[2], $it[3], $it[4], $it[5]]));
 
         $routes = $route->getPossibleRoutes();
 
         $route->setPosition(2);
-        $this->assertEquals($possiblePaths, $route->getLongestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes, $route->getLongestRoutesFromCurrentPosition($routes));
 
         $route->setPosition(5);
-        $this->assertEquals($possiblePaths2, $route->getLongestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes2, $route->getLongestRoutesFromCurrentPosition($routes));
 
         $route->setPosition(0);
-        $this->assertEquals($possiblePaths3, $route->getLongestRoutesFromCurrentPosition($routes));
+        $this->assertEquals($possibleRoutes3, $route->getLongestRoutesFromCurrentPosition($routes));
     }
 }
