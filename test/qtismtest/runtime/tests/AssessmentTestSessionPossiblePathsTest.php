@@ -380,7 +380,7 @@ class AssessmentTestSessionPossibleRoutesTest extends QtiSmAssessmentTestSession
 
         $shortestRoutes = [];
         $path = new RouteItemCollection([$it[0], $it[2], $it[5]]);
-        $shortestRoutes[] =$path;
+        $shortestRoutes[] = $path;
 
         $this->assertEquals($shortestRoutes, $route->getShortestRoutes());
 
