@@ -563,6 +563,14 @@
                     </match>
                 </branchRule>
             </assessmentItemRef>
+            <assessmentItemRef identifier="Q54" href="./Q54/qti.xml"><!-- mathconstant -->
+                <branchRule target="Q1">
+                    <match>
+                        <mathConstant name="e"></mathConstant>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
         </assessmentSection>
     </testPart>
 </assessmentTest>
