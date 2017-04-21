@@ -30,7 +30,7 @@ class ExpressionTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $impures = ['Q5', 'Q37', 'Q47', 'Q48', 'Q52', 'Q53'];
 
-        for ($i = 1; $i < 55; $i++) {
+        for ($i = 1; $i < 56; $i++) {
             $this->assertEquals(!in_array('Q' . $i, $impures),
                 $test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression()->IsPure());
         }
