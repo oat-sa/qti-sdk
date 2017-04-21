@@ -96,6 +96,6 @@ class DefaultVal extends Expression implements Pure
      */
     public function isPure()
     {
-        return true; // predictable with the declaration
+        return false; // we can change the default value of a variable during runtime
     }
 }

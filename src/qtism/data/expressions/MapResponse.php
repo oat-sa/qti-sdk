@@ -109,6 +109,6 @@ class MapResponse extends Expression implements Pure
      */
     public function isPure()
     {
-        return true; // implements map, + and reduce functions, which are all pure functions --> pure
+        return false; // dependant on identifier
     }
 }

@@ -28,7 +28,7 @@ class ExpressionTest extends QtiSmTestCase
 
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
         $test = $doc->getDocumentComponent();
-        $impures = ['Q5', 'Q37', 'Q47', 'Q48', 'Q52', 'Q53'];
+        $impures = ['Q5', 'Q37', 'Q47', 'Q48', 'Q49', 'Q50', 'Q52', 'Q53', 'Q55'];
 
         for ($i = 1; $i < 56; $i++) {
             $this->assertEquals(!in_array('Q' . $i, $impures),
