@@ -31,7 +31,7 @@ namespace qtism\data\expressions;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class NullValue extends Expression
+class NullValue extends Expression implements Pure
 {
     /**
      * @see \qtism\data\QtiComponent::getQtiClassName()
@@ -39,5 +39,16 @@ class NullValue extends Expression
     public function getQtiClassName()
     {
         return 'null';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return true;
     }
 }

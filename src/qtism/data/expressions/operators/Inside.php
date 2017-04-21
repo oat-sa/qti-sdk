@@ -25,6 +25,7 @@ namespace qtism\data\expressions\operators;
 use qtism\common\datatypes\QtiShape;
 use qtism\common\datatypes\QtiCoords;
 use qtism\data\expressions\ExpressionCollection;
+use qtism\data\expressions\Pure;
 use \InvalidArgumentException;
 
 /**
@@ -39,7 +40,7 @@ use \InvalidArgumentException;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class Inside extends Operator
+class Inside extends Operator implements Pure
 {
     /**
 	 * From IMS QTI:
@@ -128,5 +129,16 @@ class Inside extends Operator
     public function getQtiClassName()
     {
         return 'inside';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return $this->getExpressions()->isPure();
     }
 }

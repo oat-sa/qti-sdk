@@ -1606,7 +1606,7 @@ class Route implements Iterator
                 }
             }
 
-            // Handling assessmentItem            
+            // Handling assessmentItem
 
             if (count($ri->getBranchRules()) > 0) {
                 foreach ($ri->getBranchRules() as $branch) {

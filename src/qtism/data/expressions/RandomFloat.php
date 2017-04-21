@@ -33,7 +33,7 @@ use qtism\common\utils\Format;
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  *
  */
-class RandomFloat extends Expression
+class RandomFloat extends Expression implements Pure
 {
     /**
      * The min attribute value.
@@ -121,5 +121,16 @@ class RandomFloat extends Expression
     public function getQtiClassName()
     {
         return 'randomFloat';
+    }
+
+    /**
+     * Checks whether this expression is pure.
+     * @link https://en.wikipedia.org/wiki/Pure_function
+     *
+     * @return boolean True if the expression is pure, false otherwise
+     */
+    public function isPure()
+    {
+        return false; // Random --> impure
     }
 }
